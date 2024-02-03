@@ -1,7 +1,13 @@
 <!-- eslint-disable no-useless-escape -->
 <template>
-  <form @submit.prevent="handleSubmit" v-if="active === 1" class="px-4 lg:px-[30px]">
-    <div class="flex gap-x-[76px] pt-[30px]  justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-0">
+  <form
+    @submit.prevent="handleSubmit"
+    v-if="active === 1"
+    class="px-4 lg:px-[30px]"
+  >
+    <div
+      class="flex gap-x-[76px] pt-[30px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-0"
+    >
       <div class="w-[300px]">
         <h2 class="text-sm text-[#101828] font-semibold">
           Company Information
@@ -21,10 +27,8 @@
                     <span
                       v-if="!image"
                       class="h-[64px] w-[64px] rounded-full flex items-center text-xs bg-[#F1F3F5] justify-center"
-                      ><i class="uil uil-image text-4xl text-gray-400"></i
-                    >
-          
-                  </span>
+                      ><i class="uil uil-image text-4xl text-gray-400"></i>
+                    </span>
                     <img
                       v-else
                       :src="image"
@@ -382,19 +386,18 @@
       </div>
     </div>
     <div
-      class="flex justify-between gap-x-4 items-center mt-16 pt-6 border-t border-[#EAECF0] w-full "
+      class="flex justify-between gap-x-4 items-center mt-16 pt-6 border-t border-[#EAECF0] w-full"
     >
-    
-        <!-- <button
+      <!-- <button
           type="button"
           class="appearance-none leading-none px-10 py-[14px] rounded-lg w-full lg:w-auto text-primary-500 border border-primary-500 hover:bg-gray-100 text-[13px] capitalize"
         >
           Prevew
         </button> -->
-        <span></span>
-   
+      <span></span>
+
       <div class="flex justify-end gap-x-4 items-center">
-<!--     
+        <!--     
           <button
             type="button"
             class="appearance-none leading-none px-10 py-[14px] rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
@@ -535,6 +538,7 @@ import {
 } from "@/services/settingservices";
 
 const active = inject("active");
+const companyInfo = inject("companyInfo");
 const authStore = useAuthStore();
 const router = useRouter();
 const open = ref(false);
@@ -604,38 +608,36 @@ function addsocial() {
 }
 onMounted(() => {
   form.companyName = authStore.userInfo?.companyName;
-  getCompanyProfile().then((res) => {
-    form.photo = image.value = res.data.data.photo;
-    form.companyType = res.data.data.companyType;
-    form.website = res.data.data.website;
-    form.fax = res.data.data.fax;
-    form.email = res.data.data.email;
-    form.description = res.data.data.description;
-    form.socials = res.data.data.socials || [
-      {
-        name: "",
-        link: "",
-      },
-    ];
-    form.address = res.data.data.address;
-    form.country = res.data.data.country;
-    form.city = res.data.data.city;
-    form.tin = res.data.data.tin;
-    form.registrationNo = res.data.data.registrationNo;
-    form.phone = res.data.data.phone;
-    image.value = form.logo = res.data.data.logo;
-    form.state = res.data.data.state;
+  form.photo = image.value = companyInfo?.value.photo;
+  form.companyType = companyInfo?.value.companyType;
+  form.website = companyInfo?.value.website;
+  form.fax = companyInfo?.value.fax;
+  form.email = companyInfo?.value.email;
+  form.description = companyInfo?.value.description;
+  form.socials = companyInfo?.value.socials || [
+    {
+      name: "",
+      link: "",
+    },
+  ];
+  form.address = companyInfo?.value.address;
+  form.country = companyInfo?.value.country;
+  form.city = companyInfo?.value.city;
+  form.tin = companyInfo?.value.tin;
+  form.registrationNo = companyInfo?.value.registrationNo;
+  form.phone = companyInfo?.value.phone;
+  image.value = form.logo = companyInfo?.value.logo;
+  form.state = companyInfo?.value.state;
 
-    var validRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  var validRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-    if (
-      !res.data.data.companyName ||
-      !res.data.data.companyName.match(validRegex)
-    ) {
-      form.companyName = res.data.data.companyName;
-    }
-  });
+  if (
+    !companyInfo?.value.companyName ||
+    !companyInfo?.value.companyName.match(validRegex)
+  ) {
+    form.companyName = companyInfo?.value.companyName;
+  }
 });
 function removesocial(i) {
   form.socials.splice(i, 1);
@@ -733,9 +735,8 @@ async function handleSubmit() {
   updateCompanyProfile(form)
     .then((res) => {
       if (res.status === 200) {
-       
-        toast.success("Information saved")
-        active.value =2
+        toast.success("Information saved");
+        active.value = 2;
       }
     })
 

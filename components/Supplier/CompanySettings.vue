@@ -7,7 +7,7 @@
     <div class="py-10">
       <Stepper :tabs="tabs" />
     </div>
-    <div>
+    <div v-if="!isLoading">
       <div v-if="active === 1">
         <OnboardingCompanyInformation />
       </div>
@@ -18,15 +18,18 @@
         <div><OnboardingCompanyDirectors /></div>
       </div>
     </div>
+    <AppLoader v-if="isLoading" />
   </div>
 </template>
 
 <script setup>
 import { getCompanyProfile } from "@/services/settingservices";
 const companyInfo = ref(null)
+const isLoading = ref(true)
 onBeforeMount(()=>{
   getCompanyProfile().then(res=>{
     if(res.status === 200){
+      isLoading.value = false
       companyInfo.value = res.data.data
     }
   })

@@ -16,15 +16,15 @@
             label="Memorandum and Articles of Association"
             id="mermat"
           />
-          <a :href="docUrl(2)" download>  <span class="block text-xs text-blue-500 mt-1">{{ docUrl(1) }}</span></a>
+          <span @click="downloadFile(docUrl(1), 'MERMAT')" download v-if="docUrl(1)">  <span class="block text-xs text-blue-500 mt-1">Download Mermat</span></span>
         </div>
         <div>
           <FileUpload label="Certificate of Incorporation" id="incorporation" />
-          <a :href="docUrl(2)" download>  <span class="block text-xs text-blue-500 mt-1">{{ docUrl(0) }}</span></a>
+          <span @click="downloadFile(docUrl(0), 'CAC')"  v-if="docUrl(0)">  <span class="block text-xs text-blue-500 mt-1">Download Certificate of Incorporation</span></span>
         </div>
         <div>
           <FileUpload label="CAC Status Report" id="statusReport" />
-        <a :href="docUrl(2)" download>  <span class="block text-xs text-blue-500 mt-1">{{ docUrl(2) }}</span></a>
+        <span @click="downloadFile(docUrl(2), 'Status report')"  v-if="docUrl(2)">  <span class="block text-xs text-blue-500 mt-1">Download CAC Status Report</span></span>
         </div>
       </div>
     </div>
@@ -110,6 +110,45 @@ function handleChange(id, value) {
 
 function docUrl(id) {
  return form.companyDocuments.find((i) => i.documentType === id)?.url || "";
+}
+function downloadFile(fileUrl,fileName) {
+    // Replace 'your_file_url' with the actual URL of the file you want to download
+   
+    fetch(fileUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Create a link element
+            const link = document.createElement('a');
+
+            // Create a Blob URL for the file data
+            const blobUrl = window.URL.createObjectURL(blob);
+
+            // Set the link's href attribute to the Blob URL
+            link.href = blobUrl;
+
+            // Set the download attribute with the desired file name
+            link.download = fileName || 'downloaded_file'; // Change the file name as needed
+
+            // Append the link to the document
+            document.body.appendChild(link);
+
+            // Trigger a click on the link to start the download
+            link.click();
+
+            // Remove the link from the document
+            document.body.removeChild(link);
+
+            // Revoke the Blob URL to free up resources
+            window.URL.revokeObjectURL(blobUrl);
+        })
+        .catch(error => {
+            console.error('Error downloading file:', error);
+        });
 }
 const rules = {
   cac: {

@@ -146,7 +146,7 @@ const onSubmit = handleSubmit((values) => {
 });
 
 const handleLoginSuccess = (response) => {
-  console.log("🚀 ~ handleLoginSuccess ~ response:", response);
+
   const { access_token } = response;
   let data = {
     provider: "GOOGLE",
