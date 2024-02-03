@@ -1,7 +1,7 @@
 <template>
   <div class="rounded-[20px] bg-white p-4">
     <div class="mb-4 sm:mb-8 relative h-[100px] sm:h-[150px]">
-       <NuxtImg
+       <img
         class="h-[100px] sm:h-[150px] w-full rounded-[20px] object-cover z-[2] relative"
         :src="
           product.converPhoto && product.converPhoto !== 'null'

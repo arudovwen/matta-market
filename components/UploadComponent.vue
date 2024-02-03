@@ -47,7 +47,7 @@
       <span
         class="h-24 w-24 rounded-lg bg-white flex items-center justify-center border relative border-[#E7EBEE]"
       >
-        <NuxtImg :src="n" alt="logo" class="w-full h-full rounded-lg" />
+        <img :src="n" alt="logo" class="w-full h-full rounded-lg" />
         <span
           class="bg-white text-matta-black h-5 w-5 flex items-center justify-center absolute -top-1 -right-2"
           @click="removeFile(i)"

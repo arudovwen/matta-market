@@ -12,11 +12,13 @@
 
     <div class="pb-10" v-if="stats">
       <div
-        class="p-6 rounded-[10px] bg-white mb-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
+        class="p-4 lg:p-6 rounded-[10px] bg-white mb-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
       >
-        <div class="mb-10 flex justify-between items-center">
+        <div
+          class="mb-10 flex flex-col lg:flex-row lg:justify-between lg:items-center gap-y-4"
+        >
           <div
-            class="border border-[#D0D5DD] rounded-lg overflow-hidden text-sm text-[#344054] max-w-max"
+            class="border border-[#D0D5DD] rounded-lg overflow-hidden text-xs lg:text-sm text-[#344054] max-w-max"
           >
             <button
               class="px-4 py-2 border-r border-[#D0D5DD] last:border-none font-semibold"
@@ -27,7 +29,7 @@
               {{ n.title }}
             </button>
           </div>
-          <div class="max-w-[200px]">
+          <div class="max-w-[200px] hidden lg:inline">
             <ClientOnly>
               <VueDatePicker
                 v-model="date"
@@ -35,11 +37,14 @@
                 multi-calendars
                 placeholder="Select dates"
                 :time-picker="false"
+                input-class-name="!text-sm"
               />
             </ClientOnly>
           </div>
         </div>
-        <div class="flex gap-x-8 w-full">
+
+        
+        <div class="flex flex-col lg:flex-row gap-x-8 w-full">
           <div class="flex-1">
             <div class="">
               <div class="flex justify-between">
@@ -51,7 +56,7 @@
                   <div class="flex gap-x-1 items-start">
                     <span class="block text-[30px] font-bold">
                       <span
-                        class="block text-[30px] font-semibold text-[#101828]"
+                        class="block text-xl xl:text-[30px] font-semibold text-[#101828]"
                         >{{ currencyFormat(stats.currentBalance) }}</span
                       ></span
                     >
@@ -77,16 +82,23 @@
               ></client-only>
             </div>
           </div>
-          <div class="w-[200px] flex flex-col gap-y-6">
-            <div class="leading-tight" v-for="n in Statistics" :key="n.title">
+          <div
+            class="xl:w-[200px] flex flex-row lg:flex-col gap-6 justify-between xl:justify-start"
+          >
+            <div
+              class="leading-tight text-center md:text-left"
+              v-for="n in Statistics"
+              :key="n.title"
+            >
               <span
-                class="block text-[#475467] font-medium text-sm capitalize"
+                class="block text-[#475467] font-medium text-xs lg:text-sm capitalize"
                 >{{ n.title }}</span
               >
               <div class="flex gap-x-1 items-start">
-                <span class="block text-[30px] font-bold">{{
-                  stats[n.key]
-                }}</span>
+                <span
+                  class="block text-base lg:text-xl xl:text-[30px] font-bold"
+                  >{{ stats[n.key] }}</span
+                >
                 <span class="text-xs flex gap-x-1 items-center text-[#17B26A]">
                   <AppIcon
                     icon="uil:arrow-growth"
@@ -181,7 +193,7 @@ import moment from "moment";
 import EmptyData from "~/components/EmptyData";
 import { getorderchart, getchart } from "~/services/chartservice";
 
-const auth = useAuthStore()
+const auth = useAuthStore();
 const date = ref();
 const links = [
   {
@@ -197,22 +209,22 @@ const filters = [
   {
     title: "12 months",
     value: 12,
-    duration: "months"
+    duration: "months",
   },
   {
     title: "30 days",
     value: 30,
-    duration: "days"
+    duration: "days",
   },
   {
     title: "7 days",
     value: 7,
-    duration: "days"
+    duration: "days",
   },
   {
     title: "24 hours",
     value: 1,
-    duration: "day"
+    duration: "day",
   },
 ];
 const Statistics = [
@@ -608,8 +620,22 @@ const theads = ["product", "created", "views", "orders"];
 
 watch(date, () => {
   if (date.value) {
-    query.StartDate = date.value[0];
-    query.EndDate = date.value[1];
+    query.StartDate = moment(date.value[0]).format("yyyy-MM-DD");
+    query.EndDate = moment(date.value[1]).format("yyyy-MM-DD");
+    getesfrontstats(query).then((res) => {
+      stats.value = res.data.data;
+    });
+    getstorefronttrending(query).then((res) => {
+      trending.value = res.data.data.slice(0, 9);
+    });
+    getAllCharts();
+  }
+});
+
+watch(active, () => {
+  if (active.value) {
+    query.StartDate = moment().add(active.value, "days").format("yyyy-MM-DD");
+    query.EndDate = moment().format("yyyy-MM-DD");
     getesfrontstats(query).then((res) => {
       stats.value = res.data.data;
     });

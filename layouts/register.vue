@@ -8,7 +8,7 @@
     >
       <div class="flex justify-between">
         <NuxtLink to="/">
-          <NuxtImg
+          <img
             src="/images/logo-white.png"
             width="100"
             height="26"
@@ -32,7 +32,7 @@
               class="flex items-start gap-x-5"
             >
               <div class="w-20 mt-1">
-                <NuxtImg :src="n.icon" :alt="n.title" class="w-10" />
+                <img :src="n.icon" :alt="n.title" class="w-10" />
               </div>
               <div>
                 <p class="text-xl font-bold text-white mb-1">
@@ -53,10 +53,10 @@
       <div class="w-full h-full bg-white flex flex-col">
         <div class="z-10 lg:hidden mb-14 max-h-max">
           <NuxtLink to="/">
-            <NuxtImg
+            <img
               src="/images/logo.png"
               width="100"
-              
+
               height="26"
               alt="Matta"
               class="w-[100px] h-auto"
@@ -74,9 +74,9 @@
 const Earth = "/images/earth-africa.svg";
 const Code = "/images/code.svg";
 const Group = "/images/users.svg";
-const nuxtImg = useImage();
+const img = useImage();
 const backgroundStyles = computed(() => {
-  const imgUrl = nuxtImg(
+  const imgUrl = img(
     `https://res.cloudinary.com/arudovwen-me/image/upload/c_scale,w_1280/f_webp/yqbey9rcgfvo4gj2lgpz.jpg`,
     {
       sizes: {

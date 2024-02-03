@@ -34,6 +34,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
         if (clientStoredVersion != latestVersion) {
           clearCookies();
+          localStorage.clear()
           setClientAppVersion(latestVersion);
           window.location.reload(true);
         } else return;

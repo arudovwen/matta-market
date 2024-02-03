@@ -58,8 +58,8 @@
                     <!-- Replace with your content -->
                     <div class="absolute inset-0 pt-5">
                       <div class="px-5 pb-4" v-if="!authStore.isLoggedIn">
-                         <NuxtImg
-                          src="images/logo.png"
+                         <img
+                          src="/images/logo.png"
                           width="100"
                           height="26"
                           alt="Matta"
@@ -123,7 +123,7 @@
                           v-if="authStore.isLoggedIn && !activeKey"
                         >
                           <li
-                            v-for="n in mobileMenu.filter(
+                            v-for="n in mappedNav.filter(
                               (i) => i.key !== 'sign-out'
                             )"
                             :key="n.name"
@@ -170,7 +170,14 @@ const activeKey = ref(null);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 const isSigniningOut = ref(false);
-
+const mappedNav = computed(() => {
+  return mobileMenu.filter((i) =>
+    (authStore?.userType?.toLowerCase() === "supplier"
+      ? vendorRoutes
+      : buyerRoutes
+    ).includes(i.key)
+  );
+});
 const open = inject("open");
 provide("activeKey", activeKey);
 </script>

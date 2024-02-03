@@ -22,8 +22,10 @@
                       v-if="!image"
                       class="h-[64px] w-[64px] rounded-full flex items-center text-xs bg-[#F1F3F5] justify-center"
                       ><i class="uil uil-image text-4xl text-gray-400"></i
-                    ></span>
-                    <NuxtImg
+                    >
+          
+                  </span>
+                    <img
                       v-else
                       :src="image"
                       class="h-[64px] w-[64px] rounded-full flex items-center bg-[#F1F3F5] justify-center"
@@ -392,21 +394,21 @@
         <span></span>
    
       <div class="flex justify-end gap-x-4 items-center">
-    
+<!--     
           <button
             type="button"
             class="appearance-none leading-none px-10 py-[14px] rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
           >
             Cancel
           </button>
-       
+        -->
 
         <button
           :disabled="v$.$silentErrors.length || isLoading"
           :class="{
             'opacity-60 cursor-not-allowed': v$.$silentErrors.length,
           }"
-          class="appearance-none leading-none px-10 py-4 grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
+          class="appearance-none leading-none px-10 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
         >
           <i
             class="fa fa-spinner fa-spin"
@@ -731,9 +733,9 @@ async function handleSubmit() {
   updateCompanyProfile(form)
     .then((res) => {
       if (res.status === 200) {
-        setOnboardingcomplete();
-        authStore.updateUserInfo({ onboardingPageStatus: 1 });
-        router.push("/onboarding/company?onboarding_stage=3");
+       
+        toast.success("Information saved")
+        active.value =2
       }
     })
 

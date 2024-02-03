@@ -2,23 +2,23 @@
   <div class="bg-white rounded-lg">
     <nav class="flex justify-between gap-x-2 items-center py-5 px-6">
       <div class="flex items-center">
-        <router-link to="/">
+        <NuxtLink to="/">
            <img
             src="@/assets/img/logo.svg"
             width="80"
             height="auto"
             alt="Matta"
           />
-        </router-link>
+        </NuxtLink>
       </div>
       <div>
-        <router-link to="/">
+        <NuxtLink to="/">
           <button
             type="button"
             class="appearance-none h-auto leading-none py-2 px-5 text-xs md:text-[13px] uppercase border rounded-full border-primary- text-primary hover:bg-slate-50 flex items-center justify-center"
           >
             Skip
-          </button></router-link
+          </button></NuxtLink
         >
       </div>
     </nav>

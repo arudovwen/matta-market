@@ -10,7 +10,7 @@
     </p>
     <form @submit.prevent="handleSubmit">
       <div class="flex gap-x-3 md:gap-x-6 items-center mb-10">
-        <router-link to="/register/buyer" class="w-full">
+        <NuxtLink to="/register/buyer" class="w-full">
           <button
             class="border uppercase w-full rounded-lg px-6 py-2 h-10 flex items-center gap-x-2 justify-center"
             :class="
@@ -23,8 +23,8 @@
             <span class="opacity-50">|</span>
             <span>Buyer</span>
           </button>
-        </router-link>
-        <router-link to="/register/supplier" class="w-full">
+        </NuxtLink>
+        <NuxtLink to="/register/supplier" class="w-full">
           <button
             class="border uppercase w-full rounded-lg px-6 py-2 h-10 flex items-center gap-x-2 justify-center"
             :class="
@@ -37,7 +37,7 @@
             <span class="opacity-50">|</span>
             <span>Supplier</span>
           </button>
-        </router-link>
+        </NuxtLink>
       </div>
       <div class="mb-6">
         <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>

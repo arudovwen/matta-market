@@ -14,13 +14,13 @@
           You have no product in <br />
           your favourites
         </p>
-        <router-link to="/markets">
+        <NuxtLink to="/markets">
           <button
             class="bg-primary-500 text-white text-sm rounded-full px-6 py-3 uppercase"
           >
             Go to markets
           </button>
-        </router-link>
+        </NuxtLink>
       </div>
     </div>
     <div v-else>
@@ -28,7 +28,7 @@
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
         v-if="!isPageLoading"
       >
-        <router-link
+        <NuxtLink
           v-for="item in products"
           :key="item.id"
           :to="`/product/${encodeURIComponent(item.productName)}/${
@@ -36,7 +36,7 @@
           }`"
         >
           <SingleProduct :product="item" />
-        </router-link>
+        </NuxtLink>
       </div>
     </div>
     <Pagination

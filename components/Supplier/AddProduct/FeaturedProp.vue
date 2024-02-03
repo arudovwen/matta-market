@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex gap-x-[78px] justify-between text-left"
+    class="flex gap-x-[78px] text-left justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     v-if="form && form.propertyItems"
   >
     <div class="w-[300px] text-left">
@@ -39,13 +39,13 @@
         "
       >
         <div
-          class="flex gap-x-4 items-start"
+          class="flex gap-x-4 items-start flex-col lg:flex-row gap-y-6 lg:gap-y-0"
           v-for="(prop, id) in form.propertyItems[type].propertyItems"
           :key="id"
         >
-          <div class="flex-1">
+          <div class="flex-1  w-full">
             <Listbox v-model="prop.property">
-              <div class="relative mt-1">
+              <div class="relative mt-1 w-full">
                 <ListboxButton
                   class="relative w-full text-left rounded-lg appearance-none px-[14px] py-[10px] flex items-center h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                 >
@@ -137,9 +137,9 @@
               </div>
             </div>
           </div>
-          <div class="flex-1">
+          <div class="flex-1  w-full">
             <Combobox v-model="prop.propertyValue" multiple>
-              <div class="relative mt-1">
+              <div class="relative mt-1 w-full">
                 <div
                   class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
                 >

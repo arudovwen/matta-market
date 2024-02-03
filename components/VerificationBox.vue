@@ -1,5 +1,6 @@
 <template>
-  <div v-if="isOpen"
+  <div
+    v-if="!authStore?.userInfo?.onboardingPageStatus"
     class="px-5 py-[14px] bg-[#333333] rounded-[5px] flex justify-between gap-x-40 relative mb-3"
   >
     <div class="flex gap-x-4 items-center">
@@ -11,12 +12,12 @@
       </p>
     </div>
     <div class="flex items-end">
-      <router-link to="/company/settings"
+      <NuxtLink to="/company/settings"
         ><button
           class="px-8 py-[11px] rounded-[5px] bg-primary-500 hover:bg-primary/80 text-white text-sm whitespace-nowrap"
         >
           Add Company details
-        </button></router-link
+        </button></NuxtLink
       >
     </div>
   </div>
@@ -27,7 +28,7 @@ import { getCompanyProfile } from "~/services/settingservices";
 const route = useRoute();
 const isOpen = ref(false);
 const detail = ref(null);
-
+const authStore = useAuthStore();
 onMounted(() => {
   getData();
 });

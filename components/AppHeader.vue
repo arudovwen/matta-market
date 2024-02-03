@@ -54,13 +54,13 @@
       'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 border-b border-[rgba(242, 242, 242, 1)] darks:border-gray-900':
         !view.atTopOfPage,
     }"
-    class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800  z-[999] transition-all duration-500 ease-in-out"
+    class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 z-[999] transition-all duration-500 ease-in-out"
   >
     <div class="container mx-auto">
       <div class="flex justify-between items-center gap-x-5">
         <div class="logo flex gap-x-10 items-center">
           <NuxtLink to="/">
-            <NuxtImg
+            <img
               src="/images/logo.png"
               alt="Matta"
               class="w-20 md:w-[100px] h-auto object-contain"
@@ -164,7 +164,7 @@
             }"
             class="gap-x-1 items-center"
           >
-             <NuxtImg
+             <img
               src="~/assets/images/nigeria.svg"
               width="20"
               height="20"
@@ -185,33 +185,46 @@
               <option value="">English-NGN</option>
             </select></span
           > -->
-          <NuxtLink to="/cart" class="flex items-center  relative">
+          <NuxtLink
+            :class="` items-center  relative ${
+              authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
+            }`"
+          >
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
             >
               <AppIcon
-                class="text-lg text-[#484848] "
+                class="text-lg text-[#484848]"
                 icon="akar-icons:search"
               />
-          </span>
+            </span>
           </NuxtLink>
-          <NuxtLink to="/cart" class="flex items-center  relative">
+          <span
+            :class="` items-center  relative ${
+              authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
+            }`"
+            @click="isOpen=true"
+          >
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
             >
-            <AppIcon
-                class="text-lg text-[#484848] "
+              <AppIcon
+                class="text-lg text-[#484848]"
                 icon="mingcute:message-2-line"
               />
+              <span
+                v-if="unreadnotifications > 0"
+                class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
+                >{{ unreadnotifications }}</span
+              >
             </span>
-           
-          </NuxtLink>
+          </span>
           <NuxtLink to="/cart" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
             >
               <AppIcon
-                class="text-lg text-[#484848] "
+                class="text-lg text-[#484848]"
                 icon="lucide:shopping-cart"
               />
               <span
@@ -239,7 +252,7 @@
               text="Become a Supplier"
               btnClass="!text-[12px] sm:!text-sm text-white  !font-semibold !px-[15px] !py-[6px] !normal-case bg-primary-500 flex"
             />
-           
+
             <Menu
               as="div"
               class="relative hidden lg:inline-flex text-left"
@@ -276,7 +289,7 @@
                     </div>
                     <div class="flex-1">
                       <span
-                        class="text-[#333]  text-[13px] font-semibold block capitalize"
+                        class="text-[#333] text-[13px] font-semibold block capitalize"
                         >{{ authStore.userInfo?.fullName }}</span
                       >
                       <span
@@ -361,6 +374,13 @@
       </div>
     </template>
   </ModalCenter>
+  <ModalSide :isOpen="isOpen" @togglePopup="openModal" v-if="isOpen">
+    <template #content>
+      <div class="h-full md:w-[480px] bg-white rounded-lg p-6 lg:p-10">
+        <NotificationComponent />
+      </div>
+    </template>
+  </ModalSide>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -373,14 +393,19 @@ import {
 } from "~/utils/data";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
+import { getnotification } from "@/services/notificationservice";
 
+const isOpen = ref(false);
+function openModal() {
+  isOpen.value = !isOpen.value;
+}
 const { $pwa } = useNuxtApp();
 const isSigniningOut = ref(false);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const store = useMarketStore();
-
+const notifications = ref([])
 const router = useRouter();
 const { currentRoute } = router;
 const filteredMenu = computed(() =>
@@ -399,6 +424,31 @@ const open = ref(false);
 onBeforeMount(() => {
   window.addEventListener("scroll", handleScroll);
 });
+onMounted(() => {
+  if (authStore.isLoggedIn) {
+    getNotifications();
+    setInterval(() => {
+      getNotifications();
+    }, 2 * 60 * 1000);
+  }
+})
+const notifyParams = reactive({
+    PageNumber: 1,
+    PageSize: 30,
+    BusinessId: authStore?.businessId,
+    UserId: authStore.userId,
+    Role: "",
+  });
+  const unreadnotifications = computed(() => {
+  return notifications?.value?.filter((i) => !i.isViewed)?.length;
+});
+function getNotifications() {
+ 
+  getnotification(notifyParams).then((res) => {
+    notifications.value = res.data.data;
+  });
+}
+
 function handleScroll() {
   // when the user scrolls, check the pageYOffset
   if (window.pageYOffset > 500) {
@@ -423,12 +473,16 @@ function handleDropDown(val) {
 watch(currentRoute, () => {
   open.value = false;
 });
+
+provide("getNotifications", getNotifications);
+provide("notifications", notifications);
+provide("unreadnotifications", unreadnotifications);
 provide("open", open);
 provide("isOpen", isSigniningOut);
 </script>
 <style lang="scss">
 nav {
-  .router-link-active.router-link-exact-active {
+  .NuxtLink-active.NuxtLink-exact-active {
     color: #165ef0;
   }
 }

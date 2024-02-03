@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col gap-y-7 bg-[#F9FAFB] pb-2">
+  <div class="flex flex-col gap-y-4 lg:gap-y-7 bg-[#F9FAFB] pb-2">
     <div><AppHeader /></div>
 
-    <div class="flex gap-x-4 flex-1 container">
+    <div class="flex gap-x-4 flex-1 container px-2 xl:px-0">
       <div class="hidden lg:inline-flex h-full">
         <DashboardLayoutSideComponent />
       </div>
@@ -58,13 +58,14 @@ onMounted(() => {
                   i.packageId === item.packageId
               )
           );
-
-          createcart({ items: uniqueCart }).then((createRes) => {
-            if (createRes.status === 200) {
-              // Refresh the minicart after updating with unique items
-              cartStore?.getMyCart();
-            }
-          });
+          if (!remoteCartItems.length) {
+            createcart({ items: uniqueCart }).then((createRes) => {
+              if (createRes.status === 200) {
+                // Refresh the minicart after updating with unique items
+                cartStore?.getMyCart();
+              }
+            });
+          }
         }
       }
     });

@@ -1,6 +1,6 @@
 <template>
-  <form class="px-[30px] text-left" @submit.prevent="handleSubmit">
-    <div class="flex gap-x-[78px] justify-between">
+  <form class="px-6 lg:px-[30px] text-left" @submit.prevent="handleSubmit">
+    <div class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10">
       <div class="w-[300px] text-left">
         <h2 class="text-sm text-[#101828] font-semibold">Product info</h2>
         <p class="text-xs text-[#475467]">Add your product details here.</p>
@@ -131,7 +131,7 @@
                                 <span
                                   class="h-11 w-12 rounded-lg bg-white shadow p-4 flex items-center justify-center mr-4 border border-[#E7EBEE]"
                                 >
-                                  <NuxtImg
+                                  <img
                                     v-if="i.logo"
                                     :src="i.logo"
                                     alt="logo"
@@ -292,7 +292,7 @@
       </div>
     </div>
     <hr class="border-[#F4F7FE] my-10" />
-    <div class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-">
+    <div class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10">
       <div class="w-[300px]">
         <h2 class="text-sm text-[#101828] font-semibold">
           Packages & Availability <span class="text-red-500 mr-[.5px]">*</span>
@@ -580,51 +580,52 @@
                 <th
                   v-for="(item, i) in headers"
                   :key="item"
-                  class="capitalize text-[#475467] text-sm text-left font-medium border-b border-t py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+                  class="capitalize text-[#475467] text-sm text-left font-medium border-b  py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
                 >
                   {{ item }}
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in form.packagesAvailable" :key="item.id">
+              <tr v-for="item in form.packagesAvailable" :key="item.id" class="border-b border-[#EAECF0] last:border-none">
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
                 >
                   {{ item?.package?.title }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
                 >
-                  {{ item?.size }}
+                  {{ item?.size  || "-" }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6 whitespace-nowrap"
                 >
                   {{ currencyFormat(item?.amount) }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
                 >
-                  {{ item?.color }}
+                  {{ item?.color || "-"}}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
                 >
-                  {{ item?.purity }}5
+                  {{ item?.purity }}%
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
                 >
                   <span class="flex gap-x-4">
                     <span @click="removepackage(i)"
                       ><AppIcon icon="fa-trash-o" iconClass="text-[#E53F3F]"
                     /></span>
-                    <span
+                    <!-- <span
                       ><AppIcon
                         icon="prime:pencil"
                         iconClass="text-[#475467]" /></span
-                  ></span>
+                  > -->
+                </span> 
                 </td>
               </tr>
             </tbody>
@@ -633,7 +634,7 @@
       </div>
     </div>
     <hr class="border-[#F4F7FE] my-10" />
-    <div class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-">
+    <div class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10">
       <div class="w-[300px]">
         <h2 class="text-sm text-[#101828] font-semibold">Gallery</h2>
         <p class="text-xs text-[#475467]">
@@ -692,18 +693,18 @@
       <button
         type="button"
         @click="togglePreview"
-        class="appearance-none leading-none px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
+        class="appearance-none leading-none px-5  lg:px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
       >
         Preview
       </button>
       <div class="flex gap-x-4 items-center">
-        <router-link to="/storefront/products"
+        <NuxtLink to="/storefront/products"
           ><button
             type="button"
-            class="appearance-none leading-none px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
+            class="appearance-none leading-none px-5  lg:px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
           >
             Cancel
-          </button></router-link
+          </button></NuxtLink
         >
         <button
           :disabled="isLoading"
@@ -711,7 +712,7 @@
             'bg-primary/60 cursor-not-allowed': isLoading,
           }"
           type="submit"
-          class="appearance-none leading-none px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
+          class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
         >
           Next
         </button>
@@ -783,7 +784,7 @@
                   class="h-16 w-16 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                   >Logo</span
                 >
-                <NuxtImg
+                <img
                   v-else
                   :src="producerForm.logo"
                   class="h-16 w-16 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"

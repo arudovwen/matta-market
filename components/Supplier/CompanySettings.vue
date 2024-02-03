@@ -9,7 +9,7 @@
     </div>
     <div>
       <div v-if="active === 1">
-        <OnboardingCompanyInfo />
+        <OnboardingCompanyInformation />
       </div>
       <div v-if="active === 2">
         <div><OnboardingCompanyDocuments /></div>
@@ -22,6 +22,15 @@
 </template>
 
 <script setup>
+import { getCompanyProfile } from "@/services/settingservices";
+const companyInfo = ref(null)
+onBeforeMount(()=>{
+  getCompanyProfile().then(res=>{
+    if(res.status === 200){
+      companyInfo.value = res.data.data
+    }
+  })
+})
 const active = ref(1);
 const tabs = [
   {
@@ -38,6 +47,7 @@ const tabs = [
   },
 ];
 provide("active", active);
+provide("companyInfo",companyInfo)
 </script>
 
 <style lang="scss" scoped>

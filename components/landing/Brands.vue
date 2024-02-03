@@ -11,7 +11,7 @@
     <div
       class="grid grid-cols-3 lg:grid-cols-6 gap-6 justify-between items-center"
     >
-      <NuxtImg
+      <img
         data-aos="fade-up"
         data-aos-once="true"
         v-for="n in brands"

@@ -1,7 +1,9 @@
 <!-- eslint-disable no-useless-escape -->
 <template>
   <form @submit.prevent="handleSubmit" class="w-full px-4 lg:px-[30px]">
-    <div class="flex gap-x-[76px] pt-[30px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-">
+    <div
+      class="flex gap-x-[76px] pt-[30px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-"
+    >
       <div class="w-[300px]">
         <h2 class="text-sm text-[#101828] font-semibold">Company Documents</h2>
         <p class="text-xs text-[#475467]">
@@ -9,12 +11,21 @@
         </p>
       </div>
       <div class="grid gap-y-6 max-w-[560px] w-full">
-        <FileUpload
-          label="Memorandum and Articles of Association"
-          id="mermat"
-        />
-        <FileUpload label="Certificate of Incorporation" id="incorporation" />
-        <FileUpload label="CAC Status Report" id="statusReport" />
+        <div>
+          <FileUpload
+            label="Memorandum and Articles of Association"
+            id="mermat"
+          />
+          <a :href="docUrl(2)" download>  <span class="block text-xs text-blue-500 mt-1">{{ docUrl(1) }}</span></a>
+        </div>
+        <div>
+          <FileUpload label="Certificate of Incorporation" id="incorporation" />
+          <a :href="docUrl(2)" download>  <span class="block text-xs text-blue-500 mt-1">{{ docUrl(0) }}</span></a>
+        </div>
+        <div>
+          <FileUpload label="CAC Status Report" id="statusReport" />
+        <a :href="docUrl(2)" download>  <span class="block text-xs text-blue-500 mt-1">{{ docUrl(2) }}</span></a>
+        </div>
       </div>
     </div>
     <div
@@ -23,7 +34,7 @@
       <button
         @click="active--"
         type="button"
-        class="appearance-none leading-none px-10 py-[14px] rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
+        class="appearance-none leading-none px-10 py-[10px] rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
       >
         Back
       </button>
@@ -35,7 +46,7 @@
             (i) => i.url === ''
           ),
         }"
-        class="appearance-none leading-none px-10 py-[14px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
+        class="appearance-none leading-none px-10 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
       >
         <i
           class="fa fa-spinner fa-spin"
@@ -55,13 +66,14 @@ import { required } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
 // eslint-disable-next-line no-unused-vars
-import { getCompanyProfile, updateDocuments } from "@/services/settingservices";
+import { updateDocuments } from "@/services/settingservices";
 import { useStore } from "vuex";
 
+const companyInfo = inject("companyInfo");
 const router = useRouter();
 const active = inject("active");
 const form = reactive({
-  companyDocuments: [
+  companyDocuments: companyInfo.value.companyDocuments || [
     {
       url: "",
       documentType: 0,
@@ -96,6 +108,9 @@ function handleChange(id, value) {
   });
 }
 
+function docUrl(id) {
+ return form.companyDocuments.find((i) => i.documentType === id)?.url || "";
+}
 const rules = {
   cac: {
     required,
@@ -121,8 +136,8 @@ async function handleSubmit() {
   updateDocuments(form)
     .then((res) => {
       if (res.status === 200) {
-        toast.info("Documents saved");
-        router.push("/onboarding/company?onboarding_stage=4");
+        toast.success("Documents saved");
+        active.value = 3;
       }
     })
 

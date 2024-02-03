@@ -111,11 +111,11 @@
                           />
                           Keep me logged in
                         </label>
-                        <router-link
+                        <NuxtLink
                           to="/forgot-password"
                           class="text-xs hover:underline"
                           >Forgot password?
-                        </router-link>
+                        </NuxtLink>
                       </div>
 
                       <div class="mb-4">

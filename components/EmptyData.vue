@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col items-center justify-center p-4 h-[300px] text-gray-400 text-center"
+    class="flex flex-col items-center justify-center p-4 h-[500px] text-gray-400 text-center"
   >
     <div class="mb-6 flex justify-center">
       <AppIcon

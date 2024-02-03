@@ -17,12 +17,13 @@
             v-bind="storeNameAtt"
             v-model="storeName"
             :error="errors.storeName"
+            @keyup="getProfileData()"
           />
           <Textinput
             placeholder=""
             label="Store url"
             name="storeSlug"
-            :modelValue="`https://matta.trade/${formValues.storeSlug}`"
+            :modelValue="`${config.public.APP_BASE_URL}/${formValues.storeSlug}`"
             disabled
             isReadonly
           />
@@ -64,21 +65,30 @@
         </div>
 
         <div
-          class="bg-white flex justify-between gap-x-10 items-center sticky bottom-0 pb-6"
+          class="bg-white flex justify-between gap-x-6 items-center sticky bottom-0 pb-6"
         >
-          <router-link to="/company/settings"
+          <NuxtLink :to="`/${formValues.storeSlug}`"
             ><button
               type="button"
-              class="appearance-none leading-none px-10 py-[10px] rounded-[6px] text-primary border-primary- border hover:bg-gray-50 text-sm"
+              :disabled="!formValues.storeSlug"
+              class="appearance-none leading-none  px-5 md:px-10 py-[10px] rounded-[6px] text-primary-500 border-primary-500 border hover:bg-gray-50 text-sm"
             >
-              Cancel
-            </button></router-link
+              Preview
+            </button></NuxtLink
           >
           <div class="flex gap-x-4 items-center">
+            <NuxtLink to="/company/settings"
+              ><button
+                type="button"
+                class="appearance-none leading-none px-5 md:px-10 py-[10px] rounded-[6px] text-primary border-primary- border hover:bg-gray-50 text-sm"
+              >
+                Cancel
+              </button></NuxtLink
+            >
             <AppButton
               :disabled="isLoading"
               :isLoading="isLoading"
-              btnClass="bg-primary-500 text-white !px-10  !text-sm !py-[10px] disabled:cursor-not-allowed"
+              btnClass="bg-primary-500 text-white  px-6 md:!px-10  !text-sm !py-[10px] disabled:cursor-not-allowed"
               type="submit"
               text="Save"
             />
@@ -100,8 +110,10 @@ import {
   getVendorInfo,
 } from "~/services/userservices";
 
+const config = useRuntimeConfig();
 const authStore = useAuthStore();
 const isLoading = ref(false);
+const defaultName = ref("");
 const formValues = reactive({
   storeName: "",
   storeSlug: "",
@@ -114,12 +126,17 @@ const schema = yup.object({
   storeName: yup.string().required("Your store name is required"),
 });
 
-const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(
-  {
-    validationSchema: schema,
-    initialValues: formValues,
-  }
-);
+const {
+  handleSubmit,
+  defineField,
+  errors,
+  setFieldValue,
+  setValues,
+  setFieldError,
+} = useForm({
+  validationSchema: schema,
+  initialValues: formValues,
+});
 const onGetBanner = (value) => {
   formValues.bannerUrl = value;
   setFieldValue("bannerUrl", value);
@@ -131,13 +148,15 @@ const onGetCampaign = (value) => {
 const removeFile = () => {};
 const [storeName, storeNameAtt] = defineField("storeName");
 const vendorInfo = ref(null);
+const isLoadingData = ref(true);
 onMounted(() => {
   getVendorInfo().then((res) => {
     vendorInfo.value = res.data.data;
     setValues(res.data.data);
-    formValues.storeSlug = res.data.data.storeSlug
-    formValues.bannerUrl = res.data.data.bannerUrl
-    formValues.campaignBanner = res.data.data.campaignBanner
+    formValues.storeSlug = res.data.data.storeSlug;
+    formValues.bannerUrl = res.data.data.bannerUrl;
+    formValues.campaignBanner = res.data.data.campaignBanner;
+    isLoadingData.value = false;
   });
 });
 const onSubmit = handleSubmit((values) => {
@@ -157,20 +176,30 @@ const onSubmit = handleSubmit((values) => {
     });
 });
 const getProfileData = debounce(() => {
-  postStoreName(storeName.value).then((res) => {
-    formValues.storeSlug = res.data.data;
-    setFieldValue("storeSlug", res.data.data);
-  });
+  postStoreName(storeName.value)
+    .then((res) => {
+      formValues.storeSlug = res.data.data;
+      setFieldValue("storeSlug", res.data.data);
+    })
+    .catch((err) => {
+      toast.error(
+        err.response.data.message || err.response.data.Message
+      );
+      if (vendorInfo.value?.storeSlug) {
+        setFieldValue("storeSlug", vendorInfo.value?.storeSlug);
+        formValues.storeSlug = vendorInfo.value?.storeSlug;
+      }
+    });
 }, 1000);
 ``;
-watch(
-  () => [storeName.value],
-  () => {
-    if (storeName.value.length > 3) {
-      getProfileData();
-    }
-  }
-);
+// watch(
+//   () => [storeName.value],
+//   () => {
+//     if (storeName.value.length > 3) {
+//       getProfileData();
+//     }
+//   }
+// );
 </script>
 
 <style lang="scss" scoped>

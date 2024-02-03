@@ -24,9 +24,9 @@
         "
         @mouseleave="activeIndex = null"
       >
-        <router-link :to="`/market/${n.title}/${n.id}`">
+        <NuxtLink :to="`/market/${n.title}/${n.id}`">
           <TabComponent :detail="n" :index="i" :activeIndex="activeIndex" />
-        </router-link>
+        </NuxtLink>
       </div>
     </div>
     <div class="text-center p-6 lg:p-8 my-24" v-else>

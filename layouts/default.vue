@@ -46,12 +46,14 @@ onMounted(() => {
               index === self.findIndex((i) => i.productId === item.productId)
           );
 
-          createcart({ items: uniqueCart }).then((createRes) => {
-            if (createRes.status === 200) {
-              // Refresh the minicart after updating with unique items
-              cartStore?.getMyCart();
-            }
-          });
+          if (!remoteCartItems.length) {
+            createcart({ items: uniqueCart }).then((createRes) => {
+              if (createRes.status === 200) {
+                // Refresh the minicart after updating with unique items
+                cartStore?.getMyCart();
+              }
+            });
+          }
         }
       }
     });

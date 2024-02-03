@@ -4,7 +4,7 @@
       class="bg-white py-[11px] rounded-[10px] border border-[#F4F7FE] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
     >
       <ul>
-        <li v-for="item in navigation" :key="item.name">
+        <li v-for="item in mappedNav" :key="item.name">
           <NuxtLink
             :to="item.url"
             class="text-sm flex items-center px-5 border-r-[3px] border-transparent"
@@ -21,11 +21,9 @@
   </aside>
 </template>
 <script setup>
-import {
- 
-  getVendorInfo,
-} from "~/services/userservices";
+import { getVendorInfo } from "~/services/userservices";
 
+const authStore = useAuthStore();
 const formValues = reactive({
   storeUrl: "",
 });
@@ -36,96 +34,13 @@ onMounted(() => {
 });
 const authstore = useAuthStore();
 
-const navigation = [
-  {
-    name: "Dashboard",
-    url: "/overview",
-    icon: "mingcute:layout-3-line",
-    key: "overview",
-  },
-  {
-    name: "Profile",
-    url: "/account/settings",
-    icon: "lucide:user",
-    key: "account",
-  },
-  {
-    name: "My Orders",
-    url: "/procurement/my-orders",
-    icon: "lucide:shopping-bag",
-    key: "my-orders",
-  },
-  {
-    name: "My Requests",
-    url: "/procurement/my-requests",
-    icon: "ri:hand-coin-line",
-    key: "my-requests",
-  },
-
-  {
-    name: "Shipping Addresses",
-    url: "/procurement/shipping-addresses",
-    icon: "ion:map-outline",
-    key: "shipping",
-  },
-
-  {
-    name: "Wallet",
-    url: "/wallet/home",
-    icon: "ion:wallet-outline",
-    key: "wallet",
-  },
-  {
-    name: "Financing requests",
-    url: "/financing",
-    icon: "f7:tag",
-    key: "financing",
-  },
-  {
-    name: "Saved items",
-    url: "/account/saved-searches",
-    icon: "tdesign:heart",
-    key: "saved",
-  },
-  {
-    name: "Storefront",
-    url: "/company/customization",
-    icon: "solar:shop-outline",
-    key: "storefront",
-  },
-
-  {
-    name: "Company Settings",
-    url: "/company/settings",
-    icon: "mingcute:building-5-line",
-    key: "company",
-  },
-  // {
-  //   name: "Company Customization",
-  //   url: "/company/customization",
-  //   icon: "mingcute:building-5-line",
-  //   key: "company",
-  // },
-  {
-    name: "User Management",
-    url: "/user-management",
-    icon: "lucide:users",
-    key: "user",
-  },
-  {
-    name: "Products",
-    url: "/storefront/products",
-    icon: "fluent-mdl2:product-variant",
-    key: "products",
-  },
-];
 const mappedNav = computed(() => {
-  return navigation.map((i) => {
-    return {
-      ...i,
-      url: i.key === "storefront" ? `/${formValues.storeSlug}` : i.url,
-    };
-  });
+  return navigation.filter((i) =>
+    (authStore?.userType?.toLowerCase() === "supplier"
+      ? vendorRoutes
+      : buyerRoutes
+    ).includes(i.key)
+  );
 });
 const openIndex = ref([
   "Company",

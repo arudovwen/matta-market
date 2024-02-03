@@ -15,7 +15,7 @@
           v-if="product.gallery"
         >
           <slide v-for="item in product.gallery" :key="item" class="">
-             <NuxtImg :src="item" class="h-[350px] w-full object-cover" alt="alt" />
+             <img :src="item" class="h-[350px] w-full object-cover" alt="alt" />
           </slide>
         </carousel>
       </div>

@@ -16,8 +16,8 @@
   </div>
   <IndexModal
     :isOpen="isPreviewing"
-    @toggleIndexModal="isPreviewing = false"
-    :canClose="false"
+    @togglePopup="isPreviewing = false"
+    :canClose="true"
   >
     <template #content>
       <div class="max-w-[98vw] relative">

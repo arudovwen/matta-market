@@ -1,9 +1,10 @@
-
 <!-- eslint-disable no-unused-vars -->
 <!-- eslint-disable no-useless-escape -->
 <template>
   <div class="px-4 lg:px-[30px]">
-    <div class="flex gap-x-[76px] pt-[30px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-">
+    <div
+      class="flex gap-x-[76px] pt-[30px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-"
+    >
       <div class="w-[300px]">
         <h2 class="text-sm text-[#101828] font-semibold">Company Directors</h2>
         <p class="text-xs text-[#475467]">
@@ -78,7 +79,7 @@
       <button
         @click="active--"
         type="button"
-        class="appearance-none leading-none px-10 py-[14px] rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
+        class="appearance-none leading-none px-10 py-[10px]  rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
       >
         Back
       </button>
@@ -89,7 +90,7 @@
         :class="{
           'opacity-60 cursor-not-allowed': !form.directors.length,
         }"
-        class="appearance-none leading-none px-10 py-[14px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
+        class="appearance-none leading-none px-10 py-[10px]  grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
       >
         <i
           class="fa fa-spinner fa-spin"
@@ -103,7 +104,7 @@
 
   <div>
     <TransitionRoot as="template" :show="open">
-      <Dialog as="div" class="relative z-10" @close="">
+      <Dialog as="div" class="relative z-[999]" @close="">
         <TransitionChild
           as="template"
           enter="ease-out duration-300"
@@ -132,7 +133,7 @@
             >
               <DialogPanel
                 class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
-                :class="action=='add'? 'sm:max-w-lg' :'sm:max-w-[343px]'"
+                :class="action == 'add' ? 'sm:max-w-lg' : 'sm:max-w-[343px]'"
               >
                 <div class="p-6">
                   <OnboardingCompanyDirectorForm v-if="action === 'add'" />
@@ -160,7 +161,6 @@ import {
 } from "@headlessui/vue";
 import "vue-advanced-cropper/dist/style.css";
 import { ref, reactive, provide } from "vue";
-
 import { toast } from "vue3-toastify";
 import {
   additionalInfo,
@@ -171,14 +171,15 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { updateDirectors } from "~/services/settingservices";
 
+const companyInfo = inject("companyInfo")
 const id = ref(null);
 const action = ref("");
-const store = useStore();
+const authStore = useAuthStore();
 const router = useRouter();
 const open = ref(false);
 const active = inject("active");
 const form = reactive({
-  directors: [],
+  directors: companyInfo.value.directors || [],
 });
 
 const isLoading = ref(false);
@@ -205,7 +206,9 @@ async function handleSubmit() {
     .then((res) => {
       if (res.status === 200) {
         setOnboardingcomplete();
-        window.location.href = "/onboarding/complete/company";
+        authStore.updateUserInfo({ onboardingPageStatus: 1 });
+        toast.success("Directors saved");
+        isLoading.value = false
       }
     })
 

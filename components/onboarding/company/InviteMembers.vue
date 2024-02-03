@@ -130,7 +130,7 @@
             </div>
 
             <div class="flex justify-center gap-x-4 items-center mt-8">
-              <router-link
+              <NuxtLink
                 to="/onboarding/company?onboarding_stage=2"
                 class="w-1/2 lg:w-auto"
               >
@@ -139,7 +139,7 @@
                 >
                   Back
                 </button>
-              </router-link>
+              </NuxtLink>
               <button
                 :disabled="isLoading"
                 :class="{

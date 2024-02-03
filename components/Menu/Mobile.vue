@@ -1,13 +1,22 @@
 <template>
   <ul class="grid gap-y-[10px]" v-if="!activeKey">
     <li
-      v-for="n in navigations"
+      v-for="n in navigations.filter(i=>i.name.toLowerCase() !== 'finance')"
       :key="n.name"
       @click="activeKey = n.name"
       class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
     >
       {{ n.name }}
       <AppIcon icon="pepicons-pencil:angle-right" />
+    </li>
+    <li
+     
+      
+    >
+     <NuxtLink to="/finance">
+     <span class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"> Finance
+      <AppIcon icon="pepicons-pencil:angle-right" /></span>
+     </NuxtLink>
     </li>
   </ul>
   <button

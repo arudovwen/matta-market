@@ -19,7 +19,7 @@
                   class="h-24 w-24 rounded-full flex items-center text-sm justify-center bg-[#F1F3F5]"
                   >Photo</span
                 >
-                <NuxtImg
+                <img
                   v-else
                   :src="image"
                   class="h-24 w-24 rounded-full flex items-center justify-center bg-[#F1F3F5]"

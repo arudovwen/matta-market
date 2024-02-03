@@ -3,14 +3,14 @@
   <div class="gap-y-2 flex flex-col">
     <div class="flex justify-between mb-6 items-center">
       <span class="block font-bold">Last 7 transactions</span>
-      <router-link to="/wallet/transactions">
+      <NuxtLink to="/wallet/transactions">
         <button
           type="button"
           class="bg-primary-500 text-[12px] px-4 py-2 rounded-lg text-white hover:opacity-60"
         >
           View all
         </button>
-      </router-link>
+      </NuxtLink>
     </div>
 
     <div v-if="!isPageLoading">

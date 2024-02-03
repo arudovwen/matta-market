@@ -14,7 +14,9 @@ const axiosApi = Axios.create({
 axiosApi.defaults.withCredentials = true;
 axiosApi.interceptors.request.use((config) => {
   const authStore = useAuthStore();
-  config.headers.Authorization = `Bearer ${authStore?.access_token}`;
+  config.headers.Authorization = authStore?.access_token
+    ? `Bearer ${authStore?.access_token}`
+    : "";
   config.headers.Accept = "application/json";
   return config;
 });

@@ -17,10 +17,10 @@ export const useCartStore = defineStore(
     const cartItems = ref([]);
     const tax = ref(0);
 
-    const cart = computed(() => cookie?.value?.cartItems);
-    const cartTotal = computed(() => cookie?.value?.cartItems.length);
+    const cart = computed(() => cartItems?.value);
+    const cartTotal = computed(() => cartItems?.value.length);
     const cartTotalAmount = computed(() =>
-      cookie?.value?.cartItems
+      cartItems?.value
         .map((item) => item.packagePrice * item.quantity)
         .reduce((a, b) => Number(a) + Number(b), 0)
     );
@@ -43,16 +43,16 @@ export const useCartStore = defineStore(
 
     async function addToCart(item, type) {
       if (
-        cookie?.value?.cartItems.some(
+        cartItems?.value.some(
           (ct) => ct.productId === item.productId
         ) &&
-        cookie?.value?.cartItems.some((ct) => ct.packageId === item.packageId)
+        cartItems?.value.some((ct) => ct.packageId === item.packageId)
       ) {
         return { status: false, message: "incart" };
       }
 
       if (!authStore.isLoggedIn) {
-        setCart([...cookie?.value?.cartItems, item]);
+        setCart([...cartItems?.value, item]);
 
         return { status: true, message: type };
       }
@@ -63,7 +63,7 @@ export const useCartStore = defineStore(
         const res = await cartOperation(item);
         if (res.status == 200) {
           getMyCart();
-          setCart([...cookie?.value?.cartItems, item]);
+          setCart([...cartItems?.value, item]);
           return { status: true, message: type };
         }
       } catch (error) {
@@ -80,7 +80,7 @@ export const useCartStore = defineStore(
       if (authStore.isLoggedIn) {
         updatecart(item).then((res) => {
           if (res.status === 200) {
-            const tempCart = cookie?.value?.cartItems.map((dt) => {
+            const tempCart = cartItems?.value.map((dt) => {
               if (item.id === dt.id) {
                 dt.quantity = item.quantity;
               }
@@ -90,7 +90,7 @@ export const useCartStore = defineStore(
           }
         });
       } else {
-        const tempCart = cookie?.value?.cartItems.map((dt) => {
+        const tempCart = cartItems?.value.map((dt) => {
           if (item.id === dt.id) {
             dt.quantity = item.quantity;
           }
@@ -108,14 +108,14 @@ export const useCartStore = defineStore(
       if (authStore.isLoggedIn) {
         removecartitem(id).then((res) => {
           if (res.status === 200) {
-            const tempCart = cookie?.value?.cartItems.filter(
+            const tempCart = cartItems?.value.filter(
               (item) => item.id !== id
             );
             setCart(tempCart);
           }
         });
       } else {
-        const tempCart = cookie?.value?.cartItems.filter(
+        const tempCart = cartItems?.value.filter(
           (item) => item.id !== id
         );
         setCart(tempCart);

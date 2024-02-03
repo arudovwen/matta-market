@@ -22,12 +22,12 @@
     <div class="" v-if="products.length">
       <carousel :breakpoints="breakpoints" ref="myslide" snapAlign="start">
         <slide v-for="(item, index) in products" :key="index" class="px-2">
-          <router-link
+          <NuxtLink
             :to="`/product/${encodeURIComponent(item.title)}/${item.id}`"
             class="w-full h-full text-left"
           >
             <SingleProduct :product="item" />
-          </router-link>
+          </NuxtLink>
         </slide>
       </carousel>
     </div>

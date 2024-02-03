@@ -6,15 +6,15 @@
       >
         <div class="">
           <div class="mb-[15px]" >
-            <router-link to="/">
-               <NuxtImg
+            <NuxtLink to="/">
+               <img
                 src="/images/logo.png"
                 class="w-[132px]"
                 alt="Matta"
                 width="132"
                 height="auto"
               />
-            </router-link>
+            </NuxtLink>
           </div>
           <p
             class="text-sm darks:text-white text-left mb-10"
@@ -55,13 +55,13 @@
                 :key="l.title"
                 class="text-[14px] font-normal capitlize text-[#333]/80 darks:text-white mb-2"
               >
-                <a
+                <NuxtLink
                   v-if="l.title.toLowerCase() !== 'contact'"
                   :href="l.url"
                   class="hover:underline"
                 >
                   {{ l.title }}
-                </a>
+                </NuxtLink>
                 <span v-else @click="open = true" class="hover:underline">
                   {{ l.title }}
                 </span>
@@ -81,14 +81,14 @@
             © {{ new Date().getFullYear() }} Matta. All Rights Reserved.
           </p>
           <div class="order-1 lg:order-2 flex gap-x-2 md:gap-x-4 items-center">
-            <router-link to="/policy" class="text-sm md:text-sm"
-              >Privacy policy</router-link
+            <NuxtLink to="/policy" class="text-sm md:text-sm"
+              >Privacy policy</NuxtLink
             >
             <span
               class="bg-[#333] darks:text-white/80 w-[2px] h-[2px] rounded-full"
             ></span>
-            <router-link to="/terms" class="text-sm md:text-sm"
-              >Terms of use</router-link
+            <NuxtLink to="/terms" class="text-sm md:text-sm"
+              >Terms of use</NuxtLink
             >
           </div>
         </div>

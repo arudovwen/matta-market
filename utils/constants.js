@@ -38,3 +38,112 @@ export const FinancesOptions = [
     url: "/financing/requests/export",
   },
 ];
+
+export const buyerRoutes = [
+  "overview",
+  "account",
+  "my-orders",
+  "my-requests",
+  "wallet",
+  "shipping",
+  "financing",
+  "saved",
+  "profile",
+  "sign-out"
+];
+export const vendorRoutes = [
+  "overview",
+  "account",
+  "my-orders",
+  "my-requests",
+  "wallet",
+  "shipping",
+  "financing",
+  "saved",
+  "products",
+  "storefront",
+  "orders",
+  "requests",
+  "users",
+  "company",
+  "profile",
+  "sign-out"
+];
+export const navigation = [
+  {
+    name: "Dashboard",
+    url: "/overview",
+    icon: "mingcute:layout-3-line",
+    key: "overview",
+  },
+  {
+    name: "Profile",
+    url: "/account/settings",
+    icon: "lucide:user",
+    key: "account",
+  },
+  {
+    name: "My Orders",
+    url: "/procurement/my-orders",
+    icon: "lucide:shopping-bag",
+    key: "my-orders",
+  },
+  {
+    name: "My Requests",
+    url: "/procurement/my-requests",
+    icon: "ri:hand-coin-line",
+    key: "my-requests",
+  },
+
+  {
+    name: "Shipping Addresses",
+    url: "/procurement/shipping-addresses",
+    icon: "ion:map-outline",
+    key: "shipping",
+  },
+
+  {
+    name: "Wallet",
+    url: "/wallet/home",
+    icon: "ion:wallet-outline",
+    key: "wallet",
+  },
+  {
+    name: "Financing requests",
+    url: "/financing",
+    icon: "f7:tag",
+    key: "financing",
+  },
+  {
+    name: "Saved items",
+    url: "/account/saved-searches",
+    icon: "tdesign:heart",
+    key: "saved",
+  },
+  {
+    name: "Storefront",
+    url: "/storefront/customization",
+    icon: "solar:shop-outline",
+    key: "storefront",
+  },
+
+  {
+    name: "Company Settings",
+    url: "/company/settings",
+    icon: "mingcute:building-5-line",
+    key: "company",
+  },
+
+  {
+    name: "User Management",
+    url: "/user-management",
+    icon: "lucide:users",
+    key: "users",
+  },
+  {
+    name: "Products",
+    url: "/storefront/products",
+    icon: "fluent-mdl2:product-variant",
+    key: "products",
+  },
+];

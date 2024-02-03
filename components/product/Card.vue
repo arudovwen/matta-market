@@ -17,7 +17,7 @@
             :icon="!detail.liked ? 'ph:heart' : 'ph:heart-fill'"
             class="text-xs sm:text-sm md:text-base darks:text-white"
         /></span>
-        <NuxtImg
+        <img
           v-if="detail.converPhoto"
           :src="detail.converPhoto"
           alt="image"

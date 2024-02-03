@@ -1,7 +1,9 @@
 <template>
-  <section class="p-[30px]">
-    <div class="flex gap-x-[78px] justify-between text-left">
-      <div class="w-[350px] text-left">
+  <section class="px-6 lg:px-[30px] py-[30px]">
+    <div
+      class="flex gap-x-[78px] justify-between text-left flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    >
+      <div class="lg:w-[350px] text-left">
         <h2 class="text-sm text-[#101828] font-semibold">Product documents</h2>
         <p class="mb-5 flex items-center text-xs">
           Please attach the manufacturer's MSDS, COA, and TDS here and indicate
@@ -10,7 +12,7 @@
       </div>
 
       <div class="max-w-[654px] w-full">
-        <UploadComponent @onGetFiles="onGetFiles" :isMultiple="true" type="doc" />
+        <Uploader @onGetFiles="onGetFiles" :isMultiple="true" type="doc" />
         <div
           class="bg-white py-6 lg:py-8 rounded-lg"
           v-if="form.documents.length"
@@ -121,19 +123,19 @@
       </div>
     </div>
     <hr class="border-[#F4F7FE] my-10" />
-    <div class="bg-white rounded-lg flex justify-between gap-x-10 items-center">
+    <div class="bg-white rounded-lg flex justify-between gap-x-4 items-center">
       <button
         type="button"
         @click="togglePreview"
-        class="appearance-none leading-none px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
+        class="appearance-none leading-none px-5 lg:px-10px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
       >
         Preview
       </button>
-      <div class="flex justify-center gap-x-4 items-center">
+      <div class="flex justify-center gap-x-3 lg:gap-x-4 items-center">
         <button
           type="button"
           @click="toggleNext(2)"
-          class="appearance-none leading-none px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
+          class="appearance-none leading-none px-5 lg:px-10px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
         >
           Back
         </button>
@@ -144,7 +146,7 @@
           :class="{
             'bg-primary/60 cursor-not-allowed': isLoading,
           }"
-          class="appearance-none leading-none px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
+          class="appearance-none leading-none px-5 lg:px-10px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
         >
           Complete
         </button>
@@ -206,7 +208,7 @@ import {
 
 import { updateDocuments } from "~/services/productservices";
 import { useRouter } from "vue-router";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 
 const router = useRouter();
 
@@ -261,7 +263,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 </script>

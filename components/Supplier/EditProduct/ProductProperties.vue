@@ -1,5 +1,5 @@
 <template>
-  <form class="px-[30px]" @submit.prevent="handleSubmit">
+  <form class="px-4 lg:px-[30px]" @submit.prevent="handleSubmit">
     <FeaturedProp title="Properties" type="property" />
     <hr class="border-[#F4F7FE] my-10" />
     <FeaturedProp title="Technical Details & Test Data" type="technical" />

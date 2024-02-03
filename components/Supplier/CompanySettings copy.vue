@@ -12,7 +12,7 @@
                 class="h-24 w-24 rounded-lg flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                 >Logo</span
               >
-              <NuxtImg
+              <img
                 v-else
                 :src="image"
                 class="h-24 w-24 rounded-lg flex items-center bg-[#F1F3F5] mr-4 justify-center"

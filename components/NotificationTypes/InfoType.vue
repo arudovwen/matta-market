@@ -39,15 +39,15 @@
           {{ text }}
         </p>
         <div v-if="type == 4" class="text-right">
-          <router-link
+          <NuxtLink
             :to="url"
             class="text-primary text-xs sm:text-sm border-b border-primary"
-            >See details</router-link
+            >See details</NuxtLink
           >
         </div>
         <!-- <div v-if="type == 1" class="text-right mt-4">
-          <router-link to="/checkout" class="text-primary text-xs sm:text-sm"
-            >Proceed to checkout</router-link
+          <NuxtLink to="/checkout" class="text-primary text-xs sm:text-sm"
+            >Proceed to checkout</NuxtLink
           >
         </div> -->
       </div>

@@ -275,13 +275,13 @@
           class="flex justify-end mt-4"
           v-if="pendingCheckout?.items?.length"
         >
-          <router-link to="/checkout">
+          <NuxtLink to="/checkout">
             <button
               class="uppercase text-white bg-primary-500 py-4 px-6 rounded-lg text-[13px] mb-6 disabled:bg-gray-400 disabled:text-white disabled:cursor-not-allowed"
             >
               Proceed to checkout
             </button>
-          </router-link>
+          </NuxtLink>
         </div>
         <div
           v-if="!pendingCheckout?.items?.length"

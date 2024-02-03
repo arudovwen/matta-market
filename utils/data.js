@@ -129,6 +129,12 @@ export const mobileNavigation = [
 
 export const mobileMenu = [
   {
+    name: "Dashboard",
+    url: "/overview",
+    icon: "mingcute:layout-3-line",
+    key: "overview",
+  },
+  {
     name: "Profile",
     key: "profile",
     icon: "bxs:user",
@@ -148,7 +154,7 @@ export const mobileMenu = [
   },
   {
     name: "Shipping address",
-    key: "shipping-address",
+    key: "shipping",
     icon: "fa6-solid:address-book",
     url: "/procurement/shipping-addresses",
   },
@@ -160,7 +166,7 @@ export const mobileMenu = [
   },
   {
     name: "Saved items",
-    key: "saved-items",
+    key: "saved",
     icon: "ri:heart-fill",
     url: "/account/saved-searches",
   },
@@ -168,13 +174,25 @@ export const mobileMenu = [
     name: "Storefront",
     key: "storefront",
     icon: "fa6-solid:store",
-    url: "/overview",
+    url: "/storefront/customization",
   },
   {
     name: "Company settings",
-    key: "company-setting",
+    key: "company",
     icon: "clarity:building-solid",
     url: "/company/settings",
+  },
+  {
+    name: "User Management",
+    url: "/users",
+    icon: "lucide:users",
+    key: "user",
+  },
+  {
+    name: "Products",
+    url: "/storefront/products",
+    icon: "fluent-mdl2:product-variant",
+    key: "products",
   },
   {
     name: "Sign out",

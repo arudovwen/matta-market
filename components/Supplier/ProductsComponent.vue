@@ -3,11 +3,13 @@
     <div class="gap-y-2 flex flex-col mb-4">
       <HeaderComponent
         title="Products"
-        className="!px-5 !border-none"
+        className="!px-5 !border-none "
         subtext="List of all added storefront products."
         btnText="Add product"
+        btnMiniText="Add"
         btnIcon="humbleicons:plus"
         @onClick="router.push('/storefront/products/add-product')"
+        btnClass="!text-xs md:!text-sm"
       />
 
       <div class="rounded-lg bg-white">
@@ -87,7 +89,7 @@
                         v-if="item.logo"
                         class="mr-3 h-10 w-10 rounded-full flex items-center justify-center border border-[#E7EBEE]"
                       >
-                        <NuxtImg class="w-full h-full object-cover rounded-full" alt="alt" :src="item.logo" />
+                        <img class="w-full h-full object-cover rounded-full" alt="alt" :src="item.logo" />
                       </span>
                       <i
                         v-else
@@ -132,7 +134,7 @@
                         class="absolute z-[99] bg-white shadow right-0 min-w-[150px] rounded-md overflow-hidden pt-4"
                       >
                         <ul class="grid grid-cols-1">
-                          <router-link
+                          <NuxtLink
                             :to="`/storefront/products/edit-product?id=${item.id}`"
                           >
                             <li
@@ -143,7 +145,7 @@
                               ></i>
                               Edit
                             </li>
-                          </router-link>
+                          </NuxtLink>
                           <li
                             @click="isOpenModal(item)"
                             class="px-6 text-sm text-[#333333] cursor-pointer group hover:text-primary py-2 whitespace-nowrap hover:bg-[#F9FAFB]"

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-x-20 justify-center items-center">
+  <div class="flex gap-x-20 justify-center items-center z-[2]">
     <div
       v-for="tab in tabs"
       @click="active = tab.value"

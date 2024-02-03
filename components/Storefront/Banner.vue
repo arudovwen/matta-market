@@ -6,7 +6,7 @@
       </div>
       <div class="bg-gray-400 rounded-[5px]">
         <div class="h-[160px] md:h-[210px] w-full">
-          <NuxtImg
+          <img
             :src="
               vendorInfo?.bannerUrl
                 ? vendorInfo.bannerUrl

@@ -164,7 +164,7 @@ const handleLoginSuccess = (response) => {
         }
 
         if (!res.data.data.onboardingPageStatus) {
-          window.location.replace("/onboarding");
+          window.location.replace("/overview");
           return;
         }
         if (route.query.redirected_from) {

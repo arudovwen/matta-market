@@ -4,7 +4,7 @@
       <span
         class="mr-3 h-10 w-10 rounded-lg flex items-center justify-center border border-[#E7EBEE] p-2"
       >
-         <!-- <NuxtImg class="" :src="request?.image" alt="alt" /> -->
+         <!-- <img class="" :src="request?.image" alt="alt" /> -->
       </span>
       <span>
         <span class="text-xs font-medium"> {{ request.productName }} </span>
