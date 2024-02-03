@@ -200,10 +200,11 @@
             </span>
           </NuxtLink>
           <span
+            v-if="authStore.isLoggedIn"
             :class="` items-center  relative ${
               authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
             }`"
-            @click="isOpen=true"
+            @click="isOpen = true"
           >
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
@@ -405,7 +406,7 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const store = useMarketStore();
-const notifications = ref([])
+const notifications = ref([]);
 const router = useRouter();
 const { currentRoute } = router;
 const filteredMenu = computed(() =>
@@ -431,19 +432,18 @@ onMounted(() => {
       getNotifications();
     }, 2 * 60 * 1000);
   }
-})
+});
 const notifyParams = reactive({
-    PageNumber: 1,
-    PageSize: 30,
-    BusinessId: authStore?.businessId,
-    UserId: authStore.userId,
-    Role: "",
-  });
-  const unreadnotifications = computed(() => {
+  PageNumber: 1,
+  PageSize: 30,
+  BusinessId: authStore?.businessId,
+  UserId: authStore.userId,
+  Role: "",
+});
+const unreadnotifications = computed(() => {
   return notifications?.value?.filter((i) => !i.isViewed)?.length;
 });
 function getNotifications() {
- 
   getnotification(notifyParams).then((res) => {
     notifications.value = res.data.data;
   });
