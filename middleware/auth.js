@@ -1,4 +1,5 @@
 export default defineNuxtRouteMiddleware((to, from) => {
+  console.log("🚀 ~ defineNuxtRouteMiddleware ~ to:", to)
   const authStore = useAuthStore();
 
   // if token exists and url is /login redirect to homepage
@@ -10,5 +11,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (!authStore.isLoggedIn && !to?.name.includes("auth")) {
     abortNavigation();
     return navigateTo(`/auth/login?redirected_from=${to.path}`);
+  }
+
+  if (authStore.userType === "buyer" && buyerRoutes.includes(to.name)) {
+    return navigateTo("/");
   }
 });

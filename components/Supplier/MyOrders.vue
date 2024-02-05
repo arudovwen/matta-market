@@ -109,7 +109,7 @@
             @onClick="openOrder(item)"
           />
         </div>
-        <div class="hidden" v-if="!isLoading">
+        <div  v-if="!isLoading">
           <div
             class="overflow-x-auto max-w-[80vw] lg:max-w-full"
             v-if="orders.length"

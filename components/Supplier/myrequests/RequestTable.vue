@@ -205,7 +205,9 @@ onMounted(() => {
   });
 
   procurementsuppliers().then((res) => {
+    loading.value = false;
     suppliers.value = res.data.data.data.map((i) => {
+   
       return {
         id: i.supplierId,
         text1: i.supplier,
@@ -281,7 +283,7 @@ const debounceSearch = debounce(() => {
 }, 800);
 
 watch(
-  () => ({ ...queryParams }),
+  () => [queryParams.Search,  queryParams.PageNumber,  queryParams.RequestStatus],
   () => {
     debounceSearch();
   }

@@ -130,7 +130,7 @@
       v-else
       url="/markets"
       buttonText="go to catalog"
-      text="No sample request have been made"
+      title="No sample request have been made"
     />
   </div>
   <div class="text-center p-6 lg:p-8 my-20" v-if="isLoading">
@@ -244,7 +244,7 @@ const debounceSearch = debounce(() => {
 }, 800);
 
 watch(
-  () => ({ ...queryParams }),
+  () => [queryParams.Search,  queryParams.PageNumber,  queryParams.RequestStatus],
   () => {
     debounceSearch();
   }

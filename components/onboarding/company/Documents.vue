@@ -16,15 +16,34 @@
             label="Memorandum and Articles of Association"
             id="mermat"
           />
-          <span @click="downloadFile(docUrl(1), 'MERMAT')" download v-if="docUrl(1)">  <span class="block text-xs text-blue-500 mt-1">Download Mermat</span></span>
+          <span
+            @click="downloadFile(docUrl(1), 'MERMAT')"
+            download
+            v-if="docUrl(1)"
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Mermat</span
+            ></span
+          >
         </div>
         <div>
           <FileUpload label="Certificate of Incorporation" id="incorporation" />
-          <span @click="downloadFile(docUrl(0), 'CAC')"  v-if="docUrl(0)">  <span class="block text-xs text-blue-500 mt-1">Download Certificate of Incorporation</span></span>
+          <span @click="downloadFile(docUrl(0), 'CAC')" v-if="docUrl(0)">
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Certificate of Incorporation</span
+            ></span
+          >
         </div>
         <div>
           <FileUpload label="CAC Status Report" id="statusReport" />
-        <span @click="downloadFile(docUrl(2), 'Status report')"  v-if="docUrl(2)">  <span class="block text-xs text-blue-500 mt-1">Download CAC Status Report</span></span>
+          <span
+            @click="downloadFile(docUrl(2), 'Status report')"
+            v-if="docUrl(2)"
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download CAC Status Report</span
+            ></span
+          >
         </div>
       </div>
     </div>
@@ -69,24 +88,28 @@ import { useRouter } from "vue-router";
 import { updateDocuments } from "@/services/settingservices";
 import { useStore } from "vuex";
 
+const authStore = useAuthStore();
 const companyInfo = inject("companyInfo");
 const router = useRouter();
 const active = inject("active");
 const form = reactive({
-  companyDocuments: companyInfo.value.companyDocuments || [
-    {
-      url: "",
-      documentType: 0,
-    },
-    {
-      url: "",
-      documentType: 1,
-    },
-    {
-      url: "",
-      documentType: 2,
-    },
-  ],
+  companyDocuments:
+    companyInfo.value.companyDocuments.length === 3
+      ? companyInfo.value.companyDocuments
+      : [
+          {
+            url: "",
+            documentType: 0,
+          },
+          {
+            url: "",
+            documentType: 1,
+          },
+          {
+            url: "",
+            documentType: 2,
+          },
+        ],
 });
 
 const isLoading = ref(false);
@@ -109,46 +132,46 @@ function handleChange(id, value) {
 }
 
 function docUrl(id) {
- return form.companyDocuments.find((i) => i.documentType === id)?.url || "";
+  return form.companyDocuments.find((i) => i.documentType === id)?.url || "";
 }
-function downloadFile(fileUrl,fileName) {
-    // Replace 'your_file_url' with the actual URL of the file you want to download
-   
-    fetch(fileUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            // Create a link element
-            const link = document.createElement('a');
+function downloadFile(fileUrl, fileName) {
+  // Replace 'your_file_url' with the actual URL of the file you want to download
 
-            // Create a Blob URL for the file data
-            const blobUrl = window.URL.createObjectURL(blob);
+  fetch(fileUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.blob();
+    })
+    .then((blob) => {
+      // Create a link element
+      const link = document.createElement("a");
 
-            // Set the link's href attribute to the Blob URL
-            link.href = blobUrl;
+      // Create a Blob URL for the file data
+      const blobUrl = window.URL.createObjectURL(blob);
 
-            // Set the download attribute with the desired file name
-            link.download = fileName || 'downloaded_file'; // Change the file name as needed
+      // Set the link's href attribute to the Blob URL
+      link.href = blobUrl;
 
-            // Append the link to the document
-            document.body.appendChild(link);
+      // Set the download attribute with the desired file name
+      link.download = fileName || "downloaded_file"; // Change the file name as needed
 
-            // Trigger a click on the link to start the download
-            link.click();
+      // Append the link to the document
+      document.body.appendChild(link);
 
-            // Remove the link from the document
-            document.body.removeChild(link);
+      // Trigger a click on the link to start the download
+      link.click();
 
-            // Revoke the Blob URL to free up resources
-            window.URL.revokeObjectURL(blobUrl);
-        })
-        .catch(error => {
-            console.error('Error downloading file:', error);
-        });
+      // Remove the link from the document
+      document.body.removeChild(link);
+
+      // Revoke the Blob URL to free up resources
+      window.URL.revokeObjectURL(blobUrl);
+    })
+    .catch((error) => {
+      console.error("Error downloading file:", error);
+    });
 }
 const rules = {
   cac: {

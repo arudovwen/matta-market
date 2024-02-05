@@ -260,7 +260,7 @@ const debounceSearch = debounce(() => {
 }, 800);
 
 watch(
-  () => ({ ...queryParams }),
+  () => [queryParams.Search,  queryParams.PageNumber,  queryParams.RequestStatus],
   () => {
     debounceSearch();
   }

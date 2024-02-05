@@ -40,7 +40,6 @@ export const FinancesOptions = [
 ];
 
 export const buyerRoutes = [
-  "overview",
   "account",
   "my-orders",
   "my-requests",
@@ -49,7 +48,7 @@ export const buyerRoutes = [
   "financing",
   "saved",
   "profile",
-  "sign-out",
+  "sign-out"
 ];
 export const vendorRoutes = [
   "overview",
@@ -67,7 +66,7 @@ export const vendorRoutes = [
   "users",
   "company",
   "profile",
-  "sign-out",
+  "sign-out"
 ];
 export const navigation = [
   {
@@ -76,7 +75,12 @@ export const navigation = [
     icon: "mingcute:layout-3-line",
     key: "overview",
   },
-
+  {
+    name: "Profile",
+    url: "/account/settings",
+    icon: "lucide:user",
+    key: "account",
+  },
   {
     name: "My Orders",
     url: "/procurement/my-orders",
@@ -136,36 +140,9 @@ export const navigation = [
     key: "users",
   },
   {
-    name: "Account settings",
-    url: "/account/settings",
-    icon: "lucide:user",
-    key: "account",
-  },
-];
-
-export const subnavigation = [
-  {
     name: "Products",
     url: "/storefront/products",
     icon: "fluent-mdl2:product-variant",
     key: "products",
-  },
-  {
-    name: "Store Orders",
-    url: "/storefront/orders",
-    icon: "lucide:shopping-bag",
-    key: "orders",
-  },
-  {
-    name: "Store Requests",
-    url: "/storefront/requests",
-    icon: "ri:hand-coin-line",
-    key: "requests",
-  },
-  {
-    name: "Store Settings",
-    url: "/storefront/customization",
-    icon: "bx:cog",
-    key: "storefront",
   },
 ];

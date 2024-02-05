@@ -134,7 +134,12 @@ export const mobileMenu = [
     icon: "mingcute:layout-3-line",
     key: "overview",
   },
-
+  {
+    name: "Profile",
+    key: "profile",
+    icon: "bxs:user",
+    url: "/account/settings",
+  },
   {
     name: "My orders",
     key: "my-orders",
@@ -188,12 +193,6 @@ export const mobileMenu = [
     url: "/storefront/products",
     icon: "fluent-mdl2:product-variant",
     key: "products",
-  },
-  {
-    name: "Account settings",
-    url: "/account/settings",
-    icon: "lucide:user",
-    key: "settings",
   },
   {
     name: "Sign out",

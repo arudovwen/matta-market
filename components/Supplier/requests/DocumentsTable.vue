@@ -134,7 +134,7 @@
       v-else
       url="/markets"
       buttonText="go to catalog"
-      text="No document request have been made"
+      title="No document request have been made"
     />
   </div>
   <div class="text-center p-6 lg:p-8 my-20" v-if="docLoading">
@@ -241,7 +241,7 @@ const debounceSearch = debounce(() => {
   getRequestDoc();
 }, 800);
 watch(
-  () => ({ ...queryParams }),
+  () => [queryParams.Search,  queryParams.PageNumber,  queryParams.RequestStatus],
   () => {
     debounceSearch();
   }

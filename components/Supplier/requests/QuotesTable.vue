@@ -129,7 +129,7 @@
       v-else
       url="/markets"
       buttonText="go to catalog"
-      text="No quote have been made"
+      title="No quote have been made"
     />
   </div>
 

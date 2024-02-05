@@ -286,7 +286,7 @@ const debounceSearch = debounce(() => {
 }, 800);
 const handleDelete = () => {};
 watch(
-  () => ({ ...queryParams }),
+  () => [queryParams.Search,  queryParams.PageNumber,  queryParams.SortOrder],
   () => {
     debounceSearch();
   }

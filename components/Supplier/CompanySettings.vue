@@ -5,7 +5,11 @@
     <HeaderComponent title="Company settings" />
     <!-- Top bar   -->
     <div class="py-10">
-      <Stepper :tabs="tabs" />
+      <Stepper
+        :tabs="tabs"
+        :pending="!!authStore?.userInfo?.onboardingPageStatus"
+        :complete="!!companyInfo?.approvalStatus"
+      />
     </div>
     <div v-if="!isLoading">
       <div v-if="active === 1">
@@ -24,16 +28,18 @@
 
 <script setup>
 import { getCompanyProfile } from "@/services/settingservices";
-const companyInfo = ref(null)
-const isLoading = ref(true)
-onBeforeMount(()=>{
-  getCompanyProfile().then(res=>{
-    if(res.status === 200){
-      isLoading.value = false
-      companyInfo.value = res.data.data
+
+const authStore = useAuthStore();
+const companyInfo = ref(null);
+const isLoading = ref(true);
+onBeforeMount(() => {
+  getCompanyProfile().then((res) => {
+    if (res.status === 200) {
+      isLoading.value = false;
+      companyInfo.value = res.data.data;
     }
-  })
-})
+  });
+});
 const active = ref(1);
 const tabs = [
   {
@@ -50,7 +56,7 @@ const tabs = [
   },
 ];
 provide("active", active);
-provide("companyInfo",companyInfo)
+provide("companyInfo", companyInfo);
 </script>
 
 <style lang="scss" scoped>

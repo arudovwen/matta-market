@@ -385,7 +385,7 @@
         </div>
       </div>
     </div>
-    <div
+    <div   v-if="!authStore?.userInfo?.onboardingPageStatus && !companyInfo.approvalStatus"
       class="flex justify-between gap-x-4 items-center mt-16 pt-6 border-t border-[#EAECF0] w-full"
     >
       <!-- <button

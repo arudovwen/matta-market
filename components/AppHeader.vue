@@ -32,7 +32,7 @@
       role="alert"
     >
       <div class="font-bold text-sm">
-        <span> Install Matta App?</span>
+        <span> Install Matta?</span>
       </div>
       <div class="flex gap-x-4">
         <button
@@ -185,7 +185,7 @@
               <option value="">English-NGN</option>
             </select></span
           > -->
-          <NuxtLink
+          <!-- <NuxtLink
             :class="` items-center  relative ${
               authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
             }`"
@@ -198,7 +198,7 @@
                 icon="akar-icons:search"
               />
             </span>
-          </NuxtLink>
+          </NuxtLink> -->
           <span
             v-if="authStore.isLoggedIn"
             :class="` items-center  relative ${

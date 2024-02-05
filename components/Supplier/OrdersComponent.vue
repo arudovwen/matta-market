@@ -1,14 +1,14 @@
 <template>
-  <div class="mb-8 bg-white rounded-[10px] border border-[#F4F7FE]">
-    <HeaderComponent
+  <div>
+    <!-- <HeaderComponent
       title="Store Orders"
       subtext=" List of orders received by your storefront."
       btnText="Create order"
       btnIcon="humbleicons:plus"
       @onClick="router.push('/markets')"
-    />
+    /> -->
 
-    <div class="py-8 rounded-lg bg-white">
+    <div class="rounded-lg bg-white">
       <div class="hidden lg:flex justify-between items-center mb-8 px-5">
         <div class="flex gap-x-4">
           <div class="relative flex items-center">
