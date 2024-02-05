@@ -23,7 +23,7 @@
             placeholder=""
             label="Store url"
             name="storeSlug"
-            :modelValue="`${config.public.APP_BASE_URL}/${formValues.storeSlug}`"
+            :modelValue="`https://dev.matta.trade/${formValues.storeSlug}`"
             disabled
             isReadonly
           />
