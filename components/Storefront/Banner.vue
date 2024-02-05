@@ -10,7 +10,7 @@
             :src="
               vendorInfo?.bannerUrl
                 ? vendorInfo.bannerUrl
-                : '/images/amosban.png'
+                : '~/assets/images/storebanner.png'
             "
             class="w-full h-full rounded-t-[5px]"
           />

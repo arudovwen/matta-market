@@ -20,7 +20,7 @@
         {{ welcome }}
       </h1>
       <slot name="subtext">
-        <p v-if="subtext" class="text-xs md:text-sm text-[#475467]">
+        <p v-if="subtext" class="text-xs md:text-sm text-[#475467] max-w-[500px]">
           {{ subtext }}
         </p>
       </slot>

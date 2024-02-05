@@ -16,7 +16,7 @@
       <span>{{ tab.title }}</span>
       <span
         class="text-xs h-6 w-6 rounded-full flex justify-center items-center border border-[#EAECF0] bg-[#F9FAFB] text-[#344054]"
-        v-if="count[tab.key]"
+        v-if="count && count[tab.key]"
         >{{ count[tab.key] }}</span
       >
     </button>
@@ -25,4 +25,5 @@
 <script setup>
 defineProps(["tabs", "className", "count"]);
 const active = inject("active");
+
 </script>
