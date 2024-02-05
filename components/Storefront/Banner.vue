@@ -10,7 +10,7 @@
             :src="
               vendorInfo?.bannerUrl
                 ? vendorInfo.bannerUrl
-                : '~/assets/images/storebanner.png'
+                : '/images/storebanner.png'
             "
             class="w-full h-full rounded-t-[5px]"
           />
@@ -90,6 +90,7 @@ onMounted(() => {
     vendorInfo.value = res.data.data;
   });
   getCompanyProfile().then((res) => {
+   
     detail.value = res.data.data;
   });
 });

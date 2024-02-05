@@ -190,6 +190,7 @@ import {
 } from "@headlessui/vue";
 import { useForm } from "vee-validate";
 
+const form = inject("form");
 const emits = defineEmits(["close"]);
 const packForm = reactive({
   title: "",
@@ -198,6 +199,7 @@ const packForm = reactive({
   purity: "",
   size: "",
   isAvailable: false,
+  unit:form.unit
 });
 const packageForms = [
   "Plastic drum",
@@ -223,7 +225,7 @@ const { handleSubmit, defineField, errors } = useForm({
   initialValues: packForm,
 });
 
-const form = inject("form");
+
 const [title, titleAtt] = defineField("title");
 const [amount, amountAtt] = defineField("amount");
 const [color, colorAtt] = defineField("color");
