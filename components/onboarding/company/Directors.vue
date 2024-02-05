@@ -14,7 +14,8 @@
       <!-- Top bar   -->
       <div class="md:max-w-[560px] w-full">
         <div class="">
-          <div>
+          <div  v-if="!authStore?.userInfo?.onboardingPageStatus || !companyInfo.approvalStatus">
+           
             <button
               type="button"
               @click="
@@ -74,6 +75,7 @@
       </div>
     </div>
     <div
+    v-if="!authStore?.userInfo?.onboardingPageStatus || !companyInfo.approvalStatus"
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
     >
       <button

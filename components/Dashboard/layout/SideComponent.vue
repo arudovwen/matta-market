@@ -11,7 +11,7 @@
       /></NuxtLink>
     </div>
     <nav class="h-full">
-      <ul>
+      <ul class="grid grid-cols-1 gap-y-1">
         <li v-for="item in mappedNav" :key="item.name">
           <NuxtLink
             v-if="item.key !== 'storefront'"
@@ -24,7 +24,7 @@
             }`"
           >
             <span class="flex items-center gap-x-[10px] flex-1 py-[9px]">
-              <AppIcon :icon="item.icon" iconClass="text-xl" />
+              <AppIcon :icon="item.icon" iconClass="text-xl text-[#667085]" />
               <span> {{ item.name }}</span>
             </span>
           </NuxtLink>
@@ -36,7 +36,7 @@
          
           >
             <span class="flex items-center gap-x-[10px] flex-1 py-[9px]">
-              <AppIcon :icon="item.icon" iconClass="text-xl" />
+              <AppIcon :icon="item.icon" iconClass="text-xl text-[#667085]" />
               <span> {{ item.name }}</span>
             </span>
             <div

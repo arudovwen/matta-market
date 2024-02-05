@@ -58,7 +58,7 @@
                     <!-- Replace with your content -->
                     <div class="absolute inset-0 pt-5">
                       <div class="px-5 pb-4" v-if="!authStore.isLoggedIn">
-                         <img
+                        <img
                           src="/images/logo.png"
                           width="100"
                           height="26"
@@ -117,7 +117,10 @@
                       <hr class="my-[14px] border-b border-[#F4F4F4]" />
                       <div class="px-5 pt-5">
                         <MenuMobile />
-                        <hr class="border-[#F4F4F4] my-4" v-if="authStore.isLoggedIn && !activeKey" />
+                        <hr
+                          class="border-[#F4F4F4] my-4"
+                          v-if="authStore.isLoggedIn && !activeKey"
+                        />
                         <ul
                           class="grid gap-y-5"
                           v-if="authStore.isLoggedIn && !activeKey"
@@ -129,11 +132,58 @@
                             :key="n.name"
                           >
                             <NuxtLink
+                              v-if="item.key !== 'storefront'"
                               :to="n.url"
                               class="flex gap-x-3 items-center text-sm font-medium text-[#333]"
                             >
-                              <AppIcon :icon="n.icon" /> {{ n.name }}
+                              <AppIcon :icon="n.icon"  iconClass="text-xl text-[#667085]" /> {{ n.name }}
                             </NuxtLink>
+                            <span
+                              v-else
+                              @click="storeOpen = true"
+                              class="text-sm flex items-center px-5 border-r-[3px] border-transparent group font-medium hover:bg-[#2270FA0F] hover:text-primary-500 hover:border-primary-500 cursor-pointer"
+                              :class="` ${
+                                storeOpen || route.path.includes('storefront')
+                                  ? 'bg-[#2270FA0F] text-primary-500'
+                                  : ''
+                              }`"
+                            >
+                              <span
+                                class="flex items-center gap-x-[10px] flex-1 py-[9px]"
+                              >
+                                <AppIcon
+                                  :icon="item.icon"
+                                  iconClass="text-xl text-[#667085]"
+                                />
+                                <span> {{ item.name }}</span>
+                              </span>
+                              <div
+                                v-if="storeOpen"
+                                class="border-r border-[#EAECF0] absolute top-0 -right-[245px] h-screen z-[9999] bg-white py-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] min-w-[245px]"
+                              >
+                                <ul>
+                                  <li
+                                    v-for="item in subnavigation"
+                                    :key="item.name"
+                                  >
+                                    <NuxtLink
+                                      :to="item.url"
+                                      class="text-sm flex items-center px-5 border-r-[3px] border-transparent text-matta-black hoverborder-primary-500 hover:bg-[#2270FA0F] hover:text-primary-500"
+                                    >
+                                      <span
+                                        class="flex items-center gap-x-[10px] flex-1 py-[9px]"
+                                      >
+                                        <AppIcon
+                                          :icon="item.icon"
+                                          iconClass="text-xl"
+                                        />
+                                        <span> {{ item.name }}</span>
+                                      </span>
+                                    </NuxtLink>
+                                  </li>
+                                </ul>
+                              </div>
+                            </span>
                           </li>
                         </ul>
                       </div>
@@ -166,6 +216,8 @@ import {
 } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
 
+const storeOpen = ref(false);
+const route = useRoute()
 const activeKey = ref(null);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
@@ -179,5 +231,12 @@ const mappedNav = computed(() => {
   );
 });
 const open = inject("open");
+watch(
+  () => route.path,
+  () => {
+    storeOpen.value = false;
+  },
+  { deep: true, immediate: true }
+);
 provide("activeKey", activeKey);
 </script>

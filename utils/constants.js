@@ -93,7 +93,7 @@ export const navigation = [
   {
     name: "Shipping Addresses",
     url: "/procurement/shipping-addresses",
-    icon: "ion:map-outline",
+    icon: "heroicons-outline:truck",
     key: "shipping",
   },
 
@@ -106,7 +106,7 @@ export const navigation = [
   {
     name: "Financing requests",
     url: "/financing",
-    icon: "f7:tag",
+    icon: "la:hand-holding-usd",
     key: "financing",
   },
   {

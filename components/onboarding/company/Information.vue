@@ -387,6 +387,7 @@
     </div>
     <div
       class="flex justify-between gap-x-4 items-center mt-16 pt-6 border-t border-[#EAECF0] w-full"
+      v-if="!authStore?.userInfo?.onboardingPageStatus || !companyInfo.approvalStatus"
     >
       <!-- <button
           type="button"
@@ -648,6 +649,7 @@ const states = computed(() => {
     (item) => item.name.toLowerCase() == form.country.toLowerCase()
   ).states;
 });
+
 function handleEvent(e) {
   var files = e.target.files || e.dataTransfer.files;
   if (!files.length) return;
