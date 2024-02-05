@@ -31,7 +31,7 @@
         </div>
       </template></HeaderComponent
     >
-    <div class=" py-[30px]">
+    <div class="py-[30px]">
       <div>
         <div class="flex justify-between flex-col gap-y-4 sm:flex-row">
           <div class="w-full sm:w-auto">
@@ -96,21 +96,19 @@
         </div>
       </div>
       <div
-        class="flex justify-center flex-col items-center p-8 min-h-[30vh]"
+        class=""
         v-if="!hasWallet && !isLoading"
       >
-        <p class="mb-3 text-lg">You don't have an active wallet</p>
-        <button
-          @click="
+        <EmptyData
+          title="You don't have an active wallet"
+          btnText="Create your wallet"
+          @btnFunction="
             () => {
               isWithdraw = isTopup = false;
               isCreatingWallet = isOpen = true;
             }
           "
-          class="border border-matta-black bg-matta-black py-3 text-xs md:text-[13px] px-6 flex justify-center text-white rounded-lg items-center hover:bg-matta-black/80 capitalize font-normal gap-x-1"
-        >
-          Create your wallet
-        </button>
+        />
       </div>
       <div class="text-center p-6 lg:p-8 my-24" v-if="isLoading">
         <AppLoader />
@@ -131,11 +129,7 @@
           @success="handleWalletCreation"
           v-if="isAddingKyc"
         />
-        <span class="cursor-pointer" @click="handleClose"
-          ><AppIcon
-            icon="heroicons-solid:x"
-            class="w-4 h-4 absolute top-4 right-3 text-matta-black z-10"
-        /></span>
+       
       </div>
     </template>
   </IndexModal>
