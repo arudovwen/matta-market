@@ -16,8 +16,12 @@
           <NuxtLink
             v-if="item.key !== 'storefront'"
             :to="item.url"
-            class="text-sm flex items-center px-5 border-r-[3px] border-transparent font-medium"
-            activeClass="!border-primary-500 bg-[#2270FA0F] text-primary-500 block"
+            class="text-sm flex items-center px-5 border-r-[3px] border-transparent font-medium hover:bg-[#2270FA0F] hover:text-primary-500 hover:border-primary-500"
+            :activeClass="`${
+              storeOpen
+                ? ''
+                : ' bg-[#2270FA0F] text-primary-500 block'
+            }`"
           >
             <span class="flex items-center gap-x-[10px] flex-1 py-[9px]">
               <AppIcon :icon="item.icon" iconClass="text-xl" />
@@ -26,17 +30,18 @@
           </NuxtLink>
           <span
             v-else
-            class="text-sm flex items-center px-5 border-r-[3px] border-transparent group font-medium"
-            :class="`hover:!border-primary-500 hover:bg-[#2270FA0F] hover:text-primary-500 hover:block'
-               `"
-            activeClass="!border-primary-500 bg-[#2270FA0F] text-primary-500 block"
+            @click="storeOpen = true"
+            class="text-sm flex items-center px-5 border-r-[3px] border-transparent group font-medium hover:bg-[#2270FA0F] hover:text-primary-500 hover:border-primary-500 cursor-pointer"
+            :class="` ${storeOpen ||  route.path.includes('storefront') ? 'bg-[#2270FA0F] text-primary-500' : ''}`"
+         
           >
             <span class="flex items-center gap-x-[10px] flex-1 py-[9px]">
               <AppIcon :icon="item.icon" iconClass="text-xl" />
               <span> {{ item.name }}</span>
             </span>
             <div
-              class="border-l border-[#EAECF0] group-hover:inline hidden absolute top-0 -right-[245px] h-screen z-[9999] bg-white py-8 rounded-[10px] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] min-w-[245px]"
+              v-if="storeOpen"
+              class="border-r border-[#EAECF0] absolute top-0 -right-[245px] h-screen z-[9999] bg-white py-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] min-w-[245px]"
             >
               <ul>
                 <li v-for="item in subnavigation" :key="item.name">
@@ -91,17 +96,22 @@ const openIndex = ref([
   "Storefront",
   "Wallet",
 ]);
-const userType = computed(() => {
-  return authstore.userType;
-});
-function handleIndex(val) {
-  openIndex.value.push(val);
-}
-function dropIndex(val) {
-  openIndex.value = openIndex.value.filter((i) => i !== val);
-}
-watch("route", () => {
-  storeOpen.value = false;
-});
+// const userType = computed(() => {
+//   return authstore.userType;
+// });
+// function handleIndex(val) {
+//   openIndex.value.push(val);
+// }
+// function dropIndex(val) {
+//   openIndex.value = openIndex.value.filter((i) => i !== val);
+// }
+
+watch(
+  () => route.path,
+  () => {
+    storeOpen.value = false;
+  },
+  { deep: true, immediate: true }
+);
 </script>
 <style scoped lang="scss"></style>

@@ -207,7 +207,7 @@
             @click="isOpen = true"
           >
             <span
-              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
+              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center cursor-pointer"
             >
               <AppIcon
                 class="text-lg text-[#484848]"

@@ -191,7 +191,7 @@ export const mobileMenu = [
   },
   {
     name: "Account settings",
-    url: "/settings",
+    url: "/account/settings",
     icon: "lucide:user",
     key: "settings",
   },

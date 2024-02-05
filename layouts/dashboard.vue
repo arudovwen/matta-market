@@ -7,7 +7,9 @@
 
       <div class="flex-1 h-full">
         <DashboardHeader />
+       <div class="p-6">
         <DashboardLayoutMainComponent />
+       </div>
       </div>
     </div>
     <div><AppFooter /></div>

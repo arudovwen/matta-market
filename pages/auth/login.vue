@@ -115,7 +115,7 @@ const onSubmit = handleSubmit((values) => {
           res.data.data?.businessUserType.toLowerCase() === "supplier"
         ) {
           toast.info("Login successful, Complete your onboarding");
-          window.location.replace("/onboarding/company");
+          window.location.replace("/company/settings");
           return;
         }
         toast.success("Login successful");

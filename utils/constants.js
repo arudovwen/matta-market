@@ -117,7 +117,7 @@ export const navigation = [
   },
   {
     name: "Storefront",
-    url: "/storefront/customization",
+    url: "/storefront",
     icon: "solar:shop-outline",
     key: "storefront",
   },
@@ -137,7 +137,7 @@ export const navigation = [
   },
   {
     name: "Account settings",
-    url: "/settings",
+    url: "/account/settings",
     icon: "lucide:user",
     key: "account",
   },
