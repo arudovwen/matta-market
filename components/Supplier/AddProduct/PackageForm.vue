@@ -215,8 +215,8 @@ const packageForms = [
 const packFormSchema = yup.object({
   title: yup.string().required(),
   amount: yup.string().required(),
-  color: yup.string(),
-  purity: yup.number().typeError("Invalid value").max(100, "Maximum is 100"),
+  color: yup.string().nullable(),
+  purity: yup.number().typeError("Invalid value").max(100, "Maximum is 100").nullable(),
   size: yup.number().typeError("Invalid value").required(),
   isAvailable: yup.boolean(),
 });
