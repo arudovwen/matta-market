@@ -13,7 +13,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return navigateTo(`/auth/login?redirected_from=${to.path}`);
   }
 
-  if (authStore.userType.toLowerCase() === "buyer" && !buyerRoutes.includes(to.name)) {
+  if (authStore?.isLoggedIn && authStore?.userType?.toLowerCase() === "buyer" && !buyerRoutes.includes(to.name)) {
     return navigateTo("/");
   }
 });
