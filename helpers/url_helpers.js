@@ -192,6 +192,12 @@ const urls = {
   CUSTOMIZE_VENDOR_INFO: "v1/customize/vendor",
   GET_VENDOR_STORE: "v1/storefront/get-store",
   UPDATE_VENDOR_STORE: "v1/storefront/update-store",
-  POST_VENDOR_STORE_NAME: "v1/storefront/search-name"
+  POST_VENDOR_STORE_NAME: "v1/storefront/search-name",
+
+  //Finance
+  GET_ALL_FINANCE: "/financing/get-all",
+  ADD_FINANCE: "/financing/add",
+  EDIT_FINANCE: "/financing/edit",
+  UPDATE_APPROVE_FINANCE: "/financing/financing/update-approval",
 };
 export default urls;

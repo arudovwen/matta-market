@@ -89,7 +89,7 @@
   const formData = inject("formData")
 const onSubmit = handleSubmit((values) => {
   console.log("🚀 ~ onSubmit ~ values:", values);
-  formData.documents = values
+  formData.supportingDocuments = values
   active.value = 5
 });
   

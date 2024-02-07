@@ -1,13 +1,13 @@
 <template>
   <form @submit.prevent="onSubmit" class="w-full mt-6">
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
-      <FormGroup label="How much do you require?" :error="errors.amount">
+      <FormGroup label="How much do you require?" :error="errors.amountRequired">
         <CurrencyInput
           min="1"
           :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-            errors.amount ? 'border-red-500' : 'border-[#D0D5DD]'
+            errors.amountRequired ? 'border-red-500' : 'border-[#D0D5DD]'
           }`"
-          v-model="amount"
+          v-model="amountRequired"
           :options="{
             currency: 'ngn',
             currencyDisplay: 'hidden',
@@ -29,10 +29,10 @@
         <Textinput
           placeholder=""
           label="Where did you hear about us?"
-          name="about"
-          v-bind="aboutAtt"
-          v-model="about"
-          :error="errors.about"
+          name="whereDidYouHearAboutUs"
+          v-bind="whereDidYouHearAboutUsAtt"
+          v-model="whereDidYouHearAboutUs"
+          :error="errors.whereDidYouHearAboutUs"
         />
       </div>
     </div>
@@ -54,16 +54,16 @@ import * as yup from "yup";
 
 const isLoading = ref(false);
 const formValues = reactive({
-  amount: null,
+  amountRequired: null,
   tenor: "",
-  about: "",
+  whereDidYouHearAboutUs: "",
 });
 const active = inject("active");
 
 const schema = yup.object({
-  amount: yup.string().required("Amount is required"),
+  amountRequired: yup.string().required("amountRequired is required"),
   tenor: yup.string().required("Tenor is required"),
-  about: yup.string().required("About is required"),
+  whereDidYouHearAboutUs: yup.string().required("whereDidYouHearAboutUs is required"),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue } = useForm({
@@ -71,13 +71,13 @@ const { handleSubmit, defineField, errors, setFieldValue } = useForm({
   initialValues: formValues,
 });
 
-const [amount, amountAtt] = defineField("amount");
+const [amountRequired, amountRequiredAtt] = defineField("amountRequired");
 const [tenor, tenorAtt] = defineField("tenor");
-const [about, aboutAtt] = defineField("about");
+const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField("whereDidYouHearAboutUs");
 const formData = inject("formData")
 const onSubmit = handleSubmit((values) => {
   console.log("🚀 ~ onSubmit ~ values:", values);
-  formData.loanRequest = values
+  formData = {...formData, ...values}
   active.value = 2
 });
 

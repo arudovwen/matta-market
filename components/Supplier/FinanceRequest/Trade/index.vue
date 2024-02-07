@@ -26,8 +26,28 @@ const { type } = route.params;
 const formData = reactive({
   loanRequest: null,
   kyb: null,
-  directors: null,
-  documents: null,
+
+  amountRequired: 0,
+  tenor: 0,
+  customerId: 0,
+  whereDidYouHearAboutUs: "",
+  loanRequestType: 0,
+  directors: [
+    {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      dob: "",
+      bvn: "",
+    },
+  ],
+  supportingDocuments: [
+    {
+      url: "",
+      documentType: 0,
+    },
+  ],
 });
 const active = ref(1);
 const tabs = [

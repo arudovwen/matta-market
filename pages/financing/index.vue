@@ -58,7 +58,7 @@
             </div>
           </div>
         </div>
-        <div v-if="financeData.length">
+        <div v-if="financeData?.length">
           <table class="w-full">
             <thead>
               <tr>
@@ -200,7 +200,7 @@
 <script setup>
 import moment from "moment";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { sellerdoc, sellerdocdetails } from "~/services/requestservice";
+import { getAllFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";
 
 const id = ref(null);
@@ -236,8 +236,8 @@ const docLoading = ref(true);
 const isOpen = ref(false);
 function getFinanceData() {
   docLoading.value = true;
-  sellerdoc(queryParams).then((res) => {
-    // financeData.value = res.data.data.data;
+  getAllFinance(queryParams).then((res) => {
+    financeData.value = res.data.data;
     // queryParams.totalCount = res.data.data.totalCount;
     docLoading.value = false;
   });
@@ -246,10 +246,10 @@ function selectall() {
   multi.value = financeData.value.map((i) => i.id);
 }
 function openRequest(item) {
-  sellerdocdetails(item.id).then((res) => {
-    document.value = res.data.data;
-    isOpen.value = true;
-  });
+  // sellerdocdetails(item.id).then((res) => {
+  //   document.value = res.data.data;
+  //   isOpen.value = true;
+  // });
 }
 function withdrawRequest(value) {
   id.value = value;

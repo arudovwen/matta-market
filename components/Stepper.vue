@@ -54,7 +54,7 @@
   </div>
   <div
     class="flex gap-x-20 justify-center items-center z-[2]"
-    v-if="pending"
+    v-if="pending & !complete"
   >
     <div
       v-for="tab in tabs"

@@ -46,10 +46,10 @@
       <Textinput
         placeholder=""
         label="Phone number"
-        name="phoneNumber"
-        v-bind="phoneNumberAtt"
-        v-model="phoneNumber"
-        :error="errors.phoneNumber"
+        name="phone"
+        v-bind="phoneAtt"
+        v-model="phone"
+        :error="errors.phone"
       />
 
       <div class="md:col-span-2">
@@ -153,7 +153,7 @@ const formValues = reactive({
   name: "",
   bvn: "",
   email: "",
-  phoneNumber: "",
+  phone: "",
   linkedin: "",
   id: "",
   signature: "",
@@ -170,7 +170,7 @@ const formSchema = yup.object().shape({
     .string()
     .required("Email is required")
     .email("Invalid email address"),
-  phoneNumber: yup
+  phone: yup
     .string()
     .required("Phone Number is required")
     .matches(/^\d{11}$/, "Phone Number must be 11 digits"),
@@ -187,7 +187,7 @@ const { handleSubmit, defineField, errors, setFieldValue } = useForm({
 const [name, nameAtt] = defineField("name");
 const [bvn, bvnAtt] = defineField("bvn");
 const [email, emailAtt] = defineField("email");
-const [phoneNumber, phoneNumberAtt] = defineField("phoneNumber");
+const [phone, phoneAtt] = defineField("phone");
 const [linkedin, linkedinAtt] = defineField("linkedin");
 
 function handleChange(id, value) {

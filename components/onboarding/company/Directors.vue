@@ -14,8 +14,12 @@
       <!-- Top bar   -->
       <div class="md:max-w-[560px] w-full">
         <div class="">
-          <div  v-if="!authStore?.userInfo?.onboardingPageStatus && !companyInfo.approvalStatus">
-           
+          <div
+            v-if="
+              !authStore?.userInfo?.onboardingPageStatus &&
+              !companyInfo.approvalStatus
+            "
+          >
             <button
               type="button"
               @click="
@@ -43,6 +47,11 @@
                   </th>
                   <th
                     class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+                  >
+                    Email
+                  </th>
+                  <th
+                    class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
                   ></th>
                 </tr>
               </thead>
@@ -60,7 +69,18 @@
                   <td
                     class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                   >
-                    <span class="flex gap-x-3 items-center justify-end">
+                    {{ director.email }} 
+                  </td>
+                  <td
+                    class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  >
+                    <span
+                      class="flex gap-x-3 items-center justify-end"
+                      v-if="
+                        !authStore?.userInfo?.onboardingPageStatus &&
+                        !companyInfo.approvalStatus
+                      "
+                    >
                       <span class="p-1"><i class="uil uil-pen"></i></span>
                       <span class="p-1" @click="handleDelete(id)"
                         ><i class="uil uil-trash text-red-500"></i
@@ -75,13 +95,16 @@
       </div>
     </div>
     <div
-    v-if="!authStore?.userInfo?.onboardingPageStatus && !companyInfo.approvalStatus"
+      v-if="
+        !authStore?.userInfo?.onboardingPageStatus &&
+        !companyInfo.approvalStatus
+      "
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
     >
       <button
         @click="active--"
         type="button"
-        class="appearance-none leading-none px-10 py-[10px]  rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
+        class="appearance-none leading-none px-10 py-[10px] rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
       >
         Back
       </button>
@@ -92,7 +115,7 @@
         :class="{
           'opacity-60 cursor-not-allowed': !form.directors.length,
         }"
-        class="appearance-none leading-none px-10 py-[10px]  grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
+        class="appearance-none leading-none px-10 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
       >
         <i
           class="fa fa-spinner fa-spin"
@@ -173,7 +196,7 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { updateDirectors } from "~/services/settingservices";
 
-const companyInfo = inject("companyInfo")
+const companyInfo = inject("companyInfo");
 const id = ref(null);
 const action = ref("");
 const authStore = useAuthStore();
@@ -210,7 +233,7 @@ async function handleSubmit() {
         setOnboardingcomplete();
         authStore.updateUserInfo({ onboardingPageStatus: 1 });
         toast.success("Directors saved");
-        isLoading.value = false
+        isLoading.value = false;
       }
     })
 
