@@ -2,7 +2,7 @@
   <div class="w-full mt-6">
     <form
       @submit.prevent="onSubmit"
-      class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]"
+      class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-6"
     >
       <FormGroup
         label="Select a director from your profile or add a new director"
@@ -81,49 +81,56 @@
         </button>
         <span class="text-[#B9B9B9]">(Optional)</span>
       </div>
-      <div
-        v-if="directors.length"
-        class="w-full rounded-[10px] border border-[#EAECF0] overflow-hidden"
-      >
-        <table class="w-full">
-          <thead>
-            <tr>
-              <th
-                class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-              >
-                Name
-              </th>
-              <th
-                class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-              ></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(director, id) in directors"
-              :key="id"
-              class="border-b last:border-none"
-            >
-              <td
-                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-              >
-                {{ director?.name }}
-              </td>
-              <td
-                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-              >
-                <span class="flex gap-x-3 items-center justify-end">
-                  <span class="p-1"><i class="uil uil-pen"></i></span>
-                  <span class="p-1" @click="handleDelete(id)"
-                    ><i class="uil uil-trash text-red-500"></i
-                  ></span>
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </form>
+    <div
+      v-if="directors.length"
+      class="w-full rounded-[10px] border border-[#EAECF0] overflow-hidden mb-[50px]"
+    >
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th
+              class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+            >
+              Name
+            </th>
+            <th
+              class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+            ></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(director, id) in directors"
+            :key="id"
+            class="border-b last:border-none"
+          >
+            <td
+              class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+            >
+              {{ director?.name }}
+            </td>
+            <td
+              class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+            >
+              <span class="flex gap-x-3 items-center justify-end">
+                <span class="p-1"><i class="uil uil-pen"></i></span>
+                <span
+                  class="p-1"
+                  @click="
+                    () => {
+                      directors.splice(id, 1);
+                      selected = null;
+                    }
+                  "
+                  ><i class="uil uil-trash text-red-500"></i
+                ></span>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="flex gap-x-4 items-center justify-between">
       <AppButton
         @click="active--"
@@ -150,14 +157,14 @@ const company = inject("company");
 const directorOptions = ref(
   company.value.directors.map((i) => ({
     label: `${i.firstName} ${i.lastName}`,
-    value: {
+    value: JSON.stringify({
       ...i,
       name: `${i.firstName} ${i.lastName}`,
-    },
+    }),
   }))
 );
 
-const selected = ref("");
+const selected = ref(null);
 const isLoading = ref(false);
 const directors = ref([]);
 const formValues = reactive({
@@ -215,11 +222,16 @@ const handleNext = () => {
   active.value = 4;
 };
 
-watch(selected, () => {
-  if (selected.value) {
-    formData.directors = [...formData.directors, selected.value.value];
+watch(
+  () => selected.value,
+  () => {
+    console.log("🚀 ~ watch ~ selected:", selected.value);
+    if (selected.value) {
+      directors.value = [...directors.value, JSON.parse(selected.value)];
+      formData.directors = directors.value;
+    }
   }
-});
+);
 provide("handleChange", handleChange);
 </script>
 

@@ -2,19 +2,19 @@
   <form @submit.prevent="onSubmit" class="w-full mt-6">
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
       <FormGroup :error="errors.bankStatement" class="col-span-2">
-        <FileUpload label="Bank Statement" id="bankStatement" />
+        <FileUpload label="Bank Statement" id="BankStatement" />
       </FormGroup>
       <FormGroup :error="errors.proformaInvoice" class="col-span-2">
-        <FileUpload label="Proforma Invoice" id="proformaInvoice" />
+        <FileUpload label="Proforma Invoice" id="ProformaInvoice" />
       </FormGroup>
       <FormGroup :error="errors.other" class="col-span-2">
         <FileUpload
           label="Evidence of previously successful supply contracts (PO and Paid Invoices)"
-          id="evidence"
+          id="EvidenceOfPreviouslySuccessfulSupplyContracts"
         />
       </FormGroup>
       <FormGroup :error="errors.other" class="col-span-2">
-        <FileUpload label="Other documents" id="other" />
+        <FileUpload label="Other documents" id="OtherDocuments" />
       </FormGroup>
 
       <div class="md:col-span-2">
@@ -64,10 +64,10 @@ const isLoading = ref(false);
 const formValues = reactive({
   previousExport: "",
   doneBusiness: "",
-  other: "",
-  bankStatement: "",
-  proformaInvoice: "",
-  evidence: "",
+  OtherDocuments: "",
+  BankStatement: "",
+  ProformaInvoice: "",
+  EvidenceOfPreviouslySuccessfulSupplyContracts: "",
 });
 const active = inject("active");
 const formData = inject("formData");
@@ -101,7 +101,21 @@ const options = [
   },
 ];
 function handleChange(id, value) {
-  setFieldValue(id, value);
+  form.kyb.companyDocuments.map((i) => {
+    setFieldValue(id, value)
+    if (id === "BankStatement" && i.documentType === 0) {
+      i.url = value;
+    }
+    if (id === "ProformaInvoice" && i.documentType === 1) {
+      i.url = value;
+    }
+    if (id === "EvidenceOfPreviouslySuccessfulSupplyContracts" && i.documentType === 2) {
+      i.url = value;
+    }
+    if (id === "OtherDocuments" && i.documentType === 3) {
+      i.url = value;
+    }
+  });
 }
 provide("handleChange", handleChange);
 </script>
