@@ -146,6 +146,17 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 
+const company = inject("company");
+const directorOptions = ref(
+  company.value.directors.map((i) => ({
+    label: `${i.firstName} ${i.lastName}`,
+    value: {
+      ...i,
+      name: `${i.firstName} ${i.lastName}`,
+    },
+  }))
+);
+
 const selected = ref("");
 const isLoading = ref(false);
 const directors = ref([]);
@@ -204,17 +215,11 @@ const handleNext = () => {
   active.value = 4;
 };
 
-const directorOptions = [
-  {
-    label: "James Bond",
-    value: 0,
-  },
-  {
-    label: "Jason Momoa",
-    value: 1,
-  },
-];
-
+watch(selected, () => {
+  if (selected.value) {
+    formData.directors = [...formData.directors, selected.value.value];
+  }
+});
 provide("handleChange", handleChange);
 </script>
 

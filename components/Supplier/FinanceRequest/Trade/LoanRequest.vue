@@ -1,7 +1,11 @@
 <template>
   <form @submit.prevent="onSubmit" class="w-full mt-6">
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
-      <FormGroup label="How much do you require?" :error="errors.amountRequired" name="amountRequired">
+      <FormGroup
+        label="How much do you require?"
+        :error="errors.amountRequired"
+        name="amountRequired"
+      >
         <CurrencyInput
           min="1"
           :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
@@ -59,26 +63,32 @@ const formValues = reactive({
   whereDidYouHearAboutUs: "",
 });
 const active = inject("active");
-
+const formData = inject("formData");
 const schema = yup.object({
-  amountRequired: yup.number().typeError("invalid value").min(100, "Minimum amount is 100 naira").required("Amount is required"),
+  amountRequired: yup
+    .number()
+    .typeError("invalid value")
+    .min(100, "Minimum amount is 100 naira")
+    .required("Amount is required"),
   tenor: yup.string().required("Tenor is required"),
   whereDidYouHearAboutUs: yup.string(),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue } = useForm({
   validationSchema: schema,
-  initialValues: formValues,
+  initialValues: formData.loanRequest,
 });
 
 const [amountRequired, amountRequiredAtt] = defineField("amountRequired");
 const [tenor, tenorAtt] = defineField("tenor");
-const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField("whereDidYouHearAboutUs");
-const formData = inject("formData")
+const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField(
+  "whereDidYouHearAboutUs"
+);
+
 const onSubmit = handleSubmit((values) => {
   console.log("🚀 ~ onSubmit ~ values:", values);
-  formData.loanRequest = values
-  active.value = 2
+  formData.loanRequest = values;
+  active.value = 2;
 });
 
 const options = [

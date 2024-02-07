@@ -8,7 +8,7 @@
       <template #subtext>
         <p class="text-sm text-[#475467]">
           Request for financing for your business.
-          <NuxtLink to="/financing"
+          <NuxtLink to="/finance"
             ><span class="text-primary-500 font-medium"
               >Learn more</span
             ></NuxtLink

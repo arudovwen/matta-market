@@ -102,11 +102,11 @@
                       >
                         <option disabled value="">Select sector</option>
                         <option
-                          v-for="item in sectors"
-                          :key="item.name"
-                          :value="item.name"
+                          v-for="item in businessTypesOptions"
+                          :key="item.label"
+                          :value="item.value"
                         >
-                          {{ item.name }}
+                          {{ item.label }}
                         </option>
                       </select>
                       <i
@@ -550,7 +550,23 @@ const img = ref("");
 const image = ref(null);
 const coordinate = ref(null);
 const cropper = ref(null);
-
+const businessTypesOptions = businessTypes?.map(i=>{
+  return {
+    label:i.sector,
+    value:i.sector
+  }
+});
+const sectorOptions = computed(() => {
+  const selectedBusinessType = businessTypes?.find(i => i.sector === businessType.value);
+  if (!selectedBusinessType) return []; // Handle case when selected business type is not found
+  
+  return selectedBusinessType.subSectors?.map(i => {
+    return {
+      label: i.subSectorName,
+      value: i.subSectorCode // Use subSectorCode as the value
+    };
+  }) ?? []; // Use optional chaining and nullish coalescing operators for safer property access
+});
 const form = reactive({
   companyName: "",
   companyType: "",

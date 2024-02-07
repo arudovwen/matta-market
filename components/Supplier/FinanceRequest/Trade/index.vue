@@ -6,13 +6,16 @@
     <div class="py-10" v-if="active !== 5">
       <Stepper :tabs="tabs" />
     </div>
-    <div class="max-w-[576px] mx-auto w-full" v-if="active !== 5">
-      <LoanRequest v-if="active === 1" />
-      <Kyb v-if="active === 2" />
-      <Documents v-if="active === 4" />
-      <Directors v-if="active === 3" />
+    <div v-if="!loading">
+      <div class="max-w-[576px] mx-auto w-full" v-if="active !== 5">
+        <LoanRequest v-if="active === 1" />
+        <Kyb v-if="active === 2" />
+        <Documents v-if="active === 4" />
+        <Directors v-if="active === 3" />
+      </div>
+      <Final v-if="active === 5" />
     </div>
-    <Final v-if="active === 5" />
+    <AppLoader v-else />
   </div>
 </template>
 <script setup>
@@ -21,37 +24,61 @@ import Kyb from "./Kyb";
 import Documents from "./Documents";
 import Directors from "./Directors";
 import Final from "./Final";
-import {
-  getCompanyProfile
-} from "@/services/settingservices";
+import { getCompanyProfile } from "@/services/settingservices";
 
-const company = ref(null)
+const loading = ref(true);
+const company = ref(null);
 const route = useRoute();
-const { type } = route.params;
+const { type, id } = route.params;
+const authStore = useAuthStore();
 const formData = reactive({
-  loanRequest: null,
-  kyb: null,
-  amountRequired: 0,
-  tenor: 0,
-  customerId: 0,
-  whereDidYouHearAboutUs: "",
-  loanRequestType: 0,
+  loanRequest: { amountRequired: 0, tenor: 0, whereDidYouHearAboutUs: "" },
+  kyb: {
+    companyName: "",
+    sector: "",
+    date: "",
+    businessType: "",
+    address: "",
+    productDesc: "",
+    companyDocuments: [],
+  },
+  customerId: authStore.userId,
+  loanRequestType: id,
   directors: [
     {
       firstName: "",
       lastName: "",
+      name: "",
+      bvn: "",
       email: "",
       phone: "",
-      dob: "",
-      bvn: "",
+      linkedin: "",
+      id: "",
+      signature: "",
     },
   ],
-  supportingDocuments: [
-    {
-      url: "",
-      documentType: 0,
-    },
-  ],
+  documents: {
+    supportingDocuments: [
+      {
+        url: "",
+        documentType: 0,
+      },
+      {
+        url: "",
+        documentType: 1,
+      },
+      {
+        url: "",
+        documentType: 2,
+      },
+      {
+        url: "",
+        documentType: 3,
+      },
+    ],
+    previousExport: "",
+    doneBusiness: "",
+  },
 });
 const active = ref(1);
 const tabs = [
@@ -75,9 +102,16 @@ const tabs = [
 
 onMounted(() => {
   getCompanyProfile().then((res) => {
+    loading.value = false;
     company.value = res.data.data;
+    formData.kyb.companyName = res.data.data.companyName;
+    formData.kyb.sector = res.data.data.companyType;
+    formData.kyb.businessType = res.data.data.companyType;
+    formData.kyb.address = res.data.data.address;
+    formData.kyb.productDesc = res.data.data.description;
   });
 });
+provide("company", company);
 provide("active", active);
 provide("formData", formData);
 </script>

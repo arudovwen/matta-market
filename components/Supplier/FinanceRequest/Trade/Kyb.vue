@@ -17,7 +17,7 @@
       >
         <Select
           v-model="businessType"
-          :options="businessTypes"
+          :options="businessTypesOptions"
           placeholder="Select type"
           :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
             errors.tenor ? 'border-red-500' : 'border-[#D0D5DD]'
@@ -27,20 +27,21 @@
       <Textinput
         placeholder=""
         label="Date of incorporation"
-        name="date"
+        name="dateOfIncorporation"
         type="date"
-        v-bind="dateAtt"
-        v-model="date"
-        :error="errors.date"
+        v-bind="dateOfIncorporationAtt"
+        v-model="dateOfIncorporation"
+        :error="errors.dateOfIncorporation"
       />
 
-      <FormGroup label="Sector" :error="errors.tenor" name="sector">
+      <FormGroup label="Sector" :error="errors.sector" name="sector">
         <Select
           v-model="sector"
-          :options="mappedSectors"
+          :options="sectorOptions"
+          :disabled="!businessType"
           placeholder="Select sector"
           :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-            errors.tenor ? 'border-red-500' : 'border-[#D0D5DD]'
+            errors.sector ? 'border-red-500' : 'border-[#D0D5DD]'
           }`"
         />
       </FormGroup>
@@ -80,7 +81,7 @@
         <FileUpload label="CAC Status Report" id="statusReport" />
       </FormGroup>
       <FormGroup :error="errors.utilityBill" class="col-span-2">
-        <FileUpload label="Utility bill" id="utilityBill" />
+        <FileUpload label="Utility bill" id="utilitybill" />
       </FormGroup>
     </div>
     <div class="flex gap-x-4 items-center justify-between">
@@ -105,75 +106,128 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import sectors from "~/utils/sectors.json";
+import {businessTypes} from "~/utils/constants.js";
 
+const formData = inject("formData");
 const mappedSectors = computed(() =>
   sectors.map((i) => ({ label: i.name, value: i.name }))
 );
 const isLoading = ref(false);
-const formValues = reactive({
-  companyName: "",
-  sector: "",
-  date: "",
-  businessType: "",
-  address: "",
-  productDesc: "",
-  statusReport: "",
-  incorporation: "",
-  mermat: "",
-  utilityBill: "",
-});
+
 const active = inject("active");
 
 const formSchema = yup.object().shape({
   companyName: yup.string().required("Company Name is required"),
   sector: yup.string().required("Sector is required"),
-  date: yup
+  dateOfIncorporation: yup
     .date()
-    .typeError("Invalid date")
+    .typeError("Invalid date Of Incorporation")
     .nullable()
-    .required("Date is required"), // Assuming date is a date type
+    .required("Date Of Incorporation is required"), // Assuming dateOfIncorporation is a dateOfIncorporation type
   businessType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   productDesc: yup.string().required("Product Description is required"),
   statusReport: yup.string().required("Status Report is required"),
-  incorporation: yup.string().required("Incorporation is required"), // Assuming incorporation is a date type
+  incorporation: yup.string().required("Incorporation is required"), // Assuming incorporation is a dateOfIncorporation type
   mermat: yup.string().required("Mermat is required"),
   utilityBill: yup.string().required("Utility Bill is required"),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue } = useForm({
   validationSchema: formSchema,
-  initialValues: formValues,
+  initialValues: formData.kyb,
 });
 
 const [companyName, companyNameAtt] = defineField("companyName");
 const [sector, sectorAtt] = defineField("sector");
-const [date, dateAtt] = defineField("date");
+const [dateOfIncorporation, dateOfIncorporationAtt] = defineField("dateOfIncorporation");
 const [businessType, businessTypeAtt] = defineField("businessType");
 const [address, addressAtt] = defineField("address");
 const [productDesc, productDescAtt] = defineField("productDesc");
 
 function handleChange(id, value) {
-  setFieldValue(id, value);
+  form.kyb.companyDocuments.map((i) => {
+    if (id === "incorporation" && i.documentType === 0) {
+      i.url = value;
+    }
+    if (id === "mermat" && i.documentType === 1) {
+      i.url = value;
+    }
+    if (id === "statusReport" && i.documentType === 2) {
+      i.url = value;
+    }
+    if (id === "utilitybill" && i.documentType === 2) {
+      i.url = value;
+    }
+  });
+}
+function docUrl(id) {
+  return form.companyDocuments.find((i) => i.documentType === id)?.url || "";
+}
+function downloadFile(fileUrl, fileName) {
+  // Replace 'your_file_url' with the actual URL of the file you want to download
+
+  fetch(fileUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.blob();
+    })
+    .then((blob) => {
+      // Create a link element
+      const link = document.createElement("a");
+
+      // Create a Blob URL for the file data
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      // Set the link's href attribute to the Blob URL
+      link.href = blobUrl;
+
+      // Set the download attribute with the desired file name
+      link.download = fileName || "downloaded_file"; // Change the file name as needed
+
+      // Append the link to the document
+      document.body.appendChild(link);
+
+      // Trigger a click on the link to start the download
+      link.click();
+
+      // Remove the link from the document
+      document.body.removeChild(link);
+
+      // Revoke the Blob URL to free up resources
+      window.URL.revokeObjectURL(blobUrl);
+    })
+    .catch((error) => {
+      console.error("Error downloading file:", error);
+    });
 }
 
-const formData = inject("formData");
 const onSubmit = handleSubmit((values) => {
   console.log("🚀 ~ onSubmit ~ values:", values);
   formData.kyb = values;
   active.value = 3;
 });
 
-const businessTypes = [
-  {
-    label: "Type A",
-    value: 0,
-  },
-  {
-    label: "Type B",
-    value: 1,
-  },
-];
+const businessTypesOptions = businessTypes?.map(i=>{
+  return {
+    label:i.sector,
+    value:i.sector
+  }
+});
+const sectorOptions = computed(() => {
+  const selectedBusinessType = businessTypes?.find(i => i.sector === businessType.value);
+  if (!selectedBusinessType) return []; // Handle case when selected business type is not found
+  
+  return selectedBusinessType.subSectors?.map(i => {
+    return {
+      label: i.subSectorName,
+      value: i.subSectorCode // Use subSectorCode as the value
+    };
+  }) ?? []; // Use optional chaining and nullish coalescing operators for safer property access
+});
+
 provide("handleChange", handleChange);
 </script>
 

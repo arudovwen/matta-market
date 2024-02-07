@@ -253,10 +253,10 @@ const tabs = [
     key: "hidden",
   },
 
-  {
-    title: "archived",
-    key: "archive",
-  },
+  // {
+  //   title: "archived",
+  //   key: "archive",
+  // },
 ];
 const links = [
   {
