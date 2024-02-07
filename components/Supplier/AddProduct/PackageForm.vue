@@ -196,7 +196,7 @@ const packForm = reactive({
   title: "",
   amount: null,
   color: "",
-  purity: "",
+  purity: null,
   size: "",
   isAvailable: false,
   unit:form.unit

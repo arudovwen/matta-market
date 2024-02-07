@@ -408,7 +408,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
                 >
-                  {{ item?.purity }}%
+                {{ item?.purity || "-" }}{{item?.purity && "%"}}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal  py-4 px-6 ] whitespace-nowrap"
@@ -518,7 +518,7 @@
   </form>
 
   <div>
-    <Modal :isOpen="isAddingPackage" @toggleModal="isAddingPackage = false">
+    <Modal :isOpen="isAddingPackage" @toggleModal="isAddingPackage = false" :canClose="false">
       <template #content>
         <form
           v-if="typeForm === 'producer'"

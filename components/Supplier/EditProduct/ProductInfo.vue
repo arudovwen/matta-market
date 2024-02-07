@@ -1,6 +1,8 @@
 <template>
   <form class="px-6 lg:px-[30px] text-left" @submit.prevent="handleSubmit">
-    <div class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10">
+    <div
+      class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    >
       <div class="w-[300px] text-left">
         <h2 class="text-sm text-[#101828] font-semibold">Product info</h2>
         <p class="text-xs text-[#475467]">Add your product details here.</p>
@@ -109,7 +111,7 @@
                             <hr class="my-4" />
                             <div class="flex justify-end">
                               <button
-                                @click="handleAddingPackage"
+                                @click="handleAddingProducer"
                                 type="button"
                                 class="appearance-none text-xs leading-none px-6 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 uppercase"
                               >
@@ -131,11 +133,7 @@
                                 <span
                                   class="h-11 w-12 rounded-lg bg-white shadow p-4 flex items-center justify-center mr-4 border border-[#E7EBEE]"
                                 >
-                                  <img
-                                    v-if="i.logo"
-                                    :src="i.logo"
-                                    alt="logo"
-                                  />
+                                  <img v-if="i.logo" :src="i.logo" alt="logo" />
                                   <p class="uppercase text-base" v-else>
                                     {{ i.title.slice(0, 2) }}
                                   </p>
@@ -292,7 +290,9 @@
       </div>
     </div>
     <hr class="border-[#F4F7FE] my-10" />
-    <div class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10">
+    <div
+      class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    >
       <div class="w-[300px]">
         <h2 class="text-sm text-[#101828] font-semibold">
           Packages & Availability <span class="text-red-500 mr-[.5px]">*</span>
@@ -580,41 +580,45 @@
                 <th
                   v-for="(item, i) in headers"
                   :key="item"
-                  class="capitalize text-[#475467] text-sm text-left font-medium border-b  py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+                  class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
                 >
                   {{ item }}
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in form.packagesAvailable" :key="item.id" class="border-b border-[#EAECF0] last:border-none">
+              <tr
+                v-for="item in form.packagesAvailable"
+                :key="item.id"
+                class="border-b border-[#EAECF0] last:border-none"
+              >
                 <td
-                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   {{ item?.package?.title }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item?.size  || "-" }}
+                  {{ item?.size || "-" }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6 whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   {{ currencyFormat(item?.amount) }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item?.color || "-"}}
+                  {{ item?.color || "-" }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item?.purity }}%
+                  {{ item?.purity  || "-"}}{{ item?.purity && "%" }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal  py-4 px-6  whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   <span class="flex gap-x-4">
                     <span @click="removepackage(i)"
@@ -625,7 +629,7 @@
                         icon="prime:pencil"
                         iconClass="text-[#475467]" /></span
                   > -->
-                </span> 
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -634,7 +638,9 @@
       </div>
     </div>
     <hr class="border-[#F4F7FE] my-10" />
-    <div class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10">
+    <div
+      class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    >
       <div class="w-[300px]">
         <h2 class="text-sm text-[#101828] font-semibold">Gallery</h2>
         <p class="text-xs text-[#475467]">
@@ -693,7 +699,7 @@
       <button
         type="button"
         @click="togglePreview"
-        class="appearance-none leading-none px-5  lg:px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
+        class="appearance-none leading-none px-5 lg:px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
       >
         Preview
       </button>
@@ -701,7 +707,7 @@
         <NuxtLink to="/storefront/products"
           ><button
             type="button"
-            class="appearance-none leading-none px-5  lg:px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
+            class="appearance-none leading-none px-5 lg:px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
           >
             Cancel
           </button></NuxtLink
@@ -712,7 +718,7 @@
             'bg-primary/60 cursor-not-allowed': isLoading,
           }"
           type="submit"
-          class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
+          class="appearance-none leading-none px-6 lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
         >
           Next
         </button>
@@ -820,6 +826,7 @@
         <PackageForm
           v-if="typeForm === 'package'"
           @close="isAddingPackage = false"
+          :canClose="false"
         />
       </template>
     </IndexModal>
@@ -842,7 +849,7 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
-// import { Cropper } from "vue-advanced-cropper";
+import PackageForm from "../AddProduct/PackageForm";
 // import "vue-advanced-cropper/dist/style.css";
 
 import useVuelidate from "@vuelidate/core";
