@@ -1,6 +1,6 @@
 <template>
 <div class="flex gap-x-[76px] pt-[30px] flex-col lg:flex-row gap-y-7 lg:gap-y-10 py-2">
-        <div class="w-[300px]">
+        <div class="w-[250px]">
           <h2 class="text-sm text-[#101828] font-semibold">Personal info</h2>
           <p class="text-xs text-[#475467]">
             Update your photo and personal details here.

@@ -122,7 +122,7 @@
     v-if="isFilterOpen"
   >
     <template #content>
-      <div class="bg-white py-10 px-4 rounded-lg min-w-[300px]">
+      <div class="bg-white py-10 px-4 rounded-lg min-w-[250px]">
         <div class="flex flex-col gap-4 items-center">
           <SelectComponent
             @onGetData="onGetPrice"

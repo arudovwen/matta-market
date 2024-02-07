@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white p-6 lg:p-8 sm:p-6 sm:pb-4 min-w-[300px] w-full lg:w-[400px] rounded-lg"
+    class="bg-white p-6 lg:p-8 sm:p-6 sm:pb-4 min-w-[250px] w-full lg:w-[400px] rounded-lg"
   >
     <div class="flex justify-between mb-5 items-center">
       <h4 class="font-medium text-matta-black text-xl">Save Search</h4>

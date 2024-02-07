@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="max-w-[300px] mx-auto">
+  <form @submit.prevent="handleSubmit" class="max-w-[250px] mx-auto">
     <span class="block text-2xl font-medium text-center mb-2">Enter OTP</span>
     <p class="mb-6 text-sm text-center font-base text-gray-500">
       Provide 4 digit otp code sent to your email

@@ -1,9 +1,9 @@
 <template>
   <form class="px-6 lg:px-[30px] text-left" @submit.prevent="handleSubmit">
     <div
-      class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
-      <div class="w-[300px] text-left">
+      <div class="w-[250px] text-left">
         <h2 class="text-sm text-[#101828] font-semibold">Product info</h2>
         <p class="text-xs text-[#475467]">Add your product details here.</p>
       </div>
@@ -291,9 +291,9 @@
     </div>
     <hr class="border-[#F4F7FE] my-10" />
     <div
-      class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
-      <div class="w-[300px]">
+      <div class="w-[250px]">
         <h2 class="text-sm text-[#101828] font-semibold">
           Packages & Availability <span class="text-red-500 mr-[.5px]">*</span>
         </h2>
@@ -639,9 +639,9 @@
     </div>
     <hr class="border-[#F4F7FE] my-10" />
     <div
-      class="flex gap-x-[78px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
-      <div class="w-[300px]">
+      <div class="w-[250px]">
         <h2 class="text-sm text-[#101828] font-semibold">Gallery</h2>
         <p class="text-xs text-[#475467]">
           Upload pictures of your products here.

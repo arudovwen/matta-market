@@ -13,7 +13,7 @@
 
         </h1>
 
-        <div class="grid grid-cols-2 gap-5 md:min-w-[300px]">
+        <div class="grid grid-cols-2 gap-5 md:min-w-[250px]">
           <div
             class="px-5 border-l-4 border-[rgba(81,32,11,0.05)]"
             v-for="n in content"

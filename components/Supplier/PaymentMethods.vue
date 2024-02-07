@@ -14,7 +14,7 @@
         </div>
         <div />
         <div class="col-span-1 grid justify-end">
-          <span class="p-5 rounded-lg bg-[#F1F3F5] w-[300px]"></span>
+          <span class="p-5 rounded-lg bg-[#F1F3F5] w-[250px]"></span>
         </div>
       </div>
     </div>
