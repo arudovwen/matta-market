@@ -21,12 +21,16 @@ import Kyb from "./Kyb";
 import Documents from "./Documents";
 import Directors from "./Directors";
 import Final from "./Final";
+import {
+  getCompanyProfile
+} from "@/services/settingservices";
+
+const company = ref(null)
 const route = useRoute();
 const { type } = route.params;
 const formData = reactive({
   loanRequest: null,
   kyb: null,
-
   amountRequired: 0,
   tenor: 0,
   customerId: 0,
@@ -68,6 +72,12 @@ const tabs = [
     value: 4,
   },
 ];
+
+onMounted(() => {
+  getCompanyProfile().then((res) => {
+    company.value = res.data.data;
+  });
+});
 provide("active", active);
 provide("formData", formData);
 </script>

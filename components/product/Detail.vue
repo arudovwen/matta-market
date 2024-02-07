@@ -112,7 +112,7 @@
           />
         </div>
         <div
-          v-if="!productData.hidePrice"
+          v-if="!productData.hidePrice && productData?.supplierId !== authStore.businessId"
           class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4"
         >
           <div class="h-[50px] lg:flex-1">

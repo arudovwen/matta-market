@@ -189,7 +189,7 @@
           @btnFunction="openmodal('method')"
           btnText="New User"
           title="No users found"
-          subtext="Your search “Stripe” did not match any vendors. Please try again or create add a new vendor."
+          subtext="You havent't added any user to your team"
           type="user"
           btnIcon="humbleicons:plus"
           v-else

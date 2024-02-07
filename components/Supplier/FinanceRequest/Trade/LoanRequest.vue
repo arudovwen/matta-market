@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit" class="w-full mt-6">
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
-      <FormGroup label="How much do you require?" :error="errors.amountRequired">
+      <FormGroup label="How much do you require?" :error="errors.amountRequired" name="amountRequired">
         <CurrencyInput
           min="1"
           :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
@@ -61,9 +61,9 @@ const formValues = reactive({
 const active = inject("active");
 
 const schema = yup.object({
-  amountRequired: yup.string().required("amountRequired is required"),
+  amountRequired: yup.number().typeError("invalid value").min(100, "Minimum amount is 100 naira").required("Amount is required"),
   tenor: yup.string().required("Tenor is required"),
-  whereDidYouHearAboutUs: yup.string().required("whereDidYouHearAboutUs is required"),
+  whereDidYouHearAboutUs: yup.string(),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue } = useForm({
@@ -77,18 +77,26 @@ const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField("whereDi
 const formData = inject("formData")
 const onSubmit = handleSubmit((values) => {
   console.log("🚀 ~ onSubmit ~ values:", values);
-  formData = {...formData, ...values}
+  formData.loanRequest = values
   active.value = 2
 });
 
 const options = [
   {
-    label: "1 month",
-    value: 0,
+    label: "7 days",
+    value: 7,
   },
   {
-    label: "3 month",
-    value: 1,
+    label: "14 days",
+    value: 14,
+  },
+  {
+    label: "30 days",
+    value: 30,
+  },
+  {
+    label: "60 days",
+    value: 60,
   },
 ];
 </script>
