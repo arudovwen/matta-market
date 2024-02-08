@@ -56,7 +56,7 @@
     <AppButton
       :isLoading="loading"
       @click="confirmOrder"
-      :isDisabled="!cartStore?.cart || !cartStore?.cartTotalAmount || loading"
+      :isDisabled="!cartStore?.cart || !cartStore?.cartTotalAmount || loading ||!shippingStore?.defaultAddress?.id"
       :text="status"
       btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
     />

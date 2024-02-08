@@ -63,7 +63,7 @@
     <ModalCenter>
       <template #default>
         <div class="w-full max-w-[500px] p-6 md:py-9 md:px-10 z-[999] relative">
-          <CheckoutShippingForm v-if="type === 'form'" />
+          <CheckoutShippingAddForm v-if="type === 'form'" />
           <CheckoutShippingEditForm v-if="type === 'edit'" />
         </div>
       </template>

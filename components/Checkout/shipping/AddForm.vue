@@ -42,7 +42,7 @@
           :error="errors.country"
         />
       </div>
-    
+   
       <div>
         <Textinput
           placeholder=""
@@ -54,7 +54,7 @@
           v-bind="cityAtt"
           :error="errors.city"
         />
-      </div>  <div class="xl:col-span-2">
+      </div>   <div class="xl:col-span-2">
         <Textinput
           placeholder=""
           label="Address"
@@ -104,10 +104,12 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from 'vue3-toastify';
-import { editshipping, } from "~/services/cartservice";
+import { addshipping } from "~/services/cartservice";
 
+const detail = inject("detail")
+const type = inject("type")
 const isOpen = inject("isOpen");
-
+const shippingStore = useShippingStore()
 const isLoading = ref(false);
 const formValues = {
   firstName: "",
@@ -128,11 +130,14 @@ const schema = yup.object({
   postalCode: yup.string().required("Postal code is required"),
 });
 
-const { handleSubmit, defineField, errors } = useForm({
+const { handleSubmit, defineField, errors, setValues } = useForm({
   validationSchema: schema,
   initialValues: formValues,
 });
 
+onMounted(() => {
+  setValues(detail.value)
+})
 const [firstName, firstNameAtt] = defineField("firstName");
 const [lastName, lastNameAtt] = defineField("lastName");
 const [street, streetAtt] = defineField("street");
@@ -141,15 +146,17 @@ const [city, cityAtt] = defineField("city");
 const [postalCode, postalCodeAtt] = defineField("postalCode");
 const [isDefault, isDefaultAtt] = defineField("isDefault");
 
+const route = useRoute();
+const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  editshipping(values)
+  addshipping(values)
     .then((res) => {
       if (res.status === 200) {
-        toast.info("Address updated");
+        toast.info("Address added");
+        shippingStore?.getAlladdress()
         isOpen.value = false;
-        useshippingStore.getAlladdress()
       }
     })
 

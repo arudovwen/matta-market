@@ -13,7 +13,7 @@ export function payWithMonnify(data, onModalClose, onSuccess) {
     reference: "" + Math.floor(Math.random() * 1000000000 + 1),
     customerName: data.name,
     customerEmail: data.email,
-    apiKey: config.public.APP_MONNIFYISTEST,
+    apiKey: config.public.APP_MONNIFYAPIKEY,
     contractCode: config.public.APP_MONNIFYCONTRACTCODE,
 
     paymentDescription: "Order payment",
