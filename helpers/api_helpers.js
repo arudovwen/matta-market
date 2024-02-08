@@ -28,7 +28,7 @@ const handleTokenRefresh = async () => {
     // Call the API to refresh the token
     const refreshResponse = await axiosApi.post("/v1/Account/refreshtoken", {
       token: authStore.refresh_token,
-      ipAddress: "string",
+      ipAddress: "",
     });
 
     // Update the access token in the store or localStorage

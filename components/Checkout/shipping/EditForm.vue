@@ -107,9 +107,11 @@ import { toast } from 'vue3-toastify';
 import { editshipping, } from "~/services/cartservice";
 
 const isOpen = inject("isOpen");
-
+const detail = inject("detail")
+const type = inject("type")
 const isLoading = ref(false);
 const formValues = {
+  id:"",
   firstName: "",
   lastName: "",
   street: "",
@@ -118,7 +120,9 @@ const formValues = {
   postalCode: "",
   isDefault: false,
 };
-
+onMounted(() => {
+  setValues(detail.value)
+})
 const schema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -128,7 +132,7 @@ const schema = yup.object({
   postalCode: yup.string().required("Postal code is required"),
 });
 
-const { handleSubmit, defineField, errors } = useForm({
+const { handleSubmit, defineField, errors,setValues } = useForm({
   validationSchema: schema,
   initialValues: formValues,
 });
