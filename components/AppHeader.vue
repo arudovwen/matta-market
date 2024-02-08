@@ -412,10 +412,10 @@ const { currentRoute } = router;
 const filteredMenu = computed(() =>
   mobileMenu.filter(
     (i) =>
-      i.key === "profile" ||
-      i.key === "wallet" ||
+      i.key === "account-settings" ||
+      i.key === "wallet-home" ||
       i.key === "sign-out" ||
-      i.key === "my-orders"
+      i.key === "procurement-my-orders"
   )
 );
 const view = ref({
