@@ -200,9 +200,9 @@ export const mobileMenu = [
   },
   {
     name: "Products",
-    url: "/storefront/products",
+    url: "/products",
     icon: "fluent-mdl2:product-variant",
-    key: "storefront-products",
+    key: "products",
   },
   {
     name: "Sign out",

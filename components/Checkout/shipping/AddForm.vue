@@ -81,7 +81,7 @@
         class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
       >
         <Checkbox
-          label="Set default"
+          label="Set as default"
           labelClass="text-xs md:text-sm"
           v-model="isDefault"
           v-bind="isDefaultAtt"

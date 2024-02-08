@@ -62,9 +62,10 @@
                     </button>
 
                     <button
+                    :disabled="loading"
                       type="button"
                       @click="deleteItem"
-                      class="appearance-none leading-none px-4 py-[10px] rounded-lg text-white bg-[#D92D20] text-sm w-full border border-[#D92D20] font-medium"
+                      class="appearance-none leading-none px-4 py-[10px] rounded-lg text-white bg-[#D92D20] text-sm w-full border border-[#D92D20] font-medium disabled:opacity-50"
                     >
                       {{btnText}}
                     </button>
@@ -87,7 +88,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-defineProps(["title", "text", "open","btnText"]);
+defineProps(["title", "text", "open","btnText", "loading"]);
 const emits = defineEmits(["deleteItem", "close"]);
 
 function deleteItem() {

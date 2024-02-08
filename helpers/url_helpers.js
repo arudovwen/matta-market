@@ -102,6 +102,7 @@ const urls = {
   EDIT_SHIPPING_ADDRESS: "/v1/shippingaddress/edit",
   GET_SHIPPING_ADDRESS: "/v1/shippingaddress/getall",
   DEFAULT_SHIPPING_ADDRESS: "/v1/shippingaddress/setasdefault",
+  DELETE_SHIPPING: "/v1/shippingaddress/delete",
 
   //Procurement
   PROCUREMENT_ORDERS: "v1/procurement/orders",
@@ -199,5 +200,7 @@ const urls = {
   ADD_FINANCE: "/financing/add",
   EDIT_FINANCE: "/financing/edit",
   UPDATE_APPROVE_FINANCE: "/financing/financing/update-approval",
+
+  
 };
 export default urls;

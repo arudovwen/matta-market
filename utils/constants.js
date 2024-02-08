@@ -59,7 +59,7 @@ export const vendorRoutes = [
   "procurement-shipping-addresses",
   "financing",
   "account-saved-searches",
-  "storefront-products",
+  "products",
   "storefront",
   "storefront-orders",
   "storefront-requests",
@@ -141,9 +141,9 @@ export const navigation = [
   },
   {
     name: "Products",
-    url: "/storefront/products",
+    url: "/products",
     icon: "fluent-mdl2:product-variant",
-    key: "storefront-products",
+    key: "products",
   },
 ];
 

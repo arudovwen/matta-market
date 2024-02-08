@@ -33,6 +33,7 @@
                 iconClass="!text-base"
               />
               <AppButton
+                @click="handleDelete(n)"
                 text="Delete"
                 icon="bx:trash"
                 btnClass=" !px-0  !py-[0] text-xs sm:text-sm !font-normal text-red-600"
@@ -68,11 +69,19 @@
         </div>
       </template>
     </ModalCenter>
+    <DeleteModal
+      @deleteItem="deleteItem"
+      title=" Remove Shipping Address"
+      :open="isDeleteOpen"
+      btnText="Delete address"
+      :loading="deleteLoading"
+      @close="isDeleteOpen = false"
+    />
   </div>
 </template>
 
 <script setup>
-import { setdefaultaddress } from "~/services/cartservice";
+import { setdefaultaddress, deleteAddress } from "~/services/cartservice";
 
 defineProps(["title"]);
 
@@ -80,6 +89,8 @@ const shippingStore = useShippingStore();
 const type = ref("form");
 const detail = ref("detail");
 const isOpen = ref(false);
+const isDeleteOpen = ref(false);
+const deleteLoading = ref(false);
 function openModal(val) {
   type.value = val;
   isOpen.value = true;
@@ -103,6 +114,24 @@ function handleEdit(val) {
   detail.value = val;
   type.value = "edit";
   isOpen.value = true;
+}
+function handleDelete(val) {
+  detail.value = val;
+  type.value = "delete";
+  isDeleteOpen.value = true;
+}
+function deleteItem() {
+  deleteLoading.value = true;
+  deleteAddress(detail.value.id)
+    .then(() => {
+      shippingStore.getAlladdress();
+      deleteLoading.value = false;
+      isDeleteOpen.value = false;
+    })
+    .catch((err) => {
+      deleteLoading.value = false;
+      toast.error(err.response.data.Message || err.response.data.message);
+    });
 }
 
 provide("type", type);

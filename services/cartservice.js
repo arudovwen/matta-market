@@ -22,7 +22,9 @@ export async function getcart() {
 export async function removecartitem(data) {
   return await post(`${urls.REMOVE_CART}/${data}`, data, config);
 }
-
+export async function deleteAddress(data) {
+  return await post(`${urls.DELETE_SHIPPING}/${data}`, data, config);
+}
 export async function addshipping(data) {
   return await post(urls.ADD_SHIPPING_ADDRESS, data, config);
 }
@@ -30,6 +32,7 @@ export async function addshipping(data) {
 export async function editshipping(data) {
   return await post(urls.EDIT_SHIPPING_ADDRESS, data, config);
 }
+
 
 export async function setdefaultaddress(addressId) {
   return await post(

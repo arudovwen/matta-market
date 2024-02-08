@@ -19,7 +19,7 @@
         />
 
         <AppButton
-          v-if="shippingStore?.defaultAddress"
+          v-if="shippingStore?.addressesData?.length"
           @click="openModal('select')"
           text="Change address"
           btnClass="!px-4

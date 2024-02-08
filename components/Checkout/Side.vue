@@ -56,7 +56,12 @@
     <AppButton
       :isLoading="loading"
       @click="confirmOrder"
-      :isDisabled="!cartStore?.cart || !cartStore?.cartTotalAmount || loading ||!shippingStore?.defaultAddress?.id"
+      :isDisabled="
+        !cartStore?.cart ||
+        !cartStore?.cartTotalAmount ||
+        loading ||
+        !shippingStore?.defaultAddress?.id
+      "
       :text="status"
       btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
     />
@@ -68,7 +73,7 @@
   </div>
 </template>
 <script setup>
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { confirmpurchase } from "~/services/cartservice";
 
 const cartTaxAmount = computed(
@@ -102,15 +107,22 @@ function confirmOrder() {
   payWithMonnify(data.value, onModalClose, onSuccess);
 }
 function onSuccess() {
-  confirmpurchase({ shippingAddressId: data.value.shippingAddressId }).then(
-    (res) => {
+  confirmpurchase({ shippingAddressId: data.value.shippingAddressId })
+    .then((res) => {
       if (res.status === 200) {
         cartStore?.clearCart;
         window.location.href = "/order-success";
         // window.location.href = `/transaction/successful?trx_ref=${response.transactionReference}`;
         // Payment complete! Reference: transaction.reference
       }
-    }
-  );
+    })
+    .catch((err) => {
+      const error = `${
+        err.response.data.Message || err.response.data.message
+      }, Contact us for assistance on your order`;
+      toast.error(error);
+      status.value = "Retry order";
+      loading.value = false;
+    });
 }
 </script>
