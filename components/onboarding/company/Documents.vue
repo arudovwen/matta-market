@@ -45,6 +45,17 @@
             ></span
           >
         </div>
+        <div>
+          <FileUpload label="Utility bill" id="utilityBill" />
+          <span
+            @click="downloadFile(docUrl(3), 'Utility bill')"
+            v-if="docUrl(3)"
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Utitlity Bill</span
+            ></span
+          >
+        </div>
       </div>
     </div>
     <div   v-if="
@@ -129,6 +140,9 @@ function handleChange(id, value) {
       i.url = value;
     }
     if (id === "statusReport" && i.documentType === 2) {
+      i.url = value;
+    }
+    if (id === "utitlityBill" && i.documentType === 3) {
       i.url = value;
     }
   });

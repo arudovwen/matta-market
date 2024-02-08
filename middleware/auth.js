@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-  console.log("🚀 ~ defineNuxtRouteMiddleware ~ to:", to)
+
   const authStore = useAuthStore();
 
   // if token exists and url is /login redirect to homepage

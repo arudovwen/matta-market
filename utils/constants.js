@@ -40,31 +40,31 @@ export const FinancesOptions = [
 ];
 
 export const buyerRoutes = [
-  "account",
-  "my-orders",
-  "my-requests",
-  "wallet",
-  "shipping",
+  "account-settings",
+  "procurement-my-orders",
+  "procurement-my-requests",
+  "wallet-home",
+  "procurement-shipping-addresses",
   "financing",
-  "saved",
+  "account-saved-searches",
   "profile",
   "sign-out"
 ];
 export const vendorRoutes = [
   "overview",
-  "account",
-  "my-orders",
-  "my-requests",
-  "wallet",
-  "shipping",
+  "account-settings",
+  "procurement-my-orders",
+  "procurement-my-requests",
+  "wallet-home",
+  "procurement-shipping-addresses",
   "financing",
-  "saved",
-  "products",
+  "account-saved-searches",
+  "storefront-products",
   "storefront",
-  "orders",
-  "requests",
-  "users",
-  "company",
+  "storefront-orders",
+  "storefront-requests",
+  "user-managemennt",
+  "company-settings",
   "profile",
   "sign-out"
 ];
@@ -79,33 +79,33 @@ export const navigation = [
     name: "Profile",
     url: "/account/settings",
     icon: "lucide:user",
-    key: "account",
+    key: "account-settings",
   },
   {
     name: "My Orders",
     url: "/procurement/my-orders",
     icon: "lucide:shopping-bag",
-    key: "my-orders",
+    key: "procurement-my-orders",
   },
   {
     name: "My Requests",
     url: "/procurement/my-requests",
     icon: "ri:hand-coin-line",
-    key: "my-requests",
+    key: "procurement-my-requests",
   },
 
   {
     name: "Shipping Addresses",
     url: "/procurement/shipping-addresses",
     icon: "ion:map-outline",
-    key: "shipping",
+    key: "procurement-shipping-addresses",
   },
 
   {
     name: "Wallet",
     url: "/wallet/home",
     icon: "ion:wallet-outline",
-    key: "wallet",
+    key: "wallet-home",
   },
   {
     name: "Financing requests",
@@ -117,7 +117,7 @@ export const navigation = [
     name: "Saved items",
     url: "/account/saved-searches",
     icon: "tdesign:heart",
-    key: "saved",
+    key: "account-saved-searches",
   },
   {
     name: "Storefront",
@@ -130,20 +130,20 @@ export const navigation = [
     name: "Company Settings",
     url: "/company/settings",
     icon: "mingcute:building-5-line",
-    key: "company",
+    key: "company-settings",
   },
 
   {
     name: "User Management",
     url: "/user-management",
     icon: "lucide:users",
-    key: "users",
+    key: "user-management",
   },
   {
     name: "Products",
     url: "/storefront/products",
     icon: "fluent-mdl2:product-variant",
-    key: "products",
+    key: "storefront-products",
   },
 ];
 

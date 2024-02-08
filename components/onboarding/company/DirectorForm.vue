@@ -1,9 +1,11 @@
 <template>
   <h3 class="font-medium text-2xl mb-8">Add director</h3>
   <form @submit.prevent="handleSubmit">
-    <div class="grid grid-cols-2 gap-x-4">
+    <div class="grid grid-cols-1  lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">First name</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >First name</label
+        >
         <input
           v-model="v$.firstName.$model"
           :class="{ 'border-red-500': v$.firstName.$error }"
@@ -22,7 +24,9 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Last name</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >Last name</label
+        >
         <input
           v-model="v$.lastName.$model"
           :class="{ 'border-red-500': v$.lastName.$error }"
@@ -41,6 +45,7 @@
         </div>
       </div>
     </div>
+   <div class="grid grid-cols-1  lg:grid-cols-2 lg:gap-x-4">
     <div class="mb-6">
       <label for="email" class="mb-2 font-normal text-xs block">E-mail</label>
       <input
@@ -89,9 +94,12 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-x-4">
+   </div>
+    <div class="grid grid-cols-1  lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">BVN</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >BVN</label
+        >
         <input
           v-model="v$.bvn.$model"
           :class="{ 'border-red-500': v$.bvn.$error }"
@@ -110,7 +118,9 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Date of birth</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >Date of birth</label
+        >
         <input
           v-model="v$.dob.$model"
           :class="{ 'border-red-500': v$.dob.$error }"
@@ -129,6 +139,15 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="lg:col-span-2 mb-6">
+      <FileUpload
+        label="Upload ID (Passport, Driver’s License, or NIN)"
+        id="idcard"
+      />
+    </div>
+    <div class="lg:col-span-2 mb-6">
+      <FileUpload label="Upload Signature" id="signature" />
     </div>
     <div class="flex justify-end gap-x-4 mt-8 w-full">
       <button
@@ -170,6 +189,16 @@ const form = reactive({
   phone: "",
   bvn: "",
   dob: "",
+  documents: [
+    {
+      url: "",
+      documentType: 0,
+    },
+    {
+      url: "",
+      documentType: 1,
+    },
+  ],
 });
 const isLoading = ref(false);
 const validPhoneLength = (value) =>
@@ -203,6 +232,16 @@ const rules = {
 
 const v$ = useVuelidate(rules, form);
 
+function handleChange(id, value) {
+  form.documents.map((i) => {
+    if (id === "idcard" && i.documentType === 0) {
+      i.url = value;
+    }
+    if (id === "signature" && i.documentType === 1) {
+      i.url = value;
+    }
+  });
+}
 async function handleSubmit() {
   const validity = await v$.value.$validate();
   if (!validity) return;
@@ -216,4 +255,5 @@ async function handleSubmit() {
   //     "";
   open.value = false;
 }
+provide("handleChange", handleChange);
 </script>
