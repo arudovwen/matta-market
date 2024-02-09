@@ -15,7 +15,7 @@
     >
       <span>{{ tab.title }}</span>
       <span
-        class="text-xs h-6 w-6 rounded-full flex justify-center items-center border border-[#EAECF0] bg-[#F9FAFB] text-[#344054]"
+        class="text-xs h-6 min-w-[24px] rounded-full flex justify-center items-center border border-[#EAECF0] bg-[#F9FAFB] text-[#344054]"
         v-if="count && count[tab.key]"
         >{{ count[tab.key] }}</span
       >

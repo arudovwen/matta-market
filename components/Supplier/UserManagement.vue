@@ -10,6 +10,7 @@
       btnIcon="humbleicons:plus"
       @onClick="openmodal('method')"
       className="!border-[#EAECF0]"
+      :count="queryParams.totalCount"
     />
 
     <div class="rounded-lg bg-white pt-4">

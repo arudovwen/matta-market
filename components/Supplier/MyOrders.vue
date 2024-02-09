@@ -64,7 +64,7 @@
       <div v-if="isShowing === 'all'">
         <div
           class="hidden lg:flex justify-between items-center mb-8"
-          v="!isEmpty"
+        
         >
           <div class="flex gap-x-4">
             <div class="relative flex items-center">

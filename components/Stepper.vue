@@ -5,6 +5,7 @@
   >
     <div
       v-for="tab in tabs"
+      :key="tab.value"
       @click="selectValue(tab.value)"
       class="relative after:content-[''] after:absolute after:border-b-2 after:border-[#EAECF0] after:w-24 after:top-1/2 after:translate-y-[-50%] after:left-[24px] after:last:content-none after:z-10"
       :class="`${
@@ -58,6 +59,7 @@
   >
     <div
       v-for="tab in tabs"
+      :key="tab.value"
       @click="selectValue(tab.value)"
       class="relative after:content-[''] after:border-primary-500 after:absolute after:border-b-2 after:w-24 after:top-1/2 after:translate-y-[-50%] after:left-[24px] after:last:content-none after:z-10"
     >
@@ -91,6 +93,7 @@
   >
     <div
       v-for="tab in tabs"
+      :key="tab.value"
       @click="selectValue(tab.value)"
       class="relative after:content-[''] after:border-green-700 after:absolute after:border-b-2 after:w-24 after:top-1/2 after:translate-y-[-50%] after:left-[24px] after:last:content-none after:z-10"
     >

@@ -11,7 +11,11 @@
         <span class="cursor-pointer" v-if="canGoback" @click="router.go(-1)"
           ><AppIcon icon="ph:arrow-left-bold"
         /></span>
-        {{ title }}
+        {{ title }}  <span
+          class="text-xs h-6 min-w-[24px] px-1 rounded-full flex justify-center items-center border border-[#EAECF0] bg-[#F9FAFB] text-[#344054]"
+          v-if="count"
+          >{{ count }}</span
+        >
       </h1>
       <h1
         v-if="welcome"
