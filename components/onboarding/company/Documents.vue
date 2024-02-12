@@ -10,7 +10,10 @@
           Upload your company registration documents
         </p>
       </div>
-      <div class="grid gap-y-6 max-w-[560px] w-full">
+      <div
+        v-if="!companyInfo.companyDocuments.length"
+        class="grid gap-y-6 max-w-[560px] w-full"
+      >
         <div>
           <FileUpload
             label="Memorandum and Articles of Association"
@@ -46,7 +49,7 @@
           >
         </div>
         <div>
-          <FileUpload label="Utility bill" id="utilityBill" />
+          <FileUpload label="Utility bill" id="utitlityBill" />
           <span
             @click="downloadFile(docUrl(3), 'Utility bill')"
             v-if="docUrl(3)"
@@ -57,12 +60,13 @@
           >
         </div>
       </div>
+      <div v-else class="max-w-[560px]">
+        <DocumentsViewer type="kyb" :documents="companyInfo.companyDocuments" />
+      </div>
     </div>
-    <div   v-if="
-        !authStore?.userInfo?.onboardingPageStatus &&
-        !companyInfo.approvalStatus
-      "
+    <div
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
+      v-if="!companyInfo.companyDocuments.length"
     >
       <button
         @click="active--"
@@ -108,7 +112,7 @@ const router = useRouter();
 const active = inject("active");
 const form = reactive({
   companyDocuments:
-    companyInfo.value.companyDocuments.length === 3
+    companyInfo.value.companyDocuments.length === 4
       ? companyInfo.value.companyDocuments
       : [
           {
@@ -122,6 +126,10 @@ const form = reactive({
           {
             url: "",
             documentType: 2,
+          },
+          {
+            url: "",
+            documentType: 3,
           },
         ],
 });

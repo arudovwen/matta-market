@@ -14,7 +14,7 @@
         <p class="text-xs mb-4 text-[#666666]">
           Amount paid:
           <span class="font-medium text-[#333]">{{
-            currencyFormat(155000)
+            currencyFormat(order.amountWithTax)
           }}</span>
         </p>
         <p class="text-xs mb-2 text-[#333333] font-semibold">Shipped to:</p>
@@ -31,9 +31,9 @@
           <span class="text-xs text-[#666666]">{{moment(order.orderDate).format("ll")}}</span>
         </div>
         <div class="leading-[150%]">
-          <span class="text-xs text-[#333] font-semibold">Invoice No:</span
+          <span class="text-xs text-[#333] font-semibold">Order No:</span
           ><br />
-          <span class="text-xs text-[#666666]">205-6693055-4285164</span>
+          <span class="text-xs text-[#666666]">{{order.orderNumber}}</span>
         </div>
 
         <AppButton

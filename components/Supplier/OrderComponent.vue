@@ -2,37 +2,18 @@
   <section class="flex flex-col gap-y-8" v-if="order">
     <div class="grid grid-cols-2 gap-y-10 gap-x-4 mb-8">
       <div>
-        <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">status</p>
-        <span
-          v-if="order.statusText == 'invoiced'"
-          class="px-2 py-1 text-xs rounded-lg bg-[#E0F7B0]"
-        >
-          Completed</span
-        >
-        <!-- <span
-          v-if="order.statusText == 'OrderProcessed'"
-          class="px-2 py-1 text-xs rounded-lg bg-[#E0F7B0]"
-        >
-          Processed</span
-        >
-        <span
-          v-if="order.statusText == 'draft'"
-          class="px-2 py-1 text-xs rounded-lg bg-gray-100"
-        >
-          Draft</span
-        > -->
-        <span
-          v-if="order.statusText !== 'invoiced'"
-          class="px-2 py-1 text-xs rounded-lg bg-[#FDD0AF]"
-        >
-          In progress</span
-        >
+        <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">amount</p>
+        <span class="text-sm">{{ currencyFormat(order.amount) }}</span>
       </div>
       <div>
-        <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">created</p>
+        <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">status</p>
+        <AppStatusButton :status="order.status" />
+      </div>
+      <div>
+        <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">Order date</p>
         <span class="text-sm">{{ moment(order.orderDate).format("ll") }}</span>
       </div>
-      <div>
+      <div v-if="order?.schedulePickupDate">
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">
           scheduled pickup date
         </p>
@@ -45,7 +26,7 @@
           scheduled delivery date
         </p>
         <span class="text-sm">{{
-          moment(order.scheduleDeliveryDate).format("ll")
+          moment(order.scheduleDeilverDate).format("ll")
         }}</span>
       </div>
     </div>

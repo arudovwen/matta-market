@@ -23,7 +23,7 @@
         ></div>
         <span v-else>{{ btnText || "Select file" }}</span>
       </button>   <div class="flex-1 px-4">
-        <span class="max-w-max truncate text-[#999999]">{{
+        <span class="max-w-[260px] truncate text-[#999999] inline-block">{{
           title
         }}</span>
       </div>

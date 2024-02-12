@@ -87,7 +87,9 @@ const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField(
 
 const onSubmit = handleSubmit((values) => {
   console.log("🚀 ~ onSubmit ~ values:", values);
-  formData.loanRequest = values;
+  formData.amountRequired = values.amountRequired
+  formData.tenor = values.tenor
+  formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs
   active.value = 2;
 });
 

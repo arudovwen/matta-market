@@ -196,11 +196,11 @@ const urls = {
   POST_VENDOR_STORE_NAME: "v1/storefront/search-name",
 
   //Finance
-  GET_ALL_FINANCE: "/financing/get-all",
-  ADD_FINANCE: "/financing/add",
-  EDIT_FINANCE: "/financing/edit",
-  UPDATE_APPROVE_FINANCE: "/financing/financing/update-approval",
+  GET_ALL_FINANCE: "v1/financing/get-all",
+  ADD_FINANCE: "v1/financing/add",
+  EDIT_FINANCE: "v1/financing/edit",
+  UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
 
-  
+  WITHDRAW_FINANCE: "v1/financing/withdraw",
 };
 export default urls;

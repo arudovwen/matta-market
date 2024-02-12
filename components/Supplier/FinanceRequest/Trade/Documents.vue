@@ -7,7 +7,11 @@
       <FormGroup :error="errors.proformaInvoice" class="col-span-2">
         <FileUpload label="Proforma Invoice" id="ProformaInvoice" />
       </FormGroup>
-      <FormGroup :error="errors.other" class="col-span-2">
+      <FormGroup
+        :error="errors.other"
+        class="col-span-2"
+        v-if="id == 1 || id == 3"
+      >
         <FileUpload
           label="Evidence of previously successful supply contracts (PO and Paid Invoices)"
           id="EvidenceOfPreviouslySuccessfulSupplyContracts"
@@ -17,24 +21,24 @@
         <FileUpload label="Other documents" id="OtherDocuments" />
       </FormGroup>
 
-      <div class="md:col-span-2">
+      <div class="md:col-span-2" v-if="id == 0 || id == 3">
         <Textinput
           placeholder=""
           label="Have you done business with the buyer before?"
-          name="doneBusiness"
-          v-bind="doneBusinessAtt"
-          v-model="doneBusiness"
-          :error="errors.doneBusiness"
+          name="haveyoudonebusiness"
+          v-bind="haveyoudonebusinessAtt"
+          v-model="haveyoudonebusiness"
+          :error="errors.haveyoudonebusiness"
         />
       </div>
-      <div class="md:col-span-2">
+      <div class="md:col-span-2" v-if="id == 0 || id == 3">
         <Textinput
           placeholder=""
           label="Have you previously exported to the order’s country of destination?"
-          name="previousExport"
-          v-bind="previousExportAtt"
-          v-model="previousExport"
-          :error="errors.previousExport"
+          name="haveyouexportedtotheothercourty"
+          v-bind="haveyouexportedtotheothercourtyAtt"
+          v-model="haveyouexportedtotheothercourty"
+          :error="errors.haveyouexportedtotheothercourty"
         />
       </div>
     </div>
@@ -59,11 +63,15 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
+import { toast } from "vue3-toastify";
+import { addFinance, editFinance } from "~/services/financeservice";
 
 const isLoading = ref(false);
+const route = useRoute();
+const { id, financeId } = route.params;
 const formValues = reactive({
-  previousExport: "",
-  doneBusiness: "",
+  haveyouexportedtotheothercourty: "",
+  haveyoudonebusiness: "",
   OtherDocuments: "",
   BankStatement: "",
   ProformaInvoice: "",
@@ -72,8 +80,8 @@ const formValues = reactive({
 const active = inject("active");
 const formData = inject("formData");
 const formSchema = yup.object().shape({
-  previousExport: yup.string().required("Previous Export is required"),
-  doneBusiness: yup.string().required("Previous Business is required"),
+  haveyouexportedtotheothercourty: yup.string(),
+  haveyoudonebusiness: yup.string(),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue } = useForm({
@@ -81,35 +89,57 @@ const { handleSubmit, defineField, errors, setFieldValue } = useForm({
   initialValues: formData.documents,
 });
 
-const [doneBusiness, doneBusinessAtt] = defineField("doneBusiness");
-const [previousExport, previousExportAtt] = defineField("previousExport");
+const [haveyoudonebusiness, haveyoudonebusinessAtt] = defineField(
+  "haveyoudonebusiness"
+);
+const [haveyouexportedtotheothercourty, haveyouexportedtotheothercourtyAtt] =
+  defineField("haveyouexportedtotheothercourty");
 
 const onSubmit = handleSubmit((values) => {
-  console.log("🚀 ~ onSubmit ~ values:", values);
-  formData.documents = values;
-  active.value = 5;
+  isLoading.value = true;
+  formData.haveyoudonebusiness = values.haveyoudonebusiness;
+  formData.haveyouexportedtotheothercourty =
+    values.haveyouexportedtotheothercourty;
+  if (financeId) {
+    editFinance({ ...formData, id: financeId })
+      .then((res) => {
+        if (res.status === 200) {
+          active.value = 5;
+          isLoading.value = false;
+        }
+      })
+      .catch((err) => {
+        toast.error(err.response.data.Message || err.response.data.message);
+        isLoading.value = false;
+      });
+  } else {
+    addFinance(formData)
+      .then((res) => {
+        if (res.status === 200) {
+          active.value = 5;
+          isLoading.value = false;
+        }
+      })
+      .catch((err) => {
+        toast.error(err.response.data.Message || err.response.data.message);
+        isLoading.value = false;
+      });
+  }
 });
 
-const options = [
-  {
-    label: "1 month",
-    value: 0,
-  },
-  {
-    label: "3 month",
-    value: 1,
-  },
-];
 function handleChange(id, value) {
-  form.kyb.companyDocuments.map((i) => {
-    setFieldValue(id, value)
+  formData.supportingDocuments.map((i) => {
+    setFieldValue(id, value);
     if (id === "BankStatement" && i.documentType === 0) {
       i.url = value;
     }
     if (id === "ProformaInvoice" && i.documentType === 1) {
       i.url = value;
     }
-    if (id === "EvidenceOfPreviouslySuccessfulSupplyContracts" && i.documentType === 2) {
+    if (
+      id === "EvidenceOfPreviouslySuccessfulSupplyContracts" &&
+      i.documentType === 2
+    ) {
       i.url = value;
     }
     if (id === "OtherDocuments" && i.documentType === 3) {

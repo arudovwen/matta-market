@@ -16,11 +16,11 @@
       />
 
       <span
-        class="h-4 w-4 border flex-none border-slate-200 darks:border-slate-800 rounded inline-flex mr-3 relative transition-all duration-150"
+        class="h-4 w-4 border flex-none border-slate-200 rounded inline-flex mr-3 relative transition-all duration-150"
         :class="
           ck
             ? activeClass + ' border-none '
-            : 'bg-white border border-[rgba(223,223,223,1)] darks:bg-slate-600 darks:border-slate-600'
+            : 'bg-white border border-[rgba(223,223,223,1)] '
         "
       >
          <img
@@ -64,7 +64,7 @@ export default defineComponent({
     activeClass: {
       type: String,
       default:
-        " ring-black-500  bg-slate-900 dark:bg-slate-700 dark:ring-slate-700 ",
+        " ring-primary-400  bg-primary-500",
     },
     labelClass: {
       type: String,

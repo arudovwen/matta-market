@@ -14,12 +14,7 @@
       <!-- Top bar   -->
       <div class="md:max-w-[560px] w-full">
         <div class="">
-          <div
-            v-if="
-              !authStore?.userInfo?.onboardingPageStatus &&
-              !companyInfo.approvalStatus
-            "
-          >
+          <div v-if="!companyInfo.directors.length">
             <button
               type="button"
               @click="
@@ -33,72 +28,19 @@
               <span class=""> + Add director</span>
             </button>
           </div>
-          <div
-            v-if="form.directors.length"
-            class="w-full rounded-[10px] border border-[#EAECF0] overflow-hidden"
-          >
-            <table class="w-full">
-              <thead>
-                <tr>
-                  <th
-                    class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-                  >
-                    Name
-                  </th>
-                  <th
-                    class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-                  >
-                    Email
-                  </th>
-                  <th
-                    class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-                  ></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(director, id) in form.directors"
-                  :key="id"
-                  class="border-b last:border-none"
-                >
-                  <td
-                    class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    {{ director.firstName }} {{ director.lastName }}
-                  </td>
-                  <td
-                    class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    {{ director.email }} 
-                  </td>
-                  <td
-                    class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    <span
-                      class="flex gap-x-3 items-center justify-end"
-                      v-if="
-                        !authStore?.userInfo?.onboardingPageStatus &&
-                        !companyInfo.approvalStatus
-                      "
-                    >
-                      <span class="p-1"><i class="uil uil-pen"></i></span>
-                      <span class="p-1" @click="handleDelete(id)"
-                        ><i class="uil uil-trash text-red-500"></i
-                      ></span>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="max-w-[560px] mx-auto">
+            <DirectorsView
+              :directors="companyInfo.directors"
+              :companyInfo="companyInfo"
+              @handleDelete="handleDelete"
+              @handleEdit="handleEdit"
+            />
           </div>
         </div>
       </div>
     </div>
     <div
-      v-if="
-        !authStore?.userInfo?.onboardingPageStatus &&
-        !companyInfo.approvalStatus
-      "
+      v-if="!companyInfo.directors.length"
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
     >
       <button
@@ -161,7 +103,12 @@
                 :class="action == 'add' ? 'sm:max-w-lg' : 'sm:max-w-[343px]'"
               >
                 <div class="p-6">
-                  <OnboardingCompanyDirectorForm v-if="action === 'add'" />
+                  <OnboardingCompanyDirectorForm
+                    v-if="action !== 'delete'"
+                    :type="action"
+                    :director="director"
+                    :id="id"
+                  />
                   <OnboardingCompanyDeleteModal
                     v-if="action === 'delete'"
                     @delete="onDelete"
@@ -198,6 +145,7 @@ import { updateDirectors } from "~/services/settingservices";
 
 const companyInfo = inject("companyInfo");
 const id = ref(null);
+const director = ref(null);
 const action = ref("");
 const authStore = useAuthStore();
 const router = useRouter();
@@ -211,6 +159,12 @@ const isLoading = ref(false);
 function handleDelete(val) {
   id.value = val;
   action.value = "delete";
+  open.value = true;
+}
+function handleEdit(val, option) {
+  id.value = val;
+  director.value = option;
+  action.value = "edit";
   open.value = true;
 }
 
@@ -244,7 +198,7 @@ async function handleSubmit() {
     });
 }
 provide("open", open);
-provide("directors", form.directors);
+provide("directors", form);
 </script>
 
 <style lang="scss" scoped>

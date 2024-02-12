@@ -1,7 +1,7 @@
 <template>
   <h3 class="font-medium text-2xl mb-8">Add director</h3>
   <form @submit.prevent="handleSubmit">
-    <div class="grid grid-cols-1  lg:grid-cols-2 lg:gap-x-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
         <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >First name</label
@@ -45,57 +45,57 @@
         </div>
       </div>
     </div>
-   <div class="grid grid-cols-1  lg:grid-cols-2 lg:gap-x-4">
-    <div class="mb-6">
-      <label for="email" class="mb-2 font-normal text-xs block">E-mail</label>
-      <input
-        v-model="v$.email.$model"
-        :class="{ 'border-red-500': v$.email.$error }"
-        class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-        placeholder="E-mail"
-        autocomplete="off"
-        aria-autocomplete="none"
-        type="email"
-        id="email"
-      />
-      <div
-        class="text-red-500 mt-1"
-        v-for="error of v$.email.$errors"
-        :key="error.$uid"
-      >
-        <div class="error-msg text-error text-xs font-semibold">
-          {{ error.$message }}
-        </div>
-      </div>
-    </div>
-    <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block" for="phone"
-        >Phone number <span class="text-red-500 pl-[.02rem]">*</span></label
-      >
-      <div class="flex relative rounded-lg h-11">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
+      <div class="mb-6">
+        <label for="email" class="mb-2 font-normal text-xs block">E-mail</label>
         <input
-          :class="{ 'border-red-500': v$.phone.$error }"
-          v-model="v$.phone.$model"
+          v-model="v$.email.$model"
+          :class="{ 'border-red-500': v$.email.$error }"
           class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          placeholder="E-mail"
           autocomplete="off"
           aria-autocomplete="none"
-          placeholder="08160723884"
-          role="presentation"
-          id="phone"
+          type="email"
+          id="email"
         />
+        <div
+          class="text-red-500 mt-1"
+          v-for="error of v$.email.$errors"
+          :key="error.$uid"
+        >
+          <div class="error-msg text-error text-xs font-semibold">
+            {{ error.$message }}
+          </div>
+        </div>
       </div>
-      <div
-        class="text-red-500 mt-1"
-        v-for="error of v$.phone.$errors"
-        :key="error.$uid"
-      >
-        <div class="error-msg text-error text-xs font-semibold">
-          {{ error.$message }}
+      <div class="mb-6">
+        <label class="mb-2 font-normal text-xs block" for="phone"
+          >Phone number <span class="text-red-500 pl-[.02rem]">*</span></label
+        >
+        <div class="flex relative rounded-lg h-11">
+          <input
+            :class="{ 'border-red-500': v$.phone.$error }"
+            v-model="v$.phone.$model"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            autocomplete="off"
+            aria-autocomplete="none"
+            placeholder="08160723884"
+            role="presentation"
+            id="phone"
+          />
+        </div>
+        <div
+          class="text-red-500 mt-1"
+          v-for="error of v$.phone.$errors"
+          :key="error.$uid"
+        >
+          <div class="error-msg text-error text-xs font-semibold">
+            {{ error.$message }}
+          </div>
         </div>
       </div>
     </div>
-   </div>
-    <div class="grid grid-cols-1  lg:grid-cols-2 lg:gap-x-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
         <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >BVN</label
@@ -141,13 +141,71 @@
       </div>
     </div>
     <div class="lg:col-span-2 mb-6">
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Linkedin</label
+      >
+      <input
+        v-model="v$.linkedIn.$model"
+        :class="{ 'border-red-500': v$.linkedIn.$error }"
+        class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+        autocomplete="off"
+        autofocus="on"
+      />
+      <div
+        class="text-red-500 mt-1"
+        v-for="error of v$.linkedIn.$errors"
+        :key="error.$uid"
+      >
+        <div class="error-msg text-error text-xs font-semibold">
+          {{ error.$message }}
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-2 mb-6">
       <FileUpload
         label="Upload ID (Passport, Driver’s License, or NIN)"
-        id="idcard"
+        id="identityUrl"
       />
+      <span
+        @click="downloadFile(form.identityUrl, 'Identity card')"
+        download
+        v-if="form.identityUrl"
+      >
+        <span class="block text-xs text-blue-500 mt-1"
+          >Download Identity card</span
+        ></span
+      >
+      <div
+        class="text-red-500 mt-1"
+        v-for="error of v$.identityUrl.$errors"
+        :key="error.$uid"
+      >
+        <div class="error-msg text-error text-xs font-semibold">
+          {{ error.$message }}
+        </div>
+      </div>
     </div>
     <div class="lg:col-span-2 mb-6">
-      <FileUpload label="Upload Signature" id="signature" />
+      <FileUpload label="Upload Signature" id="signatureUrl" />
+      <span
+        @click="downloadFile(form.signatureUrl, 'Signature')"
+        download
+        v-if="form.signatureUrl"
+      >
+        <span class="block text-xs text-blue-500 mt-1"
+          >Download Signature</span
+        ></span
+      >
+      <div
+        class="text-red-500 mt-1"
+        v-for="error of v$.signatureUrl.$errors"
+        :key="error.$uid"
+      >
+        <div class="error-msg text-error text-xs font-semibold">
+          {{ error.$message }}
+        </div>
+      </div>
     </div>
     <div class="flex justify-end gap-x-4 mt-8 w-full">
       <button
@@ -180,8 +238,8 @@ import {
 } from "@vuelidate/validators";
 
 const open = inject("open");
-const directors = inject("directors");
-
+const formData = inject("form");
+const props = defineProps(["type", "director", "id"]);
 const form = reactive({
   firstName: "",
   lastName: "",
@@ -189,16 +247,22 @@ const form = reactive({
   phone: "",
   bvn: "",
   dob: "",
-  documents: [
-    {
-      url: "",
-      documentType: 0,
-    },
-    {
-      url: "",
-      documentType: 1,
-    },
-  ],
+  linkedIn: "",
+  signatureUrl: "",
+  identityUrl: "",
+});
+onMounted(() => {
+  if (props.director) {
+    form.firstName = props.director.firstName;
+    form.lastName = props.director.lastName;
+    form.email = props.director.email;
+    form.phone = props.director.phone;
+    form.bvn = props.director.bvn;
+    form.dob = props.director.dob;
+    form.linkedIn = props.director.linkedIn;
+    form.signatureUrl = props.director.signatureUrl;
+    form.identityUrl = props.director.identityUrl;
+  }
 });
 const isLoading = ref(false);
 const validPhoneLength = (value) =>
@@ -228,31 +292,48 @@ const rules = {
     numeric,
     required,
   },
+
+  linkedIn: {},
+  identityUrl: {
+    required,
+  },
+  signatureUrl: {
+    required,
+  },
 };
 
 const v$ = useVuelidate(rules, form);
 
 function handleChange(id, value) {
-  form.documents.map((i) => {
-    if (id === "idcard" && i.documentType === 0) {
-      i.url = value;
-    }
-    if (id === "signature" && i.documentType === 1) {
-      i.url = value;
-    }
-  });
+  if (id === "signatureUrl") {
+    form.signatureUrl = value;
+  }
+  if (id === "identityUrl") {
+    form.identityUrl = value;
+  }
 }
 async function handleSubmit() {
   const validity = await v$.value.$validate();
   if (!validity) return;
-  directors.push(form);
-  // form.phone =
-  //   form.bvn =
-  //   form.dob =
-  //   form.firstName =
-  //   form.lastName =
-  //   form.email =
-  //     "";
+  if (props.type === "add") {
+    formData.directors.push(form);
+  } else {
+    formData.directors.map((i, index) => {
+      if (index === props.id) {
+        i.firstName = form.firstName;
+        i.lastName = form.lastName;
+        i.email = form.email;
+        i.phone = form.phone;
+        i.bvn = form.bvn;
+        i.dob = form.dob;
+        i.linkedIn = form.linkedIn;
+        i.signatureUrl = form.signatureUrl;
+        i.identityUrl = form.identityUrl;
+      }
+      return i;
+    });
+  }
+
   open.value = false;
 }
 provide("handleChange", handleChange);

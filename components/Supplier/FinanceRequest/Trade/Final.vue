@@ -7,7 +7,7 @@
       mail or phone call on the next steps
     </p>
     <AppButton
-      link="/financing/requests"
+      link="/financing"
       btnClass="bg-primary-500 text-white !px-16  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
       type="button"
       text="Return to Homepage"

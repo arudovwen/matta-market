@@ -32,7 +32,7 @@
               <div
                 class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full"
               >
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="bg-white px-6  py-6">
                   <div class="flex justify-between mb-5 items-center">
                     <div>
                       <img src="/images/delete.svg" />
@@ -52,7 +52,7 @@
                     {{ text }}
                   </p>
 
-                  <div class="flex justify-end gap-x-3 items-center mt-8">
+                  <div class="flex justify-end gap-x-3 items-center mt-6">
                     <button
                       type="button"
                       @click="handleclose"

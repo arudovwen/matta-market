@@ -4,7 +4,7 @@
   >
     <!-- Top bar   -->
 
-    <HeaderComponent title="Financing">
+    <HeaderComponent title="Financing" className="px-6">
       <template #subtext>
         <p class="text-sm text-[#475467]">
           Request for financing for your business.
@@ -42,7 +42,7 @@
     <div class="pt-5">
       <div v-if="!docLoading">
         <div class="flex justify-between items-center mb-8">
-          <div class="flex gap-x-4 px-[30px]">
+          <div class="flex gap-x-4 px-6">
             <div class="relative flex items-center">
               <span class="absolute left-4 pointer-events-none text-[#667085]"
                 ><i class="uil uil-search"></i
@@ -77,58 +77,34 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <div class="flex items-center">
-                    <span :class="item.status == 3 ? 'opacity-25' : ''">
-                      <span class="text-sm font-medium">
-                        {{ item.productName }}
-                      </span>
-                      <br />
-                      <span class="text-xs font-normal">
-                        {{ item.producer }}
-                      </span>
-                    </span>
-                  </div>
+                  {{ item.financeRequestNo }}
                 </td>
                 <td
                   :class="item.status == 3 ? 'opacity-25' : ''"
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
                 >
-                  {{ item.type }}
+                  {{ item.customer || "-" }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                >
+                  {{ handleType(item.loanRequestType) }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                >
+                  {{ moment(item.created).format("ll") }}
                 </td>
                 <td
                   :class="item.status == 3 ? 'opacity-25' : ''"
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
                 >
-                  {{ moment(item.created).format("l") }}
+                  {{ currencyFormat(item.amountRequired) }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <span
-                    v-if="item.requestStatus == 0"
-                    class="px-[6px] py-[2px] text-xs rounded-full text-[#5925DC] border border-[#D9D6FE] bg-[#F4F3FF] flex gap-x-1 items-center max-w-max"
-                  >
-                    <AppIcon icon="octicon:dot-fill-24" /> New</span
-                  >
-                  <span
-                    v-if="item.status == 1"
-                    class="px-[6px] py-1 text-xs rounded-full border border-pink-100 bg-pink-50 text-pink-500 flex gap-x-1 items-center max-w-max"
-                  >
-                    <AppIcon icon="octicon:dot-fill-24" /> In progress</span
-                  >
-
-                  <span
-                    v-if="item.status == 2"
-                    class="px-[6px] py-1 text-xs rounded-full text-[#17B26A] border border-[#ABEFC6] bg-[#ECFDF3] flex gap-x-1 items-center max-w-max"
-                  >
-                    <AppIcon icon="octicon:dot-fill-24" /> Shipped</span
-                  >
-                  <span
-                    v-if="item.status == 3"
-                    class="px-[6px] py-1 text-xs rounded-lg text-[#17B26A] border border-[#ABEFC6] bg-[#ECFDF3] flex gap-x-1 items-center max-w-max"
-                  >
-                    <AppIcon icon="octicon:dot-fill-24" /> Completed</span
-                  >
+                  <AppStatusButton :status="item.financeRequestStatus" />
                 </td>
 
                 <td
@@ -152,12 +128,17 @@
                         View request
                       </div>
 
-                      <div
-                        @click="cancelRequest"
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                      <NuxtLink
+                        :to="`/financing/requests/${handleType(
+                          item.loanRequestType
+                        )}/${item.loanRequestType}/${item.id}`"
                       >
-                        Edit request
-                      </div>
+                        <div
+                          class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                        >
+                          Edit request
+                        </div>
+                      </NuxtLink>
                       <div
                         @click="withdrawRequest(item.id)"
                         class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
@@ -196,15 +177,26 @@
     :open="open"
     btnText="Withdraw request"
   />
+  <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
+    <template #content>
+      <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10">
+    
+        <FinanceRequestDetail :detail="detail" />
+      </div>
+    </template>
+  </SideModal>
 </template>
 <script setup>
 import moment from "moment";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { getAllFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";
+import { toast } from "vue3-toastify";
 
 const id = ref(null);
 const open = ref(false);
+const isOpen = ref(false);
+const detail = ref(null);
 const route = useRoute();
 const theads = [
   "request id",
@@ -233,52 +225,66 @@ const queryParams = reactive({
 });
 const docLoading = ref(true);
 
-const isOpen = ref(false);
 function getFinanceData() {
   docLoading.value = true;
   getAllFinance(queryParams).then((res) => {
     financeData.value = res.data.data;
-    // queryParams.totalCount = res.data.data.totalCount;
+    queryParams.totalCount = res.data.data.totalCount;
     docLoading.value = false;
   });
 }
 function selectall() {
   multi.value = financeData.value.map((i) => i.id);
 }
-function openRequest(item) {
-  // sellerdocdetails(item.id).then((res) => {
-  //   document.value = res.data.data;
-  //   isOpen.value = true;
-  // });
+function handleType(key) {
+  switch (parseInt(key)) {
+    case 0:
+      return "trade";
+      break;
+    case 1:
+      return "supply";
+      break;
+    case 2:
+      return "import";
+      break;
+    case 3:
+      return "export";
+      break;
+
+    default:
+      break;
+  }
 }
 function withdrawRequest(value) {
   id.value = value;
   open.value = true;
 }
 const document = ref({});
-function next() {
-  queryParams.PageNumber++;
+function openRequest(val) {
+  detail.value = val;
+  isOpen.value = true;
 }
-function toggleOrder() {
-  if (queryParams.SortOrder == "A") {
-    queryParams.SortOrder = "D";
-  } else {
-    queryParams.SortOrder = "A";
-  }
-}
-function prev() {
-  if (queryParams.PageNumber == 1) return;
-  queryParams.PageNumber--;
-}
-
 const debounceSearch = debounce(() => {
   getFinanceData();
 }, 800);
-const handleDelete = () => {};
+const handleDelete = () => {
+  withdrawFinance(id.value).then((res) => {
+    if (res.status === 200) {
+      getFinanceData();
+      toast.success("Request withdrawn");
+    }
+  });
+};
 watch(
-  () => [queryParams.Search,  queryParams.PageNumber,  queryParams.SortOrder],
+  () => [queryParams.Search],
   () => {
     debounceSearch();
+  }
+);
+watch(
+  () => [queryParams.PageNumber, queryParams.SortOrder],
+  () => {
+    getFinanceData();
   }
 );
 provide("document", document);

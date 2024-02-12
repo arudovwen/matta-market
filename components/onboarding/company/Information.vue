@@ -155,6 +155,7 @@
 
                     <div class="flex relative items-center">
                       <select
+                      :disabled="!form.companyType"
                         v-model="v$.sector.$model"
                         :class="{ 'border-red-500': v$.sector.$error }"
                         class="appearance-none rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"

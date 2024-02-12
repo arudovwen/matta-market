@@ -32,18 +32,58 @@ const route = useRoute();
 const { type, id } = route.params;
 const authStore = useAuthStore();
 const formData = reactive({
-  loanRequest: { amountRequired: 0, tenor: 0, whereDidYouHearAboutUs: "" },
+  amountRequired: 0,
+  tenor: 0,
+  whereDidYouHearAboutUs: "",
+
+  supportingDocuments: [
+    {
+      url: "",
+      documentType: 0,
+    },
+    {
+      url: "",
+      documentType: 1,
+    },
+    {
+      url: "",
+      documentType: 2,
+    },
+    {
+      url: "",
+      documentType: 3,
+    },
+  ],
+  companyDocuments:[],
+  haveyoudonebusiness: "",
+  haveyouexportedtotheothercourty: "",
+
   kyb: {
     companyName: "",
     sector: "",
     date: "",
     businessType: "",
     address: "",
-    productDesc: "",
-    companyDocuments: [],
+    description: "",
+    companyDocuments: [ {
+        url: "",
+        documentType: 0,
+      },
+      {
+        url: "",
+        documentType: 1,
+      },
+      {
+        url: "",
+        documentType: 2,
+      },
+      {
+        url: "",
+        documentType: 3,
+      },],
   },
   customerId: authStore.userId,
-  loanRequestType: id,
+  loanRequestType: parseInt(id),
   directors: [
     {
       firstName: "",
@@ -80,7 +120,7 @@ const formData = reactive({
     doneBusiness: "",
   },
 });
-const active = ref(3);
+const active = ref(1);
 const tabs = [
   {
     name: "Loan request",

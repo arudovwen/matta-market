@@ -110,7 +110,7 @@
           />
         </div>
         <div  v-if="!isLoading">
-          <div
+          <!-- <div
             class="overflow-x-auto max-w-[80vw] lg:max-w-full"
             v-if="orders.length"
           >
@@ -187,7 +187,7 @@
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div> -->
           <EmptyData
             v-if="!orders.length"
             url="/markets"

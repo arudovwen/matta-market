@@ -9,7 +9,7 @@
         v-for="n in shippingStore.addressesData"
         :key="n"
         :class="
-          n.isDefault ? 'border-[#91B3F8] bg-[#E3EBFD] ' : 'border-[#F3F3F3]'
+          n?.isDefault ? 'border-[#91B3F8] bg-[#E3EBFD] ' : 'border-[#F3F3F3]'
         "
         class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer"
       >
@@ -44,6 +44,8 @@
 </template>
 <script setup>
 import { setdefaultaddress } from "~/services/cartservice";
+import {toast} from "vue3-toastify"
+
 const shippingStore = useShippingStore();
 
 const detail = inject("detail");
@@ -60,7 +62,10 @@ function handleDefault(id) {
     if (res.status === 200) {
       isOpen.value = false;
       shippingStore.getAlladdress();
+      toast.success("Default address updated")
     }
+  }).catch(err=>{
+    toast.error(err.response.data.message || err.response.data.Message)
   });
 }
 </script>

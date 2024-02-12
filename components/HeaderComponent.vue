@@ -65,7 +65,8 @@ defineProps([
   "btnIcon",
   "canGoback",
   "btnClass",
-  "btnMiniText"
+  "btnMiniText",
+  "count"
 ]);
 const emits = defineEmits(["onClick"]);
 const router = useRouter();
