@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { get, post, put } from "../helpers/api_helpers";
+import { get, post, put, del } from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
 
@@ -24,7 +24,7 @@ export const editFinance = (data) => {
   return put(`${urls.UPDATE_FINANCE}/${data.id}`, data, config);
 };
 export const withdrawFinance = (data) => {
-  return delete(`${urls.WITHDRAW_FINANCE}/${data}`, data, config);
+  return del(`${urls.WITHDRAW_FINANCE}/${data}`, data, config);
 };
 
 export const updateApproval = (data) => {

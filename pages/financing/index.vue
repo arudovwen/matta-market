@@ -56,6 +56,10 @@
                 type="search"
               />
             </div>
+            <FilterButton
+              v-model="queryParams.Type"
+              :options="FinancesOptions"
+            />
           </div>
         </div>
         <div v-if="financeData?.length">
@@ -222,6 +226,7 @@ const queryParams = reactive({
   SortOrder: "",
   PageNumber: 1,
   PageSize: 10,
+  Type: ""
 });
 const docLoading = ref(true);
 
@@ -287,6 +292,33 @@ watch(
     getFinanceData();
   }
 );
+const FinancesOptions = [
+  {
+    label: "all finance",
+    key: "all",
+    value: "",
+  },
+  {
+    label: "trade finance",
+    key: 0,
+    value: 0,
+  },
+  {
+    label: "supply finance",
+    key: 1,
+    value: 1,
+  },
+  {
+    label: "import finance",
+    key: 2,
+    value: 2,
+  },
+  {
+    label: "export finance",
+    key: 3,
+    value: 3,
+  },
+];
 provide("document", document);
 </script>
 

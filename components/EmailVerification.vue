@@ -11,7 +11,7 @@
 
       <NuxtLink to="/auth/login">
         <button
-          class="appearance-none leading-none px-10 py-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
+          class="whitespace-nowrap  appearance-none leading-none px-10 py-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
         >
           Back to login
         </button>
@@ -40,7 +40,7 @@
 
       <NuxtLink to="/auth/login">
         <button
-          class="appearance-none leading-none px-10 py-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
+          class="whitespace-nowrap appearance-none leading-none px-10 py-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
         >
           Back to login
         </button>
