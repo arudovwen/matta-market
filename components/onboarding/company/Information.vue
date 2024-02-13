@@ -94,16 +94,16 @@
                       <span class="text-red-500 pl-[.02rem]">*</span></label
                     >
                     <input
-                      v-model="v$.dateOfIncorporation.$model"
+                      v-model="v$.dateofIncorporation.$model"
                       :class="{
-                        'border-red-500': v$.dateOfIncorporation.$error,
+                        'border-red-500': v$.dateofIncorporation.$error,
                       }"
                       class="px-[14px] py-[10px] h-11 text-sm rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                       type="date"
                     />
                     <div
                       class="text-red-500 mt-1"
-                      v-for="error of v$.dateOfIncorporation.$errors"
+                      v-for="error of v$.dateofIncorporation.$errors"
                       :key="error.$uid"
                     >
                       <div class="error-msg text-error text-xs font-semibold">
@@ -155,7 +155,7 @@
 
                     <div class="flex relative items-center">
                       <select
-                      :disabled="!form.companyType"
+                        :disabled="!form.companyType"
                         v-model="v$.sector.$model"
                         :class="{ 'border-red-500': v$.sector.$error }"
                         class="appearance-none rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -208,7 +208,7 @@
                       </div>
                     </div>
                   </div>
-               
+
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >Phone number
@@ -627,7 +627,7 @@ const sectorOptions = computed(() => {
     selectedBusinessType.subSectors?.map((i) => {
       return {
         label: i.subSectorName,
-        value: i.subSectorCode, // Use subSectorCode as the value
+        value: i.subSectorName, // Use subSectorCode as the value
       };
     }) ?? []
   ); // Use optional chaining and nullish coalescing operators for safer property access
@@ -649,7 +649,7 @@ const form = reactive({
   registrationNo: "",
   tin: "",
   sector: "",
-  dateOfIncorporation: "",
+  dateofIncorporation: "",
   socials: [
     {
       name: "",
@@ -710,6 +710,8 @@ onMounted(() => {
   form.address = companyInfo?.value.address;
   form.country = companyInfo?.value.country;
   form.city = companyInfo?.value.city;
+  form.dateofIncorporation = companyInfo?.value.dateofIncorporation;
+  form.sector = companyInfo?.value.sector;
   form.tin = companyInfo?.value.tin;
   form.registrationNo = companyInfo?.value.registrationNo;
   form.phone = companyInfo?.value.phone;
@@ -780,7 +782,7 @@ const rules = {
     required,
     maxLength: maxLength(50),
   },
-  dateOfIncorporation: {
+  dateofIncorporation: {
     required,
   },
   sector: {
@@ -836,14 +838,13 @@ async function handleSubmit() {
       if (res.status === 200) {
         toast.success("Information saved");
         active.value = 2;
+        getCompanyProfile();
       }
     })
 
     .catch((err) => {
-      invalidCredentials.value = true;
       isLoading.value = false;
-
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 function removeImage() {

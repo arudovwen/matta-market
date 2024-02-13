@@ -76,7 +76,11 @@ const schema = yup.object({
 
 const { handleSubmit, defineField, errors, setFieldValue } = useForm({
   validationSchema: schema,
-  initialValues: formData.loanRequest,
+  initialValues: {
+    amountRequired: formData.amountRequired,
+    tenor: formData.tenor,
+    whereDidYouHearAboutUs: formData.whereDidYouHearAboutUs,
+  },
 });
 
 const [amountRequired, amountRequiredAtt] = defineField("amountRequired");
@@ -87,9 +91,9 @@ const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField(
 
 const onSubmit = handleSubmit((values) => {
   console.log("🚀 ~ onSubmit ~ values:", values);
-  formData.amountRequired = values.amountRequired
-  formData.tenor = values.tenor
-  formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs
+  formData.amountRequired = values.amountRequired;
+  formData.tenor = values.tenor;
+  formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs;
   active.value = 2;
 });
 

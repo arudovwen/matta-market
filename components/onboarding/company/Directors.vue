@@ -40,7 +40,7 @@
       </div>
     </div>
     <div
-      v-if="!companyInfo.directors.length"
+      v-if="!companyInfo.directors.length || !authStore.userInfo.onboardingPageStatus"
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
     >
       <button
@@ -148,7 +148,7 @@ const id = ref(null);
 const director = ref(null);
 const action = ref("");
 const authStore = useAuthStore();
-const router = useRouter();
+const route = useRoute();
 const open = ref(false);
 const active = inject("active");
 const form = reactive({
@@ -188,6 +188,11 @@ async function handleSubmit() {
         authStore.updateUserInfo({ onboardingPageStatus: 1 });
         toast.success("Directors saved");
         isLoading.value = false;
+      
+        if(route.query.redirected_from){
+         
+          navigateTo(route.query.redirected_from)
+        }
       }
     })
 
@@ -198,7 +203,7 @@ async function handleSubmit() {
     });
 }
 provide("open", open);
-provide("directors", form);
+provide("form", form);
 </script>
 
 <style lang="scss" scoped>

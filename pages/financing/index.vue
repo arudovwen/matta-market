@@ -27,13 +27,16 @@
             class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden flex flex-col"
           >
             <MenuItem
-              v-for="n in FinancesOptions"
+              v-for="n in FinancesOptions.filter((i) => i.value !== '')"
               :key="n.title"
               class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap capitalize"
             >
-              <NuxtLink :to="n.url">
-                {{ n.title }}
-              </NuxtLink>
+              <span
+                class="cursor-pointer"
+                @click="navigateTo(handleRouting(n.url))"
+              >
+                {{ n.label }}
+              </span>
             </MenuItem>
           </MenuItems>
         </Menu>
@@ -184,7 +187,6 @@
   <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #content>
       <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10">
-    
         <FinanceRequestDetail :detail="detail" />
       </div>
     </template>
@@ -201,7 +203,8 @@ const id = ref(null);
 const open = ref(false);
 const isOpen = ref(false);
 const detail = ref(null);
-const route = useRoute();
+const authStore = useAuthStore();
+
 const theads = [
   "request id",
   "customer name",
@@ -226,7 +229,7 @@ const queryParams = reactive({
   SortOrder: "",
   PageNumber: 1,
   PageSize: 10,
-  Type: ""
+  Type: "",
 });
 const docLoading = ref(true);
 
@@ -238,9 +241,8 @@ function getFinanceData() {
     docLoading.value = false;
   });
 }
-function selectall() {
-  multi.value = financeData.value.map((i) => i.id);
-}
+
+
 function handleType(key) {
   switch (parseInt(key)) {
     case 0:
@@ -260,6 +262,13 @@ function handleType(key) {
       break;
   }
 }
+const handleRouting = (url) => {
+  if (!authStore.userInfo.onboardingPageStatus) {
+    toast.info("Complete your KYB before you proceed");
+    return `/company/settings?redirected_from=${url}`;
+  }
+  return url;
+};
 function withdrawRequest(value) {
   id.value = value;
   open.value = true;
@@ -302,21 +311,25 @@ const FinancesOptions = [
     label: "trade finance",
     key: 0,
     value: 0,
+    url:"/financing/requests/trade/0"
   },
   {
     label: "supply finance",
     key: 1,
     value: 1,
+    url:"/financing/requests/supply/1"
   },
   {
     label: "import finance",
     key: 2,
     value: 2,
+    url:"/financing/requests/import/2"
   },
   {
     label: "export finance",
     key: 3,
     value: 3,
+    url:"/financing/requests/export/3"
   },
 ];
 provide("document", document);

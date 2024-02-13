@@ -9,7 +9,7 @@
           <th
             class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
           >
-          Uploaded  Documents
+            Uploaded Documents
           </th>
 
           <th
@@ -19,7 +19,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(document, id) in documents"
+          v-for="(document, id) in documents.filter((i) => i.url)"
           :key="id"
           class="border-b last:border-none"
         >
@@ -32,8 +32,11 @@
           <td
             class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
           >
-            <span v-if="document.url"
-              @click="downloadFile(document.url, docName(document.documentType))"
+            <span
+              v-if="document.url"
+              @click="
+                downloadFile(document.url, docName(document.documentType))
+              "
               class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
             >
               View
@@ -87,34 +90,5 @@ function downloadFile(fileUrl, fileName) {
       console.error("Error downloading file:", error);
     });
 }
-function docName(id) {
-  if (props.type === "kyb") {
-    switch (id) {
-      case 0:
-        return "Certificate of Incorporation";
-      case 1:
-        return "Memorandum and Articles of Association";
-      case 2:
-        return "CAC Status Report";
-      case 3:
-        return "Utility Bill";
-      default:
-        return "";
-    }
-  } else {
-    switch (id) {
-      case 0:
-        return "Bank statement";
-      case 1:
-        return "Proforma Invoice";
-      case 2:
-        return "Evidence of previously successful supply contracts (PO and Paid Invoices)";
-      case 3:
-        return "Others";
 
-      default:
-        return "";
-    }
-  }
-}
 </script>

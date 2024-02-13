@@ -41,7 +41,7 @@ import {
 } from "@headlessui/vue";
 
 const emit = defineEmits(["update:modelValue"]);
-defineProps({
+const props = defineProps({
   options: {
     type: Array,
     default: () => [],

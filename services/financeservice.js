@@ -20,11 +20,14 @@ export const getAllFinance = withRetryHandling(
 export const addFinance = (data) => {
   return post(`${urls.ADD_FINANCE}`, data, config);
 };
+export const getFinance = (data) => {
+  return get(`${urls.GET_FINANCE}?id=${data}`, config);
+};
 export const editFinance = (data) => {
-  return put(`${urls.UPDATE_FINANCE}/${data.id}`, data, config);
+  return put(`${urls.EDIT_FINANCE}/${data.id}`, data, config);
 };
 export const withdrawFinance = (data) => {
-  return del(`${urls.WITHDRAW_FINANCE}/${data}`, data, config);
+  return del(`${urls.WITHDRAW_FINANCE}?id=${data}`, data, config);
 };
 
 export const updateApproval = (data) => {

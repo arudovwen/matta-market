@@ -40,7 +40,7 @@ onBeforeMount(() => {
     }
   });
 });
-const active = ref(3);
+const active = ref(1);
 const tabs = [
   {
     name: "Company details",

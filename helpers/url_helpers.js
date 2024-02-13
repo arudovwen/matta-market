@@ -200,7 +200,7 @@ const urls = {
   ADD_FINANCE: "v1/financing/add",
   EDIT_FINANCE: "v1/financing/edit",
   UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
-
+  GET_FINANCE: "v1/financing/get",
   WITHDRAW_FINANCE: "v1/financing/withdraw",
 };
 export default urls;
