@@ -111,7 +111,10 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <AppStatusButton :status="item.financeRequestStatus" />
+                  <AppStatusButton
+                    :status="item.financeRequestStatus"
+                    type="verdict"
+                  />
                 </td>
 
                 <td
@@ -193,6 +196,7 @@
   </SideModal>
 </template>
 <script setup>
+import AppIcon from "@/components/AppIcon";
 import moment from "moment";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { getAllFinance } from "~/services/financeservice";
@@ -241,7 +245,6 @@ function getFinanceData() {
     docLoading.value = false;
   });
 }
-
 
 function handleType(key) {
   switch (parseInt(key)) {
@@ -311,25 +314,25 @@ const FinancesOptions = [
     label: "trade finance",
     key: 0,
     value: 0,
-    url:"/financing/requests/trade/0"
+    url: "/financing/requests/trade/0",
   },
   {
     label: "supply finance",
     key: 1,
     value: 1,
-    url:"/financing/requests/supply/1"
+    url: "/financing/requests/supply/1",
   },
   {
     label: "import finance",
     key: 2,
     value: 2,
-    url:"/financing/requests/import/2"
+    url: "/financing/requests/import/2",
   },
   {
     label: "export finance",
     key: 3,
     value: 3,
-    url:"/financing/requests/export/3"
+    url: "/financing/requests/export/3",
   },
 ];
 provide("document", document);

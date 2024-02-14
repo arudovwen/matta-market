@@ -1,5 +1,5 @@
 export default function (id) {
-  if (props.type === "kyb") {
+  if (type && type === "kyb") {
     switch (id) {
       case 0:
         return "Certificate of Incorporation";
