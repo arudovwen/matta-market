@@ -44,6 +44,10 @@ const links = [
   },
 ];
 const options = [
+{
+    label: "Default",
+    value: "",
+  },
   {
     label: "Low to High",
     value: 0,
