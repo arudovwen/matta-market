@@ -25,7 +25,7 @@
     <SideTab
       v-if="route.params.id"
       title="Area of applications"
-      :lists="marketStore?.marketMenuData?.map((i) => ({ ...i, value: i.id }))"
+      :lists="menuData?.map((i) => ({ ...i, value: i.id }))"
       v-model="query.applications"
     />
   </div>
@@ -33,17 +33,33 @@
 <script setup>
 const supplierStore = useSupplierStore();
 const marketStore = useMarketStore();
+const applicationStore = useApplicationStore()
 const route = useRoute();
 const query = inject("query");
 onMounted(() => {
   supplierStore.fetchProducers({ PageSize: 100 });
   if (route.params.id) {
-    marketStore.getMarketMenu({
-      ShowSubMenu: true,
-      PageNumber: 1,
-      PageSize: 100,
-      MarketId: route.params.id,
-    });
+    if (route.params.category === "market") {
+      marketStore.getMarketMenu({
+        ShowSubMenu: true,
+        PageNumber: 1,
+        PageSize: 100,
+        MarketId: route.params.id,
+      });
+    }
+    if (route.params.category === "application") {
+      applicationStore.getAppMenu({
+        ShowSubMenu: true,
+        PageNumber: 1,
+        PageSize: 100,
+        TechnologyId: route.params.id,
+      });
+    }
   }
 });
+const menuData = computed(() =>
+  route.params.category === "application"
+    ? applicationStore?.applicationMenuData
+    : marketStore?.marketMenuData
+);
 </script>
