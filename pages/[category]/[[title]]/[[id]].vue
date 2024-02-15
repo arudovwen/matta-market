@@ -59,7 +59,7 @@ const query = reactive({
   searchParameter: route.query.search_query || "",
   MarketApplication: "",
   Status: "",
-  [route.params.category === "market" ? "MarketId" : "Technology"]:
+  [route.params.category === "market" ? "MarketId" : "TechnologyId"]:
     route.params.id,
   MarketSubApplication: "",
   productId: "",
@@ -68,6 +68,7 @@ const query = reactive({
   Producer: route.query.producer,
   producers: [],
   applications: [],
+  technologyApplications: [],
   pagecount: 0,
   totalData: 0,
   sortOrder: "",
@@ -127,11 +128,11 @@ onMounted(() => {
 watch(
   () => [
     query.PageNumber,
-    ,
     query.sortOrder,
     query.producers,
     query.sortBy,
     query.applications,
+    query.technologyApplications,
   ],
   () => {
     getAllProducts();

@@ -23,10 +23,16 @@
 
     <hr class="border-[#EFEFEF] my-[1px]" v-if="route.params.id" />
     <SideTab
-      v-if="route.params.id"
+      v-if="route.params.id && route.params.category === 'market'"
       title="Area of applications"
       :lists="menuData?.map((i) => ({ ...i, value: i.id }))"
       v-model="query.applications"
+    />
+    <SideTab
+      v-if="route.params.id && route.params.category === 'application'"
+      title="Area of applications"
+      :lists="menuData?.map((i) => ({ ...i, value: i.id }))"
+      v-model="query.technologyApplications"
     />
   </div>
 </template>
