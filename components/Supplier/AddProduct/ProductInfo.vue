@@ -359,17 +359,8 @@
           </div>
         </div>
 
-     
-        <button
-          type="button"
-          class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-sm text-left leading-[normal]"
-          @click="handleAddingPackage"
-        >
-          <i class="uil uil-plus"></i> Add a package
-        </button>
-
         <div
-          class="border border-[#F4F7FE] rounded-[10px] overflow-hidden mt-6"
+          class="border border-[#F4F7FE] rounded-[10px] overflow-hidden mb-6"
         >
         <table class="w-full" v-if="form.packagesAvailable?.length">
             <thead>
@@ -414,7 +405,7 @@
                   class="capitalize text-matta-black text-sm font-normal  py-4 px-6 ] whitespace-nowrap"
                 >
                   <span class="flex gap-x-4">
-                    <span @click="removepackage(i)"
+                    <span @click="removepackage(i)" class="cursor-pointer"
                       ><AppIcon icon="fa-trash-o" iconClass="text-[#E53F3F]"
                     /></span>
                     <!-- <span
@@ -428,6 +419,15 @@
             </tbody>
           </table>
         </div>
+        <button
+          type="button"
+          class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-[11px] text-left leading-[normal] block ml-auto"
+          @click="handleAddingPackage"
+        >
+          <i class="uil uil-plus"></i> Add a package
+        </button>
+
+     
       </div>
     </div>
     <hr class="border-[#F4F7FE] my-10" />
@@ -482,10 +482,9 @@
         </div>
       </div>
     </div>
-    <hr class="border-[#F4F7FE] my-10" />
 
     <div
-      class="bg-white flex justify-between gap-x-10 items-center sticky bottom-0 pb-6"
+      class="bg-white flex justify-between gap-x-10 items-center sticky bottom-0 py-6 mt-10 border-t border-[#F4F7FE]"
     >
       <button
         type="button"
