@@ -1,19 +1,20 @@
 <template>
   <div
     class="flex flex-col items-center justify-center p-4 h-[500px] text-gray-400 text-center"
+    :class="className"
   >
     <div class="mb-6 flex justify-center">
       <AppIcon
         icon="fa6-solid:truck"
-        iconClass="text-6xl text-[#E8E8E8]"
+        :iconClass="`${classIcon} text-6xl text-[#E8E8E8]`"
         v-if="type == 'shipping'"
       />
-      <img src="~/assets/images/emptyuser.png" v-else-if="type == 'user'" />
-      <img src="/images/campaign.png" v-else-if="type == 'campaign'" />
+      <img src="~/assets/images/emptyuser.png" v-else-if="type == 'user'" :class="classIcon" />
+      <img src="/images/campaign.png" v-else-if="type == 'campaign'"  :class="classIcon"/>
 
-      <img src="~/assets/images/empty.svg" v-else />
+      <img src="~/assets/images/empty.svg" v-else :class="classIcon" />
     </div>
-    <p class="text-lg text-[#101828] font-semibold mb-2">
+    <p :class="titleClass" class="text-lg text-[#101828] font-semibold mb-2">
       {{ title || "No data available" }}
     </p>
     <p
@@ -32,6 +33,16 @@
   </div>
 </template>
 <script setup>
-defineProps(["title", "subtext", "btnText", "url", "type", "btnIcon"]);
+defineProps([
+  "title",
+  "subtext",
+  "btnText",
+  "url",
+  "type",
+  "btnIcon",
+  "className",
+  "classIcon",
+  "titleClass"
+]);
 const emits = defineEmits(["btnFunction"]);
 </script>

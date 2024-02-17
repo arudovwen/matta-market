@@ -274,20 +274,7 @@ function updateData() {
   form.gallery = product.value.gallery || [];
   form.price = product.value.price;
   form.sampleAvailable = product.value.sampleAvailable;
-  form.packagesAvailable = product.value.packagesAvailable || [
-    {
-      package: {
-        id: create_UUID(),
-        title: "",
-      },
-      unit: selectedMeasurement.value ? selectedMeasurement.value.value : "",
-      size: null,
-      amount: null,
-      isAvailable: false,
-      color: "",
-      purity: "",
-    },
-  ];
+  form.packagesAvailable = product.value.packagesAvailable || [];
   form.packages = product.value.packages || [];
   form.hideProduct = product.value.hideProduct;
   form.hidePrice = product.value.hidePrice;
