@@ -195,7 +195,7 @@
                     <span class="text-red-500 mr-[.5px]">*</span> Markets
                   </label>
                   <MultiInput
-                    v-if="allmarkets.length"
+                   
                     :markets="allmarkets"
                     :selectedmarkets="form.markets"
                     :applications="form.marketApplications"
@@ -230,7 +230,7 @@
                     <span class="text-red-500 mr-[.5px]">*</span> Applications
                   </label>
                   <MultiInput
-                    v-if="technologies.length"
+                   
                     :markets="technologies"
                     @getValue="getTechValue"
                     :selectedmarkets="form.technologies"
@@ -308,7 +308,7 @@
           <Listbox v-model="form.unit">
             <div class="relative mt-1">
               <ListboxButton
-                class="relative w-[250px] text-left rounded-lg appearance-none px-[14px] py-[10px] flex items-center h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                class="text-sm relative w-[250px] text-left rounded-lg appearance-none px-[14px] py-[10px] flex items-center h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               >
                 <span class="block truncate">{{
                   measurements.find((i) => i.value == form.unit)?.name
@@ -412,7 +412,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ currencyFormat(item?.amount) }}
+                  {{ currencyFormat(item?.purchaseAmount) }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
@@ -740,7 +740,7 @@ const producers = inject("producers");
 const headers = computed(() => [
   "Name",
   `Size (${form.unit})`,
-  `Price / ${form.unit}`,
+  `Purchase Price / ${form.unit}`,
   "Color",
   "Purity",
   "",
@@ -967,7 +967,7 @@ function addnewpackage() {
     },
     unit: selectedMeasurement.value.value,
     size: null,
-    amount: null,
+    purchaseAmount: null,
     isAvailable: true,
     color: "",
     purity: "",

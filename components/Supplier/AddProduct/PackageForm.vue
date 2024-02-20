@@ -91,7 +91,7 @@
             class="mb-2 font-medium text-sm text-[#344054] flex items-center gap-x-1 text-left"
           >
             <span class="text-red-500 mr-[.5px]">*</span>
-            <span>Price </span>
+            <span>Purchase Price </span>
             <span
               data-toggle="tooltip"
               data-placement="top"
@@ -105,9 +105,9 @@
           <div class="relative">
             <div class="relative flex items-center">
               <CurrencyInput
-                v-model="amount"
-                v-bind="amountAtt"
-                name="amount"
+                v-model="purchaseAmount"
+                v-bind="purchaseAmountAtt"
+                name="purchaseAmount"
                 class="rounded-lg text-sm px-[14px] py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                 placeholder=""
                 :options="{
@@ -194,7 +194,7 @@ const form = inject("form");
 const emits = defineEmits(["close"]);
 const packForm = reactive({
   title: "",
-  amount: null,
+  purchaseAmount: null,
   color: "",
   purity: null,
   size: "",
@@ -214,7 +214,7 @@ const packageForms = [
 
 const packFormSchema = yup.object({
   title: yup.string().required(),
-  amount: yup.string().required(),
+  purchaseAmount: yup.string().required(),
   color: yup.string().nullable(),
   purity: yup.number().typeError("Invalid value").max(100, "Maximum is 100").nullable(),
   size: yup.number().typeError("Invalid value").required(),
@@ -228,7 +228,7 @@ const { handleSubmit, defineField, errors } = useForm({
 
 
 const [title, titleAtt] = defineField("title");
-const [amount, amountAtt] = defineField("amount");
+const [purchaseAmount, purchaseAmountAtt] = defineField("purchaseAmount");
 const [color, colorAtt] = defineField("color");
 const [size, sizeAtt] = defineField("size");
 const [isAvailable, isAvailableAtt] = defineField("isAvailable");

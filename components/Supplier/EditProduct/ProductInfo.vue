@@ -302,7 +302,7 @@
           <Listbox v-model="form.unit">
             <div class="relative mt-1">
               <ListboxButton
-                class="relative w-[250px] text-left rounded-lg appearance-none px-[14px] py-[10px] flex items-center h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                class="text-sm relative w-[250px] text-left rounded-lg appearance-none px-[14px] py-[10px] flex items-center h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               >
                 <span class="block truncate">{{
                   measurements.find((i) => i.value == form.unit)?.name
@@ -407,7 +407,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ currencyFormat(item?.amount) }}
+                  {{ currencyFormat(item?.purchaseAmount) }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
@@ -747,11 +747,11 @@ let filteredProducers = computed(() =>
 
 const form = inject("form");
 const headers = computed(() => [
-  "name",
-  `size (${form.unit})`,
-  `price / ${form.unit}`,
-  "color",
-  "purity",
+  "Name",
+  `Size (${form.unit})`,
+  `Purchase Price / ${form.unit}`,
+  "Color",
+  "Purity",
   "",
 ]);
 
@@ -921,7 +921,7 @@ function addnewpackage() {
     },
     unit: selectedMeasurement.value.value,
     size: null,
-    amount: null,
+    purchaseAmount: null,
     isAvailable: true,
     color: "",
     purity: "",

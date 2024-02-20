@@ -2,7 +2,7 @@
   <span
     :class="`px-[6px] py-1 text-xs rounded-full flex gap-x-1 items-center border max-w-max font-semibold ${Stats[status].className}`"
   >
-    <AppIcon icon="octicon:dot-fill-24" />
+    <!-- <AppIcon icon="octicon:dot-fill-24" /> -->
     <span class=""> {{ Stats[status].text }}</span>
   </span>
 </template>
@@ -15,10 +15,10 @@ const props = defineProps(["status", "type", "stattype"]);
 const StatusClass = {
   0: "text-[#F79009] bg-[#FFFAEB] border-[#FEDF89]",
   1: "text-[#067647] bg-[#ECFDF3] border-[#ABEFC6]",
-  5: "text-[#5925DC] bg-[#F4F3FF] border-[#D9D6FE]",
-  3: "text-[#067647] bg-[#ECFDF3] border-[#ABEFC6]",
+  2: "text-[#175CD3] bg-[#EFF8FF] border-[#B2DDFF]",
+  3: "text-[#363F72] bg-transparent border-[#3E4784]",
   4: "text-[#B42318] bg-[#FEF3F2] border-[#FECDCA]",
-  2: "text-[#B42318] bg-[#FEF3F2] border-[#FECDCA]",
+  5: "text-[#5925DC] bg-[#F4F3FF] border-[#D9D6FE]",
 };
 
 const StatusText = {
@@ -56,11 +56,11 @@ const OrderStatusText = {
   },
   2: {
     text: "Payment confirmed",
-    className: StatusClass[0],
+    className: StatusClass[3],
   },
   3: {
     text: "Order received",
-    className: StatusClass[5],
+    className: StatusClass[2],
   },
   4: {
     text: "Order cancelled",
@@ -68,23 +68,20 @@ const OrderStatusText = {
   },
   5: {
     text: "Refund complete",
-    className: StatusClass[1],
-  },
-};
-const ShippingStatusText = {
-  0: {
-    text: "Shipping in progress",
     className: StatusClass[0],
   },
-  1: {
+
+  6: {
+    text: "Shipping in progress",
+    className: StatusClass[5],
+  },
+  7: {
     text: "Delivered",
     className: StatusClass[1],
   },
 };
 const Stats = computed(() => {
-  if (props.stattype === "shipping") {
-    return ShippingStatusText;
-  }
+
   if (props.stattype === "order") {
     return OrderStatusText;
   }

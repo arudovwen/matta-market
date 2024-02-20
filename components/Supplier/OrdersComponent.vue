@@ -84,7 +84,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <AppStatusButton :status="item.status" />
+                  <AppStatusButton :status="item.status" stattype="order" />
                 </td>
 
                 <td
