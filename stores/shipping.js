@@ -16,10 +16,15 @@ export const useShippingStore = defineStore("shipping", () => {
     loading.value = true;
     getalladdress()
       .then((res) => {
-        if(res.data.data.length){
-          addresses.value = [res.data.data.find((i) => i.isDefault), ...res.data.data.filter((i) => !i.isDefault)]
+        if (res.data.data.length) {
+          addresses.value = res.data.data.some((i) => i.isDefault)
+            ? [
+                res.data.data.find((i) => i.isDefault),
+                ...res.data.data.filter((i) => !i.isDefault),
+              ]
+            : res.data.data;
         }
-       
+
         loading.value = false;
       })
       .catch(() => {
