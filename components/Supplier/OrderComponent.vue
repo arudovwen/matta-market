@@ -3,11 +3,11 @@
     <div class="grid grid-cols-2 gap-y-10 gap-x-4 mb-8">
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">amount</p>
-        <span class="text-sm">{{ currencyFormat(order.amount) }}</span>
+        <span class="text-sm">{{ currencyFormat(order.orderTotalwithTax) }}</span>
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">status</p>
-        <AppStatusButton :status="order.status" />
+        <AppStatusButton :status="order.status" stattype="order" />
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">Order date</p>
@@ -26,7 +26,7 @@
           scheduled delivery date
         </p>
         <span class="text-sm">{{
-          moment(order.scheduleDeilverDate).format("ll")
+          moment(order.scheduleDeliveryDate).format("ll")
         }}</span>
       </div>
     </div>

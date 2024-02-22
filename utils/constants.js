@@ -45,7 +45,6 @@ export const buyerRoutes = [
   "procurement-my-requests",
   "wallet-home",
   "procurement-shipping-addresses",
-  "financing",
   "account-saved-searches",
   "profile",
   "sign-out"
