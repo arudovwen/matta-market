@@ -1,7 +1,7 @@
 <template>
   <div>
     <TransitionRoot as="template" :show="open">
-      <Dialog as="div" class="relative z-10" @close="handleclose">
+      <Dialog as="div" class="relative z-[999]" @close="handleclose">
         <TransitionChild
           as="template"
           enter="ease-out duration-300"
@@ -32,10 +32,12 @@
               <div
                 class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full"
               >
-                <div class="bg-white px-6  py-6">
+                <div class="bg-white px-6 py-6">
                   <div class="flex justify-between mb-5 items-center">
                     <div>
-                      <img src="/images/delete.svg" />
+                      <img v-if="type === 'delete'" src="/images/delete.svg" />
+                      <img v-if="type === 'approve'" src="/images/check.svg" />
+                      <img v-if="type === 'reject'" src="/images/reject.svg" />
                     </div>
                     <span @click="handleclose" class="absolute top-3 right-3">
                       <i
@@ -51,23 +53,46 @@
                   <p class="text-sm text-[#475467]" v-if="text">
                     {{ text }}
                   </p>
+                  <div
+                    v-if="detail"
+                    class="rounded-lg p-6 border border-[#EAECF0] bg-[#F2F4F7] mt-4"
+                  >
+                    <h3 class="text-sm font-semibold mb-3 text-[#344054]">
+                      Payment Summary
+                    </h3>
+                    <div class="grid gap-y-2">
+                      <div
+                        class="flex gap-x-2 items-center text-xs"
+                        v-for="item in bankOptions"
+                        :key="item.key"
+                      >
+                        <span class="text-[#667085]">{{ item.title }}: </span>
+                        <span class="text-[#101828]">Name</span>
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="flex flex-col gap-y-4 items-center mt-6">
                     <button
                       type="button"
                       @click="handleclose"
-                      class="appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium"
+                      class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium justify-center flex items-center"
                     >
                       Cancel
                     </button>
 
                     <button
-                    :disabled="loading"
+                      :disabled="loading"
                       type="button"
-                      @click="deleteItem"
-                      class="appearance-none leading-none px-4 py-[10px] rounded-lg text-white bg-[#D92D20] text-sm w-full border border-[#D92D20] font-medium disabled:opacity-50"
+                      @click="actionItem"
+                      class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
+                      :class="
+                        type === 'approve'
+                          ? 'bg-green-600 border-green-600'
+                          : 'bg-[#D92D20] border-[#D92D20]'
+                      "
                     >
-                      {{btnText}}
+                      {{ btnText }}
                     </button>
                   </div>
                 </div>
@@ -88,22 +113,42 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-defineProps(["title", "text", "open","btnText", "loading"]);
-const emits = defineEmits(["deleteItem", "close"]);
+defineProps({
+  title: {
+    default: "",
+  },
+  text: { default: "" },
+  open: { default: false },
+  btnText: { default: "" },
+  loading: { default: false },
+  type: { default: "" },
+  detail: { default: null },
+});
+const emits = defineEmits(["actionItem", "close"]);
 
-function deleteItem() {
-  emits("deleteItem");
+function actionItem() {
+  emits("actionItem");
 }
 function handleclose() {
   emits("close");
 }
-</script>
 
-<style lang="scss" scoped>
-.bg-img {
-  background-image: url("~/assets/img/bee.svg");
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: bottom;
-}
-</style>
+const bankOptions = [
+  {
+    title: "Bank Name",
+    key: "bankName",
+  },
+  {
+    title: "Account Name",
+    key: "accountName",
+  },
+  {
+    title: "Account Number",
+    key: "accountNumber",
+  },
+  {
+    title: "Amount",
+    key: "amount",
+  },
+];
+</script>
