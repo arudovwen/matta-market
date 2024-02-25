@@ -1,4 +1,4 @@
-export default function (id) {
+export default function (id, type=null) {
   if (type && type === "kyb") {
     switch (id) {
       case 0:

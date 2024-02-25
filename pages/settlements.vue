@@ -4,66 +4,16 @@
   >
     <!-- Top bar   -->
 
-    <HeaderComponent title="Financing" className="px-6">
-      <template #subtext>
-        <p class="text-sm text-[#475467]">
-          Request for financing for your business.
-          <NuxtLink to="/finance"
-            ><span class="text-primary-500 font-medium"
-              >Learn more</span
-            ></NuxtLink
-          >
-        </p>
-      </template>
-      <template #button>
-        <Menu class="relative" as="div">
-          <MenuButton
-            id="request"
-            class="shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] font-semibold outline-none !px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm rounded-lg border border-primary-500 flex items-center gap-x-1"
-          >
-            <AppIcon icon="humbleicons:plus" /> Request Financing
-          </MenuButton>
-          <MenuItems
-            class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden flex flex-col"
-          >
-            <MenuItem
-              v-for="n in FinancesOptions.filter((i) => i.value !== '')"
-              :key="n.title"
-              class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap capitalize"
-            >
-              <span
-                class="cursor-pointer"
-                @click="navigateTo(handleRouting(n.url))"
-              >
-                {{ n.label }}
-              </span>
-            </MenuItem>
-          </MenuItems>
-        </Menu>
-      </template>
-    </HeaderComponent>
+    <HeaderComponent title="Settlements" className="px-6" />
+
     <div class="pt-5">
       <div v-if="!docLoading">
-        <div class="flex justify-between items-center mb-8">
-          <div class="flex gap-x-4 px-6">
-            <div class="relative flex items-center">
-              <span class="absolute left-4 pointer-events-none text-[#667085]"
-                ><i class="uil uil-search"></i
-              ></span>
-              <input
-                v-model="queryParams.Search"
-                @change="getRequests()"
-                @keyup="debounceSearch"
-                placeholder="Search"
-                class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
-                type="search"
-              />
-            </div>
-            <FilterButton
-              v-model="queryParams.Type"
-              :options="FinancesOptions"
-            />
-          </div>
+        <div class="mb-8 px-6">
+          <AppButton
+            @click="isOpen = true"
+            text="Add settlement account"
+            icon="humbleicons:plus"
+          />
         </div>
         <div v-if="financeData?.length">
           <table class="w-full">
@@ -95,30 +45,16 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  {{ handleType(item.loanRequestType) }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                >
-                  {{ moment(item.created).format("ll") }}
-                </td>
-                <td
-                  :class="item.status == 3 ? 'opacity-25' : ''"
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
-                >
-                  {{ currencyFormat(item.amountRequired) }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                >
-                  <AppStatusButton
-                    :status="item.financeRequestStatus"
-                    type="verdict"
-                  />
+                  -
                 </td>
 
                 <td
-                  :class="item.status == 3 ? 'opacity-25' : ''"
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+                >
+                  -
+                </td>
+
+                <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
                   <Menu class="relative" as="div">
@@ -126,34 +62,37 @@
                       :id="`${item.productName}+option`"
                       class="outline-none"
                     >
-                       <AppIcon icon="heroicons:ellipsis-vertical-solid" />
+                      <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                     </MenuButton>
                     <MenuItems
                       class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
                     >
                       <div
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap flex gap-x-1 items-center"
                         @click="openRequest(item)"
                       >
-                        View request
+                        <AppIcon icon="akar-icons:pencil" /> Edit
                       </div>
 
-                      <NuxtLink
-                        :to="`/financing/requests/${handleType(
-                          item.loanRequestType
-                        )}/${item.loanRequestType}/${item.id}`"
-                      >
-                        <div
-                          class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
-                        >
-                          Edit request
-                        </div>
-                      </NuxtLink>
                       <div
-                        @click="withdrawRequest(item.id)"
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap flex gap-x-1 items-center"
                       >
-                        Withdraw request
+                        <AppIcon
+                          icon="fluent:star-28-regular"
+                          class="text-yellow-600"
+                        />
+                        Set as primary
+                      </div>
+
+                      <div
+                        @click="deleteRequest(item.id)"
+                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap flex gap-x-1 items-center"
+                      >
+                        <AppIcon
+                          icon="mingcute:delete-2-line"
+                          class="text-red-600"
+                        />
+                        Delete
                       </div>
                     </MenuItems>
                   </Menu>
@@ -162,7 +101,7 @@
             </tbody>
           </table>
         </div>
-        <EmptyData v-else title="No request available" />
+        <EmptyData v-else title="No settlement available" type="settlements" />
       </div>
       <div class="text-center p-6 lg:p-8 my-20" v-if="docLoading">
         <AppLoader />
@@ -182,23 +121,25 @@
   <DeleteModal
     @deleteItem="handleDelete"
     @close="open = false"
-    title="Withdraw request"
-    text="Are you sure you want to withdraw this application? This action cannot be undone."
+    title="Delete account"
+    text="Are you sure you want to delete this account? This action cannot be undone."
     :open="open"
-    btnText="Withdraw request"
+    btnText="Yes, Delete"
   />
-  <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
+  <IndexModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #content>
-      <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10">
-        <FinanceRequestDetail :detail="detail" />
+      <div class="h-full w-full bg-white rounded-lg p-6">
+        <SettlementsForm :id="id" :detail="detail" />
       </div>
     </template>
-  </SideModal>
+  </IndexModal>
 </template>
 <script setup>
+definePageMeta({
+  layout: "dashboard",
+});
 import AppIcon from "@/components/AppIcon";
-import moment from "moment";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
+import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import { getAllFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";
 import { toast } from "vue3-toastify";
@@ -206,18 +147,11 @@ import { toast } from "vue3-toastify";
 const id = ref(null);
 const open = ref(false);
 const isOpen = ref(false);
+const isPrimaryOpen = ref(false)
 const detail = ref(null);
 const authStore = useAuthStore();
 
-const theads = [
-  "request id",
-  "customer name",
-  "financing type",
-  "created",
-  "amount",
-  "status",
-  "",
-];
+const theads = ["account name", "account number", "bank", "type", ""];
 const financeData = ref([]);
 
 onMounted(() => {
@@ -225,10 +159,6 @@ onMounted(() => {
 });
 
 const queryParams = reactive({
-  SupplierId: "",
-  RequestStatus: "",
-  ProducerId: "",
-  ProductId: "",
   Search: "",
   SortOrder: "",
   PageNumber: 1,
@@ -246,33 +176,7 @@ function getFinanceData() {
   });
 }
 
-function handleType(key) {
-  switch (parseInt(key)) {
-    case 0:
-      return "trade";
-      break;
-    case 1:
-      return "supply";
-      break;
-    case 2:
-      return "import";
-      break;
-    case 3:
-      return "export";
-      break;
-
-    default:
-      break;
-  }
-}
-const handleRouting = (url) => {
-  if (!authStore.userInfo.onboardingPageStatus) {
-    toast.info("Complete your KYB before you proceed");
-    return `/company/settings?redirected_from=${url}`;
-  }
-  return url;
-};
-function withdrawRequest(value) {
+function deleteRequest(value) {
   id.value = value;
   open.value = true;
 }
@@ -288,7 +192,7 @@ const handleDelete = () => {
   withdrawFinance(id.value).then((res) => {
     if (res.status === 200) {
       getFinanceData();
-      toast.success("Request withdrawn");
+      toast.success("Account deleted");
     }
   });
 };
@@ -335,7 +239,7 @@ const FinancesOptions = [
     url: "/financing/requests/export/3",
   },
 ];
-provide("document", document);
+provide("isOpen", isOpen);
 </script>
 
 <style lang="scss" scoped>

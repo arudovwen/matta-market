@@ -115,7 +115,6 @@
                   currencyDisplay: 'narrowSymbol',
                 }"
               />
-              <span class="absolute right-2 text-xs">/{{ form.unit }}</span>
             </div>
           </div>
         </div>
@@ -199,7 +198,7 @@ const packForm = reactive({
   purity: null,
   size: "",
   isAvailable: false,
-  unit:form.unit
+  unit: form.unit,
 });
 
 const packageForms = [
@@ -216,7 +215,11 @@ const packFormSchema = yup.object({
   title: yup.string().required(),
   purchaseAmount: yup.string().required(),
   color: yup.string().nullable(),
-  purity: yup.number().typeError("Invalid value").max(100, "Maximum is 100").nullable(),
+  purity: yup
+    .number()
+    .typeError("Invalid value")
+    .max(100, "Maximum is 100")
+    .nullable(),
   size: yup.number().typeError("Invalid value").required(),
   isAvailable: yup.boolean(),
 });
@@ -225,7 +228,6 @@ const { handleSubmit, defineField, errors } = useForm({
   validationSchema: packFormSchema,
   initialValues: packForm,
 });
-
 
 const [title, titleAtt] = defineField("title");
 const [purchaseAmount, purchaseAmountAtt] = defineField("purchaseAmount");
