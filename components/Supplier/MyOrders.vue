@@ -295,7 +295,7 @@
       <AppLoader />
     </div>
   </div>
-  <div class="p-5">
+  <div class="">
     <Pagination
       :total="queryParams.totalCount"
       :current="queryParams.PageNumber"
@@ -392,7 +392,7 @@ const order = ref(null);
 const isOpen = ref(false);
 
 function openOrder(val) {
-  procurementorderdetails(val.salesorderId)
+  procurementorderdetails(val.orderNumber)
     .then((res) => {
       order.value = { ...res.data, orderId: val.orderNumber };
 
