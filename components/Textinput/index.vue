@@ -14,7 +14,7 @@
     >
       {{ label }}</label
     >
-    <div class="relative" :class="horizontal ? 'flex-1' : ''">
+    <div class="relative flex items-center" :class="horizontal ? 'flex-1' : ''">
       <input
         :type="types"
         :name="name"
@@ -68,6 +68,7 @@
           <AppIcon :icon="icon" />
         </span>
       </div>
+      <slot name="content"></slot>
     </div>
 
     <span

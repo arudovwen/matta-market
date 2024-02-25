@@ -24,7 +24,7 @@
             <ListboxButton
               class="relative w-full text-left rounded-lg flex items-center appearance-none px-[14px] py-[10px] h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             >
-              <span class="block truncate text-sm">{{ title }}</span>
+              <span class="block truncate text-sm">{{ title || "Select pack" }}</span>
               <span class="right-0 pr-2 absolute"
                 ><AppIcon
                   icon="ph:caret-down-bold"
@@ -81,9 +81,26 @@
               placeholder=""
               type="text"
               :error="errors.size"
-              class="h-11"
-            />
-            <span class="absolute right-2 text-xs">{{ form.unit }}</span>
+              class="h-11 flex-1"
+              horizontal
+            >
+              <template #content>
+                <select
+                  v-model="unit"
+                  v-bind="unitAtt"
+                  name="unit"
+                  class="outline-none absolute right-2"
+                >
+                  <option
+                    v-for="i in measurements"
+                    :key="i.value"
+                    :value="i.value"
+                  >
+                    {{ i.value }}
+                  </option>
+                </select>
+              </template>
+            </Textinput>
           </div>
         </div>
         <div>
@@ -172,7 +189,7 @@
     <div class="flex gap-x-4 items-center justify-end">
       <button
         type="submit"
-        class="appearance-none leading-none px-10 py-4 w-full rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
+        class="appearance-none leading-none px-10 py-4 w-full rounded-lg text-white bg-primary-500 hover:opacity-70 text-sm"
       >
         Add package
       </button>
@@ -222,6 +239,7 @@ const packFormSchema = yup.object({
     .nullable(),
   size: yup.number().typeError("Invalid value").required(),
   isAvailable: yup.boolean(),
+  unit: yup.string(),
 });
 
 const { handleSubmit, defineField, errors } = useForm({
@@ -235,8 +253,10 @@ const [color, colorAtt] = defineField("color");
 const [size, sizeAtt] = defineField("size");
 const [isAvailable, isAvailableAtt] = defineField("isAvailable");
 const [purity, purityAtt] = defineField("purity");
+const [unit, unitAtt] = defineField("unit");
 
 const onSubmit = handleSubmit((values) => {
+ 
   form.packagesAvailable = [
     ...form.packagesAvailable,
     { ...values, package: { title: values.title } },

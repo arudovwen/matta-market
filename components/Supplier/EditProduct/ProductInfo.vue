@@ -298,65 +298,6 @@
         <p class="text-xs text-[#475467]">Provide package information here.</p>
       </div>
       <div class="max-w-[654px] w-full">
-        <div class="mb-6">
-          <Listbox v-model="form.unit">
-            <div class="relative mt-1">
-              <ListboxButton
-                class="text-sm relative w-[250px] text-left rounded-lg appearance-none px-[14px] py-[10px] flex items-center h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-              >
-                <span class="block truncate">{{
-                  measurements.find((i) => i.value == form.unit)?.name
-                }}</span>
-                <span class="right-0 pr-2 absolute"
-                  ><AppIcon
-                    icon="ph:caret-down-bold"
-                    iconClass="h-4 w-4 text-[#667085]"
-                    aria-hidden="true"
-                /></span>
-              </ListboxButton>
-
-              <transition
-                leave-active-class="transition duration-100 ease-in"
-                leave-from-class="opacity-100"
-                leave-to-class="opacity-0"
-              >
-                <ListboxOptions
-                  class="absolute mt-1 mx-h-60 w-[200px] z-40 overflow-auto rounded-[10px] bg-white py-1 text-base shadow-lg focus:outline-none sm:text-sm"
-                >
-                  <ListboxOption
-                    v-slot="{ selected }"
-                    v-for="i in measurements"
-                    :key="i.name"
-                    :value="i.value"
-                    as="template"
-                  >
-                    <li
-                      :class="[
-                        'relative cursor-pointer  text-matta-black  hover:text-primary select-none py-2 pl-10 pr-4 text-left',
-                      ]"
-                    >
-                      <span
-                        :class="[selected ? 'font-medium' : 'font-normal']"
-                        >{{ i.name }}</span
-                      >
-                    </li>
-                  </ListboxOption>
-                </ListboxOptions>
-              </transition>
-            </div>
-          </Listbox>
-
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of v$.unit.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
-        </div>
-
         <button
           type="button"
           class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-[11px] text-left leading-[normal] block"
@@ -402,7 +343,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item?.size }}
+                  {{ item?.size }}{{ item?.size }}{{item.unit}}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
@@ -501,7 +442,7 @@
       </div>
     </div>
     <div
-      class="bg-white flex justify-between gap-x-10 items-center sticky bottom-0 py-6 mt-10 border-t border-[#F4F7FE] z-10"
+      class="bg-white flex justify-between gap-x-10 items-center sticky bottom-0 py-6 mt-10 border-t border-[#F4F7FE] z-[99p]"
     >
       <button
         type="button"
@@ -748,8 +689,8 @@ let filteredProducers = computed(() =>
 const form = inject("form");
 const headers = computed(() => [
   "Name",
-  `Size (${form.unit})`,
-  `Purchase Price / ${form.unit}`,
+  `Size`,
+  `Purchase Price`,
   "Color",
   "Purity",
   "",

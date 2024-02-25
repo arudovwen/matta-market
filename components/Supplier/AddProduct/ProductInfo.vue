@@ -304,7 +304,7 @@
         <p class="text-xs text-[#475467]">Provide package information here.</p>
       </div>
       <div class="max-w-[654px] w-full">
-        <div class="mb-6">
+        <!-- <div class="mb-6">
           <Listbox v-model="form.unit">
             <div class="relative mt-1">
               <ListboxButton
@@ -361,7 +361,7 @@
               {{ error.$message }}
             </div>
           </div>
-        </div>
+        </div> -->
         <button
           type="button"
           class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-[11px] text-left leading-[normal] block"
@@ -407,7 +407,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item?.size }}
+                  {{ item?.size }}{{item.unit}}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
@@ -509,7 +509,7 @@
     </div>
 
     <div
-      class="bg-white flex justify-between gap-x-10 items-center sticky bottom-0 py-6 mt-10 border-t border-[#F4F7FE] z-10"
+      class="bg-white flex justify-between gap-x-10 items-center sticky bottom-0 py-6 mt-10 border-t border-[#F4F7FE] z-[99]"
     >
       <button
         type="button"
@@ -739,8 +739,8 @@ const allmarkets = inject("allmarkets");
 const producers = inject("producers");
 const headers = computed(() => [
   "Name",
-  `Size (${form.unit})`,
-  `Purchase Price / ${form.unit}`,
+  `Size`,
+  `Purchase Price`,
   "Color",
   "Purity",
   "",

@@ -13,6 +13,7 @@
             @click="isOpen = true"
             text="Add settlement account"
             icon="humbleicons:plus"
+            :btnClass="`!px-[10px] md:!px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm`"
           />
         </div>
         <div v-if="financeData?.length">

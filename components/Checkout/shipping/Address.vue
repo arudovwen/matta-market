@@ -2,7 +2,7 @@
   <div class="py-2" v-if="detail">
     <div class="flex justify-between items-center">
       <p class="text-base font-bold mb-[10px] capitalize">
-        {{ detail.firstName }} {{ detail.lasttName }}
+        {{ detail.firstName }} {{ detail.lastName }}
       </p>
       <AppIcon
         v-if="active"

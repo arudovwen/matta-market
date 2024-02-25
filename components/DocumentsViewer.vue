@@ -24,7 +24,7 @@
           class="border-b last:border-none"
         >
           <td
-            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
           >
             {{ docName(document.documentType) }}
           </td>

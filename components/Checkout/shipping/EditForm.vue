@@ -110,6 +110,7 @@ const isOpen = inject("isOpen");
 const detail = inject("detail")
 const type = inject("type")
 const isLoading = ref(false);
+const shippingStore = useShippingStore()
 const formValues = {
   id:"",
   firstName: "",
@@ -153,7 +154,7 @@ const onSubmit = handleSubmit((values) => {
       if (res.status === 200) {
         toast.info("Address updated");
         isOpen.value = false;
-        useshippingStore.getAlladdress()
+        shippingStore.getAlladdress()
       }
     })
 
