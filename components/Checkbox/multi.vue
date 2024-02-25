@@ -62,8 +62,8 @@ export default defineComponent({
     },
     activeClass: {
       type: String,
-      default:
-        " ring-black-500  bg-slate-900 darks:bg-slate-700 darks:ring-slate-700 ",
+     
+      default:"ring-primary-400  bg-primary-500",
     },
     labelClass: {
       type: String,

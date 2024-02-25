@@ -14,14 +14,14 @@
             v-for="n in shippingStore.addressesData"
             :key="n"
             :class="
-              n.isDefault
+              n?.isDefault
                 ? 'border-[#91B3F8] bg-[#E3EBFD] '
                 : 'border-[#ECF1FD]'
             "
             class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer"
           >
-            <div @click="handleDefault(n.id)">
-              <CheckoutShippingAddress :detail="n" :active="n.isDefault" />
+            <div @click="handleDefault(n.id)" class="mb-1">
+              <CheckoutShippingAddress :detail="n" :active="n?.isDefault" />
             </div>
             <div class="flex gap-x-5 mt-3">
               <AppButton
@@ -33,6 +33,7 @@
                 iconClass="!text-base"
               />
               <AppButton
+                @click="handleDelete(n)"
                 text="Delete"
                 icon="bx:trash"
                 btnClass=" !px-0  !py-[0] text-xs sm:text-sm !font-normal text-red-600"
@@ -63,16 +64,25 @@
     <ModalCenter>
       <template #default>
         <div class="w-full max-w-[500px] p-6 md:py-9 md:px-10 z-[999] relative">
-          <CheckoutShippingForm v-if="type === 'form'" />
+          <CheckoutShippingAddForm v-if="type === 'form'" />
           <CheckoutShippingEditForm v-if="type === 'edit'" />
         </div>
       </template>
     </ModalCenter>
+    <DeleteModal
+      @deleteItem="deleteItem"
+      title=" Remove Shipping Address"
+      :open="isDeleteOpen"
+      btnText="Delete address"
+      :loading="deleteLoading"
+      @close="isDeleteOpen = false"
+    />
   </div>
 </template>
 
 <script setup>
-import { setdefaultaddress } from "~/services/cartservice";
+import { setdefaultaddress, deleteAddress } from "~/services/cartservice";
+import {toast} from "vue3-toastify"
 
 defineProps(["title"]);
 
@@ -80,6 +90,8 @@ const shippingStore = useShippingStore();
 const type = ref("form");
 const detail = ref("detail");
 const isOpen = ref(false);
+const isDeleteOpen = ref(false);
+const deleteLoading = ref(false);
 function openModal(val) {
   type.value = val;
   isOpen.value = true;
@@ -95,7 +107,10 @@ function handleDefault(id) {
     if (res.status === 200) {
       isOpen.value = false;
       shippingStore.getAlladdress();
+      toast.success("Default address updated")
     }
+  }).catch(err=>{
+    toast.error(err.response.data.message || err.response.data.Message)
   });
 }
 
@@ -103,6 +118,24 @@ function handleEdit(val) {
   detail.value = val;
   type.value = "edit";
   isOpen.value = true;
+}
+function handleDelete(val) {
+  detail.value = val;
+  type.value = "delete";
+  isDeleteOpen.value = true;
+}
+function deleteItem() {
+  deleteLoading.value = true;
+  deleteAddress(detail.value.id)
+    .then(() => {
+      shippingStore.getAlladdress();
+      deleteLoading.value = false;
+      isDeleteOpen.value = false;
+    })
+    .catch((err) => {
+      deleteLoading.value = false;
+      toast.error(err.response.data.Message || err.response.data.message);
+    });
 }
 
 provide("type", type);

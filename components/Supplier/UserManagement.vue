@@ -10,6 +10,7 @@
       btnIcon="humbleicons:plus"
       @onClick="openmodal('method')"
       className="!border-[#EAECF0]"
+      :count="queryParams.totalCount"
     />
 
     <div class="rounded-lg bg-white pt-4">
@@ -160,7 +161,7 @@
                 >
                   <Menu class="relative" as="div">
                     <MenuButton class="outline-none">
-                      <i class="uil uil-ellipsis-v"></i>
+                       <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                     </MenuButton>
                     <MenuItems
                       class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[140px] rounded-xl overflow-hidden"
@@ -189,7 +190,7 @@
           @btnFunction="openmodal('method')"
           btnText="New User"
           title="No users found"
-          subtext="Your search “Stripe” did not match any vendors. Please try again or create add a new vendor."
+          subtext="You havent't added any user to your team"
           type="user"
           btnIcon="humbleicons:plus"
           v-else

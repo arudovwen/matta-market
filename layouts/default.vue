@@ -5,7 +5,7 @@
     <AppFooter />
     <!-- <AppScrollTop /> -->
 
-    <a href="https://wa.me/+2349169983235" target="_blank" class="z-[99999]">
+    <a href="https://wa.me/+2349169982190" target="_blank" class="z-[99999]">
       <button
         class="fixed bottom-6 transition duration-300 right-4 opacity-80 hover:opacity-100 hover:scale-[1.1]"
       >

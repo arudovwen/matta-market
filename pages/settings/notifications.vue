@@ -4,7 +4,7 @@
       <div
         class="flex gap-x-[76px]  flex-col lg:flex-row gap-y-7 lg:gap-y-10"
       >
-        <div class="w-[300px]">
+        <div class="w-[250px]">
           <h2 class="text-sm text-[#101828] font-semibold">Notifications</h2>
           <p class="text-xs text-[#475467]">
             Please enter your current password to change your password.

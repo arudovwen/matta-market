@@ -14,7 +14,7 @@
     >
       {{ label }}</label
     >
-    <div class="relative" :class="horizontal ? 'flex-1' : ''">
+    <div class="relative flex items-center" :class="horizontal ? 'flex-1' : ''">
       <input
         :type="types"
         :name="name"
@@ -57,7 +57,7 @@
           <AppIcon icon="la:eye-slash" class="text-[#666]" v-else />
         </span>
 
-        <span v-if="error" class="text-danger-500">
+        <span v-if="error && types !=='date'" class="text-danger-500">
           <AppIcon icon="heroicons-outline:information-circle" />
         </span>
 
@@ -68,6 +68,7 @@
           <AppIcon :icon="icon" />
         </span>
       </div>
+      <slot name="content"></slot>
     </div>
 
     <span

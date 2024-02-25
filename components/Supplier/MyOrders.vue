@@ -64,7 +64,7 @@
       <div v-if="isShowing === 'all'">
         <div
           class="hidden lg:flex justify-between items-center mb-8"
-          v="!isEmpty"
+        
         >
           <div class="flex gap-x-4">
             <div class="relative flex items-center">
@@ -109,8 +109,8 @@
             @onClick="openOrder(item)"
           />
         </div>
-        <div class="hidden" v-if="!isLoading">
-          <div
+        <div  v-if="!isLoading">
+          <!-- <div
             class="overflow-x-auto max-w-[80vw] lg:max-w-full"
             v-if="orders.length"
           >
@@ -170,7 +170,7 @@
                   >
                     <Menu class="relative" as="div">
                       <MenuButton class="outline-none">
-                        <i class="uil uil-ellipsis-v"></i>
+                         <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                       </MenuButton>
                       <MenuItems
                         class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[140px] rounded-xl overflow-hidden"
@@ -187,7 +187,7 @@
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div> -->
           <EmptyData
             v-if="!orders.length"
             url="/markets"
@@ -295,7 +295,7 @@
       <AppLoader />
     </div>
   </div>
-  <div class="p-5">
+  <div class="">
     <Pagination
       :total="queryParams.totalCount"
       :current="queryParams.PageNumber"
@@ -392,7 +392,7 @@ const order = ref(null);
 const isOpen = ref(false);
 
 function openOrder(val) {
-  procurementorderdetails(val.salesorderId)
+  procurementorderdetails(val.orderNumber)
     .then((res) => {
       order.value = { ...res.data, orderId: val.orderNumber };
 

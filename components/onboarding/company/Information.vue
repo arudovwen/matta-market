@@ -6,9 +6,9 @@
     class="px-4 lg:px-[30px]"
   >
     <div
-      class="flex gap-x-[76px] pt-[30px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-0"
+      class="flex gap-x-[76px] pt-[30px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-0"
     >
-      <div class="w-[300px]">
+      <div class="w-[250px]">
         <h2 class="text-sm text-[#101828] font-semibold">
           Company Information
         </h2>
@@ -90,7 +90,31 @@
                   </div>
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Company sector
+                      >Date Of Incorporation
+                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    >
+                    <input
+                      v-model="v$.dateofIncorporation.$model"
+                      :class="{
+                        'border-red-500': v$.dateofIncorporation.$error,
+                      }"
+                      class="px-[14px] py-[10px] h-11 text-sm rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      type="date"
+                    />
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.dateofIncorporation.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >Business type
                       <span class="text-red-500 pl-[.02rem]">*</span></label
                     >
 
@@ -102,11 +126,11 @@
                       >
                         <option disabled value="">Select sector</option>
                         <option
-                          v-for="item in sectors"
-                          :key="item.name"
-                          :value="item.name"
+                          v-for="item in businessTypesOptions"
+                          :key="item.label"
+                          :value="item.value"
                         >
-                          {{ item.name }}
+                          {{ item.label }}
                         </option>
                       </select>
                       <i
@@ -116,6 +140,42 @@
                     <div
                       class="text-red-500 mt-1"
                       v-for="error of v$.companyType.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >Business sector
+                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    >
+
+                    <div class="flex relative items-center">
+                      <select
+                        :disabled="!form.companyType"
+                        v-model="v$.sector.$model"
+                        :class="{ 'border-red-500': v$.sector.$error }"
+                        class="appearance-none rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      >
+                        <option disabled value="">Select sector</option>
+                        <option
+                          v-for="item in sectorOptions"
+                          :key="item.label"
+                          :value="item.value"
+                        >
+                          {{ item.label }}
+                        </option>
+                      </select>
+                      <i
+                        class="uil uil-angle-down absolute right-2 pointer-events-none"
+                      ></i>
+                    </div>
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.sector.$errors"
                       :key="error.$uid"
                     >
                       <div class="error-msg text-error text-xs font-semibold">
@@ -148,6 +208,7 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >Phone number
@@ -386,6 +447,10 @@
       </div>
     </div>
     <div
+      v-if="
+        !authStore?.userInfo?.onboardingPageStatus &&
+        !companyInfo.approvalStatus
+      "
       class="flex justify-between gap-x-4 items-center mt-16 pt-6 border-t border-[#EAECF0] w-full"
       v-if="!authStore?.userInfo?.onboardingPageStatus || !companyInfo.approvalStatus"
     >
@@ -547,7 +612,27 @@ const img = ref("");
 const image = ref(null);
 const coordinate = ref(null);
 const cropper = ref(null);
+const businessTypesOptions = businessTypes?.map((i) => {
+  return {
+    label: i.sector,
+    value: i.sector,
+  };
+});
+const sectorOptions = computed(() => {
+  const selectedBusinessType = businessTypes?.find(
+    (i) => i.sector === form.companyType
+  );
+  if (!selectedBusinessType) return []; // Handle case when selected business type is not found
 
+  return (
+    selectedBusinessType.subSectors?.map((i) => {
+      return {
+        label: i.subSectorName,
+        value: i.subSectorName, // Use subSectorCode as the value
+      };
+    }) ?? []
+  ); // Use optional chaining and nullish coalescing operators for safer property access
+});
 const form = reactive({
   companyName: "",
   companyType: "",
@@ -564,6 +649,8 @@ const form = reactive({
   code: "+234",
   registrationNo: "",
   tin: "",
+  sector: "",
+  dateofIncorporation: "",
   socials: [
     {
       name: "",
@@ -624,6 +711,8 @@ onMounted(() => {
   form.address = companyInfo?.value.address;
   form.country = companyInfo?.value.country;
   form.city = companyInfo?.value.city;
+  form.dateofIncorporation = companyInfo?.value.dateofIncorporation;
+  form.sector = companyInfo?.value.sector;
   form.tin = companyInfo?.value.tin;
   form.registrationNo = companyInfo?.value.registrationNo;
   form.phone = companyInfo?.value.phone;
@@ -670,6 +759,11 @@ function crop() {
     base64: canvas.toDataURL().replace("data:", "").replace(/^.+,/, ""),
   }).then((res) => {
     form.logo = res.data.message;
+    updateCompanyProfile({ ...form, logo: res.data.message }).then((res) => {
+      if (res.status === 200) {
+        toast.success("Logo saved");
+      }
+    });
   });
 }
 
@@ -690,6 +784,13 @@ const rules = {
     required,
     maxLength: maxLength(50),
   },
+  dateofIncorporation: {
+    required,
+  },
+  sector: {
+    required,
+  },
+
   city: {
     required,
     maxLength: maxLength(50),
@@ -739,14 +840,13 @@ async function handleSubmit() {
       if (res.status === 200) {
         toast.success("Information saved");
         active.value = 2;
+        getCompanyProfile();
       }
     })
 
     .catch((err) => {
-      invalidCredentials.value = true;
       isLoading.value = false;
-
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 function removeImage() {

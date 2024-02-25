@@ -42,7 +42,7 @@
           :error="errors.country"
         />
       </div>
-    
+   
       <div>
         <Textinput
           placeholder=""
@@ -54,7 +54,7 @@
           v-bind="cityAtt"
           :error="errors.city"
         />
-      </div>  <div class="xl:col-span-2">
+      </div>   <div class="xl:col-span-2">
         <Textinput
           placeholder=""
           label="Address"
@@ -81,7 +81,7 @@
         class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
       >
         <Checkbox
-          label="Set default"
+          label="Set as default"
           labelClass="text-xs md:text-sm"
           v-model="isDefault"
           v-bind="isDefaultAtt"
@@ -104,10 +104,11 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from 'vue3-toastify';
-import { editshipping, } from "~/services/cartservice";
+import { addshipping } from "~/services/cartservice";
+
 
 const isOpen = inject("isOpen");
-
+const shippingStore = useShippingStore()
 const isLoading = ref(false);
 const formValues = {
   firstName: "",
@@ -144,12 +145,12 @@ const [isDefault, isDefaultAtt] = defineField("isDefault");
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  editshipping(values)
+  addshipping(values)
     .then((res) => {
       if (res.status === 200) {
-        toast.info("Address updated");
+        toast.info("Address added");
+        shippingStore?.getAlladdress()
         isOpen.value = false;
-        useshippingStore.getAlladdress()
       }
     })
 

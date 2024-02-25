@@ -7,8 +7,8 @@
     <div class="py-10">
       <Stepper
         :tabs="tabs"
-        :pending="authStore?.userInfo?.onboardingPageStatus"
-        :complete="companyInfo.approvalStatus"
+        :pending="!!authStore?.userInfo?.onboardingPageStatus"
+        :complete="!!companyInfo?.approvalStatus"
       />
     </div>
     <div v-if="!isLoading">

@@ -1,14 +1,14 @@
 <template>
-  <div class="mb-8 bg-white rounded-[10px] border border-[#F4F7FE]">
-    <HeaderComponent
+  <div>
+    <!-- <HeaderComponent
       title="Store Orders"
       subtext=" List of orders received by your storefront."
       btnText="Create order"
       btnIcon="humbleicons:plus"
       @onClick="router.push('/markets')"
-    />
+    /> -->
 
-    <div class="py-8 rounded-lg bg-white">
+    <div class="rounded-lg bg-white">
       <div class="hidden lg:flex justify-between items-center mb-8 px-5">
         <div class="flex gap-x-4">
           <div class="relative flex items-center">
@@ -72,7 +72,7 @@
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                ></td>
+                > {{ item.custormer || "-" }}</td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
@@ -80,22 +80,11 @@
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                ></td>
+                >{{ currencyFormat(item.amount) }}</td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <span
-                    v-if="item.statusText == 'invoiced'"
-                    class="px-2 py-1 text-xs rounded-lg bg-[#E0F7B0]"
-                  >
-                    Completed</span
-                  >
-                  <span
-                    v-if="item.statusText !== 'invoiced'"
-                    class="px-2 py-1 text-xs rounded-lg bg-[#FDD0AF]"
-                  >
-                    In progress</span
-                  >
+                  <AppStatusButton :status="item.status" stattype="order" />
                 </td>
 
                 <td
@@ -112,7 +101,7 @@
                 >
                   <Menu class="relative" as="div">
                     <MenuButton class="outline-none">
-                      <i class="uil uil-ellipsis-v"></i>
+                       <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                     </MenuButton>
                     <MenuItems
                       class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[140px] rounded-xl overflow-hidden"
@@ -159,7 +148,7 @@
       >
         <div class="mb-3">
           <p class="text-[13px] text-[#B6B7B9] mb-2">Order ID</p>
-          <h2 class="font-medium text-2xl">#{{ order.orderId }}</h2>
+          <h2 class="font-medium text-2xl">#{{ order.orderNumber }}</h2>
         </div>
 
         <hr class="my-3 border-gray-200" />
@@ -218,16 +207,16 @@ const order = ref(null);
 const isOpen = ref(false);
 
 function openOrder(val) {
-  storefrontorderdetails(val.id)
-    .then((res) => {
-      order.value = { ...res.data, orderId: val.orderNumber };
-
+  // storefrontorderdetails(val.id)
+  //   .then((res) => {
+  //     order.value = { ...res.data, orderId: val.orderNumber };
+  order.value =val
       isOpen.value = true;
-    })
-    .catch((err) => {
-      isLoading.value = false;
-      toast.error(err.response.data.message || err.response.data.Message);
-    });
+    // })
+    // .catch((err) => {
+    //   isLoading.value = false;
+    //   toast.error(err.response.data.message || err.response.data.Message);
+    // });
 }
 
 function openModal() {

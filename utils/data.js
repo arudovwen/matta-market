@@ -134,6 +134,24 @@ export const mobileMenu = [
     icon: "mingcute:layout-3-line",
     key: "overview",
   },
+  {
+    name: "Profile",
+    url: "/account/settings",
+    icon: "lucide:user",
+    key: "account-settings",
+  },
+  {
+    name: "My Orders",
+    url: "/procurement/my-orders",
+    icon: "lucide:shopping-bag",
+    key: "procurement-my-orders",
+  },
+  {
+    name: "My Requests",
+    url: "/procurement/my-requests",
+    icon: "ri:hand-coin-line",
+    key: "procurement-my-requests",
+  },
 
   {
     name: "My Orders",
@@ -198,6 +216,13 @@ export const mobileMenu = [
     url: "/account/settings",
     icon: "lucide:user",
     key: "account",
+  },
+
+  {
+    name: "Products",
+    url: "/products",
+    icon: "fluent-mdl2:product-variant",
+    key: "products",
   },
   {
     name: "Sign out",

@@ -36,14 +36,19 @@ import { getProducts, getProductsByTag } from "~/services/productservices";
 import { useProductStore } from "~/stores/products";
 
 const store = useProductStore();
+
 const { productsData, loading } = storeToRefs(store);
 const route = useRoute();
 useHead({
-  title: `${ucFirst(route.query.title || route.query.search_query || "Market")} | Matta`,
+  title: `${ucFirst(
+    route.params.title || route.query.search_query || route.params.category
+  )} | Matta`,
   meta: [
     {
       name: "description",
-      content: `${ucFirst(route.query.title || route.query.search_query || "Market")}`,
+      content: `${ucFirst(
+        route.params.title || route.query.search_query || route.params.category
+      )}`,
     },
   ],
 });
@@ -54,7 +59,8 @@ const query = reactive({
   searchParameter: route.query.search_query || "",
   MarketApplication: "",
   Status: "",
-  MarketId: route.params.id,
+  [route.params.category === "market" ? "MarketId" : "TechnologyId"]:
+    route.params.id,
   MarketSubApplication: "",
   productId: "",
   Search: route.query.search_query || "",
@@ -62,6 +68,7 @@ const query = reactive({
   Producer: route.query.producer,
   producers: [],
   applications: [],
+  technologyApplications: [],
   pagecount: 0,
   totalData: 0,
   sortOrder: "",
@@ -121,11 +128,11 @@ onMounted(() => {
 watch(
   () => [
     query.PageNumber,
-    ,
     query.sortOrder,
     query.producers,
     query.sortBy,
     query.applications,
+    query.technologyApplications,
   ],
   () => {
     getAllProducts();

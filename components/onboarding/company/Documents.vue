@@ -2,34 +2,71 @@
 <template>
   <form @submit.prevent="handleSubmit" class="w-full px-4 lg:px-[30px]">
     <div
-      class="flex gap-x-[76px] pt-[30px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-"
+      class="flex gap-x-[76px] pt-[30px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-"
     >
-      <div class="w-[300px]">
+      <div class="w-[250px]">
         <h2 class="text-sm text-[#101828] font-semibold">Company Documents</h2>
         <p class="text-xs text-[#475467]">
           Upload your company registration documents
         </p>
       </div>
-      <div class="grid gap-y-6 max-w-[560px] w-full">
+      <div
+        v-if="!companyInfo.companyDocuments.length"
+        class="grid gap-y-6 max-w-[560px] w-full"
+      >
         <div>
           <FileUpload
             label="Memorandum and Articles of Association"
             id="mermat"
           />
-          <span @click="downloadFile(docUrl(1), 'MERMAT')" download v-if="docUrl(1)">  <span class="block text-xs text-blue-500 mt-1">Download Mermat</span></span>
+          <span
+            @click="downloadFile(docUrl(1), 'MERMAT')"
+            download
+            v-if="docUrl(1)"
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Mermat</span
+            ></span
+          >
         </div>
         <div>
           <FileUpload label="Certificate of Incorporation" id="incorporation" />
-          <span @click="downloadFile(docUrl(0), 'CAC')"  v-if="docUrl(0)">  <span class="block text-xs text-blue-500 mt-1">Download Certificate of Incorporation</span></span>
+          <span @click="downloadFile(docUrl(0), 'CAC')" v-if="docUrl(0)">
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Certificate of Incorporation</span
+            ></span
+          >
         </div>
         <div>
           <FileUpload label="CAC Status Report" id="statusReport" />
-        <span @click="downloadFile(docUrl(2), 'Status report')"  v-if="docUrl(2)">  <span class="block text-xs text-blue-500 mt-1">Download CAC Status Report</span></span>
+          <span
+            @click="downloadFile(docUrl(2), 'Status report')"
+            v-if="docUrl(2)"
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download CAC Status Report</span
+            ></span
+          >
         </div>
+        <div>
+          <FileUpload label="Utility bill" id="utitlityBill" />
+          <span
+            @click="downloadFile(docUrl(3), 'Utility bill')"
+            v-if="docUrl(3)"
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Utitlity Bill</span
+            ></span
+          >
+        </div>
+      </div>
+      <div v-else class="max-w-[560px]">
+        <DocumentsViewer type="kyb" :documents="companyInfo.companyDocuments" />
       </div>
     </div>
     <div  v-if="!authStore?.userInfo?.onboardingPageStatus || !companyInfo.approvalStatus"
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
+      v-if="!companyInfo.companyDocuments.length || !authStore.userInfo.onboardingPageStatus"
     >
       <button
         @click="active--"
@@ -69,24 +106,32 @@ import { useRouter } from "vue-router";
 import { updateDocuments } from "@/services/settingservices";
 import { useStore } from "vuex";
 
+const authStore = useAuthStore();
 const companyInfo = inject("companyInfo");
 const router = useRouter();
 const active = inject("active");
 const form = reactive({
-  companyDocuments: companyInfo.value.companyDocuments || [
-    {
-      url: "",
-      documentType: 0,
-    },
-    {
-      url: "",
-      documentType: 1,
-    },
-    {
-      url: "",
-      documentType: 2,
-    },
-  ],
+  companyDocuments:
+    companyInfo.value.companyDocuments.length === 4
+      ? companyInfo.value.companyDocuments
+      : [
+          {
+            url: "",
+            documentType: 0,
+          },
+          {
+            url: "",
+            documentType: 1,
+          },
+          {
+            url: "",
+            documentType: 2,
+          },
+          {
+            url: "",
+            documentType: 3,
+          },
+        ],
 });
 
 const isLoading = ref(false);
@@ -105,51 +150,16 @@ function handleChange(id, value) {
     if (id === "statusReport" && i.documentType === 2) {
       i.url = value;
     }
+    if (id === "utitlityBill" && i.documentType === 3) {
+      i.url = value;
+    }
   });
 }
 
 function docUrl(id) {
- return form.companyDocuments.find((i) => i.documentType === id)?.url || "";
+  return form.companyDocuments.find((i) => i.documentType === id)?.url || "";
 }
-function downloadFile(fileUrl,fileName) {
-    // Replace 'your_file_url' with the actual URL of the file you want to download
-   
-    fetch(fileUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.blob();
-        })
-        .then(blob => {
-            // Create a link element
-            const link = document.createElement('a');
 
-            // Create a Blob URL for the file data
-            const blobUrl = window.URL.createObjectURL(blob);
-
-            // Set the link's href attribute to the Blob URL
-            link.href = blobUrl;
-
-            // Set the download attribute with the desired file name
-            link.download = fileName || 'downloaded_file'; // Change the file name as needed
-
-            // Append the link to the document
-            document.body.appendChild(link);
-
-            // Trigger a click on the link to start the download
-            link.click();
-
-            // Remove the link from the document
-            document.body.removeChild(link);
-
-            // Revoke the Blob URL to free up resources
-            window.URL.revokeObjectURL(blobUrl);
-        })
-        .catch(error => {
-            console.error('Error downloading file:', error);
-        });
-}
 const rules = {
   cac: {
     required,

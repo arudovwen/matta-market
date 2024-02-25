@@ -18,7 +18,7 @@
       >
         <div v-show="isOpen">
           <div
-            class="absolute mt-1 w-full min-w-[300px] right-0 z-40 rounded-lg bg-white py-4 px-6 text-xs shadow-lg ring-1 ring-black ring-opacity-5 outline-0 sm:text-[13px]"
+            class="absolute mt-1 w-full min-w-[250px] right-0 z-40 rounded-lg bg-white py-4 px-6 text-xs shadow-lg ring-1 ring-black ring-opacity-5 outline-0 sm:text-[13px]"
           >
             <div v-if="!options.length">
               <p class="text-[#ABABAB] text-sm py-2 text-center">

@@ -3,9 +3,9 @@
 <template>
   <div class="px-4 lg:px-[30px]">
     <div
-      class="flex gap-x-[76px] pt-[30px] justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-"
+      class="flex gap-x-[76px] pt-[30px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-"
     >
-      <div class="w-[300px]">
+      <div class="w-[250px]">
         <h2 class="text-sm text-[#101828] font-semibold">Company Directors</h2>
         <p class="text-xs text-[#475467]">
           Update your company director details here.
@@ -14,8 +14,7 @@
       <!-- Top bar   -->
       <div class="md:max-w-[560px] w-full">
         <div class="">
-          <div  v-if="!authStore?.userInfo?.onboardingPageStatus || !companyInfo.approvalStatus">
-           
+          <div v-if="!companyInfo.directors.length">
             <button
               type="button"
               @click="
@@ -29,59 +28,25 @@
               <span class=""> + Add director</span>
             </button>
           </div>
-          <div
-            v-if="form.directors.length"
-            class="w-full rounded-[10px] border border-[#EAECF0] overflow-hidden"
-          >
-            <table class="w-full">
-              <thead>
-                <tr>
-                  <th
-                    class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-                  >
-                    Name
-                  </th>
-                  <th
-                    class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-                  ></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(director, id) in form.directors"
-                  :key="id"
-                  class="border-b last:border-none"
-                >
-                  <td
-                    class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    {{ director.firstName }} {{ director.lastName }}
-                  </td>
-                  <td
-                    class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    <span class="flex gap-x-3 items-center justify-end">
-                      <span class="p-1"><i class="uil uil-pen"></i></span>
-                      <span class="p-1" @click="handleDelete(id)"
-                        ><i class="uil uil-trash text-red-500"></i
-                      ></span>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="max-w-[560px] mx-auto">
+            <DirectorsView
+              :directors="companyInfo.directors"
+              :companyInfo="companyInfo"
+              @handleDelete="handleDelete"
+              @handleEdit="handleEdit"
+            />
           </div>
         </div>
       </div>
     </div>
     <div
-    v-if="!authStore?.userInfo?.onboardingPageStatus || !companyInfo.approvalStatus"
+      v-if="!companyInfo.directors.length || !authStore.userInfo.onboardingPageStatus"
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
     >
       <button
         @click="active--"
         type="button"
-        class="appearance-none leading-none px-10 py-[10px]  rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
+        class="appearance-none leading-none px-10 py-[10px] rounded-lg w-full lg:w-auto text-matta-black border border-[#E7EBEE] hover:bg-gray-100 text-[13px] capitalize"
       >
         Back
       </button>
@@ -92,7 +57,7 @@
         :class="{
           'opacity-60 cursor-not-allowed': !form.directors.length,
         }"
-        class="appearance-none leading-none px-10 py-[10px]  grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
+        class="appearance-none leading-none px-10 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
       >
         <i
           class="fa fa-spinner fa-spin"
@@ -138,7 +103,12 @@
                 :class="action == 'add' ? 'sm:max-w-lg' : 'sm:max-w-[343px]'"
               >
                 <div class="p-6">
-                  <OnboardingCompanyDirectorForm v-if="action === 'add'" />
+                  <OnboardingCompanyDirectorForm
+                    v-if="action !== 'delete'"
+                    :type="action"
+                    :director="director"
+                    :id="id"
+                  />
                   <OnboardingCompanyDeleteModal
                     v-if="action === 'delete'"
                     @delete="onDelete"
@@ -173,11 +143,12 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { updateDirectors } from "~/services/settingservices";
 
-const companyInfo = inject("companyInfo")
+const companyInfo = inject("companyInfo");
 const id = ref(null);
+const director = ref(null);
 const action = ref("");
 const authStore = useAuthStore();
-const router = useRouter();
+const route = useRoute();
 const open = ref(false);
 const active = inject("active");
 const form = reactive({
@@ -188,6 +159,12 @@ const isLoading = ref(false);
 function handleDelete(val) {
   id.value = val;
   action.value = "delete";
+  open.value = true;
+}
+function handleEdit(val, option) {
+  id.value = val;
+  director.value = option;
+  action.value = "edit";
   open.value = true;
 }
 
@@ -210,7 +187,12 @@ async function handleSubmit() {
         setOnboardingcomplete();
         authStore.updateUserInfo({ onboardingPageStatus: 1 });
         toast.success("Directors saved");
-        isLoading.value = false
+        isLoading.value = false;
+      
+        if(route.query.redirected_from){
+         
+          navigateTo(route.query.redirected_from)
+        }
       }
     })
 
@@ -221,7 +203,7 @@ async function handleSubmit() {
     });
 }
 provide("open", open);
-provide("directors", form.directors);
+provide("form", form);
 </script>
 
 <style lang="scss" scoped>

@@ -42,7 +42,7 @@
   <IndexModal :isOpen="open" @togglePopup="togglePopup">
     <template #content>
       <div
-        class="grid grid-cols-1 gap-y-[14px] w-full px-6 pt-6 pb-10 min-w-[300px] max-w-[320px]"
+        class="grid grid-cols-1 gap-y-[14px] w-full px-6 pt-6 pb-10 min-w-[250px] max-w-[320px]"
       >
         <p class="text-base text-[#18273AF0] font-bold">Filter</p>
         <SelectVueSelect

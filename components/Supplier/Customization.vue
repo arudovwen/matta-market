@@ -2,10 +2,10 @@
   <div
     class="gap-y-2 flex flex-col bg-white rounded-[10px] pb-10 border border-[#F4F7FE]"
   >
-    <HeaderComponent
+    <!-- <HeaderComponent
       title="Customization"
       subtext="Setup the look and feel of your store"
-    />
+    /> -->
     <!-- Top bar   -->
     <div class="p-[30px]">
       <form @submit.prevent="onSubmit">

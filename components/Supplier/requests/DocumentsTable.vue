@@ -105,7 +105,7 @@
             >
               <Menu class="relative" as="div">
                 <MenuButton class="outline-none">
-                  <i class="uil uil-ellipsis-v"></i>
+                   <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                 </MenuButton>
                 <MenuItems
                   class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
@@ -134,7 +134,7 @@
       v-else
       url="/markets"
       buttonText="go to catalog"
-      text="No document request have been made"
+      title="No document request have been made"
     />
   </div>
   <div class="text-center p-6 lg:p-8 my-20" v-if="docLoading">
@@ -241,7 +241,7 @@ const debounceSearch = debounce(() => {
   getRequestDoc();
 }, 800);
 watch(
-  () => ({ ...queryParams }),
+  () => [queryParams.Search,  queryParams.PageNumber,  queryParams.RequestStatus],
   () => {
     debounceSearch();
   }

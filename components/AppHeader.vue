@@ -32,7 +32,7 @@
       role="alert"
     >
       <div class="font-bold text-sm">
-        <span> Install Matta App?</span>
+        <span> Install Matta?</span>
       </div>
       <div class="flex gap-x-4">
         <button
@@ -185,7 +185,7 @@
               <option value="">English-NGN</option>
             </select></span
           > -->
-          <NuxtLink
+          <!-- <NuxtLink
             :class="` items-center  relative ${
               authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
             }`"
@@ -198,7 +198,7 @@
                 icon="akar-icons:search"
               />
             </span>
-          </NuxtLink>
+          </NuxtLink> -->
           <span
             v-if="authStore.isLoggedIn"
             :class="` items-center  relative ${
@@ -412,10 +412,10 @@ const { currentRoute } = router;
 const filteredMenu = computed(() =>
   mobileMenu.filter(
     (i) =>
-      i.key === "profile" ||
-      i.key === "wallet" ||
+      i.key === "account-settings" ||
+      i.key === "wallet-home" ||
       i.key === "sign-out" ||
-      i.key === "my-orders"
+      i.key === "procurement-my-orders"
   )
 );
 const view = ref({

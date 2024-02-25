@@ -81,13 +81,13 @@
             © {{ new Date().getFullYear() }} Matta. All Rights Reserved.
           </p>
           <div class="order-1 lg:order-2 flex gap-x-2 md:gap-x-4 items-center">
-            <NuxtLink to="/policy" class="text-sm md:text-sm"
+            <NuxtLink to="/privacy-policies" class="text-sm md:text-sm"
               >Privacy policy</NuxtLink
             >
             <span
               class="bg-[#333] darks:text-white/80 w-[2px] h-[2px] rounded-full"
             ></span>
-            <NuxtLink to="/terms" class="text-sm md:text-sm"
+            <NuxtLink to="/terms-and-conditions" class="text-sm md:text-sm"
               >Terms of use</NuxtLink
             >
           </div>

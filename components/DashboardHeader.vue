@@ -32,7 +32,7 @@
         role="alert"
       >
         <div class="font-bold text-sm">
-          <span> Install Matta App?</span>
+          <span> Install Matta?</span>
         </div>
         <div class="flex gap-x-4">
           <button

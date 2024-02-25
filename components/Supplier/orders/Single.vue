@@ -1,26 +1,26 @@
 <template>
   <div class="py-[30px] border-b border-[#F4F7FE] flex gap-x-6">
-    <div class="h-[100px] w-[100px] bg-gray-50 rounded-[10px] overflow-hidden">
+    <!-- <div class="h-[100px] w-[100px] bg-gray-50 rounded-[10px] overflow-hidden">
       <img src="/images/2.png" class="w-full h-full" alt="image" />
-    </div>
+    </div> -->
     <div class="flex-1 flex justify-between">
       <div class="w-[236px]">
         <h6 class="text-sm mb-2 text-[#333] font-bold">
-          Acrypol 600(Styrene Acrylic)
+          {{order.product || "-"}}
         </h6>
         <p class="text-xs mb-2 text-[#666666]">
-          Sold by: <span class="font-medium">A Huber Company</span>
+          Sold by: <span class="font-medium">{{order.soldBy || "-"}}</span>
         </p>
         <p class="text-xs mb-4 text-[#666666]">
           Amount paid:
           <span class="font-medium text-[#333]">{{
-            currencyFormat(155000)
+            currencyFormat(order.amount)
           }}</span>
         </p>
         <p class="text-xs mb-2 text-[#333333] font-semibold">Shipped to:</p>
-        <p class="text-xs mb-2 text-[#666666]">John Doe</p>
+        <p class="text-xs mb-2 text-[#666666]">{{order.shippingName || "-"}}</p>
         <p class="text-xs text-[#666666]">
-          15th Floor, Elephant House, Marina, Lagos., Lagos Island, Lagos
+          {{order.shippingAddress || "-" }} 
         </p>
       </div>
 
@@ -31,9 +31,9 @@
           <span class="text-xs text-[#666666]">{{moment(order.orderDate).format("ll")}}</span>
         </div>
         <div class="leading-[150%]">
-          <span class="text-xs text-[#333] font-semibold">Invoice No:</span
+          <span class="text-xs text-[#333] font-semibold">Order No:</span
           ><br />
-          <span class="text-xs text-[#666666]">205-6693055-4285164</span>
+          <span class="text-xs text-[#666666]">{{order.orderNumber}}</span>
         </div>
 
         <AppButton

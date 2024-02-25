@@ -39,7 +39,7 @@
               leave-to-class="opacity-0"
             >
               <ListboxOptions
-                class="absolute mt-1 min-w-[300px] w-full z-[99] overflow-auto rounded-md bg-white text-[13px] lg:text-base shadow-lg ring-1 ring-black ring-opacity-5 outline-0 sm:text-sm"
+                class="absolute mt-1 min-w-[250px] w-full z-[99] overflow-auto rounded-md bg-white text-[13px] lg:text-base shadow-lg ring-1 ring-black ring-opacity-5 outline-0 sm:text-sm"
               >
                 <ListboxOption
                   v-slot="{ active, selected }"
@@ -51,7 +51,7 @@
                   <li
                     :class="[
                       active ? '' : '',
-                      'relative text-matta-black flex items-center h-[60px] justify-between py-4 border-b px-3 lg:px-6',
+                      'relative text-matta-black flex items-center h-[60px] justify-start py-4 border-b px-3 lg:px-6',
                     ]"
                   >
                     <span

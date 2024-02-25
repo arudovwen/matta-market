@@ -42,7 +42,7 @@
           :error="errors.country"
         />
       </div>
-   
+    
       <div>
         <Textinput
           placeholder=""
@@ -54,7 +54,7 @@
           v-bind="cityAtt"
           :error="errors.city"
         />
-      </div>   <div class="xl:col-span-2">
+      </div>  <div class="xl:col-span-2">
         <Textinput
           placeholder=""
           label="Address"
@@ -81,7 +81,7 @@
         class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
       >
         <Checkbox
-          label="Set default"
+          label="Set as default"
           labelClass="text-xs md:text-sm"
           v-model="isDefault"
           v-bind="isDefaultAtt"
@@ -104,14 +104,15 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from 'vue3-toastify';
-import { addshipping } from "~/services/cartservice";
+import { editshipping, } from "~/services/cartservice";
 
+const isOpen = inject("isOpen");
 const detail = inject("detail")
 const type = inject("type")
-const isOpen = inject("isOpen");
-
 const isLoading = ref(false);
+const shippingStore = useShippingStore()
 const formValues = {
+  id:"",
   firstName: "",
   lastName: "",
   street: "",
@@ -120,7 +121,9 @@ const formValues = {
   postalCode: "",
   isDefault: false,
 };
-
+onMounted(() => {
+  setValues(detail.value)
+})
 const schema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -130,14 +133,11 @@ const schema = yup.object({
   postalCode: yup.string().required("Postal code is required"),
 });
 
-const { handleSubmit, defineField, errors, setValues } = useForm({
+const { handleSubmit, defineField, errors,setValues } = useForm({
   validationSchema: schema,
   initialValues: formValues,
 });
 
-onMounted(() => {
-  setValues(detail.value)
-})
 const [firstName, firstNameAtt] = defineField("firstName");
 const [lastName, lastNameAtt] = defineField("lastName");
 const [street, streetAtt] = defineField("street");
@@ -146,16 +146,15 @@ const [city, cityAtt] = defineField("city");
 const [postalCode, postalCodeAtt] = defineField("postalCode");
 const [isDefault, isDefaultAtt] = defineField("isDefault");
 
-const route = useRoute();
-const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  addshipping(values)
+  editshipping(values)
     .then((res) => {
       if (res.status === 200) {
-        toast.info("Address added");
+        toast.info("Address updated");
         isOpen.value = false;
+        shippingStore.getAlladdress()
       }
     })
 

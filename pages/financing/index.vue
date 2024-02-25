@@ -4,11 +4,11 @@
   >
     <!-- Top bar   -->
 
-    <HeaderComponent title="Financing">
+    <HeaderComponent title="Financing" className="px-6">
       <template #subtext>
         <p class="text-sm text-[#475467]">
           Request for financing for your business.
-          <NuxtLink to="/financing"
+          <NuxtLink to="/finance"
             ><span class="text-primary-500 font-medium"
               >Learn more</span
             ></NuxtLink
@@ -27,13 +27,16 @@
             class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden flex flex-col"
           >
             <MenuItem
-              v-for="n in FinancesOptions"
+              v-for="n in FinancesOptions.filter((i) => i.value !== '')"
               :key="n.title"
               class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap capitalize"
             >
-              <NuxtLink :to="n.url">
-                {{ n.title }}
-              </NuxtLink>
+              <span
+                class="cursor-pointer"
+                @click="navigateTo(handleRouting(n.url))"
+              >
+                {{ n.label }}
+              </span>
             </MenuItem>
           </MenuItems>
         </Menu>
@@ -42,7 +45,7 @@
     <div class="pt-5">
       <div v-if="!docLoading">
         <div class="flex justify-between items-center mb-8">
-          <div class="flex gap-x-4 px-[30px]">
+          <div class="flex gap-x-4 px-6">
             <div class="relative flex items-center">
               <span class="absolute left-4 pointer-events-none text-[#667085]"
                 ><i class="uil uil-search"></i
@@ -56,9 +59,13 @@
                 type="search"
               />
             </div>
+            <FilterButton
+              v-model="queryParams.Type"
+              :options="FinancesOptions"
+            />
           </div>
         </div>
-        <div v-if="financeData.length">
+        <div v-if="financeData?.length">
           <table class="w-full">
             <thead>
               <tr>
@@ -77,58 +84,37 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <div class="flex items-center">
-                    <span :class="item.status == 3 ? 'opacity-25' : ''">
-                      <span class="text-sm font-medium">
-                        {{ item.productName }}
-                      </span>
-                      <br />
-                      <span class="text-xs font-normal">
-                        {{ item.producer }}
-                      </span>
-                    </span>
-                  </div>
+                  {{ item.financeRequestNo }}
                 </td>
                 <td
                   :class="item.status == 3 ? 'opacity-25' : ''"
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
                 >
-                  {{ item.type }}
+                  {{ item.customer || "-" }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                >
+                  {{ handleType(item.loanRequestType) }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                >
+                  {{ moment(item.created).format("ll") }}
                 </td>
                 <td
                   :class="item.status == 3 ? 'opacity-25' : ''"
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
                 >
-                  {{ moment(item.created).format("l") }}
+                  {{ currencyFormat(item.amountRequired) }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <span
-                    v-if="item.requestStatus == 0"
-                    class="px-[6px] py-[2px] text-xs rounded-full text-[#5925DC] border border-[#D9D6FE] bg-[#F4F3FF] flex gap-x-1 items-center max-w-max"
-                  >
-                    <AppIcon icon="octicon:dot-fill-24" /> New</span
-                  >
-                  <span
-                    v-if="item.status == 1"
-                    class="px-[6px] py-1 text-xs rounded-full border border-pink-100 bg-pink-50 text-pink-500 flex gap-x-1 items-center max-w-max"
-                  >
-                    <AppIcon icon="octicon:dot-fill-24" /> In progress</span
-                  >
-
-                  <span
-                    v-if="item.status == 2"
-                    class="px-[6px] py-1 text-xs rounded-full text-[#17B26A] border border-[#ABEFC6] bg-[#ECFDF3] flex gap-x-1 items-center max-w-max"
-                  >
-                    <AppIcon icon="octicon:dot-fill-24" /> Shipped</span
-                  >
-                  <span
-                    v-if="item.status == 3"
-                    class="px-[6px] py-1 text-xs rounded-lg text-[#17B26A] border border-[#ABEFC6] bg-[#ECFDF3] flex gap-x-1 items-center max-w-max"
-                  >
-                    <AppIcon icon="octicon:dot-fill-24" /> Completed</span
-                  >
+                  <AppStatusButton
+                    :status="item.financeRequestStatus"
+                    type="verdict"
+                  />
                 </td>
 
                 <td
@@ -140,7 +126,7 @@
                       :id="`${item.productName}+option`"
                       class="outline-none"
                     >
-                      <i class="uil uil-ellipsis-v"></i>
+                       <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                     </MenuButton>
                     <MenuItems
                       class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
@@ -152,12 +138,17 @@
                         View request
                       </div>
 
-                      <div
-                        @click="cancelRequest"
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                      <NuxtLink
+                        :to="`/financing/requests/${handleType(
+                          item.loanRequestType
+                        )}/${item.loanRequestType}/${item.id}`"
                       >
-                        Edit request
-                      </div>
+                        <div
+                          class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                        >
+                          Edit request
+                        </div>
+                      </NuxtLink>
                       <div
                         @click="withdrawRequest(item.id)"
                         class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
@@ -196,16 +187,28 @@
     :open="open"
     btnText="Withdraw request"
   />
+  <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
+    <template #content>
+      <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10">
+        <FinanceRequestDetail :detail="detail" />
+      </div>
+    </template>
+  </SideModal>
 </template>
 <script setup>
+import AppIcon from "@/components/AppIcon";
 import moment from "moment";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { sellerdoc, sellerdocdetails } from "~/services/requestservice";
+import { getAllFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";
+import { toast } from "vue3-toastify";
 
 const id = ref(null);
 const open = ref(false);
-const route = useRoute();
+const isOpen = ref(false);
+const detail = ref(null);
+const authStore = useAuthStore();
+
 const theads = [
   "request id",
   "customer name",
@@ -230,57 +233,108 @@ const queryParams = reactive({
   SortOrder: "",
   PageNumber: 1,
   PageSize: 10,
+  Type: "",
 });
 const docLoading = ref(true);
 
-const isOpen = ref(false);
 function getFinanceData() {
   docLoading.value = true;
-  sellerdoc(queryParams).then((res) => {
-    // financeData.value = res.data.data.data;
-    // queryParams.totalCount = res.data.data.totalCount;
+  getAllFinance(queryParams).then((res) => {
+    financeData.value = res.data.data;
+    queryParams.totalCount = res.data.data.totalCount;
     docLoading.value = false;
   });
 }
-function selectall() {
-  multi.value = financeData.value.map((i) => i.id);
+
+function handleType(key) {
+  switch (parseInt(key)) {
+    case 0:
+      return "trade";
+      break;
+    case 1:
+      return "supply";
+      break;
+    case 2:
+      return "import";
+      break;
+    case 3:
+      return "export";
+      break;
+
+    default:
+      break;
+  }
 }
-function openRequest(item) {
-  sellerdocdetails(item.id).then((res) => {
-    document.value = res.data.data;
-    isOpen.value = true;
-  });
-}
+const handleRouting = (url) => {
+  if (!authStore.userInfo.onboardingPageStatus) {
+    toast.info("Complete your KYB before you proceed");
+    return `/company/settings?redirected_from=${url}`;
+  }
+  return url;
+};
 function withdrawRequest(value) {
   id.value = value;
   open.value = true;
 }
 const document = ref({});
-function next() {
-  queryParams.PageNumber++;
+function openRequest(val) {
+  detail.value = val;
+  isOpen.value = true;
 }
-function toggleOrder() {
-  if (queryParams.SortOrder == "A") {
-    queryParams.SortOrder = "D";
-  } else {
-    queryParams.SortOrder = "A";
-  }
-}
-function prev() {
-  if (queryParams.PageNumber == 1) return;
-  queryParams.PageNumber--;
-}
-
 const debounceSearch = debounce(() => {
   getFinanceData();
 }, 800);
-const handleDelete = () => {};
+const handleDelete = () => {
+  withdrawFinance(id.value).then((res) => {
+    if (res.status === 200) {
+      getFinanceData();
+      toast.success("Request withdrawn");
+    }
+  });
+};
 watch(
-  () => ({ ...queryParams }),
+  () => [queryParams.Search],
   () => {
     debounceSearch();
   }
 );
+watch(
+  () => [queryParams.PageNumber, queryParams.SortOrder],
+  () => {
+    getFinanceData();
+  }
+);
+const FinancesOptions = [
+  {
+    label: "all finance",
+    key: "all",
+    value: "",
+  },
+  {
+    label: "trade finance",
+    key: 0,
+    value: 0,
+    url: "/financing/requests/trade/0",
+  },
+  {
+    label: "supply finance",
+    key: 1,
+    value: 1,
+    url: "/financing/requests/supply/1",
+  },
+  {
+    label: "import finance",
+    key: 2,
+    value: 2,
+    url: "/financing/requests/import/2",
+  },
+  {
+    label: "export finance",
+    key: 3,
+    value: 3,
+    url: "/financing/requests/export/3",
+  },
+];
 provide("document", document);
 </script>
 

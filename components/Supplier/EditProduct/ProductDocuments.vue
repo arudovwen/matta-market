@@ -1,7 +1,7 @@
 <template>
   <section class="px-6 lg:px-[30px] py-[30px]">
     <div
-      class="flex gap-x-[78px] justify-between text-left flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+      class="flex gap-x-[56px] justify-start text-left flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
       <div class="lg:w-[350px] text-left">
         <h2 class="text-sm text-[#101828] font-semibold">Product documents</h2>
@@ -68,7 +68,7 @@
                           leave-to-class="opacity-0"
                         >
                           <ListboxOptions
-                            class="absolute mt-1 mx-h-60 w-[300px] z-40 overflow-auto rounded-md bg-white py-4 text-base shadow-lg focus:outline-none sm:text-sm"
+                            class="absolute mt-1 mx-h-60 w-[250px] z-40 overflow-auto rounded-md bg-white py-4 text-base shadow-lg focus:outline-none sm:text-sm"
                           >
                             <ListboxOption
                               v-slot="{ selected }"

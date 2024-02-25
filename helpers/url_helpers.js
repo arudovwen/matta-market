@@ -102,6 +102,7 @@ const urls = {
   EDIT_SHIPPING_ADDRESS: "/v1/shippingaddress/edit",
   GET_SHIPPING_ADDRESS: "/v1/shippingaddress/getall",
   DEFAULT_SHIPPING_ADDRESS: "/v1/shippingaddress/setasdefault",
+  DELETE_SHIPPING: "/v1/shippingaddress/delete",
 
   //Procurement
   PROCUREMENT_ORDERS: "v1/procurement/orders",
@@ -192,6 +193,14 @@ const urls = {
   CUSTOMIZE_VENDOR_INFO: "v1/customize/vendor",
   GET_VENDOR_STORE: "v1/storefront/get-store",
   UPDATE_VENDOR_STORE: "v1/storefront/update-store",
-  POST_VENDOR_STORE_NAME: "v1/storefront/search-name"
+  POST_VENDOR_STORE_NAME: "v1/storefront/search-name",
+
+  //Finance
+  GET_ALL_FINANCE: "v1/financing/get-all",
+  ADD_FINANCE: "v1/financing/add",
+  EDIT_FINANCE: "v1/financing/edit",
+  UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
+  GET_FINANCE: "v1/financing/get",
+  WITHDRAW_FINANCE: "v1/financing/withdraw",
 };
 export default urls;

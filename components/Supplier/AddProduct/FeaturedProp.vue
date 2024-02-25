@@ -1,9 +1,9 @@
 <template>
   <div
-    class="flex gap-x-[78px] text-left justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    class="flex gap-x-[56px] text-left justify-between flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     v-if="form && form.propertyItems"
   >
-    <div class="w-[300px] text-left">
+    <div class="w-[250px] text-left">
       <h3
         class="text-sm text-[#101828] font-semibold flex gap-x-1 items-center"
       >

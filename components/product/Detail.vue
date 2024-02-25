@@ -22,7 +22,7 @@
             width="100px"
             height="100"
             @click="imageUrl = n"
-            class="bg-gray-100 w-16 lg:w-[100px] object-cover h-16 lg:h-[100px] rounded-[5px]"
+            class="cursor-pointer bg-gray-100 w-16 lg:w-[100px] object-cover h-16 lg:h-[100px] rounded-[5px]"
           />
         </div>
         <div
@@ -112,7 +112,7 @@
           />
         </div>
         <div
-          v-if="!productData.hidePrice"
+          v-if="!productData.hidePrice && productData?.supplierId !== authStore.businessId"
           class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4"
         >
           <div class="h-[50px] lg:flex-1">

@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col bg-white rounded-[10px]">
     <!-- Top bar   -->
-    <HeaderComponent
+    <!-- <HeaderComponent
       title="Store Requests"
       className="!px-5"
       subtext="List of your requests for samples and documents."
-    />
+    /> -->
     <div class="pt-[30px]">
       <AppTab :tabs="tabs" className="px-5" :count="count" />
 

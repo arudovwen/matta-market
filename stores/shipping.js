@@ -2,9 +2,9 @@ import { defineStore } from "pinia";
 import { getalladdress } from "~/services/cartservice";
 export const useShippingStore = defineStore("shipping", () => {
   const addresses = ref([]);
- const loading = ref(true)
+  const loading = ref(true);
   const addressesData = computed(() => addresses.value);
-  const isLoading = computed(()=> loading.value)
+  const isLoading = computed(() => loading.value);
   const defaultAddress = computed(() =>
     addresses.value.find((i) => i.isDefault)
   );
@@ -13,13 +13,23 @@ export const useShippingStore = defineStore("shipping", () => {
     addresses.value = data;
   }
   function getAlladdress() {
-    loading.value = true
-    getalladdress().then((res) => {
-      addresses.value = res.data.data;
-      loading.value = false
-    }).catch(()=>{
-      loading.value = false
-    });
+    loading.value = true;
+    getalladdress()
+      .then((res) => {
+        if (res.data.data.length) {
+          addresses.value = res.data.data.some((i) => i.isDefault)
+            ? [
+                res.data.data.find((i) => i.isDefault),
+                ...res.data.data.filter((i) => !i.isDefault),
+              ]
+            : res.data.data;
+        }
+
+        loading.value = false;
+      })
+      .catch(() => {
+        loading.value = false;
+      });
   }
   function deleteAddress(id) {
     getalladdress(id).then((res) => {
@@ -32,6 +42,6 @@ export const useShippingStore = defineStore("shipping", () => {
     setAddresses,
     defaultAddress,
     getAlladdress,
-    isLoading
+    isLoading,
   };
 });

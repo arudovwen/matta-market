@@ -14,7 +14,7 @@
       </p>
       <div class="flex flex-col md:flex-row gap-y-4 md:gap-y-0 md:gap-x-[14px]">
         <AppButton
-          link="/overview"
+          link="/procurement/my-orders"
           text="Proceed to dashboard"
           btnClass="text-[#2176FF] bg-[#165EF014] w-full !text-sm !font-normal !py-3"
         />

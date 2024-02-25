@@ -1,7 +1,7 @@
 <template>
   <div
     @drop.prevent="onDrop"
-    class="border mb-6 flex-1 border-[#EAECF0] rounded-[12px] px-6 py-10 flex items-center justify-center text-center relative group overflow-hidden min-h-[190px]"
+    class="border mb-6 flex-1 border-[#DCDEE6] rounded-[12px] px-6 py-10 flex items-center justify-center text-center relative group overflow-hidden min-h-[190px]"
   >
     <div
       :class="`relative z-20 ${

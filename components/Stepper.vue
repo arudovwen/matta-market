@@ -5,6 +5,7 @@
   >
     <div
       v-for="tab in tabs"
+      :key="tab.value"
       @click="selectValue(tab.value)"
       class="relative after:content-[''] after:absolute after:border-b-2 after:border-[#EAECF0] after:w-24 after:top-1/2 after:translate-y-[-50%] after:left-[24px] after:last:content-none after:z-10"
       :class="`${
@@ -54,12 +55,13 @@
   </div>
   <div
     class="flex gap-x-20 justify-center items-center z-[2]"
-    v-if="pending"
+    v-if="pending & !complete"
   >
     <div
       v-for="tab in tabs"
+      :key="tab.value"
       @click="selectValue(tab.value)"
-      class="relative after:content-[''] after:border-primary-500 after:absolute after:border-b-2 after:w-24 after:top-1/2 after:translate-y-[-50%] after:left-[24px] after:last:content-none after:z-10"
+      class="cursor-pointer relative after:content-[''] after:border-primary-500 after:absolute after:border-b-2 after:w-24 after:top-1/2 after:translate-y-[-50%] after:left-[24px] after:last:content-none after:z-10"
     >
       <span
         class="flex flex-col justify-center gap-y-1 z-20 relative items-center"
@@ -70,7 +72,7 @@
           ></span>
           <span class="bg-white h-4 w-4 z-[2] absolute rounded-full"></span>
           <AppIcon
-            icon="fa-solid:dot-circle"
+          icon="fa6-solid:circle-check"
             iconClass="text-2xl text-primary-500 z-[3] relative"
           />
         </span>
@@ -91,8 +93,9 @@
   >
     <div
       v-for="tab in tabs"
+      :key="tab.value"
       @click="selectValue(tab.value)"
-      class="relative after:content-[''] after:border-green-700 after:absolute after:border-b-2 after:w-24 after:top-1/2 after:translate-y-[-50%] after:left-[24px] after:last:content-none after:z-10"
+      class="cursor-pointer relative after:content-[''] after:border-green-700 after:absolute after:border-b-2 after:w-24 after:top-1/2 after:translate-y-[-50%] after:left-[24px] after:last:content-none after:z-10"
     >
       <span
         class="flex flex-col justify-center gap-y-1 z-20 relative items-center"
@@ -120,7 +123,7 @@
   </div>
 </template>
 <script setup>
-defineProps({
+const props = defineProps({
   tabs: {
     type: Array,
     default: [],
