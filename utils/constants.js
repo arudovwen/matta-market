@@ -828,3 +828,29 @@ export const businessTypes =[
     ]
   }
 ]
+export const subnavigation = [
+  {
+    name: "Products",
+    url: "/storefront/products",
+    icon: "fluent-mdl2:product-variant",
+    key: "products",
+  },
+  {
+    name: "Store Orders",
+    url: "/storefront/orders",
+    icon: "lucide:shopping-bag",
+    key: "orders",
+  },
+  {
+    name: "Store Requests",
+    url: "/storefront/requests",
+    icon: "ri:hand-coin-line",
+    key: "requests",
+  },
+  {
+    name: "Store Settings",
+    url: "/storefront/customization",
+    icon: "bx:cog",
+    key: "storefront",
+  },
+];
