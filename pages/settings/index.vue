@@ -14,6 +14,7 @@
           <Profile v-if="active === 'profile'" />
           <Notifications v-if="active === 'notifications'" />
           <Password v-if="active === 'password'" />
+          <Settlements v-if="active === 'settlements'" />
         </div>
       </div>
     </div>
@@ -24,6 +25,7 @@
 import Profile from "./profile";
 import Password from "./password";
 import Notifications from "./notifications";
+import Settlements from "./settlements";
 
 definePageMeta({
   layout: "dashboard",
@@ -43,6 +45,10 @@ const tabs = [
   {
     title: "notifications",
     key: "notifications",
+  },
+  {
+    title: "settlements",
+    key: "settlements",
   },
 ];
 
