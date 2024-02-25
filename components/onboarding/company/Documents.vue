@@ -64,9 +64,12 @@
         <DocumentsViewer type="kyb" :documents="companyInfo.companyDocuments" />
       </div>
     </div>
-    <div  v-if="!authStore?.userInfo?.onboardingPageStatus || !companyInfo.approvalStatus"
+    <div
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
-      v-if="!companyInfo.companyDocuments.length || !authStore.userInfo.onboardingPageStatus"
+      v-if="
+        !companyInfo.companyDocuments.length ||
+        !authStore.userInfo.onboardingPageStatus
+      "
     >
       <button
         @click="active--"
