@@ -23,5 +23,5 @@ export const buyerordertimeline = withRetryHandling((salesorderId) => {
   );
 });
 export const procurementorderdetails = withRetryHandling((orderId) => {
-  return get(`${urls.PROCUREMENT_ORDER_DETAILS}?orderNo=${orderId}`, config);
+  return get(`${urls.PROCUREMENT_ORDER_DETAILS}?orderId=${orderId}`, config);
 });
