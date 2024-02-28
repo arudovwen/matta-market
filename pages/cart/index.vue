@@ -2,7 +2,7 @@
   <div class="container py-10 w-full">
     <div class="mb-6">
       <AppButton
-        link="/market/all products"
+        link="/category/market/all products"
         icon="ion:arrow-back-sharp"
         text="Back to shopping"
         btnClass="text-xs sm:text-sm !py-0 !px-0 !font-semibold"

@@ -131,7 +131,7 @@ const crumbs = [
   { name: "markets", url: `/markets` },
   {
     name: route.query.market,
-    url: `/market/${route.query.market}/${route.query.marketId}`,
+    url: `/category/market/${route.query.market}/${route.query.marketId}`,
   },
   { name: route.params.type, url: `#` },
 ];
