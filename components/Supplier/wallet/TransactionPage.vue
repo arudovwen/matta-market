@@ -12,7 +12,7 @@
             @change="getData()"
             @keyup="debounceSearch"
             placeholder="Search"
-            class="border border-[#E7E7E7] focus:pr-3 pl-10 rounded-lg w-[280px] text-sm focus:outline-none py-[10px] transition ease-in-out duration-300"
+            class="border border-[#E7E7E7] focus:pr-3 pl-10 rounded-lg w-full lg:w-[280px] text-sm focus:outline-none py-[10px] transition ease-in-out duration-300"
             type="search"
           />
         </div>
@@ -41,7 +41,7 @@
       <div v-if="!isPageLoading">
         <div
           v-if="isEmpty"
-          class="overflow-hidden border border-[#EAECF0] rounded-lg"
+          class="overflow-auto border border-[#EAECF0] rounded-lg max-w-full"
         >
           <table class="w-full">
             <thead>
