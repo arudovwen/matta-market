@@ -28,9 +28,6 @@
   </div>
 </template>
 <script setup>
-definePageMeta({
-  middleware: "auth", // this should match the name of the file inside the middleware directory
-});
 import { getProducts, getProductsByTag } from "~/services/productservices";
 import { useProductStore } from "~/stores/products";
 
