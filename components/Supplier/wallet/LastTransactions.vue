@@ -31,7 +31,7 @@
           <tbody>
             <tr v-for="item in tdata" :key="item">
               <td
-                 class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
               ></td>
               <td
                 class="text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
@@ -78,7 +78,7 @@
       </div>
     </div>
     <div class="text-center p-6 lg:p-8 my-24" v-else>
-       <AppLoader />
+      <AppLoader />
     </div>
   </div>
 </template>
@@ -86,15 +86,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 
-const theads = [
-  "date",
-  "transaction ID",
-  "amount",
-  "Payment method",
-  "type",
-  "merchant",
-  "description",
-];
+const theads = ["reference", "amount", "date", "type"];
 const tdata = [];
 const isEmpty = ref(true);
 const isPageLoading = ref(false);

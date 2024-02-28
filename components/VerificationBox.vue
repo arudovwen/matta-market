@@ -1,14 +1,12 @@
 <template>
   <div
     v-if="!authStore?.userInfo?.onboardingPageStatus"
-    class="px-5 py-[14px] bg-[#333333] rounded-[5px] flex justify-between gap-x-40 relative mb-3"
+    class="px-5 py-[14px] bg-[#182230] rounded-[5px] flex justify-between gap-x-40 relative mb-3"
   >
     <div class="flex gap-x-4 items-center">
       <AppIcon icon="quill:info" iconClass="text-white text-2xl" />
       <p class="text-white text-sm max-w-[660px]">
-        To start selling on Matta, we are required to verify your company
-        registration information. Kindly proceed t o provide your company
-        details
+        {{ route.name.includes("wallet") ? walletText : defaultText }}
       </p>
     </div>
     <div class="flex items-end">
@@ -29,6 +27,10 @@ const route = useRoute();
 const isOpen = ref(false);
 const detail = ref(null);
 const authStore = useAuthStore();
+const defaultText =
+  "To start selling on Matta, we are required to verify your company registration information. Kindly proceed t o provide your company details";
+const walletText =
+  "To request for a wallet, we are required to verifiy your company registration information. Kindly proceed t o provide your company details";
 onMounted(() => {
   getData();
 });
