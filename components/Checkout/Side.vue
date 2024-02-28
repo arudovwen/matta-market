@@ -106,23 +106,26 @@ function confirmOrder() {
 
   payWithMonnify(data.value, onModalClose, onSuccess);
 }
-function onSuccess() {
-  confirmpurchase({ shippingAddressId: data.value.shippingAddressId })
-    .then((res) => {
-      if (res.status === 200) {
-        cartStore?.clearCart;
-        window.location.href = "/order-success";
-        // window.location.href = `/transaction/successful?trx_ref=${response.transactionReference}`;
-        // Payment complete! Reference: transaction.reference
-      }
-    })
-    .catch((err) => {
-      const error = `${
-        err.response.data.Message || err.response.data.message
-      }, Contact us for assistance on your order`;
-      toast.error(error);
-      status.value = "Retry order";
-      loading.value = false;
-    });
+function onSuccess(response) {
+ 
+  if (response.status.toLowerCase() === "success") {
+    confirmpurchase({ shippingAddressId: data.value.shippingAddressId })
+      .then((res) => {
+        if (res.status === 200) {
+          cartStore?.clearCart;
+          window.location.href = "/order-success";
+          // window.location.href = `/transaction/successful?trx_ref=${response.transactionReference}`;
+          // Payment complete! Reference: transaction.reference
+        }
+      })
+      .catch((err) => {
+        const error = `${
+          err.response.data.Message || err.response.data.message
+        }, Contact us for assistance on your order`;
+        toast.error(error);
+        status.value = "Retry order";
+        loading.value = false;
+      });
+  }
 }
 </script>
