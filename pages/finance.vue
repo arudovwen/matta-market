@@ -1,9 +1,9 @@
 <template>
   <section class="">
-    <header class="h-[200px] xl:h-[672px] bg-gray-600 mb-[70px]">
+    <header class="h-[200px] xl:h-[670px] bg-gray-600 mb-[70px]">
       <img
         src="/images/financeimg.png"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-fill"
       />
     </header>
 

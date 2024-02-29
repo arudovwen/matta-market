@@ -1,22 +1,19 @@
 <template>
-  <div
-    class="gap-y-2 flex flex-col bg-white rounded-[10px] border border-[#F4F7FE]"
-  >
+  <div class="gap-y-2 flex flex-col">
     <!-- Top bar   -->
 
- 
-    <div class="">
+    <div class="mb-6">
       <div v-if="!docLoading">
         <div class="mb-8">
           <AppButton
             @click="isOpen = true"
             text="Add settlement account"
             icon="humbleicons:plus"
-            :btnClass="`!px-[10px] md:!px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm`"
+            :btnClass="`!px-[10px] md:!px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm !rounded-lg`"
           />
         </div>
-        <div v-if="financeData?.length">
-          <table class="w-full">
+        <div class="rounded-[10px] border border-[#F4F7FE] bg-white">
+          <table class="w-full" v-if="financeData?.length">
             <thead>
               <tr>
                 <th
@@ -100,20 +97,56 @@
               </tr>
             </tbody>
           </table>
+          <EmptyData
+            v-else
+            title="No settlement available"
+            type="settlements"
+          />
+          <div class="p-5" v-if="financeData.length">
+            <PaginationSimple
+              :total="queryParams.totalCount"
+              :current="queryParams.PageNumber"
+              :per-page="queryParams.PageSize"
+              :pageRange="5"
+              @page-changed="queryParams.PageNumber = $event"
+            />
+          </div>
         </div>
-        <EmptyData v-else title="No settlement available" type="settlements" />
       </div>
       <div class="text-center p-6 lg:p-8 my-20" v-if="docLoading">
         <AppLoader />
       </div>
+    </div>
+    <div class="max-w-[252px]">
+      <FormGroup
+        label="How do you want to get your earnings"
+        name="earings"
+        class="mb-6"
+      >
+        <label class="flex gap-x-2 items-center">
+          <input
+            type="radio"
+            v-model="earnings"
+            value="bankAccount"
+            class="accent-primary-500"
+          />
+          <span>Settle to my bank account</span>
+        </label>
+        <label class="flex gap-x-2 items-center">
+          <input
+            type="radio"
+            v-model="earnings"
+            value="wallet"
+            class="accent-primary-500"
+          />
+          <span>Settle to my wallet</span>
+        </label>
+      </FormGroup>
 
-      <div class="p-5" v-if="financeData.length">
-        <PaginationSimple
-          :total="queryParams.totalCount"
-          :current="queryParams.PageNumber"
-          :per-page="queryParams.PageSize"
-          :pageRange="5"
-          @page-changed="queryParams.PageNumber = $event"
+      <div class="">
+        <AppButton
+          text="Save changes"
+          :btnClass="`!px-[10px] md:!px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm !rounded-lg`"
         />
       </div>
     </div>
@@ -147,8 +180,9 @@ import { toast } from "vue3-toastify";
 const id = ref(null);
 const open = ref(false);
 const isOpen = ref(false);
-const isPrimaryOpen = ref(false)
+const isPrimaryOpen = ref(false);
 const detail = ref(null);
+const earnings = ref(null);
 const authStore = useAuthStore();
 
 const theads = ["account name", "account number", "bank", "type", ""];

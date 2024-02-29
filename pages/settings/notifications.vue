@@ -1,5 +1,5 @@
 <template>
-  <div class="py-2">
+  <div class="rounded-lg bg-white p-6 border border-[#EAECF0]  py-[30px]">
     <div>
       <div
         class="flex gap-x-[76px]  flex-col lg:flex-row gap-y-7 lg:gap-y-10"

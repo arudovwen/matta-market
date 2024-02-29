@@ -6,7 +6,7 @@
 
     <HeaderComponent title="Settlements" className="!px-6" />
 
-    <div class="pt-5">
+    <div class="pt-5 mb-6">
       <div v-if="!docLoading">
         <div class="mb-8 px-6">
           <AppButton
@@ -118,6 +118,18 @@
         />
       </div>
     </div>
+
+    <div>
+      <FormGroup label="How do you want to get your earnings" name="earings">
+        <Checkbox title="Settle to my bank account" />
+        <Checkbox title="Settle to my wallet" />
+      </FormGroup>
+
+      <AppButton
+        text="Save changes"
+        btnClass="bg-primary rounded-lg px-[14px] py-[10px]"
+      />
+    </div>
   </div>
   <DeleteModal
     @deleteItem="handleDelete"
@@ -148,7 +160,7 @@ import { toast } from "vue3-toastify";
 const id = ref(null);
 const open = ref(false);
 const isOpen = ref(false);
-const isPrimaryOpen = ref(false)
+const isPrimaryOpen = ref(false);
 const detail = ref(null);
 const authStore = useAuthStore();
 

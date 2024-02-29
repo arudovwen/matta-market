@@ -10,7 +10,7 @@
     </div>
       <AppTab :tabs="tabs" className="px-6" />
       <div class="px-6">
-        <div class="rounded-lg bg-white p-6 border border-[#EAECF0]">
+        <div class="">
           <Profile v-if="active === 'profile'" />
           <Notifications v-if="active === 'notifications'" />
           <Password v-if="active === 'password'" />

@@ -135,8 +135,8 @@ export const mobileMenu = [
     key: "overview",
   },
   {
-    name: "Profile",
-    url: "/account/settings",
+    name: "Account settings",
+    url: "/settings",
     icon: "lucide:user",
     key: "account-settings",
   },
@@ -213,7 +213,7 @@ export const mobileMenu = [
   },
   {
     name: "Account settings",
-    url: "/account/settings",
+    url: "/settings",
     icon: "lucide:user",
     key: "account",
   },

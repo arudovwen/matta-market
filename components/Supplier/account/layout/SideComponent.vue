@@ -106,7 +106,7 @@ const navigation = [
     subs: [
       {
         name: "Settings",
-        url: "/account/settings",
+        url: "/settings",
       },
       {
         name: "Notifications",
