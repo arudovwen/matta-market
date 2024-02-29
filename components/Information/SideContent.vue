@@ -127,7 +127,7 @@
         </div>
       </div>
       <NuxtLink
-        :to="`/market/${route.query.market}/${
+        :to="`/category/market/${route.query.market}/${
           route.query.marketId || route.query.TechnologyId
         }?producer=${producer.title}`"
       >

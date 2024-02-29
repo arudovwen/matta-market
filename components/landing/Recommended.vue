@@ -14,7 +14,7 @@
           Recommended
         </h2>
         <NuxtLink
-          :to="`/market/${encodeURIComponent('recommended')}?tag=${tag}`"
+          :to="`/category/market/${encodeURIComponent('recommended')}?tag=${tag}`"
         >
           <button
             class="hover:border-b text-[10px] sm:text-sm lg:text-base border-[#333] darks:text-white darks:border-white leading-tight"

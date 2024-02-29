@@ -1,131 +1,108 @@
 <template>
-  <div class="min-w-[400px] py-10 px-6">
-    <form @submit.prevent="handleSubmit" v-if="stage === 1">
-      <span class="block text-2xl font-medium text-center mb-2">{{
-        currencyFormat(details.walletBalance)
-      }}</span>
-      <p class="mb-6 text-sm text-center font-base">
-        Enter amount to withdraw into your <br />
-        bank account
-      </p>
-      <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Withdraw amount</label>
+  <div class="max-w-[400px] py-10 px-6">
+    <form @submit.prevent="onSubmit" v-if="stage === 1">
+      <h1 class="text-lg font-semibold text-[#101828] mb-4">Withdrawal</h1>
 
-        <CurrencyInput
-          v-model="v$.amount.$model"
-          :class="{ 'border-red-500': v$.amount.$error }"
-          class="rounded-lg px-5 text-sm py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          placeholder=""
-          :options="{
-            currency: 'ngn',
-            currencyDisplay: 'narrowSymbol',
-          }"
-        />
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.amount.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
-      </div>
-      <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Bank name</label>
-        <input
-          v-model="v$.bankName.$model"
-          :class="{ 'border-red-500': v$.bankName.$error }"
-          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          placeholder="Enter bank name"
-        />
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.bankName.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
-      </div>
-      <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Account name</label>
-        <input
-          v-model="v$.accountName.$model"
-          :class="{ 'border-red-500': v$.accountName.$error }"
-          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          placeholder="Enter account name"
-        />
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.accountName.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
-      </div>
-      <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Account number</label>
-        <input
-          v-model="v$.accountNo.$model"
-          :class="{ 'border-red-500': v$.accountNo.$error }"
-          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          placeholder="Enter account number"
-        />
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.accountNo.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
-      </div>
-      <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Transaction pin</label>
-        <input
-          v-model="v$.pin.$model"
-          :class="{ 'border-red-500': v$.pin.$error }"
-          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          placeholder="Enter 4 digit pin"
-          type="number"
-          maxlength="4"
-        />
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.pin.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
+      <div
+        class="px-5 py-[14px] bg-[#182230] rounded-[5px] flex justify-between gap-x-40 relative mb-3"
+      >
+        <div class="flex gap-x-2 items-start">
+          <AppIcon icon="quill:info" iconClass="text-white text-lg" />
+          <p class="text-white text-xs max-w-[660px]">
+            We need your BVN and date of birth to verify your account details.
+          </p>
         </div>
       </div>
 
-      <div class="">
-        <button
-          type="submit"
+      <div class="grid gap-x-[25px] gap-y-4 mb-[50px]">
+        <div class="">
+          <Textinput
+            placeholder="Enter your BVN"
+            label="BVN"
+            name="bvn"
+            v-bind="bvnAtt"
+            v-model="bvn"
+            :error="errors.bvn"
+          />
+        </div>
+        <div class="">
+          <Textinput
+            placeholder=""
+            label="Date of Birth"
+            name="dateOfBirth"
+            v-bind="dateOfBirthAtt"
+            v-model="dateOfBirth"
+            :error="errors.dateOfBirth"
+            type="date"
+          />
+        </div>
+        <FormGroup
+          label="How much do you require?"
+          :error="errors.amount"
+          name="amount"
+        >
+          <div class="flex items-center">
+            <CurrencyInput
+              min="1"
+              :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+                errors.amount ? 'border-red-500' : 'border-[#D0D5DD]'
+              }`"
+              placeholder="Amount"
+              v-model="amount"
+              :options="{
+                currency: 'ngn',
+                currencyDisplay: 'hidden',
+              }"
+            />
+            <span class="absolute right-4">NGN</span>
+          </div>
+        </FormGroup>
+
+        <FormGroup label="Bank name" :error="errors.bankName" name="bankName">
+          <Select
+            v-model="bankName"
+            :options="options"
+            placeholder="Select bank"
+            :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+              errors.bankName ? 'border-red-500' : 'border-[#D0D5DD]'
+            }`"
+          />
+        </FormGroup>
+        <div class="">
+          <Textinput
+            placeholder="Account number"
+            label="Account number"
+            name="accountNo"
+            v-bind="accountNoAtt"
+            v-model="accountNo"
+            :error="errors.accountNo"
+          />
+        </div>
+        <div class="">
+          <Textinput
+            placeholder="Account name"
+            label="Account name"
+            name="accountName"
+            v-bind="accountNameAtt"
+            v-model="accountName"
+            :error="errors.accountName"
+          />
+        </div>
+      </div>
+      <div class="flex gap-x-4 items-center justify-end">
+        <AppButton
+          @click="handleClose"
+          btnClass="bg-transparent text-white !px-[14px]  !text-sm !py-[10px] border !text-matta-black w-full"
+          type="button"
+          text="Cancel"
+        />
+        <AppButton
           :disabled="isLoading"
-          class="border text-[13px] border-primary- uppercase text-white lg:min-w-[120px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
-        >
-          <span>
-            <span
-              class="flex gap-x-4 justify-center items-center"
-              v-if="isLoading"
-              ><span> Processing...</span>
-              <i
-                v-if="isLoading"
-                class="fa fa-spinner fa-spin text-white"
-                aria-hidden="true"
-              ></i
-            ></span>
-            <span v-else>Submit</span>
-          </span>
-        </button>
+          :isLoading="isLoading"
+          btnClass="bg-primary-500 text-white !px-[14px]  !text-sm !py-[10px] disabled:cursor-not-allowed w-full"
+          type="submit"
+          text="Submit"
+        />
       </div>
     </form>
     <div v-if="stage === 2">
@@ -134,56 +111,84 @@
   </div>
 </template>
 <script setup>
+import { useForm } from "vee-validate";
+import * as yup from "yup";
+
 import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
-import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { loginUser } from "~/services/authservices";
 
-
 const stage = ref(1);
+const handleWithdraw = inject("handleWithdraw");
+const handleClose = inject("handleClose");
 const details = inject("details");
+const options = [
+  {
+    label: "Access bank",
+    value: "access bank",
+  },
+];
 const form = reactive({
   bankName: "",
   accountName: "",
   pin: "",
   accountNo: "",
-  amount: "",
+  amount: null,
+  bvn: "",
+  dateOfBirth: null,
+});
+const formSchema = yup.object().shape({
+  bankName: yup.string().required("Bank name is required"),
+  accountName: yup.string().required("Account name is required"),
+  accountNo: yup
+    .string()
+    .required("Account number is required")
+    .matches(/^\d{10}$/, "Account number must be 10 digits"),
+  amount: yup
+    .number()
+    .required("Amount is required")
+    .positive("Amount must be a positive number"),
+  bvn: yup
+    .string()
+    .required("BVN is required")
+    .matches(/^\d{11}$/, "BVN must be 11 digits")
+    .test("isValidBvn", "Invalid BVN", (value) => {
+      // You can add custom validation logic here if needed
+      // For example, checking against a real BVN service
+      return true; // Just returning true for demonstration
+    }),
+  dateOfBirth: yup
+    .date()
+    .required("Date of birth is required")
+    .max(new Date(), "Date of birth must be in the past"),
 });
 const isLoading = ref(false);
+const { handleSubmit, defineField, errors, setFieldError } = useForm({
+  validationSchema: formSchema,
+  initialValues: form,
+});
 
-const rules = {
-  bankName: required,
-  accountName: required,
-  accountNo: required,
-  pin: required,
-  amount: required,
-};
+const [amount] = defineField("amount");
+const [bankName] = defineField("bankName");
+const [accountNo, accountNoAtt] = defineField("accountNo");
+const [dateOfBirth, dateOfBirthAtt] = defineField("dateOfBirth");
+const [accountName, accountNameAtt] = defineField("accountName");
+const [bvn, bvnAtt] = defineField("bvn");
 
-const invalidCredentials = ref(false);
-const v$ = useVuelidate(rules, form);
+const onSubmit = handleSubmit((values) => {
+  console.log("🚀 ~ onSubmit ~ values:", values);
+  handleWithdraw();
+});
 
-async function handleSubmit() {
-  const validity = await v$.value.$validate();
-  if (!validity) return;
-  isLoading.value = true;
-  loginUser(form)
-    .then((res) => {
-      if (res.status === 200) {
-        toast.info("Login successful");
-        window.location.reload();
-      }
-    })
-
-    .catch((err) => {
-      invalidCredentials.value = true;
-      isLoading.value = false;
-
-      toast.error((err.response.data.message || err.response.data.Message));
-    });
+function verifyAmount(){
+  setFieldError("amount", "Insufficient funds");
 }
+watch(amount, () => {
+  console.log("🚀 ~ watch ~ amount:", amount);
+ 
+});
 </script>
 
 <style lang="scss" scoped>

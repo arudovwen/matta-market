@@ -38,10 +38,11 @@
                       <img v-if="type === 'delete'" src="/images/delete.svg" />
                       <img v-if="type === 'approve'" src="/images/check.svg" />
                       <img v-if="type === 'reject'" src="/images/reject.svg" />
+                      <img v-if="type === 'success'" src="/images/success.svg" />
                     </div>
-                    <span @click="handleclose" class="absolute top-3 right-3">
+                    <span @click="handleclose" class="absolute top-3 right-4">
                       <i
-                        class="uil uil-times cursor-pointer text-lg text-[#98A2B3]"
+                        class="uil uil-times cursor-pointer text-xl text-[#98A2B3]"
                       ></i>
                     </span>
                   </div>
@@ -74,6 +75,7 @@
 
                   <div class="flex flex-col gap-y-4 items-center mt-6">
                     <button
+                      v-if="!isOkay || isCancel"
                       type="button"
                       @click="handleclose"
                       class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium justify-center flex items-center"
@@ -82,6 +84,7 @@
                     </button>
 
                     <button
+                    v-if="!isOkay"
                       :disabled="loading"
                       type="button"
                       @click="actionItem"
@@ -91,6 +94,15 @@
                           ? 'bg-green-600 border-green-600'
                           : 'bg-[#D92D20] border-[#D92D20]'
                       "
+                    >
+                      {{ btnText }}
+                    </button>
+                    <button
+                    v-if="isOkay"
+                      :disabled="loading"
+                      type="button"
+                      @click="actionItem"
+                      class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border border-primary-500 font-medium disabled:opacity-50 flex items-center justify-center bg-primary-500"
                     >
                       {{ btnText }}
                     </button>
@@ -123,6 +135,8 @@ defineProps({
   loading: { default: false },
   type: { default: "" },
   detail: { default: null },
+  isCancel: { default: true },
+  isOkay: { default: false },
 });
 const emits = defineEmits(["actionItem", "close"]);
 

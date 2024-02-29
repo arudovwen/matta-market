@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col items-center justify-center p-4 h-[500px] text-gray-400 text-center"
+    class="flex flex-col items-center justify-center p-4 h-[400px] text-gray-400 text-center"
     :class="className"
   >
     <div class="mb-6 flex justify-center">
@@ -12,6 +12,7 @@
       <img src="~/assets/images/emptyuser.png" v-else-if="type == 'user'" :class="classIcon" />
       <img src="/images/campaign.png" v-else-if="type == 'campaign'"  :class="classIcon"/>
       <img src="/images/settlements.svg" v-else-if="type == 'settlements'"  :class="classIcon"/>
+      <img src="/images/transaction.svg" v-else-if="type == 'transaction'"  :class="classIcon"/>
       <img src="~/assets/images/empty.svg" v-else :class="classIcon" />
     </div>
     <p :class="titleClass" class="text-lg text-[#101828] font-semibold mb-2">

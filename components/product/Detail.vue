@@ -274,7 +274,7 @@ const links = [
   },
   {
     title: category,
-    url: `/market/${category}/${
+    url: `/category/market/${category}/${
       route.query.categoryId ? route.query.categoryId : ""
     }`,
   },

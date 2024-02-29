@@ -50,7 +50,7 @@
               </span>
               <span class="flex gap-2 items-center flex-wrap">
                 <NuxtLink
-                  :to="`/market/${i.name}?search_query=${i.name}`"
+                  :to="`/category/market/${i.name}?search_query=${i.name}`"
                   v-for="i in frequentlySearched"
                   :key="i.name"
                 >
@@ -96,7 +96,7 @@ const frequentlySearched = [
 
 function handleSearch() {
   if (!search) return;
-  router.push(`/market/${search.value}?search_query=${search.value}`);
+  router.push(`/category/market/${search.value}?search_query=${search.value}`);
 }
 </script>
 

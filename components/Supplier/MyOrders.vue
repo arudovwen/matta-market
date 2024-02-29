@@ -392,9 +392,9 @@ const order = ref(null);
 const isOpen = ref(false);
 
 function openOrder(val) {
-  procurementorderdetails(val.orderNumber)
+  procurementorderdetails(val.orderId)
     .then((res) => {
-      order.value = { ...res.data, orderId: val.orderNumber };
+      order.value = { ...res.data, orderId: val.orderId };
 
       isOpen.value = true;
     })
@@ -402,7 +402,7 @@ function openOrder(val) {
       isLoading.value = false;
       toast.error(err.response.data.message || err.response.data.Message);
     });
-  buyerordertimeline(val.salesorderId)
+  buyerordertimeline(val.orderId)
     .then((res) => {
       timeline.value = res.data.data.reverse();
       isOpen.value = true;

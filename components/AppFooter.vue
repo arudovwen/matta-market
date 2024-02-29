@@ -129,7 +129,7 @@ const navs = [
     links: [
       {
         title: "Buy chemicals",
-        url: "/market/all",
+        url: "/category/market/all",
       },
       {
         title: "Sell chemicals",

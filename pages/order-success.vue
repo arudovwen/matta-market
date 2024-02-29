@@ -19,7 +19,7 @@
           btnClass="text-[#2176FF] bg-[#165EF014] w-full !text-sm !font-normal !py-3"
         />
         <AppButton
-          link="/market/all products"
+          link="/category/market/all products"
           text="Continue shopping"
           btnClass="bg-[#2176FF] text-white w-full !text-sm !font-normal !py-3"
         />

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <SupplierWalletPage />
+        <SupplierWalletIndexComponnent />
     </div>
 </template>
 <script setup>

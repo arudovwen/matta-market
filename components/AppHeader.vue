@@ -109,7 +109,7 @@
                       <MenuItem v-slot="{ active }">
                         <NuxtLink
                           v-if="n.key !== 'finance'"
-                          :to="`/${
+                          :to="`/category/${
                             n.key === 'markets' ? 'market' : 'application'
                           }/${encodeURIComponent(cat.title.toLowerCase())}/${
                             cat.id

@@ -11,7 +11,7 @@
       >
         {{ title }}
       </h2>
-      <router-link :to="`/market/${encodeURIComponent(title)}?tag=${tag}`">
+      <router-link :to="`/category/market/${encodeURIComponent(title)}?tag=${tag}`">
         <button
           class="hover:border-b text-[10px] sm:text-sm lg:text-base border-[#333] darks:text-white darks:border-white leading-tight"
         >

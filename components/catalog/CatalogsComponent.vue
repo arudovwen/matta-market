@@ -24,7 +24,7 @@
         "
         @mouseleave="activeIndex = null"
       >
-        <NuxtLink :to="`/market/${n.title}/${n.id}`">
+        <NuxtLink :to="`/category/market/${n.title}/${n.id}`">
           <TabComponent :detail="n" :index="i" :activeIndex="activeIndex" />
         </NuxtLink>
       </div>

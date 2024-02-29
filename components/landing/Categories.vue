@@ -41,7 +41,7 @@
         <NuxtLink
           v-for="(n, idx) in store?.marketsData"
           :key="idx"
-          :to="`/market/${encodeURIComponent(n.title.toLowerCase())}/${n.id}`"
+          :to="`/category/market/${encodeURIComponent(n.title.toLowerCase())}/${n.id}`"
         >
           <span
             class="mx-auto cursor-pointer px-5 flex flex-col w-[100px] md:w-[140px] h-[100px] md:h-[140px] border-2 border-[#EAEAEA] rounded-full items-center justify-center hover:border-[#777] hover:bg-[rgba(33,118,255,0.04)]"
