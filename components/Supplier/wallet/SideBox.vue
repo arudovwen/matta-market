@@ -14,7 +14,10 @@
           <span></span> <img src="/images/pass.svg"
         /></span>
 
-        <span class="font-medium text-sm text-white">Adeleke Laketu</span>
+        <span class="font-medium text-sm text-white capitalize">
+          {{ authStore.userInfo?.firstName }}
+          {{ authStore.userInfo?.lastName }}</span
+        >
       </div>
     </div>
     <div class="px-4 pt-4 flex justify-end gap-x-4" v-if="!isLoading">
@@ -114,6 +117,7 @@
 import { toast } from "vue3-toastify";
 import { getWalletDetails } from "~/services/walletservice";
 
+const authStore = useAuthStore();
 const isSuccessOpen = ref(false);
 const isLoading = ref(true);
 const details = ref([]);

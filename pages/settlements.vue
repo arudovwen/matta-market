@@ -4,7 +4,7 @@
   >
     <!-- Top bar   -->
 
-    <HeaderComponent title="Settlements" className="px-6" />
+    <HeaderComponent title="Settlements" className="!px-6" />
 
     <div class="pt-5">
       <div v-if="!docLoading">
