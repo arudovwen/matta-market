@@ -1,6 +1,6 @@
 <template>
   <div class="lg:grid lg:grid-cols-4 gap-x-4 h-full">
-    <div class="col-span-1 h-full hidden lg:inline">
+    <div class="col-span-1 hidden lg:inline">
       <DashboardLayoutSideComponent />
     </div>
     <div class="lg:col-span-3 h-full">

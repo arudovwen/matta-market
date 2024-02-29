@@ -1,12 +1,12 @@
 <template>
   <aside
-    class="z-[9] bg-white h-screen relative py-5 border-r border-[#EAECF0] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] min-w-[245px]"
+    class="z-[9] bg-white relative py-5 border rounded-lg border-[#EAECF0] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] min-w-[245px]"
   >
-    <nav class="h-full">
+    <nav class="">
       <ul class="grid grid-cols-1 gap-y-1">
         <li v-for="item in mappedNav" :key="item.name">
           <NuxtLink
-            v-if="item.key !== 'storefront'"
+        
             :to="item.url"
             class="text-sm flex items-center px-5 border-r-[3px] border-transparent font-medium hover:bg-[#2270FA0F] hover:text-primary-500 hover:border-primary-500"
             :activeClass="`${
@@ -18,7 +18,7 @@
               <span> {{ item.name }}</span>
             </span>
           </NuxtLink>
-          <span
+          <!-- <span
             v-else
             @click="storeOpen = true"
             class="text-sm flex items-center px-5 border-r-[3px] border-transparent group font-medium hover:bg-[#2270FA0F] hover:text-primary-500 hover:border-primary-500 cursor-pointer"
@@ -52,7 +52,7 @@
                 </li>
               </ul>
             </div>
-          </span>
+          </span> -->
         </li>
       </ul>
     </nav>

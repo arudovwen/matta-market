@@ -1,10 +1,10 @@
 <template>
   <section class="">
     <header class="h-[200px] xl:h-[672px] bg-gray-600 mb-[70px]">
-      <!-- <img
-        src="/images/financebanner.png"
+      <img
+        src="/images/financeimg.png"
         class="w-full h-full object-cover"
-      /> -->
+      />
     </header>
 
     <div class="container pb-20">

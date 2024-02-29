@@ -74,12 +74,7 @@ export const navigation = [
     icon: "mingcute:layout-3-line",
     key: "overview",
   },
-  {
-    name: "Profile",
-    url: "/account/settings",
-    icon: "lucide:user",
-    key: "account-settings",
-  },
+  
   {
     name: "My Orders",
     url: "/procurement/my-orders",
@@ -124,6 +119,19 @@ export const navigation = [
     icon: "solar:shop-outline",
     key: "storefront",
   },
+  {
+    name: "Products",
+    url: "/products",
+    icon: "fluent-mdl2:product-variant",
+    key: "products",
+  },
+
+  {
+    name: "User Management",
+    url: "/user-management",
+    icon: "lucide:users",
+    key: "user-management",
+  },
 
   {
     name: "Company Settings",
@@ -133,16 +141,10 @@ export const navigation = [
   },
 
   {
-    name: "User Management",
-    url: "/user-management",
-    icon: "lucide:users",
-    key: "user-management",
-  },
-  {
-    name: "Products",
-    url: "/products",
-    icon: "fluent-mdl2:product-variant",
-    key: "products",
+    name: "Account Settings",
+    url: "/settings",
+    icon: "lucide:user",
+    key: "account-settings",
   },
 ];
 
