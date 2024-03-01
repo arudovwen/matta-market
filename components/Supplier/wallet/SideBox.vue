@@ -22,24 +22,14 @@
     </div>
     <div class="px-4 pt-4 flex justify-end gap-x-4" v-if="!isLoading">
       <AppButton
-        v-if="!hasWallet"
         @click="
           () => {
             handleClose();
-            isCreatingWallet = isOpen = true;
+            !hasWallet
+              ? (isCreatingWallet = isOpen = true)
+              : (isWithdraw = isOpen = true);
           }
         "
-        text="Request for wallet"
-        btnClass="!px-[14px]  !py-[10px] text-sm text-[#98A2B3] bg-[#F2F4F7] border border-[#EAECF0] !rounded-lg"
-      />
-      <AppButton
-        @click="
-          () => {
-            handleClose();
-            isWithdraw = isOpen = true;
-          }
-        "
-        v-if="hasWallet"
         text="Withdraw"
         btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
       />
@@ -47,10 +37,11 @@
         @click="
           () => {
             handleClose();
-            isTopup = isOpen = true;
+            !hasWallet
+              ? (isCreatingWallet = isOpen = true)
+              : (isTopup = isOpen = true);
           }
         "
-        v-if="hasWallet"
         text="Fund wallet"
         btnClass="!px-[14px]  !py-[10px] text-sm text-white bg-primary-500 border border-primary-500 !rounded-lg"
       />
@@ -108,7 +99,7 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { getWalletDetails,getWalletBalance } from "~/services/walletservice";
+import { getWalletDetails, getWalletBalance } from "~/services/walletservice";
 
 const authStore = useAuthStore();
 const isSuccessOpen = ref(false);
@@ -154,7 +145,7 @@ function handleWalletCreation() {
   handleWalletDetails();
 }
 function handleWalletDetails() {
-  getWalletBalance()
+  getWalletBalance();
   getWalletDetails()
     .then((res) => {
       details.value = res.data.data;

@@ -102,7 +102,7 @@ export const navigation = [
     key: "wallet-home",
   },
   {
-    name: "Financing requests",
+    name: "Financing",
     url: "/financing",
     icon: "la:hand-holding-usd",
     key: "financing",

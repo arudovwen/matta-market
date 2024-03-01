@@ -220,7 +220,7 @@ onMounted(() => {
   getFinanceData();
   getBanks().then((res) => {
     if (res.status === 200) {
-      banks.value = res.data.responseBody.map((i) => ({
+      banks.value = res.data.data.responseBody.map((i) => ({
         label: i.name,
         value: i.code,
       }));

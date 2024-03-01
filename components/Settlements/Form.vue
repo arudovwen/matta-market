@@ -9,7 +9,7 @@
           v-model="bankCode"
           :disabled="loadingBanks"
           :options="banks"
-          :reduce="bank => bank.value"
+          :reduce="(bank) => bank.value"
           :placeholder="loadingBanks ? 'Fetching list' : 'Select bank'"
           :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
             errors.bankCode ? 'border-red-500' : 'border-[#D0D5DD]'
@@ -28,14 +28,13 @@
         />
       </div>
 
-      <div>
+      <div v-if="formValues.accountName">
         <Textinput
           placeholder=""
           label="Account name"
           name="accountName"
-          v-bind="accountNameAtt"
-          v-model="accountName"
-          :error="errors.accountName"
+          v-model="formValues.accountName"
+          disabled
         />
       </div>
 
@@ -102,6 +101,7 @@ import {
   updateSettlement,
   getBanks,
 } from "~/services/settlementservice";
+import { validateAccount } from "~/services/walletservice";
 
 const isSuccessOpen = ref(false);
 const isErrorOpen = ref(false);
@@ -112,18 +112,42 @@ const handleSuccess = inject("handleSuccess");
 const isLoading = ref(false);
 const banks = ref([]);
 const loadingBanks = ref(false);
-const formValues = {
+const formValues = reactive({
   id: null,
   bankCode: "",
   accountNumber: "",
   accountName: "",
   isPrimaryAccount: false,
-};
+});
 
-const schema = yup.object({
+const schema = yup.object().shape({
   bankCode: yup.string().required("Bank name is required"),
-  accountNumber: yup.string().required("Account number is required"),
-  accountName: yup.string().required("Account name is required"),
+  accountNumber: yup
+    .string()
+    .matches(/^\d{10}$/, "Account number must be 10 digits")
+    .test("test-account", "Invalid account number", function (value) {
+      const { bankCode } = this.parent || {}; // Destructure bankCode safely
+      if (value && value.length === 10 && bankCode) {
+        return validateAccount({
+          bankCode: bankCode,
+          accountNumber: value,
+        })
+          .then((res) => {
+            formValues.accountName = res.data.data.responseBody.accountName;
+            return true; // Resolve the promise if validation is successful
+          })
+          .catch((err) => {
+            throw new yup.ValidationError(
+              "Invalid account number",
+              null,
+              "accountNumber"
+            );
+          });
+      } else {
+        return true; // Return true if the length is not 10 or bankCode is missing
+      }
+    })
+    .required("Account number is required"),
   isPrimaryAccount: yup.boolean(),
 });
 
@@ -148,7 +172,6 @@ onMounted(() => {
 });
 const [bankCode] = defineField("bankCode");
 const [accountNumber, accountNumberAtt] = defineField("accountNumber");
-const [accountName, accountNameAtt] = defineField("accountName");
 const [isPrimaryAccount, isPrimaryAccountAtt] = defineField("isPrimaryAccount");
 
 const onSubmit = handleSubmit((values) => {
@@ -170,4 +193,8 @@ const onSubmit = handleSubmit((values) => {
       isLoading.value = false;
     });
 });
+
+// watch(accountNumber, () => {
+//   validateAccount().then((res) => {});
+// });
 </script>

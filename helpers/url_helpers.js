@@ -174,6 +174,8 @@ const urls = {
   VALIDATE_OTP: "v1/wallet/validate-otp",
   SET_WARNING_LIMIT: "v1/wallet/setwarninglimit",
   SET_UPPER_LIMIT: "v1/wallet/setupperlimit",
+  VALIDATE_ACCOUNT: "v1/wallet/validate-account",
+  VALIDATE_BVN: "v1/wallet/verify-bvn",
 
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",
@@ -211,6 +213,6 @@ const urls = {
   VIEW_SETTLEMENT: "v1/settlement/view-settlement-account",
   UPDATE_SETTLEMENT: "v1/settlement/update-settlement-account",
   DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",
-  GET_BANKS: "v1/bank/get-bank"
+  GET_BANKS: "v1/bank/get-bank",
 };
 export default urls;

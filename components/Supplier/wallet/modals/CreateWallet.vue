@@ -38,13 +38,15 @@
           />
         </div>
 
-        <FormGroup label="Bank name" :error="errors.bankName" name="bankName">
-          <Select
-            v-model="bankName"
-            :options="options"
-            placeholder="Select bank"
+        <FormGroup label="Bank" :error="errors.bankCode" name="bankCode">
+          <SelectVueSelect
+            v-model="bankCode"
+            :disabled="loadingBanks"
+            :options="banks"
+            :reduce="(bank) => bank.value"
+            :placeholder="loadingBanks ? 'Fetching list' : 'Select bank'"
             :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-              errors.bankName ? 'border-red-500' : 'border-[#D0D5DD]'
+              errors.bankCode ? 'border-red-500' : 'border-[#D0D5DD]'
             }`"
           />
         </FormGroup>
@@ -58,12 +60,13 @@
             :error="errors.accountNumber"
           />
         </div>
-        <div class="">
+        <div class="" v-if="form.accountName">
           <Textinput
             placeholder="Account name"
             label="Account name"
             name="accountName"
-            v-model="accountName"
+            v-model="form.accountName"
+            disabled
           />
         </div>
       </div>
@@ -97,11 +100,11 @@
   />
 </template>
 <script setup>
+import { validateAccount, createWallet } from "~/services/walletservice";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { ref, reactive, inject } from "vue";
-
-import { createWallet } from "~/services/walletservice";
+import { getBanks } from "~/services/settlementservice";
 
 const handleWithdraw = inject("handleWithdraw");
 const handleClose = inject("handleClose");
@@ -116,10 +119,11 @@ const options = [
 ];
 const defaultCustomerName = `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`;
 const defaultCustomerEmail = authStore.userInfo?.email;
-
+const banks = ref([]);
+const loadingBanks = ref(false);
 // Define form structure
 const form = reactive({
-  bankName: "",
+
   accountName: "",
   accountNumber: "",
   bankCode: "", // Assuming you'll populate this somewhere
@@ -131,12 +135,34 @@ const form = reactive({
   customerEmail: defaultCustomerEmail,
 });
 const formSchema = yup.object().shape({
-  bankName: yup.string().required("Bank name is required"),
+  bankCode: yup.string().required("Bank name is required"),
   accountName: yup.string().required("Account name is required"),
   accountNumber: yup
     .string()
-    .required("Account number is required")
-    .matches(/^\d{10}$/, "Account number must be 10 digits"),
+    .matches(/^\d{10}$/, "Account number must be 10 digits")
+    .test("test-account", "Invalid account number", function (value) {
+      const { bankCode } = this.parent || {}; // Destructure bankCode safely
+      if (value && value.length === 10 && bankCode) {
+        return validateAccount({
+          bankCode: bankCode,
+          accountNumber: value,
+        })
+          .then((res) => {
+            form.accountName = res.data.data.responseBody.accountName;
+            return true; // Resolve the promise if validation is successful
+          })
+          .catch((err) => {
+            throw new yup.ValidationError(
+              "Invalid account number",
+              null,
+              "accountNumber"
+            );
+          });
+      } else {
+        return true; // Return true if the length is not 10 or bankCode is missing
+      }
+    })
+    .required("Account number is required"),
   customerName: yup.string().required("Customer name is required"),
   bvnDetails: yup.object().shape({
     bvn: yup
@@ -158,20 +184,34 @@ const { handleSubmit, defineField, errors, setFieldError } = useForm({
   initialValues: form,
 });
 
-const [bankName] = defineField("bankName");
+const [bankCode] = defineField("bankCode");
 const [accountName] = defineField("accountName");
 const [accountNumber, accountNumberAtt] = defineField("accountNumber");
 const [bvn, bvnAtt] = defineField("bvnDetails.bvn");
 const [bvnDateOfBirth, bvnDateOfBirthAtt] = defineField(
   "bvnDetails.bvnDateOfBirth"
 );
+
+onMounted(() => {
+  loadingBanks.value = true;
+  getBanks().then((res) => {
+    if (res.status === 200) {
+      loadingBanks.value = false;
+      banks.value = res.data.data.responseBody.map((i) => ({
+        label: i.name,
+        value: i.code.toString(),
+      }));
+    }
+  });
+});
 const onSubmit = handleSubmit((values) => {
-  isLoading.value = true
+  console.log("🚀 ~ onSubmit ~ values:", values)
+  isLoading.value = true;
   createWallet(values)
     .then((res) => {
       if (res.status === 200) {
         handleWithdraw();
-        isLoading.value = false
+        isLoading.value = false;
       }
     })
     .catch((err) => {
@@ -180,7 +220,7 @@ const onSubmit = handleSubmit((values) => {
         err.response.data.Message ||
         "Wallet creation request failed";
       isErrorOpen.value = true;
-      isLoading.value = false
+      isLoading.value = false;
     });
 });
 </script>

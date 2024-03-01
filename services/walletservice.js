@@ -63,3 +63,10 @@ export const setUpperLimit = (data) => {
 export const setWarningLimit = (data) => {
   return post(`${urls.SET_WARNING_LIMIT}`, data, config);
 };
+
+export const verifyBvn = (data) => {
+  return post(`${urls.VALIDATE_BVN}`, data, config);
+};
+export const validateAccount = (data) => {
+  return post(`${urls.VALIDATE_ACCOUNT}`, data, config);
+};
