@@ -25,6 +25,7 @@
           :options="options"
           :placeholder="placeholder"
           v-model="selectedValue"
+          :reduce="reduce"
         >
         </vSelect>
       </div>
@@ -73,7 +74,6 @@ import "vue-select/dist/vue-select.css";
 export default {
   components: {
     vSelect,
-  
   },
   data() {
     return {
@@ -138,6 +138,9 @@ export default {
     },
     options: {
       type: Array,
+    },
+    reduce: {
+      default: [],
     },
   },
   mounted() {
@@ -208,7 +211,7 @@ export default {
   //   @apply darks:text-slate-300;
   // }
   .vs__dropdown-option--disabled {
-    @apply bg-slate-50 ;
+    @apply bg-slate-50;
   }
 }
 </style>

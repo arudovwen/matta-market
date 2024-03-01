@@ -11,6 +11,9 @@ const config = {
 export const getWalletDetails = () => {
   return get(`${urls.GET_WALLET_DETAILS}`, config);
 };
+export const getWalletBalance = () => {
+  return get(`${urls.CHECK_BALANCE}`, config);
+};
 
 export const createWallet = (data) => {
   return post(`${urls.CREATE_WALLET}`, data, config);

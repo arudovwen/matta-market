@@ -134,12 +134,7 @@ export const mobileMenu = [
     icon: "mingcute:layout-3-line",
     key: "overview",
   },
-  {
-    name: "Account settings",
-    url: "/settings",
-    icon: "lucide:user",
-    key: "account-settings",
-  },
+ 
   {
     name: "My Orders",
     url: "/procurement/my-orders",
@@ -177,7 +172,7 @@ export const mobileMenu = [
     name: "Wallet",
     url: "/wallet/home",
     icon: "ion:wallet-outline",
-    key: "wallet",
+    key: "wallet-home",
   },
   {
     name: "Financing requests",
@@ -204,7 +199,12 @@ export const mobileMenu = [
     icon: "mingcute:building-5-line",
     key: "company",
   },
-
+  {
+    name: "Account",
+    url: "/settings",
+    icon: "lucide:user",
+    key: "account-settings",
+  },
   {
     name: "User Management",
     url: "/user-management",

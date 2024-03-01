@@ -38,7 +38,10 @@
                       <img v-if="type === 'delete'" src="/images/delete.svg" />
                       <img v-if="type === 'approve'" src="/images/check.svg" />
                       <img v-if="type === 'reject'" src="/images/reject.svg" />
-                      <img v-if="type === 'success'" src="/images/success.svg" />
+                      <img
+                        v-if="type === 'success'"
+                        src="/images/success.svg"
+                      />
                     </div>
                     <span @click="handleclose" class="absolute top-3 right-4">
                       <i
@@ -75,7 +78,7 @@
 
                   <div class="flex flex-col gap-y-4 items-center mt-6">
                     <button
-                      v-if="!isOkay || isCancel"
+                      v-if="isCancel"
                       type="button"
                       @click="handleclose"
                       class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium justify-center flex items-center"
@@ -84,7 +87,7 @@
                     </button>
 
                     <button
-                    v-if="!isOkay"
+                      v-if="!isOkay"
                       :disabled="loading"
                       type="button"
                       @click="actionItem"
@@ -98,7 +101,7 @@
                       {{ btnText }}
                     </button>
                     <button
-                    v-if="isOkay"
+                      v-if="isOkay"
                       :disabled="loading"
                       type="button"
                       @click="actionItem"

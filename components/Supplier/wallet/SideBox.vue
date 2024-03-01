@@ -91,14 +91,7 @@
       <div class="max-w-[800px]">
         <SupplierWalletModalsTopUp v-if="isTopup" :details="details" />
         <SupplierWalletModalsWithdrawalModal v-if="isWithdraw" />
-        <SupplierWalletModalsCreateWallet
-          @success="handleWalletCreation"
-          v-if="isCreatingWallet"
-        />
-        <SupplierWalletModalsCreateKyc
-          @success="handleWalletCreation"
-          v-if="isAddingKyc"
-        />
+        <SupplierWalletModalsCreateWallet v-if="isCreatingWallet" />
       </div>
     </template>
   </IndexModal>
@@ -115,7 +108,7 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { getWalletDetails } from "~/services/walletservice";
+import { getWalletDetails,getWalletBalance } from "~/services/walletservice";
 
 const authStore = useAuthStore();
 const isSuccessOpen = ref(false);
@@ -161,6 +154,7 @@ function handleWalletCreation() {
   handleWalletDetails();
 }
 function handleWalletDetails() {
+  getWalletBalance()
   getWalletDetails()
     .then((res) => {
       details.value = res.data.data;

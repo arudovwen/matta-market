@@ -166,6 +166,28 @@
       </div>
     </template>
   </IndexModal>
+
+  <ActionModal
+    :open="isSuccessOpen"
+    type="success"
+    title="Account deleted Succesfully"
+    btnText="Okay"
+    :isCancel="false"
+    @actionItem="
+      () => {
+        isSuccessOpen = false;
+      }
+    "
+  />
+  <ActionModal
+    :open="isErrorOpen"
+    type="reject"
+    title="Delete Failed"
+    :text="errorText"
+    btnText="Retry"
+    @actionItem="() => (isErrorOpen = false)"
+    @close="() => (isErrorOpen = false)"
+  />
 </template>
 <script setup>
 definePageMeta({
@@ -173,14 +195,20 @@ definePageMeta({
 });
 import AppIcon from "@/components/AppIcon";
 import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
-import { getAllFinance } from "~/services/financeservice";
+import {
+  viewSettlement,
+  deleteSettlement,
+  getBanks,
+} from "~/services/settlementservice";
 import debounce from "lodash/debounce";
-import { toast } from "vue3-toastify";
 
+const isSuccessOpen = ref(false);
+const isErrorOpen = ref(false);
+const errorText = ref("Settlement creation failed");
 const id = ref(null);
+const banks = ref([]);
 const open = ref(false);
 const isOpen = ref(false);
-const isPrimaryOpen = ref(false);
 const detail = ref(null);
 const earnings = ref(null);
 const authStore = useAuthStore();
@@ -190,6 +218,14 @@ const financeData = ref([]);
 
 onMounted(() => {
   getFinanceData();
+  getBanks().then((res) => {
+    if (res.status === 200) {
+      banks.value = res.data.responseBody.map((i) => ({
+        label: i.name,
+        value: i.code,
+      }));
+    }
+  });
 });
 
 const queryParams = reactive({
@@ -203,11 +239,15 @@ const docLoading = ref(true);
 
 function getFinanceData() {
   docLoading.value = true;
-  getAllFinance(queryParams).then((res) => {
-    financeData.value = res.data.data;
-    queryParams.totalCount = res.data.data.totalCount;
-    docLoading.value = false;
-  });
+  viewSettlement(queryParams)
+    .then((res) => {
+      financeData.value = res.data.data;
+      queryParams.totalCount = res.data.data.totalCount;
+      docLoading.value = false;
+    })
+    .catch((err) => {
+      docLoading.value = false;
+    });
 }
 
 function deleteRequest(value) {
@@ -219,16 +259,29 @@ function openRequest(val) {
   detail.value = val;
   isOpen.value = true;
 }
+function handleSuccess() {
+  getFinanceData();
+  isOpen.value = false;
+}
 const debounceSearch = debounce(() => {
   getFinanceData();
 }, 800);
 const handleDelete = () => {
-  withdrawFinance(id.value).then((res) => {
-    if (res.status === 200) {
-      getFinanceData();
-      toast.success("Account deleted");
-    }
-  });
+  deleteSettlement(id.value)
+    .then((res) => {
+      if (res.status === 200) {
+        getFinanceData();
+        isSuccessOpen.value = true;
+      }
+    })
+    .catch((err) => {
+      errorText.value =
+        err.response.data.message ||
+        err.response.data.Message ||
+        "Account deletion failed";
+      isErrorOpen.value = true;
+      isLoading.value = false;
+    });
 };
 watch(
   () => [queryParams.Search],
@@ -273,6 +326,7 @@ const FinancesOptions = [
     url: "/financing/requests/export/3",
   },
 ];
+provide("handleSuccess", handleSuccess);
 provide("isOpen", isOpen);
 </script>
 

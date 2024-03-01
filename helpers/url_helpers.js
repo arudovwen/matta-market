@@ -166,7 +166,8 @@ const urls = {
   CHART_TREND: "v1/storefront/charttrend",
 
   //wallet
-  CREATE_WALLET: "v1/wallet/new-wallet",
+  CREATE_WALLET: "v1/wallet/new",
+  CHECK_BALANCE: "v1/wallet/check-balance",
   GET_WALLET_DETAILS: "v1/wallet/get-wallet-details",
   SET_PIN: "v1/wallet/setpin",
   CHANGE_PIN: "v1/wallet/change-pin",
@@ -202,5 +203,14 @@ const urls = {
   UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
   GET_FINANCE: "v1/financing/get",
   WITHDRAW_FINANCE: "v1/financing/withdraw",
+
+  //Settlements
+
+  ADD_SETTLEMENT: "v1/settlement/add-settlement-account",
+  AUTO_SETTLEMENT: "v1/settlement/addsettlement",
+  VIEW_SETTLEMENT: "v1/settlement/view-settlement-account",
+  UPDATE_SETTLEMENT: "v1/settlement/update-settlement-account",
+  DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",
+  GET_BANKS: "v1/bank/get-bank"
 };
 export default urls;

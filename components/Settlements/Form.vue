@@ -4,27 +4,18 @@
       {{ detail ? "Update" : "Add" }} Settlement Account
     </legend>
     <form @submit.prevent="onSubmit" class="flex flex-col gap-y-6 w-full">
-      <FormGroup label="Bank" :error="errors.bank" name="bank">
-        <Select
-          v-model="bank"
-          :options="bankOptions"
-          placeholder="Select bank"
+      <FormGroup label="Bank" :error="errors.bankCode" name="bankCode">
+        <SelectVueSelect
+          v-model="bankCode"
+          :disabled="loadingBanks"
+          :options="banks"
+          :reduce="bank => bank.value"
+          :placeholder="loadingBanks ? 'Fetching list' : 'Select bank'"
           :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-            errors.bank ? 'border-red-500' : 'border-[#D0D5DD]'
+            errors.bankCode ? 'border-red-500' : 'border-[#D0D5DD]'
           }`"
         />
       </FormGroup>
-      <div>
-        <Textinput
-          placeholder=""
-          label="Account name"
-          name="accountName"
-          v-bind="accountNameAtt"
-          v-model="accountName"
-          :error="errors.accountName"
-        />
-      </div>
-
       <div>
         <Textinput
           placeholder=""
@@ -37,14 +28,25 @@
         />
       </div>
 
+      <div>
+        <Textinput
+          placeholder=""
+          label="Account name"
+          name="accountName"
+          v-bind="accountNameAtt"
+          v-model="accountName"
+          :error="errors.accountName"
+        />
+      </div>
+
       <div
         class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
       >
         <Checkbox
           label="Set as primary account"
           labelClass="text-xs md:text-sm"
-          v-model="isPrimary"
-          v-bind="isPrimaryAtt"
+          v-model="isPrimaryAccount"
+          v-bind="isPrimaryAccountAtt"
         />
       </div>
 
@@ -66,29 +68,63 @@
       </div>
     </form>
   </div>
+  <ActionModal
+    :open="isSuccessOpen"
+    type="success"
+    title="Setllement Added"
+    :text="errorText"
+    btnText="Okay"
+    :isCancel="false"
+    @actionItem="
+      () => {
+        isSuccessOpen = false;
+        handleSuccess();
+      }
+    "
+    @close="handleSuccess"
+  />
+  <ActionModal
+    :open="isErrorOpen"
+    type="reject"
+    title="Request Failed"
+    :text="errorText"
+    btnText="Retry"
+    @actionItem="() => (isErrorOpen = false)"
+    @close="() => (isOpen = false)"
+  />
 </template>
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { addshipping } from "~/services/cartservice";
+import {
+  addSettlement,
+  updateSettlement,
+  getBanks,
+} from "~/services/settlementservice";
 
+const isSuccessOpen = ref(false);
+const isErrorOpen = ref(false);
+const errorText = ref("Settlement creation failed");
 const props = defineProps(["id", "detail"]);
 const isOpen = inject("isOpen");
-const shippingStore = useShippingStore();
+const handleSuccess = inject("handleSuccess");
 const isLoading = ref(false);
+const banks = ref([]);
+const loadingBanks = ref(false);
 const formValues = {
-  bank: "",
+  id: null,
+  bankCode: "",
   accountNumber: "",
   accountName: "",
-  isPrimary: false,
+  isPrimaryAccount: false,
 };
 
 const schema = yup.object({
-  bank: yup.string().required("Bank name is required"),
+  bankCode: yup.string().required("Bank name is required"),
   accountNumber: yup.string().required("Account number is required"),
   accountName: yup.string().required("Account name is required"),
-  isPrimary: yup.boolean(),
+  isPrimaryAccount: yup.boolean(),
 });
 
 const { handleSubmit, defineField, errors, setValues } = useForm({
@@ -96,36 +132,42 @@ const { handleSubmit, defineField, errors, setValues } = useForm({
   initialValues: formValues,
 });
 onMounted(() => {
+  loadingBanks.value = true;
+  getBanks().then((res) => {
+    if (res.status === 200) {
+      loadingBanks.value = false;
+      banks.value = res.data.data.responseBody.map((i) => ({
+        label: i.name,
+        value: i.code.toString(),
+      }));
+    }
+  });
   if (props.detail) {
     setValues(props.detail);
   }
 });
-const [bank, bankAtt] = defineField("bank");
+const [bankCode] = defineField("bankCode");
 const [accountNumber, accountNumberAtt] = defineField("accountNumber");
 const [accountName, accountNameAtt] = defineField("accountName");
-const [isPrimary, isPrimaryAtt] = defineField("isPrimary");
-const bankOptions = [
-  {
-    label: "First Bank",
-    value: "fiest bank",
-  },
-];
+const [isPrimaryAccount, isPrimaryAccountAtt] = defineField("isPrimaryAccount");
+
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  addshipping(values)
+  (!props.detail ? addSettlement : updateSettlement)(values)
     .then((res) => {
       if (res.status === 200) {
-        toast.info("Address added");
-        shippingStore?.getAlladdress();
-        isOpen.value = false;
+        isLoading.value = false;
+        isSuccessOpen.value = false;
       }
     })
 
     .catch((err) => {
+      errorText.value =
+        err.response.data.message ||
+        err.response.data.Message ||
+        "Settlement creation failed";
+      isErrorOpen.value = true;
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
-        toast.error(err.response.data.message || err.response.data.Message);
-      }
     });
 });
 </script>

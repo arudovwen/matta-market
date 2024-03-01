@@ -141,7 +141,7 @@ export const navigation = [
   },
 
   {
-    name: "Account Settings",
+    name: "Account",
     url: "/settings",
     icon: "lucide:user",
     key: "account-settings",
