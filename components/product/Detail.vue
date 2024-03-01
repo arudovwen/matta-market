@@ -69,9 +69,9 @@
           class="text-xl lg:text-2xl font-[800] mb-6"
         >
           {{ currencyFormat(productData?.price || 0) }}
-          <span class="text-sm text-[#444] font-normal"
+          <!-- <span class="text-sm text-[#444] font-normal"
             >/{{ productData.unit }}</span
-          >
+          > -->
         </p>
         <p class="text-xs :text-sm mb-6">
           <span class="font-normal">Producer:</span
