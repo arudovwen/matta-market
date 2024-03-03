@@ -199,7 +199,7 @@
               />
             </span>
           </NuxtLink> -->
-          <span
+          <!-- <span
             v-if="authStore.isLoggedIn"
             :class="` items-center  relative ${
               authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
@@ -218,8 +218,8 @@
                 class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
                 >{{ unreadnotifications }}</span
               >
-            </span>
-          </span>
+            </span> -->
+          <!-- </span> -->
           <NuxtLink to="/cart" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"

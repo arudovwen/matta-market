@@ -6,7 +6,7 @@
       subtext="Fund and withdraw money from your account"
       className="border-[rgba(234,236,240,1)] !px-4 lg:!px-0"
     />
-    <VerificationBox />
+    <VerificationBox v-if="authstore.userInfo.businessUserType.toLowerCase() !== 'buyer'" />
     <div class="py-[30px] flex lg:gap-x-4 gap-y-8 lg:gap-y-0 flex-col lg:flex-row px-4 lg:px-0">
       <div class="lg:max-w-[365px]">
         <SideBox />
@@ -18,4 +18,6 @@
 
 <script setup>
 import SideBox from "./SideBox.vue";
+
+const authstore = useAuthStore()
 </script>

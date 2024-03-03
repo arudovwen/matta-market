@@ -16,7 +16,7 @@ export function payWithMonnify(data, onModalClose, onSuccess) {
     apiKey: config.public.APP_MONNIFYAPIKEY,
     contractCode: config.public.APP_MONNIFYCONTRACTCODE,
 
-    paymentDescription: "Order payment",
+    paymentDescription: data.type || "Order payment",
     isTestMode: config.public.APP_MONNIFYISTESTMODE,
     metadata: {},
     paymentMethods: ["CARD", "ACCOUNT_TRANSFER", "USSD", "PHONE_NUMBER"],
@@ -32,7 +32,7 @@ export function payWithMonnify(data, onModalClose, onSuccess) {
       if (data.status === "FAILED") {
         onModalClose();
       }
-    
+
       //Implement what should happen when the modal is closed here
     },
   });

@@ -209,7 +209,7 @@ const urls = {
   //Settlements
 
   ADD_SETTLEMENT: "v1/settlement/add-settlement-account",
-  AUTO_SETTLEMENT: "v1/settlement/addsettlement",
+  AUTO_SETTLEMENT: "v1/settlement/autosettlement",
   VIEW_SETTLEMENT: "v1/settlement/view-settlement-account",
   UPDATE_SETTLEMENT: "v1/settlement/update-settlement-account",
   DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",

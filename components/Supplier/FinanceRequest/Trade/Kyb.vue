@@ -12,11 +12,11 @@
       <Textinput
         placeholder=""
         label="Date of incorporation"
-        name="dateOfIncorporation"
+        name="dateofIncorporation"
         type="date"
-        v-bind="dateOfIncorporationAtt"
-        v-model="dateOfIncorporation"
-        :error="errors.dateOfIncorporation"
+        v-bind="dateofIncorporationAtt"
+        v-model="dateofIncorporation"
+        :error="errors.dateofIncorporation"
       />
 
       <FormGroup
@@ -118,27 +118,30 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { businessTypes } from "~/utils/constants.js";
-import { updateCompanyProfile,updateDocuments } from "@/services/settingservices";
-import{toast} from "vue3-toastify"
+import {
+  updateCompanyProfile,
+  updateDocuments,
+} from "@/services/settingservices";
+import { toast } from "vue3-toastify";
 
 const company = inject("company");
 const formData = inject("formData");
 const isLoading = ref(false);
 const active = inject("active");
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 const formSchema = yup.object().shape({
   companyName: yup.string().required("Company Name is required"),
   sector: yup.string().required("Sector is required"),
-  dateOfIncorporation: yup
+  dateofIncorporation: yup
     .date()
     .typeError("Invalid date Of Incorporation")
     .nullable()
-    .required("Date Of Incorporation is required"), // Assuming dateOfIncorporation is a dateOfIncorporation type
+    .required("Date Of Incorporation is required"), // Assuming dateofIncorporation is a dateofIncorporation type
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   description: yup.string().required("Product Description is required"),
   // statusReport: yup.string().required("Status Report is required"),
-  // incorporation: yup.string().required("Incorporation is required"), // Assuming incorporation is a dateOfIncorporation type
+  // incorporation: yup.string().required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
   // mermat: yup.string().required("Mermat is required"),
   // utilityBill: yup.string().required("Utility Bill is required"),
 });
@@ -152,8 +155,8 @@ const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(
 
 const [companyName, companyNameAtt] = defineField("companyName");
 const [sector, sectorAtt] = defineField("sector");
-const [dateOfIncorporation, dateOfIncorporationAtt] = defineField(
-  "dateOfIncorporation"
+const [dateofIncorporation, dateofIncorporationAtt] = defineField(
+  "dateofIncorporation"
 );
 const [companyType, companyTypeAtt] = defineField("companyType");
 const [address, addressAtt] = defineField("address");
@@ -180,18 +183,31 @@ function handleChange(id, value) {
 }
 
 const onSubmit = handleSubmit((values) => {
- 
-  if (!authStore.userInfo.onboardingPageStatus) {
-    updateCompanyProfile(values).catch(err=>{
-      toast.error(err.response.data.message || err.response.data.Message || "Soemthing went wrong, try again later")
+  updateCompanyProfile(values)
+    .then((res) => {
+      if (res.status === 200) {
+        formData.kyb.companyDocuments.some((i) => i.url) &&
+          updateDocuments({
+            companyDocuments: formData.kyb.companyDocuments,
+          }).catch((err) => {
+            toast.error(
+              err.response.data.message ||
+                err.response.data.Message ||
+                "Soemthing went wrong, try again later"
+            );
+          });
+        active.value = 3;
+      }
+    })
+    .catch((err) => {
+      toast.error(
+        err.response.data.message ||
+          err.response.data.Message ||
+          "Soemthing went wrong, try again later"
+      );
     });
-    formData.kyb.companyDocuments.some(i=> i.url) && updateDocuments(formData.kyb.companyDocuments).catch(err=>{
-      toast.error(err.response.data.message || err.response.data.Message || "Soemthing went wrong, try again later")
-    });
-  } else {
-    active.value = 3;
-  }
-  formData.kyb = values;
+
+  // formData.kyb = values;
 });
 
 const companyTypesOptions = businessTypes?.map((i) => {
@@ -210,7 +226,7 @@ const sectorOptions = computed(() => {
     selectedcompanyType.subSectors?.map((i) => {
       return {
         label: i.subSectorName,
-        value: i.subSectorCode, // Use subSectorCode as the value
+        value: i.subSectorName, // Use subSectorCode as the value
       };
     }) ?? []
   ); // Use optional chaining and nullish coalescing operators for safer property access

@@ -123,24 +123,7 @@
         name="earings"
         class="mb-6"
       >
-        <label class="flex gap-x-2 items-center">
-          <input
-            type="radio"
-            v-model="earnings"
-            value="bankAccount"
-            class="accent-primary-500"
-          />
-          <span>Settle to my bank account</span>
-        </label>
-        <label class="flex gap-x-2 items-center">
-          <input
-            type="radio"
-            v-model="earnings"
-            value="wallet"
-            class="accent-primary-500"
-          />
-          <span>Settle to my wallet</span>
-        </label>
+       <Checkbox label="Auto settlement" v-model="isAutoSettlement" />
       </FormGroup>
 
       <div class="">
@@ -198,7 +181,7 @@ import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import {
   viewSettlement,
   deleteSettlement,
-  getBanks,
+  getBanks,autoSettlement
 } from "~/services/settlementservice";
 import debounce from "lodash/debounce";
 
@@ -210,8 +193,7 @@ const banks = ref([]);
 const open = ref(false);
 const isOpen = ref(false);
 const detail = ref(null);
-const earnings = ref(null);
-const authStore = useAuthStore();
+const isAutoSettlement = ref(false);
 
 const theads = ["account name", "account number", "bank", "type", ""];
 const financeData = ref([]);
@@ -295,6 +277,9 @@ watch(
     getFinanceData();
   }
 );
+watch(isAutoSettlement ,()=>{
+autoSettlement({settlementDestination :isAutoSettlement.value})
+})
 const FinancesOptions = [
   {
     label: "all finance",

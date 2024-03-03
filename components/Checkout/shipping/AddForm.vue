@@ -30,19 +30,31 @@
         />
       </div>
 
-      <div>
-        <Textinput
-          placeholder=""
-          label="Country"
-          type="tel"
-          name="country"
-          classInput="!h-[45px]"
+      <FormGroup label="Country" :error="errors.country" name="country">
+        <SelectVueSelect
           v-model="country"
-          v-bind="countryAtt"
-          :error="errors.country"
+          :options="allcountries"
+          :reduce="(country) => country.value"
+          placeholder="Select country"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.country ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
         />
-      </div>
-   
+      </FormGroup>
+
+      <FormGroup label="State" :error="errors.state" name="state">
+        <SelectVueSelect
+          v-model="state"
+          :disabled="!country"
+          :options="states"
+          :reduce="(state) => state.value"
+          placeholder="Select state"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.state ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
+        />
+      </FormGroup>
+
       <div>
         <Textinput
           placeholder=""
@@ -53,16 +65,6 @@
           v-model="city"
           v-bind="cityAtt"
           :error="errors.city"
-        />
-      </div>   <div class="xl:col-span-2">
-        <Textinput
-          placeholder=""
-          label="Address"
-          name="street"
-          classInput="!h-[45px]"
-          v-model="street"
-          v-bind="streetAtt"
-          :error="errors.street"
         />
       </div>
       <div>
@@ -77,6 +79,18 @@
           :error="errors.postalCode"
         />
       </div>
+      <div class="xl:col-span-2">
+        <Textinput
+          placeholder=""
+          label="Address"
+          name="street"
+          classInput="!h-[45px]"
+          v-model="street"
+          v-bind="streetAtt"
+          :error="errors.street"
+        />
+      </div>
+    
       <div
         class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
       >
@@ -88,7 +102,7 @@
         />
       </div>
 
-      <div class="xl:col-span-2 grid gap-y-[22px] mb-9 mt-4">
+      <div class="xl:col-span-2 grid gap-y-[22px] mt-4">
         <AppButton
           type="submit"
           :isLoading="isLoading"
@@ -103,18 +117,20 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { addshipping } from "~/services/cartservice";
-
+import CountryList from "country-list-with-dial-code-and-flag";
+import countries from "@/utils/countries.json";
 
 const isOpen = inject("isOpen");
-const shippingStore = useShippingStore()
+const shippingStore = useShippingStore();
 const isLoading = ref(false);
 const formValues = {
   firstName: "",
   lastName: "",
   street: "",
   country: "",
+  state: "",
   city: "",
   postalCode: "",
   isDefault: false,
@@ -125,6 +141,7 @@ const schema = yup.object({
   lastName: yup.string().required("Last name is required"),
   street: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
+  state: yup.string().required("State is required"),
   city: yup.string().required("City is required"),
   postalCode: yup.string().required("Postal code is required"),
 });
@@ -138,26 +155,51 @@ const [firstName, firstNameAtt] = defineField("firstName");
 const [lastName, lastNameAtt] = defineField("lastName");
 const [street, streetAtt] = defineField("street");
 const [country, countryAtt] = defineField("country");
+const [state, stateAtt] = defineField("state");
 const [city, cityAtt] = defineField("city");
 const [postalCode, postalCodeAtt] = defineField("postalCode");
 const [isDefault, isDefaultAtt] = defineField("isDefault");
 
+const allcountries = computed(() => {
+  return CountryList.map((item) => {
+    return {
+      id: "",
+      label: `${item.name}`,
+      value: item.name,
+    };
+  });
+});
+const mystates = computed(() => {
+  if (!country.value) return [];
+  return countries.find(
+    (item) => item.name.toLowerCase() == country.value.toLowerCase()
+  ).states;
+});
 
+const states = computed(() => {
+  return mystates.value.map((item) => {
+    return {
+      id: item.code,
+      label: item.name,
+      value: item.name,
+    };
+  });
+});
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
   addshipping(values)
     .then((res) => {
       if (res.status === 200) {
         toast.info("Address added");
-        shippingStore?.getAlladdress()
+        shippingStore?.getAlladdress();
         isOpen.value = false;
       }
     })
 
     .catch((err) => {
       isLoading.value = false;
-      if ((err.response.data.message || err.response.data.Message)) {
-        toast.error((err.response.data.message || err.response.data.Message));
+      if (err.response.data.message || err.response.data.Message) {
+        toast.error(err.response.data.message || err.response.data.Message);
       }
     });
 });

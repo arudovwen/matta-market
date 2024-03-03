@@ -5,6 +5,7 @@
         label="How much do you require?"
         :error="errors.amountRequired"
         name="amountRequired"
+        required
       >
         <CurrencyInput
           min="1"
@@ -19,7 +20,7 @@
         />
       </FormGroup>
 
-      <FormGroup label="Tenor" :error="errors.tenor" name="tenor">
+      <FormGroup label="Tenor" :error="errors.tenor" name="tenor" required>
         <Select
           v-model="tenor"
           :options="options"

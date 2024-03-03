@@ -37,7 +37,7 @@
         @click="
           () => {
             handleClose();
-            !hasWallet
+            hasWallet
               ? (isCreatingWallet = isOpen = true)
               : (isTopup = isOpen = true);
           }
@@ -80,7 +80,7 @@
   <IndexModal :isOpen="isOpen" @togglePopup="handleClose">
     <template #content>
       <div class="max-w-[800px]">
-        <SupplierWalletModalsTopUp v-if="isTopup" :details="details" />
+        <SupplierWalletModalsTopUp v-if="isTopup" :balance="700" />
         <SupplierWalletModalsWithdrawalModal v-if="isWithdraw" />
         <SupplierWalletModalsCreateWallet v-if="isCreatingWallet" />
       </div>
@@ -90,7 +90,7 @@
     :open="isSuccessOpen"
     type="success"
     title="Request Successful"
-    text="Your withdrawal request is being processed."
+    :text="completeText"
     btn-text="Okay"
     :isOkay="true"
     :isCancel="false"
@@ -102,6 +102,8 @@ import { toast } from "vue3-toastify";
 import { getWalletDetails, getWalletBalance } from "~/services/walletservice";
 
 const authStore = useAuthStore();
+const completeText = ref("Your withdrawal request is being processed.")
+const data = ref(null);
 const isSuccessOpen = ref(false);
 const isLoading = ref(true);
 const details = ref([]);
@@ -135,7 +137,8 @@ function handleClose() {
     isSuccessOpen.value =
       false;
 }
-function handleWithdraw() {
+function handleComplete(text) {
+  completeText.value = text;
   handleClose();
   isSuccessOpen.value = true;
 }
@@ -143,6 +146,16 @@ function handleWalletCreation() {
   isLoading.value = true;
   handleClose();
   handleWalletDetails();
+}
+function confirmOrder() {
+  data.value = {
+    email: authstore.userInfo?.email,
+    name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
+    amount: 0,
+    phoneNumber: authstore.userInfo?.phoneNumber,
+  };
+
+  payWithMonnify(data.value, onModalClose, onSuccess);
 }
 function handleWalletDetails() {
   getWalletBalance();
@@ -161,7 +174,7 @@ function handleWalletDetails() {
 onMounted(() => {
   handleWalletDetails();
 });
-provide("handleWithdraw", handleWithdraw);
+provide("handleComplete", handleComplete);
 provide("handleClose", handleClose);
 provide("details", details);
 </script>

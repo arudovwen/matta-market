@@ -1,11 +1,17 @@
 <template>
   <form @submit.prevent="onSubmit" class="w-full mt-6">
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
-      <FormGroup :error="errors.BankStatement" class="col-span-2">
-        <FileUpload label="Bank Statement" id="BankStatement" />
+      <FormGroup
+        :error="isFieldTouched('BankStatement') ? errors.BankStatement : ''"
+        class="col-span-2"
+        label="Bank Statement"
+        required
+      >
+        <FileUpload id="BankStatement" />
         <span
-          @click="downloadFile(formData?.supportingDocuments[0]?.url, 'BankStatement')"
-          
+          @click="
+            downloadFile(formData?.supportingDocuments[0]?.url, 'BankStatement')
+          "
           v-if="formData?.supportingDocuments[0]?.url"
         >
           <span class="block text-xs text-blue-500 mt-1"
@@ -13,11 +19,21 @@
           ></span
         >
       </FormGroup>
-      <FormGroup :error="errors.ProformaInvoice" class="col-span-2">
-        <FileUpload label="Proforma Invoice" id="ProformaInvoice" />
+
+      <FormGroup
+        :error="isFieldTouched('ProformaInvoice') ? errors.ProformaInvoice : ''"
+        class="col-span-2"
+        label="Proforma Invoice"
+        required
+      >
+        <FileUpload id="ProformaInvoice" />
         <span
-          @click="downloadFile(formData?.supportingDocuments[1]?.url, 'ProformaInvoice')"
-          
+          @click="
+            downloadFile(
+              formData?.supportingDocuments[1]?.url,
+              'ProformaInvoice'
+            )
+          "
           v-if="formData?.supportingDocuments[1]?.url"
         >
           <span class="block text-xs text-blue-500 mt-1"
@@ -26,14 +42,17 @@
         >
       </FormGroup>
       <FormGroup
-        :error="errors.EvidenceOfPreviouslySuccessfulSupplyContracts"
+        label="Evidence of previously successful supply contracts (PO and Paid Invoices)"
+        :error="
+          isFieldTouched('EvidenceOfPreviouslySuccessfulSupplyContracts')
+            ? errors.EvidenceOfPreviouslySuccessfulSupplyContracts
+            : ''
+        "
         class="col-span-2"
         v-if="id == 1 || id == 3"
+        required
       >
-        <FileUpload
-          label="Evidence of previously successful supply contracts (PO and Paid Invoices)"
-          id="EvidenceOfPreviouslySuccessfulSupplyContracts"
-        />
+        <FileUpload id="EvidenceOfPreviouslySuccessfulSupplyContracts" />
         <span
           @click="
             downloadFile(
@@ -41,7 +60,6 @@
               'EvidenceOfPreviouslySuccessfulSupplyContracts'
             )
           "
-          
           v-if="formData?.supportingDocuments[2]?.url"
         >
           <span class="block text-xs text-blue-500 mt-1"
@@ -49,11 +67,14 @@
           ></span
         >
       </FormGroup>
-      <FormGroup :error="errors.OtherDocuments" class="col-span-2">
-        <FileUpload label="Other documents" id="OtherDocuments" />
+      <FormGroup
+        label="Other documents"
+        :error="isFieldTouched('OtherDocuments') ? errors.OtherDocuments : ''"
+        class="col-span-2"
+      >
+        <FileUpload id="OtherDocuments" />
         <span
           @click="downloadFile(formData?.supportingDocuments[3]?.url, 'Others')"
-          
           v-if="formData?.supportingDocuments[3]?.url"
         >
           <span class="block text-xs text-blue-500 mt-1"
@@ -122,16 +143,23 @@ const formSchema = yup.object().shape({
   OtherDocuments: yup.string(),
 });
 
-const { handleSubmit, defineField, errors, setFieldValue } = useForm({
+const {
+  handleSubmit,
+  defineField,
+  errors,
+  setFieldValue,
+  setFieldTouched,
+  isFieldTouched,
+} = useForm({
   validationSchema: formSchema,
   initialValues: {
     haveyouexportedtotheothercourty: formData.haveyouexportedtotheothercourty,
     haveyoudonebusiness: formData.haveyoudonebusiness,
     EvidenceOfPreviouslySuccessfulSupplyContracts:
-      formData?.supportingDocuments[2]?.url,
-    ProformaInvoice: formData?.supportingDocuments[1]?.url,
-    BankStatement: formData?.supportingDocuments[0]?.url,
-    OtherDocuments: formData?.supportingDocuments[3]?.url,
+      formData?.supportingDocuments[2]?.url || "",
+    ProformaInvoice: formData?.supportingDocuments[1]?.url || "",
+    BankStatement: formData?.supportingDocuments[0]?.url || "",
+    OtherDocuments: formData?.supportingDocuments[3]?.url || "",
   },
 });
 
@@ -171,7 +199,7 @@ const onSubmit = handleSubmit((values) => {
     addFinance(formData)
       .then((res) => {
         if (res.status === 200) {
-          active.value = 5;
+          active.value = 3;
           isLoading.value = false;
         }
       })
@@ -183,7 +211,10 @@ const onSubmit = handleSubmit((values) => {
 });
 
 function handleChange(id, value) {
+  if (!value) return;
   setFieldValue(id, value);
+  setFieldTouched(id, value);
+
   formData.supportingDocuments.map((i) => {
     setFieldValue(id, value);
     if (id === "BankStatement" && i.documentType === 0) {

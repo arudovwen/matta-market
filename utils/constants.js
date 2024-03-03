@@ -40,7 +40,7 @@ export const FinancesOptions = [
 ];
 
 export const buyerRoutes = [
-  "account-settings",
+  "settings",
   "procurement-my-orders",
   "procurement-my-requests",
   "wallet-home",
@@ -51,7 +51,7 @@ export const buyerRoutes = [
 ];
 export const vendorRoutes = [
   "overview",
-  "account-settings",
+  "settings",
   "procurement-my-orders",
   "procurement-my-requests",
   "wallet-home",
@@ -144,7 +144,7 @@ export const navigation = [
     name: "Account",
     url: "/settings",
     icon: "lucide:user",
-    key: "account-settings",
+    key: "settings",
   },
 ];
 

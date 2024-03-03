@@ -21,9 +21,10 @@
             v-model="queryParams.Status"
             class="appearance-none border border-[#E7E7E7] rounded-lg w-[150px] text-sm py-[10px] px-[14px] focus:outline-matta-black/20"
           >
-            <option value="">Filter</option>
-            <option value="0">Pending</option>
-            <option value="1">Completed</option>
+          <option value="" disabled>Filter</option>
+            <option value="">Default</option>
+            <option value="0">Credit</option>
+            <option value="1">Debit</option>
           </select>
           <i
             class="uil uil-angle-down absolute right-2 pointer-events-none"
@@ -87,7 +88,7 @@
               </tr>
             </tbody>
           </table>
-          <EmptyData type="transaction"  v-if="isEmpty" title="No Transactions yet" subtext="All your wallet transactions will show up here" />
+          <EmptyData type="transaction"  v-if="isEmpty" title="No Transaction yet" subtext="All your transactions will show up here" />
         </div>
       
       </div>

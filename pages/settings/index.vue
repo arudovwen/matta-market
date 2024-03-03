@@ -42,10 +42,10 @@ const tabs = [
     key: "password",
   },
 
-  {
-    title: "notifications",
-    key: "notifications",
-  },
+  // {
+  //   title: "notifications",
+  //   key: "notifications",
+  // },
   {
     title: "settlements",
     key: "settlements",

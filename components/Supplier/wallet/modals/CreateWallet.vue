@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-[400px] py-8 px-6">
     <form @submit.prevent="onSubmit">
-      <h1 class="text-lg font-semibold text-[#101828] mb-4">Wallet Request</h1>
+      <h1 class="text-lg font-semibold text-[#101828] mb-4">Activate Wallet</h1>
 
       <div
         class="px-5 py-[14px] bg-[#182230] rounded-[5px] flex justify-between gap-x-40 relative mb-3"
@@ -106,7 +106,7 @@ import * as yup from "yup";
 import { ref, reactive, inject } from "vue";
 import { getBanks } from "~/services/settlementservice";
 
-const handleWithdraw = inject("handleWithdraw");
+const handleComplete = inject("handleComplete");
 const handleClose = inject("handleClose");
 const authStore = useAuthStore();
 const isErrorOpen = ref(false);
@@ -123,7 +123,6 @@ const banks = ref([]);
 const loadingBanks = ref(false);
 // Define form structure
 const form = reactive({
-
   accountName: "",
   accountNumber: "",
   bankCode: "", // Assuming you'll populate this somewhere
@@ -136,7 +135,6 @@ const form = reactive({
 });
 const formSchema = yup.object().shape({
   bankCode: yup.string().required("Bank name is required"),
-  accountName: yup.string().required("Account name is required"),
   accountNumber: yup
     .string()
     .matches(/^\d{10}$/, "Account number must be 10 digits")
@@ -205,12 +203,12 @@ onMounted(() => {
   });
 });
 const onSubmit = handleSubmit((values) => {
-  console.log("🚀 ~ onSubmit ~ values:", values)
+  console.log("🚀 ~ onSubmit ~ values:", values);
   isLoading.value = true;
   createWallet(values)
     .then((res) => {
       if (res.status === 200) {
-        handleWithdraw();
+        handleComplete("Your withdrawal request is being processed.");
         isLoading.value = false;
       }
     })

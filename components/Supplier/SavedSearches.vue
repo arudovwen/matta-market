@@ -54,7 +54,7 @@ const productsData = ref([]);
 
 const totalData = ref(20);
 const btnFunction = () => {
-  router.push("/market");
+  router.push("/");
 };
 const next = () => {};
 const prev = () => {};

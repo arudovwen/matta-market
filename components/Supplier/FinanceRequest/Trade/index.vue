@@ -11,13 +11,14 @@
       <Stepper :tabs="tabs" />
     </div>
     <div v-if="!loading && !isfetching">
-      <div class="max-w-[576px] mx-auto w-full" v-if="active !== 3">
+      <div class="max-w-[576px] mx-auto w-full" v-if="active !== 5">
         <LoanRequest v-if="active === 1" />
-        <!-- <Kyb v-if="active === 2" /> -->
-        <Documents v-if="active === 2" />
-        <!-- <Finalize v-if="active === 3" /> -->
+        <Kyb v-if="active === 2" />
+        <Documents v-if="active === 4" />
+        <Directors v-if="active === 3" />
+        <!-- <Finalize v-if="active === 5" /> -->
       </div>
-      <Final v-if="active === 3" />
+      <Final v-if="active === 5" />
     </div>
     <AppLoader v-else />
   </div>
@@ -128,25 +129,31 @@ const formData = reactive({
     doneBusiness: "",
   },
 });
+
 const active = ref(1);
 const tabs = [
   {
     name: "Loan request",
     value: 1,
   },
-  // {
-  //   name: "KYB",
-  //   value: 2,
-  // },
-
   {
-    name: "Documents",
+    name: "KYB",
     value: 2,
   },
+
+ 
   {
-    name: "Finalize",
+    name: "Directors",
     value: 3,
   },
+  {
+    name: "Documents",
+    value: 4,
+  },
+  // {
+  //   name: "Finalize",
+  //   value: 5,
+  // },
 ];
 
 onMounted(() => {

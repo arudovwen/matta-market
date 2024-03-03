@@ -16,6 +16,9 @@ export const addSettlement = (data) => {
   return post(`${urls.ADD_SETTLEMENT}`, data, config);
 };
 
+export const autoSettlement = (data) => {
+  return post(`${urls.AUTO_SETTLEMENT}`, data, config);
+};
 export const updateSettlement = (data) => {
   return put(`${urls.UPDATE_SETTLEMENT}/${data.id}`, data, config);
 };

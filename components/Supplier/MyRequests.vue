@@ -77,7 +77,7 @@ const tabs = [
   },
 
   {
-    title: "quotes",
+    title: "order requests",
     key: "quotes",
   },
   {

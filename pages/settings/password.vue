@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-lg bg-white px-6 border border-[#EAECF0] flex gap-x-[76px] flex-col lg:flex-row gap-y-7 lg:gap-y-10  py-[30px]"
+    class="rounded-lg bg-white px-6 border border-[#EAECF0] flex gap-x-[76px] flex-col lg:flex-row gap-y-7 lg:gap-y-10 py-[30px]"
   >
     <div class="w-[250px]">
       <h2 class="text-sm text-[#101828] font-semibold">Password</h2>
@@ -8,7 +8,7 @@
         Please enter your current password to change your password.
       </p>
     </div>
-    <div class="flex-1">
+    <div class="flex-1 max-w-[576px]">
       <form @submit.prevent="handlePassword">
         <div class="mb-6">
           <label class="mb-2 font-normal text-sm block text-matta-black"
@@ -114,138 +114,30 @@
         </div>
 
         <div class="flex justify-end">
-          <button
+          <AppButton
             :disabled="isLoading"
-            :class="isLoading && 'bg-primary/80'"
+            :isLoading="isLoading"
+            btnClass="bg-primary-500 text-white !px-16  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
             type="submit"
-            class="border-2 border-primary-500 text-[13px] bg-primary-500 text-white rounded-[10px] block w-full lg:w-auto px-12 font-semibold py-3 hover:bg-primary/80"
-          >
-            Change password
-          </button>
+            text=" Change password"
+          />
         </div>
       </form>
     </div>
-
-    <!-- <div class="p-6 lg:p-8 rounded-lg bg-white col-span-1 hidden">
-          <h5 class="font-medium mb-4">Delete account</h5>
-          <p class="mb-8 text-base">
-            You can delete your account any time. Yet note we cannot revert your
-            account back.
-          </p>
-          <div>
-            <button
-              type="button"
-              @click="handleDelete('delete')"
-              class="text-primary border border-primary- rounded-full px-6 py-3 text-sm hover:bg-priamry/70"
-            >
-              Delete account
-            </button>
-          </div>
-        </div> -->
   </div>
 </template>
 
 <script setup>
 import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
-import { useRoute } from "vue-router";
-import moment from "moment-timezone";
 import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  email,
-  helpers,
-  maxLength,
-  minLength,
-  numeric,
-} from "@vuelidate/validators";
-import {
-  Dialog,
-  DialogPanel,
-  TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue";
-import { Cropper } from "vue-advanced-cropper";
-import "vue-advanced-cropper/dist/style.css";
-// eslint-disable-next-line no-unused-vars
+import { required, helpers, maxLength, minLength } from "@vuelidate/validators";
 
-import {
-  getProfile,
-  deleteaccount,
-  settimezone,
-  updateProfile,
-  changepassword,
-} from "~/services/settingservices";
+import { changepassword } from "~/services/settingservices";
 import { toast } from "vue3-toastify";
-import countries from "~/utils/countries.json";
 
-const store = useAuthStore();
-const deleteText = ref("");
-const isShowing = ref("crop");
-const open = ref(false);
-const img = ref("");
-const image = ref(null);
-const coordinate = ref(null);
-const cropper = ref(null);
-const route = useRoute();
 const isOpen = ref(false);
-const zones = moment.tz.names();
-
-const abbrs = {
-  EST: "Eastern Standard Time",
-  EDT: "Eastern Daylight Time",
-  CST: "Central Standard Time",
-  CDT: "Central Daylight Time",
-  MST: "Mountain Standard Time",
-  MDT: "Mountain Daylight Time",
-  PST: "Pacific Standard Time",
-  PDT: "Pacific Daylight Time",
-  GMT: "Greenwich Mean Time",
-  CAT: "Central Africa Time",
-  WAT: "Western Africa Time",
-  EAT: "Eastern Africa Time",
-  EET: "Eastern European Time",
-};
-
-// const country = computed(() => {
-//   return CountryList.map((item) => {
-//     return {
-//       id: "",
-//       name: `${item.flag} ${item.name}`,
-//       value: item.dial_code,
-//     };
-//   });
-// });
-
-moment.fn.zoneName = function () {
-  var abbr = this.zoneAbbr();
-  return abbrs[abbr] || abbr;
-};
-defineProps(["title"]);
 const isLoading = ref(false);
-onMounted(() => {
-  getProfile().then((res) => {
-    form.photo = image.value = res.data.data.photo;
-    form.firstName = res.data.data.firstName;
-    form.lastName = res.data.data.lastName;
-    form.country = res.data.data.country;
-    form.city = res.data.data.city;
-    form.email = res.data.data.email;
-    form.phone = res.data.data.phone;
-    form.timezone = res.data.data.timeZone;
-  });
-});
 
-const form = reactive({
-  photo: "",
-  firstName: "",
-  lastName: "",
-  country: "",
-  city: "",
-  email: "",
-  phone: "",
-  timezone: "",
-  code: "+234",
-});
 const newform = reactive({
   oldPassword: "",
   newPassword: "",
@@ -301,27 +193,8 @@ const newrules = {
     samePassword: helpers.withMessage("Passwords do not match!", samePassword),
   },
 };
-const states = computed(() => {
-  if (!form.country) return [];
-  return (
-    countries.find(
-      (item) => form.country.toLowerCase() === item.name.toLowerCase()
-    ).states || []
-  );
-});
-function handleDelete(val) {
-  isShowing.value = val;
-  open.value = true;
-}
-function deleteAccount() {
-  deleteaccount.then((res) => {
-    if (res.status == 200) {
-      toast.info("Account deleted successfully");
-      store.logOut();
-      window.location.href = "/";
-    }
-  });
-}
+const newv$ = useVuelidate(newrules, newform);
+
 async function handlePassword() {
   const validity = await newv$.value.$validate();
   if (!validity) return;
@@ -332,101 +205,14 @@ async function handlePassword() {
       if (res.status === 200) {
         toast.info("Password updated successfully");
         isLoading.value = false;
-        newform.oldPassword = "";
-        newform.newPassword = "";
-        newform.confirmPassword = "";
+        newform.oldPassword =
+          newform.newPassword =
+          newform.confirmPassword =
+            "";
+        newv$.value.$reset();
       }
     })
 
-    .catch((err) => {
-      isLoading.value = false;
-
-      toast.error(err.response.data.message || err.response.data.Message);
-    });
-}
-function setTimezone() {
-  settimezone(form).then((res) => {
-    if (res.status == 200) {
-      toast.info("timezone updated successfully");
-    }
-  });
-}
-function handleEvent(e) {
-  var files = e.target.files || e.dataTransfer.files;
-  if (!files.length) return;
-  if (img.value) {
-    URL.revokeObjectURL(img.value);
-  }
-  img.value = URL.createObjectURL(files[0]);
-  isShowing.value = "crop";
-  open.value = true;
-}
-
-function crop() {
-  const { coordinates, canvas } = cropper.value.getResult();
-  coordinate.value = coordinates;
-  image.value = canvas.toDataURL();
-  open.value = false;
-  form.photo = canvas.toDataURL().replace("data:", "").replace(/^.+,/, "");
-}
-const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 12 : true;
-const rules = {
-  email: {
-    required,
-    email: helpers.withMessage("Email is invalid", email),
-    maxLength: maxLength(50),
-  },
-  firstName: {
-    required,
-    maxLength: maxLength(50),
-  },
-  lastName: {
-    required,
-    maxLength: maxLength(50),
-  },
-  country: {
-    required,
-    maxLength: maxLength(50),
-  },
-  city: {
-    required,
-    maxLength: maxLength(50),
-  },
-  phone: {
-    numeric,
-    required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
-  },
-  timezone: {
-    required,
-    maxLength: maxLength(250),
-  },
-  photo: {
-    required,
-  },
-};
-const fullName = computed(() => {
-  return `${form.firstName} ${form.lastName}`;
-});
-const v$ = useVuelidate(rules, form);
-const newv$ = useVuelidate(newrules, newform);
-async function handleSubmit() {
-  const validity = await v$.value.$validate();
-  if (!validity) return;
-  isLoading.value = true;
-
-  updateProfile(form)
-    .then((res) => {
-      if (res.status === 200) {
-        store.updateUser(fullName.value);
-        toast.info("Profile updated successfully");
-        isLoading.value = false;
-      }
-    })
     .catch((err) => {
       isLoading.value = false;
 
