@@ -343,7 +343,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item?.size }}{{ item?.size }}{{item.unit}}
+                  {{ item?.size }}{{ item?.size }}{{ item.unit }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
@@ -363,15 +363,13 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 ] whitespace-nowrap"
                 >
-                  <span class="flex gap-x-4">
-                    <span @click="removepackage(i)" class="cursor-pointer"
+                  <span class="flex gap-x-6">
+                    <span @click="removepackage(i)" class="cursor-pointer p-1"
                       ><AppIcon icon="fa-trash-o" iconClass="text-[#E53F3F]"
                     /></span>
-                    <!-- <span
-                      ><AppIcon
-                        icon="prime:pencil"
-                        iconClass="text-[#475467]" /></span
-                  >-->
+                    <span class="p-1" @click="editPackage(item)"
+                      ><AppIcon icon="prime:pencil" iconClass="text-[#475467]"
+                    /></span>
                   </span>
                 </td>
               </tr>
@@ -573,7 +571,13 @@
         </form>
         <PackageForm
           v-if="typeForm === 'package'"
-          @close="isAddingPackage = false"
+          @close="
+            () => {
+              isAddingPackage = false;
+              detail = null;
+            }
+          "
+          :detail="detail"
           :canClose="false"
         />
       </template>
@@ -631,7 +635,7 @@ import { uploadfile } from "~/services/onboardingservices";
 
 const route = useRoute();
 const router = useRouter();
-
+const detail = ref(null);
 // const queryParams = reactive({
 //   Search: "",
 //   PageSize: 10,
@@ -668,6 +672,11 @@ function getMarketValue(data) {
   form.markets = data.selectedmarkets;
   form.marketApplications = data.applications;
   form.marketSubapplications = data.subapplications;
+}
+function editPackage(val) {
+  typeForm.value = "package";
+  detail.value = val;
+  isAddingPackage.value = true;
 }
 const isAddingPackage = ref(false);
 const isLoading = ref(false);
@@ -722,7 +731,7 @@ const rules = {
   unit: { required },
   productBrandName: { maxLength: maxLength(100) },
   packagesAvailable: {
-    required:helpers.withMessage("At least 1 package is required", required),
+    required: helpers.withMessage("At least 1 package is required", required),
   },
   gallery: {
     required: helpers.withMessage("At least 1 imaage is required", required),

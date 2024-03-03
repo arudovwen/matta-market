@@ -87,7 +87,7 @@ const router = useRouter();
 const isPreviewing = ref(false);
 const isPageLoading = ref(true);
 defineProps(["title"]);
-const active = ref(1);
+const active = ref(2);
 const technologies = ref([]);
 const allmarkets = ref([]);
 const producers = ref([]);

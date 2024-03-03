@@ -25,7 +25,7 @@
 
         <span
           class="rounded-full flex items-center relative justify-center"
-          v-if="active === tab.value"
+          v-if="active == tab.value"
         >
           <span
             class="bg-[rgba(34,112,250,0.25)] rounded-full flex items-center h-[26px] w-[26px] justify-center absolute z-[1]"

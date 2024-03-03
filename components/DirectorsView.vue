@@ -39,13 +39,16 @@
                 !companyInfo?.approvalStatus
               "
             >
-              <span @click="emits('handleEdit', id,director)" class="p-1"><i class="uil uil-pen"></i></span>
+              <span @click="emits('handleEdit', id, director)" class="p-1"
+                ><i class="uil uil-pen"></i
+              ></span>
               <span class="p-1" @click="emits('handleDelete', id)"
                 ><i class="uil uil-trash text-red-500"></i
               ></span>
             </span>
             <span v-else>
-              <span @click="handleDetail(director)"
+              <span
+                @click="handleDetail(director)"
                 class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
               >
                 View details
@@ -55,14 +58,17 @@
         </tr>
       </tbody>
     </table>
+    <EmptyData title="No director added" type="user" />
   </div>
-  <IndexModal :is-open="open" @toggle-popup="open=false">
+  <IndexModal :is-open="open" @toggle-popup="open = false">
     <template #content>
       <DirectorView :detail="detail" />
     </template>
   </IndexModal>
 </template>
 <script setup>
+import EmptyData from "./EmptyData.vue";
+
 const authStore = useAuthStore();
 defineProps(["directors", "companyInfo"]);
 const emits = defineEmits(["handleDelete", "handleEdit"]);

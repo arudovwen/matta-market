@@ -2,7 +2,7 @@
   <div class="gap-y-2 flex flex-col">
     <!-- Top bar   -->
 
-    <div class="mb-6">
+    <div class="mb-10">
       <div v-if="!docLoading">
         <div class="mb-8">
           <AppButton
@@ -123,15 +123,8 @@
         name="earings"
         class="mb-6"
       >
-       <Checkbox label="Auto settlement" v-model="isAutoSettlement" />
+        <Checkbox label="Auto settlement" v-model="isAutoSettlement" />
       </FormGroup>
-
-      <div class="">
-        <AppButton
-          text="Save changes"
-          :btnClass="`!px-[10px] md:!px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm !rounded-lg`"
-        />
-      </div>
     </div>
   </div>
   <DeleteModal
@@ -181,7 +174,8 @@ import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import {
   viewSettlement,
   deleteSettlement,
-  getBanks,autoSettlement
+  getBanks,
+  autoSettlement,
 } from "~/services/settlementservice";
 import debounce from "lodash/debounce";
 
@@ -277,9 +271,9 @@ watch(
     getFinanceData();
   }
 );
-watch(isAutoSettlement ,()=>{
-autoSettlement({settlementDestination :isAutoSettlement.value})
-})
+watch(isAutoSettlement, () => {
+  autoSettlement({ settlementDestination: isAutoSettlement.value });
+});
 const FinancesOptions = [
   {
     label: "all finance",

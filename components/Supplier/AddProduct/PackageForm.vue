@@ -1,7 +1,9 @@
 <template>
-  <form @submit.prevent="onSubmit" class="grid bg-white p-10 rounded-[10px]">
+  <form @submit.prevent="onSubmit" class="grid bg-white p-6 rounded-[10px]">
     <div class="flex gap-x-5 justify-between items-center mb-4">
-      <legend class="text-[#18273AF0] text-lg font-bold">Add Package</legend>
+      <legend class="text-[#18273AF0] text-lg font-bold">
+        {{ detail ? "Edit" : "Add" }} Package
+      </legend>
       <button
         @click="emits('close')"
         type="button"
@@ -24,7 +26,9 @@
             <ListboxButton
               class="relative w-full text-left rounded-lg flex items-center appearance-none px-[14px] py-[10px] h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             >
-              <span class="block truncate text-sm">{{ title || "Select pack" }}</span>
+              <span class="block truncate text-sm">{{
+                title || "Select pack"
+              }}</span>
               <span class="right-0 pr-2 absolute"
                 ><AppIcon
                   icon="ph:caret-down-bold"
@@ -191,7 +195,7 @@
         type="submit"
         class="appearance-none leading-none px-10 py-4 w-full rounded-lg text-white bg-primary-500 hover:opacity-70 text-sm"
       >
-        Add package
+        {{ detail ? "Update" : "Add" }} package
       </button>
     </div>
   </form>
@@ -207,6 +211,11 @@ import {
 import { useForm } from "vee-validate";
 
 const form = inject("form");
+const props = defineProps({
+  detail: {
+    default: null,
+  },
+});
 const emits = defineEmits(["close"]);
 const packForm = reactive({
   title: "",
@@ -216,6 +225,12 @@ const packForm = reactive({
   size: "",
   isAvailable: false,
   unit: form.unit,
+});
+onMounted(() => {
+  if (props.detail) {
+    setValues(props.detail);
+  }
+  console.log("🚀 ~ onMounted ~ props.detail:", props.detail);
 });
 
 const packageForms = [
@@ -242,7 +257,7 @@ const packFormSchema = yup.object({
   unit: yup.string(),
 });
 
-const { handleSubmit, defineField, errors } = useForm({
+const { handleSubmit, defineField, errors, setValues } = useForm({
   validationSchema: packFormSchema,
   initialValues: packForm,
 });
@@ -256,11 +271,26 @@ const [purity, purityAtt] = defineField("purity");
 const [unit, unitAtt] = defineField("unit");
 
 const onSubmit = handleSubmit((values) => {
- 
-  form.packagesAvailable = [
-    ...form.packagesAvailable,
-    { ...values, package: { title: values.title } },
-  ];
+  if (!props.detail) {
+    form.packagesAvailable.push({
+      ...values,
+      package: { title: values.title },
+    });
+  } else {
+    const index = form.packagesAvailable.findIndex(
+      (i) =>
+        i.title === props.detail.title &&
+        i.purchaseAmount === props.detail.purchaseAmount &&
+        i.size === props.detail.size
+    );
+    if (index !== -1) {
+      form.packagesAvailable[index] = {
+        ...values,
+        package: { title: values.title },
+      };
+      console.log("🚀 ~ form.packagesAvailable.map ~ values:", values);
+    }
+  }
   emits("close");
 });
 </script>

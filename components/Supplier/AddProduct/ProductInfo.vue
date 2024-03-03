@@ -195,7 +195,6 @@
                     <span class="text-red-500 mr-[.5px]">*</span> Markets
                   </label>
                   <MultiInput
-                   
                     :markets="allmarkets"
                     :selectedmarkets="form.markets"
                     :applications="form.marketApplications"
@@ -230,7 +229,6 @@
                     <span class="text-red-500 mr-[.5px]">*</span> Applications
                   </label>
                   <MultiInput
-                   
                     :markets="technologies"
                     @getValue="getTechValue"
                     :selectedmarkets="form.technologies"
@@ -407,7 +405,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item?.size }}{{item.unit}}
+                  {{ item?.size }}{{ item.unit }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
@@ -427,15 +425,13 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 ] whitespace-nowrap"
                 >
-                  <span class="flex gap-x-4">
-                    <span @click="removepackage(i)" class="cursor-pointer"
+                  <span class="flex gap-x-6">
+                    <span @click="removepackage(i)" class="cursor-pointer p-1"
                       ><AppIcon icon="fa-trash-o" iconClass="text-[#E53F3F]"
                     /></span>
-                    <!-- <span
-                      ><AppIcon
-                        icon="prime:pencil"
-                        iconClass="text-[#475467]" /></span
-                  >-->
+                    <span class="p-1" @click="editPackage(item)"
+                      ><AppIcon icon="prime:pencil" iconClass="text-[#475467]"
+                    /></span>
                   </span>
                 </td>
               </tr>
@@ -456,7 +452,9 @@
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
       <div class="w-[250px]">
-        <h2 class="text-sm text-[#101828] font-semibold">Gallery</h2>
+        <h2 class="text-sm text-[#101828] font-semibold">
+          Gallery <span class="text-red-500 mr-[.5px]">*</span>
+        </h2>
         <p class="text-xs text-[#475467]">
           Upload pictures of your products here.
         </p>
@@ -641,7 +639,13 @@
         </form>
         <PackageForm
           v-if="typeForm === 'package'"
-          @close="isAddingPackage = false"
+          @close="
+            () => {
+              isAddingPackage = false;
+              detail = null;
+            }
+          "
+          :detail="detail"
         />
       </template>
     </Modal>
@@ -730,6 +734,7 @@ const states = computed(() => {
   );
 });
 
+const detail = ref(null);
 const getProducers = inject("getProducers");
 const technologies = inject("technologies");
 const markets = ref([]);
@@ -795,7 +800,7 @@ const rules = {
   },
   unit: { required },
   packagesAvailable: {
-    required:helpers.withMessage("At least 1 package is required", required),
+    required: helpers.withMessage("At least 1 package is required", required),
   },
   productBrandName: { maxLength: maxLength(100) },
   gallery: {
@@ -817,6 +822,11 @@ function create_UUID() {
     }
   );
   return uuid;
+}
+function editPackage(val) {
+  typeForm.value = "package";
+  detail.value = val;
+  isAddingPackage.value = true;
 }
 function getTechValue(data) {
   form.technologies = data.selectedmarkets;

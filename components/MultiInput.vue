@@ -3,7 +3,7 @@
     <div class="relative mt-1">
       <div
         @click="isOpen = !isOpen"
-        class="relative w-full cursor-default  bg-white text-left focus:outline-none  text-sm"
+        class="relative w-full cursor-default bg-white text-left focus:outline-none text-sm"
       >
         <div class="w-full">
           <div
@@ -24,7 +24,8 @@
               </li>
             </ul>
             <span class="right-0 pr-2 absolute"
-              ><AppIcon icon="ph:caret-down-bold"
+              ><AppIcon
+                icon="ph:caret-down-bold"
                 iconClass="h-4 w-4 text-[#667085]"
                 aria-hidden="true"
             /></span>
@@ -34,11 +35,11 @@
 
       <div
         v-show="isOpen"
-        class="flex flex-col z-40 max-h-[500px] w-[500px] rounded-lg p-[30px] bg-white text-base shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]  focus:outline-none sm:text-sm  border border-[#DCDEE6] mt-1"
+        class="flex flex-col z-40 max-h-[500px] w-[500px] rounded-lg p-[30px] bg-white text-base shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] focus:outline-none sm:text-sm border border-[#DCDEE6] mt-1"
       >
         <div class="relative flex items-center mb-6">
           <input
-            class="w-full h-10 rounded-lg text-sm px-3 py-1  border border-[#DCDEE6]"
+            class="w-full h-10 rounded-lg text-sm px-3 py-1 border border-[#DCDEE6]"
             v-model="query"
             placeholder="Type name here"
           />
@@ -102,19 +103,19 @@
         </ul>
         <hr class="my-4" />
         <div class="relative flex items-center justify-end gap-x-4">
-          <button
+          <!-- <button
             type="button"
             class="text-sm text-matta-black"
             @click="isOpen = false"
           >
             Cancel
-          </button>
+          </button> -->
           <button
             type="button"
             @click="handleSave"
             class="px-4 py-2 hover:opacity-80 rounded-lg bg-primary-500 text-white text-sm"
           >
-            Save
+            Close
           </button>
         </div>
       </div>
@@ -123,7 +124,6 @@
 </template>
 <script setup>
 import { defineProps, ref, computed, defineEmits } from "vue";
-
 
 const props = defineProps([
   "markets",
@@ -148,7 +148,6 @@ const filteredMarkets = computed(() => {
   );
 });
 function getMarketName(id) {
-
   const result = props.markets.find((m) => m.id === id);
 
   return result.title;
@@ -206,4 +205,14 @@ function handleUpdate(value, type, market) {
   }
   emits("getValue", data.value);
 }
+watch(
+  () => [
+    data.value.selectedmarkets,
+    data.value.applications,
+    data.value.subapplications,
+  ],
+  () => {
+    // emits("getValue", data.value);
+  }
+);
 </script>
