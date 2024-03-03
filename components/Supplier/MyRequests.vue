@@ -12,7 +12,7 @@
           :canCancel="false"
         />
         <SupplierMyrequestsDocumentsTable v-if="active == 'documents'" />
-        <SupplierMyrequestsQuotesTable v-if="active == 'quotes'" />
+        <SupplierMyrequestsQuotesTable v-if="active == 'orders'" />
         <SupplierMyrequestsProductTable v-if="active == 'products'" />
       </div>
     </div>
@@ -77,8 +77,8 @@ const tabs = [
   },
 
   {
-    title: "order requests",
-    key: "quotes",
+    title: "orders",
+    key: "orders",
   },
   {
     title: "products",

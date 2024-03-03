@@ -15,7 +15,7 @@
           :canCancel="false"
         />
         <SupplierRequestsDocumentsTable v-if="active == 'documents'" />
-        <SupplierRequestsQuotesTable v-if="active == 'quotes'" />
+        <SupplierRequestsQuotesTable v-if="active == 'orders'" />
       </div>
     </div>
   </div>
@@ -71,8 +71,8 @@ const tabs = [
   },
 
   {
-    title: "order requests",
-    key: "quotes",
+    title: "orders",
+    key: "orders",
   },
 ];
 defineProps(["title"]);
