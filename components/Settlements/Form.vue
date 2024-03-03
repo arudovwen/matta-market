@@ -103,6 +103,7 @@ import {
 } from "~/services/settlementservice";
 import { validateAccount } from "~/services/walletservice";
 
+const emits = defineEmits(["refresh", "close"]);
 const isSuccessOpen = ref(false);
 const isErrorOpen = ref(false);
 const errorText = ref("Settlement creation failed");
@@ -151,10 +152,12 @@ const schema = yup.object().shape({
   isPrimaryAccount: yup.boolean(),
 });
 
-const { handleSubmit, defineField, errors, setValues } = useForm({
-  validationSchema: schema,
-  initialValues: formValues,
-});
+const { handleSubmit, defineField, errors, setValues, setFieldValue } = useForm(
+  {
+    validationSchema: schema,
+    initialValues: formValues,
+  }
+);
 onMounted(() => {
   loadingBanks.value = true;
   getBanks().then((res) => {
@@ -164,6 +167,12 @@ onMounted(() => {
         label: i.name,
         value: i.code.toString(),
       }));
+      if (props.detail) {
+        const tempBank = res.data.data.responseBody
+          .find((i) => i.name === props.detail.bankName)
+          ?.code.toString();
+        setFieldValue("bankCode", tempBank);
+      }
     }
   });
   if (props.detail) {
@@ -179,8 +188,10 @@ const onSubmit = handleSubmit((values) => {
   (!props.detail ? addSettlement : updateSettlement)(values)
     .then((res) => {
       if (res.status === 200) {
+        emits("refresh");
         isLoading.value = false;
         isSuccessOpen.value = false;
+        isOpen.value = false;
       }
     })
 

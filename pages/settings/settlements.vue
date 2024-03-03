@@ -29,26 +29,25 @@
             <tbody>
               <tr v-for="item in financeData" :key="item">
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item.financeRequestNo }}
+                  {{ item.accountName || "-" }}
                 </td>
                 <td
-                  :class="item.status == 3 ? 'opacity-25' : ''"
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap max-w-[260px] truncate"
                 >
-                  {{ item.customer || "-" }}
+                  {{ item.accountNumber || "-" }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  -
+                  {{ item.bankName || "-" }}
                 </td>
 
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap max-w-[260px] truncate"
                 >
-                  -
+                  {{ item.isPrimaryAccount ? "Primary" : "-" }}
                 </td>
 
                 <td
@@ -102,15 +101,6 @@
             title="No settlement available"
             type="settlements"
           />
-          <div class="p-5" v-if="financeData.length">
-            <PaginationSimple
-              :total="queryParams.totalCount"
-              :current="queryParams.PageNumber"
-              :per-page="queryParams.PageSize"
-              :pageRange="5"
-              @page-changed="queryParams.PageNumber = $event"
-            />
-          </div>
         </div>
       </div>
       <div class="text-center p-6 lg:p-8 my-20" v-if="docLoading">
@@ -138,7 +128,17 @@
   <IndexModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #content>
       <div class="h-full w-full bg-white rounded-lg p-6">
-        <SettlementsForm :id="id" :detail="detail" />
+        <SettlementsForm
+          @close="
+            () => {
+              isOpen = false;
+              detail = null;
+            }
+          "
+          :id="id"
+          :detail="detail"
+          @refresh="getSettlements"
+        />
       </div>
     </template>
   </IndexModal>
@@ -193,7 +193,7 @@ const theads = ["account name", "account number", "bank", "type", ""];
 const financeData = ref([]);
 
 onMounted(() => {
-  getFinanceData();
+  getSettlements();
   getBanks().then((res) => {
     if (res.status === 200) {
       banks.value = res.data.data.responseBody.map((i) => ({
@@ -213,8 +213,10 @@ const queryParams = reactive({
 });
 const docLoading = ref(true);
 
-function getFinanceData() {
+function getSettlements() {
   docLoading.value = true;
+  isOpen.value = false;
+  detail.value = null;
   viewSettlement(queryParams)
     .then((res) => {
       financeData.value = res.data.data;
@@ -236,17 +238,17 @@ function openRequest(val) {
   isOpen.value = true;
 }
 function handleSuccess() {
-  getFinanceData();
+  getSettlements();
   isOpen.value = false;
 }
 const debounceSearch = debounce(() => {
-  getFinanceData();
+  getSettlements();
 }, 800);
 const handleDelete = () => {
   deleteSettlement(id.value)
     .then((res) => {
       if (res.status === 200) {
-        getFinanceData();
+        getSettlements();
         isSuccessOpen.value = true;
       }
     })
@@ -268,7 +270,7 @@ watch(
 watch(
   () => [queryParams.PageNumber, queryParams.SortOrder],
   () => {
-    getFinanceData();
+    getSettlements();
   }
 );
 watch(isAutoSettlement, () => {
