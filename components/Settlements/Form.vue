@@ -46,6 +46,7 @@
           labelClass="text-xs md:text-sm"
           v-model="isPrimaryAccount"
           v-bind="isPrimaryAccountAtt"
+          :checked="isPrimaryAccount"
         />
       </div>
 

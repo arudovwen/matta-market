@@ -97,6 +97,10 @@ export default defineComponent({
       set: (newValue) => context.emit("update:modelValue", newValue),
     });
 
+    watch(()=> [props.checked], ()=>{
+      ck.value = props.checked
+    })
+
     return { localValue, ck, onChange };
   },
 });
