@@ -40,6 +40,6 @@ const tabs = [
   },
 ];
 
-const active = ref("orders");
+const active = ref("customer orders");
 provide("active", active);
 </script>

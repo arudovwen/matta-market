@@ -394,7 +394,7 @@ const isOpen = ref(false);
 function openOrder(val) {
   procurementorderdetails(val.orderId)
     .then((res) => {
-      order.value = { ...res.data, orderId: val.orderId };
+      order.value = { ...val, ...res.data, orderId: val.orderNumber };
 
       isOpen.value = true;
     })

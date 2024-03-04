@@ -72,7 +72,9 @@
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                > {{ item.custormer || "-" }}</td>
+                >
+                  {{ item.custormer || "-" }}
+                </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
@@ -80,7 +82,9 @@
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                >{{ currencyFormat(item.amount) }}</td>
+                >
+                  {{ currencyFormat(item.amount) }}
+                </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
@@ -101,7 +105,7 @@
                 >
                   <Menu class="relative" as="div">
                     <MenuButton class="outline-none">
-                       <AppIcon icon="heroicons:ellipsis-vertical-solid" />
+                      <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                     </MenuButton>
                     <MenuItems
                       class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[140px] rounded-xl overflow-hidden"
@@ -207,16 +211,15 @@ const order = ref(null);
 const isOpen = ref(false);
 
 function openOrder(val) {
-  // storefrontorderdetails(val.id)
-  //   .then((res) => {
-  //     order.value = { ...res.data, orderId: val.orderNumber };
-  order.value =val
+  storefrontorderdetails(val.id)
+    .then((res) => {
+      order.value = { ...val, ...res.data, orderId: val.orderNumber };
       isOpen.value = true;
-    // })
-    // .catch((err) => {
-    //   isLoading.value = false;
-    //   toast.error(err.response.data.message || err.response.data.Message);
-    // });
+    })
+    .catch((err) => {
+      isLoading.value = false;
+      toast.error(err.response.data.message || err.response.data.Message);
+    });
 }
 
 function openModal() {

@@ -75,7 +75,7 @@
         </p>
         <p class="text-xs :text-sm mb-6">
           <span class="font-normal">Producer:</span
-          ><span class="font-bold"> {{ productData?.producer?.title }}</span>
+          > <span class="font-bold"> {{ productData?.producer?.title }}</span>
         </p>
         <div
           class="flex flex-col md:flex-row gap-x-[18px] gap-y-4 lg:gap-y-0 mb-6 justify-start"

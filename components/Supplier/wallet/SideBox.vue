@@ -48,7 +48,7 @@
     </div>
   </div>
   <div
-    v-if="hasWallet"
+    v-if="!hasWallet"
     class="border border-[#EAECF0] bg-[#F2F4F7] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-4 px-4"
   >
     <p class="text-sm text-[#344054] font-semibold mb-3">
@@ -81,8 +81,14 @@
     <template #content>
       <div class="max-w-[800px]">
         <SupplierWalletModalsTopUp v-if="isTopup" :balance="700" />
-        <SupplierWalletModalsWithdrawalModal v-if="isWithdraw" />
-        <SupplierWalletModalsCreateWallet v-if="isCreatingWallet" />
+        <SupplierWalletModalsWithdrawalModal
+          v-if="isWithdraw"
+          :hasSettlement="hasSettlement"
+        />
+        <SupplierWalletModalsCreateWallet
+          :hasSettlement="hasSettlement"
+          v-if="isCreatingWallet"
+        />
       </div>
     </template>
   </IndexModal>
@@ -100,9 +106,10 @@
 <script setup>
 import { toast } from "vue3-toastify";
 import { getWalletDetails, getWalletBalance } from "~/services/walletservice";
+import { viewSettlement } from "~/services/settlementservice";
 
 const authStore = useAuthStore();
-const completeText = ref("Your withdrawal request is being processed.")
+const completeText = ref("Your withdrawal request is being processed.");
 const data = ref(null);
 const isSuccessOpen = ref(false);
 const isLoading = ref(true);
@@ -114,6 +121,7 @@ const isTopup = ref(false);
 const isWithdraw = ref(false);
 const isCreatingWallet = ref(false);
 const isAddingKyc = ref(false);
+const hasSettlement = ref(false);
 const bankData = [
   {
     title: "Bank name",
@@ -137,10 +145,16 @@ function handleClose() {
     isSuccessOpen.value =
       false;
 }
-function handleComplete(text) {
-  completeText.value = text;
-  handleClose();
-  isSuccessOpen.value = true;
+function handleComplete(text, type = null) {
+  checkSettlement();
+  if (type === "withdraw") {
+    isCreatingWallet.value = false;
+    isWithdraw.value = true;
+  } else {
+    completeText.value = text;
+    handleClose();
+    isSuccessOpen.value = true;
+  }
 }
 function handleWalletCreation() {
   isLoading.value = true;
@@ -170,9 +184,18 @@ function handleWalletDetails() {
       isLoading.value = false;
     });
 }
-
+function checkSettlement() {
+  viewSettlement().then((res) => {
+    if (res.status && res.data.data.length > 0) {
+      hasSettlement.value = true;
+    } else {
+      hasSettlement.value = false;
+    }
+  });
+}
 onMounted(() => {
   handleWalletDetails();
+  checkSettlement();
 });
 provide("handleComplete", handleComplete);
 provide("handleClose", handleClose);

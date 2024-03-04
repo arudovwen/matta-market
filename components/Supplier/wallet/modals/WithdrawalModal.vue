@@ -26,44 +26,6 @@
             <span class="absolute right-4">NGN</span>
           </div>
         </FormGroup>
-
-        <FormGroup
-          label="Bank name"
-          :error="errors.bankCode"
-          name="bankCode"
-          v-if="!hasSettlement"
-          classLabel="!normal-case"
-        >
-          <SelectVueSelect
-            v-model="bankCode"
-            :disabled="loadingBanks"
-            :options="banks"
-            :reduce="(bank) => bank.value"
-            :placeholder="loadingBanks ? 'Fetching list' : 'Select bank'"
-            :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-              errors.bankCode ? 'border-red-500' : 'border-[#D0D5DD]'
-            }`"
-          />
-        </FormGroup>
-        <div class="" v-if="!hasSettlement">
-          <Textinput
-            placeholder="Account number"
-            label="Account number"
-            name="accountNumber"
-            v-bind="accountNumberAtt"
-            v-model="accountNumber"
-            :error="errors.accountNumber"
-          />
-        </div>
-        <div class="" v-if="!hasSettlement">
-          <Textinput
-            placeholder="Account name"
-            label="Account name"
-            name="accountName"
-            disabled
-            v-model="form.accountName"
-          />
-        </div>
       </div>
       <div class="flex gap-x-4 items-center justify-end">
         <AppButton
@@ -89,109 +51,31 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import {
-  getBanks,
-  viewSettlement,
-  addSettlement,
-} from "~/services/settlementservice";
+import { getBanks } from "~/services/settlementservice";
 import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
-import { toast } from "vue3-toastify";
-import { validateAccount } from "~/services/walletservice";
 
 const props = defineProps({
   balance: {
     default: 800,
   },
+  hasSettlement: {
+    default: true,
+  },
 });
-const banks = ref([]);
-const loadingBanks = ref(false);
+
 const stage = ref(1);
 const handleWithdraw = inject("handleWithdraw");
 const handleClose = inject("handleClose");
 
-const queryParams = reactive({
-  Search: "",
-  SortOrder: "",
-  PageNumber: 1,
-  PageSize: 10,
-  Type: "",
-});
-const docLoading = ref(true);
-function getSettlement() {
-  docLoading.value = true;
-  // viewSettlement(queryParams).then((res) => {
-  //   if (res.data.data.length) {
-  //     docLoading.value = false;
-  //     setFieldValue("hasSettlement", true);
-  //   } else {
-  //     setFieldValue("hasSettlement", false);
-  //   }
-  // });
-}
-onMounted(() => {
-  getSettlement();
-  loadingBanks.value = true;
-  getBanks().then((res) => {
-    if (res.status === 200) {
-      loadingBanks.value = false;
-      banks.value = res.data.data.responseBody.map((i) => ({
-        label: i.name,
-        value: i.code.toString(),
-      }));
-    }
-  });
-});
 const form = reactive({
-  hasSettlement: false,
-  bankCode: "",
-  accountName: "",
-  pin: "",
-  accountNumber: "",
   amount: null,
-  bvn: "",
-  dateOfBirth: null,
   balance: props.balance,
 });
 const formSchema = yup.object().shape({
   balance: yup.number(),
-  hasSettlement: yup.boolean(),
-  bankCode: yup.string().when("hasSettlement", {
-    is: false,
-    then: (schema) => schema.required("Bank name is required"),
-    otherwise: (schema) => schema.nullable(),
-  }),
-  accountNumber: yup.string().when("hasSettlement", {
-    is: false,
-    then: (schema) =>
-      schema
-        .required("Account number is required")
-        .matches(/^\d{10}$/, "Account number must be 10 digits")
-        .test("test-account", "Invalid account number", function (value) {
-          const bankCode = this.parent.bankCode; // Access bankCode directly
-          if (value && value.length === 10 && bankCode) {
-            return validateAccount({
-              bankCode: bankCode,
-              accountNumber: value,
-            })
-              .then((res) => {
-                form.accountName = res.data.data.responseBody.accountName;
-                return true; // Resolve the promise if validation is successful
-              })
-              .catch(() => {
-                throw new schema.ValidationError(
-                  "Invalid account number",
-                  null,
-                  "accountNumber"
-                );
-              });
-          } else {
-            return true; // Return true if the length is not 10 or bankCode is missing
-          }
-        }),
-    otherwise: (schema) => schema.nullable(),
-  }),
+
   amount: yup
     .number()
     .required("Amount is required")
@@ -207,32 +91,18 @@ const formSchema = yup.object().shape({
 });
 
 const isLoading = ref(false);
-const { handleSubmit, defineField, errors, setFieldError, setFieldValue } =
+const { handleSubmit, defineField, errors} =
   useForm({
     validationSchema: formSchema,
     initialValues: form,
   });
 
 const [amount] = defineField("amount");
-const [bankCode] = defineField("bankCode");
-const [accountNumber, accountNumberAtt] = defineField("accountNumber");
-const [hasSettlement] = defineField("hasSettlement");
 
 const onSubmit = handleSubmit((values) => {
-  console.log("🚀 ~ onSubmit ~ values:", values);
-  addSettlement({ ...values, isPrimaryAccount: true }).then((res) => {
-    if (res.status === 200) {
-      handleWithdraw();
-    }
-  });
+  handleWithdraw();
 });
 
-function verifyAmount() {
-  setFieldError("amount", "Insufficient funds");
-}
-watch(amount, () => {
-  console.log("🚀 ~ watch ~ amount:", amount);
-});
 </script>
 
 <style lang="scss" scoped>

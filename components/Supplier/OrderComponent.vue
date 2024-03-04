@@ -3,22 +3,22 @@
     <div class="grid grid-cols-2 gap-y-10 gap-x-4 mb-8">
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">amount</p>
-        <span class="text-sm">{{ currencyFormat(order.orderTotalwithTax) }}</span>
+        <span class="text-sm">{{ currencyFormat(order?.orderTotal) }}</span>
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">status</p>
-        <AppStatusButton :status="order.status" stattype="order" />
+        <AppStatusButton :status="order?.status" stattype="order" />
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">Order date</p>
-        <span class="text-sm">{{ moment(order.orderDate).format("ll") }}</span>
+        <span class="text-sm">{{ moment(order?.orderDate).format("ll") }}</span>
       </div>
       <div v-if="order?.schedulePickupDate">
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">
           scheduled pickup date
         </p>
         <span class="text-sm">{{
-          moment(order.schedulePickupDate || "").format("ll")
+          moment(order?.schedulePickupDate || "").format("ll")
         }}</span>
       </div>
       <div>
@@ -26,7 +26,7 @@
           scheduled delivery date
         </p>
         <span class="text-sm">{{
-          moment(order.scheduleDeliveryDate).format("ll")
+          moment(order?.scheduleDeliveryDate).format("ll")
         }}</span>
       </div>
     </div>
@@ -37,7 +37,7 @@
         <!-- <span><i class="uil uil-minus text-lg"></i></span> -->
       </div>
 
-      <div v-for="(item, id) in order.orderDetails" :key="id">
+      <div v-for="(item, id) in order?.orderDetails" :key="id">
         <div class="flex justify-between items-end gap-x-2 mb-1">
           <div class="text-[#E1E1E1] pt-1 flex items-end text-sm">
             <span>
@@ -73,13 +73,13 @@
       <div class="flex justify-between gap-x-2">
         <div class="text-[#E1E1E1] text-sm">Item total</div>
         <div class="text-right py-1">
-          {{ currencyFormat(order.orderTotal) }}
+          {{ currencyFormat(order?.orderTotal) }}
         </div>
       </div>
       <div class="flex justify-between gap-x-2">
         <div class="text-sm text-[#E1E1E1]">Tax <span class="text-xs">(7.5%)</span></div>
         <div class="text-right py-1">
-          {{ currencyFormat(order.orderTotalwithTax - order.orderTotal) }}
+          {{ currencyFormat(order?.orderTotalwithTax - order?.orderTotal) }}
         </div>
       </div>
       <div class="flex justify-between gap-x-2 border-b border-[#ddd] mb-6">
@@ -92,7 +92,7 @@
       <div class="flex justify-between gap-x-2 mb-6">
         <div class="text-[#E1E1E1]text-sm">Total</div>
         <div class="text-xl text-right font-medium">
-          {{ currencyFormat(order.orderTotalwithTax) }}
+          {{ currencyFormat(order?.orderTotalwithTax) }}
         </div>
       </div>
     </div>
@@ -160,12 +160,12 @@
         </span> -->
             <span>
               <span class="text-xs text-[#ABABAB]"
-                >{{ moment(item.activityDate).format("ll") }},
-                {{ item.activityTime }}</span
+                >{{ moment(item?.activityDate).format("ll") }},
+                {{ item?.activityTime }}</span
               >
               <br />
               <span class="text-xs"
-                ><span>{{ item.description }}</span></span
+                ><span>{{ item?.description }}</span></span
               >
             </span>
           </div>

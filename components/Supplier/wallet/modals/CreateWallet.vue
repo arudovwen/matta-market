@@ -104,8 +104,13 @@ import { validateAccount, createWallet } from "~/services/walletservice";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { ref, reactive, inject } from "vue";
-import { getBanks } from "~/services/settlementservice";
+import { getBanks, addSettlement } from "~/services/settlementservice";
 
+const props = defineProps({
+  hasSettlement: {
+    default: true,
+  },
+});
 const handleComplete = inject("handleComplete");
 const handleClose = inject("handleClose");
 const authStore = useAuthStore();
@@ -203,12 +208,18 @@ onMounted(() => {
   });
 });
 const onSubmit = handleSubmit((values) => {
-  console.log("🚀 ~ onSubmit ~ values:", values);
   isLoading.value = true;
+  if (!props.hasWallet) {
+    addSettlement({ ...values, isPrimaryAccount: true });
+  }
+
   createWallet(values)
     .then((res) => {
       if (res.status === 200) {
-        handleComplete("Your withdrawal request is being processed.");
+        handleComplete(
+          "Your wallet has been activated, proceed to withdraw",
+          "withdraw"
+        );
         isLoading.value = false;
       }
     })

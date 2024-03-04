@@ -1,9 +1,9 @@
 <template>
   <span
-    :class="`px-[6px] py-1 text-xs rounded-full flex gap-x-1 items-center border max-w-max font-semibold ${Stats[status].className}`"
+    :class="`px-[6px] py-1 text-xs rounded-full flex gap-x-1 items-center border max-w-max font-semibold ${Stats[status]?.className}`"
   >
     <!-- <AppIcon icon="octicon:dot-fill-24" /> -->
-    <span class=""> {{ Stats[status].text }}</span>
+    <span class=""> {{ Stats[status]?.text }}</span>
   </span>
 </template>
 
@@ -80,10 +80,66 @@ const OrderStatusText = {
     className: StatusClass[1],
   },
 };
-const Stats = computed(() => {
+const FinanceStatusText = {
+  0: {
+    text: "Pending",
+    className: StatusClass[0],
+  },
+  1: {
+    text: "Approved",
+    className: StatusClass[1],
+  },
 
+  2: {
+    text: "Rejected",
+    className: StatusClass[4],
+  },
+  3: {
+    text: "Requested",
+    className: StatusClass[5],
+  },
+  4: {
+    text: "Disbursed",
+    className: StatusClass[1],
+  },
+  5: {
+    text: "Partially paid",
+    className: StatusClass[3],
+  },
+
+  6: {
+    text: "Paid",
+    className: StatusClass[1],
+  },
+  7: {
+    text: "Due",
+    className: StatusClass[4],
+  },
+  8: {
+    text: "Overdue",
+    className: StatusClass[2],
+  },
+};
+const PaymentStatus = {
+  0: {
+    text: "Settlement",
+    className: StatusClass[5],
+  },
+  1: {
+    text: "Withdrawal",
+    className: StatusClass[0],
+  },
+};
+
+const Stats = computed(() => {
   if (props.stattype === "order") {
     return OrderStatusText;
+  }
+  if (props.stattype === "finance") {
+    return FinanceStatusText;
+  }
+  if (props.stattype === "payment") {
+    return PaymentStatus;
   }
   return StatusText;
 });
