@@ -1,9 +1,8 @@
 <template>
   <div
-    v-if="directors.length"
     class="w-full rounded-[10px] border border-[#EAECF0] overflow-hidden md:min-w-[560px]"
   >
-    <table class="w-full">
+    <table class="w-full" v-if="directors.length">
       <thead>
         <tr>
           <th
@@ -58,7 +57,7 @@
         </tr>
       </tbody>
     </table>
-    <EmptyData title="No director added" type="user" />
+    <EmptyData className="!h-[250px]" v-if="!directors.length" title="No director added" type="user" />
   </div>
   <IndexModal :is-open="open" @toggle-popup="open = false">
     <template #content>
