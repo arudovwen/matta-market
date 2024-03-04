@@ -187,7 +187,7 @@ const onSubmit = handleSubmit((values) => {
     editFinance({ ...formData, id: financeId })
       .then((res) => {
         if (res.status === 200) {
-          active.value = 3;
+          active.value = 5;
           isLoading.value = false;
         }
       })
@@ -199,7 +199,7 @@ const onSubmit = handleSubmit((values) => {
     addFinance(formData)
       .then((res) => {
         if (res.status === 200) {
-          active.value = 3;
+          active.value = 5;
           isLoading.value = false;
         }
       })
