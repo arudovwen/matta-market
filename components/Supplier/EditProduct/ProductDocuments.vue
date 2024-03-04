@@ -12,7 +12,7 @@
       </div>
 
       <div class="max-w-[654px] w-full">
-        <Uploader @onGetFiles="onGetFiles" :isMultiple="true" type="doc" />
+        <UploadComponent @onGetFiles="onGetFiles" :isMultiple="true" type="doc" />
         <div
           class="bg-white py-6 lg:py-8 rounded-lg"
           v-if="form.documents.length"
