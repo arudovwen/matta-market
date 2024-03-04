@@ -22,13 +22,13 @@
             class="absolute w-20 h-20 rounded-[5px] overflow-hidden left-10 bg-white top-0 translate-y-[-60%] flex items-center justify-center border border-[#F5F5F5]"
           >
             <img
-              :src="detail?.logo ? detail?.logo : '/images/matta-icon.png'"
+              :src="vendorInfo?.logo ? vendorInfo?.logo : '/images/matta-icon.png'"
               class=""
             />
           </div>
           <div>
             <h1 class="text-[#202939] text-xl font-bold capitalize mb-1">
-              {{ vendorInfo?.storeName || detail?.companyName }}
+              {{ vendorInfo?.storeName || vendor.replace("-", " ")}}
             </h1>
             <p class="text-sm text-[#364152] font-medium">
               {{ total }} Products
@@ -49,8 +49,7 @@
 </template>
 
 <script setup>
-import { getCompanyProfile } from "~/services/settingservices";
-import { getVendorInfo } from "~/services/userservices";
+import { getStoreInfo } from "~/services/productservices";
 import { useProductStore } from "~/stores/products";
 const query = inject("query");
 const store = useProductStore();
@@ -86,12 +85,9 @@ const options = [
 ];
 const vendorInfo = inject("vendorInfo");
 onMounted(() => {
-  getVendorInfo().then((res) => {
+ 
+  getStoreInfo(vendor).then(res=>{
     vendorInfo.value = res.data.data;
-  });
-  getCompanyProfile().then((res) => {
-   
-    detail.value = res.data.data;
-  });
+  })
 });
 </script>

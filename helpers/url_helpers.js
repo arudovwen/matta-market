@@ -35,6 +35,7 @@ const urls = {
   GET_PRODUCT_STATUS_COUNT: "/v1/product/get-productscount",
   DELETE_PRODUCT: "/v1/product/deleteproduct",
   GET_PRODUCTS_BY_TAG: "v1/marketplace/get-products-bytags",
+  GET_STORE_INFO: "v1/marketplace/get-store",
 
   //Markets
   GET_MARKETS: "/v1/marketplace/getmarkets",
@@ -166,16 +167,13 @@ const urls = {
   CHART_TREND: "v1/storefront/charttrend",
 
   //wallet
-  CREATE_WALLET: "v1/wallet/new",
-  CHECK_BALANCE: "v1/wallet/check-balance",
+  CREATE_WALLET: "v1/wallet/new-wallet",
   GET_WALLET_DETAILS: "v1/wallet/get-wallet-details",
   SET_PIN: "v1/wallet/setpin",
   CHANGE_PIN: "v1/wallet/change-pin",
   VALIDATE_OTP: "v1/wallet/validate-otp",
   SET_WARNING_LIMIT: "v1/wallet/setwarninglimit",
   SET_UPPER_LIMIT: "v1/wallet/setupperlimit",
-  VALIDATE_ACCOUNT: "v1/wallet/validate-account",
-  VALIDATE_BVN: "v1/wallet/verify-bvn",
 
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",
@@ -205,14 +203,5 @@ const urls = {
   UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
   GET_FINANCE: "v1/financing/get",
   WITHDRAW_FINANCE: "v1/financing/withdraw",
-
-  //Settlements
-
-  ADD_SETTLEMENT: "v1/settlement/add-settlement-account",
-  AUTO_SETTLEMENT: "v1/settlement/autosettlement",
-  VIEW_SETTLEMENT: "v1/settlement/view-settlement-account",
-  UPDATE_SETTLEMENT: "v1/settlement/update-settlement-account",
-  DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",
-  GET_BANKS: "v1/bank/get-bank",
 };
 export default urls;
