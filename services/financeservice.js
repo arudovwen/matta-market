@@ -8,14 +8,12 @@ const config = {
 };
 //Orders
 
-export const getAllFinance = withRetryHandling(
-  ({ Status, SortOrder, Search, PageNumber, PageSize }) => {
-    return get(
-      `${urls.GET_ALL_FINANCE}?PageSize=${PageSize}&PageNumber=${PageNumber}&Search=${Search}&SortOrder=${SortOrder}&Status=${Status}`,
-      config
-    );
-  }
-);
+export const getAllFinance = withRetryHandling((data) => {
+  return get(
+    `${urls.GET_ALL_FINANCE}?${new URLSearchParams(cleanObject(data))}`,
+    config
+  );
+});
 
 export const addFinance = (data) => {
   return post(`${urls.ADD_FINANCE}`, data, config);
