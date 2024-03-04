@@ -6,8 +6,8 @@
     <AppTab :tabs="tabs" className="px-6" />
     <div >
       <div >
-        <SupplierOrdersComponent v-if="active === 'orders'" />
-        <SupplierStoreRequests v-if="active === 'requests'" />
+        <SupplierOrdersComponent v-if="active === 'customer orders'" />
+        <SupplierStoreRequests v-if="active === 'customer requests'" />
         <SupplierCustomization v-if="active === 'settings'" />
       </div>
     </div>
@@ -26,12 +26,12 @@ definePageMeta({
 
 const tabs = [
   {
-    title: "orders",
-    key: "orders",
+    title: "customer orders",
+    key: "customer orders",
   },
   {
-    title: "requests",
-    key: "requests",
+    title: "customer requests",
+    key: "customer requests",
   },
 
   {

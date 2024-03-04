@@ -4,7 +4,7 @@
   >
     <div class="px-4 pb-4 border-b border-[#EAECF0]">
       <div
-        class="lg:w-[311px] h-[160px] bg-gray-700 px-5 py-4 rounded-2xl flex flex-col justify-between bg-cover shadow-[7.873417377471924px_9.841772079467773px_15.746834754943848px_0px_rgba(0,0,0,0.05)]"
+        class="lg:w-[311px] h-[160px] bg-gray-100 px-5 py-4 rounded-2xl flex flex-col justify-between bg-cover shadow-[7.873417377471924px_9.841772079467773px_15.746834754943848px_0px_rgba(0,0,0,0.05)]"
         :style="{ backgroundImage: `url('/images/card.png')` }"
       >
         <span class="flex items-center justify-between text-white">
