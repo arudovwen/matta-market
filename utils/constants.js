@@ -856,3 +856,10 @@ export const subnavigation = [
     key: "storefront",
   },
 ];
+
+
+export const LedgerAction = 
+  {
+   0: "Debit",
+   1: "Credit" 
+}

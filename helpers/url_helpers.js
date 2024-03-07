@@ -97,6 +97,7 @@ const urls = {
   GET_CART: "/v1/shoppingcart/get-cart",
   REMOVE_CART: "/v1/shoppingcart/remove-cartitem",
   CONFIRM_PURCHASE: "/v1/shoppingcart/confirm-purchase",
+  CONFIRM_PAYMENT: "v1/shoppingcart/confirm-paymennt",
 
   //Shipping address
   ADD_SHIPPING_ADDRESS: "/v1/shippingaddress/add",
@@ -215,5 +216,6 @@ const urls = {
   UPDATE_SETTLEMENT: "v1/settlement/update-settlement-account",
   DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",
   GET_BANKS: "v1/bank/get-bank",
+  GET_LEDGER_TRANSACTIONS: "v1/ledger/get-all"
 };
 export default urls;

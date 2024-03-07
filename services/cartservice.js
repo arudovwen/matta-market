@@ -49,3 +49,6 @@ export const getalladdress = withRetryHandling(() => {
 export async function confirmpurchase(data) {
   return await post(`${urls.CONFIRM_PURCHASE}`, data, config);
 }
+export async function confirmpayment(data) {
+  return await post(`${urls.CONFIRM_PAYMENT}`, data, config);
+}

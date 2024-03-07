@@ -21,7 +21,7 @@
             v-model="queryParams.Status"
             class="appearance-none border border-[#E7E7E7] rounded-lg w-[150px] text-sm py-[10px] px-[14px] focus:outline-matta-black/20"
           >
-          <option value="" disabled>Filter</option>
+            <option value="" disabled>Filter</option>
             <option value="">Default</option>
             <option value="0">Credit</option>
             <option value="1">Debit</option>
@@ -41,7 +41,7 @@
     <div class="bg-white">
       <div v-if="!isPageLoading">
         <div
-          v-if="isEmpty"
+          v-if="tdata.length"
           class="overflow-auto border border-[#EAECF0] rounded-lg max-w-full"
         >
           <table class="w-full">
@@ -66,31 +66,35 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  Text
+                  {{ item.reference }}
                 </td>
 
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  Text
+                  {{ currencyFormat(item.amount, item.currencyCode) }}
                 </td>
 
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  Text
+                  {{ moment(item.transactionDate).format("ll") }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  Text
+                  {{ LedgerAction[item.legerAction] }}
                 </td>
               </tr>
             </tbody>
           </table>
-          <EmptyData type="transaction"  v-if="isEmpty" title="No Transaction yet" subtext="All your transactions will show up here" />
+          <EmptyData
+            type="transaction"
+            v-if="!tdata.length"
+            title="No Transaction yet"
+            subtext="All your transactions will show up here"
+          />
         </div>
-      
       </div>
       <div class="text-center p-6 lg:p-8 my-16" v-else>
         <AppLoader />
@@ -102,11 +106,13 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { reactive, ref } from "vue";
+import { getLedgerTransactions } from "~/services/walletservice";
+import moment from "moment";
 
 const route = useRoute();
 const type = ref("1");
 const theads = ["reference", "amount", "date", "type"];
-const tdata = [];
+const tdata = ref([]);
 const isEmpty = ref(true);
 const isPageLoading = ref(false);
 // eslint-disable-next-line no-unused-vars
@@ -118,6 +124,14 @@ const queryParams = reactive({
   pagecount: 0,
   totalCount: 0,
   Search: "",
+});
+onMounted(() => {
+  getLedgerTransactions(queryParams).then((res) => {
+    if (res.status === 200) {
+      console.log("🚀 ~ getLedgerTransactions ~ res:", res.data.data);
+      tdata.value = res.data.data;
+    }
+  });
 });
 </script>
 

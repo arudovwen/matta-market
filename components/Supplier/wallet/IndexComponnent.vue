@@ -20,4 +20,5 @@
 import SideBox from "./SideBox.vue";
 
 const authstore = useAuthStore()
+
 </script>

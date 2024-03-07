@@ -93,7 +93,7 @@ function onModalClose() {
   status.value = "Retry order";
   loading.value = false;
 }
-function confirmOrder() {
+function makePayment(reference) {
   status.value = "Processing order...";
   loading.value = true;
   data.value = {
@@ -102,12 +102,30 @@ function confirmOrder() {
     name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
     amount: cartTaxAmount.value,
     phoneNumber: authstore.userInfo?.phoneNumber,
+    reference,
   };
 
   payWithMonnify(data.value, onModalClose, onSuccess);
 }
+function confirmOrder() {
+  status.value = "Processing order...";
+  loading.value = true;
+  confirmpurchase({ shippingAddressId:  shippingStore?.defaultAddress.id })
+    .then((res) => {
+      if (res.status === 200) {
+        console.log("🚀 ~ .then ~ res:", res);
+      }
+    })
+    .catch((err) => {
+      const error = `${
+        err.response.data.Message || err.response.data.message
+      }, Contact us for assistance on your order`;
+      toast.error(error);
+      status.value = "Retry order";
+      loading.value = false;
+    });
+}
 function onSuccess(response) {
- 
   if (response.status.toLowerCase() === "success") {
     confirmpurchase({ shippingAddressId: data.value.shippingAddressId })
       .then((res) => {

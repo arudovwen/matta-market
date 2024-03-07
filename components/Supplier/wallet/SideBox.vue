@@ -48,7 +48,7 @@
     </div>
   </div>
   <div
-    v-if="!hasWallet"
+    v-if="hasWallet"
     class="border border-[#EAECF0] bg-[#F2F4F7] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-4 px-4"
   >
     <p class="text-sm text-[#344054] font-semibold mb-3">
