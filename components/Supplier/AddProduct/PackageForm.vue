@@ -228,9 +228,8 @@ const packForm = reactive({
 });
 onMounted(() => {
   if (props.detail) {
-    setValues(props.detail);
+    setValues({ ...props.detail, title: props?.detail?.package?.title });
   }
-  console.log("🚀 ~ onMounted ~ props.detail:", props.detail);
 });
 
 const packageForms = [
