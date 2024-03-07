@@ -169,7 +169,7 @@ const urls = {
 
   //wallet
   CREATE_WALLET: "v1/wallet/new",
-  CHECK_BALANCE: "v1/wallet/check-balance",
+  CHECK_BALANCE: "v1/wallet/get-balance",
   GET_WALLET_DETAILS: "v1/wallet/get-wallet-details",
   SET_PIN: "v1/wallet/setpin",
   CHANGE_PIN: "v1/wallet/change-pin",
@@ -178,6 +178,7 @@ const urls = {
   SET_UPPER_LIMIT: "v1/wallet/setupperlimit",
   VALIDATE_ACCOUNT: "v1/wallet/validate-account",
   VALIDATE_BVN: "v1/wallet/verify-bvn",
+  CONFIRM_FUNDING: "v1/wallet/confirm-wallet-funding",
 
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",

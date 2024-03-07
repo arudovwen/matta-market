@@ -57,6 +57,7 @@
     @actionItem="() => (isErrorOpen = false)"
     @close="() => (isErrorOpen = false)"
   />
+  <RequestLoader :open="loader" />
 </template>
 <script setup>
 import { useForm } from "vee-validate";
@@ -64,36 +65,24 @@ import * as yup from "yup";
 import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
+import { confirmFunding } from "~/services/walletservice";
 
 const isErrorOpen = ref(false);
 const authstore = useAuthStore();
-const props = defineProps({
-  balance: {
-    default: 800,
-  },
-});
-
+const getLedgersTrans = inject("getLedgersTrans");
+const loader = ref(false);
 const stage = ref(1);
 const handleComplete = inject("handleComplete");
 const handleClose = inject("handleClose");
 
 const form = reactive({
-  balance: props.balance,
   amount: null,
 });
 const formSchema = yup.object().shape({
-  balance: yup.number(),
   amount: yup
     .number()
     .required("Amount is required")
-    .test("balance-validation", "Exceeded current balance", function (value) {
-      const balance = this.parent.balance;
 
-      if (value && balance) {
-        return value <= balance;
-      }
-      return true; // Return true if no validation needed
-    })
     .positive("Amount must be a positive number"),
 });
 
@@ -108,17 +97,33 @@ function onModalClose() {
   isErrorOpen.value = true;
 }
 function onSuccess(response) {
-  console.log("🚀 ~ onSuccess ~ response:", response)
-  handleComplete("Your funding request is being proceesed");
+  loader.value = true;
+  const data = {
+    amount: amount.value,
+    transactionReference: response.transactionReference,
+    paymentDescription: "Wallet Funding",
+  };
+
+  confirmFunding(data)
+    .then((res) => {
+      if (res.status === 200) {
+        getLedgersTrans();
+        handleComplete("Your funding request is being proceesed");
+        loader.value = false;
+      }
+    })
+    .catch((err) => {
+      isErrorOpen.value = true;
+      loader.value = false;
+    });
 }
 const onSubmit = handleSubmit((values) => {
-  console.log("🚀 ~ onSubmit ~ values:", values)
   const data = {
     email: authstore.userInfo?.email,
     name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
     amount: values.amount,
     phoneNumber: authstore.userInfo?.phoneNumber,
-    type: "Wallet funding",
+    type: "Wallet Funding",
   };
 
   payWithMonnify(data, onModalClose, onSuccess);

@@ -9,8 +9,6 @@
           ></span>
           <input
             v-model="queryParams.Search"
-            @change="getData()"
-            @keyup="debounceSearch"
             placeholder="Search"
             class="border border-[#E7E7E7] focus:pr-3 pl-10 rounded-lg w-full lg:w-[280px] text-sm focus:outline-none py-[10px] transition ease-in-out duration-300"
             type="search"
@@ -18,7 +16,7 @@
         </div>
         <div class="flex relative items-center">
           <select
-            v-model="queryParams.Status"
+            v-model="queryParams.Type"
             class="appearance-none border border-[#E7E7E7] rounded-lg w-[150px] text-sm py-[10px] px-[14px] focus:outline-matta-black/20"
           >
             <option value="" disabled>Filter</option>
@@ -78,16 +76,29 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ moment(item.transactionDate).format("ll") }}
+                  {{ moment(item.transactionDate).format("lll") }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ LedgerAction[item.legerAction] }}
+                  <AppStatusButton
+                    stattype="wallet"
+                    :status="item.legerAction"
+                  />
                 </td>
               </tr>
             </tbody>
           </table>
+          <div class="p-5">
+            <PaginationSimple
+              v-if="tdata.length"
+              :total="queryParams.totalCount"
+              :current="queryParams.PageNumber"
+              :per-page="queryParams.PageSize"
+              :pageRange="5"
+              @page-changed="queryParams.PageNumber = $event"
+            />
+          </div>
           <EmptyData
             type="transaction"
             v-if="!tdata.length"
@@ -105,34 +116,34 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { reactive, ref } from "vue";
-import { getLedgerTransactions } from "~/services/walletservice";
 import moment from "moment";
+import debounce from "lodash/debounce";
 
-const route = useRoute();
-const type = ref("1");
 const theads = ["reference", "amount", "date", "type"];
-const tdata = ref([]);
-const isEmpty = ref(true);
-const isPageLoading = ref(false);
+const tdata = inject("tdata");
+const isPageLoading = inject("isPageLoading");
 // eslint-disable-next-line no-unused-vars
-const queryParams = reactive({
-  Status: "",
-  Role: "",
-  PageSize: 10,
-  PageNumber: 1,
-  pagecount: 0,
-  totalCount: 0,
-  Search: "",
-});
+const queryParams = inject("queryParams");
+const getLedgersTrans = inject("getLedgersTrans");
 onMounted(() => {
-  getLedgerTransactions(queryParams).then((res) => {
-    if (res.status === 200) {
-      console.log("🚀 ~ getLedgerTransactions ~ res:", res.data.data);
-      tdata.value = res.data.data;
-    }
-  });
+  getLedgersTrans();
 });
+
+const debounceSearch = debounce(() => {
+  getLedgersTrans();
+}, 1000);
+watch(
+  () => queryParams.Search,
+  () => {
+    debounceSearch();
+  }
+);
+watch(
+  () => [queryParams.Type, queryParams.PageNumber],
+  () => {
+    getLedgersTrans();
+  }
+);
 </script>
 
 <style lang="scss" scoped>

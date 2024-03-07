@@ -67,6 +67,9 @@ export const setWarningLimit = (data) => {
 export const verifyBvn = (data) => {
   return post(`${urls.VALIDATE_BVN}`, data, config);
 };
+export const confirmFunding = (data) => {
+  return post(`${urls.CONFIRM_FUNDING}`, data, config);
+};
 export const validateAccount = (data) => {
   return post(`${urls.VALIDATE_ACCOUNT}`, data, config);
 };

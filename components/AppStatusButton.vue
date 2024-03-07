@@ -131,6 +131,18 @@ const PaymentStatus = {
   },
 };
 
+const WalletStatus = {
+  1: {
+    text: "Account Funding",
+    className: StatusClass[1],
+  },
+  0: {
+    text: "Withdrawal",
+    className: StatusClass[4],
+  },
+};
+
+
 const Stats = computed(() => {
   if (props.stattype === "order") {
     return OrderStatusText;
@@ -140,6 +152,9 @@ const Stats = computed(() => {
   }
   if (props.stattype === "payment") {
     return PaymentStatus;
+  }
+  if (props.stattype === "wallet") {
+    return WalletStatus;
   }
   return StatusText;
 });

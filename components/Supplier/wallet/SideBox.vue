@@ -9,7 +9,7 @@
       >
         <span class="flex items-center justify-between text-white">
           <span class="text-lg font-semibold">{{
-            currencyFormat(details?.walletBalance)
+            currencyFormat(balance)
           }}</span>
           <span></span> <img src="/images/pass.svg"
         /></span>
@@ -80,10 +80,11 @@
   <IndexModal :isOpen="isOpen" @togglePopup="handleClose">
     <template #content>
       <div class="max-w-[800px]">
-        <SupplierWalletModalsTopUp v-if="isTopup" :balance="700" />
+        <SupplierWalletModalsTopUp v-if="isTopup" />
         <SupplierWalletModalsWithdrawalModal
           v-if="isWithdraw"
           :hasSettlement="hasSettlement"
+          :balance="balance"
         />
         <SupplierWalletModalsCreateWallet
           :hasSettlement="hasSettlement"
@@ -105,10 +106,12 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { getWalletDetails, getWalletBalance } from "~/services/walletservice";
+import { getWalletDetails } from "~/services/walletservice";
 import { viewSettlement } from "~/services/settlementservice";
 
+const balance = inject("balance");
 const authStore = useAuthStore();
+const getLedgersTrans = inject("getLedgersTrans");
 const completeText = ref("Your withdrawal request is being processed.");
 const data = ref(null);
 const isSuccessOpen = ref(false);
@@ -161,20 +164,11 @@ function handleWalletCreation() {
   handleClose();
   handleWalletDetails();
 }
-function confirmOrder() {
-  data.value = {
-    email: authstore.userInfo?.email,
-    name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
-    amount: 0,
-    phoneNumber: authstore.userInfo?.phoneNumber,
-  };
 
-  payWithMonnify(data.value, onModalClose, onSuccess);
-}
 function handleWalletDetails() {
-  getWalletBalance();
   getWalletDetails()
     .then((res) => {
+      
       details.value = res.data.data;
       hasWallet.value = true;
       isLoading.value = false;
@@ -197,6 +191,7 @@ onMounted(() => {
   handleWalletDetails();
   checkSettlement();
 });
+
 provide("handleComplete", handleComplete);
 provide("handleClose", handleClose);
 provide("details", details);
