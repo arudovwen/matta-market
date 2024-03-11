@@ -97,7 +97,7 @@ const urls = {
   GET_CART: "/v1/shoppingcart/get-cart",
   REMOVE_CART: "/v1/shoppingcart/remove-cartitem",
   CONFIRM_PURCHASE: "/v1/shoppingcart/confirm-purchase",
-  CONFIRM_PAYMENT: "v1/shoppingcart/confirm-payment",
+  CONFIRM_PAYMENT: "v1/ShoppingCart/confirm-payment",
 
   //Shipping address
   ADD_SHIPPING_ADDRESS: "/v1/shippingaddress/add",

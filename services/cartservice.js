@@ -48,5 +48,5 @@ export async function confirmpurchase(data) {
   return await post(`${urls.CONFIRM_PURCHASE}`, data, config);
 }
 export async function confirmpayment(data) {
-  return await post(`${urls.CONFIRM_PAYMENT}/${data.orderId}`, data, config);
+  return await post(`${urls.CONFIRM_PAYMENT}?orderId=${data.orderId}`, data, config);
 }
