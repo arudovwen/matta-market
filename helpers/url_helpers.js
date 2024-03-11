@@ -36,7 +36,7 @@ const urls = {
   DELETE_PRODUCT: "/v1/product/deleteproduct",
   GET_PRODUCTS_BY_TAG: "v1/marketplace/get-products-bytags",
   GET_STORE_INFO: "v1/marketplace/get-store",
-  
+
   //Markets
   GET_MARKETS: "/v1/marketplace/getmarkets",
   GET_MARKET_MENU: "/v1/marketplace/getmarkets-menu",
@@ -179,6 +179,7 @@ const urls = {
   VALIDATE_ACCOUNT: "v1/wallet/validate-account",
   VALIDATE_BVN: "v1/wallet/verify-bvn",
   CONFIRM_FUNDING: "v1/wallet/confirm-wallet-funding",
+  WITHDRAW_FUNDS: "v1/wallet/withdraw",
 
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",
@@ -217,6 +218,6 @@ const urls = {
   UPDATE_SETTLEMENT: "v1/settlement/update-settlement-account",
   DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",
   GET_BANKS: "v1/bank/get-bank",
-  GET_LEDGER_TRANSACTIONS: "v1/ledger/get-all"
+  GET_LEDGER_TRANSACTIONS: "v1/ledger/get-all",
 };
 export default urls;

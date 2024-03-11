@@ -73,6 +73,9 @@ export const confirmFunding = (data) => {
 export const validateAccount = (data) => {
   return post(`${urls.VALIDATE_ACCOUNT}`, data, config);
 };
+export const withdrawFunds = (data) => {
+  return post(`${urls.WITHDRAW_FUNDS}`, data, config);
+};
 
 export const getLedgerTransactions = (data) => {
   return get(`${urls.GET_LEDGER_TRANSACTIONS}?${new URLSearchParams(cleanObject(data))}`, config);

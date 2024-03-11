@@ -84,14 +84,13 @@ const { handleSubmit, defineField, errors, setFieldValue } = useForm({
   },
 });
 
-const [amountRequired, amountRequiredAtt] = defineField("amountRequired");
-const [tenor, tenorAtt] = defineField("tenor");
+const [amountRequired] = defineField("amountRequired");
+const [tenor] = defineField("tenor");
 const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField(
   "whereDidYouHearAboutUs"
 );
 
 const onSubmit = handleSubmit((values) => {
-  console.log("🚀 ~ onSubmit ~ values:", values);
   formData.amountRequired = values.amountRequired;
   formData.tenor = values.tenor;
   formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs;

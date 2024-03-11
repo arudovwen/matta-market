@@ -6,18 +6,18 @@
       <div class="grid gap-x-[25px] gap-y-4 mb-[50px]">
         <FormGroup
           label="How much do you require?"
-          :error="errors.amount"
-          name="amount"
+          :error="errors.withdrawalAmount"
+          name="withdrawalAmount"
           classLabel="!normal-case"
         >
           <div class="flex items-center">
             <CurrencyInput
               min="1"
               :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-                errors.amount ? 'border-red-500' : 'border-[#D0D5DD]'
+                errors.withdrawalAmount ? 'border-red-500' : 'border-[#D0D5DD]'
               }`"
               placeholder="Amount"
-              v-model="amount"
+              v-model="withdrawalAmount"
               :options="{
                 currency: 'ngn',
                 currencyDisplay: 'hidden',
@@ -47,6 +47,17 @@
       <OTP />
     </div>
   </div>
+  <ActionModal
+    :open="isErrorOpen"
+    type="reject"
+    title="Request Failed"
+    :text="errorText"
+    btnText="Retry"
+    :isCancel="false"
+    @actionItem="() => (isErrorOpen = false)"
+    @close="() => (isErrorOpen = false)"
+  />
+  <RequestLoader :open="isLoading" />
 </template>
 <script setup>
 import { useForm } from "vee-validate";
@@ -55,7 +66,12 @@ import { getBanks } from "~/services/settlementservice";
 import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
+import { withdrawFunds } from "~/services/walletservice";
 
+const banks = ref([]);
+const isErrorOpen = ref(false);
+const settlements = inject("settlements");
+const errorText = ref("Wallet creation request failed");
 const props = defineProps({
   balance: {
     default: 800,
@@ -66,17 +82,33 @@ const props = defineProps({
 });
 
 const stage = ref(1);
-const handleWithdraw = inject("handleWithdraw");
 const handleClose = inject("handleClose");
-
+const defaultsettlement = computed(() => {
+  const tempValue = settlements.value.find((i) => i.isPrimaryAccount);
+  return tempValue ? tempValue : settlements.value[0];
+});
 const form = reactive({
-  amount: null,
+  withdrawalAmount: null,
+  narration: "withdraw",
   balance: props.balance,
+  accountNumber: defaultsettlement.value?.accountNumber,
+  currency: "NGN",
+  bankCode: "",
+});
+onMounted(() => {
+  getBanks().then((res) => {
+    if (res.status === 200) {
+      banks.value = res.data.data.responseBody.map((i) => ({
+        label: i.name,
+        value: i.code.toString(),
+      }));
+    }
+  });
 });
 const formSchema = yup.object().shape({
   balance: yup.number(),
 
-  amount: yup
+  withdrawalAmount: yup
     .number()
     .required("Amount is required")
     .test("balance-validation", "Exceeded current balance", function (value) {
@@ -91,18 +123,38 @@ const formSchema = yup.object().shape({
 });
 
 const isLoading = ref(false);
-const { handleSubmit, defineField, errors} =
-  useForm({
-    validationSchema: formSchema,
-    initialValues: form,
-  });
-
-const [amount] = defineField("amount");
-
-const onSubmit = handleSubmit((values) => {
-  handleWithdraw();
+const { handleSubmit, defineField, errors, setFieldValue } = useForm({
+  validationSchema: formSchema,
+  initialValues: form,
 });
 
+const [withdrawalAmount] = defineField("withdrawalAmount");
+const handleComplete = inject("handleComplete");
+const onSubmit = handleSubmit((values) => {
+  isLoading.value = true;
+  withdrawFunds(values)
+    .then((res) => {
+      if (res.status === 200) {
+        handleComplete("Your withdraw request is being processed");
+      }
+    })
+    .catch((err) => {
+      errorText.value =
+        err.response.data.message ||
+        JSON.parse(err.response.data.Message)?.responseMessage ||
+        "Wallet creation request failed";
+      isErrorOpen.value = true;
+      isLoading.value = false;
+    });
+});
+watch(banks, () => {
+  if (banks.value.length) {
+    const bankCode = banks.value.find(
+      (i) => i.label === defaultsettlement.value?.bankName
+    );
+    setFieldValue("bankCode", bankCode.value);
+  }
+});
 </script>
 
 <style lang="scss" scoped>

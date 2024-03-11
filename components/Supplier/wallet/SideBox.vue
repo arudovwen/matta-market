@@ -25,7 +25,7 @@
         @click="
           () => {
             handleClose();
-            !hasWallet
+            hasWallet
               ? (isCreatingWallet = isOpen = true)
               : (isWithdraw = isOpen = true);
           }
@@ -112,6 +112,7 @@ import { viewSettlement } from "~/services/settlementservice";
 const balance = inject("balance");
 const authStore = useAuthStore();
 const getLedgersTrans = inject("getLedgersTrans");
+const settlements = ref([]);
 const completeText = ref("Your withdrawal request is being processed.");
 const data = ref(null);
 const isSuccessOpen = ref(false);
@@ -168,7 +169,6 @@ function handleWalletCreation() {
 function handleWalletDetails() {
   getWalletDetails()
     .then((res) => {
-      
       details.value = res.data.data;
       hasWallet.value = true;
       isLoading.value = false;
@@ -182,6 +182,7 @@ function checkSettlement() {
   viewSettlement().then((res) => {
     if (res.status && res.data.data.length > 0) {
       hasSettlement.value = true;
+      settlements.value = res.data.data;
     } else {
       hasSettlement.value = false;
     }
@@ -195,4 +196,5 @@ onMounted(() => {
 provide("handleComplete", handleComplete);
 provide("handleClose", handleClose);
 provide("details", details);
+provide("settlements", settlements);
 </script>

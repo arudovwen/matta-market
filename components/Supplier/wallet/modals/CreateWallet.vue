@@ -38,7 +38,12 @@
           />
         </div>
 
-        <FormGroup label="Bank" :error="errors.bankCode" name="bankCode">
+        <FormGroup
+          v-if="!hasSettlement"
+          label="Bank"
+          :error="errors.bankCode"
+          name="bankCode"
+        >
           <SelectVueSelect
             v-model="bankCode"
             :disabled="loadingBanks"
@@ -50,7 +55,7 @@
             }`"
           />
         </FormGroup>
-        <div class="">
+        <div class="" v-if="!hasSettlement">
           <Textinput
             placeholder="Account number"
             label="Account number"
@@ -60,7 +65,7 @@
             :error="errors.accountNumber"
           />
         </div>
-        <div class="" v-if="form.accountName">
+        <div class="" v-if="form.accountName && !hasSettlement">
           <Textinput
             placeholder="Account name"
             label="Account name"
@@ -98,6 +103,7 @@
     @actionItem="() => (isErrorOpen = false)"
     @close="() => (isErrorOpen = false)"
   />
+  <RequestLoader :open="isLoading" />
 </template>
 <script setup>
 import { validateAccount, createWallet } from "~/services/walletservice";
@@ -116,12 +122,6 @@ const handleClose = inject("handleClose");
 const authStore = useAuthStore();
 const isErrorOpen = ref(false);
 const errorText = ref("Wallet creation request failed");
-const options = [
-  {
-    label: "Access bank",
-    value: "access bank",
-  },
-];
 const defaultCustomerName = `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`;
 const defaultCustomerEmail = authStore.userInfo?.email;
 const banks = ref([]);
@@ -137,35 +137,44 @@ const form = reactive({
     bvnDateOfBirth: "",
   },
   customerEmail: defaultCustomerEmail,
+  hasSettlement: null,
 });
 const formSchema = yup.object().shape({
-  bankCode: yup.string().required("Bank name is required"),
-  accountNumber: yup
-    .string()
-    .matches(/^\d{10}$/, "Account number must be 10 digits")
-    .test("test-account", "Invalid account number", function (value) {
-      const { bankCode } = this.parent || {}; // Destructure bankCode safely
-      if (value && value.length === 10 && bankCode) {
-        return validateAccount({
-          bankCode: bankCode,
-          accountNumber: value,
+  bankCode: yup.string().when("hasSettlement", {
+    is: false,
+    then: (schema) => schema.required("Bank name is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  accountNumber: yup.string().when("hasSettlement", {
+    is: false,
+    then: (schema) =>
+      schema
+        .matches(/^\d{10}$/, "Account number must be 10 digits")
+        .test("test-account", "Invalid account number", function (value) {
+          const { bankCode } = this.parent || {}; // Destructure bankCode safely
+          if (value && value.length === 10 && bankCode) {
+            return validateAccount({
+              bankCode: bankCode,
+              accountNumber: value,
+            })
+              .then((res) => {
+                form.accountName = res.data.data.responseBody.accountName;
+                return true; // Resolve the promise if validation is successful
+              })
+              .catch((err) => {
+                throw new yup.ValidationError(
+                  "Invalid account number",
+                  null,
+                  "accountNumber"
+                );
+              });
+          } else {
+            return true; // Return true if the length is not 10 or bankCode is missing
+          }
         })
-          .then((res) => {
-            form.accountName = res.data.data.responseBody.accountName;
-            return true; // Resolve the promise if validation is successful
-          })
-          .catch((err) => {
-            throw new yup.ValidationError(
-              "Invalid account number",
-              null,
-              "accountNumber"
-            );
-          });
-      } else {
-        return true; // Return true if the length is not 10 or bankCode is missing
-      }
-    })
-    .required("Account number is required"),
+        .required("Account number is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   customerName: yup.string().required("Customer name is required"),
   bvnDetails: yup.object().shape({
     bvn: yup
@@ -184,11 +193,10 @@ const formSchema = yup.object().shape({
 const isLoading = ref(false);
 const { handleSubmit, defineField, errors, setFieldError } = useForm({
   validationSchema: formSchema,
-  initialValues: form,
+  initialValues: { ...form, hasSettlement: props.hasSettlement },
 });
 
 const [bankCode] = defineField("bankCode");
-const [accountName] = defineField("accountName");
 const [accountNumber, accountNumberAtt] = defineField("accountNumber");
 const [bvn, bvnAtt] = defineField("bvnDetails.bvn");
 const [bvnDateOfBirth, bvnDateOfBirthAtt] = defineField(
@@ -209,7 +217,7 @@ onMounted(() => {
 });
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  if (!props.hasWallet) {
+  if (!props.hasSettlement) {
     addSettlement({ ...values, isPrimaryAccount: true });
   }
 
@@ -226,7 +234,7 @@ const onSubmit = handleSubmit((values) => {
     .catch((err) => {
       errorText.value =
         err.response.data.message ||
-        err.response.data.Message ||
+        JSON.parse(err.response.data.Message)?.responseMessage ||
         "Wallet creation request failed";
       isErrorOpen.value = true;
       isLoading.value = false;
