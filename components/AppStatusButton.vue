@@ -90,12 +90,12 @@ const FinanceStatusText = {
     className: StatusClass[1],
   },
 
-  2: {
+  3: {
     text: "Rejected",
     className: StatusClass[4],
   },
-  3: {
-    text: "Requested",
+  2: {
+    text: "Disbursed",
     className: StatusClass[5],
   },
   4: {

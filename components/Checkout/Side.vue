@@ -74,7 +74,7 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { confirmpurchase } from "~/services/cartservice";
+import { confirmpurchase,confirmpayment } from "~/services/cartservice";
 
 const cartTaxAmount = computed(
   () => cartStore?.cartTotalAmount * cartStore?.tax + cartStore?.cartTotalAmount
@@ -114,6 +114,7 @@ function confirmOrder() {
     .then((res) => {
       if (res.status === 200) {
         console.log("🚀 ~ .then ~ res:", res);
+        makePayment(res.data.data)
       }
     })
     .catch((err) => {
@@ -127,7 +128,7 @@ function confirmOrder() {
 }
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
-    confirmpurchase({ shippingAddressId: data.value.shippingAddressId })
+    confirmpayment({ orderId: data.value.reference })
       .then((res) => {
         if (res.status === 200) {
           cartStore?.clearCart;
