@@ -14,7 +14,7 @@
           <Profile v-if="active === 'profile'" />
           <Notifications v-if="active === 'notifications'" />
           <Password v-if="active === 'password'" />
-          <Settlements v-if="active === 'settlements'" />
+          <Settlements v-if="active === 'bank accounts'" />
         </div>
       </div>
     </div>
@@ -47,8 +47,8 @@ const tabs = [
   //   key: "notifications",
   // },
   {
-    title: "settlements",
-    key: "settlements",
+    title: "bank accounts",
+    key: "bank accounts",
   },
 ];
 

@@ -126,7 +126,7 @@
                       :id="`${item.productName}+option`"
                       class="outline-none"
                     >
-                       <AppIcon icon="heroicons:ellipsis-vertical-solid" />
+                      <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                     </MenuButton>
                     <MenuItems
                       class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
@@ -139,6 +139,7 @@
                       </div>
 
                       <NuxtLink
+                        v-if="item.financeRequestStatus === 0"
                         :to="`/financing/requests/${handleType(
                           item.loanRequestType
                         )}/${item.loanRequestType}/${item.id}`"
@@ -150,6 +151,7 @@
                         </div>
                       </NuxtLink>
                       <div
+                        v-if="item.financeRequestStatus === 0"
                         @click="withdrawRequest(item.id)"
                         class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
                       >
@@ -186,6 +188,7 @@
     text="Are you sure you want to withdraw this application? This action cannot be undone."
     :open="open"
     btnText="Withdraw request"
+    :loading="loading"
   />
   <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #content>
@@ -199,13 +202,14 @@
 import AppIcon from "@/components/AppIcon";
 import moment from "moment";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-import { getAllFinance } from "~/services/financeservice";
+import { getAllFinance, withdrawFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";
 import { toast } from "vue3-toastify";
 
 const id = ref(null);
 const open = ref(false);
 const isOpen = ref(false);
+const loading = ref(false);
 const detail = ref(null);
 const authStore = useAuthStore();
 
@@ -285,12 +289,23 @@ const debounceSearch = debounce(() => {
   getFinanceData();
 }, 800);
 const handleDelete = () => {
-  withdrawFinance(id.value).then((res) => {
-    if (res.status === 200) {
-      getFinanceData();
-      toast.success("Request withdrawn");
-    }
-  });
+  loading.value = true;
+  withdrawFinance(id.value)
+    .then((res) => {
+      if (res.status === 200) {
+        open.value = false;
+        getFinanceData();
+        toast.success("Request withdrawn");
+        loading.value = false;
+      }
+    })
+    .catch((err) => {
+      toast.error(
+        err.response.data.message ||
+          err.response.data.message ||
+          "Withdraw request failed"
+      );
+    });
 };
 watch(
   () => [queryParams.Search],

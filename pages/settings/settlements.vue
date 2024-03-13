@@ -7,7 +7,7 @@
         <div class="mb-8">
           <AppButton
             @click="isOpen = true"
-            text="Add settlement account"
+            text="Add account"
             icon="humbleicons:plus"
             :btnClass="`!px-[10px] md:!px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm !rounded-lg`"
           />
@@ -27,7 +27,11 @@
             </thead>
 
             <tbody>
-              <tr v-for="item in financeData" :key="item">
+              <tr
+                v-for="item in financeData"
+                :key="item"
+                class="border-b border-[#EAECF0]"
+              >
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
@@ -47,7 +51,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap max-w-[260px] truncate"
                 >
-                  {{ item.isPrimaryAccount ? "Primary" : "-" }}
+                  {{ item.isPrimaryAccount ? "Settlement" : "-" }}
                 </td>
 
                 <td
@@ -108,12 +112,14 @@
       </div>
     </div>
     <div class="max-w-[252px]">
-      <FormGroup
-        label="How do you want to get your earnings"
-        name="earings"
-        class="mb-6"
-      >
-        <Checkbox label="Auto settlement" v-model="isAutoSettlement" />
+      <FormGroup label="" name="earings" class="mb-6">
+        <Checkbox
+          :label="`${
+            !isAutoSettlement ? 'Activate' : 'Deactivate'
+          } auto settlement`"
+          v-model="isAutoSettlement"
+          labelClass="noraml-case"
+        />
       </FormGroup>
     </div>
   </div>
@@ -145,7 +151,7 @@
 
   <ActionModal
     :open="isSuccessOpen"
-    type="success"
+    type="approve"
     title="Account deleted Succesfully"
     btnText="Okay"
     :isCancel="false"

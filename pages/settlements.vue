@@ -153,7 +153,7 @@ definePageMeta({
 });
 import AppIcon from "@/components/AppIcon";
 import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
-import { getAllFinance } from "~/services/financeservice";
+import { getAllFinance, withdrawFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";
 import { toast } from "vue3-toastify";
 

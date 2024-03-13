@@ -42,11 +42,11 @@
         class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
       >
         <Checkbox
-          label="Set as primary account"
+          label="Set as settlement account"
           labelClass="text-xs md:text-sm"
           v-model="isPrimaryAccount"
           v-bind="isPrimaryAccountAtt"
-          :checked="isPrimaryAccount"
+   
         />
       </div>
 

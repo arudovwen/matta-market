@@ -25,7 +25,7 @@ export const editFinance = (data) => {
   return put(`${urls.EDIT_FINANCE}/${data.id}`, data, config);
 };
 export const withdrawFinance = (data) => {
-  return del(`${urls.WITHDRAW_FINANCE}?id=${data}`, data, config);
+  return put(`${urls.WITHDRAW_FINANCE}/${data}`, data, config);
 };
 
 export const updateApproval = (data) => {

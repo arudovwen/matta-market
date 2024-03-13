@@ -21,8 +21,8 @@
           >
             <option value="" disabled>Filter</option>
             <option value="">Default</option>
-            <option value="0">Credit</option>
-            <option value="1">Debit</option>
+            <option value="1">Credit</option>
+            <option value="0">Debit</option>
           </select>
           <i
             class="uil uil-angle-down absolute right-2 pointer-events-none"
