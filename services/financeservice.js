@@ -28,6 +28,6 @@ export const withdrawFinance = (data) => {
   return put(`${urls.WITHDRAW_FINANCE}/${data}`, data, config);
 };
 
-export const updateApproval = (data) => {
+export const updateFinanceStatus = (data) => {
   return post(`${urls.UPDATE_APPROVE_FINANCE}`, data, config);
 };

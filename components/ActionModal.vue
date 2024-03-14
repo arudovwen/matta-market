@@ -76,7 +76,7 @@
                     </div>
                   </div>
 
-                  <div class="flex flex-col gap-y-4 items-center mt-6">
+                  <div class="flex gap-x-4 items-center mt-6">
                     <button
                       v-if="isCancel"
                       type="button"

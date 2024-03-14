@@ -183,27 +183,34 @@ function handleChange(id, value) {
 }
 
 const onSubmit = handleSubmit((values) => {
+  isLoading.value = true;
   updateCompanyProfile(values)
     .then((res) => {
       if (res.status === 200) {
         formData.kyb.companyDocuments.some((i) => i.url) &&
           updateDocuments({
             companyDocuments: formData.kyb.companyDocuments,
-          }).catch((err) => {
-            toast.error(
-              err.response.data.message ||
-                err.response.data.Message ||
-                "Soemthing went wrong, try again later"
-            );
-          });
+          })
+            .then((res) => {
+              isLoading.value = false;
+            })
+            .catch((err) => {
+              isLoading.value = false;
+              toast.error(
+                err.response.data.message ||
+                  err.response.data.Message ||
+                  "Something went wrong, try again later"
+              );
+            });
         active.value = 3;
       }
     })
     .catch((err) => {
+      isLoading.value = false;
       toast.error(
         err.response.data.message ||
           err.response.data.Message ||
-          "Soemthing went wrong, try again later"
+          "Something went wrong, try again later"
       );
     });
 

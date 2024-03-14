@@ -39,8 +39,8 @@ const route = useRoute();
 const { financeId, type, id } = route.params;
 const authStore = useAuthStore();
 const formData = reactive({
-  amountRequired: 0,
-  tenor: 0,
+  amountRequired: null,
+  tenor: null,
   whereDidYouHearAboutUs: "",
 
   supportingDocuments: [
@@ -141,7 +141,6 @@ const tabs = [
     value: 2,
   },
 
- 
   {
     name: "Directors",
     value: 3,
@@ -169,13 +168,14 @@ onMounted(() => {
   getFinanceData();
 });
 function getFinanceData() {
+  if (!financeId) return;
   getFinance(financeId)
     .then((res) => {
       if (res.status === 200) {
         formData.amountRequired = res.data.data.amountRequired;
         formData.tenor = res.data.data.tenor;
         formData.whereDidYouHearAboutUs = res.data.data.whereDidYouHearAboutUs;
-        formData.supportingDocuments = res.data.data.supportingDocuments
+        formData.supportingDocuments = res.data.data.supportingDocuments;
         formData.haveyoudonebusiness = res.data.data.haveyoudonebusiness;
         formData.haveyouexportedtotheothercourty =
           res.data.data.haveyouexportedtotheothercourty;

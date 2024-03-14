@@ -87,7 +87,6 @@
                   {{ item.financeRequestNo }}
                 </td>
                 <td
-                  :class="item.status == 3 ? 'opacity-25' : ''"
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
                 >
                   {{ item.customer || "-" }}
@@ -103,10 +102,18 @@
                   {{ moment(item.created).format("ll") }}
                 </td>
                 <td
-                  :class="item.status == 3 ? 'opacity-25' : ''"
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
                 >
                   {{ currencyFormat(item.amountRequired) }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+                >
+                  {{
+                    !item.financeRequestStatus
+                      ? "-"
+                      : currencyFormat(item.amountApproved)
+                  }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
@@ -118,7 +125,6 @@
                 </td>
 
                 <td
-                  :class="item.status == 3 ? 'opacity-25' : ''"
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
                   <Menu class="relative" as="div">
@@ -136,6 +142,13 @@
                         @click="openRequest(item)"
                       >
                         View request
+                      </div>
+                      <div
+                        v-if="item.financeRequestStatus === 1"
+                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                        @click="openLoan(item)"
+                      >
+                        View loan offer
                       </div>
 
                       <NuxtLink
@@ -197,6 +210,17 @@
       </div>
     </template>
   </SideModal>
+  <IndexModal
+    :isOpen="isLoanOpen"
+    @togglePopup="isLoanOpen = false"
+    v-if="isLoanOpen"
+  >
+    <template #content>
+      <div class="h-full w-full bg-white rounded-lg p-6">
+        <FinanceLoanUpdate v-if="detail" :detail="detail" @refresh="refresh" />
+      </div>
+    </template>
+  </IndexModal>
 </template>
 <script setup>
 import AppIcon from "@/components/AppIcon";
@@ -205,11 +229,14 @@ import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { getAllFinance, withdrawFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";
 import { toast } from "vue3-toastify";
+import CardDetail from "~/components/payments/CardDetail.vue";
 
+const type = ref(null);
 const id = ref(null);
 const open = ref(false);
 const isOpen = ref(false);
 const loading = ref(false);
+const isLoanOpen = ref(false);
 const detail = ref(null);
 const authStore = useAuthStore();
 
@@ -218,7 +245,8 @@ const theads = [
   "customer name",
   "financing type",
   "created",
-  "amount",
+  "requested amount",
+  "approved amount",
   "status",
   "",
 ];
@@ -249,7 +277,11 @@ function getFinanceData() {
     docLoading.value = false;
   });
 }
-
+function refresh() {
+  getFinanceData();
+  isOpen.value = isLoanOpen.value = false;
+  detail.value = null;
+}
 function handleType(key) {
   switch (parseInt(key)) {
     case 0:
@@ -270,10 +302,10 @@ function handleType(key) {
   }
 }
 const handleRouting = (url) => {
-  if (!authStore.userInfo.onboardingPageStatus) {
-    toast.info("Complete your KYB before you proceed");
-    return `/company/settings?redirected_from=${url}`;
-  }
+  // if (!authStore.userInfo.onboardingPageStatus) {
+  //   toast.info("Complete your KYB before you proceed");
+  //   return `/company/settings?redirected_from=${url}`;
+  // }
   return url;
 };
 function withdrawRequest(value) {
@@ -282,8 +314,14 @@ function withdrawRequest(value) {
 }
 const document = ref({});
 function openRequest(val) {
+  type.value = "detail";
   detail.value = val;
   isOpen.value = true;
+}
+function openLoan(val) {
+  type.value = "update";
+  detail.value = val;
+  isLoanOpen.value = true;
 }
 const debounceSearch = debounce(() => {
   getFinanceData();
