@@ -82,7 +82,7 @@
                           icon="fluent:star-28-regular"
                           class="text-yellow-600"
                         />
-                        Set as primary
+                        Set as settlement
                       </div>
 
                       <div
