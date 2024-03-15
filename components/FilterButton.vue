@@ -60,6 +60,7 @@ onMounted(() => {
   }
 });
 watch(selectedoption, () => {
-  emit("update:modelValue", selectedoption.value);
+  emit("update:modelValue", selectedoption.value.value);
 });
+ 
 </script>

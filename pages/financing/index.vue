@@ -1,6 +1,6 @@
 <template>
   <div
-    class="gap-y-2 flex flex-col bg-white rounded-[10px] border border-[#F4F7FE] pb-10"
+    class="gap-y-2 flex flex-col bg-white rounded-[10px] border border-[#F4F7FE]"
   >
     <!-- Top bar   -->
 
@@ -43,7 +43,7 @@
       </template>
     </HeaderComponent>
     <div class="pt-5">
-      <div v-if="!docLoading">
+      <div>
         <div class="flex justify-between items-center mb-8">
           <div class="flex gap-x-4 px-6">
             <div class="relative flex items-center">
@@ -60,12 +60,12 @@
               />
             </div>
             <FilterButton
-              v-model="queryParams.Type"
+              v-model="queryParams.LoadRequestType"
               :options="FinancesOptions"
             />
           </div>
         </div>
-        <div v-if="financeData?.length">
+        <div v-if="!docLoading && financeData?.length">
           <table class="w-full">
             <thead>
               <tr>
@@ -120,7 +120,7 @@
                 >
                   <AppStatusButton
                     :status="item.financeRequestStatus"
-                    type="verdict"
+                    stattype="finance"
                   />
                 </td>
 
@@ -177,13 +177,13 @@
             </tbody>
           </table>
         </div>
-        <EmptyData v-else title="No request available" />
+        <EmptyData v-if="!docLoading && !financeData?.length" title="No request available" />
       </div>
       <div class="text-center p-6 lg:p-8 my-20" v-if="docLoading">
         <AppLoader />
       </div>
 
-      <div class="p-5" v-if="financeData.length">
+      <div class="p-5" v-if="queryParams.totalCount > queryParams.PageSize">
         <PaginationSimple
           :total="queryParams.totalCount"
           :current="queryParams.PageNumber"
@@ -352,7 +352,7 @@ watch(
   }
 );
 watch(
-  () => [queryParams.PageNumber, queryParams.SortOrder],
+  () => [queryParams.PageNumber, queryParams.SortOrder, queryParams.LoadRequestType, queryParams.RequestStatus],
   () => {
     getFinanceData();
   }

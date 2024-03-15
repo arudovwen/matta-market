@@ -46,10 +46,10 @@
         >
           <SelectVueSelect
             v-model="bankCode"
-            :disabled="loadingBanks"
+            :disabled="!banks.length"
             :options="banks"
             :reduce="(bank) => bank.value"
-            :placeholder="loadingBanks ? 'Fetching list' : 'Select bank'"
+            :placeholder="!banks.length ? 'Fetching list' : 'Select bank'"
             :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
               errors.bankCode ? 'border-red-500' : 'border-[#D0D5DD]'
             }`"
@@ -110,7 +110,7 @@ import { validateAccount, createWallet } from "~/services/walletservice";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { ref, reactive, inject } from "vue";
-import { getBanks, addSettlement } from "~/services/settlementservice";
+import { addSettlement } from "~/services/settlementservice";
 
 const props = defineProps({
   hasSettlement: {
@@ -118,6 +118,9 @@ const props = defineProps({
   },
   type: {
     default: "",
+  },
+  banks: {
+    default: () => [],
   },
 });
 const handleComplete = inject("handleComplete");
@@ -127,8 +130,6 @@ const isErrorOpen = ref(false);
 const errorText = ref("Wallet creation request failed");
 const defaultCustomerName = `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`;
 const defaultCustomerEmail = authStore.userInfo?.email;
-const banks = ref([]);
-const loadingBanks = ref(false);
 // Define form structure
 const form = reactive({
   accountName: "",
@@ -206,18 +207,7 @@ const [bvnDateOfBirth, bvnDateOfBirthAtt] = defineField(
   "bvnDetails.bvnDateOfBirth"
 );
 
-onMounted(() => {
-  loadingBanks.value = true;
-  getBanks().then((res) => {
-    if (res.status === 200) {
-      loadingBanks.value = false;
-      banks.value = res.data.data.responseBody.map((i) => ({
-        label: i.name,
-        value: i.code.toString(),
-      }));
-    }
-  });
-});
+
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
   if (!props.hasSettlement) {

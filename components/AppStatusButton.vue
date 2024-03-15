@@ -86,38 +86,27 @@ const FinanceStatusText = {
     className: StatusClass[0],
   },
   1: {
-    text: "Approved",
+    text: "Request approved",
     className: StatusClass[1],
   },
 
-  3: {
-    text: "Rejected",
-    className: StatusClass[4],
-  },
   2: {
-    text: "Disbursed",
-    className: StatusClass[5],
-  },
-  4: {
-    text: "Disbursed",
-    className: StatusClass[1],
-  },
-  5: {
-    text: "Partially paid",
-    className: StatusClass[3],
-  },
-
-  6: {
-    text: "Paid",
-    className: StatusClass[1],
-  },
-  7: {
-    text: "Due",
+    text: "Request rejected",
     className: StatusClass[4],
   },
-  8: {
-    text: "Overdue",
-    className: StatusClass[2],
+  3: {
+    text: "Loan approved",
+    className: StatusClass[1],
+  },
+
+  4: {
+    text: "Loan rejected",
+    className: StatusClass[4],
+  },
+
+  5: {
+    text: "Loan disbursed",
+    className: StatusClass[5],
   },
 };
 const PaymentStatus = {

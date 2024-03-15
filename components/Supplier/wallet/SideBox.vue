@@ -26,7 +26,7 @@
           () => {
             handleClose();
             type = 'withdraw';
-            !hasWallet
+            hasWallet
               ? (isCreatingWallet = isOpen = true)
               : (isWithdraw = isOpen = true);
           }
@@ -50,7 +50,7 @@
     </div>
   </div>
   <div
-    v-if="!hasWallet"
+    v-if="hasWallet"
     class="border border-[#EAECF0] bg-[#F2F4F7] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-4 px-4"
   >
     <p class="text-sm text-[#344054] font-semibold mb-3">
@@ -92,11 +92,13 @@
           v-if="isWithdraw"
           :hasSettlement="hasSettlement"
           :balance="balance"
+          :banks="banks"
         />
         <SupplierWalletModalsCreateWallet
           :hasSettlement="hasSettlement"
           v-if="isCreatingWallet"
           :type="type"
+          :banks="banks"
         />
       </div>
     </template>
@@ -115,7 +117,7 @@
 <script setup>
 import { toast } from "vue3-toastify";
 import { getWalletDetails } from "~/services/walletservice";
-import { viewSettlement } from "~/services/settlementservice";
+import { getBanks, viewSettlement } from "~/services/settlementservice";
 
 const balance = inject("balance");
 const authStore = useAuthStore();
@@ -149,6 +151,7 @@ const bankData = [
     key: "accountNumber",
   },
 ];
+const banks = ref([]);
 async function activateWallet() {
   type.value = "fund";
   isTopup.value = false;
@@ -209,6 +212,14 @@ function checkSettlement() {
 onMounted(() => {
   handleWalletDetails();
   checkSettlement();
+  getBanks().then((res) => {
+    if (res.status === 200) {
+      banks.value = res.data.data.responseBody.map((i) => ({
+        label: i.name,
+        value: i.code.toString(),
+      }));
+    }
+  });
 });
 
 provide("handleComplete", handleComplete);

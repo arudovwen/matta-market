@@ -67,24 +67,25 @@
                     <MenuItems
                       class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
                     >
-                      <div
+                      <button
                         class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap flex gap-x-1 items-center"
                         @click="openRequest(item)"
                       >
                         <AppIcon icon="akar-icons:pencil" /> Edit
-                      </div>
+                      </button>
 
-                      <div
+                      <button
                         class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap flex gap-x-1 items-center"
+                        @click="setAsDefault(item)"
                       >
                         <AppIcon
                           icon="fluent:star-28-regular"
                           class="text-yellow-600"
                         />
                         Set as settlement
-                      </div>
+                      </button>
 
-                      <div
+                      <button
                         @click="deleteRequest(item.id)"
                         class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap flex gap-x-1 items-center"
                       >
@@ -93,7 +94,7 @@
                           class="text-red-600"
                         />
                         Delete
-                      </div>
+                      </button>
                     </MenuItems>
                   </Menu>
                 </td>
@@ -127,7 +128,7 @@
               class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
             />
           </Switch>
-          <AppIcon v-if="setLoader" icon="fa:spinner" iconClass="fa-spin" /> 
+          <AppIcon v-if="setLoader" icon="fa:spinner" iconClass="fa-spin" />
         </div>
       </SwitchGroup>
     </div>
@@ -193,6 +194,7 @@ import {
   getBanks,
   autoSettlement,
   getAutoSettlement,
+  updateSettlement,
 } from "~/services/settlementservice";
 import debounce from "lodash/debounce";
 
@@ -232,15 +234,33 @@ const queryParams = reactive({
 const docLoading = ref(true);
 
 function getSettlement() {
-  setLoader.value = true
-  getAutoSettlement().then((res) => {
-    if (res.status === 200) {
-      setLoader.value = false
-      isAutoSettlement.value = res.data.data.autoSettlement;
-    }
-  }).catch(()=>{
-    setLoader.value = false
-  });
+  setLoader.value = true;
+  getAutoSettlement()
+    .then((res) => {
+      if (res.status === 200) {
+        setLoader.value = false;
+        isAutoSettlement.value = res.data.data.autoSettlement;
+      }
+    })
+    .catch(() => {
+      setLoader.value = false;
+    });
+}
+function setAsDefault(data) {
+  const values = {
+    ...data,
+    settlementAccountId: data.id,
+    isPrimaryAccount: true,
+    bankCode: banks.value.find(
+      (i) => i.label.toLowerCase() === data.bankName.toLowerCase()
+    )?.value,
+  };
+  console.log("🚀 ~ setAsDefault ~ values:", values);
+  // updateSettlement().then((res) => {
+  //   if (res.status === 200) {
+  //     getSettlements();
+  //   }
+  // });
 }
 function getSettlements() {
   docLoading.value = true;
@@ -307,12 +327,14 @@ watch(isAutoSettlement, (oldval, newval) => {
   handleAutoSettlement();
 });
 function handleAutoSettlement() {
-  setLoader.value = true
-  autoSettlement({ autoSettlement: isAutoSettlement.value }).then(res=>{
-    setLoader.value = false
-  }).catch(()=>{
-    setLoader.value = false
-  });
+  setLoader.value = true;
+  autoSettlement({ autoSettlement: isAutoSettlement.value })
+    .then((res) => {
+      setLoader.value = false;
+    })
+    .catch(() => {
+      setLoader.value = false;
+    });
 }
 const FinancesOptions = [
   {

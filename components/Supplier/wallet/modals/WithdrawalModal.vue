@@ -62,13 +62,11 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import { getBanks } from "~/services/settlementservice";
 import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
 import { withdrawFunds } from "~/services/walletservice";
 
-const banks = ref([]);
 const isErrorOpen = ref(false);
 const settlements = inject("settlements");
 const errorText = ref("Wallet creation request failed");
@@ -78,6 +76,9 @@ const props = defineProps({
   },
   hasSettlement: {
     default: true,
+  },
+  banks: {
+    default: () => [],
   },
 });
 
@@ -93,18 +94,12 @@ const form = reactive({
   balance: props.balance,
   accountNumber: defaultsettlement.value?.accountNumber,
   currency: "NGN",
-  bankCode: "",
+  bankCode: props.banks.find(
+    (i) =>
+      i.label.toLowerCase() === defaultsettlement.value?.bankName.toLowerCase()
+  )?.value,
 });
-onMounted(() => {
-  getBanks().then((res) => {
-    if (res.status === 200) {
-      banks.value = res.data.data.responseBody.map((i) => ({
-        label: i.name,
-        value: i.code.toString(),
-      }));
-    }
-  });
-});
+
 const formSchema = yup.object().shape({
   balance: yup.number(),
 
@@ -147,11 +142,14 @@ const onSubmit = handleSubmit((values) => {
       isLoading.value = false;
     });
 });
-watch(banks, () => {
-  if (banks.value.length) {
-    const bankCode = banks.value.find(
-      (i) => i.label === defaultsettlement.value?.bankName
+watch(props.banks, () => {
+  if (props.banks.length) {
+    const bankCode = props.banks.find(
+      (i) =>
+        i.label.toLowerCase() ===
+        defaultsettlement.value?.bankName.toLowerCase()
     );
+    console.log("🚀 ~ watch ~ bankCode:", bankCode.value);
     setFieldValue("bankCode", bankCode.value);
   }
 });
