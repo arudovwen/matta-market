@@ -25,6 +25,7 @@
         @click="
           () => {
             handleClose();
+            type = 'withdraw';
             !hasWallet
               ? (isCreatingWallet = isOpen = true)
               : (isWithdraw = isOpen = true);
@@ -37,6 +38,7 @@
         @click="
           () => {
             handleClose();
+            type = 'fund';
             hasWallet
               ? (isCreatingWallet = isOpen = true)
               : (isTopup = isOpen = true);
@@ -80,7 +82,12 @@
   <IndexModal :isOpen="isOpen" @togglePopup="handleClose">
     <template #content>
       <div class="max-w-[800px]">
-        <SupplierWalletModalsTopUp v-if="isTopup" />
+        <SupplierWalletModalsTopUp
+          v-if="isTopup"
+          :details="details"
+          :hasWallet="hasWallet"
+          @activate="activateWallet"
+        />
         <SupplierWalletModalsWithdrawalModal
           v-if="isWithdraw"
           :hasSettlement="hasSettlement"
@@ -89,6 +96,7 @@
         <SupplierWalletModalsCreateWallet
           :hasSettlement="hasSettlement"
           v-if="isCreatingWallet"
+          :type="type"
         />
       </div>
     </template>
@@ -126,6 +134,7 @@ const isWithdraw = ref(false);
 const isCreatingWallet = ref(false);
 const isAddingKyc = ref(false);
 const hasSettlement = ref(false);
+const type = ref("");
 const bankData = [
   {
     title: "Bank name",
@@ -140,6 +149,11 @@ const bankData = [
     key: "accountNumber",
   },
 ];
+async function activateWallet() {
+  type.value = "fund";
+  isTopup.value = false;
+  isCreatingWallet.value = true;
+}
 function handleClose() {
   isWithdraw.value =
     isTopup.value =
@@ -151,9 +165,13 @@ function handleClose() {
 }
 function handleComplete(text, type = null) {
   checkSettlement();
+  handleWalletDetails();
   if (type === "withdraw") {
     isCreatingWallet.value = false;
     isWithdraw.value = true;
+  } else if (type === "fund") {
+    isCreatingWallet.value = false;
+    isTopup.value = true;
   } else {
     completeText.value = text;
     handleClose();

@@ -1,9 +1,11 @@
 <template>
   <div class="max-w-[400px] w-full min-w-[350px] py-6 px-6">
     <form @submit.prevent="onSubmit" v-if="stage === 1">
-      <h1 class="text-lg font-semibold text-[#101828] mb-4">Fund Wallet</h1>
+      <h1 class="text-lg font-semibold text-[#101828] mb-4">
+        Fund via monnify
+      </h1>
 
-      <div class="grid gap-x-[25px] gap-y-4 mb-[50px]">
+      <div class="grid gap-x-[25px] gap-y-4 mb-6">
         <FormGroup
           label="How much do you wish to fund?"
           :error="errors.amount"
@@ -29,12 +31,6 @@
       </div>
       <div class="flex gap-x-4 items-center justify-end">
         <AppButton
-          @click="handleClose"
-          btnClass="bg-transparent text-white !px-[14px]  !text-sm !py-[10px] border !text-matta-black w-full"
-          type="button"
-          text="Cancel"
-        />
-        <AppButton
           :disabled="isLoading"
           :isLoading="isLoading"
           btnClass="bg-primary-500 text-white !px-[14px]  !text-sm !py-[10px] disabled:cursor-not-allowed w-full"
@@ -43,8 +39,48 @@
         />
       </div>
     </form>
-    <div v-if="stage === 2">
-      <OTP />
+
+    <div class="my-6 flex gap-x-4 items-center">
+      <span class="border-b flex-1"></span>
+      <span>or</span>
+      <span class="border-b flex-1"></span>
+    </div>
+    <div
+      v-if="hasWallet"
+      class="border border-[#EAECF0] bg-[#F2F4F7] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-4 px-4"
+    >
+      <p class="text-base text-[#344054] font-semibold mb-3">Bank Transfer</p>
+
+      <div class="grid gap-y-1">
+        <div
+          class="flex gap-x-2 items-center text-xs"
+          v-for="item in bankData"
+          :key="item.title"
+        >
+          <span class="font-normal text-[#667085]">{{ item.title }}: </span>
+          <span class="flex gap-x-6 items-center">
+            <span class="font-medium text-[#101828]">{{
+              details[item.key]
+            }}</span>
+            <button
+              v-if="item.key === 'accountNumber'"
+              v-clipboard="details?.accountNumber"
+              @click="toast.success('Copied')"
+              class="cursor-pointer ml-2"
+            >
+              <i class="uil uil-copy text-[#101828]"></i></button
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button
+        @click="emits('activate')"
+        class="text-primary-500 font-medium flex items-center gap-x-2"
+      >
+        <span>Activate wallet</span>
+        <AppIcon icon="flowbite:angle-right-outline" iconClass="text-lg" />
+      </button>
     </div>
   </div>
   <ActionModal
@@ -70,11 +106,26 @@ import { confirmFunding } from "~/services/walletservice";
 const isErrorOpen = ref(false);
 const authstore = useAuthStore();
 const getLedgersTrans = inject("getLedgersTrans");
+defineProps(["details", "hasWallet"]);
+const emits = defineEmits(["activate"]);
 const loader = ref(false);
 const stage = ref(1);
 const handleComplete = inject("handleComplete");
 const handleClose = inject("handleClose");
-
+const bankData = [
+  {
+    title: "Bank name",
+    key: "bankName",
+  },
+  {
+    title: "Account name",
+    key: "accountName",
+  },
+  {
+    title: "Account number",
+    key: "accountNumber",
+  },
+];
 const form = reactive({
   amount: null,
 });

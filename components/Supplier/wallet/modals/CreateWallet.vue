@@ -116,6 +116,9 @@ const props = defineProps({
   hasSettlement: {
     default: true,
   },
+  type: {
+    default: "",
+  },
 });
 const handleComplete = inject("handleComplete");
 const handleClose = inject("handleClose");
@@ -221,24 +224,24 @@ const onSubmit = handleSubmit((values) => {
     addSettlement({ ...values, isPrimaryAccount: true });
   }
 
-  createWallet(values)
-    .then((res) => {
-      if (res.status === 200) {
+  // createWallet(values)
+  //   .then((res) => {
+  //     if (res.status === 200) {
         handleComplete(
           "Your wallet has been activated, proceed to withdraw",
-          "withdraw"
+          props.type
         );
-        isLoading.value = false;
-      }
-    })
-    .catch((err) => {
-      errorText.value =
-        err.response.data.message ||
-        JSON.parse(err.response.data.Message)?.responseMessage ||
-        "Wallet creation request failed";
-      isErrorOpen.value = true;
-      isLoading.value = false;
-    });
+    //     isLoading.value = false;
+    //   }
+    // })
+    // .catch((err) => {
+    //   errorText.value =
+    //     err.response.data.message ||
+    //     JSON.parse(err.response.data.Message)?.responseMessage ||
+    //     "Wallet creation request failed";
+    //   isErrorOpen.value = true;
+    //   isLoading.value = false;
+    // });
 });
 </script>
 

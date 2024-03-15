@@ -170,7 +170,7 @@ const urls = {
   //wallet
   CREATE_WALLET: "v1/wallet/new",
   CHECK_BALANCE: "v1/wallet/get-balance",
-  GET_WALLET_DETAILS: "v1/wallet/get-wallet-details",
+  GET_WALLET_DETAILS: "v1/wallet/customer-wallet-details",
   SET_PIN: "v1/wallet/setpin",
   CHANGE_PIN: "v1/wallet/change-pin",
   VALIDATE_OTP: "v1/wallet/validate-otp",
@@ -215,6 +215,7 @@ const urls = {
 
   ADD_SETTLEMENT: "v1/settlement/add-settlement-account",
   AUTO_SETTLEMENT: "v1/settlement/autosettlement",
+  AUTO_SETTLEMENT_VALUE: "v1/settlement/autosettlement-value",
   VIEW_SETTLEMENT: "v1/settlement/view-settlement-account",
   UPDATE_SETTLEMENT: "v1/settlement/update-settlement-account",
   DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",

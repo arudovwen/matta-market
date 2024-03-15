@@ -111,16 +111,25 @@
         <AppLoader />
       </div>
     </div>
-    <div class="max-w-[252px]">
-      <FormGroup label="" name="earings" class="mb-6">
-        <Checkbox
-          :label="`${
-            !isAutoSettlement ? 'Activate' : 'Deactivate'
-          } auto settlement`"
-          v-model="isAutoSettlement"
-          labelClass="noraml-case"
-        />
-      </FormGroup>
+    <div class="max-w-[280px]">
+      <SwitchGroup>
+        <div class="flex items-center justify-start gap-x-1">
+          <SwitchLabel class="mr-4 whitespace-nowrap font-medium">{{
+            `${!isAutoSettlement ? "Activate" : "Deactivate"} auto settlement`
+          }}</SwitchLabel>
+          <Switch
+            v-model="isAutoSettlement"
+            :class="isAutoSettlement ? 'bg-blue-600' : 'bg-gray-200'"
+            class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none"
+          >
+            <span
+              :class="isAutoSettlement ? 'translate-x-6' : 'translate-x-1'"
+              class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+            />
+          </Switch>
+          <AppIcon v-if="setLoader" icon="fa:spinner" iconClass="fa-spin" /> 
+        </div>
+      </SwitchGroup>
     </div>
   </div>
   <DeleteModal
@@ -175,6 +184,7 @@
 definePageMeta({
   layout: "dashboard",
 });
+import { Switch, SwitchGroup, SwitchLabel } from "@headlessui/vue";
 import AppIcon from "@/components/AppIcon";
 import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import {
@@ -182,6 +192,7 @@ import {
   deleteSettlement,
   getBanks,
   autoSettlement,
+  getAutoSettlement,
 } from "~/services/settlementservice";
 import debounce from "lodash/debounce";
 
@@ -197,9 +208,10 @@ const isAutoSettlement = ref(false);
 
 const theads = ["account name", "account number", "bank", "type", ""];
 const financeData = ref([]);
-
+const setLoader = ref(false);
 onMounted(() => {
   getSettlements();
+  getSettlement();
   getBanks().then((res) => {
     if (res.status === 200) {
       banks.value = res.data.data.responseBody.map((i) => ({
@@ -219,6 +231,17 @@ const queryParams = reactive({
 });
 const docLoading = ref(true);
 
+function getSettlement() {
+  setLoader.value = true
+  getAutoSettlement().then((res) => {
+    if (res.status === 200) {
+      setLoader.value = false
+      isAutoSettlement.value = res.data.data.autoSettlement;
+    }
+  }).catch(()=>{
+    setLoader.value = false
+  });
+}
 function getSettlements() {
   docLoading.value = true;
   isOpen.value = false;
@@ -238,7 +261,7 @@ function deleteRequest(value) {
   id.value = value;
   open.value = true;
 }
-const document = ref({});
+
 function openRequest(val) {
   detail.value = val;
   isOpen.value = true;
@@ -279,9 +302,18 @@ watch(
     getSettlements();
   }
 );
-watch(isAutoSettlement, () => {
-  autoSettlement({ settlementDestination: isAutoSettlement.value });
+watch(isAutoSettlement, (oldval, newval) => {
+  if (oldval === newval) return;
+  handleAutoSettlement();
 });
+function handleAutoSettlement() {
+  setLoader.value = true
+  autoSettlement({ autoSettlement: isAutoSettlement.value }).then(res=>{
+    setLoader.value = false
+  }).catch(()=>{
+    setLoader.value = false
+  });
+}
 const FinancesOptions = [
   {
     label: "all finance",

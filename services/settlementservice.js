@@ -17,7 +17,11 @@ export const addSettlement = (data) => {
 };
 
 export const autoSettlement = (data) => {
+  if (!data) return;
   return post(`${urls.AUTO_SETTLEMENT}`, data, config);
+};
+export const getAutoSettlement = () => {
+  return get(`${urls.AUTO_SETTLEMENT_VALUE}`, config);
 };
 export const updateSettlement = (data) => {
   return put(`${urls.UPDATE_SETTLEMENT}/${data.id}`, data, config);
