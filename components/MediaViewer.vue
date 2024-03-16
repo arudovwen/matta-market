@@ -11,22 +11,19 @@
         >
           <AppIcon icon="ph:x-bold" />
         </button>
-        <PDFViewer
+        <!-- <PDFViewer
           style="height: 100%; width: 100%"
           v-if="media && fileType === 'pdf'"
           :source="media"
-        ></PDFViewer>
-        <img :src="media" class="w-full h-full object-contain" v-else />
+        ></PDFViewer> -->
+        <img :src="media" class="w-full h-full object-contain" />
       </div>
     </template>
   </IndexModal>
 </template>
 
 <script setup>
-import PDFViewer from "pdf-viewer-vue";
-import IndexModal from "@/components/IndexModal";
-import AppIcon from "@/components/AppIcon";
-import { defineProps, computed, defineEmits } from "vue";
+// import PDFViewer from "pdf-viewer-vue";
 
 const props = defineProps(["media", "open"]);
 const emits = defineEmits(["close"]);

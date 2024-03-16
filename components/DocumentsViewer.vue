@@ -34,9 +34,7 @@
           >
             <span
               v-if="document.url"
-              @click="
-                downloadFile(document.url, docName(document.documentType))
-              "
+              @click="openMedia(document.url)"
               class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
             >
               View
@@ -46,11 +44,24 @@
       </tbody>
     </table>
   </div>
+  <MediaViewer
+    v-if="isMediaOpen"
+    :open="isMediaOpen"
+    @close="isMediaOpen = false"
+    :media="media"
+  />
 </template>
 <script setup>
 const authStore = useAuthStore();
 const props = defineProps(["documents", "type"]);
 
+const media = ref(null);
+const isMediaOpen = ref(false);
+
+function openMedia(val) {
+  media.value = val;
+  isMediaOpen.value = true;
+}
 function downloadFile(fileUrl, fileName) {
   // Replace 'your_file_url' with the actual URL of the file you want to download
 
@@ -90,5 +101,4 @@ function downloadFile(fileUrl, fileName) {
       console.error("Error downloading file:", error);
     });
 }
-
 </script>

@@ -86,7 +86,7 @@ export default defineNuxtConfig({
       hashMode: false,
     },
   },
-  // plugins: ["~/plugins/apexcharts.client.js"],
+  // plugins: ["~/plugins/pdf-viewer.client.js"],
   // @ts-ignore
   googleSignIn: {
     clientId:

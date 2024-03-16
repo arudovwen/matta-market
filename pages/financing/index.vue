@@ -260,16 +260,13 @@ onMounted(() => {
 });
 
 const queryParams = reactive({
-  SupplierId: "", 
-  RequestStatus: "",
-  LoadRequestType:"",
-  ProducerId: "",
-  ProductId: "",
+  SupplierId: null, 
+  RequestStatus: null,
+  LoadRequestType:null,
   Search: "",
-  SortOrder: "",
+  SortOrder: null,
   PageNumber: 1,
   PageSize: 10,
-  Type: "",
   financeRequestStatus_In: [0, 1, 2, 3, 4, 5],
 });
 const docLoading = ref(true);
