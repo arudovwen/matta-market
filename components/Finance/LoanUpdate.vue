@@ -73,16 +73,21 @@ const approveloading = ref(false);
 
 function handleReject() {
   loading.value = true;
-  let data = {};
+  let data = {
+    financeRequestId: props.detail.id,
+    approvalStatus: 4,
+    approvedAmount:props.detail.amountApproved,
+    tenor: props.detail.tenor,
+  };
   updateFinanceStatus(data)
     .then((res) => {
       if (res.status === 200) {
-        loading.value = true;
-        emits("refresh")
+        loading.value = false;
+        emits("refresh");
       }
     })
     .catch((err) => {
-      loading.value = true;
+      loading.value = false;
       toast.error(
         err.response.data.message ||
           err.response.data.Message ||
@@ -91,16 +96,22 @@ function handleReject() {
     });
 }
 function handleApprove() {
-  let data = {};
+  let data = {
+    financeRequestId: props.detail.id,
+    approvalStatus: 3,
+    approvedAmount:props.detail.amountApproved,
+    tenor: props.detail.tenor,
+  };
+  approveloading.value = true;
   updateFinanceStatus(data)
     .then((res) => {
       if (res.status === 200) {
-        approveloading.value = true;
-        emits("refresh")
+        approveloading.value = false;
+        emits("refresh");
       }
     })
     .catch((err) => {
-      approveloading.value = true;
+      approveloading.value = false;
       toast.error(
         err.response.data.message ||
           err.response.data.Message ||

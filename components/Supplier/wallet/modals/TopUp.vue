@@ -73,7 +73,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <div v-else>
       <button
         @click="emits('activate')"
         class="text-primary-500 font-medium flex items-center gap-x-2"

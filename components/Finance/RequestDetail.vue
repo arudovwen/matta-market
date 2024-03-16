@@ -3,7 +3,9 @@
     <AppLoader />
   </div>
   <div v-else>
-    <h1 class="font-bold text-xl mb-5">{{ requestDetail?.financeRequestNo }}</h1>
+    <h1 class="font-bold text-xl mb-5">
+      {{ requestDetail?.financeRequestNo }}
+    </h1>
 
     <div class="grid grid-cols-1 gap-y-6 mb-6">
       <div>
@@ -39,6 +41,10 @@
         <p class="font-medium text-base">{{ requestDetail?.tenor }} days</p>
       </div>
       <div>
+        <p class="font-nomrmal text-sm text-gray-500">Interest Rate</p>
+        <p class="font-medium text-base">{{ requestDetail?.interestRate | 0 }}%</p>
+      </div>
+      <div>
         <p class="font-nomrmal text-sm text-gray-500">Type</p>
         <p class="font-medium text-base capitalize">
           {{ handleType(requestDetail?.loanRequestType) }} finance
@@ -48,7 +54,9 @@
         <p class="font-nomrmal text-sm text-gray-500">
           Have you done business with the buyer before?
         </p>
-        <p class="font-medium text-base">{{ requestDetail?.haveyoudonebusiness }}</p>
+        <p class="font-medium text-base">
+          {{ requestDetail?.haveyoudonebusiness }}
+        </p>
       </div>
       <div class="">
         <p class="font-nomrmal text-sm text-gray-500">

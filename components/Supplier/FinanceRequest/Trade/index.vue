@@ -33,7 +33,7 @@ import { getCompanyProfile } from "@/services/settingservices";
 import { getFinance } from "~/services/financeservice";
 
 const loading = ref(true);
-const isfetching = ref(true);
+const isfetching = ref(false);
 const company = ref(null);
 const route = useRoute();
 const { financeId, type, id } = route.params;
@@ -169,6 +169,7 @@ onMounted(() => {
 });
 function getFinanceData() {
   if (!financeId) return;
+  isfetching.value = true;
   getFinance(financeId)
     .then((res) => {
       if (res.status === 200) {

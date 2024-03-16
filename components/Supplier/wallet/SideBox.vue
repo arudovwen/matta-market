@@ -26,7 +26,7 @@
           () => {
             handleClose();
             type = 'withdraw';
-            hasWallet
+            !hasWallet
               ? (isCreatingWallet = isOpen = true)
               : (isWithdraw = isOpen = true);
           }
@@ -39,9 +39,7 @@
           () => {
             handleClose();
             type = 'fund';
-            hasWallet
-              ? (isCreatingWallet = isOpen = true)
-              : (isTopup = isOpen = true);
+            isTopup = isOpen = true;
           }
         "
         text="Fund wallet"
