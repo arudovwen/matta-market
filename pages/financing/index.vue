@@ -177,7 +177,10 @@
             </tbody>
           </table>
         </div>
-        <EmptyData v-if="!docLoading && !financeData?.length" title="No request available" />
+        <EmptyData
+          v-if="!docLoading && !financeData?.length"
+          title="No request available"
+        />
       </div>
       <div class="text-center p-6 lg:p-8 my-20" v-if="docLoading">
         <AppLoader />
@@ -257,8 +260,9 @@ onMounted(() => {
 });
 
 const queryParams = reactive({
-  SupplierId: "",
+  SupplierId: "", 
   RequestStatus: "",
+  LoadRequestType:"",
   ProducerId: "",
   ProductId: "",
   Search: "",
@@ -266,6 +270,7 @@ const queryParams = reactive({
   PageNumber: 1,
   PageSize: 10,
   Type: "",
+  financeRequestStatus_In: [0, 1, 2, 3, 4, 5],
 });
 const docLoading = ref(true);
 
@@ -352,7 +357,12 @@ watch(
   }
 );
 watch(
-  () => [queryParams.PageNumber, queryParams.SortOrder, queryParams.LoadRequestType, queryParams.RequestStatus],
+  () => [
+    queryParams.PageNumber,
+    queryParams.SortOrder,
+    queryParams.LoadRequestType,
+    queryParams.RequestStatus,
+  ],
   () => {
     getFinanceData();
   }

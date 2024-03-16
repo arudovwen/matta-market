@@ -9,10 +9,7 @@ const config = {
 //Orders
 
 export const getAllFinance = withRetryHandling((data) => {
-  return get(
-    `${urls.GET_ALL_FINANCE}?${new URLSearchParams(cleanObject(data))}`,
-    config
-  );
+  return post(`${urls.GET_ALL_FINANCE}`, data, config);
 });
 
 export const addFinance = (data) => {
