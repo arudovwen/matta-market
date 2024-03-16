@@ -80,7 +80,7 @@
                 class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
               >
                 <span
-                  @click="downloadFile(detail.signatureUrl, 'Signature')"
+                  @click="openMedia(detail.signatureUrl)"
                   class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
                 >
                   View
@@ -98,7 +98,7 @@
                 class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
               >
                 <span
-                  @click="downloadFile(detail.identityUrl, 'Identity Card')"
+                  @click="openMedia(detail.identityUrl)"
                   class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
                 >
                   View
@@ -110,9 +110,23 @@
       </div>
     </div>
   </div>
+  <MediaViewer
+    v-if="isMediaOpen"
+    :open="isMediaOpen"
+    @close="isMediaOpen = false"
+    :media="media"
+  />
 </template>
 
 <script setup>
-import moment from "moment"
+import moment from "moment";
 defineProps(["detail"]);
+
+const media = ref(null);
+const isMediaOpen = ref(false);
+
+function openMedia(val) {
+  media.value = val;
+  isMediaOpen.value = true;
+}
 </script>
