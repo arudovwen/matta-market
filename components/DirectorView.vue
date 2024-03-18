@@ -79,12 +79,12 @@
               <td
                 class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
               >
-                <span
+                <spanw
                   @click="openMedia(detail.signatureUrl)"
                   class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
                 >
                   View
-                </span>
+                </spanw>
               </td>
             </tr>
             <tr class="border-b last:border-none">
