@@ -86,11 +86,11 @@
                 >
                   {{ item.financeRequestNo }}
                 </td>
-                <td
+                <!-- <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
                 >
                   {{ item.customer || "-" }}
-                </td>
+                </td> -->
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
@@ -138,14 +138,14 @@
                       class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
                     >
                       <div
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
                         @click="openRequest(item)"
                       >
                         View request
                       </div>
                       <div
                         v-if="item.financeRequestStatus === 1"
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
                         @click="openLoan(item)"
                       >
                         View loan offer
@@ -245,7 +245,7 @@ const authStore = useAuthStore();
 
 const theads = [
   "request id",
-  "customer name",
+  // "customer name",
   "financing type",
   "created",
   "requested amount",

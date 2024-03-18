@@ -58,7 +58,7 @@
       <div class="md:col-span-2">
         <Textarea
           placeholder=""
-          label="Brief description of the product"
+          label="Brief description of the company"
           name="description"
           v-bind="descriptionAtt"
           v-model="description"
@@ -68,8 +68,7 @@
       <div class="md:col-span-2">
         <label class="mb-4 mt-3 font-medium text-sm block"
           >Company documents
-          <span class="text-[#B9B9B9]">(Optional)</span></label
-        >
+        </label>
         <div v-if="!company.companyDocuments.length" class="grid gap-y-6">
           <FormGroup :error="errors.mermat" class="col-span-2">
             <FileUpload
@@ -139,11 +138,11 @@ const formSchema = yup.object().shape({
     .required("Date Of Incorporation is required"), // Assuming dateofIncorporation is a dateofIncorporation type
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
-  description: yup.string().required("Product Description is required"),
-  // statusReport: yup.string().required("Status Report is required"),
-  // incorporation: yup.string().required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
-  // mermat: yup.string().required("Mermat is required"),
-  // utilityBill: yup.string().required("Utility Bill is required"),
+  description: yup.string(),
+  statusReport: yup.string().required("Status Report is required"),
+  incorporation: yup.string().required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
+  mermat: yup.string().required("Mermat is required"),
+  utilityBill: yup.string().required("Utility Bill is required"),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(

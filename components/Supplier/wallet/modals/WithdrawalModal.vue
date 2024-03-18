@@ -26,6 +26,37 @@
             <span class="absolute right-4">NGN</span>
           </div>
         </FormGroup>
+        <FormGroup label="Bank" :error="errors.bankCode" name="bankCode">
+          <SelectVueSelect
+            v-model="bankCode"
+            :disabled="!banks.length"
+            :options="banks"
+            :reduce="(bank) => bank.value"
+            :placeholder="!banks.length ? 'Fetching list' : 'Select bank'"
+            :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+              errors.bankCode ? 'border-red-500' : 'border-[#D0D5DD]'
+            }`"
+          />
+        </FormGroup>
+        <div class="">
+          <Textinput
+            placeholder="Account number"
+            label="Account number"
+            name="accountNumber"
+            v-bind="accountNumberAtt"
+            v-model="accountNumber"
+            :error="errors.accountNumber"
+          />
+        </div>
+        <div class="" v-if="form.accountName">
+          <Textinput
+            placeholder="Account name"
+            label="Account name"
+            name="accountName"
+            v-model="form.accountName"
+            disabled
+          />
+        </div>
       </div>
       <div class="flex gap-x-4 items-center justify-end">
         <AppButton
@@ -84,25 +115,53 @@ const props = defineProps({
 
 const stage = ref(1);
 const handleClose = inject("handleClose");
-const defaultsettlement = computed(() => {
-  const tempValue = settlements.value.find((i) => i.isPrimaryAccount);
-  return tempValue ? tempValue : settlements.value[0];
-});
 const form = reactive({
   withdrawalAmount: null,
   narration: "withdraw",
   balance: props.balance,
-  accountNumber: defaultsettlement.value?.accountNumber,
+  accountNumber: "",
   currency: "NGN",
-  bankCode: props.banks.find(
-    (i) =>
-      i.label.toLowerCase() === defaultsettlement.value?.bankName.toLowerCase()
-  )?.value,
+  bankCode: "",
 });
 
 const formSchema = yup.object().shape({
   balance: yup.number(),
-
+  bankCode: yup.string().when("hasSettlement", {
+    is: false,
+    then: (schema) => schema.required("Bank name is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  accountNumber: yup.string().when("hasSettlement", {
+    is: false,
+    then: (schema) =>
+      schema
+        .matches(/^\d{10}$/, "Account number must be 10 digits")
+        .test("test-account", "Invalid account number", function (value) {
+          const { bankCode } = this.parent || {}; // Destructure bankCode safely
+          if (value && value.length === 10 && bankCode) {
+            return validateAccount({
+              bankCode: bankCode,
+              accountNumber: value,
+            })
+              .then((res) => {
+                form.accountName = res.data.data.responseBody.accountName;
+                return true; // Resolve the promise if validation is successful
+              })
+              .catch((err) => {
+                throw new yup.ValidationError(
+                  "Invalid account number",
+                  null,
+                  "accountNumber"
+                );
+              });
+          } else {
+            return true; // Return true if the length is not 10 or bankCode is missing
+          }
+        })
+        .required("Account number is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  customerName: yup.string().required("Customer name is required"),
   withdrawalAmount: yup
     .number()
     .required("Amount is required")

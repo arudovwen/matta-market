@@ -47,7 +47,7 @@
         :isLoading="approveloading"
         :isDisabled="loading || approveloading"
         type="button"
-        text=" Approve request"
+        text=" Accept loan offer"
         class="appearance-none leading-none px-10 py-4 w-full rounded-lg text-white bg-[#0E9384] hover:opacity-70 mb-4"
       />
 
