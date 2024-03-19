@@ -135,6 +135,6 @@ export default defineNuxtPlugin((context) => {
       }
     })(window, document);
   })();
-  amplitude.defaultTracking = true;
-  amplitude.init("662bcea7400aa949c2cbbd4e0a9fa5c9");
+
+  amplitude.init("662bcea7400aa949c2cbbd4e0a9fa5c9", { defaultTracking: true });
 });
