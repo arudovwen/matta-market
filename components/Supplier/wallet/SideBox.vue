@@ -167,6 +167,7 @@ function handleClose() {
 function handleComplete(text, type = null) {
   checkSettlement();
   handleWalletDetails();
+  getLedgersTrans()
   if (type === "withdraw") {
     isCreatingWallet.value = false;
     isWithdraw.value = true;

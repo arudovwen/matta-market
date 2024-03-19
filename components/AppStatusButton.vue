@@ -95,17 +95,27 @@ const FinanceStatusText = {
     className: StatusClass[4],
   },
   3: {
-    text: "Loan approved",
+    text: "Offer accepted",
     className: StatusClass[1],
   },
 
   4: {
-    text: "Loan rejected",
+    text: "Offer rejected",
     className: StatusClass[4],
   },
 
   5: {
     text: "Loan disbursed",
+    className: StatusClass[5],
+  },
+};
+const ActiveFinance = {
+  0: {
+    text: "Active",
+    className: StatusClass[1],
+  },
+  1: {
+    text: "Finished",
     className: StatusClass[5],
   },
 };
@@ -144,6 +154,9 @@ const Stats = computed(() => {
   }
   if (props.stattype === "wallet") {
     return WalletStatus;
+  }
+  if (props.stattype === "active-finance") {
+    return ActiveFinance;
   }
   return StatusText;
 });

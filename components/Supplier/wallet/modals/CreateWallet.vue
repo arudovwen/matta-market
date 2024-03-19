@@ -74,6 +74,11 @@
             disabled
           />
         </div>
+        <div v-if="isValidating" class="text-center p-1">
+          <div
+            class="loader border-t-4 border-gray-500 border-solid rounded-full h-4 w-4 animate-spin mx-auto"
+          ></div>
+        </div>
       </div>
       <div class="flex gap-x-4 items-center justify-end">
         <AppButton
@@ -112,6 +117,7 @@ import * as yup from "yup";
 import { ref, reactive, inject } from "vue";
 import { addSettlement } from "~/services/settlementservice";
 
+const  isValidating = ref(false)
 const props = defineProps({
   hasSettlement: {
     default: true,
@@ -157,15 +163,18 @@ const formSchema = yup.object().shape({
         .test("test-account", "Invalid account number", function (value) {
           const { bankCode } = this.parent || {}; // Destructure bankCode safely
           if (value && value.length === 10 && bankCode) {
+            isValidating.value=true;
             return validateAccount({
               bankCode: bankCode,
               accountNumber: value,
             })
               .then((res) => {
+                isValidating.value=false
                 form.accountName = res.data.data.responseBody.accountName;
                 return true; // Resolve the promise if validation is successful
               })
               .catch((err) => {
+                isValidating.value=false
                 throw new yup.ValidationError(
                   "Invalid account number",
                   null,

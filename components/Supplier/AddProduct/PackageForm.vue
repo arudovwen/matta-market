@@ -209,6 +209,7 @@ import {
   ListboxOption,
 } from "@headlessui/vue";
 import { useForm } from "vee-validate";
+import { v4 as uuidv4 } from "uuid";
 
 const form = inject("form");
 const props = defineProps({
@@ -225,10 +226,15 @@ const packForm = reactive({
   size: "",
   isAvailable: false,
   unit: form.unit,
+  id: uuidv4(),
 });
 onMounted(() => {
   if (props.detail) {
-    setValues({ ...props.detail, title: props?.detail?.package?.title });
+    setValues({
+      ...props.detail,
+      title: props?.detail?.package?.title,
+      id: props?.detail?.package?.id,
+    });
   }
 });
 
@@ -254,6 +260,7 @@ const packFormSchema = yup.object({
   size: yup.number().typeError("Invalid value").required(),
   isAvailable: yup.boolean(),
   unit: yup.string(),
+  id: yup.string(),
 });
 
 const { handleSubmit, defineField, errors, setValues } = useForm({
@@ -273,7 +280,7 @@ const onSubmit = handleSubmit((values) => {
   if (!props.detail) {
     form.packagesAvailable.push({
       ...values,
-      package: { title: values.title },
+      package: { title: values.title, id: values.id },
     });
   } else {
     const index = form.packagesAvailable.findIndex(
@@ -285,9 +292,8 @@ const onSubmit = handleSubmit((values) => {
     if (index !== -1) {
       form.packagesAvailable[index] = {
         ...values,
-        package: { title: values.title },
+        package: { title: values.title, id: values.id },
       };
-      console.log("🚀 ~ form.packagesAvailable.map ~ values:", values);
     }
   }
   emits("close");

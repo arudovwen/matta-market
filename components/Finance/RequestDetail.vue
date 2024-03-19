@@ -55,7 +55,7 @@
           Have you done business with the buyer before?
         </p>
         <p class="font-medium text-base">
-          {{ requestDetail?.haveyoudonebusiness }}
+          {{ requestDetail?.haveyoudonebusiness || "-" }}
         </p>
       </div>
       <div class="">
@@ -63,7 +63,7 @@
           Have you previously exported to the order’s country of destination?
         </p>
         <p class="font-medium text-base">
-          {{ requestDetail?.haveyouexportedtotheothercourty }}
+          {{ requestDetail?.haveyouexportedtotheothercourty|| "-"  }}
         </p>
       </div>
       <div>
@@ -71,7 +71,7 @@
           Where did you hear about us?
         </p>
         <p class="font-medium text-base">
-          {{ requestDetail?.whereDidYouHearAboutUs }}
+          {{ requestDetail?.whereDidYouHearAboutUs || "-" }}
         </p>
       </div>
     </div>

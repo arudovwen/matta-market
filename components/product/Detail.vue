@@ -68,14 +68,14 @@
           v-if="!productData.hidePrice"
           class="text-xl lg:text-2xl font-[800] mb-6"
         >
-          {{ currencyFormat(productData?.price || 0) }}
-          <!-- <span class="text-sm text-[#444] font-normal"
-            >/{{ productData.unit }}</span
-          > -->
+          {{ currencyFormat(mypackage?.amount || 0) }}
+          <span class="text-sm text-[#444] font-normal"
+            >/{{ `${mypackage?.size || ""}${mypackage?.unit || ""}` }}</span
+          >
         </p>
         <p class="text-xs :text-sm mb-6">
-          <span class="font-normal">Producer:</span
-          > <span class="font-bold"> {{ productData?.producer?.title }}</span>
+          <span class="font-normal">Producer:</span>
+          <span class="font-bold"> {{ productData?.producer?.title }}</span>
         </p>
         <div
           class="flex flex-col md:flex-row gap-x-[18px] gap-y-4 lg:gap-y-0 mb-6 justify-start"
@@ -97,7 +97,7 @@
           </div>
           <AppButton
             @click="handleSave"
-            :icon="isSaved?'tdesign:heart-filled':'tdesign:heart'"
+            :icon="isSaved ? 'tdesign:heart-filled' : 'tdesign:heart'"
             text="Save for later"
             btnClass="text-xs sm:text-sm !py-0 !px-0 w-full sm:!w-auto sm:!max-w-max items-center"
           />
@@ -112,7 +112,10 @@
           />
         </div>
         <div
-          v-if="!productData.hidePrice && productData?.supplierId !== authStore.businessId"
+          v-if="
+            !productData.hidePrice &&
+            productData?.supplierId !== authStore.businessId
+          "
           class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4"
         >
           <div class="h-[50px] lg:flex-1">
@@ -255,11 +258,10 @@ const router = useRouter();
 const selectedPackage = ref(null);
 const { name, id, category } = route.params;
 const imageUrl = ref(productData?.value?.featuredPhoto);
-const isSaved = ref(false)
+const isSaved = ref(false);
 const packageOptions = computed(() =>
   productData?.value?.packagesAvailable?.map((i) => {
     return {
-      ...i,
       label: `${i.package.title}/${i.size}${i.unit} - ${currencyFormat(
         i.amount
       )}`,
@@ -304,7 +306,9 @@ function handleRequest(type) {
 function toggleModal(val) {
   active.value = val;
 }
-const mypackage = computed(() => JSON.parse(selectedPackage.value));
+const mypackage = computed(() =>
+  selectedPackage.value ? JSON.parse(selectedPackage.value) : null
+);
 const counter = ref(1);
 function handleCart(type) {
   if (!selectedPackage.value) {
@@ -330,7 +334,7 @@ function handleCart(type) {
 
   cartStore?.addToCart(data, type).then((res) => {
     if (!res.status && res.message === "incart") {
-      toast.info("Already in your cart");
+      router.push("/cart")
     }
     if (res.status && res.message !== "buy") {
       isAdded.value = true;
@@ -346,9 +350,9 @@ function handleCart(type) {
 function handleSave() {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
-   return;
+    return;
   }
-  isSaved.value = true
+  isSaved.value = true;
   toast.success("Saved");
 }
 
@@ -392,6 +396,14 @@ function handleLike(value) {
 function togglePopup() {
   isOpen.value = false;
 }
+watch(
+  () => [packageOptions.value],
+  () => {
+    if (packageOptions.value?.length) {
+      selectedPackage.value = packageOptions.value[0]?.value;
+    }
+  }
+);
 watch(productData, () => {
   supplierStore.fetchSupplier(productData.value.supplierId);
   imageUrl.value = productData?.value?.featuredPhoto;

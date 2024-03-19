@@ -45,7 +45,7 @@
             name="accountNumber"
             v-bind="accountNumberAtt"
             v-model="accountNumber"
-            :error="errors.accountNumber"
+            :error="isValidating ? '' : errors.accountNumber"
           />
         </div>
         <div class="" v-if="form.accountName">
@@ -56,6 +56,11 @@
             v-model="form.accountName"
             disabled
           />
+        </div>
+        <div v-if="isValidating" class="text-center p-1">
+          <div
+            class="loader border-t-4 border-gray-500 border-solid rounded-full h-4 w-4 animate-spin mx-auto"
+          ></div>
         </div>
       </div>
       <div class="flex gap-x-4 items-center justify-end">
@@ -96,10 +101,9 @@ import * as yup from "yup";
 import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
-import { withdrawFunds } from "~/services/walletservice";
+import { withdrawFunds, validateAccount } from "~/services/walletservice";
 
 const isErrorOpen = ref(false);
-const settlements = inject("settlements");
 const errorText = ref("Wallet creation request failed");
 const props = defineProps({
   balance: {
@@ -123,45 +127,39 @@ const form = reactive({
   currency: "NGN",
   bankCode: "",
 });
-
+const isValidating = ref(false);
 const formSchema = yup.object().shape({
   balance: yup.number(),
-  bankCode: yup.string().when("hasSettlement", {
-    is: false,
-    then: (schema) => schema.required("Bank name is required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  accountNumber: yup.string().when("hasSettlement", {
-    is: false,
-    then: (schema) =>
-      schema
-        .matches(/^\d{10}$/, "Account number must be 10 digits")
-        .test("test-account", "Invalid account number", function (value) {
-          const { bankCode } = this.parent || {}; // Destructure bankCode safely
-          if (value && value.length === 10 && bankCode) {
-            return validateAccount({
-              bankCode: bankCode,
-              accountNumber: value,
-            })
-              .then((res) => {
-                form.accountName = res.data.data.responseBody.accountName;
-                return true; // Resolve the promise if validation is successful
-              })
-              .catch((err) => {
-                throw new yup.ValidationError(
-                  "Invalid account number",
-                  null,
-                  "accountNumber"
-                );
-              });
-          } else {
-            return true; // Return true if the length is not 10 or bankCode is missing
-          }
+  bankCode: yup.string().required("Bank name is required"),
+  accountNumber: yup
+    .string()
+    .matches(/^\d{10}$/, "Account number must be 10 digits")
+    .test("test-account", "Invalid account number", function (value) {
+      const { bankCode } = this.parent || {}; // Destructure bankCode safely
+      if (value && value.length === 10 && bankCode) {
+        isValidating.value = true;
+        return validateAccount({
+          bankCode: bankCode,
+          accountNumber: value,
         })
-        .required("Account number is required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  customerName: yup.string().required("Customer name is required"),
+          .then((res) => {
+            isValidating.value = false;
+            form.accountName = res.data.data.responseBody.accountName;
+            return true; // Resolve the promise if validation is successful
+          })
+          .catch((err) => {
+            isValidating.value = false;
+            throw new yup.ValidationError(
+              "Invalid account number",
+              null,
+              "accountNumber"
+            );
+          });
+      } else {
+        return true; // Return true if the length is not 10 or bankCode is missing
+      }
+    })
+    .required("Account number is required"),
   withdrawalAmount: yup
     .number()
     .required("Amount is required")
@@ -182,6 +180,8 @@ const { handleSubmit, defineField, errors, setFieldValue } = useForm({
   initialValues: form,
 });
 
+const [bankCode] = defineField("bankCode");
+const [accountNumber, accountNumberAtt] = defineField("accountNumber");
 const [withdrawalAmount] = defineField("withdrawalAmount");
 const handleComplete = inject("handleComplete");
 const onSubmit = handleSubmit((values) => {
