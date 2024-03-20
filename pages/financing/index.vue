@@ -97,6 +97,13 @@ const FinancesOptions = [
     url: "/financing/requests/export/3",
   },
 ];
+const handleRouting = (url) => {
+    // if (!authStore.userInfo.onboardingPageStatus) {
+    //   toast.info("Complete your KYB before you proceed");
+    //   return `/company/settings?redirected_from=${url}`;
+    // }
+    return url;
+  }
 provide("active", active);
 </script>
 

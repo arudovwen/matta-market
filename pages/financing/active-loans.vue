@@ -270,13 +270,7 @@
         break;
     }
   }
-  const handleRouting = (url) => {
-    // if (!authStore.userInfo.onboardingPageStatus) {
-    //   toast.info("Complete your KYB before you proceed");
-    //   return `/company/settings?redirected_from=${url}`;
-    // }
-    return url;
-  };
+ ;
   function withdrawRequest(value) {
     id.value = value;
     open.value = true;

@@ -322,7 +322,9 @@ function handleCart(type) {
     unit: mypackage?.value.unit,
     productId: productData?.value?.id,
     product: productData?.value.name,
-    productImg: productData?.value?.featuredPhoto,
+    productImg: productData.value.gallery.length
+      ? productData.value.gallery[0]
+      : productData.value.featuredPhoto,
     selectedPackage: mypackage?.value.package?.title,
     selectedPackageData: mypackage.value,
     productBrandName: productData?.value.productBrandName,
@@ -334,7 +336,7 @@ function handleCart(type) {
 
   cartStore?.addToCart(data, type).then((res) => {
     if (!res.status && res.message === "incart") {
-      router.push("/cart")
+      router.push("/cart");
     }
     if (res.status && res.message !== "buy") {
       isAdded.value = true;
@@ -360,13 +362,18 @@ function handleLike(value) {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
   }
+  console.log(
+    "🚀 ~ handleLike ~ data.productData.value.gallery:",
+    data.productData.value.gallery
+  );
+
   let data = {
     businessId: authStore.userId,
     productId: productData.value.id,
     productName: productData.value.name,
     productImg: productData.value.gallery.length
       ? productData.value.gallery[0]
-      : "",
+      : productData.value.featuredPhoto,
     backgroundbg: "",
     price: productData.value.price,
     unit: productData.value.unit,
