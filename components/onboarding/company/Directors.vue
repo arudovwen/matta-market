@@ -12,7 +12,7 @@
         </p>
       </div>
       <!-- Top bar   -->
-      <div class="md:max-w-[560px] w-full">
+      <div class="flex-1">
         <div class="">
           <div v-if="!companyInfo.directors.length">
             <button
@@ -28,7 +28,7 @@
               <span class=""> + Add director</span>
             </button>
           </div>
-          <div class="max-w-[560px] mx-auto">
+          <div class="overflow-x-auto max-w-[800px]">
             <DirectorsView
               :directors="companyInfo.directors"
               :companyInfo="companyInfo"

@@ -286,6 +286,7 @@ const docLoading = ref(true);
 
 function getFinanceData() {
   docLoading.value = true;
+  if(!queryParams.financeRequestStatus_In?.length) return
   getAllFinance(queryParams).then((res) => {
     financeData.value = res.data.data;
     queryParams.totalCount = res.data.data.totalCount;

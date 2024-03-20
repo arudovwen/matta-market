@@ -447,9 +447,11 @@
       </div>
     </div>
     <div
-     
       class="flex justify-between gap-x-4 items-center mt-16 pt-6 border-t border-[#EAECF0] w-full"
-      v-if="!authStore?.userInfo?.onboardingPageStatus || !companyInfo.approvalStatus"
+      v-if="
+        !authStore?.userInfo?.onboardingPageStatus ||
+        !companyInfo.approvalStatus
+      "
     >
       <!-- <button
           type="button"
@@ -658,7 +660,7 @@ const form = reactive({
 
 const isLoading = ref(false);
 const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 12 : true;
+  form.code === "+234" ? value.length > 9 && value.length < 18 : true;
 const mystates = computed(() => {
   return states.value.map((item) => {
     return {
@@ -807,7 +809,7 @@ const rules = {
     numeric,
     required,
     validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
+      "Phone number must be between 10 0r 20 digits",
       validPhoneLength
     ),
   },
@@ -837,7 +839,25 @@ async function handleSubmit() {
       if (res.status === 200) {
         toast.success("Information saved");
         active.value = 2;
-        getCompanyProfile();
+        getCompanyProfile().then((res) => {
+          if (res.status === 200) {
+            form.companyName = res.data.data.companyName;
+            form.photo = image.value = res.data.data.photo;
+            form.companyType = res.data.data.companyType;
+            form.website = res.data.data.website;
+            form.description = res.data.data.description;
+            form.address = res.data.data.address;
+            form.country = res.data.data.country;
+            form.city = res.data.data.city;
+            form.dateofIncorporation = res.data.data.dateofIncorporation;
+            form.sector = res.data.data.sector;
+            form.tin = res.data.data.tin;
+            form.registrationNo = res.data.data.registrationNo;
+            form.phone = res.data.data.phone;
+            image.value = form.logo = res.data.data.logo;
+            form.state = res.data.data.state;
+          }
+        });
       }
     })
 

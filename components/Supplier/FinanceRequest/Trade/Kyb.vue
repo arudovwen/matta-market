@@ -45,6 +45,36 @@
           }`"
         />
       </FormGroup>
+      <FormGroup label="Country" :error="errors.country" name="sector">
+        <SelectVueSelect
+          :options="allcountries"
+          v-model="country"
+          :reduce="(country) => country.value"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.country ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
+        />
+      </FormGroup>
+      <FormGroup label="State" :error="errors.state" name="state">
+        <SelectVueSelect
+          :options="mystates"
+          :reduce="(state) => state.value"
+          v-model="state"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.state ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
+        />
+      </FormGroup>
+      <div>
+        <Textinput
+          placeholder=""
+          label="City"
+          name="city"
+          v-bind="cityAtt"
+          v-model="city"
+          :error="errors.city"
+        />
+      </div>
       <div class="md:col-span-2">
         <Textinput
           placeholder=""
@@ -114,6 +144,8 @@
 </template>
 
 <script setup>
+import CountryList from "country-list-with-dial-code-and-flag";
+import countries from "@/utils/countries.json";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { businessTypes } from "~/utils/constants.js";
@@ -122,6 +154,7 @@ import {
   updateDocuments,
 } from "@/services/settingservices";
 import { toast } from "vue3-toastify";
+import SelectComponent from "@/components/forms/SelectComponent";
 
 const company = inject("company");
 const formData = inject("formData");
@@ -143,6 +176,9 @@ const formSchema = yup.object().shape({
   incorporation: yup.string().required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
   mermat: yup.string().required("Mermat is required"),
   utilityBill: yup.string().required("Utility Bill is required"),
+  country: yup.string().required(),
+  state: yup.string().required(),
+  city: yup.string(),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(
@@ -160,6 +196,35 @@ const [dateofIncorporation, dateofIncorporationAtt] = defineField(
 const [companyType] = defineField("companyType");
 const [address, addressAtt] = defineField("address");
 const [description, descriptionAtt] = defineField("description");
+const [country] = defineField("country");
+const [state] = defineField("state");
+const [city, cityAtt] = defineField("city");
+const allcountries = computed(() => {
+  return CountryList.map((item) => {
+    return {
+      id: "",
+      label: `${item.name}`,
+      value: item.name,
+    };
+  });
+});
+
+const states = computed(() => {
+  if (!country.value) return [];
+  return countries.find(
+    (item) => item.name.toLowerCase() == country.value?.toLowerCase()
+  )?.states;
+});
+
+const mystates = computed(() => {
+  return states.value?.map((item) => {
+    return {
+      id: item.code,
+      label: item.name,
+      value: item.name,
+    };
+  });
+});
 
 onMounted(() => {
   setValues(company?.value || {});

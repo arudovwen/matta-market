@@ -3,15 +3,11 @@
     <AppLoader />
   </div>
   <div v-else>
-    <h1 class="font-bold text-xl mb-5">
+    <h1 class="font-bold text-xl mb-10">
       {{ requestDetail?.financeRequestNo }}
     </h1>
 
     <div class="grid grid-cols-1 gap-y-6 mb-6">
-      <div>
-        <p class="font-nomrmal text-sm text-gray-500">Customer name</p>
-        <p class="font-medium text-sm">{{ requestDetail?.customer || "-" }}</p>
-      </div>
       <div>
         <p class="font-nomrmal text-sm text-gray-500">Date requested</p>
         <p class="font-medium text-sm">
@@ -42,7 +38,9 @@
       </div>
       <div>
         <p class="font-nomrmal text-sm text-gray-500">Interest Rate</p>
-        <p class="font-medium text-base">{{ requestDetail?.interestRate | 0 }}%</p>
+        <p class="font-medium text-base">
+          {{ requestDetail?.interestRate | 0 }}%
+        </p>
       </div>
       <div>
         <p class="font-nomrmal text-sm text-gray-500">Type</p>
@@ -63,7 +61,7 @@
           Have you previously exported to the order’s country of destination?
         </p>
         <p class="font-medium text-base">
-          {{ requestDetail?.haveyouexportedtotheothercourty|| "-"  }}
+          {{ requestDetail?.haveyouexportedtotheothercourty || "-" }}
         </p>
       </div>
       <div>

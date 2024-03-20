@@ -10,8 +10,11 @@
     <div class="py-10" v-if="active !== 5">
       <Stepper :tabs="tabs" />
     </div>
-    <div v-if="!loading && !isfetching">
-      <div class="max-w-[576px] mx-auto w-full" v-if="active !== 5">
+    <div v-if="!loading && !isfetching" class="w-full">
+      <div
+        :class="` mx-auto w-full ${active === 3 ? '' : 'max-w-[676px]'}`"
+        v-if="active !== 5"
+      >
         <LoanRequest v-if="active === 1" />
         <Kyb v-if="active === 2" />
         <Documents v-if="active === 4" />
