@@ -20,10 +20,16 @@
             <FilterButton
               v-model="queryParams.LoadRequestType"
               :options="FinancesOptions"
+              title="Filter type"
+            />
+            <FilterButton
+              v-model="queryParams.financeRequestStatus_In"
+              :options="StatusOptions"
+              title="Filter status"
             />
           </div>
         </div>
-       
+
         <div v-if="!docLoading && financeData?.length">
           <table class="w-full">
             <thead>
@@ -201,6 +207,45 @@ const loading = ref(false);
 const isLoanOpen = ref(false);
 const detail = ref(null);
 const authStore = useAuthStore();
+const StatusOptions = [
+  {
+    label: "All status",
+    key: "all",
+    value: [0, 1, 2, 3, 4, 5],
+  },
+  {
+    label: "Pending",
+    key: 0,
+    value: [0],
+  },
+  {
+    label: "Request approved",
+    key: 1,
+    value: [1],
+  },
+
+  {
+    label: "Request rejected",
+    key: 2,
+    value: [2],
+  },
+
+  {
+    label: "Offer accepted",
+    key: 3,
+    value: [3],
+  },
+  {
+    label: "Offer rejected",
+    key: 4,
+    value: [4],
+  },
+  {
+    label: "Loan disbursed",
+    key: 5,
+    value: [5],
+  },
+];
 const tabs = [
   {
     title: "pending",
@@ -327,6 +372,7 @@ watch(
     queryParams.SortOrder,
     queryParams.LoadRequestType,
     queryParams.RequestStatus,
+    queryParams.financeRequestStatus_In,
   ],
   () => {
     getFinanceData();

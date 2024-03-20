@@ -15,7 +15,7 @@
                   action = 'add';
                 }
               "
-              class="appearance-none leading-none px-[14px] py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-xs mb-6"
+              class="appearance-none leading-none px-[14px] py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary hover:opacity-70 text-xs mb-6"
             >
               <span class=""> + Add director</span>
             </button>

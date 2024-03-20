@@ -72,6 +72,7 @@ const formData = reactive({
     businessType: "",
     address: "",
     description: "",
+    dateofIncorporation: null,
     companyDocuments: [
       {
         url: "",
@@ -90,6 +91,13 @@ const formData = reactive({
         documentType: 3,
       },
     ],
+    statusReport: "",
+    incorporation: "", // Assuming incorporation is a dateofIncorporation type
+    mermat: "",
+    utilityBill: "",
+    country: "",
+    city: "",
+    state: "",
   },
   customerId: authStore.userId,
   loanRequestType: parseInt(id),
@@ -164,6 +172,17 @@ onMounted(() => {
     formData.kyb.businessType = res.data.data.companyType;
     formData.kyb.address = res.data.data.address;
     formData.kyb.productDesc = res.data.data.description;
+    formData.kyb.country = res.data.data.country;
+    formData.kyb.state = res.data.data.state;
+    formData.kyb.state = res.data.data.state;
+    formData.kyb.city = res.data.data.city;
+
+    if (res.data.data.companyDocuments.length > 0) {
+      formData.kyb.incorporation = res.data.data.companyDocuments[0].url;
+      formData.kyb.mermat = res.data.data.companyDocuments[1].url;
+      formData.kyb.statusReport = res.data.data.companyDocuments[2].url;
+      formData.kyb.utilityBill = res.data.data.companyDocuments[3].url;
+    }
   });
   getFinanceData();
 });
@@ -180,6 +199,7 @@ function getFinanceData() {
         formData.haveyoudonebusiness = res.data.data.haveyoudonebusiness;
         formData.haveyouexportedtotheothercourty =
           res.data.data.haveyouexportedtotheothercourty;
+
         isfetching.value = false;
       }
     })

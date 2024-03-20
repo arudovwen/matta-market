@@ -44,8 +44,8 @@
     </HeaderComponent>
     <AppTab :tabs="tabs" className="px-[30px]" />
     <div>
-      <ActiveLoans v-if="active === 'active'" />
-      <PendingLoans v-if="active === 'pending'" />
+      <ActiveLoans v-if="active === 'active loans'" />
+      <PendingLoans v-if="active === 'requests'" />
     </div>
   </div>
 </template>
@@ -55,15 +55,15 @@ import ActiveLoans from "./active-loans";
 import PendingLoans from "./pending-loans";
 import AppIcon from "@/components/AppIcon";
 
-const active = ref("pending");
+const active = ref("requests");
 const tabs = [
   {
-    title: "pending",
-    key: "pending",
+    title: "requests",
+    key: "requests",
   },
   {
-    title: "active",
-    key: "active",
+    title: "active loans",
+    key: "active loans",
   },
 ];
 const FinancesOptions = [

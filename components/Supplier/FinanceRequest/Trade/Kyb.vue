@@ -86,7 +86,7 @@
             <FileUpload label="CAC Status Report" id="statusReport" />
           </FormGroup>
           <FormGroup :error="errors.utilityBill" class="col-span-2">
-            <FileUpload label="Utility bill" id="utilitybill" />
+            <FileUpload label="Utility bill" id="utilityBill" />
           </FormGroup>
         </div>
 
@@ -138,7 +138,7 @@ const formSchema = yup.object().shape({
     .required("Date Of Incorporation is required"), // Assuming dateofIncorporation is a dateofIncorporation type
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
-  description: yup.string(),
+  description: yup.string().nullable(),
   statusReport: yup.string().required("Status Report is required"),
   incorporation: yup.string().required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
   mermat: yup.string().required("Mermat is required"),
@@ -153,11 +153,11 @@ const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(
 );
 
 const [companyName, companyNameAtt] = defineField("companyName");
-const [sector, sectorAtt] = defineField("sector");
+const [sector] = defineField("sector");
 const [dateofIncorporation, dateofIncorporationAtt] = defineField(
   "dateofIncorporation"
 );
-const [companyType, companyTypeAtt] = defineField("companyType");
+const [companyType] = defineField("companyType");
 const [address, addressAtt] = defineField("address");
 const [description, descriptionAtt] = defineField("description");
 
@@ -172,13 +172,14 @@ function handleChange(id, value) {
     if (id === "mermat" && i.documentType === 1) {
       i.url = value;
     }
-    if (id === "description" && i.documentType === 2) {
+    if (id === "statusReport" && i.documentType === 2) {
       i.url = value;
     }
-    if (id === "utilitybill" && i.documentType === 2) {
+    if (id === "utilityBill" && i.documentType === 3) {
       i.url = value;
     }
   });
+  setFieldValue(id, value);
 }
 
 const onSubmit = handleSubmit((values) => {

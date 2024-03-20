@@ -148,25 +148,27 @@ function onModalClose() {
   isErrorOpen.value = true;
 }
 function onSuccess(response) {
-  loader.value = true;
-  const data = {
-    amount: amount.value,
-    transactionReference: response.transactionReference,
-    paymentDescription: "Wallet Funding",
-  };
+  if (response.status.toLowerCase() === "success" && response.transactionReference) {
+    loader.value = true;
+    const data = {
+      amount: amount.value,
+      transactionReference: response.transactionReference,
+      paymentDescription: "Wallet Funding",
+    };
 
-  confirmFunding(data)
-    .then((res) => {
-      if (res.status === 200) {
-        getLedgersTrans();
-        handleComplete("Your funding request is being proceesed");
+    confirmFunding(data)
+      .then((res) => {
+        if (res.status === 200) {
+          getLedgersTrans();
+          handleComplete("Your funding request is being proceesed");
+          loader.value = false;
+        }
+      })
+      .catch((err) => {
+        isErrorOpen.value = true;
         loader.value = false;
-      }
-    })
-    .catch((err) => {
-      isErrorOpen.value = true;
-      loader.value = false;
-    });
+      });
+  }
 }
 const onSubmit = handleSubmit((values) => {
   const data = {

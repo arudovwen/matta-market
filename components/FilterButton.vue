@@ -1,11 +1,12 @@
 <template>
   <Listbox as="div" v-model="selectedoption" class="relative">
     <ListboxButton
-      class="border border-[#D0D5DD] rounded-lg px-[14px] py-[10px] text-sm capitalize h-11"
+      class="border border-[#D0D5DD] rounded-lg px-[14px] py-[10px] text-sm capitalize h-11 min-w-[100px]"
     >
-      <span v-if="selectedoption.label"> {{ selectedoption.label }}</span>
+      <span v-if="selectedoption?.label"> {{ selectedoption?.label }}</span>
       <span class="flex gap-x-1 items-center" v-else
-        ><AppIcon icon="fluent:filter-28-filled" /> Filter</span
+        ><AppIcon icon="fluent:filter-28-filled" v-if="title == 'Filter'" />
+        {{ title }}</span
       >
     </ListboxButton>
     <transition
@@ -33,12 +34,14 @@
 </template>
 
 <script setup>
+import AppIcon from "@/components/AppIcon";
 import {
   Listbox,
   ListboxButton,
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
+import { ref, defineEmits, defineProps, watch, onMounted } from "vue";
 
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
@@ -48,6 +51,9 @@ const props = defineProps({
   },
   modelValue: {
     default: "",
+  },
+  title: {
+    default: "Filter",
   },
 });
 
@@ -60,7 +66,6 @@ onMounted(() => {
   }
 });
 watch(selectedoption, () => {
-  emit("update:modelValue", selectedoption.value.value);
+  emit("update:modelValue", selectedoption.value?.value);
 });
- 
 </script>
