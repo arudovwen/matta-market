@@ -52,7 +52,7 @@
                   </div>
                 </TransitionChild>
                 <div
-                  class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl"
+                  class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl pb-8"
                 >
                   <div class="relative flex-1 px-4 sm:px-6">
                     <!-- Replace with your content -->
@@ -118,11 +118,11 @@
                       <div class="px-5 pt-5">
                         <MenuMobile />
                         <hr
-                          class="border-[#F4F4F4] my-4"
+                          class="border-[#F4F4F4] mb-4"
                           v-if="authStore.isLoggedIn && !activeKey"
                         />
                         <ul
-                          class="grid gap-y-5"
+                          class="grid gap-y-5 pb-8"
                           v-if="authStore.isLoggedIn && !activeKey"
                         >
                           <li
@@ -132,19 +132,22 @@
                             :key="n.name"
                           >
                             <NuxtLink
-                              v-if="item.key !== 'storefront'"
                               :to="n.url"
                               class="flex gap-x-3 items-center text-sm font-medium text-[#333]"
                             >
-                              <AppIcon :icon="n.icon"  iconClass="text-xl text-[#667085]" /> {{ n.name }}
+                              <AppIcon
+                                :icon="n.icon"
+                                iconClass="text-xl text-[#667085]"
+                              />
+                              {{ n.name }}
                             </NuxtLink>
-                            <span
+                            <!-- <span
                               v-else
                               @click="storeOpen = true"
-                              class="text-sm flex items-center px-5 border-r-[3px] border-transparent group font-medium hover:bg-[#2270FA0F] hover:text-primary-500 hover:border-primary-500 cursor-pointer"
+                              class="text-sm flex items-center border-r-[3px] border-transparent group font-medium hover:text-primary-500 hover:border-primary-500 cursor-pointer"
                               :class="` ${
                                 storeOpen || route.path.includes('storefront')
-                                  ? 'bg-[#2270FA0F] text-primary-500'
+                                  ? ' text-primary-500'
                                   : ''
                               }`"
                             >
@@ -152,10 +155,10 @@
                                 class="flex items-center gap-x-[10px] flex-1 py-[9px]"
                               >
                                 <AppIcon
-                                  :icon="item.icon"
+                                  :icon="n.icon"
                                   iconClass="text-xl text-[#667085]"
                                 />
-                                <span> {{ item.name }}</span>
+                                <span> {{ n.name }}</span>
                               </span>
                               <div
                                 v-if="storeOpen"
@@ -183,7 +186,7 @@
                                   </li>
                                 </ul>
                               </div>
-                            </span>
+                            </span> -->
                           </li>
                         </ul>
                       </div>
@@ -217,13 +220,13 @@ import {
 import { logOut } from "~/services/authservices";
 
 const storeOpen = ref(false);
-const route = useRoute()
+const route = useRoute();
 const activeKey = ref(null);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 const isSigniningOut = ref(false);
 const mappedNav = computed(() => {
-  return mobileMenu.filter((i) =>
+  return navigation.filter((i) =>
     (authStore?.userType?.toLowerCase() === "supplier"
       ? vendorRoutes
       : buyerRoutes

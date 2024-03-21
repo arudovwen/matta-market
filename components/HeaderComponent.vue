@@ -6,7 +6,7 @@
     <div>
       <h1
         v-if="title"
-        class="text-base md:text-lg text-[#101828] col-span-1 font-semibold flex gap-x-3 items-center capitalize"
+        class="text-lg text-[#101828] col-span-1 font-semibold flex gap-x-3 items-center capitalize"
       >
         <span
           class="cursor-pointer"

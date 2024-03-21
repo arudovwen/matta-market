@@ -4,12 +4,12 @@
     <div class="mb-2">
         <HeaderComponent
         title="Account settings"
-        className="!px-6 !border-none "
+        className="!px-0 lg:!px-6 !border-none "
         subtext="Manage your team members and their account permissions here."
       />
     </div>
-      <AppTab :tabs="tabs" className="px-6" />
-      <div class="px-6">
+      <AppTab :tabs="tabs" className="lg:px-6" />
+      <div class="lg:px-6">
         <div class="">
           <Profile v-if="active === 'profile'" />
           <Notifications v-if="active === 'notifications'" />

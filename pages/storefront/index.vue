@@ -3,7 +3,7 @@
     <!-- Top bar   -->
     <HeaderComponent title="Storefront" subtext="List of orders, requests, products in your storefront" />
 
-    <AppTab :tabs="tabs" className="px-6" />
+    <AppTab :tabs="tabs" className="px-4 lg:px-6" />
     <div >
       <div >
         <SupplierOrdersComponent v-if="active === 'customer orders'" />

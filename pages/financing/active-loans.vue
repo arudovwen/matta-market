@@ -2,145 +2,153 @@
     <div class="">
       <div class="">
         <div>
-          <div class="flex justify-between items-center mb-8">
-            <div class="flex gap-x-4 px-6">
-              <div class="relative flex items-center">
-                <span class="absolute left-4 pointer-events-none text-[#667085]"
-                  ><i class="uil uil-search"></i
-                ></span>
-                <input
-                  v-model="queryParams.Search"
-                  @change="getRequests()"
-                  @keyup="debounceSearch"
-                  placeholder="Search"
-                  class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
-                  type="search"
-                />
-              </div>
-              <FilterButton
-                v-model="queryParams.LoadRequestType"
-                :options="FinancesOptions"
+        <div class="mb-8">
+          <div class="flex gap-x-4 px-6 flex-col lg:flex-row gap-y-4">
+            <div class="relative flex items-center">
+              <span class="absolute left-4 pointer-events-none text-[#667085]"
+                ><i class="uil uil-search"></i
+              ></span>
+              <input
+                v-model="queryParams.Search"
+                @change="getRequests()"
+                @keyup="debounceSearch"
+                placeholder="Search"
+                class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-full lg:w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
+                type="search"
               />
             </div>
+          <div class="flex gap-x-4">
+            <FilterButton
+              v-model="queryParams.LoadRequestType"
+              :options="FinancesOptions"
+              title="Filter type"
+            />
+            <FilterButton
+              v-model="queryParams.financeRequestStatus_In"
+              :options="StatusOptions"
+              title="Filter status"
+            />
           </div>
-         
-          <div v-if="!docLoading && financeData?.length">
-            <table class="w-full">
-              <thead>
-                <tr>
-                  <th
-                    v-for="item in theads"
-                    :key="item"
-                    class="capitalize text-[#475467] text-sm text-left font-medium border-t border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+          </div>
+        </div>
+
+        <div v-if="!docLoading && financeData?.length" class="overflow-x-auto">
+          <table class="table-auto w-full">
+            <thead>
+              <tr>
+                <th
+                  v-for="item in theads"
+                  :key="item"
+                  class="capitalize text-[#475467] text-sm text-left font-medium border-t border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+                >
+                  {{ item }}
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr v-for="item in financeData" :key="item">
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                >
+                  {{ item.financeRequestNo }}
+                </td>
+                <!-- <td
+                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
                   >
-                    {{ item }}
-                  </th>
-                </tr>
-              </thead>
-  
-              <tbody>
-                <tr v-for="item in financeData" :key="item">
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    {{ item.financeRequestNo }}
-                  </td>
-                  <!-- <td
-                      class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+                    {{ item.customer || "-" }}
+                  </td> -->
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                >
+                  {{ handleType(item.loanRequestType) }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                >
+                  {{ moment(item.created).format("ll") }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+                >
+                  {{ currencyFormat(item.amountRequired) }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+                >
+                  {{
+                    !item.financeRequestStatus
+                      ? "-"
+                      : currencyFormat(item.amountApproved)
+                  }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                >
+                  <AppStatusButton
+                    :status="item.financeRequestStatus"
+                    stattype="finance"
+                  />
+                </td>
+
+                <td
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                >
+                  <Menu class="relative" as="div">
+                    <MenuButton
+                      :id="`${item.productName}+option`"
+                      class="outline-none"
                     >
-                      {{ item.customer || "-" }}
-                    </td> -->
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    {{ handleType(item.loanRequestType) }}
-                  </td>
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    {{ moment(item.created).format("ll") }}
-                  </td>
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
-                  >
-                    {{ currencyFormat(item.amountRequired) }}
-                  </td>
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
-                  >
-                    {{
-                      !item.financeRequestStatus
-                        ? "-"
-                        : currencyFormat(item.amountApproved)
-                    }}
-                  </td>
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    <AppStatusButton
-                      :status="0"
-                      stattype="active-finance"
-                    />
-                  </td>
-  
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    <Menu class="relative" as="div">
-                      <MenuButton
-                        :id="`${item.productName}+option`"
-                        class="outline-none"
+                      <AppIcon icon="heroicons:ellipsis-vertical-solid" />
+                    </MenuButton>
+                    <MenuItems
+                      class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
+                    >
+                      <div
+                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
+                        @click="openRequest(item)"
                       >
-                        <AppIcon icon="heroicons:ellipsis-vertical-solid" />
-                      </MenuButton>
-                      <MenuItems
-                        class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
+                        View request
+                      </div>
+                      <div
+                        v-if="item.financeRequestStatus === 1"
+                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
+                        @click="openLoan(item)"
+                      >
+                        View loan offer
+                      </div>
+
+                      <NuxtLink
+                        v-if="item.financeRequestStatus === 0"
+                        :to="`/financing/requests/${handleType(
+                          item.loanRequestType
+                        )}/${item.loanRequestType}/${item.id}`"
                       >
                         <div
-                          class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
-                          @click="openRequest(item)"
-                        >
-                          View request
-                        </div>
-                        <div
-                          v-if="item.financeRequestStatus === 1"
-                          class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
-                          @click="openLoan(item)"
-                        >
-                          View loan offer
-                        </div>
-  
-                        <NuxtLink
-                          v-if="item.financeRequestStatus === 0"
-                          :to="`/financing/requests/${handleType(
-                            item.loanRequestType
-                          )}/${item.loanRequestType}/${item.id}`"
-                        >
-                          <div
-                            class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
-                          >
-                            Edit request
-                          </div>
-                        </NuxtLink>
-                        <div
-                          v-if="item.financeRequestStatus === 0"
-                          @click="withdrawRequest(item.id)"
                           class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
                         >
-                          Withdraw request
+                          Edit request
                         </div>
-                      </MenuItems>
-                    </Menu>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <EmptyData
-            v-if="!docLoading && !financeData?.length"
-            title="No request available"
-          />
+                      </NuxtLink>
+                      <div
+                        v-if="item.financeRequestStatus === 0"
+                        @click="withdrawRequest(item.id)"
+                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                      >
+                        Withdraw request
+                      </div>
+                    </MenuItems>
+                  </Menu>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <EmptyData
+          v-if="!docLoading && !financeData?.length"
+          title="No request available"
+        />
+      </div>
         <div class="text-center p-6 lg:p-8 my-20" v-if="docLoading">
           <AppLoader />
         </div>

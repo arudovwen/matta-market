@@ -35,7 +35,7 @@
       </div>
       <div class="w-full py-3 md:py-5 px-3 xl:px-5">
         <span
-          class="block mb-1 font-medium truncate max-w-max text-[12px] sm:text-sm xl:text-base darks:text-white leading-tight"
+          class="block mb-1 font-medium truncate max-w-[120px] md:max-w-max text-[12px] sm:text-sm xl:text-base darks:text-white leading-tight"
           >{{ detail.title }}</span
         >
         <span

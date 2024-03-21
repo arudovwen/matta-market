@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!authStore?.userInfo?.onboardingPageStatus"
-    class="px-5 py-[14px] bg-[#182230] rounded-[5px] flex justify-between gap-x-40 relative mb-3"
+    class="px-5 py-[14px] bg-[#182230] rounded-[5px] flex flex-col lg:flex-row justify-between gap-y-5 lg:gap-y-0 lg:gap-x-40 relative mb-3"
   >
     <div class="flex gap-x-4 items-center">
       <AppIcon icon="quill:info" iconClass="text-white text-2xl" />
@@ -10,9 +10,9 @@
       </p>
     </div>
     <div class="flex items-end">
-      <NuxtLink to="/company/settings"
+      <NuxtLink to="/company/settings" class="w-full lg:w-auto"
         ><button
-          class="px-8 py-[11px] rounded-[5px] bg-primary-500 hover:bg-primary/80 text-white text-sm whitespace-nowrap"
+          class="px-8 py-[11px] rounded-[5px] bg-primary-500 hover:bg-primary/80 text-white text-sm whitespace-nowrap w-full lg:w-auto"
         >
           Add Company details
         </button></NuxtLink

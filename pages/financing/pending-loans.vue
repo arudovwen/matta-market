@@ -2,8 +2,8 @@
   <div class="">
     <div class="">
       <div>
-        <div class="flex justify-between items-center mb-8">
-          <div class="flex gap-x-4 px-6">
+        <div class="mb-8">
+          <div class="flex gap-x-4 px-6 flex-col lg:flex-row gap-y-4">
             <div class="relative flex items-center">
               <span class="absolute left-4 pointer-events-none text-[#667085]"
                 ><i class="uil uil-search"></i
@@ -13,10 +13,11 @@
                 @change="getRequests()"
                 @keyup="debounceSearch"
                 placeholder="Search"
-                class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
+                class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-full lg:w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
                 type="search"
               />
             </div>
+          <div class="flex gap-x-4">
             <FilterButton
               v-model="queryParams.LoadRequestType"
               :options="FinancesOptions"
@@ -28,10 +29,11 @@
               title="Filter status"
             />
           </div>
+          </div>
         </div>
 
-        <div v-if="!docLoading && financeData?.length">
-          <table class="w-full">
+        <div v-if="!docLoading && financeData?.length" class="overflow-x-auto">
+          <table class="table-auto w-full">
             <thead>
               <tr>
                 <th

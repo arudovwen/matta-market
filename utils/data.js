@@ -114,11 +114,11 @@ export const navigations = [
     key: "applications",
     url: null,
   },
-  {
-    name: "Finance",
-    key: "finance",
-    url: "/finance",
-  },
+  // {
+  //   name: "Finance",
+  //   key: "finance",
+  //   url: "/finance",
+  // },
 ];
 export const mobileNavigation = [
   {

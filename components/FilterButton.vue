@@ -4,7 +4,7 @@
       class="border border-[#D0D5DD] rounded-lg px-[14px] py-[10px] text-sm capitalize h-11 min-w-[100px]"
     >
       <span v-if="selectedoption?.label"> {{ selectedoption?.label }}</span>
-      <span class="flex gap-x-1 items-center" v-else
+      <span class="flex gap-x-1 items-center whitespace-nowrap" v-else
         ><AppIcon icon="fluent:filter-28-filled" v-if="title == 'Filter'" />
         {{ title }}</span
       >

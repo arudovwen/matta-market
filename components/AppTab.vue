@@ -7,7 +7,7 @@
       v-for="tab in tabs"
       :key="tab.title"
       @click="active = tab.title"
-      :class="`capitalize text-sm font-semibold pb-3 border-b-2 px-1 flex items-center gap-x-1 ${
+      :class="`capitalize text-xs md:text-sm font-semibold pb-3 border-b-2 px-1 flex items-center gap-x-1 ${
         active === tab.title
           ? 'border-primary-500 text-primary-500'
           : 'border-transparent text-matta-black'

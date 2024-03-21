@@ -4,7 +4,7 @@
     class="flex justify-between items-center relative z-[999]"
     :class="wrapperClass"
   >
-    <span class="text-sm text-[#344054]">
+    <span class="text-xs md:text-sm text-[#344054]">
       Page <span>{{ current }}</span> to <span>{{ totalPages }}</span></span
     >
     <div class="flex gap-x-4">
@@ -13,18 +13,18 @@
         :disabled="current === 1"
         :class="`${
           current === 1 ? ' opacity-50 cursor-not-allowed' : ''
-        } border border-[#D0D5DD] rounded-[5px] text-sm px-4 py-2`"
+        } border border-[#D0D5DD] rounded-[5px] text-xs md:text-sm px-4 py-2`"
       >
-        <span class="text-sm">Previous</span>
+        <span class="text-xs md:text-sm">Previous</span>
       </button>
       <button
         @click.prevent="changePage(nextPage)"
         :disabled="current === totalPages"
         :class="`${
           current === totalPages ? ' opacity-50 cursor-not-allowed' : ''
-        } border border-[#D0D5DD] rounded-[5px] text-sm px-4 py-2`"
+        } border border-[#D0D5DD] rounded-[5px] text-xs md:text-sm px-4 py-2`"
       >
-        <span class="text-sm">Next</span>
+        <span class="text-xs md:text-sm">Next</span>
       </button>
     </div>
   </div>
@@ -168,7 +168,7 @@ export default defineComponent({
   li {
     a,
     div {
-      @apply bg-transparent   text-[10px] sm:text-xs lg:text-sm font-normal rounded-lg leading-[16px] flex h-6 lg:h-10 w-6 lg:w-10 items-center justify-center transition-all duration-150;
+      @apply bg-transparent   text-[10px] sm:text-xs lg:text-xs md:text-sm font-normal rounded-lg leading-[16px] flex h-6 lg:h-10 w-6 lg:w-10 items-center justify-center transition-all duration-150;
       &.active {
         @apply bg-[#EFF1F5] text-[#333] font-medium;
       }

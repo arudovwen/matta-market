@@ -1,23 +1,23 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
-  <div class="gap-y-2 flex flex-col">
+  <div class="gap-y-2 flex flex-col w-full">
     <div class="mb-4">
       <div class="flex gap-x-4 justify-between">
-        <div class="relative flex items-center">
+        <div class="relative flex items-center max-w-[280px]">
           <span class="absolute left-4 pointer-events-none text-[#667085]"
             ><i class="uil uil-search"></i
           ></span>
           <input
             v-model="queryParams.Search"
             placeholder="Search"
-            class="border border-[#E7E7E7] focus:pr-3 pl-10 rounded-lg w-full lg:w-[280px] text-sm focus:outline-none py-[10px] transition ease-in-out duration-300"
+            class="border border-[#E7E7E7] focus:pr-3 pl-10 rounded-lg w-full text-sm focus:outline-none py-[10px] transition ease-in-out duration-300"
             type="search"
           />
         </div>
         <div class="flex relative items-center">
           <select
             v-model="queryParams.Type"
-            class="appearance-none border border-[#E7E7E7] rounded-lg w-[150px] text-sm py-[10px] px-[14px] focus:outline-matta-black/20"
+            class="appearance-none border border-[#E7E7E7] rounded-lg max-w-[150px] text-sm py-[10px] px-[14px] focus:outline-matta-black/20"
           >
             <option value="" disabled>Filter</option>
             <option value="">Default</option>
@@ -36,13 +36,12 @@
         /> -->
       </div>
     </div>
-    <div class="bg-white">
-      <div v-if="!isPageLoading">
+    <div class="w-full">
+      <div v-if="!isPageLoading" class="w-full">
         <div
-          v-if="tdata.length"
-          class="overflow-auto border border-[#EAECF0] rounded-lg max-w-full"
+          class="overflow-x-auto border border-[#EAECF0] rounded-lg w-full max-w-full bg-white"
         >
-          <table class="w-full">
+          <table class="table-auto w-full hidden lg:inline-table">
             <thead>
               <tr>
                 <th
@@ -59,7 +58,7 @@
               <tr
                 v-for="item in tdata"
                 :key="item"
-                class="border-b py-4 px-6 border-[#EAECF0] last:border-none whitespace-nowrap"
+                class="border-b border-[#EAECF0] last:border-none"
               >
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
@@ -89,21 +88,45 @@
               </tr>
             </tbody>
           </table>
-          <div class="p-5">
-            <PaginationSimple
-              v-if="tdata.length"
-              :total="queryParams.totalCount"
-              :current="queryParams.PageNumber"
-              :per-page="queryParams.PageSize"
-              :pageRange="5"
-              @page-changed="queryParams.PageNumber = $event"
-            />
+          <div class="lg:hidden">
+            <div
+              class="border-b border-[#EAECF0] last:border-none px-3 py-4"
+              v-for="item in tdata"
+              :key="item"
+            >
+              <div class="text-left text-matta-black">
+                <span class="block text-sm mb-1"> {{ item.reference }}</span>
+                <span class="block text-sm mb-1">
+                  {{ moment(item.transactionDate).format("lll") }}</span
+                >
+                <span class="block text-base font-semibold">
+                  {{ currencyFormat(item.amount, item.currencyCode) }}</span
+                >
+                <div class="!text-[10px] flex justify-end">
+                  <AppStatusButton
+                    stattype="wallet"
+                    :status="item.legerAction"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
+
           <EmptyData
             type="transaction"
             v-if="!tdata.length"
-            title="No Transaction yet"
+            title="No Transaction ye"
             subtext="All your transactions will show up here"
+          />
+        </div>
+        <div class="py-5" v-if="tdata.length">
+          <PaginationSimple
+            v-if="tdata.length"
+            :total="queryParams.totalCount"
+            :current="queryParams.PageNumber"
+            :per-page="queryParams.PageSize"
+            :pageRange="5"
+            @page-changed="queryParams.PageNumber = $event"
           />
         </div>
       </div>

@@ -21,7 +21,7 @@
             id="request"
             class="shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] font-semibold outline-none !px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm rounded-lg border border-primary-500 flex items-center gap-x-1"
           >
-            <AppIcon icon="humbleicons:plus" /> Request Financing
+            <AppIcon icon="humbleicons:plus" /> Request <span class="hidden lg:inline">Financing</span>
           </MenuButton>
           <MenuItems
             class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden flex flex-col"
