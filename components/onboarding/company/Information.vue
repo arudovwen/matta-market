@@ -93,14 +93,17 @@
                       >Date Of Incorporation
                       <span class="text-red-500 pl-[.02rem]">*</span></label
                     >
-                    <input
-                      v-model="v$.dateofIncorporation.$model"
-                      :class="{
-                        'border-red-500': v$.dateofIncorporation.$error,
-                      }"
-                      class="px-[14px] py-[10px] h-11 text-sm rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      type="date"
-                    />
+
+                    <ClientOnly>
+                      <VueDatePicker
+                        v-model="v$.dateofIncorporation.$model"
+                        placeholder="Select date"
+                        :enable-time-picker="false"
+                        :input-class-name="`!rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20 ${
+                          v$.dateofIncorporation.$error ? 'border-red-500' : 'border-[#DCDEE6]'
+                        }`"
+                      />
+                    </ClientOnly>
                     <div
                       class="text-red-500 mt-1"
                       v-for="error of v$.dateofIncorporation.$errors"
@@ -472,7 +475,7 @@
         -->
 
         <button
-          :disabled="v$.$silentErrors.length || isLoading"
+          :disabled="isLoading"
           :class="{
             'opacity-60 cursor-not-allowed': v$.$silentErrors.length,
           }"
@@ -568,6 +571,8 @@
 </template>
 
 <script setup>
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
 import sectors from "@/utils/sectors.json";

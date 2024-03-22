@@ -165,8 +165,7 @@ const tabs = [
   //   value: 5,
   // },
 ];
-
-onMounted(() => {
+function getCommpanyData() {
   getCompanyProfile().then((res) => {
     loading.value = false;
     company.value = res.data.data;
@@ -187,6 +186,9 @@ onMounted(() => {
       formData.kyb.utilityBill = res.data.data.companyDocuments[3].url;
     }
   });
+}
+onMounted(() => {
+  getCommpanyData();
   getFinanceData();
 });
 function getFinanceData() {
@@ -210,6 +212,7 @@ function getFinanceData() {
       isfetching.value = false;
     });
 }
+
 provide("company", company);
 provide("active", active);
 provide("formData", formData);

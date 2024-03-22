@@ -14,7 +14,7 @@
       <!-- Top bar   -->
       <div class="flex-1">
         <div class="">
-          <div v-if="!companyInfo.directors.length">
+          <div>
             <button
               type="button"
               @click="
@@ -28,7 +28,7 @@
               <span class=""> + Add director</span>
             </button>
           </div>
-          <div class="overflow-x-auto max-w-[800px]">
+          <div class="overflow-x-auto max-w-[656px]">
             <DirectorsView
               :directors="companyInfo.directors"
               :companyInfo="companyInfo"

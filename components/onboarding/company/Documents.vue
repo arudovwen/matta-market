@@ -18,6 +18,7 @@
           <FileUpload
             label="Memorandum and Articles of Association"
             id="mermat"
+            :modelValue="docUrl(1)"
           />
           <span
             @click="downloadFile(docUrl(1), 'MERMAT')"
@@ -30,7 +31,7 @@
           >
         </div>
         <div>
-          <FileUpload label="Certificate of Incorporation" id="incorporation" />
+          <FileUpload label="Certificate of Incorporation" id="incorporation" :modelValue="docUrl(0)" />
           <span @click="downloadFile(docUrl(0), 'CAC')" v-if="docUrl(0)">
             <span class="block text-xs text-blue-500 mt-1"
               >Download Certificate of Incorporation</span
@@ -38,7 +39,7 @@
           >
         </div>
         <div>
-          <FileUpload label="CAC Status Report" id="statusReport" />
+          <FileUpload label="CAC Status Report" id="statusReport" :modelValue="docUrl(2)" />
           <span
             @click="downloadFile(docUrl(2), 'Status report')"
             v-if="docUrl(2)"
@@ -49,7 +50,7 @@
           >
         </div>
         <div>
-          <FileUpload label="Utility bill" id="utitlityBill" />
+          <FileUpload label="Utility bill" id="utitlityBill" :modelValue="docUrl(3)" />
           <span
             @click="downloadFile(docUrl(3), 'Utility bill')"
             v-if="docUrl(3)"

@@ -121,14 +121,16 @@
         <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >Date of birth</label
         >
-        <input
-          v-model="v$.dob.$model"
-          :class="{ 'border-red-500': v$.dob.$error }"
-          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          autocomplete="off"
-          autofocus="on"
-          type="date"
-        />
+        <ClientOnly>
+          <VueDatePicker
+            v-model="v$.dob.$model"
+            placeholder="Select date"
+           :enable-time-picker="false"
+            :input-class-name="`!rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20 ${
+              v$.dob.$error ? 'border-red-500' : 'border-[#DCDEE6]'
+            }`"
+          />
+        </ClientOnly>
         <div
           class="text-red-500 mt-1"
           v-for="error of v$.dob.$errors"
@@ -166,6 +168,7 @@
       <FileUpload
         label="Upload ID (Passport, Driver’s License, or NIN)"
         id="identityUrl"
+        :modelValue="form.identityUrl"
       />
       <span
         @click="downloadFile(form.identityUrl, 'Identity card')"
@@ -187,7 +190,11 @@
       </div>
     </div>
     <div class="lg:col-span-2 mb-6">
-      <FileUpload label="Upload Signature" id="signatureUrl" />
+      <FileUpload
+        label="Upload Signature"
+        id="signatureUrl"
+        :modelValue="form.signatureUrl"
+      />
       <span
         @click="downloadFile(form.signatureUrl, 'Signature')"
         download
@@ -228,6 +235,9 @@
 
 <script setup>
 import useVuelidate from "@vuelidate/core";
+import moment from "moment";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import {
   required,
   email,
@@ -258,7 +268,7 @@ onMounted(() => {
     form.email = props.director.email;
     form.phone = props.director.phone;
     form.bvn = props.director.bvn;
-    form.dob = props.director.dob;
+    form.dob = new Date(props.director.dob);
     form.linkedIn = props.director.linkedIn;
     form.signatureUrl = props.director.signatureUrl;
     form.identityUrl = props.director.identityUrl;

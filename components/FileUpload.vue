@@ -23,21 +23,21 @@
         ></div>
         <span v-else>{{ btnText || "Select file" }}</span>
       </button>
-      <div class="flex-1 px-4">
-        <span class="max-w-[260px] truncate text-[#999999] inline-block">{{
-          title
-        }}</span>
-      </div>
+
+      <span
+        class="flex-1 px-4 truncate text-[#999999] inline-block"
+        >{{ title }}</span
+      >
     </div>
   </div>
 </template>
 
 <script setup>
-import { uploadfile } from "~/services/onboardingservices";
+import { uploaddocument } from "~/services/onboardingservices";
 import { defineProps, ref, inject } from "vue";
 import { toast } from "vue3-toastify";
 
-const props = defineProps(["label", "id", "btnText", "value"]);
+const props = defineProps(["label", "id", "btnText", "modelValue"]);
 
 const handleChange = inject("handleChange");
 const fileInputRef = ref(null);
@@ -48,16 +48,7 @@ function handleEvent(e) {
 
   if (!file) return;
 
-  const allowedExtensions = [
-    "jpeg",
-    "png",
-    "jpg",
-    "pdf",
-    "doc",
-    "docx",
-    "xlsx",
-    "csv",
-  ]; // Add more allowed extensions if needed
+  const allowedExtensions = ["jpeg", "png", "jpg", "pdf"]; // Add more allowed extensions if needed
   const fileExtension = file.name.split(".").pop().toLowerCase();
 
   if (!allowedExtensions.includes(fileExtension)) {
@@ -71,8 +62,10 @@ function handleEvent(e) {
   reader.onload = function (event) {
     const base64String = event.target.result.split(",")[1];
     loading.value = true;
-    // Assuming canvas and uploadfile are available
-    uploadfile({ base64: base64String })
+    const data = { base64: base64String, ext: `.${fileExtension}` };
+    // Assuming canvas and uploaddocument are available
+    console.log("🚀 ~ handleEvent ~ data:", data);
+    uploaddocument(data)
       .then((res) => {
         loading.value = false;
         handleChange(props.id, res.data.message);
@@ -92,10 +85,13 @@ function handleEvent(e) {
 function triggerFileInput() {
   fileInputRef.value.click();
 }
+onMounted(() => {
+  title.value = props.modelValue;
+});
 watch(
-  () => props.value,
+  () => [props.modelValue],
   () => {
-    fileInputRef.value = title.value = props.value;
+    title.value = props.modelValue;
   }
 );
 </script>

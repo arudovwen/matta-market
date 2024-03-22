@@ -9,15 +9,22 @@
         v-model="companyName"
         :error="errors.companyName"
       />
-      <Textinput
-        placeholder=""
+
+      <FormGroup
         label="Date of incorporation"
         name="dateofIncorporation"
-        type="date"
-        v-bind="dateofIncorporationAtt"
-        v-model="dateofIncorporation"
         :error="errors.dateofIncorporation"
-      />
+      >
+        <ClientOnly>
+          <VueDatePicker
+            v-model="dateofIncorporation"
+            placeholder="Select date"
+            :enable-time-picker="false"
+            :input-class-name="`!rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20
+                        border-[#DCDEE6]`"
+          />
+        </ClientOnly>
+      </FormGroup>
 
       <FormGroup
         label="Business type"
@@ -99,24 +106,37 @@
         <label class="mb-4 mt-3 font-medium text-sm block"
           >Company documents
         </label>
-        <div v-if="company.companyDocuments.find(i=> !i.url)" class="grid gap-y-6">
+        <div
+          v-if="company.companyDocuments.find((i) => !i.url)"
+          class="grid gap-y-6"
+        >
           <FormGroup :error="errors.mermat" class="col-span-2">
             <FileUpload
               label="Memorandum and Articles of Association"
               id="mermat"
+              :modelValue="mermat"
             />
           </FormGroup>
           <FormGroup :error="errors.incorporation" class="col-span-2">
             <FileUpload
               label="Certificate of Incorporation"
               id="incorporation"
+              :modelValue="incorporation"
             />
           </FormGroup>
           <FormGroup :error="errors.statusReport" class="col-span-2">
-            <FileUpload label="CAC Status Report" id="statusReport" />
+            <FileUpload
+              label="CAC Status Report"
+              id="statusReport"
+              :modelValue="statusReport"
+            />
           </FormGroup>
           <FormGroup :error="errors.utilityBill" class="col-span-2">
-            <FileUpload label="Utility bill" id="utilityBill" />
+            <FileUpload
+              label="Utility bill"
+              id="utilityBill"
+              :modelValue="utilityBill"
+            />
           </FormGroup>
         </div>
 
@@ -144,6 +164,8 @@
 </template>
 
 <script setup>
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
 import { useForm } from "vee-validate";
@@ -187,7 +209,10 @@ const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(
     initialValues: formData.kyb,
   }
 );
-
+const [utilityBill] = defineField("utilityBill");
+const [mermat] = defineField("mermat");
+const [statusReport] = defineField("statusReport");
+const [incorporation] = defineField("incorporation");
 const [companyName, companyNameAtt] = defineField("companyName");
 const [sector] = defineField("sector");
 const [dateofIncorporation, dateofIncorporationAtt] = defineField(
