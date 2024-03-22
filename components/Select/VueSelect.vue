@@ -26,6 +26,7 @@
           :placeholder="placeholder"
           v-model="selectedValue"
           :reduce="reduce"
+          :clearable="clearable"
         >
         </vSelect>
       </div>
@@ -142,6 +143,9 @@ export default {
     reduce: {
       default: [],
     },
+    clearable:{
+      default:true
+    }
   },
   mounted() {
     this.selectedValue = this.modelValue;

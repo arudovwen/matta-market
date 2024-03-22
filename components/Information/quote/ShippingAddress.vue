@@ -18,16 +18,8 @@
       <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
 
       <div class="flex relative rounded-lg h-11">
-        <FormsPhoneCodes v-model="quoteForm.phoneCode" />
+        <FormsPhoneCodes  v-model="request2$.phone.$model" />
 
-        <input
-          v-model="request2$.phone.$model"
-          class="flex-1 rounded-r-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20 placeholder:text-sm"
-          autocomplete="off"
-          autofocus="on"
-          placeholder="08160723884"
-          type="tel"
-        />
       </div>
       <div
         class="text-red-500 mt-1"

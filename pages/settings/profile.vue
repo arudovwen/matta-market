@@ -1,211 +1,270 @@
 <template>
-<div class="rounded-lg bg-white px-6 border border-[#EAECF0] flex gap-x-[76px] flex-col lg:flex-row gap-y-7 lg:gap-y-10  py-[30px]">
-        <div class="w-[250px]">
-          <h2 class="text-sm text-[#101828] font-semibold">Personal info</h2>
-          <p class="text-xs text-[#475467]">
-            Update your photo and personal details here.
-          </p>
+  <div
+    class="rounded-lg bg-white px-6 border border-[#EAECF0] flex gap-x-[76px] flex-col lg:flex-row gap-y-7 lg:gap-y-10 py-[30px]"
+  >
+    <div class="w-[250px]">
+      <h2 class="text-sm text-[#101828] font-semibold">Personal info</h2>
+      <p class="text-xs text-[#475467]">
+        Update your photo and personal details here.
+      </p>
+    </div>
+    <div class="flex-1">
+      <div class="flex gap-x-3 items-center mb-10">
+        <div class="flex items-center">
+          <span>
+            <span
+              v-if="!image"
+              class="h-24 w-24 rounded-full flex items-center text-sm justify-center bg-[#F1F3F5]"
+              >Photo</span
+            >
+            <img
+              v-else
+              :src="image"
+              class="h-24 w-24 rounded-full flex items-center justify-center bg-[#F1F3F5]"
+            />
+          </span>
         </div>
-        <div class="flex-1">
-          <div class="flex gap-x-3 items-center mb-10">
-            <div class="flex items-center">
-              <span>
-                <span
-                  v-if="!image"
-                  class="h-24 w-24 rounded-full flex items-center text-sm justify-center bg-[#F1F3F5]"
-                  >Photo</span
-                >
-                <img
-                  v-else
-                  :src="image"
-                  class="h-24 w-24 rounded-full flex items-center justify-center bg-[#F1F3F5]"
-                />
-              </span>
-            </div>
-            <div class="flex items-center gap-x-3">
-              <label for="upload">
-                <span
-                  class="text-[#344054] rounded-full px-1 py-3 text-sm cursor-pointer"
-                >
-                  Upload photo
-                </span>
-                <input
-                  @change="handleEvent($event)"
-                  type="file"
-                  accept="image/*"
-                  id="upload"
-                  class="hidden"
-                />
-              </label>
-            </div>
-          </div>
-          <form @submit.prevent="handleSubmit">
-            <div>
-              <div class="grid lg:grid-cols-2 gap-x-6">
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block"
-                    >First name</label
-                  >
-                  <input
-                    v-model="v$.firstName.$model"
-                    :class="{ 'border-red-500': v$.firstName.$error }"
-                    class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                    autocomplete="off"
-                    autofocus="on"
-                  />
-                  <div
-                    class="text-red-500 mt-1"
-                    v-for="error of v$.firstName.$errors"
-                    :key="error.$uid"
-                  >
-                    <div class="error-msg text-error text-sm font-semibold">
-                      {{ error.$message }}
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block"
-                    >Last name</label
-                  >
-                  <input
-                    v-model="v$.lastName.$model"
-                    :class="{ 'border-red-500': v$.lastName.$error }"
-                    class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                    autocomplete="off"
-                    autofocus="on"
-                  />
-                  <div
-                    class="text-red-500 mt-1"
-                    v-for="error of v$.lastName.$errors"
-                    :key="error.$uid"
-                  >
-                    <div class="error-msg text-error text-sm font-semibold">
-                      {{ error.$message }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="grid lg:grid-cols-2 gap-x-6">
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">E-mail</label>
-                  <div class="flex relative items-center">
-                    <input
-                      :value="form.email"
-                      class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      autocomplete="off"
-                      autofocus="on"
-                      disabled
-                      readonnly
-                    />
-                    <i class="uil uil-lock absolute right-4 text-gray-600"></i>
-                  </div>
-                  <div
-                    class="text-red-500 mt-1"
-                    v-for="error of v$.email.$errors"
-                    :key="error.$uid"
-                  >
-                    <div class="error-msg text-error text-sm font-semibold">
-                      {{ error.$message }}
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block"
-                    >Phone number</label
-                  >
-                  <div class="flex relative rounded-lg h-11">
-                    <FormsPhoneCodes v-model="form.code" />
-
-                    <input
-                      :class="{ 'border-red-500': v$.phone.$error }"
-                      v-model="v$.phone.$model"
-                      class="flex-1 rounded-r-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      autocomplete="off"
-                      autofocus="on"
-                      placeholder="08160723884"
-                      type="tel"
-                    />
-                  </div>
-                  <div
-                    class="text-red-500 mt-1"
-                    v-for="error of v$.phone.$errors"
-                    :key="error.$uid"
-                  >
-                    <div class="error-msg text-error text-sm font-semibold">
-                      {{ error.$message }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="grid lg:grid-cols-2 gap-x-6">
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">Country</label>
-                  <div class="flex relative">
-                    <FormsCountriesSelect v-model="v$.country.$model" />
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.country.$errors"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-sm font-semibold">
-                        {{ error.$message }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">State</label>
-
-                  <FormsStatesSelect
-                    v-model="v$.city.$model"
-                    :states="states"
-                  />
-                  <div
-                    class="text-red-500 mt-1"
-                    v-for="error of v$.city.$errors"
-                    :key="error.$uid"
-                  >
-                    <div class="error-msg text-error text-sm font-semibold">
-                      {{ error.$message }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="">
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">Timezone</label>
-                  <div class="flex relative items-center w-full">
-                    <select
-                      v-model="form.timezone"
-                      class="appearance-none rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9]"
-                    >
-                      <option v-for="z in zones" :key="z">
-                        ({{ moment.tz(new Date(), z).format("z - Z") }})
-                        {{ moment.tz(new Date(), z).format("zz") }} {{ z }}
-                      </option>
-                    </select>
-                    <i
-                      class="uil uil-sort absolute right-3 pointer-events-none"
-                    ></i>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-6 flex justify-end">
-                <button
-                  :disabled="isLoading"
-                  :class="isLoading && 'bg-primary/80'"
-                  type="submit"
-                  class="border border-primary-500 text-sm bg-primary-500 text-white rounded-[10px] block w-full lg:w-auto px-10 font-semibold py-[10px] hover:bg-primary/80"
-                >
-                  Save changes
-                </button>
-              </div>
-            </div>
-          </form>
+        <div class="flex items-center gap-x-3">
+          <label for="upload">
+            <span
+              class="text-[#344054] rounded-full px-1 py-3 text-sm cursor-pointer"
+            >
+              Upload photo
+            </span>
+            <input
+              @change="handleEvent($event)"
+              type="file"
+              accept="image/*"
+              id="upload"
+              class="hidden"
+            />
+          </label>
         </div>
       </div>
+      <form @submit.prevent="handleSubmit">
+        <div>
+          <div class="grid lg:grid-cols-2 gap-x-6">
+            <div class="mb-6">
+              <label class="mb-2 font-normal text-sm block">First name</label>
+              <input
+                v-model="v$.firstName.$model"
+                :class="{ 'border-red-500': v$.firstName.$error }"
+                class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                autocomplete="off"
+                autofocus="on"
+              />
+              <div
+                class="text-red-500 mt-1"
+                v-for="error of v$.firstName.$errors"
+                :key="error.$uid"
+              >
+                <div class="error-msg text-error text-sm font-semibold">
+                  {{ error.$message }}
+                </div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <label class="mb-2 font-normal text-sm block">Last name</label>
+              <input
+                v-model="v$.lastName.$model"
+                :class="{ 'border-red-500': v$.lastName.$error }"
+                class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                autocomplete="off"
+                autofocus="on"
+              />
+              <div
+                class="text-red-500 mt-1"
+                v-for="error of v$.lastName.$errors"
+                :key="error.$uid"
+              >
+                <div class="error-msg text-error text-sm font-semibold">
+                  {{ error.$message }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-2 gap-x-6">
+            <div class="mb-6">
+              <label class="mb-2 font-normal text-sm block">E-mail</label>
+              <div class="flex relative items-center">
+                <input
+                  :value="form.email"
+                  class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  autocomplete="off"
+                  autofocus="on"
+                  disabled
+                  readonnly
+                />
+                <i class="uil uil-lock absolute right-4 text-gray-600"></i>
+              </div>
+              <div
+                class="text-red-500 mt-1"
+                v-for="error of v$.email.$errors"
+                :key="error.$uid"
+              >
+                <div class="error-msg text-error text-sm font-semibold">
+                  {{ error.$message }}
+                </div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <label class="mb-2 font-normal text-sm block">Phone number</label>
+              <div class="flex relative rounded-lg h-11">
+                <FormsPhoneCodes v-model="v$.phone.$model" />
+              </div>
+              <div
+                class="text-red-500 mt-1"
+                v-for="error of v$.phone.$errors"
+                :key="error.$uid"
+              >
+                <div class="error-msg text-error text-sm font-semibold">
+                  {{ error.$message }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid lg:grid-cols-2 gap-x-6">
+            <div class="mb-6">
+              <label class="mb-2 font-normal text-sm block">Country</label>
+              <div class="flex relative">
+                <FormsCountriesSelect v-model="v$.country.$model" />
+              </div>
+              <div
+                class="text-red-500 mt-1"
+                v-for="error of v$.country.$errors"
+                :key="error.$uid"
+              >
+                <div class="error-msg text-error text-sm font-semibold">
+                  {{ error.$message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label class="mb-2 font-normal text-sm block">State</label>
+
+              <FormsStatesSelect v-model="v$.city.$model" :states="states" />
+              <div
+                class="text-red-500 mt-1"
+                v-for="error of v$.city.$errors"
+                :key="error.$uid"
+              >
+                <div class="error-msg text-error text-sm font-semibold">
+                  {{ error.$message }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <div class="mb-6">
+              <label class="mb-2 font-normal text-sm block">Timezone</label>
+              <div class="flex relative items-center w-full">
+                <select
+                  v-model="form.timezone"
+                  class="appearance-none rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9]"
+                >
+                  <option v-for="z in zones" :key="z">
+                    ({{ moment.tz(new Date(), z).format("z - Z") }})
+                    {{ moment.tz(new Date(), z).format("zz") }} {{ z }}
+                  </option>
+                </select>
+                <i
+                  class="uil uil-sort absolute right-3 pointer-events-none"
+                ></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 flex justify-end">
+            <button
+              :disabled="isLoading"
+              :class="isLoading && 'bg-primary/80'"
+              type="submit"
+              class="border border-primary-500 text-sm bg-primary-500 text-white rounded-[10px] block w-full lg:w-auto px-10 font-semibold py-[10px] hover:bg-primary/80"
+            >
+              Save changes
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div>
+    <TransitionRoot as="template" :show="open">
+      <Dialog as="div" class="relative z-10" @close="open = false">
+        <TransitionChild
+          as="template"
+          enter="ease-out duration-300"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="ease-in duration-200"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
+        >
+          <div
+            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          />
+        </TransitionChild>
+
+        <div class="fixed z-10 inset-0 overflow-y-auto">
+          <div
+            class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0"
+          >
+            <TransitionChild
+              as="template"
+              enter="ease-out duration-300"
+              enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enter-to="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leave-from="opacity-100 translate-y-0 sm:scale-100"
+              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <DialogPanel
+                class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
+              >
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                  <div class="flex justify-between mb-5 items-center">
+                    <h4 class="font-medium text-matta-black text-xl">
+                      Customize logo
+                    </h4>
+                    <i
+                      class="uil uil-times cursor-pointer text-lg"
+                      @click="open = false"
+                    ></i>
+                  </div>
+
+                  <Cropper
+                    ref="cropper"
+                    class="cropper"
+                    :src="img"
+                    :stencil-size="{
+                      width: 200,
+                      height: 200,
+                    }"
+                  />
+                  <div class="flex justify-end gap-x-2 items-center mt-8">
+                    <button
+                      @click="open = false"
+                      class="appearance-none leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] capitalize"
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      @click="crop"
+                      class="appearance-none leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
+  </div>
 </template>
 
 <script setup>
@@ -309,61 +368,7 @@ const form = reactive({
   timezone: "",
   code: "+234",
 });
-const newform = reactive({
-  oldPassword: "",
-  newPassword: "",
-  confirmPassword: "",
-});
-const validPassword = (value) => {
-  let res = /[a-z]/.test(value) && /[A-Z]/.test(value) && /[0-9]/.test(value);
-  return res;
-};
-const specialPassword = (value) => {
-  let res = /[@&!%#$%]/.test(value);
-  return res;
-};
-const samePassword = (value) => value === newform.newPassword;
-const newrules = {
-  oldPassword: {
-    required: helpers.withMessage("Password field cannot be empty", required),
-    minLength: minLength(8),
-    maxLength: maxLength(16),
-    validPassword: helpers.withMessage(
-      "Password must include UPPER/lowercase characters and number",
-      validPassword
-    ),
-    specialPassword: helpers.withMessage(
-      "Password must contain at least 1 of the special  characters @&!-%#$%",
-      specialPassword
-    ),
-  },
-  newPassword: {
-    required: helpers.withMessage("Password field cannot be empty", required),
-    minLength: minLength(8),
-    maxLength: maxLength(16),
-    validPassword: helpers.withMessage(
-      "Password must include UPPER/lowercase characters and number",
-      validPassword
-    ),
-    specialPassword: helpers.withMessage(
-      "Password must contain at least 1 of the special  characters @&!-%#$%",
-      specialPassword
-    ),
-  },
-  confirmPassword: {
-    required: helpers.withMessage(
-      "Confirm Password field cannot be empty",
-      required
-    ),
-    minLength: minLength(8),
-    maxLength: maxLength(16),
-    validPassword: helpers.withMessage(
-      "Confirm Password is invalid",
-      validPassword
-    ),
-    samePassword: helpers.withMessage("Passwords do not match!", samePassword),
-  },
-};
+
 const states = computed(() => {
   if (!form.country) return [];
   return (
@@ -384,28 +389,6 @@ function deleteAccount() {
       window.location.href = "/";
     }
   });
-}
-async function handlePassword() {
-  const validity = await newv$.value.$validate();
-  if (!validity) return;
-  isLoading.value = true;
-
-  changepassword(newform)
-    .then((res) => {
-      if (res.status === 200) {
-        toast.info("Password updated successfully");
-        isLoading.value = false;
-        newform.oldPassword = "";
-        newform.newPassword = "";
-        newform.confirmPassword = "";
-      }
-    })
-
-    .catch((err) => {
-      isLoading.value = false;
-
-      toast.error(err.response.data.message || err.response.data.Message);
-    });
 }
 function setTimezone() {
   settimezone(form).then((res) => {
@@ -432,8 +415,7 @@ function crop() {
   open.value = false;
   form.photo = canvas.toDataURL().replace("data:", "").replace(/^.+,/, "");
 }
-const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 12 : true;
+
 const rules = {
   email: {
     required,
@@ -457,26 +439,17 @@ const rules = {
     maxLength: maxLength(50),
   },
   phone: {
-    numeric,
     required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
   },
   timezone: {
-    required,
     maxLength: maxLength(250),
   },
-  photo: {
-    required,
-  },
+  photo: {},
 };
 const fullName = computed(() => {
   return `${form.firstName} ${form.lastName}`;
 });
 const v$ = useVuelidate(rules, form);
-const newv$ = useVuelidate(newrules, newform);
 async function handleSubmit() {
   const validity = await v$.value.$validate();
   if (!validity) return;

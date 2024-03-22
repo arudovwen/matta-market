@@ -218,17 +218,7 @@
                       <span class="text-red-500 pl-[.02rem]">*</span></label
                     >
                     <div class="flex relative rounded-lg h-11">
-                      <FormsPhoneCodes v-model="form.code" />
-
-                      <input
-                        :class="{ 'border-red-500': v$.phone.$error }"
-                        v-model="v$.phone.$model"
-                        class="flex-1 rounded-r-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                        autocomplete="off"
-                        autofocus="on"
-                        placeholder="08160723884"
-                        type="tel"
-                      />
+                      <FormsPhoneCodes  v-model="v$.phone.$model" />
                     </div>
                     <div
                       class="text-red-500 mt-1"
@@ -811,12 +801,9 @@ const rules = {
     maxLength: maxLength(50),
   },
   phone: {
-    numeric,
+
     required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 20 digits",
-      validPhoneLength
-    ),
+ 
   },
   fax: {
     maxLength: maxLength(50),

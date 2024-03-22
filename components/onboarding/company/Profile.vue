@@ -26,7 +26,7 @@
                 class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                 >Photo</span
               >
-               <NuxtImg
+              <NuxtImg
                 v-else
                 :src="image"
                 class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
@@ -211,17 +211,7 @@
                   <span class="text-red-500 pl-[.02rem]">*</span></label
                 >
                 <div class="flex relative rounded-lg h-11">
-                  <FormsPhoneCodes v-model="form.code" />
-
-                  <input
-                    :class="{ 'border-red-500': v$.phone.$error }"
-                    v-model="v$.phone.$model"
-                    class="flex-1 rounded-r-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                    autocomplete="off"
-                    autofocus="on"
-                    placeholder="08160723884"
-                    type="tel"
-                  />
+                  <FormsPhoneCodes v-model="v$.phone.$model" />
                 </div>
                 <div
                   class="text-red-500 mt-1"
@@ -290,7 +280,7 @@
             </div>
           </div>
           <div class="flex justify-center gap-x-4 items-center mt-16 w-full">
-           <span></span>
+            <span></span>
 
             <button
               :disabled="v$.$silentErrors.length || isLoading"
@@ -412,7 +402,7 @@ import {
   maxLength,
   numeric,
 } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import {
   updatePersonalInfo,
   // getOnboarding,
@@ -433,7 +423,7 @@ onMounted(() => {
     form.country = res.data.data.country;
     form.city = res.data.data.city;
     form.email = res.data.data.email;
-    form.phone = replaceCountryCode(res.data.data.phone, "+234");
+    form.phone = res.data.data.phone;
     form.timeZone = res.data.data.timeZone;
   });
 });
@@ -560,12 +550,7 @@ const rules = {
     maxLength: maxLength(50),
   },
   phone: {
-    numeric,
     required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
   },
   timeZone: {
     required,
@@ -590,7 +575,6 @@ async function handleSubmit() {
   updatePersonalInfo(form)
     .then((res) => {
       if (res.status === 200) {
-
         authStore.updateUserInfo({
           fullName: fullName.value,
           firstName: form.firstName,
@@ -604,7 +588,7 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 function removeImage() {

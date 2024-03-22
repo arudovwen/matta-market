@@ -3,7 +3,9 @@
     <!-- Top bar   -->
     <div class="">
       <HeaderComponent title="Profile information" />
-      <div class="flex gap-x-[76px] pt-[30px] px-4 lg:px-[30px] flex-col lg:flex-row gap-y-7 lg:gap-y-">
+      <div
+        class="flex gap-x-[76px] pt-[30px] px-4 lg:px-[30px] flex-col lg:flex-row gap-y-7 lg:gap-y-"
+      >
         <div class="w-[250px]">
           <h2 class="text-sm text-[#101828] font-semibold">Personal info</h2>
           <p class="text-xs text-[#475467]">
@@ -118,17 +120,7 @@
                     >Phone number</label
                   >
                   <div class="flex relative rounded-lg h-11">
-                    <FormsPhoneCodes v-model="form.code" />
-
-                    <input
-                      :class="{ 'border-red-500': v$.phone.$error }"
-                      v-model="v$.phone.$model"
-                      class="flex-1 rounded-r-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      autocomplete="off"
-                      autofocus="on"
-                      placeholder="08160723884"
-                      type="tel"
-                    />
+                    <FormsPhoneCodes v-model="v$.phone.$model" />
                   </div>
                   <div
                     class="text-red-500 mt-1"
@@ -211,7 +203,9 @@
         </div>
       </div>
       <hr class="my-10 border-[#F4F7FE]" />
-      <div class="flex gap-x-[76px] px-4 lg:px-[30px] flex-col lg:flex-row gap-y-7 lg:gap-y-">
+      <div
+        class="flex gap-x-[76px] px-4 lg:px-[30px] flex-col lg:flex-row gap-y-7 lg:gap-y-"
+      >
         <div class="w-[250px]">
           <h2 class="text-sm text-[#101828] font-semibold">Password</h2>
           <p class="text-xs text-[#475467]">
@@ -220,8 +214,6 @@
         </div>
         <div class="flex-1">
           <form @submit.prevent="handlePassword">
-          
-
             <div class="mb-6">
               <label class="mb-2 font-normal text-sm block text-matta-black"
                 >Current Password</label
@@ -325,14 +317,16 @@
               </div>
             </div>
 
-          <div class="flex justify-end">  <button
-              :disabled="isLoading"
-              :class="isLoading && 'bg-primary/80'"
-              type="submit"
-              class="border-2 border-primary-500 text-[13px] bg-primary-500 text-white rounded-[10px] block w-full lg:w-auto px-12 font-semibold py-3 hover:bg-primary/80"
-            >
-             Change password
-            </button></div>
+            <div class="flex justify-end">
+              <button
+                :disabled="isLoading"
+                :class="isLoading && 'bg-primary/80'"
+                type="submit"
+                class="border-2 border-primary-500 text-[13px] bg-primary-500 text-white rounded-[10px] block w-full lg:w-auto px-12 font-semibold py-3 hover:bg-primary/80"
+              >
+                Change password
+              </button>
+            </div>
           </form>
         </div>
 
@@ -606,12 +600,7 @@ const rules = {
     maxLength: maxLength(50),
   },
   phone: {
-    numeric,
     required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
   },
   timezone: {
     required,
