@@ -99,7 +99,7 @@
         <label class="mb-4 mt-3 font-medium text-sm block"
           >Company documents
         </label>
-        <div v-if="!company.companyDocuments.length" class="grid gap-y-6">
+        <div v-if="company.companyDocuments.find(i=> !i.url)" class="grid gap-y-6">
           <FormGroup :error="errors.mermat" class="col-span-2">
             <FileUpload
               label="Memorandum and Articles of Association"
