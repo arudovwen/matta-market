@@ -14,7 +14,7 @@
         >
         <span class="block text-sm text-[#333]">{{currencyFormat(n.amount)}}</span></span
       >
-      <div class="mb-5"><AppLine value="50" /></div>
+      <div class="mb-5"><AppLine :value="getPercentage(n.amount_left, n.amount)" /></div>
       <span class="flex justify-between items-centeer text-sm">
         <span class="block text-sm text-[#475467]"
           >Interest <span class="font-medium text-[#333]">{{n.interest}}%</span></span
@@ -41,6 +41,9 @@ const content = [
     days_left: 20,
   },
 ];
+function getPercentage(part, total){
+ return (part/total) * 100
+}
 </script>
 
 <style lang="scss" scoped>
