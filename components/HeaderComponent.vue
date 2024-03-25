@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full py-5 px-4 lg:px-[30px] border-[#F4F7FE] border-b flex items-center justify-between"
+    class="w-full py-5 px-4 lg:px-[30px] border-[#EAECF0] border-b flex items-center justify-between"
     :class="className"
   >
     <div>

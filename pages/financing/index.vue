@@ -1,10 +1,10 @@
 <template>
   <div
-    class="gap-y-2 flex flex-col bg-white rounded-[10px] border border-[#F4F7FE]"
+    class="gap-y-2 flex flex-col bg-white rounded-[10px] border border-[#F4F7FE] px-6"
   >
     <!-- Top bar   -->
 
-    <HeaderComponent title="Financing" className="px-6 mb-6">
+    <HeaderComponent title="Financing" className=" mb-6 !px-0">
       <template #subtext>
         <p class="text-sm text-[#475467]">
           Request for financing for your business.
@@ -44,9 +44,9 @@
     </HeaderComponent>
     <!-- <AppTab :tabs="tabs" className="px-[30px]" /> -->
     <div>
-    <div class=" px-6">
+    <div class="">
       <ActiveLoans  />
-      <hr class="my-8" />
+      <hr class="my-6 border-[#EAECF0]" />
       <PendingLoans />
     </div>
    
