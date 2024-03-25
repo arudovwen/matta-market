@@ -42,10 +42,14 @@
         </Menu>
       </template>
     </HeaderComponent>
-    <AppTab :tabs="tabs" className="px-[30px]" />
+    <!-- <AppTab :tabs="tabs" className="px-[30px]" /> -->
     <div>
-      <ActiveLoans v-if="active === 'active loans'" />
-      <PendingLoans v-if="active === 'requests'" />
+    <div class=" px-6">
+      <ActiveLoans  />
+      <hr class="my-8" />
+      <PendingLoans />
+    </div>
+   
     </div>
   </div>
 </template>

@@ -3,7 +3,7 @@
     <div class="">
       <div>
         <div class="mb-8">
-          <div class="flex gap-x-4 px-6 flex-col lg:flex-row gap-y-4">
+          <div class="flex gap-x-4  flex-col lg:flex-row gap-y-4">
             <div class="relative flex items-center">
               <span class="absolute left-4 pointer-events-none text-[#667085]"
                 ><i class="uil uil-search"></i

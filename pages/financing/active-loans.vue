@@ -1,378 +1,53 @@
 <template>
-    <div class="">
-      <div class="">
-        <div>
-        <div class="mb-8">
-          <div class="flex gap-x-4 px-6 flex-col lg:flex-row gap-y-4">
-            <div class="relative flex items-center">
-              <span class="absolute left-4 pointer-events-none text-[#667085]"
-                ><i class="uil uil-search"></i
-              ></span>
-              <input
-                v-model="queryParams.Search"
-                @change="getRequests()"
-                @keyup="debounceSearch"
-                placeholder="Search"
-                class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-full lg:w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
-                type="search"
-              />
-            </div>
-          <div class="flex gap-x-4">
-            <FilterButton
-              v-model="queryParams.LoadRequestType"
-              :options="FinancesOptions"
-              title="Filter type"
-            />
-            <FilterButton
-              v-model="queryParams.financeRequestStatus_In"
-              :options="StatusOptions"
-              title="Filter status"
-            />
-          </div>
-          </div>
-        </div>
-
-        <div v-if="!docLoading && financeData?.length" class="overflow-x-auto">
-          <table class="table-auto w-full">
-            <thead>
-              <tr>
-                <th
-                  v-for="item in theads"
-                  :key="item"
-                  class="capitalize text-[#475467] text-sm text-left font-medium border-t border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-                >
-                  {{ item }}
-                </th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr v-for="item in financeData" :key="item">
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                >
-                  {{ item.financeRequestNo }}
-                </td>
-                <!-- <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
-                  >
-                    {{ item.customer || "-" }}
-                  </td> -->
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                >
-                  {{ handleType(item.loanRequestType) }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                >
-                  {{ moment(item.created).format("ll") }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
-                >
-                  {{ currencyFormat(item.amountRequired) }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
-                >
-                  {{
-                    !item.financeRequestStatus
-                      ? "-"
-                      : currencyFormat(item.amountApproved)
-                  }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                >
-                  <AppStatusButton
-                    :status="item.financeRequestStatus"
-                    stattype="finance"
-                  />
-                </td>
-
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                >
-                  <Menu class="relative" as="div">
-                    <MenuButton
-                      :id="`${item.productName}+option`"
-                      class="outline-none"
-                    >
-                      <AppIcon icon="heroicons:ellipsis-vertical-solid" />
-                    </MenuButton>
-                    <MenuItems
-                      class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
-                    >
-                      <div
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
-                        @click="openRequest(item)"
-                      >
-                        View request
-                      </div>
-                      <div
-                        v-if="item.financeRequestStatus === 1"
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
-                        @click="openLoan(item)"
-                      >
-                        View loan offer
-                      </div>
-
-                      <NuxtLink
-                        v-if="item.financeRequestStatus === 0"
-                        :to="`/financing/requests/${handleType(
-                          item.loanRequestType
-                        )}/${item.loanRequestType}/${item.id}`"
-                      >
-                        <div
-                          class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
-                        >
-                          Edit request
-                        </div>
-                      </NuxtLink>
-                      <div
-                        v-if="item.financeRequestStatus === 0"
-                        @click="withdrawRequest(item.id)"
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
-                      >
-                        Withdraw request
-                      </div>
-                    </MenuItems>
-                  </Menu>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <EmptyData
-          v-if="!docLoading && !financeData?.length"
-          title="No request available"
-        />
+  <div class="grid grid-cols-3 gap-4">
+    <div class="rounded-lg border border-gray-200 py-5 px-4" v-for="(n,id) in content" :key="id">
+      <div class="flex justify-between items-center mb-6">
+        <span class="text-base font-semibold capitalize text-[#333]">{{n.type}}</span>
+        <span
+          class="text-sm px-[6px] py[3px] rounded-full bg-green-100 text-green-600"
+          >Active</span
+        >
       </div>
-        <div class="text-center p-6 lg:p-8 my-20" v-if="docLoading">
-          <AppLoader />
-        </div>
-  
-        <div class="p-5" v-if="queryParams.totalCount > queryParams.PageSize">
-          <PaginationSimple
-            :total="queryParams.totalCount"
-            :current="queryParams.PageNumber"
-            :per-page="queryParams.PageSize"
-            :pageRange="5"
-            @page-changed="queryParams.PageNumber = $event"
-          />
-        </div>
-      </div>
+      <span class="flex justify-between items-centeer text-sm mb-1 text-[#475467]">
+        <span class="block text-sm"
+          >Amount <span class="font-medium">{{currencyFormat(n.amount_left)}}</span></span
+        >
+        <span class="block text-sm text-[#333]">{{currencyFormat(n.amount)}}</span></span
+      >
+      <div class="mb-5"><AppLine value="50" /></div>
+      <span class="flex justify-between items-centeer text-sm">
+        <span class="block text-sm text-[#475467]"
+          >Interest <span class="font-medium text-[#333]">{{n.interest}}%</span></span
+        >
+        <span class="block text-sm text-[#475467]">{{n.days_left}} days left</span></span
+      >
     </div>
-    <DeleteModal
-      @deleteItem="handleDelete"
-      @close="open = false"
-      title="Withdraw request"
-      text="Are you sure you want to withdraw this application? This action cannot be undone."
-      :open="open"
-      btnText="Withdraw request"
-      :loading="loading"
-    />
-    <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
-      <template #content>
-        <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10 overflow-y-auto">
-          <FinanceRequestDetail :detail="detail" />
-        </div>
-      </template>
-    </SideModal>
-    <IndexModal
-      :isOpen="isLoanOpen"
-      @togglePopup="isLoanOpen = false"
-      v-if="isLoanOpen"
-    >
-      <template #content>
-        <div class="h-full w-full bg-white rounded-lg p-6">
-          <FinanceLoanUpdate v-if="detail" :detail="detail" @refresh="refresh" />
-        </div>
-      </template>
-    </IndexModal>
-  </template>
-  <script setup>
-  import AppIcon from "@/components/AppIcon";
-  import moment from "moment";
-  import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
-  import { getAllFinance, withdrawFinance } from "~/services/financeservice";
-  import debounce from "lodash/debounce";
-  import { toast } from "vue3-toastify";
-  import CardDetail from "~/components/payments/CardDetail.vue";
-  
-  const type = ref(null);
-  const id = ref(null);
-  const open = ref(false);
-  const isOpen = ref(false);
-  const loading = ref(false);
-  const isLoanOpen = ref(false);
-  const detail = ref(null);
-  const authStore = useAuthStore();
-  const tabs = [
-    {
-      title: "pending",
-      key: "pending",
-    },
-    {
-      title: "active",
-      key: "active",
-    },
-  ];
-  const theads = [
-    "request id",
-    "financing type",
-    "amount",
-    "amount due",
-    "interest",
-    "status",
-    "",
-  ];
-  const financeData = ref([]);
-  
-  onMounted(() => {
-    getFinanceData();
-  });
-  
-  const queryParams = reactive({
-    SupplierId: null,
-    RequestStatus: null,
-    LoadRequestType: null,
-    Search: "",
-    SortOrder: null,
-    PageNumber: 1,
-    PageSize: 10,
-    financeRequestStatus_In: [0, 1, 2, 3, 4, 5],
-  });
-  const docLoading = ref(true);
-  
-  function getFinanceData() {
-    docLoading.value = true;
-    getAllFinance(queryParams).then((res) => {
-      financeData.value = res.data.data;
-      queryParams.totalCount = res.data.data.totalCount;
-      docLoading.value = false;
-    });
-  }
-  function refresh() {
-    getFinanceData();
-    isOpen.value = isLoanOpen.value = false;
-    detail.value = null;
-  }
-  function handleType(key) {
-    switch (parseInt(key)) {
-      case 0:
-        return "trade";
-        break;
-      case 1:
-        return "supply";
-        break;
-      case 2:
-        return "import";
-        break;
-      case 3:
-        return "export";
-        break;
-  
-      default:
-        break;
-    }
-  }
- ;
-  function withdrawRequest(value) {
-    id.value = value;
-    open.value = true;
-  }
-  const document = ref({});
-  function openRequest(val) {
-    type.value = "detail";
-    detail.value = val;
-    isOpen.value = true;
-  }
-  function openLoan(val) {
-    type.value = "update";
-    detail.value = val;
-    isLoanOpen.value = true;
-  }
-  const debounceSearch = debounce(() => {
-    getFinanceData();
-  }, 800);
-  const handleDelete = () => {
-    loading.value = true;
-    withdrawFinance(id.value)
-      .then((res) => {
-        if (res.status === 200) {
-          open.value = false;
-          getFinanceData();
-          toast.success("Request withdrawn");
-          loading.value = false;
-        }
-      })
-      .catch((err) => {
-        toast.error(
-          err.response.data.message ||
-            err.response.data.message ||
-            "Withdraw request failed"
-        );
-      });
-  };
-  watch(
-    () => [queryParams.Search],
-    () => {
-      debounceSearch();
-    }
-  );
-  watch(
-    () => [
-      queryParams.PageNumber,
-      queryParams.SortOrder,
-      queryParams.LoadRequestType,
-      queryParams.RequestStatus,
-    ],
-    () => {
-      getFinanceData();
-    }
-  );
-  const FinancesOptions = [
-    {
-      label: "all finance",
-      key: "all",
-      value: "",
-    },
-    {
-      label: "trade finance",
-      key: 0,
-      value: 0,
-      url: "/financing/requests/trade/0",
-    },
-    {
-      label: "supply finance",
-      key: 1,
-      value: 1,
-      url: "/financing/requests/supply/1",
-    },
-    {
-      label: "import finance",
-      key: 2,
-      value: 2,
-      url: "/financing/requests/import/2",
-    },
-    {
-      label: "export finance",
-      key: 3,
-      value: 3,
-      url: "/financing/requests/export/3",
-    },
-  ];
-  provide("document", document);
-  </script>
-  
-  <style lang="scss" scoped>
-  .bg-img {
-    background-image: url("~/assets/img/bee.svg");
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: bottom;
-  }
-  </style>
-  
+  </div>
+</template>
+<script setup>
+const content = [
+  {
+    type: "trade finance",
+    amount: 40000,
+    amount_left: 20000,
+    interest: 10,
+    days_left: 20,
+  },
+  {
+    type: "inport finance",
+    amount: 55000,
+    amount_left: 12000,
+    interest: 10,
+    days_left: 20,
+  },
+];
+</script>
+
+<style lang="scss" scoped>
+.bg-img {
+  background-image: url("~/assets/img/bee.svg");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: bottom;
+}
+</style>
