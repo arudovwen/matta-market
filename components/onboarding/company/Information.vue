@@ -100,7 +100,9 @@
                         placeholder="Select date"
                         :enable-time-picker="false"
                         :input-class-name="`!rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20 ${
-                          v$.dateofIncorporation.$error ? 'border-red-500' : 'border-[#DCDEE6]'
+                          v$.dateofIncorporation.$error
+                            ? 'border-red-500'
+                            : 'border-[#DCDEE6]'
                         }`"
                       />
                     </ClientOnly>
@@ -218,7 +220,7 @@
                       <span class="text-red-500 pl-[.02rem]">*</span></label
                     >
                     <div class="flex relative rounded-lg h-11">
-                      <FormsPhoneCodes  v-model="v$.phone.$model" />
+                      <FormsPhoneCodes v-model="v$.phone.$model" />
                     </div>
                     <div
                       class="text-red-500 mt-1"
@@ -441,10 +443,7 @@
     </div>
     <div
       class="flex justify-between gap-x-4 items-center mt-16 pt-6 border-t border-[#EAECF0] w-full"
-      v-if="
-        !authStore?.userInfo?.onboardingPageStatus ||
-        !companyInfo.approvalStatus
-      "
+      v-if="!companyInfo.approvalStatus"
     >
       <!-- <button
           type="button"
@@ -801,9 +800,7 @@ const rules = {
     maxLength: maxLength(50),
   },
   phone: {
-
     required,
- 
   },
   fax: {
     maxLength: maxLength(50),

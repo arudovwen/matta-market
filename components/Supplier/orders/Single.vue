@@ -14,7 +14,7 @@
         <p class="text-xs mb-4 text-[#666666]">
           Amount paid:
           <span class="font-medium text-[#333]">{{
-            currencyFormat(order.amount)
+            currencyFormat(order.amountWithTax)
           }}</span>
         </p>
         <p class="text-xs mb-2 text-[#333333] font-semibold">Shipped to:</p>

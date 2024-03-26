@@ -11,8 +11,6 @@ import { toast } from "vue3-toastify";
 export const useCartStore = defineStore(
   "cart",
   () => {
-    const cookie = useCookie("cart");
-
     const authStore = useAuthStore();
     const cartItems = ref([]);
     const tax = ref(0);

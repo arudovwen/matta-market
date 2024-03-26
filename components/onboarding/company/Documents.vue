@@ -11,7 +11,7 @@
         </p>
       </div>
       <div
-      v-if="companyInfo.companyDocuments.find(i=> !i.url)"
+        v-if="companyInfo.companyDocuments.find((i) => !i.url)"
         class="grid gap-y-6 max-w-[560px] w-full"
       >
         <div>
@@ -31,7 +31,11 @@
           >
         </div>
         <div>
-          <FileUpload label="Certificate of Incorporation" id="incorporation" :modelValue="docUrl(0)" />
+          <FileUpload
+            label="Certificate of Incorporation"
+            id="incorporation"
+            :modelValue="docUrl(0)"
+          />
           <span @click="downloadFile(docUrl(0), 'CAC')" v-if="docUrl(0)">
             <span class="block text-xs text-blue-500 mt-1"
               >Download Certificate of Incorporation</span
@@ -39,7 +43,11 @@
           >
         </div>
         <div>
-          <FileUpload label="CAC Status Report" id="statusReport" :modelValue="docUrl(2)" />
+          <FileUpload
+            label="CAC Status Report"
+            id="statusReport"
+            :modelValue="docUrl(2)"
+          />
           <span
             @click="downloadFile(docUrl(2), 'Status report')"
             v-if="docUrl(2)"
@@ -50,7 +58,11 @@
           >
         </div>
         <div>
-          <FileUpload label="Utility bill" id="utitlityBill" :modelValue="docUrl(3)" />
+          <FileUpload
+            label="Utility bill"
+            id="utitlityBill"
+            :modelValue="docUrl(3)"
+          />
           <span
             @click="downloadFile(docUrl(3), 'Utility bill')"
             v-if="docUrl(3)"
@@ -67,10 +79,7 @@
     </div>
     <div
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
-      v-if="
-        !companyInfo.companyDocuments.length ||
-        !authStore.userInfo.onboardingPageStatus
-      "
+      v-if="!companyInfo.approvalStatus"
     >
       <button
         @click="active--"

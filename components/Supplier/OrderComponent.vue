@@ -3,7 +3,7 @@
     <div class="grid grid-cols-2 gap-y-10 gap-x-4 mb-8">
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">amount</p>
-        <span class="text-sm">{{ currencyFormat(order?.orderTotal) }}</span>
+        <span class="text-sm">{{ currencyFormat(order?.amountWithTax) }}</span>
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">status</p>

@@ -46,7 +46,7 @@
     <div>
     <div class="">
       <ActiveLoans  />
-      <hr class="my-6 border-[#EAECF0]" />
+     
       <PendingLoans />
     </div>
    

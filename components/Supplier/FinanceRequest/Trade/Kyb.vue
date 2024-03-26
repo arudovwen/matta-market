@@ -107,7 +107,7 @@
           >Company documents
         </label>
         <div
-          v-if="company.companyDocuments.find((i) => !i.url)"
+          v-if="!company.companyDocuments.length || company.companyDocuments.find((i) => !i.url)"
           class="grid gap-y-6"
         >
           <FormGroup :error="errors.mermat" class="col-span-2">
@@ -190,7 +190,8 @@ const formSchema = yup.object().shape({
     .date()
     .typeError("Invalid date Of Incorporation")
     .nullable()
-    .required("Date Of Incorporation is required"), // Assuming dateofIncorporation is a dateofIncorporation type
+    .max(new Date(), "Date Of Incorporation cannot be after today")
+    .required("Date Of Incorporation is required"),
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   description: yup.string().nullable(),

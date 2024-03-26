@@ -14,7 +14,7 @@
       <!-- Top bar   -->
       <div class="flex-1">
         <div class="">
-          <div>
+          <div v-if="!companyInfo.approvalStatus">
             <button
               type="button"
               @click="
@@ -40,7 +40,7 @@
       </div>
     </div>
     <div
-      v-if="!companyInfo.directors.length || !authStore.userInfo.onboardingPageStatus"
+      v-if="!companyInfo.approvalStatus"
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
     >
       <button
@@ -188,10 +188,9 @@ async function handleSubmit() {
         authStore.updateUserInfo({ onboardingPageStatus: 1 });
         toast.success("Directors saved");
         isLoading.value = false;
-      
-        if(route.query.redirected_from){
-         
-          navigateTo(route.query.redirected_from)
+
+        if (route.query.redirected_from) {
+          navigateTo(route.query.redirected_from);
         }
       }
     })

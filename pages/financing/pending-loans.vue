@@ -283,6 +283,7 @@ const queryParams = reactive({
   PageNumber: 1,
   PageSize: 10,
   financeRequestStatus_In: [0, 1, 2, 3, 4, 5],
+  loanStatus_In: [0,1,2],
 });
 const docLoading = ref(true);
 

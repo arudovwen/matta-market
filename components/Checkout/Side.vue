@@ -131,7 +131,7 @@ function onSuccess(response) {
     confirmpayment({ orderId: data.value.reference })
       .then((res) => {
         if (res.status === 200) {
-          cartStore?.clearCart;
+          cartStore?.clearCart();
           window.location.href = "/order-success";
           // window.location.href = `/transaction/successful?trx_ref=${response.transactionReference}`;
           // Payment complete! Reference: transaction.reference
