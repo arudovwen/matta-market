@@ -107,7 +107,7 @@
           >Company documents
         </label>
         <div
-          v-if="!company.companyDocuments.length || company.companyDocuments.find((i) => !i.url)"
+          v-if="!company.companyDocuments?.length || company.companyDocuments.some((i) => !i.url)"
           class="grid gap-y-6"
         >
           <FormGroup :error="errors.mermat" class="col-span-2">
