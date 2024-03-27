@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white w-full">
     <legend class="block text-[20px] font-bold mb-8 text-left">
-     Update Shipping address
+      Update Shipping address
     </legend>
     <form
       @submit.prevent="onSubmit"
@@ -91,15 +91,16 @@
         />
       </div>
 
-
       <div
-        class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
+        class="flex items-center text-[#333] text-xs md:text-sm gap-x-[2px] max-w-max"
       >
-        <Checkbox
-          label="Set as default"
+        <input
+          type="checkbox"
+          label=""
           labelClass="text-xs md:text-sm"
           v-model="isDefault"
         />
+        Set as default
       </div>
 
       <div class="xl:col-span-2 grid gap-y-[22px] mb-9 mt-4">
