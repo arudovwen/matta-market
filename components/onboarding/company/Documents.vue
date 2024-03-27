@@ -11,7 +11,7 @@
         </p>
       </div>
       <div
-        v-if="!companyInfo.companyDocuments || companyInfo.companyDocuments.find((i) => !i.url)"
+        v-if="!companyInfo.companyDocuments || companyInfo.companyDocuments?.some((i) => !i.url)"
         class="grid gap-y-6 max-w-[560px] w-full"
       >
         <div>
