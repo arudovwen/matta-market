@@ -99,7 +99,6 @@
           label="Set as default"
           labelClass="text-xs md:text-sm"
           v-model="isDefault"
-          v-bind="isDefaultAtt"
         />
       </div>
 
@@ -150,6 +149,7 @@ const schema = yup.object({
   state: yup.string().required("State is required"),
   city: yup.string().required("City is required"),
   postalCode: yup.string().required("Postal code is required"),
+  isDefault: yup.boolean(),
 });
 
 const { handleSubmit, defineField, errors, setValues } = useForm({
@@ -164,7 +164,7 @@ const [country, countryAtt] = defineField("country");
 const [state, stateAtt] = defineField("state");
 const [city, cityAtt] = defineField("city");
 const [postalCode, postalCodeAtt] = defineField("postalCode");
-const [isDefault, isDefaultAtt] = defineField("isDefault");
+const [isDefault] = defineField("isDefault");
 
 const allcountries = computed(() => {
   return CountryList.map((item) => {
