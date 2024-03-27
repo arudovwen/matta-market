@@ -129,7 +129,26 @@ const PaymentStatus = {
     className: StatusClass[0],
   },
 };
+const ParentOrderStatusText = {
+  0: {
+    text: props.type ? "In progress" : "In cart",
+    className: StatusClass[0],
+  },
+  1: {
+    text: "Payment Confirmed",
+    className: StatusClass[2],
+  },
 
+  3: {
+    text: "Completed",
+    className: StatusClass[1],
+  },
+
+  4: {
+    text: "Cancelled",
+    className: StatusClass[4],
+  },
+};
 const WalletStatus = {
   1: {
     text: "Account Funding",
@@ -154,6 +173,9 @@ const Stats = computed(() => {
   }
   if (props.stattype === "wallet") {
     return WalletStatus;
+  }
+  if (props.stattype === "parent-order") {
+    return ParentOrderStatusText;
   }
   if (props.stattype === "active-finance") {
     return ActiveFinance;

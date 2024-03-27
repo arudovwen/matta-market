@@ -1,71 +1,10 @@
 <template>
   <div class="gap-y-2 flex flex-col mb-4 bg-white rounded-[10px] pb-10">
     <HeaderComponent title="My  Orders" />
-    <!-- Top bar   -->
-    <!-- <div class="p-6 lg:p-8 bg-white rounded-lg bg-img">
-      <div class="mb-12"><Breadcrumbs /></div>
-      <div class="">
-        <div class="flex gap-x-3 items-center mb-3">
-          <h1
-            class="text-3xl lg:text-[48px] text-matta-black col-span-1 font-medium capitalize"
-          >
-           My orders
-          </h1>
-          <span class="mt-3">/</span>
-          <span class="text-primary text-3xl lg:text-[48px]">{{
-            queryParams.totalCount || 0
-          }}</span>
-        </div>
-
-        <div class="">
-          <p class="text-sm lg:text-base mb-6">
-            Manage your recent orders and invoices.
-          </p>
-
-          <div class="flex gap-x-4 justify-end">
-            <button
-              @click="isShowing = 'all'"
-              :class="`px-6 py-3 border border-matta-black rounded-lg text-[13px] capitalize hover:opacity-60 ${
-                isShowing === 'all'
-                  ? 'bg-matta-black text-white'
-                  : 'text-matta-black'
-              }
-            `"
-            >
-              All orders
-            </button>
-            <button
-              @click="isShowing = 'pending'"
-              :class="`px-6 py-3 border border-matta-black rounded-lg text-[13px] capitalize hover:opacity-60 flex gap-x-2 ${
-                isShowing === 'pending'
-                  ? 'bg-matta-black text-white'
-                  : 'text-matta-black'
-              }
-           `"
-            >
-              Pending checkout
-              <span
-                class="h-4 w-4 text-[11px] rounded-full border border-matta-black flex items-center justify-center"
-                :class="
-                  isShowing === 'pending'
-                    ? 'text-matta-black bg-white'
-                    : 'bg-matta-black text-white'
-                "
-                v-if="pendingCheckout && pendingCheckout?.items?.length"
-                >{{ pendingCheckout?.items?.length }}</span
-              >
-            </button>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <div class="p-6 lg:p-8 rounded-lg bg-white">
       <div v-if="isShowing === 'all'">
-        <div
-          class="hidden lg:flex justify-between items-center mb-8"
-        
-        >
+        <div class="hidden lg:flex justify-between items-center mb-8">
           <div class="flex gap-x-4">
             <div class="relative flex items-center">
               <span class="absolute left-4 pointer-events-none text-[#667085]"
@@ -81,21 +20,22 @@
               />
             </div>
             <div class="flex relative items-center">
-              <select
-                v-model="queryParams.Status"
-                class="appearance-none border border-[#E7E7E7] text-sm rounded-lg w-[180px] py-[10px] px-[14px] focus:outline-matta-black/20"
-              >
-                <option value="">Status</option>
-                <option value="0">Pending</option>
-                <option value="1">Completed</option>
-              </select>
-              <i
-                class="uil uil-angle-down absolute right-2 pointer-events-none"
-              ></i>
+              <Select
+                v-model="status"
+                :options="subOptions"
+                placeholder="Select status"
+                :classInput="`text-sm min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !border !h-11 cursor-pointer border-[#D0D5DD]`"
+              />
             </div>
 
             <AppButton
-              @click="queryParams.Status = ''"
+              @click="
+                queryParams.Status = '';
+                queryParams.Search = '';
+
+                queryParams.orderStage = '';
+                status = '';
+              "
               text="Clear filter"
               btnClass="text-xs text-[#98A2B3] font-normal"
             />
@@ -109,85 +49,7 @@
             @onClick="openOrder(item)"
           />
         </div>
-        <div  v-if="!isLoading">
-          <!-- <div
-            class="overflow-x-auto max-w-[80vw] lg:max-w-full"
-            v-if="orders.length"
-          >
-            <table class="w-full" v-if="orders.length">
-              <thead>
-                <tr>
-                  <th
-                    v-for="item in theads"
-                    :key="item"
-                    class="uppercase text-[#B6B7B9] text-[13px] text-left font-normal border-b py-6 px-3 border-[#E7EBEE] whitespace-nowrap"
-                  >
-                    {{ item }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in orders" :key="item">
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    {{ item.orderNumber }}
-                  </td>
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    {{ moment(item.orderDate).format("lll") }}
-                  </td>
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    <span
-                      v-if="item.statusText == 'invoiced'"
-                      class="px-2 py-1 text-xs rounded-lg bg-[#E0F7B0]"
-                    >
-                      Completed</span
-                    >
-                    <span
-                      v-if="item.statusText !== 'invoiced'"
-                      class="px-2 py-1 text-xs rounded-lg bg-[#FDD0AF]"
-                    >
-                      In progress</span
-                    >
-                  </td>
-
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    {{
-                      item.scheduleDeilverDate
-                        ? moment(item.scheduleDeilverDate)?.format("lll")
-                        : moment()?.format("lll")
-                    }}
-                  </td>
-
-                  <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                  >
-                    <Menu class="relative" as="div">
-                      <MenuButton class="outline-none">
-                         <AppIcon icon="heroicons:ellipsis-vertical-solid" />
-                      </MenuButton>
-                      <MenuItems
-                        class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[140px] rounded-xl overflow-hidden"
-                      >
-                        <div
-                          class="py-2 px-4 hover:bg-gray-50 text-sm whitespace-nowrap"
-                          @click="openOrder(item)"
-                        >
-                          <i class="uil uil-box mr-2"></i> Open order
-                        </div>
-                      </MenuItems>
-                    </Menu>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div> -->
+        <div v-if="!isLoading">
           <EmptyData
             v-if="!orders.length"
             url="/markets"
@@ -239,9 +101,6 @@
                     <span class="text-[13px] whitespace-nowrap">
                       {{ currencyFormat(item.packagePrice) }}</span
                     >
-                    <!-- /<span class="text-[13px] whitespace-nowrap">
-                      {{ cartItem.selectedPackageData.unit }}</span
-                    > -->
                   </span>
                 </div>
               </div>
@@ -354,8 +213,57 @@ const queryParams = reactive({
   pagecount: 0,
   totalCount: 0,
   Search: "",
+  orderStage: "",
 });
+const status = ref("");
 const isLoading = ref(true);
+const options = [
+  {
+    label: "In cart",
+    value: 0,
+  },
+  {
+    label: "In progress",
+    value: 0,
+  },
+  {
+    label: "Payment confirmed",
+    value: 1,
+  },
+
+  {
+    label: "Order cancelled",
+    value: 3,
+  },
+  {
+    label: "Order completed",
+    value: 2,
+  },
+];
+
+const subOptions = [
+  {
+    label: "In cart",
+    value: "In cart",
+  },
+  {
+    label: "In progress",
+    value: "In progress",
+  },
+  {
+    label: "Payment confirmed",
+    value: "Payment confirmed",
+  },
+
+  {
+    label: "Order cancelled",
+    value: "Order cancelled",
+  },
+  {
+    label: "Order completed",
+    value: "Order completed",
+  },
+];
 function fetchCart() {
   getcart().then((res) => {
     if (res.status === 200) {
@@ -438,9 +346,32 @@ function prev() {
 const debounceSearch = debounce(() => {
   getData();
 }, 800);
+watch(
+  () => [status.value],
+  () => {
+    if (status.value) {
+      const data = options.find((i) => i.label === status.value);
+      queryParams.orderStage = "";
+      if (status.value === "In cart") {
+        queryParams.orderStage = 0;
+      }
+      if (status.value === "In progress") {
+        queryParams.orderStage = 1;
+      }
+
+      queryParams.Status = data?.value;
+    }
+  }
+);
 
 watch(
-  () => [queryParams.PageNumber, queryParams.Status, queryParams.PageSiz],
+  () => [
+    queryParams.PageNumber,
+    queryParams.Status,
+    queryParams.PageSize,
+    queryParams.Status,
+    queryParams.orderStage,
+  ],
   () => {
     getData();
   }
