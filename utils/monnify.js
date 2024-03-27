@@ -3,14 +3,18 @@
 
 import { confirmpurchase } from "@/services/cartservice";
 
-export function payWithMonnify(data, onModalClose, onSuccess) {
+export function payWithMonnify(
+  data,
+  onModalClose,
+  onSuccess,
+) {
   const config = useRuntimeConfig();
 
   const cartstore = useCartStore();
   window.MonnifySDK.initialize({
     amount: data.amount,
     currency: "NGN",
-    reference: "" + Math.floor(Math.random() * 1000000000 + 1),
+    reference: data.reference || "" + Math.floor(Math.random() * 1000000000 + 1),
     customerName: data.name,
     customerEmail: data.email,
     apiKey: config.public.APP_MONNIFYAPIKEY,

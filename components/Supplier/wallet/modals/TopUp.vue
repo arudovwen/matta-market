@@ -148,7 +148,10 @@ function onModalClose() {
   isErrorOpen.value = true;
 }
 function onSuccess(response) {
-  if (response.status.toLowerCase() === "success" && response.transactionReference) {
+  if (
+    response.status.toLowerCase() === "success" &&
+    response.transactionReference
+  ) {
     loader.value = true;
     const data = {
       amount: amount.value,
@@ -177,6 +180,7 @@ const onSubmit = handleSubmit((values) => {
     amount: values.amount,
     phoneNumber: authstore.userInfo?.phoneNumber,
     type: "Wallet Funding",
+    reference: `WAL-${Math.floor(Math.random() * 1000000000 + 1)}`,
   };
 
   payWithMonnify(data, onModalClose, onSuccess);

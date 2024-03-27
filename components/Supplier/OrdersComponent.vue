@@ -25,17 +25,12 @@
             />
           </div>
           <div class="flex relative items-center">
-            <select
-              v-model="queryParams.Status"
-              class="appearance-none border border-[#E7E7E7] rounded-lg w-[150px] text-sm py-[10px] px-[14px] focus:outline-matta-black/20"
-            >
-              <option value="">Status</option>
-              <option value="0">Pending</option>
-              <option value="1">Completed</option>
-            </select>
-            <i
-              class="uil uil-angle-down absolute right-2 pointer-events-none"
-            ></i>
+            <Select
+              v-model="status"
+              :options="subOptions"
+              placeholder="Select status"
+              :classInput="`text-sm min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !border !h-11 cursor-pointer border-[#D0D5DD]`"
+            />
           </div>
 
           <AppButton
@@ -78,7 +73,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  {{ moment(item.orderDate).format("lll") }}
+                  {{ moment(item.orderDate).format("ll") }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
@@ -88,36 +83,22 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <AppStatusButton :status="item.status" stattype="order" />
+                  <AppStatusButton
+                    :status="item.status"
+                    stattype="parent-order"
+                    :type="item.orderNumber"
+                  />
                 </td>
 
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  {{
-                    item.scheduleDeilverDate
-                      ? moment(item.scheduleDeilverDate)?.format("lll")
-                      : moment()?.format("lll")
-                  }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-                >
-                  <Menu class="relative" as="div">
-                    <MenuButton class="outline-none">
-                      <AppIcon icon="heroicons:ellipsis-vertical-solid" />
-                    </MenuButton>
-                    <MenuItems
-                      class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[140px] rounded-xl overflow-hidden"
-                    >
-                      <div
-                        class="py-2 px-4 hover:bg-gray-50 text-sm whitespace-nowrap"
-                        @click="openOrder(item)"
-                      >
-                        <i class="uil uil-box mr-2"></i> Open order
-                      </div>
-                    </MenuItems>
-                  </Menu>
+                  <div
+                    class="text-sm whitespace-nowrap hover:underline"
+                    @click="openOrder(item)"
+                  >
+                    View order
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -150,13 +131,14 @@
       <div
         class="h-full w-full bg-white rounded-lg p-6 lg:p-8 overflow-auto max-h-full"
       >
-        <div class="mb-3">
+        <div class="mb-3" v-if="!isOrderLoading">
           <p class="text-[13px] text-[#B6B7B9] mb-2">Order ID</p>
-          <h2 class="font-medium text-2xl">#{{ order.orderNumber }}</h2>
+          <h2 class="font-medium text-2xl">#{{ order?.orderNumber }}</h2>
         </div>
 
         <hr class="my-3 border-gray-200" />
-        <OrderComponent :order="order" />
+        <OrderComponent :order="order" v-if="!isOrderLoading" />
+        <AppLoader v-if="isOrderLoading" />
       </div>
     </template>
   </SideModal>
@@ -187,8 +169,58 @@ const queryParams = reactive({
   pagecount: 0,
   totalCount: 0,
   Search: "",
+  orderStage: "",
 });
+const status = ref("");
+const options = [
+  {
+    label: "In cart",
+    value: 0,
+  },
+  {
+    label: "In progress",
+    value: 0,
+  },
+  {
+    label: "Payment confirmed",
+    value: 1,
+  },
+
+  {
+    label: "Order cancelled",
+    value: 3,
+  },
+  {
+    label: "Order completed",
+    value: 2,
+  },
+];
+
+const subOptions = [
+  {
+    label: "In cart",
+    value: "In cart",
+  },
+  {
+    label: "In progress",
+    value: "In progress",
+  },
+  {
+    label: "Payment confirmed",
+    value: "Payment confirmed",
+  },
+
+  {
+    label: "Order cancelled",
+    value: "Order cancelled",
+  },
+  {
+    label: "Order completed",
+    value: "Order completed",
+  },
+];
 const isLoading = ref(true);
+const isOrderLoading = ref(false);
 function getData() {
   isLoading.value = true;
   storefrontorders(queryParams)
@@ -211,13 +243,14 @@ const order = ref(null);
 const isOpen = ref(false);
 
 function openOrder(val) {
+  isOrderLoading.value = isOpen.value = true;
   storefrontorderdetails(val.id)
     .then((res) => {
       order.value = { ...val, ...res.data, orderId: val.orderNumber };
-      isOpen.value = true;
+      isOrderLoading.value = false;
     })
     .catch((err) => {
-      isLoading.value = false;
+      isOrderLoading.value = false;
       toast.error(err.response.data.message || err.response.data.Message);
     });
 }
@@ -226,15 +259,7 @@ function openModal() {
   isOpen.value = !isOpen.value;
 }
 
-const theads = [
-  "order id",
-  "customer name",
-  "created",
-  "amount",
-  "status",
-  "scheduled delivery",
-  "",
-];
+const theads = ["order id", "customer name", "created", "amount", "status", ""];
 
 function next() {
   queryParams.PageNumber++;
@@ -257,7 +282,30 @@ const debounceSearch = debounce(() => {
 }, 800);
 
 watch(
-  () => [queryParams.PageNumber, queryParams.PageSize, queryParams.Status],
+  () => [status.value],
+  () => {
+    if (status.value) {
+      const data = options.find((i) => i.label === status.value);
+      queryParams.orderStage = "";
+      if (status.value === "In cart") {
+        queryParams.orderStage = 0;
+      }
+      if (status.value === "In progress") {
+        queryParams.orderStage = 1;
+      }
+
+      queryParams.Status = data?.value;
+    }
+  }
+);
+
+watch(
+  () => [
+    queryParams.PageSize,
+    queryParams.PageNumber,
+    queryParams.Status,
+    queryParams.orderStage,
+  ],
   () => {
     getData();
   }

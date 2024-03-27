@@ -60,7 +60,7 @@ function getDate(val) {
     return moment(val).fromNow();
   }
 
-  return moment(new Date(val)).format("lll");
+  return moment(new Date(val)).format("ll");
 }
 const filteredNotification = computed(() => {
   if (!selectedOption.value.length) return notifications.value;

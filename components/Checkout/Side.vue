@@ -74,7 +74,7 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { confirmpurchase,confirmpayment } from "~/services/cartservice";
+import { confirmpurchase, confirmpayment } from "~/services/cartservice";
 
 const cartTaxAmount = computed(
   () => cartStore?.cartTotalAmount * cartStore?.tax + cartStore?.cartTotalAmount
@@ -102,7 +102,8 @@ function makePayment(reference) {
     name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
     amount: cartTaxAmount.value,
     phoneNumber: authstore.userInfo?.phoneNumber,
-    reference,
+    reference: `ORD-${reference}`,
+    orderId: reference
   };
 
   payWithMonnify(data.value, onModalClose, onSuccess);
@@ -110,11 +111,11 @@ function makePayment(reference) {
 function confirmOrder() {
   status.value = "Processing order...";
   loading.value = true;
-  confirmpurchase({ shippingAddressId:  shippingStore?.defaultAddress.id })
+  confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress.id })
     .then((res) => {
       if (res.status === 200) {
-        console.log("🚀 ~ .then ~ res:", res);
-        makePayment(res.data.data)
+        makePayment(res.data.data);
+        cartStore?.clearCart();
       }
     })
     .catch((err) => {
@@ -128,7 +129,7 @@ function confirmOrder() {
 }
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
-    confirmpayment({ orderId: data.value.reference })
+    confirmpayment({ orderId: data.value.orderId })
       .then((res) => {
         if (res.status === 200) {
           cartStore?.clearCart();

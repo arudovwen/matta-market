@@ -75,7 +75,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ moment(item.transactionDate).format("lll") }}
+                  {{ moment(item.transactionDate).format("ll") }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
@@ -97,7 +97,7 @@
               <div class="text-left text-matta-black">
                 <span class="block text-sm mb-1"> {{ item.reference }}</span>
                 <span class="block text-sm mb-1">
-                  {{ moment(item.transactionDate).format("lll") }}</span
+                  {{ moment(item.transactionDate).format("ll") }}</span
                 >
                 <span class="block text-base font-semibold">
                   {{ currencyFormat(item.amount, item.currencyCode) }}</span

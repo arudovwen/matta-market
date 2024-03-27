@@ -1,5 +1,5 @@
 <template>
-  <div class="gap-y-2 flex flex-col mb-4 bg-white rounded-[10px] pb-10">
+  <div class="gap-y-2 flex flex-col mb-4 bg-white rounded-[10px] pb-10 border border-[#F4F7FE]">
     <HeaderComponent title="My  Orders" />
 
     <div class="p-6 lg:p-8 rounded-lg bg-white">
@@ -21,8 +21,8 @@
             </div>
             <div class="flex relative items-center">
               <Select
-                v-model="status"
-                :options="subOptions"
+                v-model="queryParams.Status"
+                :options="options"
                 placeholder="Select status"
                 :classInput="`text-sm min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !border !h-11 cursor-pointer border-[#D0D5DD]`"
               />
@@ -32,9 +32,6 @@
               @click="
                 queryParams.Status = '';
                 queryParams.Search = '';
-
-                queryParams.orderStage = '';
-                status = '';
               "
               text="Clear filter"
               btnClass="text-xs text-[#98A2B3] font-normal"
@@ -154,7 +151,7 @@
       <AppLoader />
     </div>
   </div>
-  <div class="">
+  <div class="mb-6" v-if="queryParams.totalCount > queryParams.PageSize">
     <Pagination
       :total="queryParams.totalCount"
       :current="queryParams.PageNumber"
@@ -189,7 +186,6 @@ import debounce from "lodash/debounce";
 import {
   procurementorders,
   procurementorderdetails,
-  buyerordertimeline,
 } from "~/services/orderservice";
 import moment from "moment";
 import { toast } from "vue3-toastify";
@@ -213,9 +209,7 @@ const queryParams = reactive({
   pagecount: 0,
   totalCount: 0,
   Search: "",
-  orderStage: "",
 });
-const status = ref("");
 const isLoading = ref(true);
 const options = [
   {
@@ -223,47 +217,36 @@ const options = [
     value: 0,
   },
   {
-    label: "In progress",
-    value: 0,
+    label: "Order created",
+    value: `StatusClass[0]`,
   },
   {
     label: "Payment confirmed",
-    value: 1,
+    value: 2,
   },
-
   {
-    label: "Order cancelled",
+    label: "Order received",
     value: 3,
   },
   {
-    label: "Order completed",
-    value: 2,
-  },
-];
-
-const subOptions = [
-  {
-    label: "In cart",
-    value: "In cart",
-  },
-  {
-    label: "In progress",
-    value: "In progress",
-  },
-  {
-    label: "Payment confirmed",
-    value: "Payment confirmed",
-  },
-
-  {
     label: "Order cancelled",
-    value: "Order cancelled",
+    value: 4,
   },
   {
-    label: "Order completed",
-    value: "Order completed",
+    label: "Refund complete",
+    value: 5,
+  },
+
+  {
+    label: "Shipping in progress",
+    value: 6,
+  },
+  {
+    label: "Delivered",
+    value: 7,
   },
 ];
+
 function fetchCart() {
   getcart().then((res) => {
     if (res.status === 200) {
@@ -293,7 +276,7 @@ function getData() {
       toast.error(err.response.data.message || err.response.data.Message);
     });
 }
-const route = useRoute();
+
 defineProps(["title"]);
 
 const order = ref(null);
@@ -310,59 +293,15 @@ function openOrder(val) {
       isLoading.value = false;
       toast.error(err.response.data.message || err.response.data.Message);
     });
-  buyerordertimeline(val.orderId)
-    .then((res) => {
-      timeline.value = res.data.data.reverse();
-      isOpen.value = true;
-    })
-    .catch((err) => {
-      isLoading.value = false;
-      toast.error(err.response.data.message || err.response.data.Message);
-    });
 }
 
 function openModal() {
   isOpen.value = !isOpen.value;
 }
 
-const theads = ["order id", "created", "status", "scheduled delivery date", ""];
-
-function next() {
-  queryParams.PageNumber++;
-  getData();
-}
-function toggleOrder() {
-  queryParams.SortOrder == "A"
-    ? (queryParams.SortOrder = "D")
-    : (queryParams.SortOrder = "A");
-  getData();
-}
-function prev() {
-  if (queryParams.PageNumber == 1) return;
-  queryParams.PageNumber--;
-  getData();
-}
-
 const debounceSearch = debounce(() => {
   getData();
 }, 800);
-watch(
-  () => [status.value],
-  () => {
-    if (status.value) {
-      const data = options.find((i) => i.label === status.value);
-      queryParams.orderStage = "";
-      if (status.value === "In cart") {
-        queryParams.orderStage = 0;
-      }
-      if (status.value === "In progress") {
-        queryParams.orderStage = 1;
-      }
-
-      queryParams.Status = data?.value;
-    }
-  }
-);
 
 watch(
   () => [
@@ -370,7 +309,6 @@ watch(
     queryParams.Status,
     queryParams.PageSize,
     queryParams.Status,
-    queryParams.orderStage,
   ],
   () => {
     getData();

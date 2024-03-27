@@ -2,7 +2,7 @@
   <div class="gap-y-4 flex flex-col pb-10">
     <!-- Top bar   -->
 
-    <div class="bg-white rounded-[10px]">
+    <div class="bg-white rounded-[10px] border border-[#F4F7FE]">
       <HeaderComponent title="Shipping address" />
 
       <div class="p-5" v-if="!shippingStore.isLoading">

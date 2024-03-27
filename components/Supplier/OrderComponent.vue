@@ -6,7 +6,7 @@
         <span class="text-sm">{{ currencyFormat(order?.amountWithTax) }}</span>
       </div>
       <div>
-        <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">status</p>
+        <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">Order status</p>
         <AppStatusButton
           :status="order?.status"
           stattype="parent-order"
@@ -46,7 +46,7 @@
         :key="id"
         class="border-b pb-4 border-[#ddd] mb-3"
       >
-        <div class="flex justify-between items-end gap-x-2 mb-1">
+        <div class="flex justify-between items-end gap-x-2 mb-[6px]">
           <div class="text-[#E1E1E1] pt-1 flex items-end text-sm">
             <span>
               <span class="text-sm font-medium">{{ item.product }}</span>
@@ -59,11 +59,13 @@
           </div>
           <span class="text-right">{{ currencyFormat(item.itemTotal) }}</span>
         </div>
-        <div class="flex justify-between items-center text-sm">
-          <span class="flex gap-x-3 items-center text-sm"
-            ><span>Status:</span>
+        <div class="flex justify-between items-center text-xs">
+          <span class="flex gap-x-3 items-center text-xs"
+            ><span>Status</span>
           </span>
-          <AppStatusButton :status="item.orderItemStatus" stattype="order" />
+          <span class="rounded">
+            <AppStatusButton :status="item.orderItemStatus" stattype="order"
+          /></span>
         </div>
       </div>
       <div class="flex justify-between gap-x-2">
@@ -93,82 +95,6 @@
           {{ currencyFormat(order?.orderTotalwithTax) }}
         </div>
       </div>
-    </div>
-    <div class="bg-[#F1F3F5] rounded-lg p-6 text-matta-black" v-if="timeline.length">
-      <div class="flex justify-between mb-6">
-        <h3 class="text-lg font-medium">Timeline</h3>
-        <span><i class="uil uil-minusext-lg"></i></span>
-      </div>
-
-      <ul class="grid grid-cols-1 gap-4">
-        <li v-for="(item, id) in timeline" :key="id" class="group">
-          <div class="py-4 items-center hidden group-last:flex">
-            <span class="bg-matta-black h-[2px] rounded-l flex-1"></span>
-            <span class="h-4 w-4 rounded-full bg-matta-black"></span>
-          </div>
-          <div
-            class="flex justify-start items-center gap-x-2 opacity-50 group-last:opacity-100"
-          >
-            <span
-              class="group-last:bg-primary-500 group-last:text-white w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-sm"
-            >
-              <i class="uil uil-check"></i>
-            </span>
-            <!-- <span
-          :class="
-            stage > 2
-              ? ''
-              : stage == 2
-              ? ' bg-primary-500 text-white'
-              : stage < 2
-              ? 'bg-white text-matta-black'
-              : ''
-          "
-          class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-sm"
-        >
-          <i class="uil uil-map-marker"></i>
-        </span> -->
-            <!-- <span
-          :class="
-            stage > 3
-              ? ''
-              : stage == 3
-              ? ' bg-primary-500 text-white'
-              : stage < 3
-              ? 'bg-white text-matta-black'
-              : ''
-          "
-          class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-sm"
-        >
-          <i class="uil uil-dollar-alt"></i>
-        </span> -->
-            <!-- <span
-          :class="
-            stage > 4
-              ? ''
-              : stage == 4
-              ? ' bg-primary-500 text-white'
-              : stage < 4
-              ? 'bg-white text-matta-black'
-              : ''
-          "
-          class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-sm"
-        >
-          <i class="uil uil-refresh"></i>
-        </span> -->
-            <span>
-              <span class="text-xs text-[#ABABAB]"
-                >{{ moment(item?.activityDate).format("ll") }},
-                {{ item?.activityTime }}</span
-              >
-              <br />
-              <span class="text-xs"
-                ><span>{{ item?.description }}</span></span
-              >
-            </span>
-          </div>
-        </li>
-      </ul>
     </div>
   </section>
 </template>

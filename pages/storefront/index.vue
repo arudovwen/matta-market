@@ -1,5 +1,5 @@
 <template>
-  <div class="gap-y-2 flex flex-col bg-white rounded-[10px] pb-10">
+  <div class="gap-y-2 flex flex-col bg-white rounded-[10px] pb-10  border border-[#F4F7FE]">
     <!-- Top bar   -->
     <HeaderComponent title="Storefront" subtext="List of orders, requests, products in your storefront" />
 

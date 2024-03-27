@@ -31,7 +31,7 @@
       </div>
       <div>
         <p class="text-[12px] text-[#98A2B3] mb-1 capitalize">created</p>
-        <span class="text-xs"> {{ moment(request.date).format("lll") }}</span>
+        <span class="text-xs"> {{ moment(request.date).format("ll") }}</span>
       </div>
       <div>
         <p class="text-[12px] text-[#98A2B3] mb-1 capitalize">
