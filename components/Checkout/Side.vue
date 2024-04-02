@@ -67,8 +67,8 @@
     />
 
     <p class="text-xs text-[#E1E1E1]">
-      After placing an order, our manager will contact you to clarify the price
-      and other details of your order.
+      After placing an order, you can contact our support for details of your
+      order.
     </p>
   </div>
 </template>
@@ -103,7 +103,7 @@ function makePayment(reference) {
     amount: cartTaxAmount.value,
     phoneNumber: authstore.userInfo?.phoneNumber,
     reference: `ORD-${reference}`,
-    orderId: reference
+    orderId: reference,
   };
 
   payWithMonnify(data.value, onModalClose, onSuccess);

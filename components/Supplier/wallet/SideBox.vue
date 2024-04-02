@@ -62,7 +62,7 @@
         :key="item.title"
       >
         <span class="font-normal text-[#667085]">{{ item.title }}: </span>
-        <span class="flex gap-x-6 items-center">
+        <span class="flex gap-x-4 items-center">
           <span class="font-medium text-[#101828]">{{
             details[item.key]
           }}</span>
@@ -70,7 +70,7 @@
             v-if="item.key === 'accountNumber'"
             v-clipboard="details?.accountNumber"
             @click="toast.success('Copied')"
-            class="cursor-pointer ml-2"
+            class="cursor-pointer"
           >
             <i class="uil uil-copy text-[#101828]"></i></button
         ></span>
