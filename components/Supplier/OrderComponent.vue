@@ -63,7 +63,7 @@
           <span class="flex gap-x-3 items-center text-xs"
             ><span>Status</span>
           </span>
-          <span class="rounded">
+          <span class="rounded bg-white">
             <AppStatusButton :status="item.orderItemStatus" stattype="order"
           /></span>
         </div>
