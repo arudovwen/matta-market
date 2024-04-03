@@ -34,9 +34,6 @@
     <EmptyData
       v-if="!productsData.length"
       title="No product available"
-      btnText="New product"
-      btnIcon="humbleicons:plus"
-      @btn-function="navigateTo('/storefront/products/add-product')"
     />
   </div>
   <IndexModal :isOpen="open" @togglePopup="togglePopup">
