@@ -145,10 +145,6 @@ const navs = [
         url: "#",
       },
       {
-        title: "Cross border payments",
-        url: "#",
-      },
-      {
         title: "Local fulfillment partnerships",
         url: "#",
       },
