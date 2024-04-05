@@ -34,7 +34,7 @@
     >
       <NuxtLink
         v-if="activeKey.toLowerCase() !== 'finance'"
-        :to="`/${
+        :to="`/category/${
           activeKey.toLowerCase() === 'markets' ? 'market' : 'application'
         }/${encodeURIComponent(cat.title.toLowerCase())}/${cat.id}`"
       >
