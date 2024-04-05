@@ -9,7 +9,7 @@
       {{ n.name }}
       <AppIcon icon="pepicons-pencil:angle-right" />
     </li>
-    <li
+    <!-- <li
      
       
     >
@@ -17,7 +17,7 @@
      <span class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"> Finance
       <AppIcon icon="pepicons-pencil:angle-right" /></span>
      </NuxtLink>
-    </li>
+    </li> -->
   </ul>
   <button
     class="flex gap-x-1 items-center text-xs mb-5"
