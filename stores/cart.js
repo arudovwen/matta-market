@@ -24,12 +24,16 @@ export const useCartStore = defineStore(
     );
 
     function getMyCart() {
-      getcart().then((res) => {
-        if (res.status === 200) {
-          setCart(res.data.data.items);
-          setTax(res.data.data.tax);
-        }
-      });
+      getcart()
+        .then((res) => {
+          if (res.status === 200) {
+            setCart(res.data.data.items);
+            setTax(res.data.data.tax);
+          }
+        })
+        .catch((err) => {
+          console.log("🚀 ~ getcart ~ err:", err.response.data.Message);
+        });
     }
     function setTax(data) {
       tax.value = data;
@@ -41,9 +45,7 @@ export const useCartStore = defineStore(
 
     async function addToCart(item, type) {
       if (
-        cartItems?.value.some(
-          (ct) => ct.productId === item.productId
-        ) &&
+        cartItems?.value.some((ct) => ct.productId === item.productId) &&
         cartItems?.value.some((ct) => ct.packageId === item.packageId)
       ) {
         return { status: false, message: "incart" };
@@ -106,16 +108,12 @@ export const useCartStore = defineStore(
       if (authStore.isLoggedIn) {
         removecartitem(id).then((res) => {
           if (res.status === 200) {
-            const tempCart = cartItems?.value.filter(
-              (item) => item.id !== id
-            );
+            const tempCart = cartItems?.value.filter((item) => item.id !== id);
             setCart(tempCart);
           }
         });
       } else {
-        const tempCart = cartItems?.value.filter(
-          (item) => item.id !== id
-        );
+        const tempCart = cartItems?.value.filter((item) => item.id !== id);
         setCart(tempCart);
       }
     }

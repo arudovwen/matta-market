@@ -56,7 +56,12 @@ onMounted(() => {
           }
         }
       }
-    });
+    }) .catch((err) => {
+         
+          if(err.response.data.Message.toLowerCase() === "no items in cart"){
+            cartStore?.setCart?.([])
+          }
+        });
   } else {
     cartStore?.setCart?.(cookie?.value?.cartItems || []);
   }

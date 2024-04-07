@@ -116,7 +116,6 @@ function confirmOrder() {
     .then((res) => {
       if (res.status === 200) {
         makePayment(res.data.data);
-        cartStore?.clearCart();
       }
     })
     .catch((err) => {
@@ -135,8 +134,6 @@ function onSuccess(response) {
         if (res.status === 200) {
           cartStore?.clearCart();
           window.location.href = `/order-success?orderId=${data.value.orderId}`;
-          // window.location.href = `/transaction/successful?trx_ref=${response.transactionReference}`;
-          // Payment complete! Reference: transaction.reference
         }
       })
       .catch((err) => {

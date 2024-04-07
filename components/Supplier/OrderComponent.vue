@@ -57,7 +57,7 @@
               >
             </span>
           </div>
-          <span class="text-right">{{ currencyFormat(item.itemTotal) }}</span>
+          <span class="text-right">{{ currencyFormat(item.itemTotal_with_tax) }}</span>
         </div>
         <div class="flex justify-between items-center text-xs">
           <span class="flex gap-x-3 items-center text-xs"

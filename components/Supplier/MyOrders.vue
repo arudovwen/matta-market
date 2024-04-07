@@ -1,5 +1,5 @@
 <template>
-  <div class="gap-y-2 flex flex-col mb-4 bg-white rounded-[10px] pb-10 border border-[#F4F7FE]">
+  <div class="gap-y-2 flex flex-col mb-4 bg-white rounded-[10px] border border-[#F4F7FE]">
     <HeaderComponent title="My  Orders" />
 
     <div class="p-6 lg:p-8 rounded-lg bg-white">

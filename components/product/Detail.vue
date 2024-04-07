@@ -390,9 +390,9 @@ function handleCart(type) {
     unit: mypackage?.value.unit,
     productId: productData?.value?.id,
     product: productData?.value.name,
-    productImg: productData.value.gallery.length
-      ? productData.value.gallery[0]
-      : productData.value.featuredPhoto,
+    productImg: productData.value?.gallery?.length
+      ? productData.value?.gallery[0]
+      : productData.value?.featuredPhoto,
     selectedPackage: mypackage?.value.package?.title,
     selectedPackageData: mypackage.value,
     productBrandName: productData?.value.productBrandName,
@@ -404,7 +404,7 @@ function handleCart(type) {
 
   cartStore?.addToCart(data, type).then((res) => {
     if (!res.status && res.message === "incart") {
-      router.push("/cart");
+     toast.info("Already in cart")
     }
     if (res.status && res.message !== "buy") {
       isAdded.value = true;
@@ -432,9 +432,9 @@ function handleOrderRequest() {
     unit: mypackage?.value.unit,
     productId: productData?.value?.id,
     product: productData?.value.name,
-    productImg: productData.value.gallery.length
-      ? productData.value.gallery[0]
-      : productData.value.featuredPhoto,
+    productImg: productData.value?.gallery?.length
+      ? productData.value?.gallery[0]
+      : productData.value?.featuredPhoto,
     selectedPackage: mypackage?.value.package?.title,
     selectedPackageData: mypackage.value,
     productBrandName: productData?.value.productBrandName,
@@ -455,8 +455,8 @@ function handleLike(value) {
     businessId: authStore.userId,
     productId: productData.value.id,
     productName: productData.value.name,
-    productImg: productData.value.gallery.length
-      ? productData.value.gallery[0]
+    productImg: productData.value?.gallery?.length
+      ? productData.value?.gallery[0]
       : productData.value.featuredPhoto,
     backgroundbg: "",
     price: productData.value.price,
