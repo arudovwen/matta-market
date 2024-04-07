@@ -1,7 +1,8 @@
 <template>
   <form @submit.prevent="onSubmit" class="w-full mt-6">
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
-      <Textinput
+      <div class="md:col-span-2">
+        <Textinput
         placeholder=""
         label="Company name"
         name="companyName"
@@ -9,6 +10,7 @@
         v-model="companyName"
         :error="errors.companyName"
       />
+      </div>
 
       <FormGroup
         label="Date of incorporation"
@@ -52,6 +54,22 @@
           }`"
         />
       </FormGroup>
+      <Textinput
+        placeholder=""
+        label="Registration number"
+        name="registrationNo"
+        v-bind="registrationNoAtt"
+        v-model="registrationNo"
+        :error="errors.registrationNo"
+      />
+      <Textinput
+        placeholder=""
+        label="TIN number"
+        name="tin"
+        v-bind="tinAtt"
+        v-model="tin"
+        :error="errors.tin"
+      />
       <FormGroup label="Country" :error="errors.country" name="sector">
         <SelectVueSelect
           :options="allcountries"
@@ -107,7 +125,10 @@
           >Company documents
         </label>
         <div
-          v-if="!company.companyDocuments?.length || company.companyDocuments.some((i) => !i.url)"
+          v-if="
+            !company.companyDocuments?.length ||
+            company.companyDocuments.some((i) => !i.url)
+          "
           class="grid gap-y-6"
         >
           <FormGroup :error="errors.mermat" class="col-span-2">
@@ -202,6 +223,16 @@ const formSchema = yup.object().shape({
   country: yup.string().required(),
   state: yup.string().required(),
   city: yup.string(),
+  registrationNo: yup
+    .string()
+    .min(14, "Value must be 14")
+    .max(14, "Value must be 14")
+    .required(),
+  tin: yup
+    .string()
+    .required()
+    .min(7, "Value must be 7")
+    .max(7, "Value must be 7"),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(
@@ -215,6 +246,8 @@ const [mermat] = defineField("mermat");
 const [statusReport] = defineField("statusReport");
 const [incorporation] = defineField("incorporation");
 const [companyName, companyNameAtt] = defineField("companyName");
+const [registrationNo, registrationNoAtt] = defineField("registrationNo");
+const [tin, tinAtt] = defineField("tin");
 const [sector] = defineField("sector");
 const [dateofIncorporation, dateofIncorporationAtt] = defineField(
   "dateofIncorporation"

@@ -25,7 +25,7 @@
       </button>
 
       <span
-        class="flex-1 px-4 truncate text-[#999999] inline-block"
+        class="flex-1 px-4 truncate text-[#999999] inline-block max-w-[300px]"
         >{{ title }}</span
       >
     </div>

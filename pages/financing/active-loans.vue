@@ -6,9 +6,9 @@
       :key="id"
     >
       <div class="flex justify-between items-center mb-5">
-        <span class="text-sm font-semibold capitalize text-[#344054]">{{
-          handleType(n.loanRequestType)
-        }} finance</span>
+        <span class="text-sm font-semibold capitalize text-[#344054]"
+          >{{ handleType(n.loanRequestType) }} finance</span
+        >
         <span
           class="text-xs px-[6px] py-[2px] rounded-[6px] bg-[#ECFDF3] border border-[#ABEFC6] text-[#067647]"
           >Active</span
@@ -45,7 +45,7 @@
   <hr v-if="financeData.length" class="my-6 border-[#EAECF0]" />
 </template>
 <script setup>
-import { getAllFinance, withdrawFinance } from "~/services/financeservice";
+import { getAllFinance } from "~/services/financeservice";
 
 const queryParams = reactive({
   SupplierId: null,
@@ -63,7 +63,7 @@ const docLoading = ref(true);
 const financeData = ref([]);
 function getFinanceData() {
   docLoading.value = true;
-  if (!queryParams.financeRequestStatus_In?.length) return;
+
   getAllFinance(queryParams).then((res) => {
     financeData.value = res.data.data;
     queryParams.totalCount = res.data.data.totalCount;
@@ -92,22 +92,7 @@ function handleType(key) {
 onMounted(() => {
   getFinanceData();
 });
-const content = [
-  {
-    type: "trade finance",
-    amount: 40000,
-    amount_left: 20000,
-    interest: 10,
-    days_left: 20,
-  },
-  {
-    type: "import finance",
-    amount: 55000,
-    amount_left: 12000,
-    interest: 10,
-    days_left: 20,
-  },
-];
+
 function getPercentage(part, total) {
   return (part / total) * 100;
 }

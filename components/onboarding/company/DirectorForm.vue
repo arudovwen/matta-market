@@ -152,6 +152,7 @@
         class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
         autocomplete="off"
         autofocus="on"
+        placeholder="Your linkedin profile url"
       />
       <div
         class="text-red-500 mt-1"

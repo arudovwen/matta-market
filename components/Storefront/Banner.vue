@@ -12,7 +12,7 @@
                 ? vendorInfo.bannerUrl
                 : '/images/storebanner.png'
             "
-            class="w-full h-full rounded-t-[5px]"
+            class="w-full h-full rounded-t-[5px] object-cover"
           />
         </div>
         <div
@@ -22,13 +22,15 @@
             class="absolute w-20 h-20 rounded-[5px] overflow-hidden left-10 bg-white top-0 translate-y-[-60%] flex items-center justify-center border border-[#F5F5F5]"
           >
             <img
-              :src="vendorInfo?.logo ? vendorInfo?.logo : '/images/matta-icon.png'"
+              :src="
+                vendorInfo?.logo ? vendorInfo?.logo : '/images/matta-icon.png'
+              "
               class=""
             />
           </div>
           <div>
             <h1 class="text-[#202939] text-xl font-bold capitalize mb-1">
-              {{ vendorInfo?.storeName || vendor.replace("-", " ")}}
+              {{ vendorInfo?.storeName || vendor.replace("-", " ") }}
             </h1>
             <p class="text-sm text-[#364152] font-medium">
               {{ total }} Products
@@ -85,9 +87,9 @@ const options = [
 ];
 const vendorInfo = inject("vendorInfo");
 onMounted(() => {
- 
-  getStoreInfo(vendor).then(res=>{
-    vendorInfo.value = res.data.data;
-  })
+  getStoreInfo(vendor).then((res) => {
+    vendorInfo.value = res.data;
+  });
 });
 </script>
+ 

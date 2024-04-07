@@ -32,14 +32,14 @@
           </div>
         </div>
 
-        <div v-if="!docLoading && financeData?.length" class="overflow-x-auto">
+        <div v-if="!docLoading && financeData?.length" class="border border-[#EAECF0] rounded-lg">
           <table class="table-auto w-full">
             <thead>
               <tr>
                 <th
                   v-for="item in theads"
                   :key="item"
-                  class="capitalize text-[#475467] text-sm text-left font-medium border-t border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+                  class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB] rounded-t-lg"
                 >
                   {{ item }}
                 </th>
@@ -47,34 +47,29 @@
             </thead>
 
             <tbody>
-              <tr v-for="item in financeData" :key="item">
+              <tr v-for="item in financeData" :key="item" class="rounded-b-lg  border-b border-[#EAECF0] last:border-none">
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   {{ item.financeRequestNo }}
                 </td>
-                <!-- <td
-                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
-                  >
-                    {{ item.customer || "-" }}
-                  </td> -->
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   {{ handleType(item.loanRequestType) }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   {{ moment(item.created).format("ll") }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   {{ currencyFormat(item.amountRequired) }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   {{
                     !item.financeRequestStatus
@@ -83,7 +78,7 @@
                   }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   <AppStatusButton
                     :status="item.financeRequestStatus"
@@ -92,7 +87,7 @@
                 </td>
 
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
                   <Menu class="relative" as="div">
                     <MenuButton
@@ -261,7 +256,7 @@ const tabs = [
 const theads = [
   "request id",
   // "customer name",
-  "financing type",
+  "type",
   "created",
   "requested amount",
   "approved amount",
@@ -289,7 +284,6 @@ const docLoading = ref(true);
 
 function getFinanceData() {
   docLoading.value = true;
-  if(!queryParams.financeRequestStatus_In?.length) return
   getAllFinance(queryParams).then((res) => {
     financeData.value = res.data.data;
     queryParams.totalCount = res.data.data.totalCount;
@@ -386,7 +380,7 @@ const FinancesOptions = [
   {
     label: "all finance",
     key: "all",
-    value: "",
+    value: null,
   },
   {
     label: "trade finance",

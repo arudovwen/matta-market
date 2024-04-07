@@ -1,6 +1,6 @@
 <template>
   <div
-    class="gap-y-2 flex flex-col bg-white rounded-[10px] border border-[#F4F7FE] px-6"
+    class="gap-y-2 flex flex-col bg-white rounded-[10px] border border-[#F4F7FE] px-6 pb-10"
   >
     <!-- Top bar   -->
 

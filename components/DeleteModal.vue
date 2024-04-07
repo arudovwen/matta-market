@@ -32,7 +32,7 @@
               <div
                 class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full"
               >
-                <div class="bg-white px-6  py-6">
+                <div class="bg-white px-6 py-6">
                   <div class="flex justify-between mb-5 items-center">
                     <div>
                       <img src="/images/delete.svg" />
@@ -52,7 +52,7 @@
                     {{ text }}
                   </p>
 
-                  <div class="flex flex-col gap-y-4 items-center mt-6">
+                  <div class="flex gap-x-4 items-center mt-6">
                     <button
                       type="button"
                       @click="handleclose"
@@ -62,12 +62,12 @@
                     </button>
 
                     <button
-                    :disabled="loading"
+                      :disabled="loading"
                       type="button"
                       @click="deleteItem"
                       class="appearance-none leading-none px-4 py-[10px] rounded-lg text-white bg-[#D92D20] text-sm w-full border border-[#D92D20] font-medium disabled:opacity-50"
                     >
-                      {{btnText}}
+                      {{ btnText }}
                     </button>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-defineProps(["title", "text", "open","btnText", "loading"]);
+defineProps(["title", "text", "open", "btnText", "loading"]);
 const emits = defineEmits(["deleteItem", "close"]);
 
 function deleteItem() {
