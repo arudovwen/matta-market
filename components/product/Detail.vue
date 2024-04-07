@@ -78,29 +78,35 @@
           <span class="font-bold"> {{ productData?.producer?.title }}</span>
         </p>
         <div
-          class="flex flex-col md:flex-row gap-x-[18px] gap-y-4 lg:gap-y-0 mb-6 justify-start"
+          class="flex flex-col md:flex-row gap-x-[28px] gap-y-4 lg:gap-y-0 mb-6 justify-start"
         >
           <div
-            class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-4 items-center"
+            class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-2 items-center"
           >
-            <AppButton
+            <!-- <AppButton
               v-if="productData?.sampleAvailable"
               @click="handleRequest('sample')"
               text="Request sample"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB]"
-            />
+            /> -->
             <AppButton
-              @click="handleRequest('quote')"
-              text="Request quote"
+              @click="handleOrderRequest()"
+              text="Add to order request"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
             />
+            <Tooltip title="tooltip test" description="Hello">
+              <span class="cursor-pointer">
+                <AppIcon
+                  icon="bi:question-circle"
+                  iconClass="text-[#98A2B3]" /></span
+            ></Tooltip>
           </div>
-          <AppButton
+          <!-- <AppButton
             @click="handleSave"
             :icon="isSaved ? 'tdesign:heart-filled' : 'tdesign:heart'"
             text="Save for later"
             btnClass="text-xs sm:text-sm !py-0 !px-0 w-full sm:!w-auto sm:!max-w-max items-center"
-          />
+          /> -->
         </div>
         <div class="mb-6">
           <h2 class="font-bold text-sm mb-2">Choose packaging</h2>
@@ -240,12 +246,60 @@
     :name="productData.name"
     :hidePrice="productData.hidePrice"
   />
+  <ModalCenter
+    :isOpen="isRequestAdded"
+    @togglePopup="isRequestAdded = false"
+    v-if="isRequestAdded"
+  >
+    <template #default>
+      <div class="bg-white px-6 py-6">
+        <div class="flex justify-between mb-5 items-center">
+          <div>
+            <img src="/images/box.svg" />
+          </div>
+          <!-- <span @click="handleclose" class="absolute top-3 right-4">
+              <i
+                class="uil uil-times cursor-pointer text-xl text-[#98A2B3]"
+              ></i>
+            </span> -->
+        </div>
+
+        <h4 class="font-semibold text-[#101828] text-lg">Order Request</h4>
+
+        <p class="text-sm text-[#475467]">
+          Your item has been added. Would you like to add another item or
+          proceed to send request?
+        </p>
+
+        <div class="flex gap-x-4 items-center mt-6">
+          <button
+            @click="isRequestAdded = false"
+            type="button"
+            class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium justify-center flex items-center"
+          >
+            Add another item
+          </button>
+
+          <button
+            @click="navigateTo('/order-requests')"
+            type="button"
+            class="h-11 bg-green-600 border-green-600 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
+          >
+            Send request
+          </button>
+        </div>
+      </div>
+    </template>
+  </ModalCenter>
 </template>
 <script setup>
 import { useProductStore } from "~/stores/products";
 import { toast } from "vue3-toastify";
 import { likeproduct } from "~/services/productservices";
+import { Tooltip } from "@programic/vue3-tooltip";
 
+const orderRequestStore = useOrderRequestStore();
+const isRequestAdded = ref(false);
 const isLoading = inject("isLoading");
 const store = useProductStore();
 const cartStore = useCartStore();
@@ -357,15 +411,31 @@ function handleSave() {
   isSaved.value = true;
   toast.success("Saved");
 }
-
+function handleOrderRequest() {
+  let data = {
+    id: 0,
+    packageId: mypackage?.value.package.id,
+    unit: mypackage?.value.unit,
+    productId: productData?.value?.id,
+    product: productData?.value.name,
+    productImg: productData.value.gallery.length
+      ? productData.value.gallery[0]
+      : productData.value.featuredPhoto,
+    selectedPackage: mypackage?.value.package?.title,
+    selectedPackageData: mypackage.value,
+    productBrandName: productData?.value.productBrandName,
+    supplierId: productData?.value.supplierId,
+    producer: productData.value?.manufacturer,
+    quantity: counter.value,
+    packagePrice: mypackage?.value.amount,
+  };
+  orderRequestStore.addToRequest(data);
+  isRequestAdded.value = true;
+}
 function handleLike(value) {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
   }
-  console.log(
-    "🚀 ~ handleLike ~ data.productData.value.gallery:",
-    data.productData.value.gallery
-  );
 
   let data = {
     businessId: authStore.userId,
@@ -419,4 +489,5 @@ provide("counter", counter);
 provide("toggleModal", toggleModal);
 provide("togglePopup", togglePopup);
 provide("product", productData);
+provide("isOpen", isRequestAdded);
 </script>

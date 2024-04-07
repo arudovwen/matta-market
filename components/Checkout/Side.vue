@@ -75,6 +75,7 @@
 <script setup>
 import { toast } from "vue3-toastify";
 import { confirmpurchase, confirmpayment } from "~/services/cartservice";
+import { nanoid } from "nanoid";
 
 const cartTaxAmount = computed(
   () => cartStore?.cartTotalAmount * cartStore?.tax + cartStore?.cartTotalAmount
@@ -102,7 +103,7 @@ function makePayment(reference) {
     name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
     amount: cartTaxAmount.value,
     phoneNumber: authstore.userInfo?.phoneNumber,
-    reference: `ORD-${reference}`,
+    reference: `ORD-${reference}-${nanoid(6)}`,
     orderId: reference,
   };
 

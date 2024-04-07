@@ -50,3 +50,10 @@ export async function confirmpurchase(data) {
 export async function confirmpayment(data) {
   return await post(`${urls.CONFIRM_PAYMENT}?orderId=${data.orderId}`, data, config);
 }
+
+export async function getcartorder(data) {
+  return await get(`${urls.GET_ORDER}?${new URLSearchParams(cleanObject(data))}`, config);
+}
+export async function getcartcustomer(data) {
+  return await get(`${urls.GET_CUSTOMER_INFO}?${new URLSearchParams(cleanObject(data))}`, config);
+}

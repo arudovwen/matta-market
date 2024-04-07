@@ -105,6 +105,7 @@ import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
 import { confirmFunding } from "~/services/walletservice";
+import { nanoid } from "nanoid";
 
 const isErrorOpen = ref(false);
 const authstore = useAuthStore();
@@ -183,7 +184,7 @@ const onSubmit = handleSubmit((values) => {
     amount: values.amount,
     phoneNumber: authstore.userInfo?.phoneNumber,
     type: "Wallet Funding",
-    reference: `WAL-${Math.floor(Math.random() * 1000000000 + 1)}`,
+    reference: `WAL-${Math.floor(Math.random() * 1000000000 + 1)}-${nanoid(6)}`,
   };
 
   payWithMonnify(data, onModalClose, onSuccess);

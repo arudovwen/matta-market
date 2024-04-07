@@ -62,9 +62,9 @@ axiosApi.interceptors.response.use(
         const authStore = useAuthStore();
         // Handle refresh token failure, e.g., redirect to login
         // toast.info("Your session has expired");
-        authStore.logOut();
-        window.location.href = `/auth/login?info=session_expired&redirected_from=${window.location.href}`;
-        return Promise.reject(refreshError);
+        // authStore.logOut();
+        // window.location.href = `/auth/login?info=session_expired&redirected_from=${window.location.href}`;
+        // return Promise.reject(refreshError);
       }
     } else {
       return Promise.reject(error);

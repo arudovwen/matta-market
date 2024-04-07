@@ -76,7 +76,7 @@ export default defineNuxtConfig({
       APP_MONNIFYCONTRACTCODE: process.env.APP_MONNIFYCONTRACTCODE,
       APP_MONNIFYISTEST: process.env.APP_MONNIFYISTEST,
       APP_MONNIFYISTESTMODE: process.env.APP_MONNIFYISTESTMODE,
-      TINY_MCE: process.env.APP_TINYMCE_KEY
+      TINY_MCE: process.env.APP_TINYMCE_KEY,
     },
   },
   ssr: false,
@@ -98,6 +98,7 @@ export default defineNuxtConfig({
   css: [
     "vue-toastification/dist/index.css",
     "vue3-carousel/dist/carousel.css",
+    "@programic/vue3-tooltip/dist/index.css",
     "~/assets/css/tailwind.css",
     "~/assets/scss/_button.scss",
     "~/assets/scss/_form.scss",
@@ -157,7 +158,7 @@ export default defineNuxtConfig({
       periodicSyncForUpdates: 3600,
     },
   },
-  
+
   app: {
     head: {
       title: "Matta - Africa's Leading B2B Marketplace for chemicals",

@@ -7,7 +7,7 @@
     >
       <div class="font-semibold text-2xl text-white pb-6">Order Details</div>
       <div class="flex flex-col gap-y-5">
-        <div class="flex justify-between" v-for="item in order?.orderDetails">
+        <div class="flex justify-between" v-for="item in order?.items">
           <div>
             <p class="font-semibold text-sm text-white mb-[2px]">
               {{ item.product }}
@@ -27,14 +27,14 @@
           <p class="text-sm text-[#E1E1E1]">Sub-total</p>
 
           <p class="text-white font-medium text-sm">
-            {{ currencyFormat(order?.cartTotalAmount) }}
+            {{ currencyFormat(order?.cartTotal) }}
           </p>
         </div>
         <div class="flex justify-between">
           <p class="text-sm text-[#E1E1E1]">Tax (7.5%)</p>
 
           <p class="text-white text-sm font-medium">
-            {{ currencyFormat(order?.cartTotalAmount * order?.tax) }}
+            {{ currencyFormat(order?.cartTotalwithTax - order?.cartTotal) }}
           </p>
         </div>
         <div class="flex justify-between">
@@ -48,11 +48,7 @@
         <p class="text-sm text-[#E1E1E1]">Total</p>
 
         <p class="text-white font-bold">
-          {{
-            currencyFormat(
-              order?.cartTotalAmount * order?.tax + order?.cartTotalAmount
-            )
-          }}
+          {{ currencyFormat(order?.cartTotalwithTax) }}
         </p>
       </div>
       <AppButton
@@ -67,7 +63,9 @@
 </template>
 
 <script setup>
+import { getcartorder, getcartcustomer } from "~/services/cartservice";
 import { toast } from "vue3-toastify";
+import { nanoid } from "nanoid";
 definePageMeta({
   layout: "default",
 });
@@ -76,38 +74,24 @@ const status = ref("Make payment");
 const route = useRoute();
 const { orderId } = route.params;
 const loading = ref(false);
+const userInfo = ref(null);
 function handlePayment() {
   status.value = "Processing payment...";
   loading.value = true;
-  data.value = {
-    shippingAddressId: shippingStore?.defaultAddress.id,
-    email: authstore.userInfo?.email,
-    name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
-    amount: cartTaxAmount.value,
-    phoneNumber: authstore.userInfo?.phoneNumber,
-    reference: `ORD-${orderId}`,
-    orderId: reference,
+  const data = {
+    email: userInfo?.value?.email,
+    name: userInfo?.value.companyName,
+    amount: order?.value?.cartTotalwithTax,
+    phoneNumber: userInfo?.value?.phoneNumber,
+    reference: `ORD-${orderId}-${nanoid(6)}`,
+    orderId: orderId,
   };
 
-  payWithMonnify(data.value, onModalClose, onSuccess);
+  payWithMonnify(data, onModalClose, onSuccess);
 }
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
-    confirmpayment({ orderId: data.value.orderId })
-      .then((res) => {
-        if (res.status === 200) {
-          cartStore?.clearCart();
-          window.location.href = `/order-success?orderId=${data.value.orderId}`;
-        }
-      })
-      .catch((err) => {
-        const error = `${
-          err.response.data.Message || err.response.data.message
-        }, Contact us for assistance on your order`;
-        toast.error(error);
-        status.value = "Retry order";
-        loading.value = false;
-      });
+    window.location.href = `/order-success?orderId=${ orderId}`;
   }
 }
 function onModalClose() {
@@ -116,4 +100,17 @@ function onModalClose() {
   status.value = "Retry payment";
   loading.value = false;
 }
+
+onMounted(() => {
+  getcartorder({ orderNo: orderId }).then((res) => {
+    if (res.status === 200) {
+      order.value = res.data.data;
+      getcartcustomer({ businessId: res.data.data.businessId }).then((resp) => {
+        if (resp.status === 200) {
+          userInfo.value = resp.data.data;
+        }
+      });
+    }
+  });
+});
 </script>
