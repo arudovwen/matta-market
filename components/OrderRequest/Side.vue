@@ -32,9 +32,8 @@
     </div>
 
     <AppButton
-      icon="bytesize:cart"
       :isDisabled="!orderRequestStore?.orderRequestItems"
-      text="Send order request"
+      text="Submit order request"
       btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm"
     />
   </div>

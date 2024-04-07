@@ -94,12 +94,25 @@
               text="Add to order request"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
             />
-            <Tooltip title="tooltip test" description="Hello">
+            <!-- <Tooltip title="tooltip test" description="Hello">
               <span class="cursor-pointer">
                 <AppIcon
                   icon="bi:question-circle"
                   iconClass="text-[#98A2B3]" /></span
-            ></Tooltip>
+            ></Tooltip> -->
+            <tippy
+              tag="button"
+              content-tag="div"
+              content-class="content-wrapper"
+            >
+              <template #default>
+                <span class="cursor-pointer">
+                  <AppIcon
+                    icon="bi:question-circle"
+                    iconClass="text-[#98A2B3]" /></span
+              ></template>
+              <template #content>Hi!</template>
+            </tippy>
           </div>
           <!-- <AppButton
             @click="handleSave"
@@ -283,7 +296,7 @@
           <button
             @click="navigateTo('/order-requests')"
             type="button"
-            class="h-11 bg-green-600 border-green-600 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
+            class="h-11 bg-blue-600 border-blue-600 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
           >
             Send request
           </button>
@@ -297,6 +310,7 @@ import { useProductStore } from "~/stores/products";
 import { toast } from "vue3-toastify";
 import { likeproduct } from "~/services/productservices";
 import { Tooltip } from "@programic/vue3-tooltip";
+import "tippy.js/dist/tippy.css";
 
 const orderRequestStore = useOrderRequestStore();
 const isRequestAdded = ref(false);

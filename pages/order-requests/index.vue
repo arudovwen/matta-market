@@ -4,7 +4,7 @@
       <AppButton
         link="/category/market/all products"
         icon="ion:arrow-back-sharp"
-        text="Back to shopping"
+        text="Back"
         btnClass="text-xs sm:text-sm !py-0 !px-0 !font-semibold"
       />
     </div>
