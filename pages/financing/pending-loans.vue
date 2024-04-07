@@ -32,7 +32,7 @@
           </div>
         </div>
 
-        <div v-if="!docLoading && financeData?.length" class="border border-[#EAECF0] rounded-lg">
+        <div v-if="!docLoading && financeData?.length" class="border border-[#EAECF0] rounded-lg overflow-x-auto">
           <table class="table-auto w-full">
             <thead>
               <tr>
@@ -89,7 +89,8 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  <Menu class="relative" as="div">
+                  <Menu class="" as="div">
+                    <Float placement="bottom-end" :offset="4">
                     <MenuButton
                       :id="`${item.productName}+option`"
                       class="outline-none"
@@ -97,7 +98,7 @@
                       <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                     </MenuButton>
                     <MenuItems
-                      class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
+                      class=" z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2  min-w-[180px] rounded-xl overflow-hidden"
                     >
                       <div
                         class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
@@ -133,6 +134,7 @@
                         Withdraw request
                       </div>
                     </MenuItems>
+                  </Float>
                   </Menu>
                 </td>
               </tr>
@@ -188,6 +190,7 @@
   </IndexModal>
 </template>
 <script setup>
+import { Float } from '@headlessui-float/vue'
 import AppIcon from "@/components/AppIcon";
 import moment from "moment";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
