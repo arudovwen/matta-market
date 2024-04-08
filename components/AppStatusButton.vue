@@ -139,12 +139,12 @@ const ParentOrderStatusText = {
     className: StatusClass[2],
   },
 
-  3: {
+  2: {
     text: "Completed",
     className: StatusClass[1],
   },
 
-  4: {
+  3: {
     text: "Cancelled",
     className: StatusClass[4],
   },
