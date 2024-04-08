@@ -1,25 +1,24 @@
 <template>
-  <footer class="bg-white darks:bg-gray-800 pt-16 pb-8">
+  <footer class="bg-white darks:bg-gray-800 pt-16 pb-8 mt-6">
     <div class="rounded-lg container">
       <div
         class="grid text-center lg:text-left grid-cols-1 lg:grid-cols-4 gap-y-8 lg:gap-x-10 lg:pt-8 mb-14"
       >
         <div class="">
-          <div class="mb-[15px]" data-aos="fade-up" data-aos-once="true">
-            <router-link to="/">
-               <NuxtImg
+          <div class="mb-[15px]" >
+            <NuxtLink to="/">
+               <img
                 src="/images/logo.png"
                 class="w-[132px]"
                 alt="Matta"
                 width="132"
                 height="auto"
               />
-            </router-link>
+            </NuxtLink>
           </div>
           <p
             class="text-sm darks:text-white text-left mb-10"
-            data-aos="fade-up"
-            data-aos-once="true"
+        
           >
             Discover and buy chemicals, raw materials, ingredients, and
             commodities all in one place.
@@ -30,8 +29,7 @@
               v-for="s in socials"
               :key="s.title"
               :href="s.link"
-              data-aos="fade-up"
-              data-aos-once="true"
+       
             >
               <span class="">
                 <AppIcon
@@ -43,8 +41,7 @@
         </div>
         <div
           class="grid md:grid-cols-3 gap-y-8 md:gap-x-10 col-span-3 text-left"
-          data-aos="fade-up"
-          data-aos-once="true"
+       
         >
           <div v-for="n in navs" :key="n.subject">
             <span
@@ -58,13 +55,13 @@
                 :key="l.title"
                 class="text-[14px] font-normal capitlize text-[#333]/80 darks:text-white mb-2"
               >
-                <a
+                <NuxtLink
                   v-if="l.title.toLowerCase() !== 'contact'"
                   :href="l.url"
                   class="hover:underline"
                 >
                   {{ l.title }}
-                </a>
+                </NuxtLink>
                 <span v-else @click="open = true" class="hover:underline">
                   {{ l.title }}
                 </span>
@@ -84,14 +81,14 @@
             © {{ new Date().getFullYear() }} Matta. All Rights Reserved.
           </p>
           <div class="order-1 lg:order-2 flex gap-x-2 md:gap-x-4 items-center">
-            <router-link to="/policy" class="text-sm md:text-sm"
-              >Privacy policy</router-link
+            <NuxtLink to="/privacy-policies" class="text-sm md:text-sm"
+              >Privacy policy</NuxtLink
             >
             <span
               class="bg-[#333] darks:text-white/80 w-[2px] h-[2px] rounded-full"
             ></span>
-            <router-link to="/terms" class="text-sm md:text-sm"
-              >Terms of use</router-link
+            <NuxtLink to="/terms-and-conditions" class="text-sm md:text-sm"
+              >Terms of use</NuxtLink
             >
           </div>
         </div>
@@ -132,11 +129,11 @@ const navs = [
     links: [
       {
         title: "Buy chemicals",
-        url: "/market/all",
+        url: "/category/market/all",
       },
       {
         title: "Sell chemicals",
-        url: "#",
+        url: "/auth/vendor-register",
       },
       {
         title: "Logistics solutions",
@@ -145,10 +142,6 @@ const navs = [
 
       {
         title: "Financing solutions",
-        url: "#",
-      },
-      {
-        title: "Cross border payments",
         url: "#",
       },
       {

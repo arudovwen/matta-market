@@ -1,5 +1,5 @@
 <template>
-  <input ref="inputRef" type="text" />
+  <input ref="inputRef" type="text"  :class="classInput"/>
 </template>
 
 <script>
@@ -10,6 +10,7 @@ export default {
   props: {
     modelValue: Number, // Vue 2: value
     options: Object,
+    classInput: String
   },
   setup(props) {
     const { inputRef, setValue } = useCurrencyInput(props.options);

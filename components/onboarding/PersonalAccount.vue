@@ -29,7 +29,7 @@
                   class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                   >Photo</span
                 >
-                 <NuxtImg
+                 <img
                   v-else
                   :src="image"
                   class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
@@ -54,7 +54,7 @@
             <div class="flex items-center gap-x-3">
               <label for="upload" class="w-full lg:w-auto block lg:inline">
                 <span
-                  class="text-primary border border-primary rounded-lg w-full lg:w-auto px-4 lg:px-6 py-2 lg:py-3 text-xs lg:text-sm cursor-pointer"
+                  class="text-primary border border-primary- rounded-lg w-full lg:w-auto px-4 lg:px-6 py-2 lg:py-3 text-xs lg:text-sm cursor-pointer"
                 >
                   Upload photo
                 </span>
@@ -79,7 +79,7 @@
                   <input
                     v-model="v$.firstName.$model"
                     :class="{ 'border-red-500': v$.firstName.$error }"
-                    class="rounded-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                    class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                     autocomplete="off"
                     autofocus="on"
                   />
@@ -101,7 +101,7 @@
                   <input
                     v-model="v$.lastName.$model"
                     :class="{ 'border-red-500': v$.lastName.$error }"
-                    class="rounded-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                    class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                     autocomplete="off"
                     autofocus="on"
                   />
@@ -159,13 +159,13 @@
                     >Phone number
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
-                  <div class="flex relative rounded-lg h-12">
+                  <div class="flex relative rounded-lg h-11">
                     <PhoneCodes v-model="form.code" />
 
                     <input
                       :class="{ 'border-red-500': v$.phone.$error }"
                       v-model="v$.phone.$model"
-                      class="flex-1 rounded-r-lg px-4 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      class="flex-1 rounded-r-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                       autocomplete="off"
                       autofocus="on"
                       placeholder="08160723884"
@@ -191,7 +191,7 @@
                     <input
                       :class="{ 'border-red-500': v$.email.$error }"
                       :value="form.email"
-                      class="rounded-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                       autocomplete="off"
                       autofocus="on"
                       disabled
@@ -220,7 +220,7 @@
                 <select
                   v-model="v$.timeZone.$model"
                   :class="{ 'border-red-500': v$.timeZone.$error }"
-                  class="appearance-none rounded-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9]"
+                  class="appearance-none rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9]"
                 >
                   <option v-for="z in zones" :key="z">
                     ({{ moment.tz(new Date(), z).format("z - Z") }})

@@ -1,497 +1,353 @@
 <template>
-  <div class="gap-y-2 flex flex-col">
+  <div class="gap-y-2 flex flex-col pb-10 bg-white rounded-[10px]">
     <!-- Top bar   -->
-    <div class="p-6 lg:p-8 bg-white rounded-lg">
-      <div class="mb-12"><Breadcrumbs /></div>
-      <div class=" justify-between items-end mb-8">
-        <h1
-          class="text-3xl lg:text-[48px] lg:leading-[56px] text-matta-black col-span-1 font-medium capitalize mb-6"
-        >
-          Personal settings
-        </h1>
-        <div />
-      </div>
-      <div class="flex justify-between items-center mb-10">
-        <div class="flex items-center">
-          <span>
-            <span
-              v-if="!image"
-              class="h-24 w-24 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
-              >Photo</span
-            >
-             <NuxtImg
-              v-else
-              :src="image"
-              class="h-24 w-24 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
-            />
-          </span>
+    <div class="">
+      <HeaderComponent title="Profile information" />
+      <div
+        class="flex gap-x-[76px] pt-[30px] px-4 lg:px-[30px] flex-col lg:flex-row gap-y-7 lg:gap-y-"
+      >
+        <div class="w-[250px]">
+          <h2 class="text-sm text-[#101828] font-semibold">Personal info</h2>
+          <p class="text-xs text-[#475467]">
+            Update your photo and personal details here.
+          </p>
         </div>
-        <div class="flex items-center gap-x-3">
-          <label for="upload">
-            <span
-              class="text-primary border border-primary rounded-full px-6 py-3 text-sm cursor-pointer"
-            >
-              Upload photo
-            </span>
-            <input
-              @change="handleEvent($event)"
-              type="file"
-              accept="image/*"
-              id="upload"
-              class="hidden"
-            />
-          </label>
-        </div>
-      </div>
-      <form @submit.prevent="handleSubmit">
-        <div>
-          <div class="grid lg:grid-cols-2 gap-x-4">
-            <div class="mb-6">
-              <label class="mb-2 font-normal text-xs block">First name</label>
-              <input
-                v-model="v$.firstName.$model"
-                :class="{ 'border-red-500': v$.firstName.$error }"
-                class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                autocomplete="off"
-                autofocus="on"
-              />
-              <div
-                class="text-red-500 mt-1"
-                v-for="error of v$.firstName.$errors"
-                :key="error.$uid"
-              >
-                <div class="error-msg text-error text-xs font-semibold">
-                  {{ error.$message }}
-                </div>
-              </div>
+        <div class="flex-1">
+          <div class="flex gap-x-3 items-center mb-10">
+            <div class="flex items-center">
+              <span>
+                <span
+                  v-if="!image"
+                  class="h-24 w-24 rounded-full flex items-center text-sm justify-center bg-[#F1F3F5]"
+                  >Photo</span
+                >
+                <img
+                  v-else
+                  :src="image"
+                  class="h-24 w-24 rounded-full flex items-center justify-center bg-[#F1F3F5]"
+                />
+              </span>
             </div>
-            <div class="mb-6">
-              <label class="mb-2 font-normal text-xs block">Last name</label>
-              <input
-                v-model="v$.lastName.$model"
-                :class="{ 'border-red-500': v$.lastName.$error }"
-                class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                autocomplete="off"
-                autofocus="on"
-              />
-              <div
-                class="text-red-500 mt-1"
-                v-for="error of v$.lastName.$errors"
-                :key="error.$uid"
-              >
-                <div class="error-msg text-error text-xs font-semibold">
-                  {{ error.$message }}
-                </div>
-              </div>
+            <div class="flex items-center gap-x-3">
+              <label for="upload">
+                <span
+                  class="text-[#344054] rounded-full px-1 py-3 text-sm cursor-pointer"
+                >
+                  Upload photo
+                </span>
+                <input
+                  @change="handleEvent($event)"
+                  type="file"
+                  accept="image/*"
+                  id="upload"
+                  class="hidden"
+                />
+              </label>
             </div>
           </div>
-          <div class="grid lg:grid-cols-2 gap-x-4">
-            <div class="mb-6">
-              <label class="mb-2 font-normal text-xs block">Country</label>
-              <div class="flex relative">
-                <!-- <div class="flex relative items-center w-full">
-                  <select
-                    v-model="v$.country.$model"
-                    :class="{ 'border-red-500': v$.country.$error }"
-                    class="rounded-lg appearance-none px-5 py-3 h-12 border w-full bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          <form @submit.prevent="handleSubmit">
+            <div>
+              <div class="grid lg:grid-cols-2 gap-x-6">
+                <div class="mb-6">
+                  <label class="mb-2 font-normal text-sm block"
+                    >First name</label
                   >
-                    <option v-for="z in CountryList" :key="z" :value="z.name">
-                      <span> {{ z.name }}</span>
-                    </option>
-                  </select>
-                  <i
-                    class="uil uil-sort absolute right-3 pointer-events-none"
-                  ></i>
-                </div> -->
-                <FormsCountriesSelect v-model="v$.country.$model" />
-                <div
-                  class="text-red-500 mt-1"
-                  v-for="error of v$.country.$errors"
-                  :key="error.$uid"
-                >
-                  <div class="error-msg text-error text-xs font-semibold">
-                    {{ error.$message }}
+                  <input
+                    v-model="v$.firstName.$model"
+                    :class="{ 'border-red-500': v$.firstName.$error }"
+                    class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                    autocomplete="off"
+                    autofocus="on"
+                  />
+                  <div
+                    class="text-red-500 mt-1"
+                    v-for="error of v$.firstName.$errors"
+                    :key="error.$uid"
+                  >
+                    <div class="error-msg text-error text-sm font-semibold">
+                      {{ error.$message }}
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <label class="mb-2 font-normal text-sm block"
+                    >Last name</label
+                  >
+                  <input
+                    v-model="v$.lastName.$model"
+                    :class="{ 'border-red-500': v$.lastName.$error }"
+                    class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                    autocomplete="off"
+                    autofocus="on"
+                  />
+                  <div
+                    class="text-red-500 mt-1"
+                    v-for="error of v$.lastName.$errors"
+                    :key="error.$uid"
+                  >
+                    <div class="error-msg text-error text-sm font-semibold">
+                      {{ error.$message }}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div class="mb-6">
-              <label class="mb-2 font-normal text-xs block">State</label>
-              <!-- <div class="flex relative items-center w-full">
-                <select
-                  v-model="v$.city.$model"
-                  :class="{ 'border-red-500': v$.city.$error }"
-                  class="rounded-lg appearance-none px-5 py-3 h-12 border w-full bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                >
-                  <option v-for="z in states" :key="z" :value="z.name">
-                    <span class="flex gap-x-6">
-                      <span> {{ z.name }}</span></span
+              <div class="grid lg:grid-cols-2 gap-x-6">
+                <div class="mb-6">
+                  <label class="mb-2 font-normal text-sm block">E-mail</label>
+                  <div class="flex relative items-center">
+                    <input
+                      :value="form.email"
+                      class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      autocomplete="off"
+                      autofocus="on"
+                      disabled
+                      readonnly
+                    />
+                    <i class="uil uil-lock absolute right-4 text-gray-600"></i>
+                  </div>
+                  <div
+                    class="text-red-500 mt-1"
+                    v-for="error of v$.email.$errors"
+                    :key="error.$uid"
+                  >
+                    <div class="error-msg text-error text-sm font-semibold">
+                      {{ error.$message }}
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <label class="mb-2 font-normal text-sm block"
+                    >Phone number</label
+                  >
+                  <div class="flex relative rounded-lg h-11">
+                    <FormsPhoneCodes v-model="v$.phone.$model" />
+                  </div>
+                  <div
+                    class="text-red-500 mt-1"
+                    v-for="error of v$.phone.$errors"
+                    :key="error.$uid"
+                  >
+                    <div class="error-msg text-error text-sm font-semibold">
+                      {{ error.$message }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid lg:grid-cols-2 gap-x-6">
+                <div class="mb-6">
+                  <label class="mb-2 font-normal text-sm block">Country</label>
+                  <div class="flex relative">
+                    <FormsCountriesSelect v-model="v$.country.$model" />
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.country.$errors"
+                      :key="error.$uid"
                     >
-                  </option>
-                </select>
-                <i
-                  class="uil uil-sort absolute right-3 pointer-events-none"
-                ></i>
-              </div> -->
-              <FormsStatesSelect v-model="v$.city.$model" :states="states" />
-              <div
-                class="text-red-500 mt-1"
-                v-for="error of v$.city.$errors"
-                :key="error.$uid"
-              >
-                <div class="error-msg text-error text-xs font-semibold">
-                  {{ error.$message }}
+                      <div class="error-msg text-error text-sm font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="grid lg:grid-cols-2 gap-x-4">
-            <div class="mb-6">
-              <label class="mb-2 font-normal text-xs block">Phone number</label>
-              <div class="flex relative rounded-lg h-12">
-                <FormsPhoneCodes v-model="form.code" />
 
+                <div class="mb-6">
+                  <label class="mb-2 font-normal text-sm block">State</label>
+
+                  <FormsStatesSelect
+                    v-model="v$.city.$model"
+                    :states="states"
+                  />
+                  <div
+                    class="text-red-500 mt-1"
+                    v-for="error of v$.city.$errors"
+                    :key="error.$uid"
+                  >
+                    <div class="error-msg text-error text-sm font-semibold">
+                      {{ error.$message }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="">
+                <div class="mb-6">
+                  <label class="mb-2 font-normal text-sm block">Timezone</label>
+                  <div class="flex relative items-center w-full">
+                    <select
+                      v-model="form.timezone"
+                      class="appearance-none rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9]"
+                    >
+                      <option v-for="z in zones" :key="z">
+                        ({{ moment.tz(new Date(), z).format("z - Z") }})
+                        {{ moment.tz(new Date(), z).format("zz") }} {{ z }}
+                      </option>
+                    </select>
+                    <i
+                      class="uil uil-sort absolute right-3 pointer-events-none"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 flex justify-end">
+                <button
+                  :disabled="isLoading"
+                  :class="isLoading && 'bg-primary/80'"
+                  type="submit"
+                  class="border border-primary-500 text-sm bg-primary-500 text-white rounded-[10px] block w-full lg:w-auto px-10 font-semibold py-[10px] hover:bg-primary/80"
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr class="my-10 border-[#F4F7FE]" />
+      <div
+        class="flex gap-x-[76px] px-4 lg:px-[30px] flex-col lg:flex-row gap-y-7 lg:gap-y-"
+      >
+        <div class="w-[250px]">
+          <h2 class="text-sm text-[#101828] font-semibold">Password</h2>
+          <p class="text-xs text-[#475467]">
+            Please enter your current password to change your password.
+          </p>
+        </div>
+        <div class="flex-1">
+          <form @submit.prevent="handlePassword">
+            <div class="mb-6">
+              <label class="mb-2 font-normal text-sm block text-matta-black"
+                >Current Password</label
+              >
+              <div class="relative flex items-center">
                 <input
-                  :class="{ 'border-red-500': v$.phone.$error }"
-                  v-model="v$.phone.$model"
-                  class="flex-1 rounded-r-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  :class="{ 'border-red-500': newv$.oldPassword.$error }"
+                  v-model="newv$.oldPassword.$model"
+                  class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  placeholder="Password"
                   autocomplete="off"
-                  autofocus="on"
-                  placeholder="08160723884"
-                  type="tel"
+                  :type="!isOpen ? 'oldPassword' : 'text'"
+                />
+                <EyeIcon
+                  v-if="!isOpen"
+                  @click="isOpen = !isOpen"
+                  class="w-4 h-4 absolute cursor-pointer right-6"
+                />
+                <EyeSlashIcon
+                  @click="isOpen = !isOpen"
+                  v-else
+                  class="w-4 h-4 absolute cursor-pointer right-6"
                 />
               </div>
               <div
                 class="text-red-500 mt-1"
-                v-for="error of v$.phone.$errors"
+                v-for="error of newv$.oldPassword.$errors"
                 :key="error.$uid"
               >
-                <div class="error-msg text-error text-xs font-semibold">
+                <div class="error-msg text-error text-sm font-semibold">
                   {{ error.$message }}
                 </div>
               </div>
             </div>
             <div class="mb-6">
-              <label class="mb-2 font-normal text-xs block">E-mail</label>
-              <div class="flex relative items-center">
+              <label class="mb-2 font-normal text-sm block text-matta-black"
+                >New Password</label
+              >
+              <div class="relative flex items-center">
                 <input
-                  :value="form.email"
-                  class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  :class="{ 'border-red-500': newv$.newPassword.$error }"
+                  v-model="newv$.newPassword.$model"
+                  class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  placeholder="Password"
                   autocomplete="off"
-                  autofocus="on"
-                  disabled
-                  readonnly
+                  :type="!isOpen ? 'oldPassword' : 'text'"
                 />
-                <i class="uil uil-lock absolute right-4 text-gray-600"></i>
+                <EyeIcon
+                  v-if="!isOpen"
+                  @click="isOpen = !isOpen"
+                  class="w-4 h-4 absolute cursor-pointer right-6"
+                />
+                <EyeSlashIcon
+                  @click="isOpen = !isOpen"
+                  v-else
+                  class="w-4 h-4 absolute cursor-pointer right-6"
+                />
               </div>
               <div
                 class="text-red-500 mt-1"
-                v-for="error of v$.email.$errors"
+                v-for="error of newv$.newPassword.$errors"
                 :key="error.$uid"
               >
-                <div class="error-msg text-error text-xs font-semibold">
+                <div class="error-msg text-error text-sm font-semibold">
                   {{ error.$message }}
                 </div>
               </div>
             </div>
-          </div>
-          <div class="mt-6">
+            <div class="mb-12">
+              <label class="mb-2 font-normal text-sm block text-matta-black"
+                >Confirm Password</label
+              >
+              <div class="relative flex items-center">
+                <input
+                  :class="{ 'border-red-500': newv$.confirmPassword.$error }"
+                  v-model="newv$.confirmPassword.$model"
+                  class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  placeholder="Confirm oldPassword"
+                  autocomplete="off"
+                  :type="!isOpen ? 'oldPassword' : 'text'"
+                />
+                <EyeIcon
+                  v-if="!isOpen"
+                  @click="isOpen = !isOpen"
+                  class="w-4 h-4 absolute cursor-pointer right-6"
+                />
+                <EyeSlashIcon
+                  @click="isOpen = !isOpen"
+                  v-else
+                  class="w-4 h-4 absolute cursor-pointer right-6"
+                />
+              </div>
+              <div
+                class="text-red-500 mt-1"
+                v-for="error of newv$.confirmPassword.$errors"
+                :key="error.$uid"
+              >
+                <div class="error-msg text-error text-sm font-semibold">
+                  {{ error.$message }}
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-end">
+              <button
+                :disabled="isLoading"
+                :class="isLoading && 'bg-primary/80'"
+                type="submit"
+                class="border-2 border-primary-500 text-[13px] bg-primary-500 text-white rounded-[10px] block w-full lg:w-auto px-12 font-semibold py-3 hover:bg-primary/80"
+              >
+                Change password
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- <div class="p-6 lg:p-8 rounded-lg bg-white col-span-1 hidden">
+          <h5 class="font-medium mb-4">Delete account</h5>
+          <p class="mb-8 text-base">
+            You can delete your account any time. Yet note we cannot revert your
+            account back.
+          </p>
+          <div>
             <button
-              :disabled="isLoading"
-              :class="isLoading && 'bg-primary/80'"
-              type="submit"
-              class="border-2 border-primary text-[13px] bg-primary-500 uppercase text-white rounded-full block w-full lg:w-auto px-6 py-3 hover:bg-primary/80"
+              type="button"
+              @click="handleDelete('delete')"
+              class="text-primary border border-primary- rounded-full px-6 py-3 text-sm hover:bg-priamry/70"
             >
-              Save changes
+              Delete account
             </button>
           </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="grid grid-rows-2 lg:grid-cols-2 gap-2">
-      <div class="p-6 lg:p-8 rounded-lg bg-white col-span-1 row-span-2">
-        <form @submit.prevent="handlePassword">
-          <legend class="font-medium mb-4">Change Password</legend>
-
-          <div class="mb-6">
-            <label class="mb-2 font-normal text-xs block text-matta-black"
-              >Password</label
-            >
-            <div class="relative flex items-center">
-              <input
-                :class="{ 'border-red-500': newv$.oldPassword.$error }"
-                v-model="newv$.oldPassword.$model"
-                class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                placeholder="Password"
-                autocomplete="off"
-                :type="!isOpen ? 'oldPassword' : 'text'"
-              />
-              <EyeIcon
-                v-if="!isOpen"
-                @click="isOpen = !isOpen"
-                class="w-4 h-4 absolute cursor-pointer right-6"
-              />
-              <EyeSlashIcon
-                @click="isOpen = !isOpen"
-                v-else
-                class="w-4 h-4 absolute cursor-pointer right-6"
-              />
-            </div>
-            <div
-              class="text-red-500 mt-1"
-              v-for="error of newv$.oldPassword.$errors"
-              :key="error.$uid"
-            >
-              <div class="error-msg text-error text-xs font-semibold">
-                {{ error.$message }}
-              </div>
-            </div>
-          </div>
-          <div class="mb-6">
-            <label class="mb-2 font-normal text-xs block text-matta-black"
-              >New Password</label
-            >
-            <div class="relative flex items-center">
-              <input
-                :class="{ 'border-red-500': newv$.newPassword.$error }"
-                v-model="newv$.newPassword.$model"
-                class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                placeholder="Password"
-                autocomplete="off"
-                :type="!isOpen ? 'oldPassword' : 'text'"
-              />
-              <EyeIcon
-                v-if="!isOpen"
-                @click="isOpen = !isOpen"
-                class="w-4 h-4 absolute cursor-pointer right-6"
-              />
-              <EyeSlashIcon
-                @click="isOpen = !isOpen"
-                v-else
-                class="w-4 h-4 absolute cursor-pointer right-6"
-              />
-            </div>
-            <div
-              class="text-red-500 mt-1"
-              v-for="error of newv$.newPassword.$errors"
-              :key="error.$uid"
-            >
-              <div class="error-msg text-error text-xs font-semibold">
-                {{ error.$message }}
-              </div>
-            </div>
-          </div>
-          <div class="mb-12">
-            <label class="mb-2 font-normal text-xs block text-matta-black"
-              >Confirm Password</label
-            >
-            <div class="relative flex items-center">
-              <input
-                :class="{ 'border-red-500': newv$.confirmPassword.$error }"
-                v-model="newv$.confirmPassword.$model"
-                class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                placeholder="Confirm oldPassword"
-                autocomplete="off"
-                :type="!isOpen ? 'oldPassword' : 'text'"
-              />
-              <EyeIcon
-                v-if="!isOpen"
-                @click="isOpen = !isOpen"
-                class="w-4 h-4 absolute cursor-pointer right-6"
-              />
-              <EyeSlashIcon
-                @click="isOpen = !isOpen"
-                v-else
-                class="w-4 h-4 absolute cursor-pointer right-6"
-              />
-            </div>
-            <div
-              class="text-red-500 mt-1"
-              v-for="error of newv$.confirmPassword.$errors"
-              :key="error.$uid"
-            >
-              <div class="error-msg text-error text-xs font-semibold">
-                {{ error.$message }}
-              </div>
-            </div>
-          </div>
-
-          <button
-            :disabled="isLoading"
-            :class="isLoading && 'bg-primary/80'"
-            type="submit"
-            class="border-2 border-primary text-[13px] bg-primary-500 uppercase text-white rounded-full block w-full lg:w-auto px-6 py-3 hover:bg-primary/80"
-          >
-            Save changes
-          </button>
-        </form>
-      </div>
-      <div class="p-6 lg:p-8 rounded-lg bg-white col-span-1">
-        <form>
-          <legend class="font-medium mb-4">Timezone</legend>
-          <div class="mb-10">
-            <div class="flex relative items-center w-full">
-              <select
-                v-model="form.timezone"
-                class="appearance-none rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9]"
-              >
-                <option v-for="z in zones" :key="z">
-                  ({{ moment.tz(new Date(), z).format("z - Z") }})
-                  {{ moment.tz(new Date(), z).format("zz") }} {{ z }}
-                </option>
-              </select>
-              <i class="uil uil-sort absolute right-3 pointer-events-none"></i>
-            </div>
-          </div>
-
-          <button
-            @click="setTimezone"
-            :disabled="isLoading"
-            :class="isLoading && 'bg-primary/80'"
-            type="button"
-            class="border-2 border-primary text-[13px] bg-primary-500 uppercase text-white rounded-full block w-full lg:w-auto px-6 py-3 hover:bg-primary/80"
-          >
-            Save changes
-          </button>
-        </form>
-      </div>
-      <div class="p-6 lg:p-8 rounded-lg bg-white col-span-1 hidden">
-        <h5 class="font-medium mb-4">Delete account</h5>
-        <p class="mb-8 text-base">
-          You can delete your account any time. Yet note we cannot revert your
-          account back.
-        </p>
-        <div>
-          <button
-            type="button"
-            @click="handleDelete('delete')"
-            class="text-primary border border-primary rounded-full px-6 py-3 text-sm hover:bg-priamry/70"
-          >
-            Delete account
-          </button>
-        </div>
+        </div> -->
       </div>
     </div>
-  </div>
-  <div>
-    <TransitionRoot as="template" :show="open">
-      <Dialog as="div" class="relative z-10" @close="open = false">
-        <TransitionChild
-          as="template"
-          enter="ease-out duration-300"
-          enter-from="opacity-0"
-          enter-to="opacity-100"
-          leave="ease-in duration-200"
-          leave-from="opacity-100"
-          leave-to="opacity-0"
-        >
-          <div
-            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
-          />
-        </TransitionChild>
-
-        <div class="fixed z-10 inset-0 overflow-y-auto">
-          <div
-            class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0"
-          >
-            <TransitionChild
-              as="template"
-              enter="ease-out duration-300"
-              enter-from="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enter-to="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leave-from="opacity-100 translate-y-0 sm:scale-100"
-              leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <DialogPanel
-                class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full"
-              >
-                <div
-                  class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
-                  v-if="isShowing == 'crop'"
-                >
-                  <div class="flex justify-between mb-5 items-center">
-                    <h4 class="font-medium text-matta-black text-xl">
-                      Customize photo
-                    </h4>
-                    <i
-                      class="uil uil-times cursor-pointer text-lg"
-                      @click="open = false"
-                    ></i>
-                  </div>
-
-                  <Cropper
-                    ref="cropper"
-                    class="cropper"
-                    :src="img"
-                    :stencil-component="ImageStencil"
-                  />
-                  <div class="flex justify-end gap-x-2 items-center mt-8">
-                    <button
-                      @click="open = false"
-                      class="appearance-none leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
-                    >
-                      Cancel
-                    </button>
-
-                    <button
-                      @click="crop"
-                      class="appearance-none leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-                <div
-                  class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
-                  v-if="isShowing == 'delete'"
-                >
-                  <div class="flex justify-between mb-5 items-center">
-                    <h4 class="font-medium text-matta-black text-xl">
-                      Delete Account
-                    </h4>
-                    <i
-                      class="uil uil-times cursor-pointer text-lg"
-                      @click="open = false"
-                    ></i>
-                  </div>
-
-                  <p class="text-sm text-matta-black mb-2">
-                    By deleting account, you will delete all data. Please, type
-                    ‘Delete’ to confirm.
-                  </p>
-                  <input
-                    v-model="deleteText"
-                    class="bg-[#F1F3F5] text-sm px-4 py-2 h-12 rounded-lg w-full"
-                  />
-
-                  <div class="flex justify-end gap-x-2 items-center mt-8">
-                    <button
-                      type="button"
-                      @click="open = false"
-                      class="appearance-none leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
-                    >
-                      Cancel
-                    </button>
-
-                    <button
-                      @click="deleteAccount"
-                      :disabled="deleteText !== 'Delete'"
-                      :class="deleteText !== 'Delete' && 'bg-primary/70'"
-                      class="appearance-none leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </DialogPanel>
-            </TransitionChild>
-          </div>
-        </div>
-      </Dialog>
-    </TransitionRoot>
   </div>
 </template>
 
@@ -525,7 +381,7 @@ import {
   updateProfile,
   changepassword,
 } from "~/services/settingservices";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import countries from "~/utils/countries.json";
 
 const store = useAuthStore();
@@ -667,7 +523,7 @@ function deleteAccount() {
   deleteaccount.then((res) => {
     if (res.status == 200) {
       toast.info("Account deleted successfully");
-      store.logOut()
+      store.logOut();
       window.location.href = "/";
     }
   });
@@ -691,7 +547,7 @@ async function handlePassword() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 function setTimezone() {
@@ -744,12 +600,7 @@ const rules = {
     maxLength: maxLength(50),
   },
   phone: {
-    numeric,
     required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
   },
   timezone: {
     required,
@@ -780,7 +631,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 </script>

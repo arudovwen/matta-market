@@ -1,33 +1,32 @@
 <template>
-  <form class="grid gap-y-4" @submit.prevent="handleSubmit">
-    <!-- <FeaturedProp title="Applications & Uses" type="applications" /> -->
+  <form class="px-4 lg:px-[30px]" @submit.prevent="handleSubmit">
     <FeaturedProp title="Properties" type="property" />
+    <hr class="border-[#F4F7FE] my-10" />
     <FeaturedProp title="Technical Details & Test Data" type="technical" />
-    <!-- <FeaturedProp
-      title="Features & Benefits"
-      type="features"
-      :optional="true"
-    /> -->
+    <hr class="border-[#F4F7FE] my-10" />
     <FeaturedProp
       title="Regulatory & Compliance"
       type="compliance"
       :optional="true"
     />
+
+    <hr class="border-[#F4F7FE] my-10" />
+
     <div
-      class="bg-white rounded-lg px-10 py-6 flex justify-between gap-x-10 items-center"
+      class="bg-white rounded-lg  py-6 flex justify-between gap-x-4 items-center"
     >
       <button
         type="button"
         @click="togglePreview"
-        class="appearance-none leading-none px-10 py-4 rounded-full text-primary border-primary border hover:bg-gray-100 text-[13px] uppercase"
+        class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
       >
-        PREVIEW
+        Preview
       </button>
-      <div class="flex justify-center gap-x-4 items-center">
+      <div class="flex justify-center gap-x-3 lg:gap-x-4 items-center">
         <button
           type="button"
           @click="toggleNext(1)"
-          class="appearance-none leading-none px-10 py-4 rounded-full text-matta-black bg-[#F1F3F5] hover:bg-gray-300 text-[13px] uppercase"
+          class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
         >
           Back
         </button>
@@ -37,7 +36,7 @@
             'opacity-60 cursor-not-allowed': isLoading,
           }"
           type="submit"
-          class="appearance-none leading-none px-10 py-4 rounded-full text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase disabled:opacity-40"
+          class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
         >
           Next
         </button>
@@ -48,8 +47,8 @@
 
 <script setup>
 import { ref, provide, onMounted, inject } from "vue";
-import FeaturedProp from "./properties/FeaturedProp";
-import { toast } from 'vue3-toastify';
+import FeaturedProp from "./FeaturedProp";
+import { toast } from "vue3-toastify";
 import { updateProperties } from "~/services/productservices";
 import { useRoute, useRouter } from "vue-router";
 import useVuelidate from "@vuelidate/core";
@@ -166,7 +165,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 provide("form", form);

@@ -50,13 +50,9 @@
           @click="() => login()"
           text="Sign in with Google"
           icon="flat-color-icons:google"
-          btnClass="btn-dark !py-3"
+          btnClass="btn-dark !py-3 disabled:opacity-50"
           type="button"
         />
-        <!-- <GoogleSignInButton
-          @success="handleLoginSuccess"
-          @error="handleLoginError"
-        ></GoogleSignInButton> -->
       </div>
       <span
         class="flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
@@ -73,13 +69,11 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-
 import { loginUser, sociallogin } from "~/services/authservices";
-
-import { GoogleSignInButton } from "vue3-google-signin";
 
 definePageMeta({
   layout: "auth",
+  middleware: "auth",
 });
 useHead({
   title: "Login | Matta",
@@ -121,16 +115,12 @@ const onSubmit = handleSubmit((values) => {
           res.data.data?.businessUserType.toLowerCase() === "supplier"
         ) {
           toast.info("Login successful, Complete your onboarding");
-          window.location.replace("/onboarding/company");
+          window.location.replace("/company/settings");
           return;
         }
         toast.success("Login successful");
         if (route.query.redirected_from) {
           window.location.replace(route.query.redirected_from);
-          return;
-        }
-        if (route.query.redirect_to) {
-          window.location.replace(route.query.redirect_to);
           return;
         }
 
@@ -148,12 +138,15 @@ const onSubmit = handleSubmit((values) => {
           "Email has not verified yet"
         )
       ) {
-        router.push(`/resend-verification/${form.email}`);
+        router.push(
+          `/auth/resend-verification/${encodeURIComponent(values.email)}`
+        );
       }
     });
 });
 
 const handleLoginSuccess = (response) => {
+
   const { access_token } = response;
   let data = {
     provider: "GOOGLE",
@@ -171,7 +164,7 @@ const handleLoginSuccess = (response) => {
         }
 
         if (!res.data.data.onboardingPageStatus) {
-          window.location.replace("/onboarding");
+          window.location.replace("/overview");
           return;
         }
         if (route.query.redirected_from) {

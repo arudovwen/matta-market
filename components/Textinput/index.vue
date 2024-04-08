@@ -14,12 +14,12 @@
     >
       {{ label }}</label
     >
-    <div class="relative" :class="horizontal ? 'flex-1' : ''">
+    <div class="relative flex items-center" :class="horizontal ? 'flex-1' : ''">
       <input
         :type="types"
         :name="name"
         :placeholder="placeholder"
-        :class="`${classInput} input-control w-full block focus:outline-none h-[40px] ${
+        :class="`${classInput} input-control w-full block focus:outline-none h-[44px] ${
           hasicon ? 'pr-10' : ''
         } `"
         :value="modelValue"
@@ -32,7 +32,7 @@
         v-if="!isMask"
       />
       <cleave
-        :class="`${classInput} cleave input-control block w-full focus:outline-none h-[40px] `"
+        :class="`${classInput} cleave input-control block w-full focus:outline-none h-[44px] `"
         :name="name"
         :placeholder="placeholder"
         :value="modelValue"
@@ -57,7 +57,7 @@
           <AppIcon icon="la:eye-slash" class="text-[#666]" v-else />
         </span>
 
-        <span v-if="error" class="text-danger-500">
+        <span v-if="error && types !=='date'" class="text-danger-500">
           <AppIcon icon="heroicons-outline:information-circle" />
         </span>
 
@@ -68,11 +68,12 @@
           <AppIcon :icon="icon" />
         </span>
       </div>
+      <slot name="content"></slot>
     </div>
 
     <span
       v-if="error"
-      class="mt-2"
+      class=""
       :class="
         msgTooltip
           ? ' inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded'
@@ -82,7 +83,7 @@
     >
     <span
       v-if="validate"
-      class="mt-2"
+      class=""
       :class="
         msgTooltip
           ? ' inline-block bg-success-500 text-white text-[10px] px-2 py-1 rounded'

@@ -1,22 +1,69 @@
 <template>
+  <ClientOnly>
+    <div
+      v-if="$pwa?.offlineReady || $pwa?.needRefresh"
+      class="flex justify-start items-center gap-x-6 py-2 container"
+      role="alert"
+    >
+      <div class="message font-bold">
+        <span v-if="$pwa.offlineReady"> App ready to work offline </span>
+        <span v-else>
+          New content available, click on reload button to update.
+        </span>
+      </div>
+      <div class="flex items-center gap-x-6">
+        <button
+          class="btn btn-sm bg-primary-500 text-white text-sm px-3 py-2"
+          v-if="$pwa.needRefresh"
+          @click="$pwa.updateServiceWorker()"
+        >
+          Reload
+        </button>
+        <button class="btn-sm text-sm" @click="$pwa.cancelPrompt()">
+          Close
+        </button>
+      </div>
+    </div>
+    <div
+      v-if="
+        $pwa?.showInstallPrompt && !$pwa?.offlineReady && !$pwa?.needRefresh
+      "
+      class="flex justify-start items-center gap-x-6 py-2 container"
+      role="alert"
+    >
+      <div class="font-bold text-sm">
+        <span> Install Matta?</span>
+      </div>
+      <div class="flex gap-x-4">
+        <button
+          class="btn btn-sm bg-primary-500 text-white text-sm px-3 py-2"
+          @click="$pwa.install()"
+        >
+          Install
+        </button>
+        <button class="btn-sm text-sm" @click="$pwa.cancelInstall()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </ClientOnly>
+
   <nav
     :class="{
       relative: view.atTopOfPage,
       'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 border-b border-[rgba(242, 242, 242, 1)] darks:border-gray-900':
         !view.atTopOfPage,
     }"
-    class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 darks:text-white/90 z-[999] transition-all duration-500 ease-in-out"
+    class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 z-[999] transition-all duration-500 ease-in-out"
   >
     <div class="container mx-auto">
       <div class="flex justify-between items-center gap-x-5">
         <div class="logo flex gap-x-10 items-center">
           <NuxtLink to="/">
-             <NuxtImg
+            <img
               src="/images/logo.png"
-              width="100"
-              height="26"
               alt="Matta"
-              class="w-20 md:w-[100px] h-auto"
+              class="w-20 md:w-[100px] h-auto object-contain"
           /></NuxtLink>
           <ul class="lg:flex items-center gap-x-6 hidden">
             <li
@@ -30,6 +77,7 @@
               }`"
             >
               <Menu
+                v-if="!n.url"
                 v-slot="{ open }"
                 as="div"
                 class="relative inline-block text-left"
@@ -61,7 +109,7 @@
                       <MenuItem v-slot="{ active }">
                         <NuxtLink
                           v-if="n.key !== 'finance'"
-                          :to="`/${
+                          :to="`/category/${
                             n.key === 'markets' ? 'market' : 'application'
                           }/${encodeURIComponent(cat.title.toLowerCase())}/${
                             cat.id
@@ -69,7 +117,7 @@
                         >
                           <button
                             :class="[
-                              'group flex w-full items-center rounded-md px-[14px] py-[11px] text-sm hover:bg-[rgba(22,94,240,0.09)] whitespace-nowrap gap-x-2 text-[#333] darks:text-white/90',
+                              'group flex w-full items-center rounded-md px-[14px] py-[11px] text-sm hover:bg-[rgba(22,94,240,0.09)] whitespace-nowrap gap-x-2 text-[#333] ',
                             ]"
                           >
                             <AppIcon
@@ -84,7 +132,7 @@
                         <button
                           v-else
                           :class="[
-                            'group flex w-full items-center rounded-md px-[14px] py-[11px] text-sm hover:bg-[rgba(22,94,240,0.09)] whitespace-nowrap gap-x-2 text-[#333] darks:text-white/90',
+                            'group flex w-full items-center rounded-md px-[14px] py-[11px] text-sm hover:bg-[rgba(22,94,240,0.09)] whitespace-nowrap gap-x-2 text-[#333] ',
                           ]"
                         >
                           <AppIcon
@@ -100,11 +148,11 @@
                   </MenuItems>
                 </transition>
               </Menu>
-              <!-- <NuxtLink :to="n.url" v-else>
+              <NuxtLink :to="n.url" v-else>
                 <span class="cursor-pointer hover:text-[#165EF0]">
                   {{ n.name }}</span
                 >
-              </NuxtLink> -->
+              </NuxtLink>
             </li>
           </ul>
         </div>
@@ -116,7 +164,7 @@
             }"
             class="gap-x-1 items-center"
           >
-             <NuxtImg
+             <img
               src="~/assets/images/nigeria.svg"
               width="20"
               height="20"
@@ -137,35 +185,73 @@
               <option value="">English-NGN</option>
             </select></span
           > -->
-          <NuxtLink to="/cart" class="flex items-center gap-x-[6px] relative">
-            <span class="relative">
+          <!-- <NuxtLink
+            :class="` items-center  relative ${
+              authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
+            }`"
+          >
+            <span
+              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
+            >
               <AppIcon
-                class="text-base text-[#333] darks:text-white/90"
-                icon="fa6-solid:cart-shopping"
+                class="text-lg text-[#484848]"
+                icon="akar-icons:search"
+              />
+            </span>
+          </NuxtLink> -->
+          <!-- <span
+            v-if="authStore.isLoggedIn"
+            :class="` items-center  relative ${
+              authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
+            }`"
+            @click="isOpen = true"
+          >
+            <span
+              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center cursor-pointer"
+            >
+              <AppIcon
+                class="text-lg text-[#484848]"
+                icon="mingcute:message-2-line"
+              />
+              <span
+                v-if="unreadnotifications > 0"
+                class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
+                >{{ unreadnotifications }}</span
+              >
+            </span> -->
+          <!-- </span> -->
+          <NuxtLink to="/cart" class="flex items-center relative">
+            <span
+              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
+            >
+              <AppIcon
+                class="text-lg text-[#484848]"
+                icon="lucide:shopping-cart"
               />
               <span
                 v-if="cartStore?.cartTotal > 0"
-                class="w-[14px] h-[14px] rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute -top-[10px] -right-[6px]"
+                class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
                 >{{ cartStore?.cartTotal }}</span
               >
             </span>
-            <span class="text-xs sm:text-sm font-medium inline-flex text-[#333]"
+            <!-- <span class="text-xs sm:text-sm font-medium inline-flex text-[#333]"
               >Cart</span
-            >
+            > -->
           </NuxtLink>
 
-          <div class="flex gap-x-3">
+          <div class="flex gap-x-3 ml-3">
+            <AppButton
+              v-if="!authStore.isLoggedIn"
+              link="/auth/login"
+              text="Log in"
+              btnClass="text-[#475467] !px-4 !sm:px-6 !py-[6px] !font-semibold text-xs sm:!text-base hidden md:flex"
+            />
+
             <AppButton
               v-if="!authStore.isLoggedIn"
               link="/auth/vendor-register"
               text="Become a Supplier"
-              btnClass="!text-[12px] md:!text-sm text-white  !font-normal !px-[15px] !py-[6px] !normal-case bg-[#f90] flex"
-            />
-            <AppButton
-              v-if="!authStore.isLoggedIn"
-              link="/auth/login"
-              text="Sign In"
-              btnClass="bg-primary-500  text-white !px-4 !sm:px-6 !py-[6px] !font-normal text-xs sm:text-sm hidden md:flex"
+              btnClass="!text-[12px] sm:!text-sm text-white  !font-semibold !px-[15px] !py-[6px] !normal-case bg-primary-500 flex"
             />
 
             <Menu
@@ -204,7 +290,7 @@
                     </div>
                     <div class="flex-1">
                       <span
-                        class="text-[#333] darks:text-white/90 text-[13px] font-semibold block capitalize"
+                        class="text-[#333] text-[13px] font-semibold block capitalize"
                         >{{ authStore.userInfo?.fullName }}</span
                       >
                       <span
@@ -254,7 +340,7 @@
   <ModalCenter v-if="isSigniningOut">
     <template #default>
       <div
-        class="bg-white p-6 lg:p-10 sm:p-6 sm:pb-4  rounded-lg"
+        class="bg-white p-6 lg:p-10 sm:p-6 sm:pb-4 rounded-lg"
         v-if="isSigniningOut"
       >
         <div class="flex justify-between mb-5 items-center">
@@ -289,6 +375,13 @@
       </div>
     </template>
   </ModalCenter>
+  <ModalSide :isOpen="isOpen" @togglePopup="openModal" v-if="isOpen">
+    <template #content>
+      <div class="h-full md:w-[480px] bg-white rounded-lg p-6 lg:p-10">
+        <NotificationComponent />
+      </div>
+    </template>
+  </ModalSide>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -301,22 +394,28 @@ import {
 } from "~/utils/data";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
+import { getnotification } from "@/services/notificationservice";
 
+const isOpen = ref(false);
+function openModal() {
+  isOpen.value = !isOpen.value;
+}
+const { $pwa } = useNuxtApp();
 const isSigniningOut = ref(false);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const store = useMarketStore();
-
+const notifications = ref([]);
 const router = useRouter();
 const { currentRoute } = router;
 const filteredMenu = computed(() =>
   mobileMenu.filter(
     (i) =>
-      i.key === "profile" ||
-      i.key === "wallet" ||
+      i.key === "account-settings" ||
+      i.key === "wallet-home" ||
       i.key === "sign-out" ||
-      i.key === "my-orders"
+      i.key === "procurement-my-orders"
   )
 );
 const view = ref({
@@ -326,6 +425,30 @@ const open = ref(false);
 onBeforeMount(() => {
   window.addEventListener("scroll", handleScroll);
 });
+onMounted(() => {
+  if (authStore.isLoggedIn) {
+    getNotifications();
+    setInterval(() => {
+      getNotifications();
+    }, 2 * 60 * 1000);
+  }
+});
+const notifyParams = reactive({
+  PageNumber: 1,
+  PageSize: 30,
+  BusinessId: authStore?.businessId,
+  UserId: authStore.userId,
+  Role: "",
+});
+const unreadnotifications = computed(() => {
+  return notifications?.value?.filter((i) => !i.isViewed)?.length;
+});
+function getNotifications() {
+  getnotification(notifyParams).then((res) => {
+    notifications.value = res.data.data;
+  });
+}
+
 function handleScroll() {
   // when the user scrolls, check the pageYOffset
   if (window.pageYOffset > 500) {
@@ -350,12 +473,16 @@ function handleDropDown(val) {
 watch(currentRoute, () => {
   open.value = false;
 });
+
+provide("getNotifications", getNotifications);
+provide("notifications", notifications);
+provide("unreadnotifications", unreadnotifications);
 provide("open", open);
 provide("isOpen", isSigniningOut);
 </script>
 <style lang="scss">
 nav {
-  .router-link-active.router-link-exact-active {
+  .NuxtLink-active.NuxtLink-exact-active {
     color: #165ef0;
   }
 }

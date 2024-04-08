@@ -1,215 +1,121 @@
 <template>
   <div class="gap-y-2 flex flex-col">
     <!-- Top bar   -->
-    <div class="p-6 lg:p-8 bg-white rounded-lg bg-img">
-      <div class="mb-12"><Breadcrumbs /></div>
-      <div class="">
-        <h1
-          class="text-3xl md:text-[48px] md:leading-[56px] text-matta-black col-span-1 font-medium capitalize mb-8"
-        >
-          Overview
-        </h1>
-
-        <ClientOnly>
-          <div class="flex justify-start lg:justify-end relative">
-            <span class="flex items-center">
-              <span
-                class="rounded-lg bg-[#F1F3F5] flex gap-x-1 items-center px-3 mr-2 py-1"
-              >
-                <i class="uil uil-calender"></i>
-                <datepicker
-                  v-model="startDate"
-                  placeholder="Start date"
-                  inputFormat="yyyy-MM-dd"
-                  class="bg-transparent text-center pt-2 pb-1 max-w-[110px] cursor-pointer outline-gray-200"
-                />
-                <i class="uil uil-minus"></i>
-                <datepicker
-                  v-model="endDate"
-                  :lowerLimit="startDate || new Date()"
-                  :upperLimit="compEndDate"
-                  class="bg-transparent text-center pt-2 pb-1 max-w-[110px] cursor-pointer outline-gray-200"
-                  placeholder="End date"
-                  inputFormat="yyyy-MM-dd"
-                />
-                <i class="uil uil-angle-down"></i>
-              </span>
-
-              <span
-                @click="
-                  () => {
-                    endDate = new Date();
-                    startDate = new Date(
-                      moment(moment()).subtract(5, 'months')
-                    );
-                  }
-                "
-                ><i class="uil uil-refresh"></i
-              ></span>
-            </span>
-          </div>
-        </ClientOnly>
-      </div>
+    <div>
+      <HeaderComponent
+        :welcome="`Welcome back, ${auth?.userInfo?.firstName}`"
+        subtext="Your current sales summary and activity."
+        className="!px-0 !py-0 pb-6 !border-none mb-[15px]"
+      />
     </div>
+    <VerificationBox />
 
-    <div class="bg-[#F1F3F5] p-3 lg:p-8 rounded-lg" v-if="stats">
-      <div class="flex flex-col md:grid md:grid-cols-2 gap-2 mb-2">
-        <!-- <div class="p-6 rounded-lg bg-white col-span-1">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-sm font-normal">Pending orders</span>
-            <span class="text-sm text-[#59B221] bg-[#59b22114] p-1 rounded-md"
-              >{{ stats.pendingorderPercentage }}%</span
+    <div class="pb-10" v-if="stats">
+      <div
+        class="p-4 lg:p-6 rounded-[10px] bg-white mb-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
+      >
+        <div
+          class="mb-10 flex flex-col lg:flex-row lg:justify-between lg:items-center gap-y-4"
+        >
+          <div
+            class="border border-[#D0D5DD] rounded-lg overflow-hidden text-xs lg:text-sm text-[#344054] max-w-max"
+          >
+            <button
+              class="px-4 py-2 border-r border-[#D0D5DD] last:border-none font-semibold"
+              :class="active === n.value ? 'bg-[#F9FAFB]' : ''"
+              v-for="n in filters"
+              @click="active = n.value"
             >
+              {{ n.title }}
+            </button>
           </div>
-          <div class="flex justify-between items-center py-4 gap-x-6">
-            <span class="font-medium text-4xl">{{ stats.pendingOrder }}</span>
-            <div id="chart">
-              <apexchart
-                type="line"
-                height="100"
-                :options="pendingOptions"
-                :series="pendingSeries"
-              ></apexchart>
-            </div>
-          </div>
-        </div> -->
-        <div class="p-6 rounded-lg bg-white col-span-1">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-sm font-normal">Confirmed orders</span>
-            <span class="text-sm text-[#59B221] bg-[#59b22114] p-1 rounded-md"
-              >{{ stats.confirmOrdersPecentage }}%</span
-            >
-          </div>
-          <div class="flex justify-between items-center gap-x-4 py-4">
-            <div class="font-medium text-2xl md:text-4xl">
-              {{ stats.confirmedOrders }}
-            </div>
-            <div class="">
-              <ClientOnly>
-                <apexchart
-                  type="line"
-                  height="100"
-                  width="150"
-                  :options="confirmOptions"
-                  :series="confirmSeries"
-                ></apexchart>
-              </ClientOnly>
-            </div>
-          </div>
-        </div>
-
-        <div class="p-6 rounded-lg bg-white col-span-1">
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-sm font-normal">Product views</span>
-            <span class="text-sm text-[#59B221] bg-[#59b22114] p-1 rounded-md"
-              >{{ stats.productViewPercentage }}%</span
-            >
-          </div>
-          <div class="flex justify-between items-center py-4 gap-x-4">
-            <div class="font-medium text-2xl md:text-4xl">
-              {{ stats.productViews }}
-            </div>
-            <div class="">
-              <ClientOnly>
-                <apexchart
-                  type="line"
-                  height="100"
-                  width="150"
-                  :options="viewOptions"
-                  :series="viewSeries"
-                ></apexchart>
-              </ClientOnly>
-            </div>
-          </div>
-        </div>
-        <div class="p-6 rounded-lg bg-white col-span-1">
-          <div class="flex justify-between items-center mb-4 gap-x-4">
-            <span class="text-sm font-normal">Requested quotes</span>
-            <span class="text-sm text-[#59B221] bg-[#59b22114] p-1 rounded-md"
-              >0%</span
-            >
-          </div>
-          <div class="flex justify-between items-center py-4">
-            <div class="font-medium text-2xl md:text-4xl">
-              {{ stats.quotes }}
-            </div>
-            <ClientOnly class="">
-              <apexchart
-                type="line"
-                height="100"
-                width="150"
-                :options="quoteOptions"
-                :series="quoteSeries"
-              ></apexchart>
+          <div class="max-w-[200px] hidden lg:inline">
+            <ClientOnly>
+              <VueDatePicker
+                v-model="date"
+                range
+                multi-calendars
+                placeholder="Select dates"
+                :time-picker="false"
+                input-class-name="!text-sm"
+              />
             </ClientOnly>
           </div>
         </div>
-        <div class="p-6 rounded-lg bg-white flex flex-col justify-between">
-          <div class="flex justify-between items-center">
-            <span class="text-sm font-normal">Current balance</span>
-            <div class="text-sm text-[#59B221] bg-[#59b22114] p-1 rounded-md">
-              {{ stats.currentBalancePecentage }}%
+
+        
+        <div class="flex flex-col lg:flex-row gap-x-8 w-full">
+          <div class="flex-1">
+            <div class="">
+              <div class="flex justify-between">
+                <div>
+                  <span class="block text-sm text-[#475467] font-medium"
+                    >Total Amount</span
+                  >
+
+                  <div class="flex gap-x-1 items-start">
+                    <span class="block text-[30px] font-bold">
+                      <span
+                        class="block text-xl xl:text-[30px] font-semibold text-[#101828]"
+                        >{{ currencyFormat(stats.currentBalance) }}</span
+                      ></span
+                    >
+                    <span
+                      class="text-xs flex gap-x-1 items-center text-[#17B26A]"
+                    >
+                      <AppIcon
+                        icon="uil:arrow-growth"
+                        iconClass="!text-[#17B26A]"
+                      />
+                      <span>{{ stats.currentBalancePecentage }}%</span></span
+                    >
+                  </div>
+                </div>
+              </div>
+              <client-only>
+                <apexchart
+                  type="area"
+                  height="300"
+                  :options="chartOptions"
+                  :series="series"
+                ></apexchart
+              ></client-only>
             </div>
           </div>
-          <ClientOnly class="">
-            <apexchart
-              type="area"
-              height="100"
-              :options="balanceOptions"
-              :series="balanceSeries"
-            ></apexchart>
-          </ClientOnly>
-          <div class="flex justify-between items-center py-4">
-            <span class="font-medium text-2xl md:text-4xl">{{
-              currencyFormat(stats.currentBalance)
-            }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="p-6 rounded-lg bg-white mb-8">
-        <div class="flex justify-between items-center mb-4">
-          <span class="text-sm font-normal">Orders</span>
-          <span class="text-sm flex gap-x-6 rounded">
-            <span class="flex items-center"
-              ><span class="h-2 w-2 mr-2 bg-[#165EF0]"></span> This year</span
+          <div
+            class="xl:w-[200px] flex flex-row lg:flex-col gap-6 justify-between xl:justify-start"
+          >
+            <div
+              class="leading-tight text-center md:text-left"
+              v-for="n in Statistics"
+              :key="n.title"
             >
-            <span class="flex items-center rounded"
-              ><span class="h-2 w-2 mr-2 bg-[#B6B7B9]"></span> Last year</span
-            >
-          </span>
-        </div>
-        <div class="">
-          <div class="flex justify-between">
-            <div>
-              <span class="block text-lg text-[#475467] font-medium"
-                >Total Account Balance</span
+              <span
+                class="block text-[#475467] font-medium text-xs lg:text-sm capitalize"
+                >{{ n.title }}</span
               >
-              <span class="block text-[30px] font-semibold text-[#101828]">{{
-                currencyFormat(0)
-              }}</span>
-            </div>
-            <div class="flex text-sm gap-x-3">
-              <button>12 months</button>
-              <button>30 days</button>
-              <button>7 days</button>
-              <button>24 hrs</button>
+              <div class="flex gap-x-1 items-start">
+                <span
+                  class="block text-base lg:text-xl xl:text-[30px] font-bold"
+                  >{{ stats[n.key] }}</span
+                >
+                <span class="text-xs flex gap-x-1 items-center text-[#17B26A]">
+                  <AppIcon
+                    icon="uil:arrow-growth"
+                    iconClass="!text-[#17B26A]"
+                  />
+                  <span>{{ stats[n.percent] }}%</span></span
+                >
+              </div>
             </div>
           </div>
-          <ClientOnly>
-            <apexchart
-              type="area"
-              height="300"
-              :options="chartOptions"
-              :series="series"
-            ></apexchart
-          ></ClientOnly>
         </div>
       </div>
 
-      <div class="px-6 py-8 rounded-lg bg-white">
-        <h4 class="font-medium text-base text-matta-black mb-6">
-          Trending Products
-        </h4>
+      <div
+        class="rounded-[10px] bg-white border border-[#F4F7FE] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
+      >
+        <HeaderComponent title="Trending Products" className="!px-5" />
         <div>
           <div class="overflow-x-auto max-w-[80vw] lg:max-w-full">
             <table class="w-full" v-if="trending.length">
@@ -218,64 +124,43 @@
                   <th
                     v-for="item in theads"
                     :key="item"
-                    class="uppercase text-[#B6B7B9] text-[13px] text-left font-normal border-b py-4 px-3 border-[#E7EBEE]"
+                    class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
                   >
                     {{ item }}
                   </th>
-                  <!-- <th
-                  class="uppercase text-[#B6B7B9] text-[13px] text-left font-normal border-b py-4 px-3 border-[#E7EBEE]"
-                ></th> -->
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="item in trending" :key="item.id">
                   <td
-                    class="uppercase text-matta-black text-[13px] border-b py-4 px-3 border-[#E7EBEE] whitespace-nowrap"
+                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                   >
-                    <div class="flex items-center">
-                      <span
-                        v-if="item.image"
-                        class="mr-3 h-10 w-10 rounded-lg flex items-center justify-center border border-[#E7EBEE] p-2"
-                      >
-                         <NuxtImg class="" :src="item.image" alt="alt" />
+                    <span>
+                      <span class="text-sm font-medium">
+                        {{ item.product }}
                       </span>
-                      <i
-                        v-else
-                        class="fas fa-image text-[40px] mr-3 text-gray-400"
-                      ></i>
-                      <span>
-                        <span class="text-sm font-medium">
-                          {{ item.product }}
-                        </span>
-                        <br />
-                        <span class="text-xs font-normal">
-                          {{ item.manufacturer }}
-                        </span>
+                      <br />
+                      <span class="text-xs font-normal">
+                        {{ item.manufacturer }}
                       </span>
-                    </div>
+                    </span>
                   </td>
                   <td
-                    class="uppercase text-matta-black text-sm font-normal border-b py-4 px-3 border-[#E7EBEE] whitespace-nowrap"
+                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                   >
-                    {{ moment(item.created).format("lll") }}
+                    {{ moment(item.created).format("ll") }}
                   </td>
                   <td
-                    class="uppercase text-matta-black text-sm font-normal border-b py-4 px-3 border-[#E7EBEE]"
+                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                   >
                     {{ item.views }}
                   </td>
 
                   <td
-                    class="uppercase text-matta-black text-sm font-normal border-b py-4 px-3 border-[#E7EBEE]"
+                    class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                   >
                     {{ item.orders }}
                   </td>
-
-                  <!-- <td
-                  class="uppercase text-matta-black text-sm font-normal border-b py-4 px-3 border-[#E7EBEE]"
-                >
-                  <i class="uil uil-ellipsis-h"></i>
-                </td> -->
                 </tr>
               </tbody>
             </table>
@@ -283,9 +168,8 @@
 
           <EmptyData
             v-if="!trending.length"
-            url="/markets"
-            buttonText="go to catalog"
-            text="No data available"
+            buttonText=""
+            text="No orders yet"
           />
         </div>
       </div>
@@ -298,8 +182,9 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import Datepicker from "vue3-datepicker";
-import VueApexCharts from "vue3-apexcharts";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+
 import {
   getesfrontstats,
   getstorefronttrending,
@@ -308,6 +193,57 @@ import moment from "moment";
 import EmptyData from "~/components/EmptyData";
 import { getorderchart, getchart } from "~/services/chartservice";
 
+const auth = useAuthStore();
+const date = ref();
+const links = [
+  {
+    title: "home",
+    url: "/",
+  },
+  {
+    title: "storefront",
+    url: "/overview",
+  },
+];
+const filters = [
+  {
+    title: "12 months",
+    value: 12,
+    duration: "months",
+  },
+  {
+    title: "30 days",
+    value: 30,
+    duration: "days",
+  },
+  {
+    title: "7 days",
+    value: 7,
+    duration: "days",
+  },
+  {
+    title: "24 hours",
+    value: 1,
+    duration: "day",
+  },
+];
+const Statistics = [
+  {
+    title: "product views",
+    key: "productViews",
+    percent: "productViewPercentage",
+  },
+  {
+    title: "confirmed orders",
+    key: "confirmedOrders",
+    percent: "confirmOrdersPecentage",
+  },
+  {
+    title: "pending orders",
+    key: "pendingOrder",
+    percent: "pendingorderPercentage",
+  },
+];
 const startDate = ref(new Date(moment(moment()).subtract(5, "months")));
 const endDate = ref(new Date());
 const query = reactive({
@@ -316,6 +252,7 @@ const query = reactive({
   top: 10,
 });
 
+const active = ref(null);
 const stats = ref(null);
 const trending = ref([]);
 const thisyear = ref([]);
@@ -333,6 +270,7 @@ const confirmmonth = ref([]);
 const confirmseries = ref([]);
 // const pendingmonth = ref(["Sep", "Oct", "Nov"]);
 // const pendingseries = ref([0, 0, 0]);
+
 onMounted(() => {
   getesfrontstats(query).then((res) => {
     stats.value = res.data.data;
@@ -344,10 +282,7 @@ onMounted(() => {
 });
 
 function getAllCharts() {
-  getorderchart({
-    StartDate: moment(startDate.value).format("yyyy-MM-DD"),
-    EndDate: moment(endDate.value).format("yyyy-MM-DD"),
-  }).then((res) => {
+  getorderchart(query).then((res) => {
     if (res.status === 200) {
       thisyear.value = res.data.data.data[0]?.chartrecords.map(
         (item) => item.month
@@ -363,10 +298,7 @@ function getAllCharts() {
       showChart.value = true;
     }
   });
-  getchart({
-    StartDate: moment(startDate.value).format("yyyy-MM-DD"),
-    EndDate: moment(endDate.value).format("yyyy-MM-DD"),
-  }).then((res) => {
+  getchart(query).then((res) => {
     if (res.status === 200) {
       viewmonth.value = res.data.data.viewTrends.data[0].chartrecords.map(
         (item) => item.month
@@ -398,7 +330,7 @@ function getAllCharts() {
     }
   });
 }
-const apexchart = VueApexCharts;
+// const apexchart = VueApexCharts;
 const route = useRoute();
 
 const series = computed(() => {
@@ -686,31 +618,36 @@ const confirmSeries = computed(() => {
 defineProps(["title"]);
 const theads = ["product", "created", "views", "orders"];
 
-watch(
-  () => [startDate.value],
-  () => {
-    endDate.value = null;
+watch(date, () => {
+  if (date.value) {
+    query.StartDate = moment(date.value[0]).format("yyyy-MM-DD");
+    query.EndDate = moment(date.value[1]).format("yyyy-MM-DD");
+    getesfrontstats(query).then((res) => {
+      stats.value = res.data.data;
+    });
+    getstorefronttrending(query).then((res) => {
+      trending.value = res.data.data.slice(0, 9);
+    });
+    getAllCharts();
   }
-);
-watch(
-  () => [startDate.value, endDate.value],
-  () => {
-    if (startDate.value && endDate.value) {
-      query.StartDate = moment(startDate.value).format("yyyy-MM-DD");
-      query.EndDate = moment(endDate.value).format("yyyy-MM-DD");
-      getesfrontstats(query).then((res) => {
-        stats.value = res.data.data;
-      });
-      getstorefronttrending(query).then((res) => {
-        trending.value = res.data.data.slice(0, 9);
-      });
-      getAllCharts();
-    }
+});
+
+watch(active, () => {
+  if (active.value) {
+    query.StartDate = moment().add(active.value, "days").format("yyyy-MM-DD");
+    query.EndDate = moment().format("yyyy-MM-DD");
+    getesfrontstats(query).then((res) => {
+      stats.value = res.data.data;
+    });
+    getstorefronttrending(query).then((res) => {
+      trending.value = res.data.data.slice(0, 9);
+    });
+    getAllCharts();
   }
-);
+});
 
 const compEndDate = computed(() => {
-  return new Date(moment(moment(startDate.value)).add(5, "months"));
+  return new Date(moment(date.value.startDate).add(5, "months"));
 });
 // const compStartDate = computed(() => {
 //   return moment(moment(startDate.value)).subtract(5, "months");

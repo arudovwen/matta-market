@@ -138,6 +138,7 @@
 <script setup>
 definePageMeta({
   layout: "register",
+  middleware: "auth",
 });
 useHead({
   title: "Register vendor | Matta",
@@ -149,7 +150,6 @@ import { toast } from "vue3-toastify";
 import { registerUser } from "~/services/authservices";
 
 const agree = ref(false);
-
 const isLoading = ref(false);
 const formValues = {
   email: "",
@@ -197,8 +197,6 @@ const [lastName, lastNameAtt] = defineField("lastName");
 const [phone, phoneAtt] = defineField("phone");
 const [confirmPassword, confirmPasswordAtt] = defineField("confirmPassword");
 const [companyName, companyNameAtt] = defineField("companyName");
-
-const route = useRoute();
 const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {

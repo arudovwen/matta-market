@@ -4,7 +4,7 @@
       class="container py-[35px] flex flex-col lg:flex-row lg:items-end justify-between"
     >
       <div>
-        <Breadcrumbs :links="links" />
+        <Breadcrumbs :links="links" className="text-white" />
         <h1 class="text-white text-[32px] font-bold mb-[10px] mt-9 capitalize">
           {{ title }}
         </h1>
@@ -44,6 +44,10 @@ const links = [
   },
 ];
 const options = [
+{
+    label: "Default",
+    value: "",
+  },
   {
     label: "Low to High",
     value: 0,

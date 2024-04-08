@@ -2,7 +2,7 @@
   
   <button
     :disabled="isDisabled"
-   
+    :type="type"
     :class="`
       ${isLoading ? ' pointer-events-none' : ''}
       ${isDisabled ? ' opacity-40 cursor-not-allowed' : ''}
@@ -210,6 +210,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    type:{
+      type: String,
+      default: "button"
+    }
   },
 };
 </script>

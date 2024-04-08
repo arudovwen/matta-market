@@ -114,11 +114,11 @@ export const navigations = [
     key: "applications",
     url: null,
   },
-  {
-    name: "Finance",
-    key: "finance",
-    url: null,
-  },
+  // {
+  //   name: "Finance",
+  //   key: "finance",
+  //   url: "/finance",
+  // },
 ];
 export const mobileNavigation = [
   {
@@ -129,52 +129,100 @@ export const mobileNavigation = [
 
 export const mobileMenu = [
   {
-    name: "Profile",
-    key: "profile",
-    icon: "bxs:user",
-    url: "/account/settings",
+    name: "Dashboard",
+    url: "/overview",
+    icon: "mingcute:layout-3-line",
+    key: "overview",
   },
+ 
   {
-    name: "My orders",
-    key: "my-orders",
-    icon: "solar:box-bold",
+    name: "My Orders",
     url: "/procurement/my-orders",
+    icon: "lucide:shopping-bag",
+    key: "procurement-my-orders",
   },
   {
-    name: "My requests",
-    key: "my-requests",
-    icon: "gridicons:cart",
+    name: "My Requests",
     url: "/procurement/my-requests",
+    icon: "ri:hand-coin-line",
+    key: "procurement-my-requests",
+  },
+
+  {
+    name: "My Orders",
+    url: "/procurement/my-orders",
+    icon: "lucide:shopping-bag",
+    key: "my-orders",
   },
   {
-    name: "Shipping address",
-    key: "shipping-address",
-    icon: "fa6-solid:address-book",
-    url: "/procurement/shipping-addresses",
+    name: "My Requests",
+    url: "/procurement/my-requests",
+    icon: "ri:hand-coin-line",
+    key: "my-requests",
   },
+
+  {
+    name: "Shipping Addresses",
+    url: "/procurement/shipping-addresses",
+    icon: "heroicons-outline:truck",
+    key: "shipping",
+  },
+
   {
     name: "Wallet",
-    key: "wallet",
-    icon: "ion:wallet",
     url: "/wallet/home",
+    icon: "ion:wallet-outline",
+    key: "wallet-home",
+  },
+  {
+    name: "Financing requests",
+    url: "/financing",
+    icon: "la:hand-holding-usd",
+    key: "financing",
   },
   {
     name: "Saved items",
-    key: "saved-items",
-    icon: "ri:heart-fill",
     url: "/account/saved-searches",
+    icon: "tdesign:heart",
+    key: "saved",
   },
   {
     name: "Storefront",
+    url: "/storefront",
+    icon: "solar:shop-outline",
     key: "storefront",
-    icon: "fa6-solid:store",
-    url: "/storefront/overview",
+  },
+
+  {
+    name: "Company Settings",
+    url: "/company/settings",
+    icon: "mingcute:building-5-line",
+    key: "company",
   },
   {
-    name: "Company settings",
-    key: "company-setting",
-    icon: "clarity:building-solid",
-    url: "/company/settings",
+    name: "Account",
+    url: "/settings",
+    icon: "lucide:user",
+    key: "account-settings",
+  },
+  {
+    name: "User Management",
+    url: "/user-management",
+    icon: "lucide:users",
+    key: "users",
+  },
+  {
+    name: "Account settings",
+    url: "/settings",
+    icon: "lucide:user",
+    key: "account",
+  },
+
+  {
+    name: "Products",
+    url: "/products",
+    icon: "fluent-mdl2:product-variant",
+    key: "products",
   },
   {
     name: "Sign out",

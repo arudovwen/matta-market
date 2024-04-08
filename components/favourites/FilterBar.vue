@@ -7,7 +7,7 @@
           :class="
             productParams.Search.length && 'pl-3 pr-10 rounded-lg w-[250px]'
           "
-          class="focus:pl-3 focus:pr-10 border border-[#D0D5DD] rounded-full focus:rounded-lg h-12 bg-transparent peer focus:w-[280px] focus:outline-none w-12 transition ease-in-out duration-300"
+          class="focus:pl-3 focus:pr-10 border border-[#D0D5DD] rounded-full focus:rounded-lg h-11 bg-transparent peer focus:w-[280px] focus:outline-none w-12 transition ease-in-out duration-300"
           type="search"
         />
         <span class="absolute right-4 peer-focus:right-3 pointer-events-none"
@@ -20,7 +20,7 @@
           :class="
             supplierParams.Search.length && 'pl-3 pr-10 rounded-lg w-[250px]'
           "
-          class="focus:pl-3 focus:pr-10 border border-[#D0D5DD] rounded-full focus:rounded-lg h-12 bg-transparent peer focus:w-[280px] focus:outline-none w-12 transition ease-in-out duration-300"
+          class="focus:pl-3 focus:pr-10 border border-[#D0D5DD] rounded-full focus:rounded-lg h-11 bg-transparent peer focus:w-[280px] focus:outline-none w-12 transition ease-in-out duration-300"
           type="search"
         />
         <span class="absolute right-4 peer-focus:right-3 pointer-events-none"

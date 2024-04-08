@@ -26,7 +26,7 @@
                 class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                 >Photo</span
               >
-               <NuxtImg
+              <NuxtImg
                 v-else
                 :src="image"
                 class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
@@ -52,7 +52,7 @@
           <div class="flex items-center justify-between gap-x-3">
             <label for="upload">
               <span
-                class="text-primary border border-primary rounded-lg px-4 lg:px-6 py-2 lg:py-3 text-xs lg:text-sm cursor-pointer"
+                class="text-primary border border-primary- rounded-lg px-4 lg:px-6 py-2 lg:py-3 text-xs lg:text-sm cursor-pointer"
               >
                 Upload photo
               </span>
@@ -81,7 +81,7 @@
                 <input
                   v-model="v$.firstName.$model"
                   :class="{ 'border-red-500': v$.firstName.$error }"
-                  class="rounded-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   autocomplete="off"
                   autofocus="on"
                 />
@@ -102,7 +102,7 @@
                 <input
                   v-model="v$.lastName.$model"
                   :class="{ 'border-red-500': v$.lastName.$error }"
-                  class="rounded-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   autocomplete="off"
                   autofocus="on"
                 />
@@ -132,12 +132,12 @@
                       containerStyle="w-full"
                       :classStyles="`${
                         v$.country.$error && 'border-red-500'
-                      } rounded-lg appearance-none px-5 py-3 h-12 text-sm border w-full !bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
+                      } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full !bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
                     />
                     <!-- <select
                       v-model="v$.country.$model"
                       :class="{ 'border-red-500': v$.country.$error }"
-                      class="rounded-lg appearance-none px-5 py-3 h-12 text-sm border w-full bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      class="rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                     >
                       <option v-for="z in CountryList" :key="z" :value="z.name">
                         <span class="flex gap-x-6">
@@ -174,14 +174,14 @@
                   containerStyle="w-full"
                   :classStyles="`${
                     v$.city.$error && 'border-red-500'
-                  } rounded-lg appearance-none px-5 py-3 h-12 text-sm border w-full !bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
+                  } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full !bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
                 />
 
                 <!-- <div class="flex relative items-center w-full">
                   <select
                     v-model="v$.city.$model"
                     :class="{ 'border-red-500': v$.city.$error }"
-                    class="rounded-lg appearance-none px-5 py-3 h-12 text-sm border w-full bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                    class="rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   >
                     <option v-for="z in states" :key="z" :value="z.name">
                       <span class="flex gap-x-6">
@@ -210,18 +210,8 @@
                   >Phone number
                   <span class="text-red-500 pl-[.02rem]">*</span></label
                 >
-                <div class="flex relative rounded-lg h-12">
-                  <FormsPhoneCodes v-model="form.code" />
-
-                  <input
-                    :class="{ 'border-red-500': v$.phone.$error }"
-                    v-model="v$.phone.$model"
-                    class="flex-1 rounded-r-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                    autocomplete="off"
-                    autofocus="on"
-                    placeholder="08160723884"
-                    type="tel"
-                  />
+                <div class="flex relative rounded-lg h-11">
+                  <FormsPhoneCodes v-model="v$.phone.$model" />
                 </div>
                 <div
                   class="text-red-500 mt-1"
@@ -241,7 +231,7 @@
                   <input
                     :class="{ 'border-red-500': v$.email.$error }"
                     :value="form.email"
-                    class="rounded-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] text-matta-black/60 focus:outline-matta-black/20"
+                    class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] text-matta-black/60 focus:outline-matta-black/20"
                     autocomplete="off"
                     autofocus="on"
                     disabled
@@ -270,7 +260,7 @@
               <select
                 v-model="v$.timeZone.$model"
                 :class="{ 'border-red-500': v$.timeZone.$error }"
-                class="appearance-none rounded-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9]"
+                class="appearance-none rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9]"
               >
                 <option v-for="z in zones" :key="z">
                   ({{ moment.tz(new Date(), z).format("z - Z") }})
@@ -290,7 +280,7 @@
             </div>
           </div>
           <div class="flex justify-center gap-x-4 items-center mt-16 w-full">
-           <span></span>
+            <span></span>
 
             <button
               :disabled="v$.$silentErrors.length || isLoading"
@@ -412,7 +402,7 @@ import {
   maxLength,
   numeric,
 } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import {
   updatePersonalInfo,
   // getOnboarding,
@@ -433,7 +423,7 @@ onMounted(() => {
     form.country = res.data.data.country;
     form.city = res.data.data.city;
     form.email = res.data.data.email;
-    form.phone = replaceCountryCode(res.data.data.phone, "+234");
+    form.phone = res.data.data.phone;
     form.timeZone = res.data.data.timeZone;
   });
 });
@@ -560,12 +550,7 @@ const rules = {
     maxLength: maxLength(50),
   },
   phone: {
-    numeric,
     required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
   },
   timeZone: {
     required,
@@ -590,7 +575,6 @@ async function handleSubmit() {
   updatePersonalInfo(form)
     .then((res) => {
       if (res.status === 200) {
-
         authStore.updateUserInfo({
           fullName: fullName.value,
           firstName: form.firstName,
@@ -604,7 +588,7 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 function removeImage() {

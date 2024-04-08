@@ -131,6 +131,7 @@
 <script setup>
 definePageMeta({
   layout: "auth",
+  middleware: "auth",
 });
 useHead({
   title: "Register | Matta",

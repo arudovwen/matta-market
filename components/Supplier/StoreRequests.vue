@@ -1,77 +1,21 @@
 <template>
-  <div class="gap-y-2 flex flex-col">
+  <div class="flex flex-col bg-white rounded-[10px]">
     <!-- Top bar   -->
-    <div class="p-6 lg:p-8 bg-white rounded-lg bg-img">
-      <div class="mb-12"><Breadcrumbs /></div>
-      <div class="">
-        <div class="flex gap-x-3 items-center mb-3">
-          <h1
-            class="text-3xl lg:text-[48px] text-matta-black col-span-1 font-medium capitalize"
-          >
-           Requests
-          </h1>
-          <span class="mt-3">/</span>
-          <span class="text-primary text-3xl lg:text-[48px]">{{
-            count?.samples + count?.documents + count?.quotes || 0
-          }}</span>
-        </div>
-
-        <p class="text-sm lg:text-base">
-          List of your requests for samples and documents.
-        </p>
-      </div>
-    </div>
-    <div class="p-6 lg:p-8 rounded-lg bg-white">
-      <div class="flex gap-x-4 mb-8">
-        <button
-          @click="active = 'sample'"
-          :class="active === 'sample' ? 'bg-matta-black text-white' : ''"
-          class="flex gap-x-2 items-center capitalize text-matta-black hover:text-white hover:bg-matta-black py-2 px-3 md:py-4 md:px-6 border rounded-lg border-[#E7EBEE] md:leading-5 text-[10px] sm:text-[13px] shadow-sm"
-        >
-          <i class="uil uil-temperature-empty hidden md:inline"></i>
-          <span class="hidden md:inline">|</span>
-          <span>samples</span
-          ><span
-            :class="active === 'sample' ? 'bg-white' : ''"
-            class="text-matta-black bg-gray-200 hover:bg-white rounded-full text-[11px] w-4 h-4 flex items-center justify-center"
-            >{{ count?.samples || 0 }}</span
-          >
-        </button>
-
-        <button
-          @click="active = 'documents'"
-          :class="active === 'documents' ? 'bg-matta-black text-white' : ''"
-          class="flex gap-x-2 items-center capitalize text-matta-black hover:text-white hover:bg-matta-black py-2 px-2 md:py-4 md:px-6 border rounded-lg border-[#E7EBEE] md:leading-5 text-[10px] sm:text-[13px] shadow-sm"
-        >
-          <i class="uil uil-file hidden md:inline"></i>
-          <span class="hidden md:inline">|</span>
-          <span>documents</span
-          ><span
-            :class="active === 'documents' ? 'bg-white' : ''"
-            class="text-matta-black bg-gray-200 hover:bg-white rounded-full text-[11px] w-4 h-4 flex items-center justify-center"
-            >{{ count?.documents || 0 }}</span
-          >
-        </button>
-        <button
-          @click="active = 'quotes'"
-          :class="active === 'quotes' ? 'bg-matta-black text-white' : ''"
-          class="flex gap-x-2 items-center capitalize text-matta-black hover:text-white hover:bg-matta-black py-2 px-2 md:py-4 md:px-6 border rounded-lg border-[#E7EBEE] md:leading-5 text-[10px] sm:text-[13px] shadow-sm"
-        >
-          <i class="uil uil-chat hidden md:inline"></i>
-          <span class="hidden md:inline">|</span>
-          <span>quotes</span
-          ><span
-            :class="active === 'documents' ? 'bg-white' : ''"
-            class="text-matta-black bg-gray-200 hover:bg-white rounded-full text-[11px] w-4 h-4 flex items-center justify-center"
-            >{{ count?.quotes || 0 }}</span
-          >
-        </button>
-      </div>
+    <!-- <HeaderComponent
+      title="Store Requests"
+      className="!px-5"
+      subtext="List of your requests for samples and documents."
+    /> -->
+    <div class="pt-[30px]">
+      <AppTab :tabs="tabs" className="px-5" :count="count" />
 
       <div>
-        <SupplierRequestsRequestTable v-if="active == 'sample'" :canCancel="false" />
+        <SupplierRequestsRequestTable
+          v-if="active == 'samples'"
+          :canCancel="false"
+        />
         <SupplierRequestsDocumentsTable v-if="active == 'documents'" />
-        <SupplierRequestsQuotesTable v-if="active == 'quotes'" />
+        <SupplierRequestsQuotesTable v-if="active == 'order requests'" />
       </div>
     </div>
   </div>
@@ -97,7 +41,7 @@
           </button>
           <button
             type="submit"
-            class="border text-[13px] border-primary uppercase w-full text-white bg-primary-500 rounded-lg px-2 py-3 hover:bg-primary/80"
+            class="border text-[13px] border-primary- uppercase w-full text-white bg-primary-500 rounded-lg px-2 py-3 hover:bg-primary/80"
           >
             cancel request
           </button>
@@ -116,6 +60,21 @@ import {
 } from "~/services/requestservice";
 import { sellerquotes } from "~/services/quoteservice";
 
+const tabs = [
+  {
+    title: "samples",
+    key: "samples",
+  },
+  {
+    title: "documents",
+    key: "documents",
+  },
+
+  {
+    title: "order requests",
+    key: "order requests",
+  },
+];
 defineProps(["title"]);
 const isLoading = ref(true);
 const quoteLoading = ref(true);
@@ -124,7 +83,7 @@ const documents = ref([]);
 const requests = ref([]);
 const route = useRoute();
 const isOpen = ref(false);
-const active = ref("sample");
+const active = ref("samples");
 const quotes = ref([]);
 // const products = ref([]);
 // const suppliers = ref([]);
@@ -142,13 +101,10 @@ const count = reactive({
   quotes: 0,
 });
 onMounted(() => {
-  getRequests();
-  getRequestDoc();
   samplerequestcount().then((res) => {
     count.documents = res.data.documents;
     count.samples = res.data.samples;
   });
-  getquotes();
 });
 function getquotes() {
   quoteLoading.value = true;
@@ -193,8 +149,12 @@ watch(
 );
 provide("quotes", quotes);
 provide("quoteParams", quoteParams);
-provide("quoteLoading", quoteLoading)
-provide("docLoading", docLoading)
+provide("quoteLoading", quoteLoading);
+provide("docLoading", docLoading);
+provide("active", active);
+provide("getRequests", getRequests);
+provide("getRequestDoc", getRequestDoc);
+provide("getquotes", getquotes);
 </script>
 
 <style lang="scss" scoped>

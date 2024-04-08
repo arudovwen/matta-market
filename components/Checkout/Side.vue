@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#333] rounded-[10px] py-[30px] px-5 w-full lg:w-[300px] xl:w-[360px]"
+    class="bg-[#333] rounded-[10px] py-[30px] px-5 w-full lg:w-[250px] xl:w-[360px]"
   >
     <div class="font-semibold text-2xl text-white pb-6">Order Details</div>
     <div class="flex flex-col gap-y-5">
@@ -56,20 +56,26 @@
     <AppButton
       :isLoading="loading"
       @click="confirmOrder"
-      :isDisabled="!cartStore?.cart || !cartStore?.cartTotalAmount || loading"
+      :isDisabled="
+        !cartStore?.cart ||
+        !cartStore?.cartTotalAmount ||
+        loading ||
+        !shippingStore?.defaultAddress?.id
+      "
       :text="status"
       btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
     />
 
     <p class="text-xs text-[#E1E1E1]">
-      After placing an order, our manager will contact you to clarify the price
-      and other details of your order.
+      After placing an order, you can contact our support for details of your
+      order.
     </p>
   </div>
 </template>
 <script setup>
-import { toast } from 'vue3-toastify';
-import { confirmpurchase } from "~/services/cartservice";
+import { toast } from "vue3-toastify";
+import { confirmpurchase, confirmpayment } from "~/services/cartservice";
+import { nanoid } from "nanoid";
 
 const cartTaxAmount = computed(
   () => cartStore?.cartTotalAmount * cartStore?.tax + cartStore?.cartTotalAmount
@@ -88,7 +94,7 @@ function onModalClose() {
   status.value = "Retry order";
   loading.value = false;
 }
-function confirmOrder() {
+function makePayment(reference) {
   status.value = "Processing order...";
   loading.value = true;
   data.value = {
@@ -97,20 +103,47 @@ function confirmOrder() {
     name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
     amount: cartTaxAmount.value,
     phoneNumber: authstore.userInfo?.phoneNumber,
+    reference: `ORD-${reference}-${nanoid(6)}`,
+    orderId: reference,
   };
 
   payWithMonnify(data.value, onModalClose, onSuccess);
 }
-function onSuccess() {
-  confirmpurchase({ shippingAddressId: data.value.shippingAddressId }).then(
-    (res) => {
+function confirmOrder() {
+  status.value = "Processing order...";
+  loading.value = true;
+  confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress.id })
+    .then((res) => {
       if (res.status === 200) {
-        cartStore?.clearCart;
-        window.location.href = "/order-success";
-        // window.location.href = `/transaction/successful?trx_ref=${response.transactionReference}`;
-        // Payment complete! Reference: transaction.reference
+        makePayment(res.data.data);
       }
-    }
-  );
+    })
+    .catch((err) => {
+      const error = `${
+        err.response.data.Message || err.response.data.message
+      }, Contact us for assistance on your order`;
+      toast.error(error);
+      status.value = "Retry order";
+      loading.value = false;
+    });
+}
+function onSuccess(response) {
+  if (response.status.toLowerCase() === "success") {
+    confirmpayment({ orderId: data.value.orderId })
+      .then((res) => {
+        if (res.status === 200) {
+          cartStore?.clearCart();
+          window.location.href = `/order-success?orderId=${data.value.orderId}`;
+        }
+      })
+      .catch((err) => {
+        const error = `${
+          err.response.data.Message || err.response.data.message
+        }, Contact us for assistance on your order`;
+        toast.error(error);
+        status.value = "Retry order";
+        loading.value = false;
+      });
+  }
 }
 </script>

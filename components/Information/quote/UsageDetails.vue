@@ -5,7 +5,7 @@
       This information will help us prepare your quote.
     </p>
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block">Market</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Market</label>
       <FormsSelectComponent
         @onGetData="onGetMarket"
         :options="marketOptions"
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block">Application</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Application</label>
       <FormsSelectComponent
         @onGetData="onGetApp"
         :options="appOptions"
@@ -46,7 +46,7 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block">Package type</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Package type</label>
       <select
         v-if="product && product.packagesAvailable"
         v-model="request1$.package.$model"

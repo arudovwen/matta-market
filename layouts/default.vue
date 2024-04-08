@@ -1,12 +1,27 @@
 <template>
-  <div class="bg-[#F4F4F4] darks:bg-gray-800 relative">
+  <div class="bg-[#F4F4F4] darks:bg-gray-800 relative w-screen">
     <AppHeader />
     <slot />
     <AppFooter />
-    <AppScrollTop />
+    <!-- <AppScrollTop /> -->
+
+    <a href="https://wa.me/+2349169982190" target="_blank" class="z-[99999]">
+      <button
+        class="fixed bottom-6 transition duration-300 right-4 opacity-80 hover:opacity-100 hover:scale-[1.1]"
+      >
+        <img
+          src="@/assets/img/whatsapp.png"
+          width="60"
+          height="60"
+          alt="whatsapp link"
+          class="drop-shadow-lg"
+        />
+      </button>
+    </a>
   </div>
 </template>
 <script setup>
+
 import { createcart, getcart } from "~/services/cartservice";
 const cookie = useCookie("cart");
 const authStore = useAuthStore();
@@ -31,15 +46,22 @@ onMounted(() => {
               index === self.findIndex((i) => i.productId === item.productId)
           );
 
-          createcart({ items: uniqueCart }).then((createRes) => {
-            if (createRes.status === 200) {
-              // Refresh the minicart after updating with unique items
-              cartStore?.getMyCart();
-            }
-          });
+          if (!remoteCartItems.length) {
+            createcart({ items: uniqueCart }).then((createRes) => {
+              if (createRes.status === 200) {
+                // Refresh the minicart after updating with unique items
+                cartStore?.getMyCart();
+              }
+            });
+          }
         }
       }
-    });
+    }) .catch((err) => {
+         
+          if(err.response.data.Message.toLowerCase() === "no items in cart"){
+            cartStore?.setCart?.([])
+          }
+        });
   } else {
     cartStore?.setCart?.(cookie?.value?.cartItems || []);
   }

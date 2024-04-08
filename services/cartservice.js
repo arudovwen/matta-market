@@ -9,11 +9,10 @@ const config = {
 //Authentication
 
 export async function createcart(data) {
-
   return await post(urls.CREATE_CART, data, config);
 }
 export async function updatecart(data) {
- return await post(urls.UPDATE_CART, data, config);
+  return await post(urls.UPDATE_CART, data, config);
 }
 export async function getcart() {
   return await get(urls.GET_CART, config);
@@ -22,7 +21,9 @@ export async function getcart() {
 export async function removecartitem(data) {
   return await post(`${urls.REMOVE_CART}/${data}`, data, config);
 }
-
+export async function deleteAddress(data) {
+  return await post(`${urls.DELETE_SHIPPING}/${data}`, data, config);
+}
 export async function addshipping(data) {
   return await post(urls.ADD_SHIPPING_ADDRESS, data, config);
 }
@@ -45,4 +46,14 @@ export const getalladdress = withRetryHandling(() => {
 
 export async function confirmpurchase(data) {
   return await post(`${urls.CONFIRM_PURCHASE}`, data, config);
+}
+export async function confirmpayment(data) {
+  return await post(`${urls.CONFIRM_PAYMENT}?orderId=${data.orderId}`, data, config);
+}
+
+export async function getcartorder(data) {
+  return await get(`${urls.GET_ORDER}?${new URLSearchParams(cleanObject(data))}`, config);
+}
+export async function getcartcustomer(data) {
+  return await get(`${urls.GET_CUSTOMER_INFO}?${new URLSearchParams(cleanObject(data))}`, config);
 }

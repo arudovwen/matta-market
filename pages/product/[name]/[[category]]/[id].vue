@@ -15,7 +15,6 @@
   </div>
 </template>
 <script setup>
-import { get } from "~/helpers/api_helpers";
 import { getProduct } from "~/services/productservices";
 import { useProductStore } from "~/stores/products";
 

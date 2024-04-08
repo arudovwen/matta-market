@@ -18,7 +18,7 @@
 
         <div class="fixed z-10 inset-0 overflow-y-auto">
           <div
-            class="flex items-center md:items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0"
+            class="flex items-center justify-center min-h-full p-4 text-center sm:p-0"
           >
             <TransitionChild
               as="template"
@@ -32,40 +32,42 @@
               <div
                 class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full"
               >
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="bg-white px-6 py-6">
                   <div class="flex justify-between mb-5 items-center">
-                    <h4 class="font-medium text-matta-black text-xl">
-                      {{ title }}
-                    </h4>
-                    <i
-                      class="uil uil-times cursor-pointer text-lg"
-                      @click="handleclose"
-                    ></i>
+                    <div>
+                      <img src="/images/delete.svg" />
+                    </div>
+                    <span @click="handleclose" class="absolute top-3 right-3">
+                      <i
+                        class="uil uil-times cursor-pointer text-lg text-[#98A2B3]"
+                      ></i>
+                    </span>
                   </div>
 
-                  <p class="text-sm text-matta-black mb-2">
+                  <h4 class="font-semibold text-[#101828] text-lg" v-if="title">
+                    {{ title }}
+                  </h4>
+
+                  <p class="text-sm text-[#475467]" v-if="text">
                     {{ text }}
                   </p>
-                  <input
-                    class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                    v-model="text"
-                  />
-                  <div class="flex justify-end gap-x-2 items-center mt-8">
+
+                  <div class="flex gap-x-4 items-center mt-6">
                     <button
                       type="button"
                       @click="handleclose"
-                      class="appearance-none leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
+                      class="appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium"
                     >
                       Cancel
                     </button>
 
                     <button
+                      :disabled="loading"
                       type="button"
                       @click="deleteItem"
-                      :disabled="text != 'Delete'"
-                      class="appearance-none leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:bg-priamry/70 text-[13px] uppercase"
+                      class="appearance-none leading-none px-4 py-[10px] rounded-lg text-white bg-[#D92D20] text-sm w-full border border-[#D92D20] font-medium disabled:opacity-50"
                     >
-                      Delete
+                      {{ btnText }}
                     </button>
                   </div>
                 </div>
@@ -79,7 +81,6 @@
 </template>
 
 <script setup>
-
 import {
   Dialog,
   DialogOverlay,
@@ -87,8 +88,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-const text = ref("");
-defineProps(["title", "text", "open"]);
+defineProps(["title", "text", "open", "btnText", "loading"]);
 const emits = defineEmits(["deleteItem", "close"]);
 
 function deleteItem() {

@@ -10,7 +10,7 @@
       :class="`${classLabel} inline-block input-label `"
       :for="name"
     >
-      {{ label }}</label
+      {{ label }} <span v-if="required" className="text-red-600">*</span> </label
     >
     <div class="relative">
       <slot></slot>
@@ -82,6 +82,10 @@ export default {
     description: {
       type: String,
     },
+    required: {
+      type: Boolean,
+      default: false,
+    }
   },
 };
 </script>

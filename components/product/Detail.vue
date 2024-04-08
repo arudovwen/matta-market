@@ -14,7 +14,7 @@
           v-if="!isLoading"
           class="lg:w-[100px] flex flex-row lg:flex-col gap-x-3 lg:gap-x-0 lg:gap-y-3"
         >
-          <NuxtImg
+          <img
             :src="n"
             v-for="n in productData.gallery"
             :key="n"
@@ -22,7 +22,7 @@
             width="100px"
             height="100"
             @click="imageUrl = n"
-            class="bg-gray-100 w-16 lg:w-[100px] object-cover h-16 lg:h-[100px] rounded-[5px]"
+            class="cursor-pointer bg-gray-100 w-16 lg:w-[100px] object-cover h-16 lg:h-[100px] rounded-[5px]"
           />
         </div>
         <div
@@ -36,7 +36,7 @@
           />
         </div>
         <div v-if="!isLoading" class="flex-1 relative">
-          <NuxtImg
+          <img
             :src="imageUrl || productData.featuredPhoto"
             alt="cover"
             width="400"
@@ -68,20 +68,20 @@
           v-if="!productData.hidePrice"
           class="text-xl lg:text-2xl font-[800] mb-6"
         >
-          {{ currencyFormat(productData?.price || 0) }}
+          {{ currencyFormat(mypackage?.amount || 0) }}
           <span class="text-sm text-[#444] font-normal"
-            >/{{ productData.unit }}</span
+            >/{{ `${mypackage?.size || ""}${mypackage?.unit || ""}` }}</span
           >
         </p>
         <p class="text-xs :text-sm mb-6">
-          <span class="font-normal">Producer:</span
-          ><span class="font-bold"> {{ productData?.producer?.title }}</span>
+          <span class="font-normal">Producer:</span>
+          <span class="font-bold"> {{ productData?.producer?.title }}</span>
         </p>
         <div
-          class="flex flex-col md:flex-row gap-x-[18px] gap-y-4 lg:gap-y-0 mb-6 justify-start"
+          class="flex flex-col md:flex-row gap-x-[28px] gap-y-4 lg:gap-y-0 mb-6 justify-start"
         >
           <div
-            class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-4 items-center"
+            class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-2 items-center"
           >
             <AppButton
               v-if="productData?.sampleAvailable"
@@ -89,18 +89,37 @@
               text="Request sample"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB]"
             />
-            <AppButton
-              @click="handleRequest('quote')"
-              text="Request quote"
+            <!-- <AppButton
+              @click="handleOrderRequest()"
+              text="Add to order request"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
-            />
+            /> -->
+            <!-- <Tooltip title="tooltip test" description="Hello">
+              <span class="cursor-pointer">
+                <AppIcon
+                  icon="bi:question-circle"
+                  iconClass="text-[#98A2B3]" /></span
+            ></Tooltip> -->
+            <!-- <tippy
+              tag="button"
+              content-tag="div"
+              content-class="content-wrapper"
+            >
+              <template #default>
+                <span class="cursor-pointer">
+                  <AppIcon
+                    icon="bi:question-circle"
+                    iconClass="text-[#98A2B3]" /></span
+              ></template>
+              <template #content>Hi!</template>
+            </tippy> -->
           </div>
-          <AppButton
+          <!-- <AppButton
             @click="handleSave"
-            icon="tdesign:heart"
+            :icon="isSaved ? 'tdesign:heart-filled' : 'tdesign:heart'"
             text="Save for later"
             btnClass="text-xs sm:text-sm !py-0 !px-0 w-full sm:!w-auto sm:!max-w-max items-center"
-          />
+          /> -->
         </div>
         <div class="mb-6">
           <h2 class="font-bold text-sm mb-2">Choose packaging</h2>
@@ -111,7 +130,13 @@
             classInput="min-w-[180px] w-full !bg-white !border-[#E7E7E7] !rounded-[4px] !text-[#333] !h-[50px] cursor-pointer bg-[#FCFCFC]"
           />
         </div>
-        <div class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4">
+        <div
+          v-if="
+            !productData.hidePrice &&
+            productData?.supplierId !== authStore.businessId
+          "
+          class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4"
+        >
           <div class="h-[50px] lg:flex-1">
             <CartButton />
           </div>
@@ -120,12 +145,15 @@
               @click="handleCart('add')"
               text="Add to cart"
               icon="bytesize:cart"
+              :isLoading="cartLoading"
+              :isDisabled="cartLoading"
               btnClass="bg-primary-500  text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full lg:!w-[140px]"
             />
             <AppButton
               @click="handleCart('buy')"
               icon="icon-park-outline:mall-bag"
               text="Buy now"
+              :isDisabled="cartLoading"
               btnClass="text-white  !px-[15px] !py-[13px] !normal-case bg-[#f90] flex w-full lg:!w-[140px]"
             />
           </div>
@@ -168,13 +196,13 @@
             />
           </div>
           <p
-          class="text-xl lg:text-2xl font-[800] bg-gray-200 w-[160px] p-[6px] rounded-full animate-pulse"
-        ></p>
+            class="text-xl lg:text-2xl font-[800] bg-gray-200 w-[160px] p-[6px] rounded-full animate-pulse"
+          ></p>
         </div>
         <div class="mb-6">
           <p
-          class="text-xl lg:text-2xl font-[800] mb-6 bg-gray-200 w-[160px] p-[6px] rounded-full animate-pulse"
-        ></p>
+            class="text-xl lg:text-2xl font-[800] mb-6 bg-gray-200 w-[160px] p-[6px] rounded-full animate-pulse"
+          ></p>
           <AppButton
             text=""
             btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] !bg-gray-200 w-[260px] !h-[50px] rounded-full animate-pulse"
@@ -234,12 +262,61 @@
     :name="productData.name"
     :hidePrice="productData.hidePrice"
   />
+  <ModalCenter
+    :isOpen="isRequestAdded"
+    @togglePopup="isRequestAdded = false"
+    v-if="isRequestAdded"
+  >
+    <template #default>
+      <div class="bg-white px-6 py-6">
+        <div class="flex justify-between mb-5 items-center">
+          <div>
+            <img src="/images/box.svg" />
+          </div>
+          <!-- <span @click="handleclose" class="absolute top-3 right-4">
+              <i
+                class="uil uil-times cursor-pointer text-xl text-[#98A2B3]"
+              ></i>
+            </span> -->
+        </div>
+
+        <h4 class="font-semibold text-[#101828] text-lg">Order Request</h4>
+
+        <p class="text-sm text-[#475467]">
+          Your item has been added. Would you like to add another item or
+          proceed to send request?
+        </p>
+
+        <div class="flex gap-x-4 items-center mt-6">
+          <button
+            @click="isRequestAdded = false"
+            type="button"
+            class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium justify-center flex items-center"
+          >
+            Add another item
+          </button>
+
+          <button
+            @click="navigateTo('/order-requests')"
+            type="button"
+            class="h-11 bg-blue-600 border-blue-600 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
+          >
+            Send request
+          </button>
+        </div>
+      </div>
+    </template>
+  </ModalCenter>
 </template>
 <script setup>
 import { useProductStore } from "~/stores/products";
 import { toast } from "vue3-toastify";
 import { likeproduct } from "~/services/productservices";
+import { Tooltip } from "@programic/vue3-tooltip";
+import "tippy.js/dist/tippy.css";
 
+const orderRequestStore = useOrderRequestStore();
+const isRequestAdded = ref(false);
 const isLoading = inject("isLoading");
 const store = useProductStore();
 const cartStore = useCartStore();
@@ -252,11 +329,10 @@ const router = useRouter();
 const selectedPackage = ref(null);
 const { name, id, category } = route.params;
 const imageUrl = ref(productData?.value?.featuredPhoto);
-
+const isSaved = ref(false);
 const packageOptions = computed(() =>
   productData?.value?.packagesAvailable?.map((i) => {
     return {
-      ...i,
       label: `${i.package.title}/${i.size}${i.unit} - ${currencyFormat(
         i.amount
       )}`,
@@ -271,7 +347,7 @@ const links = [
   },
   {
     title: category,
-    url: `/market/${category}/${
+    url: `/category/market/${category}/${
       route.query.categoryId ? route.query.categoryId : ""
     }`,
   },
@@ -301,9 +377,13 @@ function handleRequest(type) {
 function toggleModal(val) {
   active.value = val;
 }
-const mypackage = computed(() => JSON.parse(selectedPackage.value));
+const mypackage = computed(() =>
+  selectedPackage.value ? JSON.parse(selectedPackage.value) : null
+);
 const counter = ref(1);
+const cartLoading = ref(false)
 function handleCart(type) {
+  cartLoading.value = true
   if (!selectedPackage.value) {
     toast.info("Please choose a package");
     return;
@@ -315,7 +395,9 @@ function handleCart(type) {
     unit: mypackage?.value.unit,
     productId: productData?.value?.id,
     product: productData?.value.name,
-    productImg: productData?.value?.featuredPhoto,
+    productImg: productData.value?.gallery?.length
+      ? productData.value?.gallery[0]
+      : productData.value?.featuredPhoto,
     selectedPackage: mypackage?.value.package?.title,
     selectedPackageData: mypackage.value,
     productBrandName: productData?.value.productBrandName,
@@ -327,7 +409,7 @@ function handleCart(type) {
 
   cartStore?.addToCart(data, type).then((res) => {
     if (!res.status && res.message === "incart") {
-      toast.info("Already in your cart");
+     toast.info("Already in cart")
     }
     if (res.status && res.message !== "buy") {
       isAdded.value = true;
@@ -338,25 +420,50 @@ function handleCart(type) {
     if (res.message === "buy") {
       router.push("/cart");
     }
+    cartLoading.value = false
   });
 }
 function handleSave() {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
+    return;
   }
+  isSaved.value = true;
+  toast.success("Saved");
 }
-
+function handleOrderRequest() {
+  let data = {
+    id: 0,
+    packageId: mypackage?.value.package.id,
+    unit: mypackage?.value.unit,
+    productId: productData?.value?.id,
+    product: productData?.value.name,
+    productImg: productData.value?.gallery?.length
+      ? productData.value?.gallery[0]
+      : productData.value?.featuredPhoto,
+    selectedPackage: mypackage?.value.package?.title,
+    selectedPackageData: mypackage.value,
+    productBrandName: productData?.value.productBrandName,
+    supplierId: productData?.value.supplierId,
+    producer: productData.value?.manufacturer,
+    quantity: counter.value,
+    packagePrice: mypackage?.value.amount,
+  };
+  orderRequestStore.addToRequest(data);
+  isRequestAdded.value = true;
+}
 function handleLike(value) {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
   }
+
   let data = {
     businessId: authStore.userId,
     productId: productData.value.id,
     productName: productData.value.name,
-    productImg: productData.value.gallery.length
-      ? productData.value.gallery[0]
-      : "",
+    productImg: productData.value?.gallery?.length
+      ? productData.value?.gallery[0]
+      : productData.value.featuredPhoto,
     backgroundbg: "",
     price: productData.value.price,
     unit: productData.value.unit,
@@ -386,6 +493,14 @@ function handleLike(value) {
 function togglePopup() {
   isOpen.value = false;
 }
+watch(
+  () => [packageOptions.value],
+  () => {
+    if (packageOptions.value?.length) {
+      selectedPackage.value = packageOptions.value[0]?.value;
+    }
+  }
+);
 watch(productData, () => {
   supplierStore.fetchSupplier(productData.value.supplierId);
   imageUrl.value = productData?.value?.featuredPhoto;
@@ -394,4 +509,5 @@ provide("counter", counter);
 provide("toggleModal", toggleModal);
 provide("togglePopup", togglePopup);
 provide("product", productData);
+provide("isOpen", isRequestAdded);
 </script>

@@ -10,9 +10,11 @@
           <h4 class="text-2xl font-medium">Request a product</h4>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block">Full name</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+            >Full name</label
+          >
           <input
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Provide your full name"
             autocomplete="off"
             autofocus="on"
@@ -29,9 +31,11 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block">Business name</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+            >Business name</label
+          >
           <input
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Provide your business name"
             autocomplete="off"
             autofocus="on"
@@ -49,16 +53,11 @@
         </div>
 
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block">Phone number</label>
-          <div class="flex relative rounded-lg h-12">
-            <FormsPhoneCodes v-model="form.phoneCode" />
-
-            <input
-              v-model="request$.phone.$model"
-              class="flex-1 rounded-r-lg text-[13px] px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-              placeholder="08160723884"
-              type="tel"
-            />
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+            >Phone number</label
+          >
+          <div class="flex relative rounded-lg h-11">
+            <FormsPhoneCodes  v-model="request$.phone.$model" />
           </div>
           <div
             class="text-red-500 mt-1"
@@ -71,9 +70,11 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block">E-mail</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+            >E-mail</label
+          >
           <input
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Provide your email address"
             autocomplete="off"
             type="email"
@@ -90,9 +91,9 @@
           </div>
         </div>
         <!-- <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block">Address</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
           <input
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Provide your full address"
             autocomplete="off"
             autofocus="on"
@@ -109,9 +110,11 @@
           </div>
         </div> -->
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block">Chemical name</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+            >Chemical name</label
+          >
           <input
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Provide chemical name"
             autocomplete="off"
             autofocus="on"
@@ -129,9 +132,12 @@
         </div>
         <div class="grid lg:grid-cols-2 lg:gap-x-6">
           <div class="mb-6">
-            <label class="mb-2 font-normal text-xs block">Quantity</label>
+            <label
+              class="mb-2 font-medium text-sm text-[#344054] block text-left"
+              >Quantity</label
+            >
             <input
-              class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               placeholder="Enter quantity needed"
               type=""
               v-model="request$.quantity.$model"
@@ -147,10 +153,13 @@
             </div>
           </div>
           <div class="mb-6">
-            <label class="mb-2 font-normal text-xs block">Unit</label>
+            <label
+              class="mb-2 font-medium text-sm text-[#344054] block text-left"
+              >Unit</label
+            >
             <select
               v-model="request$.unit.$model"
-              class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             >
               <option v-for="n in measurements" :key="n" :value="n.value">
                 {{ n.name }}
@@ -211,7 +220,7 @@
           <button
             type="submit"
             :disabled="isLoading"
-            class="border text-[13px] mb-4 border-primary uppercase text-white w-full lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-12"
+            class="border text-[13px] mb-4 border-primary- uppercase text-white w-full lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
           >
             <span>
               <span
@@ -246,7 +255,7 @@ import {
   sameAs,
   helpers,
 } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 
 const isComplete = ref(false);
 
@@ -266,17 +275,12 @@ const form = reactive({
   uploadedDocumentExtension: "",
   phoneCode: "+234",
 });
-const validPhoneLength = (value) =>
-  form.phoneCode === "+234" ? value.length > 9 && value.length < 12 : true;
+
 const isLoading = ref(false);
 const isUploading = ref(false);
 const myrules = {
   phone: {
     required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
   },
   businessName: { required },
   fullName: { required },
@@ -338,7 +342,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 provide("isComplete", isComplete);

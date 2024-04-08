@@ -1,16 +1,17 @@
 <template>
   <div class="container mb-[30px]">
     <div
+      v-if="content.length && !isLoading"
       data-aos="fade-up"
       data-aos-once="true"
       class="flex justify-between items-center mb-4"
     >
       <h2
-        class="text-xs sm:text-base lg:text-xl font-bold ttext-[#222] darks:text-white"
+        class="text-xs sm:text-base lg:text-xl font-bold text-[#222] darks:text-white"
       >
         {{ title }}
       </h2>
-      <router-link :to="`/market/${encodeURIComponent(title)}?tag=${tag}`">
+      <router-link :to="`/category/market/${encodeURIComponent(title)}?tag=${tag}`">
         <button
           class="hover:border-b text-[10px] sm:text-sm lg:text-base border-[#333] darks:text-white darks:border-white leading-tight"
         >
@@ -21,7 +22,7 @@
 
     <div
       v-if="content.length && !isLoading"
-      class="flex xl:grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 overflow-x-hidden hover:overflow-x-auto pb-6"
+      class="flex xl:grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar overflow-x-auto pb-6"
     >
       <ProductCard
         data-aos="fade-up"
@@ -85,7 +86,7 @@ function getAllProducts() {
       }
     })
     .catch(() => {
-      setLoader(false);
+      // setLoader(false);
       isLoading.value = false;
     });
 }

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full min-w-[130px] sm:min-w-[160px] md:min-w-[200px] bg-white darks:bg-gray-800 rounded-[10px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.05)] darks:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.1)] overflow-hidden"
+    class="w-[130px] sm:w-[160px] md:w-[200px] xl:w-[260px] bg-white darks:bg-gray-800 rounded-[10px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.05)] darks:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.1)] overflow-hidden"
   >
   
     <div

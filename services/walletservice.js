@@ -11,6 +11,9 @@ const config = {
 export const getWalletDetails = () => {
   return get(`${urls.GET_WALLET_DETAILS}`, config);
 };
+export const getWalletBalance = () => {
+  return get(`${urls.CHECK_BALANCE}`, config);
+};
 
 export const createWallet = (data) => {
   return post(`${urls.CREATE_WALLET}`, data, config);
@@ -59,4 +62,21 @@ export const setUpperLimit = (data) => {
 };
 export const setWarningLimit = (data) => {
   return post(`${urls.SET_WARNING_LIMIT}`, data, config);
+};
+
+export const verifyBvn = (data) => {
+  return post(`${urls.VALIDATE_BVN}`, data, config);
+};
+export const confirmFunding = (data) => {
+  return post(`${urls.CONFIRM_FUNDING}`, data, config);
+};
+export const validateAccount = (data) => {
+  return post(`${urls.VALIDATE_ACCOUNT}`, data, config);
+};
+export const withdrawFunds = (data) => {
+  return post(`${urls.WITHDRAW_FUNDS}`, data, config);
+};
+
+export const getLedgerTransactions = (data) => {
+  return get(`${urls.GET_LEDGER_TRANSACTIONS}?${new URLSearchParams(cleanObject(data))}`, config);
 };

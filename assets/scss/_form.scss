@@ -1,7 +1,7 @@
 .form-control {
   @apply bg-transparent transition duration-300 ease-in-out border border-[#D0D5DD] 
-    focus:ring-1 focus:ring-slate-600 focus:outline-none focus:ring-opacity-90 rounded
-    placeholder:text-[rgba(102,112,133,1)] text-[#333] text-sm px-3  placeholder:font-normal block w-full h-[50px];
+    focus:ring-1 focus:ring-slate-600 focus:outline-none focus:ring-opacity-90 rounded-lg
+    placeholder:text-[#CDD2DA] text-[#344054] text-sm px-[14px] py-[10px] placeholder:font-normal block w-full;
 }
 
 .form-label {
@@ -10,8 +10,8 @@
 
 .input-control {
   @apply bg-transparent  transition duration-300 ease-in-out border border-[#D0D5DD] 
-    focus:ring-0 focus:border-slate-400 focus:outline-none focus:ring-opacity-90 rounded
-    placeholder:text-[rgba(102,112,133,1)] text-[#333] text-sm px-3  placeholder:font-normal block w-full h-[50px];
+    focus:ring-0 focus:border-slate-400 focus:outline-none focus:ring-opacity-90 rounded-lg
+    placeholder:text-[#CDD2DA] text-[#344054] text-sm px-[14px] py-[10px] placeholder:font-normal block w-full ;
 }
 .input-label {
   @apply mb-2 text-[#344054]  text-sm leading-6 capitalize cursor-pointer font-medium;
@@ -58,4 +58,8 @@
   .bg-vtd-primary-500-500 {
     background-color: #334155 !important;
   }
+}
+
+label {
+  color: #344054 !important;
 }

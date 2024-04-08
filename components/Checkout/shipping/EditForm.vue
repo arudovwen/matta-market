@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white w-full">
     <legend class="block text-[20px] font-bold mb-8 text-left">
-      Shipping address
+      Update Shipping address
     </legend>
     <form
       @submit.prevent="onSubmit"
@@ -30,19 +30,31 @@
         />
       </div>
 
-      <div>
-        <Textinput
-          placeholder=""
-          label="Country"
-          type="tel"
-          name="country"
-          classInput="!h-[45px]"
+      <FormGroup label="Country" :error="errors.country" name="country">
+        <SelectVueSelect
           v-model="country"
-          v-bind="countryAtt"
-          :error="errors.country"
+          :options="allcountries"
+          :reduce="(country) => country.value"
+          placeholder="Select country"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.country ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
         />
-      </div>
-   
+      </FormGroup>
+
+      <FormGroup label="State" :error="errors.state" name="state">
+        <SelectVueSelect
+          v-model="state"
+          :disabled="!country"
+          :options="states"
+          :reduce="(state) => state.value"
+          placeholder="Select state"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.state ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
+        />
+      </FormGroup>
+
       <div>
         <Textinput
           placeholder=""
@@ -53,16 +65,6 @@
           v-model="city"
           v-bind="cityAtt"
           :error="errors.city"
-        />
-      </div>   <div class="xl:col-span-2">
-        <Textinput
-          placeholder=""
-          label="Address"
-          name="street"
-          classInput="!h-[45px]"
-          v-model="street"
-          v-bind="streetAtt"
-          :error="errors.street"
         />
       </div>
       <div>
@@ -77,15 +79,28 @@
           :error="errors.postalCode"
         />
       </div>
+      <div class="xl:col-span-2">
+        <Textinput
+          placeholder=""
+          label="Address"
+          name="street"
+          classInput="!h-[45px]"
+          v-model="street"
+          v-bind="streetAtt"
+          :error="errors.street"
+        />
+      </div>
+
       <div
-        class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
+        class="flex items-center text-[#333] text-xs md:text-sm gap-x-[2px] max-w-max"
       >
-        <Checkbox
-          label="Set default"
+        <input
+          type="checkbox"
+          label=""
           labelClass="text-xs md:text-sm"
           v-model="isDefault"
-          v-bind="isDefaultAtt"
         />
+        Set as default
       </div>
 
       <div class="xl:col-span-2 grid gap-y-[22px] mb-9 mt-4">
@@ -103,31 +118,39 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import { toast } from 'vue3-toastify';
-import { addshipping } from "~/services/cartservice";
+import { toast } from "vue3-toastify";
+import { editshipping } from "~/services/cartservice";
+import CountryList from "country-list-with-dial-code-and-flag";
+import countries from "@/utils/countries.json";
 
-const detail = inject("detail")
-const type = inject("type")
 const isOpen = inject("isOpen");
-
+const detail = inject("detail");
+const type = inject("type");
 const isLoading = ref(false);
+const shippingStore = useShippingStore();
 const formValues = {
+  id: "",
   firstName: "",
   lastName: "",
   street: "",
   country: "",
+  state: "",
   city: "",
   postalCode: "",
   isDefault: false,
 };
-
+onMounted(() => {
+  setValues(detail.value);
+});
 const schema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
   street: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
+  state: yup.string().required("State is required"),
   city: yup.string().required("City is required"),
   postalCode: yup.string().required("Postal code is required"),
+  isDefault: yup.boolean(),
 });
 
 const { handleSubmit, defineField, errors, setValues } = useForm({
@@ -135,34 +158,56 @@ const { handleSubmit, defineField, errors, setValues } = useForm({
   initialValues: formValues,
 });
 
-onMounted(() => {
-  setValues(detail.value)
-})
 const [firstName, firstNameAtt] = defineField("firstName");
 const [lastName, lastNameAtt] = defineField("lastName");
 const [street, streetAtt] = defineField("street");
 const [country, countryAtt] = defineField("country");
+const [state, stateAtt] = defineField("state");
 const [city, cityAtt] = defineField("city");
 const [postalCode, postalCodeAtt] = defineField("postalCode");
-const [isDefault, isDefaultAtt] = defineField("isDefault");
+const [isDefault] = defineField("isDefault");
 
-const route = useRoute();
-const router = useRouter();
+const allcountries = computed(() => {
+  return CountryList.map((item) => {
+    return {
+      id: "",
+      label: `${item.name}`,
+      value: item.name,
+    };
+  });
+});
+const mystates = computed(() => {
+  if (!country.value) return [];
+  return countries.find(
+    (item) => item.name.toLowerCase() == country.value.toLowerCase()
+  ).states;
+});
+
+const states = computed(() => {
+  return mystates.value.map((item) => {
+    return {
+      id: item.code,
+      label: item.name,
+      value: item.name,
+    };
+  });
+});
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  addshipping(values)
+  editshipping(values)
     .then((res) => {
       if (res.status === 200) {
-        toast.info("Address added");
+        toast.info("Address updated");
         isOpen.value = false;
+        shippingStore.getAlladdress();
       }
     })
 
     .catch((err) => {
       isLoading.value = false;
-      if ((err.response.data.message || err.response.data.Message)) {
-        toast.error((err.response.data.message || err.response.data.Message));
+      if (err.response.data.message || err.response.data.Message) {
+        toast.error(err.response.data.message || err.response.data.Message);
       }
     });
 });

@@ -1,122 +1,247 @@
 <template>
-  <div class="lg:min-w-[450px] w-full max-w-[800px] py-10 px-6">
-    <h3 class="block text-2xl font-medium text-center mb-6">Create wallet</h3>
+  <div class="max-w-[400px] py-8 px-6">
+    <form @submit.prevent="onSubmit">
+      <h1 class="text-lg font-semibold text-[#101828] mb-4">Activate Wallet</h1>
 
-    <form @submit.prevent="handleSubmit">
-      <div class="grid grid-cols-1 gap-6">
-        <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
-            >Full name</label
-          >
-          <div class="relative flex items-center">
-            <input
-              v-model="v$.customerName.$model"
-              :class="{ 'border-red-500 ': v$.customerName.$error }"
-              class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-              placeholder="Enter your name"
-            />
-          </div>
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of v$.customerName.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
-        </div>
-        <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block">Phone number</label>
-          <div class="flex relative rounded-lg">
-            <PhoneCodes v-model="form.phoneCode" />
-
-            <input
-              :class="{ 'border-red-500': v$.phoneNumber.$error }"
-              v-model="v$.phoneNumber.$model"
-              class="flex-1 rounded-r-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-              autofocus="on"
-              placeholder="08160723884"
-              type="tel"
-            />
-          </div>
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of v$.phoneNumber.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
+      <div
+        class="px-5 py-[14px] bg-[#182230] rounded-[5px] flex justify-between gap-x-40 relative mb-3"
+      >
+        <div class="flex gap-x-2 items-start">
+          <AppIcon icon="quill:info" iconClass="text-white text-lg" />
+          <p class="text-white text-xs max-w-[660px]">
+            We need your BVN and date of birth to verify your account details.
+          </p>
         </div>
       </div>
 
-      <div class="flex justify-center mt-8">
-        <button
-          type="submit"
-          :disabled="isLoading"
-          class="border text-[13px] mb-4 border-primary uppercase text-white w-full lg:w-auto lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-12"
+      <div class="grid gap-x-[25px] gap-y-4 mb-[30px]">
+        <div class="">
+          <Textinput
+            placeholder="Enter your BVN"
+            label="BVN"
+            name="bvn"
+            v-bind="bvnAtt"
+            v-model="bvn"
+            :error="errors?.['bvnDetails.bvn']"
+          />
+        </div>
+
+        <div class="">
+          <Textinput
+            placeholder=""
+            label="Date of Birth"
+            name="bvnDateOfBirth"
+            v-bind="bvnDateOfBirthAtt"
+            v-model="bvnDateOfBirth"
+            :error="errors?.['bvnDetails.bvnDateOfBirth']"
+            type="date"
+          />
+        </div>
+
+        <FormGroup
+          v-if="!hasSettlement"
+          label="Bank"
+          :error="errors.bankCode"
+          name="bankCode"
         >
-          <span>
-            <span
-              class="flex gap-x-4 justify-center items-center"
-              v-if="isLoading"
-              ><span> Processing...</span>
-              <i
-                v-if="isLoading"
-                class="fa fa-spinner fa-spin text-white"
-                aria-hidden="true"
-              ></i
-            ></span>
-            <span v-else>Submit</span>
-          </span>
-        </button>
+          <SelectVueSelect
+            v-model="bankCode"
+            :disabled="!banks.length"
+            :options="banks"
+            :reduce="(bank) => bank.value"
+            :placeholder="!banks.length ? 'Fetching list' : 'Select bank'"
+            :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+              errors.bankCode ? 'border-red-500' : 'border-[#D0D5DD]'
+            }`"
+          />
+        </FormGroup>
+        <div class="" v-if="!hasSettlement">
+          <Textinput
+            placeholder="Account number"
+            label="Account number"
+            name="accountNumber"
+            v-bind="accountNumberAtt"
+            v-model="accountNumber"
+            :error="errors.accountNumber"
+          />
+        </div>
+        <div class="" v-if="form.accountName && !hasSettlement">
+          <Textinput
+            placeholder="Account name"
+            label="Account name"
+            name="accountName"
+            v-model="form.accountName"
+            disabled
+          />
+        </div>
+        <div v-if="isValidating" class="text-center p-1">
+          <div
+            class="loader border-t-4 border-gray-500 border-solid rounded-full h-4 w-4 animate-spin mx-auto"
+          ></div>
+        </div>
+      </div>
+      <div class="flex gap-x-4 items-center justify-end">
+        <AppButton
+          @click="handleClose"
+          btnClass="bg-transparent text-white !px-[14px]  !text-sm !py-[10px] border !text-matta-black w-full"
+          type="button"
+          text="Cancel"
+        />
+        <AppButton
+          :disabled="isLoading"
+          :isLoading="isLoading"
+          btnClass="bg-primary-500 text-white !px-[14px]  !text-sm !py-[10px] disabled:cursor-not-allowed w-full"
+          type="submit"
+          text="Confirm"
+        />
       </div>
     </form>
   </div>
+
+  <ActionModal
+    :open="isErrorOpen"
+    type="reject"
+    title="Request Failed"
+    :text="errorText"
+    btnText="Retry"
+    :isCancel="false"
+    @actionItem="() => (isErrorOpen = false)"
+    @close="() => (isErrorOpen = false)"
+  />
+  <RequestLoader :open="isLoading" />
 </template>
 <script setup>
-import { ref, reactive, defineEmits } from "vue";
-import PhoneCodes from "~/components/forms/PhoneCodes";
-import useVuelidate from "@vuelidate/core";
-import { required, helpers, numeric } from "@vuelidate/validators";
-import { createWallet } from "~/services/walletservice";
+import { validateAccount, createWallet } from "~/services/walletservice";
+import { useForm } from "vee-validate";
+import * as yup from "yup";
+import { ref, reactive, inject } from "vue";
+import { addSettlement } from "~/services/settlementservice";
 
-const emits = defineEmits(["success"]);
-const form = reactive({
-  customerName: "",
-  phoneCode: "+234",
-  phoneNumber: "",
+const  isValidating = ref(false)
+const props = defineProps({
+  hasSettlement: {
+    default: true,
+  },
+  type: {
+    default: "",
+  },
+  banks: {
+    default: () => [],
+  },
 });
+const handleComplete = inject("handleComplete");
+const handleClose = inject("handleClose");
+const authStore = useAuthStore();
+const isErrorOpen = ref(false);
+const errorText = ref("Wallet creation request failed");
+const defaultCustomerName = `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`;
+const defaultCustomerEmail = authStore.userInfo?.email;
+// Define form structure
+const form = reactive({
+  accountName: "",
+  accountNumber: "",
+  bankCode: "", // Assuming you'll populate this somewhere
+  customerName: defaultCustomerName,
+  bvnDetails: {
+    bvn: "",
+    bvnDateOfBirth: "",
+  },
+  customerEmail: defaultCustomerEmail,
+  hasSettlement: null,
+});
+const formSchema = yup.object().shape({
+  bankCode: yup.string().when("hasSettlement", {
+    is: false,
+    then: (schema) => schema.required("Bank name is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  accountNumber: yup.string().when("hasSettlement", {
+    is: false,
+    then: (schema) =>
+      schema
+        .matches(/^\d{10}$/, "Account number must be 10 digits")
+        .test("test-account", "Invalid account number", function (value) {
+          const { bankCode } = this.parent || {}; // Destructure bankCode safely
+          if (value && value.length === 10 && bankCode) {
+            isValidating.value=true;
+            return validateAccount({
+              bankCode: bankCode,
+              accountNumber: value,
+            })
+              .then((res) => {
+                isValidating.value=false
+                form.accountName = res.data.data.responseBody.accountName;
+                return true; // Resolve the promise if validation is successful
+              })
+              .catch((err) => {
+                isValidating.value=false
+                throw new yup.ValidationError(
+                  "Invalid account number",
+                  null,
+                  "accountNumber"
+                );
+              });
+          } else {
+            return true; // Return true if the length is not 10 or bankCode is missing
+          }
+        })
+        .required("Account number is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  customerName: yup.string().required("Customer name is required"),
+  bvnDetails: yup.object().shape({
+    bvn: yup
+      .string()
+      .required("BVN is required")
+      .matches(/^\d{11}$/, "BVN must be 11 digits"),
+    bvnDateOfBirth: yup
+      .date()
+      .typeError("Invalid date")
+      .required("Date of birth is required")
+      .max(new Date(), "Date of birth must be in the past"),
+  }),
+  customerEmail: yup.string().email("Invalid email address"),
+});
+
 const isLoading = ref(false);
-const validPhoneLength = (value) =>
-  form.phoneCode === "+234" ? value.length > 9 && value.length < 12 : true;
-const rules = {
-  customerName: {
-    required: helpers.withMessage("Name field cannot be empty", required),
-  },
+const { handleSubmit, defineField, errors, setFieldError } = useForm({
+  validationSchema: formSchema,
+  initialValues: { ...form, hasSettlement: props.hasSettlement },
+});
 
-  phoneNumber: {
-    numeric,
-    required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
-  },
-};
+const [bankCode] = defineField("bankCode");
+const [accountNumber, accountNumberAtt] = defineField("accountNumber");
+const [bvn, bvnAtt] = defineField("bvnDetails.bvn");
+const [bvnDateOfBirth, bvnDateOfBirthAtt] = defineField(
+  "bvnDetails.bvnDateOfBirth"
+);
 
-const v$ = useVuelidate(rules, form);
 
-async function handleSubmit() {
-  const validity = await v$.value.$validate();
-  if (!validity) return;
+const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  createWallet(form).then((res) => {
-    emits("success", res.data);
-  });
-}
+  if (!props.hasSettlement) {
+    addSettlement({ ...values, isPrimaryAccount: true });
+  }
+
+  createWallet(values)
+    .then((res) => {
+      if (res.status === 200) {
+        handleComplete(
+          "Your wallet has been activated, proceed to withdraw",
+          props.type
+        );
+        isLoading.value = false;
+      }
+    })
+    .catch((err) => {
+      errorText.value =
+        err.response.data.message ||
+        JSON.parse(err.response.data.Message)?.responseMessage ||
+        "Wallet creation request failed";
+      isErrorOpen.value = true;
+      isLoading.value = false;
+    });
+});
 </script>
 
 <style lang="scss" scoped>

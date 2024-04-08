@@ -25,6 +25,8 @@
           :options="options"
           :placeholder="placeholder"
           v-model="selectedValue"
+          :reduce="reduce"
+          :clearable="clearable"
         >
         </vSelect>
       </div>
@@ -73,7 +75,6 @@ import "vue-select/dist/vue-select.css";
 export default {
   components: {
     vSelect,
-  
   },
   data() {
     return {
@@ -139,6 +140,12 @@ export default {
     options: {
       type: Array,
     },
+    reduce: {
+      default: [],
+    },
+    clearable:{
+      default:true
+    }
   },
   mounted() {
     this.selectedValue = this.modelValue;
@@ -157,7 +164,7 @@ export default {
 <style lang="scss">
 .formGroup {
   .vs__dropdown-toggle {
-    @apply bg-transparent   border-slate-200 min-h-[36px] text-slate-900 text-sm;
+    @apply bg-transparent placeholder:text-[#CDD2DA]  border border-[#D0D5DD] rounded-lg min-h-[44px] text-[#344054] text-sm placeholder:text-sm;
   }
   // .v-select {
   //   @apply darks:text-slate-300;
@@ -208,7 +215,7 @@ export default {
   //   @apply darks:text-slate-300;
   // }
   .vs__dropdown-option--disabled {
-    @apply bg-slate-50 ;
+    @apply bg-slate-50;
   }
 }
 </style>

@@ -5,12 +5,12 @@
     <form @submit.prevent="handleSubmit">
       <div class="grid grid-cols-1 gap-6">
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block">Bank name</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Bank name</label>
           <div class="relative flex items-center">
             <input
               v-model="v$.bank.$model"
               :class="{ 'border-red-500 ': v$.bank.$error }"
-              class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               placeholder="Provide bank name"
             />
           </div>
@@ -32,7 +32,7 @@
             <input
               v-model="v$.accountNo.$model"
               :class="{ 'border-red-500 ': v$.accountNo.$error }"
-              class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               placeholder="Provide account number"
             />
           </div>
@@ -52,7 +52,7 @@
         <button
           type="submit"
           :disabled="isLoading"
-          class="border text-[13px] mb-4 border-primary uppercase text-white w-full lg:w-auto lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-12"
+          class="border text-[13px] mb-4 border-primary- uppercase text-white w-full lg:w-auto lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
         >
           <span>
             <span

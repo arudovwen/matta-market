@@ -1,5 +1,6 @@
 <template>
   <div
+  v-if="totalPages"
     class="flex justify-start items-center relative z-[999]"
     :class="wrapperClass"
   >

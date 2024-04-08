@@ -4,7 +4,7 @@
       <span
         class="mr-3 h-10 w-10 rounded-lg flex items-center justify-center border border-[#E7EBEE] p-2"
       >
-         <NuxtImg class="" :src="document.logo" alt="alt" />
+         <img class="" :src="document.logo" alt="alt" />
       </span>
       <span>
         <span class="text-xs font-medium">{{ document.productName }}</span>
@@ -54,7 +54,7 @@
       </div>
     </div>
     <button
-      class="px-6 py-4 w-full border-primary border text-sm rounded-full text-primary uppercase"
+      class="px-6 py-4 w-full border-primary- border text-sm rounded-full text-primary uppercase"
     >
       see documents
     </button>

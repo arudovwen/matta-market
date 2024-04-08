@@ -35,6 +35,7 @@ const urls = {
   GET_PRODUCT_STATUS_COUNT: "/v1/product/get-productscount",
   DELETE_PRODUCT: "/v1/product/deleteproduct",
   GET_PRODUCTS_BY_TAG: "v1/marketplace/get-products-bytags",
+  GET_STORE_INFO: "v2/marketplace/store",
 
   //Markets
   GET_MARKETS: "/v1/marketplace/getmarkets",
@@ -94,14 +95,18 @@ const urls = {
   CREATE_CART: "/v1/shoppingcart/create-cart",
   UPDATE_CART: "/v1/shoppingcart/update-cartitem",
   GET_CART: "/v1/shoppingcart/get-cart",
+  GET_ORDER: "/v1/shoppingcart/get-order",
+  GET_CUSTOMER_INFO: "/v1/shoppingcart/customer-info",
   REMOVE_CART: "/v1/shoppingcart/remove-cartitem",
   CONFIRM_PURCHASE: "/v1/shoppingcart/confirm-purchase",
+  CONFIRM_PAYMENT: "v1/ShoppingCart/confirm-payment",
 
   //Shipping address
   ADD_SHIPPING_ADDRESS: "/v1/shippingaddress/add",
   EDIT_SHIPPING_ADDRESS: "/v1/shippingaddress/edit",
   GET_SHIPPING_ADDRESS: "/v1/shippingaddress/getall",
   DEFAULT_SHIPPING_ADDRESS: "/v1/shippingaddress/setasdefault",
+  DELETE_SHIPPING: "/v1/shippingaddress/delete",
 
   //Procurement
   PROCUREMENT_ORDERS: "v1/procurement/orders",
@@ -165,13 +170,18 @@ const urls = {
   CHART_TREND: "v1/storefront/charttrend",
 
   //wallet
-  CREATE_WALLET: "v1/wallet/new-wallet",
-  GET_WALLET_DETAILS: "v1/wallet/get-wallet-details",
+  CREATE_WALLET: "v1/wallet/new",
+  CHECK_BALANCE: "v1/wallet/get-balance",
+  GET_WALLET_DETAILS: "v1/wallet/customer-wallet-details",
   SET_PIN: "v1/wallet/setpin",
   CHANGE_PIN: "v1/wallet/change-pin",
   VALIDATE_OTP: "v1/wallet/validate-otp",
   SET_WARNING_LIMIT: "v1/wallet/setwarninglimit",
   SET_UPPER_LIMIT: "v1/wallet/setupperlimit",
+  VALIDATE_ACCOUNT: "v1/wallet/validate-account",
+  VALIDATE_BVN: "v1/wallet/verify-bvn",
+  CONFIRM_FUNDING: "v1/wallet/confirm-wallet-funding",
+  WITHDRAW_FUNDS: "v1/wallet/withdraw",
 
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",
@@ -188,5 +198,30 @@ const urls = {
 
   // Contact
   CONTACT_USER: "v1/contact/send",
+
+  CUSTOMIZE_VENDOR_INFO: "v1/customize/vendor",
+  GET_VENDOR_STORE: "v1/storefront/get-store",
+  UPDATE_VENDOR_STORE: "v1/storefront/update-store",
+  POST_VENDOR_STORE_NAME: "v1/storefront/search-name",
+
+  //Finance
+  GET_ALL_FINANCE: "v1/financing/get-all",
+  ADD_FINANCE: "v1/financing/add",
+  EDIT_FINANCE: "v1/financing/edit",
+  UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
+  GET_FINANCE: "v1/financing/get",
+  WITHDRAW_FINANCE: "v1/financing/withdraw",
+  UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
+
+  //Settlements
+
+  ADD_SETTLEMENT: "v1/settlement/add-settlement-account",
+  AUTO_SETTLEMENT: "v1/settlement/autosettlement",
+  AUTO_SETTLEMENT_VALUE: "v1/settlement/autosettlement-value",
+  VIEW_SETTLEMENT: "v1/settlement/view-settlement-account",
+  UPDATE_SETTLEMENT: "v1/settlement/update-settlement-account",
+  DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",
+  GET_BANKS: "v1/bank/get-bank",
+  GET_LEDGER_TRANSACTIONS: "v1/ledger/get-all",
 };
 export default urls;

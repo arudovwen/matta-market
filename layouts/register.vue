@@ -8,7 +8,7 @@
     >
       <div class="flex justify-between">
         <NuxtLink to="/">
-           <NuxtImg
+          <img
             src="/images/logo-white.png"
             width="100"
             height="26"
@@ -22,8 +22,8 @@
           <h1
             class="text-4xl leading-10 xl:text-5xl 2xl:text-[50px] text-white font-bold mb-8 xl:leading-[1.2]"
           >
-          Sell your chemicals, raw materials and finished goods easily on Matta
-
+            Sell your chemicals, raw materials and finished goods easily on
+            Matta
           </h1>
           <div class="grid gap-y-7">
             <div
@@ -32,14 +32,14 @@
               class="flex items-start gap-x-5"
             >
               <div class="w-20 mt-1">
-                 <NuxtImg :src="n.icon" :alt="n.title" class="w-10" />
+                <img :src="n.icon" :alt="n.title" class="w-10" />
               </div>
               <div>
                 <p class="text-xl font-bold text-white mb-1">
                   {{ n.title }}
                 </p>
                 <p class="text-base text-white">
-                  {{n.text}}
+                  {{ n.text }}
                 </p>
               </div>
             </div>
@@ -53,10 +53,10 @@
       <div class="w-full h-full bg-white flex flex-col">
         <div class="z-10 lg:hidden mb-14 max-h-max">
           <NuxtLink to="/">
-             <NuxtImg
-             :nonce="nonce"
+            <img
               src="/images/logo.png"
               width="100"
+
               height="26"
               alt="Matta"
               class="w-[100px] h-auto"
@@ -73,13 +73,21 @@
 <script setup>
 const Earth = "/images/earth-africa.svg";
 const Code = "/images/code.svg";
-const Group = "/images/users.svg"; 
-const nonce = useNonce()
-const nuxtImg = useImage();
+const Group = "/images/users.svg";
+const img = useImage();
 const backgroundStyles = computed(() => {
-  const imgUrl = nuxtImg(`https://res.cloudinary.com/arudovwen-me/image/upload/c_scale,w_1280/f_webp/yqbey9rcgfvo4gj2lgpz.jpg`, {
-    sizes: { xl: "100vw", lg: "100vw", md: "100vw", sm: "100vw", xs: "100vw" },
-  });
+  const imgUrl = img(
+    `https://res.cloudinary.com/arudovwen-me/image/upload/c_scale,w_1280/f_webp/yqbey9rcgfvo4gj2lgpz.jpg`,
+    {
+      sizes: {
+        xl: "100vw",
+        lg: "100vw",
+        md: "100vw",
+        sm: "100vw",
+        xs: "100vw",
+      },
+    }
+  );
   return { backgroundImage: `url('${imgUrl}')` };
 });
 const content = [

@@ -26,7 +26,7 @@ defineProps(["active"]);
 const navigation = [
   "Profile",
   "Company info",
-  "Company documents",
+  "Company dpocuments",
   "Directors",
 ];
 </script>

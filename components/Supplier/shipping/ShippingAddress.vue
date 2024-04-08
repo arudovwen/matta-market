@@ -38,7 +38,7 @@ import SingleAddress from "~/components/shipping/SingleAddress";
 import ShippingForm from "~/components/shipping/ShippingForm";
 import EditAddress from "~/components/shipping/EditAddress";
 import RemoveAddress from "~/components/shipping/RemoveAddress";
-
+import {toast} from "vue3-toastify"
 import Modal from "~/components/IndexModal";
 import { getalladdress, setdefaultaddress } from "~/services/cartservice";
 
@@ -86,8 +86,11 @@ function handleDefault(id) {
     if (res.status) {
       loading.value = false;
       getData();
+      toast.success("Default address updated")
     }
-  });
+  }).catch(err=>{
+    toast.error(err.response.data.message || err.response.data.Message)
+  });;
 }
 
 provide("editAddress", editAddress);

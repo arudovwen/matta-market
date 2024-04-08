@@ -13,13 +13,13 @@
         You have no supplier in <br />
         your favourites
       </p>
-      <router-link to="/suppliers">
+      <NuxtLink to="/suppliers">
         <button
           class="bg-primary-500 text-white text-sm rounded-full px-6 py-3 uppercase"
         >
           Go to suppliers page
         </button>
-      </router-link>
+      </NuxtLink>
     </div>
   </div>
   <div v-else>
@@ -27,13 +27,13 @@
       class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
       v-if="!isPageLoading"
     >
-      <router-link
+      <NuxtLink
         :to="`/page/supplier/${s.name}/${s.id}`"
         v-for="(s, i) in suppliers"
         :key="i"
       >
         <SingleSupplier :supplier="s" />
-      </router-link>
+      </NuxtLink>
     </div>
     <Pagination
       v-if="!isPageLoading"

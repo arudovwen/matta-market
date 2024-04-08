@@ -59,7 +59,7 @@ import { resetPassword } from "~/services/authservices";
 
 definePageMeta({
   layout: "auth",
-  
+  middleware: "auth",
 });
 useHead({
   

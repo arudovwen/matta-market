@@ -3,12 +3,12 @@
     class="flex flex-col sm:flex-row justify-between p-5 sm:p-6 lg:p-[30px] gap-y-5 md:gap-y-0"
   >
     <div class="flex gap-x-4 md:gap-x-6">
-       <NuxtImg
+       <img
         :src="detail.productImg || '/images/imgplace.png'"
         alt="img"
         width="117"
         height="117"
-        class="bg-gray-100 w-12 md:w-[117px] h-12 md:h-[117px] rounded-[5px] bg-cover object-cover"
+        class="bg-gray-100 w-12 md:w-[117px] h-11 md:h-[117px] rounded-[5px] bg-cover object-cover"
       />
       <div class="w-full sm:w-auto sm:max-w-[350px]">
         <p class="font-bold text-xs md:text-base mb-[6px]md: mb-[9px]">

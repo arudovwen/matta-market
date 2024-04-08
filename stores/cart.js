@@ -11,27 +11,29 @@ import { toast } from "vue3-toastify";
 export const useCartStore = defineStore(
   "cart",
   () => {
-    const cookie = useCookie("cart");
-
     const authStore = useAuthStore();
     const cartItems = ref([]);
     const tax = ref(0);
 
-    const cart = computed(() => cookie?.value?.cartItems);
-    const cartTotal = computed(() => cookie?.value?.cartItems.length);
+    const cart = computed(() => cartItems?.value);
+    const cartTotal = computed(() => cartItems?.value.length);
     const cartTotalAmount = computed(() =>
-      cookie?.value?.cartItems
+      cartItems?.value
         .map((item) => item.packagePrice * item.quantity)
         .reduce((a, b) => Number(a) + Number(b), 0)
     );
 
     function getMyCart() {
-      getcart().then((res) => {
-        if (res.status === 200) {
-          setCart(res.data.data.items);
-          setTax(res.data.data.tax);
-        }
-      });
+      getcart()
+        .then((res) => {
+          if (res.status === 200) {
+            setCart(res.data.data.items);
+            setTax(res.data.data.tax);
+          }
+        })
+        .catch((err) => {
+          console.log("🚀 ~ getcart ~ err:", err.response.data.Message);
+        });
     }
     function setTax(data) {
       tax.value = data;
@@ -43,16 +45,14 @@ export const useCartStore = defineStore(
 
     async function addToCart(item, type) {
       if (
-        cookie?.value?.cartItems.some(
-          (ct) => ct.productId === item.productId
-        ) &&
-        cookie?.value?.cartItems.some((ct) => ct.packageId === item.packageId)
+        cartItems?.value.some((ct) => ct.productId === item.productId) &&
+        cartItems?.value.some((ct) => ct.packageId === item.packageId)
       ) {
         return { status: false, message: "incart" };
       }
 
       if (!authStore.isLoggedIn) {
-        setCart([...cookie?.value?.cartItems, item]);
+        setCart([...cartItems?.value, item]);
 
         return { status: true, message: type };
       }
@@ -63,7 +63,7 @@ export const useCartStore = defineStore(
         const res = await cartOperation(item);
         if (res.status == 200) {
           getMyCart();
-          setCart([...cookie?.value?.cartItems, item]);
+          setCart([...cartItems?.value, item]);
           return { status: true, message: type };
         }
       } catch (error) {
@@ -80,7 +80,7 @@ export const useCartStore = defineStore(
       if (authStore.isLoggedIn) {
         updatecart(item).then((res) => {
           if (res.status === 200) {
-            const tempCart = cookie?.value?.cartItems.map((dt) => {
+            const tempCart = cartItems?.value.map((dt) => {
               if (item.id === dt.id) {
                 dt.quantity = item.quantity;
               }
@@ -90,7 +90,7 @@ export const useCartStore = defineStore(
           }
         });
       } else {
-        const tempCart = cookie?.value?.cartItems.map((dt) => {
+        const tempCart = cartItems?.value.map((dt) => {
           if (item.id === dt.id) {
             dt.quantity = item.quantity;
           }
@@ -108,16 +108,12 @@ export const useCartStore = defineStore(
       if (authStore.isLoggedIn) {
         removecartitem(id).then((res) => {
           if (res.status === 200) {
-            const tempCart = cookie?.value?.cartItems.filter(
-              (item) => item.id !== id
-            );
+            const tempCart = cartItems?.value.filter((item) => item.id !== id);
             setCart(tempCart);
           }
         });
       } else {
-        const tempCart = cookie?.value?.cartItems.filter(
-          (item) => item.id !== id
-        );
+        const tempCart = cartItems?.value.filter((item) => item.id !== id);
         setCart(tempCart);
       }
     }

@@ -19,6 +19,9 @@
   </div>
 </template>
 <script setup>
+definePageMeta({
+  layout: "default",
+});
 useHead({
   title: "Checkout | Matta",
   meta: [{ name: "description", content: "Checkout" }],

@@ -50,7 +50,7 @@
                 <input
                   v-model="query"
                   placeholder="Search name..."
-                  class="text-xs rounded-lg px-3 py-1 h-10 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  class="text-xs rounded-lg px-3 py-1 h-10 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                 />
                 <i class="uil uil-search absolute right-2"></i>
               </div>

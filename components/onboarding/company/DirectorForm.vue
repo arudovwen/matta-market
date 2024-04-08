@@ -1,13 +1,15 @@
 <template>
   <h3 class="font-medium text-2xl mb-8">Add director</h3>
   <form @submit.prevent="handleSubmit">
-    <div class="grid grid-cols-2 gap-x-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">First name</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >First name</label
+        >
         <input
           v-model="v$.firstName.$model"
           :class="{ 'border-red-500': v$.firstName.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           autocomplete="off"
           autofocus="on"
         />
@@ -22,11 +24,13 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Last name</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >Last name</label
+        >
         <input
           v-model="v$.lastName.$model"
           :class="{ 'border-red-500': v$.lastName.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           autocomplete="off"
           autofocus="on"
         />
@@ -41,61 +45,65 @@
         </div>
       </div>
     </div>
-    <div class="mb-6">
-      <label for="email" class="mb-2 font-normal text-xs block">E-mail</label>
-      <input
-        v-model="v$.email.$model"
-        :class="{ 'border-red-500': v$.email.$error }"
-        class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-        placeholder="E-mail"
-        autocomplete="off"
-        aria-autocomplete="none"
-        type="email"
-        id="email"
-      />
-      <div
-        class="text-red-500 mt-1"
-        v-for="error of v$.email.$errors"
-        :key="error.$uid"
-      >
-        <div class="error-msg text-error text-xs font-semibold">
-          {{ error.$message }}
-        </div>
-      </div>
-    </div>
-    <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block" for="phone"
-        >Phone number <span class="text-red-500 pl-[.02rem]">*</span></label
-      >
-      <div class="flex relative rounded-lg h-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
+      <div class="mb-6">
+        <label for="email" class="mb-2 font-normal text-xs block">E-mail</label>
         <input
-          :class="{ 'border-red-500': v$.phone.$error }"
-          v-model="v$.phone.$model"
-          class="flex-1 rounded-r-lg px-4 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          v-model="v$.email.$model"
+          :class="{ 'border-red-500': v$.email.$error }"
+          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          placeholder="E-mail"
           autocomplete="off"
           aria-autocomplete="none"
-          placeholder="08160723884"
-          role="presentation"
-          id="phone"
+          type="email"
+          id="email"
         />
+        <div
+          class="text-red-500 mt-1"
+          v-for="error of v$.email.$errors"
+          :key="error.$uid"
+        >
+          <div class="error-msg text-error text-xs font-semibold">
+            {{ error.$message }}
+          </div>
+        </div>
       </div>
-      <div
-        class="text-red-500 mt-1"
-        v-for="error of v$.phone.$errors"
-        :key="error.$uid"
-      >
-        <div class="error-msg text-error text-xs font-semibold">
-          {{ error.$message }}
+      <div class="mb-6">
+        <label class="mb-2 font-normal text-xs block" for="phone"
+          >Phone number <span class="text-red-500 pl-[.02rem]">*</span></label
+        >
+        <div class="flex relative rounded-lg h-11">
+          <input
+            :class="{ 'border-red-500': v$.phone.$error }"
+            v-model="v$.phone.$model"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            autocomplete="off"
+            aria-autocomplete="none"
+            placeholder="08160723884"
+            role="presentation"
+            id="phone"
+          />
+        </div>
+        <div
+          class="text-red-500 mt-1"
+          v-for="error of v$.phone.$errors"
+          :key="error.$uid"
+        >
+          <div class="error-msg text-error text-xs font-semibold">
+            {{ error.$message }}
+          </div>
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-x-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">BVN</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >BVN</label
+        >
         <input
           v-model="v$.bvn.$model"
           :class="{ 'border-red-500': v$.bvn.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           autocomplete="off"
           autofocus="on"
         />
@@ -110,15 +118,19 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Date of birth</label>
-        <input
-          v-model="v$.dob.$model"
-          :class="{ 'border-red-500': v$.dob.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          autocomplete="off"
-          autofocus="on"
-          type="date"
-        />
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >Date of birth</label
+        >
+        <ClientOnly>
+          <VueDatePicker
+            v-model="v$.dob.$model"
+            placeholder="Select date"
+           :enable-time-picker="false"
+            :input-class-name="`!rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20 ${
+              v$.dob.$error ? 'border-red-500' : 'border-[#DCDEE6]'
+            }`"
+          />
+        </ClientOnly>
         <div
           class="text-red-500 mt-1"
           v-for="error of v$.dob.$errors"
@@ -127,6 +139,79 @@
           <div class="error-msg text-error text-xs font-semibold">
             {{ error.$message }}
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="lg:col-span-2 mb-6">
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Linkedin</label
+      >
+      <input
+        v-model="v$.linkedIn.$model"
+        :class="{ 'border-red-500': v$.linkedIn.$error }"
+        class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+        autocomplete="off"
+        autofocus="on"
+        placeholder="Your linkedin profile url"
+      />
+      <div
+        class="text-red-500 mt-1"
+        v-for="error of v$.linkedIn.$errors"
+        :key="error.$uid"
+      >
+        <div class="error-msg text-error text-xs font-semibold">
+          {{ error.$message }}
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-2 mb-6">
+      <FileUpload
+        label="Upload ID (Passport, Driver’s License, or NIN)"
+        id="identityUrl"
+        :modelValue="form.identityUrl"
+      />
+      <span
+        @click="downloadFile(form.identityUrl, 'Identity card')"
+        download
+        v-if="form.identityUrl"
+      >
+        <span class="block text-xs text-blue-500 mt-1"
+          >Download Identity card</span
+        ></span
+      >
+      <div
+        class="text-red-500 mt-1"
+        v-for="error of v$.identityUrl.$errors"
+        :key="error.$uid"
+      >
+        <div class="error-msg text-error text-xs font-semibold">
+          {{ error.$message }}
+        </div>
+      </div>
+    </div>
+    <div class="lg:col-span-2 mb-6">
+      <FileUpload
+        label="Upload Signature"
+        id="signatureUrl"
+        :modelValue="form.signatureUrl"
+      />
+      <span
+        @click="downloadFile(form.signatureUrl, 'Signature')"
+        download
+        v-if="form.signatureUrl"
+      >
+        <span class="block text-xs text-blue-500 mt-1"
+          >Download Signature</span
+        ></span
+      >
+      <div
+        class="text-red-500 mt-1"
+        v-for="error of v$.signatureUrl.$errors"
+        :key="error.$uid"
+      >
+        <div class="error-msg text-error text-xs font-semibold">
+          {{ error.$message }}
         </div>
       </div>
     </div>
@@ -151,6 +236,9 @@
 
 <script setup>
 import useVuelidate from "@vuelidate/core";
+import moment from "moment";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import {
   required,
   email,
@@ -161,8 +249,8 @@ import {
 } from "@vuelidate/validators";
 
 const open = inject("open");
-const directors = inject("directors");
-
+const formData = inject("form");
+const props = defineProps(["type", "director", "id"]);
 const form = reactive({
   firstName: "",
   lastName: "",
@@ -170,6 +258,22 @@ const form = reactive({
   phone: "",
   bvn: "",
   dob: "",
+  linkedIn: "",
+  signatureUrl: "",
+  identityUrl: "",
+});
+onMounted(() => {
+  if (props.director) {
+    form.firstName = props.director.firstName;
+    form.lastName = props.director.lastName;
+    form.email = props.director.email;
+    form.phone = props.director.phone;
+    form.bvn = props.director.bvn;
+    form.dob = new Date(props.director.dob);
+    form.linkedIn = props.director.linkedIn;
+    form.signatureUrl = props.director.signatureUrl;
+    form.identityUrl = props.director.identityUrl;
+  }
 });
 const isLoading = ref(false);
 const validPhoneLength = (value) =>
@@ -199,21 +303,49 @@ const rules = {
     numeric,
     required,
   },
+
+  linkedIn: {},
+  identityUrl: {
+    required,
+  },
+  signatureUrl: {
+    required,
+  },
 };
 
 const v$ = useVuelidate(rules, form);
 
+function handleChange(id, value) {
+  if (id === "signatureUrl") {
+    form.signatureUrl = value;
+  }
+  if (id === "identityUrl") {
+    form.identityUrl = value;
+  }
+}
 async function handleSubmit() {
   const validity = await v$.value.$validate();
   if (!validity) return;
-  directors.push(form);
-  // form.phone =
-  //   form.bvn =
-  //   form.dob =
-  //   form.firstName =
-  //   form.lastName =
-  //   form.email =
-  //     "";
+  if (props.type === "add") {
+    formData.directors.push(form);
+  } else {
+    formData.directors.map((i, index) => {
+      if (index === props.id) {
+        i.firstName = form.firstName;
+        i.lastName = form.lastName;
+        i.email = form.email;
+        i.phone = form.phone;
+        i.bvn = form.bvn;
+        i.dob = form.dob;
+        i.linkedIn = form.linkedIn;
+        i.signatureUrl = form.signatureUrl;
+        i.identityUrl = form.identityUrl;
+      }
+      return i;
+    });
+  }
+
   open.value = false;
 }
+provide("handleChange", handleChange);
 </script>
