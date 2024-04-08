@@ -11,37 +11,34 @@ pool:
 
 # define variables to use during the build
 variables:
-  projectFolder: 'src'
-  buildOutputFolder: 'dist'
+  projectFolder: '$(System.DefaultWorkingDirectory)'
+  buildOutputFolder: '.output/public'
 
 # define the steps of the build
 strategy:
   matrix:
-   
-    node_14_x:
-      node_version: 14.x
+    
+    node_20_x:
+      node_version: 20.x
 
 steps:
+
 - task: CopyFiles@2
   inputs:
     SourceFolder: 'staging'
     Contents: '**'
     TargetFolder: '$(Build.Repository.LocalPath)'
     OverWrite: true
-- task: NodeTool@0 
+- task: UseNode@1 
   inputs:
-    versionSpec: $(node_version)
+    version: '20.x'
+      
 ## Run the npm install/build
 - script: |
     pushd $(projectFolder) && npm install && popd
     pushd $(projectFolder) && npm run build && popd
-## Copy the client to the staging directory
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: 'staging'
-    Contents: '**'
-    TargetFolder: 'src/dist'
-    OverWrite: true
+    pushd $(projectFolder) && npm run generate
+
 - task: CopyFiles@2
   inputs:
     sourceFolder: '$(buildOutputFolder)' 
