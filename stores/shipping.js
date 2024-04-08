@@ -6,7 +6,9 @@ export const useShippingStore = defineStore("shipping", () => {
   const addressesData = computed(() => addresses.value);
   const isLoading = computed(() => loading.value);
   const defaultAddress = computed(() =>
-    addresses.value.find((i) => i.isDefault)
+    addresses.value.length
+      ? addresses.value.find((i) => i.isDefault) || addresses.value[0]
+      : null
   );
 
   function setAddresses(data) {

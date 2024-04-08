@@ -53,16 +53,51 @@
         }}
       </p>
     </div>
-    <NuxtLink href="/checkout">
+    <div class="flex flex-col gap-y-4 mt-3">
       <AppButton
-        icon="bytesize:cart"
-        :isDisabled="!cartStore?.cart || !cartStore?.cartTotalAmount"
-        text="Checkout"
-        btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm"
+        @click="handleOrderRequest()"
+        text="Submit order request"
+        :isLoading="loading"
+        :isDisabled="!shippingStore?.defaultAddress?.id"
+        btnClass="!rounded-[5px] !text-[#DBDBDB] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
       />
-    </NuxtLink>
+      <NuxtLink href="/checkout">
+        <AppButton
+          :isDisabled="!cartStore?.cart || !cartStore?.cartTotalAmount"
+          text="Proceed to Checkout"
+          btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm"
+        />
+      </NuxtLink>
+    </div>
   </div>
 </template>
 <script setup>
+import { confirmpurchase } from "~/services/cartservice";
+import { toast } from "vue3-toastify";
+
+const shippingStore = useShippingStore();
 const cartStore = useCartStore();
+const loading = ref(false);
+
+onMounted(() => {
+  shippingStore.getAlladdress();
+});
+function handleOrderRequest() {
+  loading.value = true;
+  confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
+    .then((res) => {
+      if (res.status === 200) {
+        loading.value = false;
+        cartStore?.clearCart();
+        window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
+      }
+    })
+    .catch((err) => {
+      const error = `${
+        err.response.data.Message || err.response.data.message
+      }, Contact us for assistance on your order`;
+      toast.error(error);
+      loading.value = false;
+    });
+}
 </script>

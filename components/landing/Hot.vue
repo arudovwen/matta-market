@@ -86,7 +86,7 @@ function getAllProducts() {
       }
     })
     .catch(() => {
-      setLoader(false);
+      // setLoader(false);
       isLoading.value = false;
     });
 }

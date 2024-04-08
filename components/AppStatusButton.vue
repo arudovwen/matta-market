@@ -160,7 +160,6 @@ const WalletStatus = {
   },
 };
 
-
 const Stats = computed(() => {
   if (props.stattype === "order") {
     return OrderStatusText;

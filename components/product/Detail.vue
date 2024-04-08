@@ -83,24 +83,24 @@
           <div
             class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-2 items-center"
           >
-            <!-- <AppButton
+            <AppButton
               v-if="productData?.sampleAvailable"
               @click="handleRequest('sample')"
               text="Request sample"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB]"
-            /> -->
-            <AppButton
+            />
+            <!-- <AppButton
               @click="handleOrderRequest()"
               text="Add to order request"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
-            />
+            /> -->
             <!-- <Tooltip title="tooltip test" description="Hello">
               <span class="cursor-pointer">
                 <AppIcon
                   icon="bi:question-circle"
                   iconClass="text-[#98A2B3]" /></span
             ></Tooltip> -->
-            <tippy
+            <!-- <tippy
               tag="button"
               content-tag="div"
               content-class="content-wrapper"
@@ -112,7 +112,7 @@
                     iconClass="text-[#98A2B3]" /></span
               ></template>
               <template #content>Hi!</template>
-            </tippy>
+            </tippy> -->
           </div>
           <!-- <AppButton
             @click="handleSave"
@@ -145,12 +145,15 @@
               @click="handleCart('add')"
               text="Add to cart"
               icon="bytesize:cart"
+              :isLoading="cartLoading"
+              :isDisabled="cartLoading"
               btnClass="bg-primary-500  text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full lg:!w-[140px]"
             />
             <AppButton
               @click="handleCart('buy')"
               icon="icon-park-outline:mall-bag"
               text="Buy now"
+              :isDisabled="cartLoading"
               btnClass="text-white  !px-[15px] !py-[13px] !normal-case bg-[#f90] flex w-full lg:!w-[140px]"
             />
           </div>
@@ -378,7 +381,9 @@ const mypackage = computed(() =>
   selectedPackage.value ? JSON.parse(selectedPackage.value) : null
 );
 const counter = ref(1);
+const cartLoading = ref(false)
 function handleCart(type) {
+  cartLoading.value = true
   if (!selectedPackage.value) {
     toast.info("Please choose a package");
     return;
@@ -415,6 +420,7 @@ function handleCart(type) {
     if (res.message === "buy") {
       router.push("/cart");
     }
+    cartLoading.value = false
   });
 }
 function handleSave() {
