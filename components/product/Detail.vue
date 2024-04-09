@@ -89,6 +89,11 @@
               text="Request sample"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB]"
             />
+            <AppButton
+              @click="handleRequest('quote')"
+              text="Request quote"
+              btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
+            />
             <!-- <AppButton
               @click="handleOrderRequest()"
               text="Add to order request"
