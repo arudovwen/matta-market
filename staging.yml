@@ -16,13 +16,11 @@ variables:
 
 # define the steps of the build
 strategy:
-  matrix:
-    
+  matrix:    
     node_20_x:
       node_version: 20.x
 
 steps:
-
 - task: CopyFiles@2
   inputs:
     SourceFolder: 'staging'
