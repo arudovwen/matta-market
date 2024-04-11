@@ -1,7 +1,7 @@
 <template>
   <form
     @submit.prevent="handleSubmit"
-    class="flex flex-col h-full overflow-y-auto"
+    class="flex flex-col h-full overflow-y-auto pr-4"
   >
     <div class="flex-1">
       <div class="flex justify-between items-center mb-6">
