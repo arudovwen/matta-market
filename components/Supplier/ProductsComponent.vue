@@ -126,7 +126,7 @@
                   <td
                     class="capitalize text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE] relative"
                   >
-                    <Popover class="relative">
+                    <Popover class="relative z-[99]">
                       <PopoverButton class="outline-none">
                         <i class="uil uil-ellipsis-v text-lg"></i>
                       </PopoverButton>
@@ -183,7 +183,7 @@
       />
     </div>
 
-    <IndexModal :isOpen="isOpen" @toggleModal="isOpen = false">
+    <IndexModal :isOpen="isOpen" @toggleModal="close">
       <template #content>
         <div
           class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-w-sm"
@@ -193,7 +193,7 @@
             <h4 class="font-medium text-matta-black text-xl">
               {{ title }}
             </h4>
-            <i class="uil uil-times cursor-pointer text-lg" @click="close"></i>
+            <!-- <i class="uil uil-times cursor-pointer text-lg" @click="close"></i> -->
           </div>
 
           <p class="text-sm text-matta-black mb-2">

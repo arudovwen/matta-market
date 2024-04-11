@@ -98,28 +98,9 @@
               @click="handleOrderRequest()"
               text="Add to order request"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
-            /> -->
-            <!-- <Tooltip title="tooltip test" description="Hello">
-              <span class="cursor-pointer">
-                <AppIcon
-                  icon="bi:question-circle"
-                  iconClass="text-[#98A2B3]" /></span
-            ></Tooltip> -->
-            <!-- <tippy
-              tag="button"
-              content-tag="div"
-              content-class="content-wrapper"
-            >
-              <template #default>
-                <span class="cursor-pointer">
-                  <AppIcon
-                    icon="bi:question-circle"
-                    iconClass="text-[#98A2B3]" /></span
-              ></template>
-              <template #content>Hi!</template>
-            </tippy> -->
+            />
           </div>
-          <!-- <AppButton
+          <AppButton
             @click="handleSave"
             :icon="isSaved ? 'tdesign:heart-filled' : 'tdesign:heart'"
             text="Save for later"
@@ -386,9 +367,9 @@ const mypackage = computed(() =>
   selectedPackage.value ? JSON.parse(selectedPackage.value) : null
 );
 const counter = ref(1);
-const cartLoading = ref(false)
+const cartLoading = ref(false);
 function handleCart(type) {
-  cartLoading.value = true
+  cartLoading.value = true;
   if (!selectedPackage.value) {
     toast.info("Please choose a package");
     return;
@@ -414,7 +395,7 @@ function handleCart(type) {
 
   cartStore?.addToCart(data, type).then((res) => {
     if (!res.status && res.message === "incart") {
-     toast.info("Already in cart")
+      toast.info("Already in cart");
     }
     if (res.status && res.message !== "buy") {
       isAdded.value = true;
@@ -425,7 +406,7 @@ function handleCart(type) {
     if (res.message === "buy") {
       router.push("/cart");
     }
-    cartLoading.value = false
+    cartLoading.value = false;
   });
 }
 function handleSave() {
