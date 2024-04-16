@@ -154,6 +154,15 @@
                 >
               </NuxtLink>
             </li>
+            <li
+              class="flex gap-x-[6px] items-center text-sm border-transparent group"
+            >
+              <NuxtLink to="/request-product"
+                class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
+              >
+                Request a product</NuxtLink
+              >
+            </li>
           </ul>
         </div>
         <div class="flex items-center gap-x-4 smd:gap-x-6 text-sm">

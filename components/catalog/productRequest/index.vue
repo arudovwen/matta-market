@@ -3,12 +3,11 @@
     <form
       v-if="!isComplete"
       @submit.prevent="handleSubmit"
-      class="flex flex-col h-full max-w-[450px] mx-auto my-10 border p-6 rounded-lg"
+      class="h-full max-w-[600px] mx-auto my-10 border p-6 rounded-lg"
     >
-      <div class="flex-1">
-        <div class="flex justify-between items-center mb-6">
-          <h4 class="text-2xl font-medium">Request a product</h4>
-        </div>
+      <h4 class="text-2xl font-medium text-center mb-7">Request a product</h4>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
         <div class="mb-6">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >Full name</label
@@ -51,25 +50,7 @@
             </div>
           </div>
         </div>
-
-        <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Phone number</label
-          >
-          <div class="flex relative rounded-lg h-11">
-            <FormsPhoneCodes  v-model="request$.phone.$model" />
-          </div>
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of request$.phone.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
-        </div>
-        <div class="mb-6">
+        <div class="mb-6 md:col-span-2">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >E-mail</label
           >
@@ -90,25 +71,25 @@
             </div>
           </div>
         </div>
-        <!-- <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
-          <input
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            placeholder="Provide your full address"
-            autocomplete="off"
-            autofocus="on"
-            v-model="request$.address.$model"
-          />
+
+        <div class="mb-6">
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+            >Phone number</label
+          >
+          <div class="flex relative rounded-lg h-11">
+            <FormsPhoneCodes v-model="request$.phone.$model" />
+          </div>
           <div
             class="text-red-500 mt-1"
-            v-for="error of request$.address.$errors"
+            v-for="error of request$.phone.$errors"
             :key="error.$uid"
           >
             <div class="error-msg text-error text-xs font-semibold">
               {{ error.$message }}
             </div>
           </div>
-        </div> -->
+        </div>
+
         <div class="mb-6">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >Chemical name</label
@@ -130,59 +111,57 @@
             </div>
           </div>
         </div>
-        <div class="grid lg:grid-cols-2 lg:gap-x-6">
-          <div class="mb-6">
-            <label
-              class="mb-2 font-medium text-sm text-[#344054] block text-left"
-              >Quantity</label
-            >
-            <input
-              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-              placeholder="Enter quantity needed"
-              type=""
-              v-model="request$.quantity.$model"
-            />
-            <div
-              class="text-red-500 mt-1"
-              v-for="error of request$.quantity.$errors"
-              :key="error.$uid"
-            >
-              <div class="error-msg text-error text-xs font-semibold">
-                {{ error.$message }}
-              </div>
-            </div>
-          </div>
-          <div class="mb-6">
-            <label
-              class="mb-2 font-medium text-sm text-[#344054] block text-left"
-              >Unit</label
-            >
-            <select
-              v-model="request$.unit.$model"
-              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            >
-              <option v-for="n in measurements" :key="n" :value="n.value">
-                {{ n.name }}
-              </option>
-            </select>
-            <div
-              class="text-red-500 mt-1"
-              v-for="error of request$.unit.$errors"
-              :key="error.$uid"
-            >
-              <div class="error-msg text-error text-xs font-semibold">
-                {{ error.$message }}
-              </div>
+
+        <div class="mb-6">
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+            >Quantity</label
+          >
+          <input
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            placeholder="Enter quantity needed"
+            type=""
+            v-model="request$.quantity.$model"
+          />
+          <div
+            class="text-red-500 mt-1"
+            v-for="error of request$.quantity.$errors"
+            :key="error.$uid"
+          >
+            <div class="error-msg text-error text-xs font-semibold">
+              {{ error.$message }}
             </div>
           </div>
         </div>
         <div class="mb-6">
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+            >Unit</label
+          >
+          <select
+            v-model="request$.unit.$model"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          >
+            <option v-for="n in measurements" :key="n" :value="n.value">
+              {{ n.name }}
+            </option>
+          </select>
+          <div
+            class="text-red-500 mt-1"
+            v-for="error of request$.unit.$errors"
+            :key="error.$uid"
+          >
+            <div class="error-msg text-error text-xs font-semibold">
+              {{ error.$message }}
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-6 md:col-span-2">
           <label class="mb-2 font-normal text-xs block text-matta-black"
             >Upload document</label
           >
           <div class="relative flex items-center">
             <input
-              class="flex-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
+              class="flex-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:cursor-pointer file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
               type="file"
               id="formFile"
               accept=".xls, .xlsx, .png, .jpg, .jpeg, .docx, .pdf"
@@ -203,7 +182,7 @@
           </div>
         </div>
 
-        <div class="mb-6">
+        <div class="mb-6 md:col-span-2">
           <label
             class="flex items-center gap-x-2"
             :class="request$.confirm.$errors.length ? 'text-red-600' : ''"
@@ -216,27 +195,27 @@
             <span>I confirm that I want to submit this request</span>
           </label>
         </div>
-        <div class="flex justify-center mt-8">
-          <button
-            type="submit"
-            :disabled="isLoading"
-            class="border text-[13px] mb-4 border-primary- uppercase text-white w-full lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
-          >
-            <span>
-              <span
-                class="flex gap-x-4 justify-center items-center"
-                v-if="isLoading || isUploading"
-                ><span> Processing...</span>
-                <i
-                  v-if="isLoading"
-                  class="fa fa-spinner fa-spin text-white"
-                  aria-hidden="true"
-                ></i
-              ></span>
-              <span v-else>Submit</span>
-            </span>
-          </button>
-        </div>
+      </div>
+      <div class="flex justify-center mt-8">
+        <button
+          type="submit"
+          :disabled="isLoading"
+          class="border text-[13px] mb-4 border-primary- uppercase text-white w-full lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
+        >
+          <span>
+            <span
+              class="flex gap-x-4 justify-center items-center"
+              v-if="isLoading || isUploading"
+              ><span> Processing...</span>
+              <i
+                v-if="isLoading"
+                class="fa fa-spinner fa-spin text-white"
+                aria-hidden="true"
+              ></i
+            ></span>
+            <span v-else>Submit</span>
+          </span>
+        </button>
       </div>
     </form>
     <CatalogProductRequestComplete v-else />

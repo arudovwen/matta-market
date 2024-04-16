@@ -76,7 +76,7 @@
       </div>
       <div class="flex justify-between gap-x-2">
         <div class="text-sm text-[#E1E1E1]">
-          Tax <span class="text-xs">(7.5%)</span>
+          VAT <span class="text-xs">(7.5%)</span>
         </div>
         <div class="text-right py-1">
           {{ currencyFormat(order?.orderTotalwithTax - order?.orderTotal) }}

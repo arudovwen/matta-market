@@ -31,7 +31,7 @@
           </p>
         </div>
         <div class="flex justify-between">
-          <p class="text-sm text-[#E1E1E1]">Tax (7.5%)</p>
+          <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
 
           <p class="text-white text-sm font-medium">
             {{ currencyFormat(order?.cartTotalwithTax - order?.cartTotal) }}
