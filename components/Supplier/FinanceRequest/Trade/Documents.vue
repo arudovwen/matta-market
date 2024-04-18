@@ -10,7 +10,7 @@
         <FileUpload id="BankStatement" :multiple="true" />
         <div
           class="flex flex-wrap gap-x-4 gap-y-3"
-          v-if="formData?.supportingDocuments[0]?.urls.length"
+          v-if="formData?.supportingDocuments[0]?.urls?.length"
         >
           <span
             v-for="(file, idx) in formData?.supportingDocuments[0]?.urls"
@@ -33,7 +33,7 @@
         <FileUpload id="ProformaInvoice" :multiple="true" />
         <div
           class="flex flex-wrap gap-x-4 gap-y-3"
-          v-if="formData?.supportingDocuments[1]?.urls.length"
+          v-if="formData?.supportingDocuments[1]?.urls?.length"
         >
           <span
             v-for="(file, idx) in formData?.supportingDocuments[1]?.urls"
@@ -63,7 +63,7 @@
         />
         <div
           class="flex flex-wrap gap-x-4 gap-y-3"
-          v-if="formData?.supportingDocuments[2]?.urls.length"
+          v-if="formData?.supportingDocuments[2]?.urls?.length"
         >
           <span
             v-for="(file, idx) in formData?.supportingDocuments[2]?.urls"
@@ -89,7 +89,7 @@
         <FileUpload id="OtherDocuments" :multiple="true" />
         <div
           class="flex flex-wrap gap-x-4 gap-y-3"
-          v-if="formData?.supportingDocuments[3]?.urls.length"
+          v-if="formData?.supportingDocuments[3]?.urls?.length"
         >
           <span
             v-for="(file, idx) in formData?.supportingDocuments[3]?.urls"
@@ -176,10 +176,10 @@ const {
     haveyouexportedtotheothercourty: formData.haveyouexportedtotheothercourty,
     haveyoudonebusiness: formData.haveyoudonebusiness,
     EvidenceOfPreviouslySuccessfulSupplyContracts:
-      formData?.supportingDocuments[2]?.urls || "",
-    ProformaInvoice: formData?.supportingDocuments[1]?.urls || "",
-    BankStatement: formData?.supportingDocuments[0]?.urls || "",
-    OtherDocuments: formData?.supportingDocuments[3]?.urls || "",
+      formData?.supportingDocuments[2]?.urls || [],
+    ProformaInvoice: formData?.supportingDocuments[1]?.urls || [],
+    BankStatement: formData?.supportingDocuments[0]?.urls || [],
+    OtherDocuments: formData?.supportingDocuments[3]?.urls || [],
   },
 });
 

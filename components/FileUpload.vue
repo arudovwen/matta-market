@@ -110,6 +110,9 @@ function handleEvent(e) {
 }
 function handleMultiple(e) {
   const files = e.target.files;
+
+  if(!files.length) return
+
   const promises = [];
   files.forEach((file) => {
     multiUrls.value = [];
