@@ -8,8 +8,13 @@
         ref="fileInputRef"
         type="file"
         class="hidden"
-        @change="handleEvent"
-        accept="pdf, doc,docx"
+        @change="
+          (e) => {
+            multiple ? handleMultiple(e) : handleEvent(e);
+          }
+        "
+        :accept="accept"
+        :multiple="multiple"
       />
 
       <button
@@ -25,8 +30,8 @@
       </button>
 
       <span
-        class="flex-1 px-4 truncate text-[#999999] inline-block max-w-[300px]"
-        >{{ title }}</span
+        class="flex-1 px-4 truncate text-[#999999] inline-block max-w-[300px] xl:max-w-[380px]"
+        >{{ multiple ? multiUrls.join() : title }}</span
       >
     </div>
   </div>
@@ -37,21 +42,42 @@ import { uploaddocument } from "~/services/onboardingservices";
 import { defineProps, ref, inject } from "vue";
 import { toast } from "vue3-toastify";
 
-const props = defineProps(["label", "id", "btnText", "modelValue"]);
+const props = defineProps({
+  label: {
+    default: "",
+  },
+  id: {
+    default: "",
+  },
+  btnText: {
+    default: "",
+  },
+  modelValue: {
+    default: "",
+  },
+  multiple: {
+    default: false,
+  },
+  accept: {
+    default: "pdf,jpeg,jpg,png",
+  },
+});
 
 const handleChange = inject("handleChange");
 const fileInputRef = ref(null);
 const title = ref("");
 const loading = ref(false);
+const multiUrls = ref([]);
 function handleEvent(e) {
   const file = e.target.files[0];
 
   if (!file) return;
 
-  const allowedExtensions = ["jpeg", "png", "jpg", "pdf"]; // Add more allowed extensions if needed
+  // Add more allowed extensions if needed
   const fileExtension = file.name.split(".").pop().toLowerCase();
 
-  if (!allowedExtensions.includes(fileExtension)) {
+  if (!props.accept.split(",").includes(fileExtension)) {
+   
     // Show an error message or handle accordingly
     toast.error("Invalid file type. Please upload a document.");
     return;
@@ -82,6 +108,67 @@ function handleEvent(e) {
 
   reader.readAsDataURL(file);
 }
+function handleMultiple(e) {
+  const files = e.target.files;
+  const promises = [];
+  files.forEach((file) => {
+    multiUrls.value = [];
+
+    const fileExtension = file.name.split(".").pop().toLowerCase();
+
+    if (!props.accept.split(",").includes(fileExtension)) {
+      // Show an error message or handle accordingly
+      toast.error("Invalid file type. Please upload a document.");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    const promise = new Promise((resolve, reject) => {
+      reader.onload = function (event) {
+        const base64String = event.target.result.split(",")[1];
+        loading.value = true;
+        const data = { base64: base64String, ext: `.${fileExtension}` };
+
+        // Assuming uploaddocument is available
+        uploaddocument(data)
+          .then((res) => {
+            multiUrls.value = [...multiUrls.value, res.data.message];
+            resolve(); // Resolve the promise after successful upload
+          })
+          .catch((error) => {
+            console.error("Error uploading file:", error);
+            reject(error); // Reject the promise if there's an error
+          })
+          .finally(() => {
+            loading.value = false; // Ensure loading indicator is turned off after upload, regardless of success or failure
+          });
+      };
+
+      reader.onerror = function (error) {
+        console.error("Error reading file:", error);
+        reject(error);
+      };
+
+      reader.readAsDataURL(file);
+    });
+
+    promises.push(promise);
+  });
+
+  // Wait for all promises to resolve before calling handleChange
+  Promise.all(promises)
+    .then(() => {
+      // All files have been successfully uploaded
+      handleChange(props.id, multiUrls.value);
+      console.log("All files uploaded successfully.");
+    })
+    .catch((error) => {
+      // An error occurred during file upload
+      console.error("Error handling multiple files:", error);
+    });
+}
+
 function triggerFileInput() {
   fileInputRef.value.click();
 }

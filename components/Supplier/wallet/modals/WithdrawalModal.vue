@@ -3,7 +3,7 @@
     <form @submit.prevent="onSubmit" v-if="stage === 1">
       <h1 class="text-lg font-semibold text-[#101828] mb-4">Withdrawal</h1>
 
-      <div class="grid gap-x-[25px] gap-y-4 mb-[50px]">
+      <div class="grid gap-x-[25px] gap-y-4 mb-5">
         <FormGroup
           label="How much do you require?"
           :error="errors.withdrawalAmount"
@@ -62,6 +62,9 @@
             class="loader border-t-4 border-gray-500 border-solid rounded-full h-4 w-4 animate-spin mx-auto"
           ></div>
         </div>
+      </div>
+      <div class="mb-[50px]">
+        <p class="flex gap-x-2 text-sm text-right justify-end"><span>Fee:</span> <span>{{ currencyFormat(10) }}</span></p>
       </div>
       <div class="flex gap-x-4 items-center justify-end">
         <AppButton

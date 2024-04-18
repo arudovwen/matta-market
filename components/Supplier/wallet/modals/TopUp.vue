@@ -1,11 +1,11 @@
 <template>
-  <div class="max-w-[400px] w-full min-w-[350px] py-6 px-6">
+  <div class="max-w-[450px] w-full min-w-[350px] py-6 px-6">
     <form @submit.prevent="onSubmit" v-if="stage === 1">
       <h1 class="text-lg font-semibold text-[#101828] mb-4">
         Fund via monnify
       </h1>
 
-      <div class="grid gap-x-[25px] gap-y-4 mb-6">
+      <div class="grid gap-x-[25px] gap-y-4 mb-5">
         <FormGroup
           label="How much do you wish to fund?"
           :error="errors.amount"
@@ -28,6 +28,10 @@
             <span class="absolute right-4">NGN</span>
           </div>
         </FormGroup>
+      </div>
+
+      <div class="mb-6">
+        <p class="flex gap-x-2 text-sm text-right justify-end"><span>Fee:</span> <span>{{ currencyFormat(10) }}</span></p>
       </div>
       <div class="flex gap-x-4 items-center justify-end">
         <AppButton

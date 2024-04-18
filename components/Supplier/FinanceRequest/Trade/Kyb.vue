@@ -126,8 +126,8 @@
         </label>
         <div
           v-if="
-            !company.companyDocuments?.length ||
-            company.companyDocuments.some((i) => !i.url)
+            !company?.companyDocuments?.length ||
+            company?.companyDocuments.some((i) => !i.url)
           "
           class="grid gap-y-6"
         >
@@ -162,7 +162,7 @@
         </div>
 
         <div v-else class="">
-          <DocumentsViewer type="kyb" :documents="company.companyDocuments" />
+          <DocumentsViewer type="kyb" :documents="company?.companyDocuments" />
         </div>
       </div>
     </div>

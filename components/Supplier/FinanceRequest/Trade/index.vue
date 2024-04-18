@@ -48,19 +48,19 @@ const formData = reactive({
 
   supportingDocuments: [
     {
-      url: "",
+      urls: [],
       documentType: 0,
     },
     {
-      url: "",
+      urls: [],
       documentType: 1,
     },
     {
-      url: "",
+      urls: [],
       documentType: 2,
     },
     {
-      url: "",
+      urls: [],
       documentType: 3,
     },
   ],
@@ -120,19 +120,19 @@ const formData = reactive({
   documents: {
     supportingDocuments: [
       {
-        url: "",
+        urls: [],
         documentType: 0,
       },
       {
-        url: "",
+        urls: [],
         documentType: 1,
       },
       {
-        url: "",
+        urls: [],
         documentType: 2,
       },
       {
-        url: "",
+        urls: [],
         documentType: 3,
       },
     ],
