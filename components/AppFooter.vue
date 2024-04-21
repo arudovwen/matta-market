@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-white darks:bg-gray-800 pt-16 pb-8">
+  <footer class="bg-white darks:bg-gray-800 pt-16 pb-8 mt-6">
     <div class="rounded-lg container">
       <div
         class="grid text-center lg:text-left grid-cols-1 lg:grid-cols-4 gap-y-8 lg:gap-x-10 lg:pt-8 mb-14"
@@ -190,7 +190,7 @@ const socials = [
   {
     title: "Instagram",
     icon: "fe:instagram",
-    link: "https://www.instagram.com/matta.trade/",
+    link: "https://www.instagram.com/matta_trade/",
   },
 ];
 function togglePopup() {
