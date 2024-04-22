@@ -182,6 +182,9 @@ const urls = {
   VALIDATE_BVN: "v1/wallet/verify-bvn",
   CONFIRM_FUNDING: "v1/wallet/confirm-wallet-funding",
   WITHDRAW_FUNDS: "v1/wallet/withdraw",
+  GET_WITHDRAW_CHARGE: "v1/wallet/get-withdrawalfee",
+  GET_DEPOSIT_CHARGE: "v1/wallet/get-depositfee",
+
 
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",

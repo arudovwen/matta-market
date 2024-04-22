@@ -63,8 +63,14 @@
           ></div>
         </div>
       </div>
-      <div class="mb-[50px]">
-        <p class="flex gap-x-2 text-sm text-right justify-end"><span>Fee:</span> <span>{{ currencyFormat(10) }}</span></p>
+      <div class="mb-[50px]" v-if="withdrawalAmount">
+        <p class="flex gap-x-2 text-sm text-right justify-start">
+          <span>You will be charged:</span>
+          <span>{{ currencyFormat(withdrawalAmount + charge) }}</span>
+        </p>
+        <!-- <p class="flex gap-x-2 text-sm text-right justify-end">
+          <span>Fee:</span> <span>{{ currencyFormat(charge) }}</span>
+        </p> -->
       </div>
       <div class="flex gap-x-4 items-center justify-end">
         <AppButton
@@ -74,7 +80,7 @@
           text="Cancel"
         />
         <AppButton
-          :disabled="isLoading"
+          :disabled="isLoading || loading"
           :isLoading="isLoading"
           btnClass="bg-primary-500 text-white !px-[14px]  !text-sm !py-[10px] disabled:cursor-not-allowed w-full"
           type="submit"
@@ -104,7 +110,11 @@ import * as yup from "yup";
 import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
-import { withdrawFunds, validateAccount } from "~/services/walletservice";
+import {
+  withdrawFunds,
+  validateAccount,
+  getWithdrawalCharge,
+} from "~/services/walletservice";
 
 const isErrorOpen = ref(false);
 const errorText = ref("Wallet creation request failed");
@@ -119,7 +129,7 @@ const props = defineProps({
     default: () => [],
   },
 });
-
+const loading = ref(false)
 const stage = ref(1);
 const handleClose = inject("handleClose");
 const form = reactive({
@@ -215,6 +225,23 @@ watch(props.banks, () => {
     setFieldValue("bankCode", bankCode.value);
   }
 });
+const charge = ref(5);
+watch(
+  () => [withdrawalAmount.value],
+  () => {
+    if (withdrawalAmount.value) {
+      loading.value = true
+      setTimeout(() => {
+        getWithdrawalCharge(withdrawalAmount.value).then((res) => {
+          if (res.status === 200) {
+            charge.value = res.data.data;
+            loading.value = false
+          }
+        });
+      }, [1200]);
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>
