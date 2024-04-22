@@ -117,7 +117,7 @@ import * as yup from "yup";
 import { ref, reactive, inject } from "vue";
 import { addSettlement } from "~/services/settlementservice";
 
-const  isValidating = ref(false)
+const isValidating = ref(false);
 const props = defineProps({
   hasSettlement: {
     default: true,
@@ -163,18 +163,18 @@ const formSchema = yup.object().shape({
         .test("test-account", "Invalid account number", function (value) {
           const { bankCode } = this.parent || {}; // Destructure bankCode safely
           if (value && value.length === 10 && bankCode) {
-            isValidating.value=true;
+            isValidating.value = true;
             return validateAccount({
               bankCode: bankCode,
               accountNumber: value,
             })
               .then((res) => {
-                isValidating.value=false
+                isValidating.value = false;
                 form.accountName = res.data.data.responseBody.accountName;
                 return true; // Resolve the promise if validation is successful
               })
               .catch((err) => {
-                isValidating.value=false
+                isValidating.value = false;
                 throw new yup.ValidationError(
                   "Invalid account number",
                   null,
@@ -216,14 +216,19 @@ const [bvnDateOfBirth, bvnDateOfBirthAtt] = defineField(
   "bvnDetails.bvnDateOfBirth"
 );
 
-
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
   if (!props.hasSettlement) {
     addSettlement({ ...values, isPrimaryAccount: true });
   }
-
-  createWallet(values)
+  const data = {
+    accountNumber: values.accountNumber,
+    bankCode: values.bankCode,
+    customerName: defaultCustomerName,
+    bvn: values.bvn,
+    customerEmail: defaultCustomerEmail,
+  };
+  createWallet(data)
     .then((res) => {
       if (res.status === 200) {
         handleComplete(
