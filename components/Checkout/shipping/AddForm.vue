@@ -54,7 +54,20 @@
           }`"
         />
       </FormGroup>
-
+      <FormGroup
+        v-if="country?.toLowerCase() == 'nigeria'"
+        label="Lga"
+        :error="errors.lga"
+      >
+        <SelectVueSelect
+          class="w-full"
+          v-model.value="lga"
+          :options="lgasOption"
+          placeholder="Select your lga"
+          name="lga"
+          :reduce="(lga) => lga.value"
+        />
+      </FormGroup>
       <div>
         <Textinput
           placeholder=""
@@ -67,7 +80,7 @@
           :error="errors.city"
         />
       </div>
-      <div>
+      <!-- <div>
         <Textinput
           placeholder=""
           label="Postal code"
@@ -78,7 +91,7 @@
           v-bind="postalCodeAtt"
           :error="errors.postalCode"
         />
-      </div>
+      </div> -->
       <div class="xl:col-span-2">
         <Textinput
           placeholder=""
@@ -90,7 +103,7 @@
           :error="errors.street"
         />
       </div>
-    
+
       <div
         class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
       >
@@ -121,6 +134,7 @@ import { toast } from "vue3-toastify";
 import { addshipping } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
+import Lgas from "@/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
 const shippingStore = useShippingStore();
@@ -132,6 +146,7 @@ const formValues = {
   country: "",
   state: "",
   city: "",
+  lga: "",
   postalCode: "",
   isDefault: false,
 };
@@ -143,6 +158,7 @@ const schema = yup.object({
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
   city: yup.string().required("City is required"),
+  lga: yup.string().required("Lga is required"),
   postalCode: yup.string().required("Postal code is required"),
 });
 
@@ -157,6 +173,7 @@ const [street, streetAtt] = defineField("street");
 const [country, countryAtt] = defineField("country");
 const [state, stateAtt] = defineField("state");
 const [city, cityAtt] = defineField("city");
+const [lga, lgaAtt] = defineField("lga");
 const [postalCode, postalCodeAtt] = defineField("postalCode");
 const [isDefault, isDefaultAtt] = defineField("isDefault");
 
@@ -185,6 +202,15 @@ const states = computed(() => {
     };
   });
 });
+
+const lgasOption = computed(() => {
+  return Lgas.find(
+    (i) => i?.state?.toLowerCase() === state?.value?.label?.toLowerCase()
+  )?.lgas?.map((i) => {
+    return { label: i, value: i };
+  });
+});
+
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
   addshipping(values)

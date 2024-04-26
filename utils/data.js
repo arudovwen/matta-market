@@ -134,7 +134,7 @@ export const mobileMenu = [
     icon: "mingcute:layout-3-line",
     key: "overview",
   },
- 
+
   {
     name: "My Orders",
     url: "/procurement/my-orders",
@@ -160,14 +160,6 @@ export const mobileMenu = [
     icon: "ri:hand-coin-line",
     key: "my-requests",
   },
-
-  {
-    name: "Shipping Addresses",
-    url: "/procurement/shipping-addresses",
-    icon: "heroicons-outline:truck",
-    key: "shipping",
-  },
-
   {
     name: "Wallet",
     url: "/wallet/home",
@@ -180,6 +172,20 @@ export const mobileMenu = [
     icon: "la:hand-holding-usd",
     key: "financing",
   },
+  {
+    name: "Shipping Addresses",
+    url: "/procurement/shipping-addresses",
+    icon: "heroicons-outline:truck",
+    key: "shipping",
+  },
+  {
+    name: "Pickup locations",
+    url: "/pickup-locations",
+    icon: "lucide:truck",
+    key: "pickup",
+  },
+
+ 
   {
     name: "Saved items",
     url: "/account/saved-searches",

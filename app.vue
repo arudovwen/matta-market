@@ -255,5 +255,6 @@ onMounted(() => {
   AOS.init();
   getAllApplications();
   getAllMarkets();
+ 
 });
 </script>

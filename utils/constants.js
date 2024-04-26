@@ -56,6 +56,7 @@ export const vendorRoutes = [
   "procurement-my-requests",
   "wallet-home",
   "procurement-shipping-addresses",
+  "pickup-locations",
   "financing",
   "account-saved-searches",
   "products",
@@ -87,14 +88,6 @@ export const navigation = [
     icon: "ri:hand-coin-line",
     key: "procurement-my-requests",
   },
-
-  {
-    name: "Shipping Addresses",
-    url: "/procurement/shipping-addresses",
-    icon: "ion:map-outline",
-    key: "procurement-shipping-addresses",
-  },
-
   {
     name: "Wallet",
     url: "/wallet/home",
@@ -107,6 +100,20 @@ export const navigation = [
     icon: "la:hand-holding-usd",
     key: "financing",
   },
+  {
+    name: "Shipping Addresses",
+    url: "/procurement/shipping-addresses",
+    icon: "ion:map-outline",
+    key: "procurement-shipping-addresses",
+  },
+  {
+    name: "Pickup locations",
+    url: "/pickup-locations",
+    icon: "lucide:truck",
+    key: "pickup-locations",
+  },
+
+ 
   {
     name: "Saved items",
     url: "/account/saved-searches",

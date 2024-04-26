@@ -1,16 +1,16 @@
 <template>
   <div class="bg-white w-full">
     <legend class="block text-[20px] font-bold mb-8 text-left">
-      Update Shipping address
+      Update Pickup location
     </legend>
     <form
       @submit.prevent="onSubmit"
       class="grid grid-cols-1 xl:grid-cols-2 gap-x-[18px] gap-y-4 w-full"
     >
-      <div>
+    <div class="md:col-span-2">
         <Textinput
           placeholder=""
-          label="First name"
+          label="Store name"
           type="text"
           name="firstName"
           v-bind="firstNameAtt"
@@ -19,17 +19,10 @@
         />
       </div>
       <div>
-        <Textinput
-          placeholder=""
-          label="Last name"
-          type="text"
-          name="lasttName"
-          v-bind="lastNameAtt"
-          v-model="lastName"
-          :error="errors.lastName"
-        />
+        <FormGroup label="Phone number">
+          <FormsPhoneCodes v-model="postalCode" />
+        </FormGroup>
       </div>
-
       <FormGroup label="Country" :error="errors.country" name="country">
         <SelectVueSelect
           v-model="country"
@@ -54,20 +47,6 @@
           }`"
         />
       </FormGroup>
-      <FormGroup
-        v-if="country?.toLowerCase() == 'nigeria'"
-        label="Lga"
-        :error="errors.lga"
-      >
-        <SelectVueSelect
-          class="w-full"
-          v-model.value="lga"
-          :options="lgasOption"
-          placeholder="Select your lga"
-          name="lga"
-          :reduce="(lga) => lga.value"
-        />
-      </FormGroup>
       <div>
         <Textinput
           placeholder=""
@@ -80,18 +59,6 @@
           :error="errors.city"
         />
       </div>
-      <!-- <div>
-        <Textinput
-          placeholder=""
-          label="Postal code"
-          type="tel"
-          name="postalCode"
-          classInput="!h-[45px]"
-          v-model="postalCode"
-          v-bind="postalCodeAtt"
-          :error="errors.postalCode"
-        />
-      </div> -->
       <div class="xl:col-span-2">
         <Textinput
           placeholder=""
@@ -103,25 +70,33 @@
           :error="errors.street"
         />
       </div>
-
-      <div
-        class="flex items-center text-[#333] text-xs md:text-sm gap-x-[2px] max-w-max"
-      >
-        <input
-          type="checkbox"
-          label=""
-          labelClass="text-xs md:text-sm"
-          v-model="isDefault"
+     
+      <div>
+        <Textinput
+          placeholder=""
+          label="Postal code"
+          type="tel"
+          name="postalCode"
+          classInput="!h-[45px]"
+          v-model="postalCode"
+          v-bind="postalCodeAtt"
+          :error="errors.postalCode"
         />
-        Set as default
       </div>
-
-      <div class="xl:col-span-2 grid gap-y-[22px] mb-9 mt-4">
+      <div class="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5  mb-9 mt-8">
+        <AppButton
+          type="button"
+          :isLoading="isLoading"
+          :isDisabled="isLoading"
+          @click="isOpen = false"
+          text="Cancel"
+          btnClass="normal-case bg-trnasparent border border-gray-100 rounded-lg !py-3"
+        />
         <AppButton
           type="submit"
           :isLoading="isLoading"
           :isDisabled="isLoading"
-          text="Update address"
+          text="Update location"
           btnClass="normal-case btn-primary !py-3"
         />
       </div>
@@ -135,7 +110,6 @@ import { toast } from "vue3-toastify";
 import { editshipping } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
-import Lgas from "@/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
 const detail = inject("detail");
@@ -150,14 +124,12 @@ const formValues = {
   country: "",
   state: "",
   city: "",
-  lga: "",
   postalCode: "",
   isDefault: false,
 };
 onMounted(() => {
   setValues(detail.value);
 });
-
 const schema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -165,8 +137,8 @@ const schema = yup.object({
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
   city: yup.string().required("City is required"),
-  lga: yup.string().required("Lga is required"),
   postalCode: yup.string().required("Postal code is required"),
+  isDefault: yup.boolean(),
 });
 
 const { handleSubmit, defineField, errors, setValues } = useForm({
@@ -180,7 +152,6 @@ const [street, streetAtt] = defineField("street");
 const [country, countryAtt] = defineField("country");
 const [state, stateAtt] = defineField("state");
 const [city, cityAtt] = defineField("city");
-const [lga, lgaAtt] = defineField("lga");
 const [postalCode, postalCodeAtt] = defineField("postalCode");
 const [isDefault] = defineField("isDefault");
 
@@ -207,13 +178,6 @@ const states = computed(() => {
       label: item.name,
       value: item.name,
     };
-  });
-});
-const lgasOption = computed(() => {
-  return Lgas.find(
-    (i) => i?.state?.toLowerCase() === state?.value?.label?.toLowerCase()
-  )?.lgas?.map((i) => {
-    return { label: i, value: i };
   });
 });
 

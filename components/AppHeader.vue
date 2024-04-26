@@ -65,6 +65,7 @@
               alt="Matta"
               class="w-20 md:w-[100px] h-auto object-contain"
           /></NuxtLink>
+
           <ul class="lg:flex items-center gap-x-6 hidden">
             <li
               v-for="n in navigations"
@@ -157,7 +158,8 @@
             <li
               class="flex gap-x-[6px] items-center text-sm border-transparent group"
             >
-              <NuxtLink to="/request-product"
+              <NuxtLink
+                to="/request-product"
                 class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
               >
                 Request a product</NuxtLink
@@ -165,7 +167,7 @@
             </li>
           </ul>
         </div>
-        <div class="flex items-center gap-x-4 smd:gap-x-6 text-sm">
+        <div class="flex items-center gap-x-4 text-sm">
           <!-- <span
             :class="{
               'hidden md:flex': view.atTopOfPage,
@@ -229,6 +231,13 @@
               >
             </span> -->
           <!-- </span> -->
+          <!-- <GoogleTranslateSelect
+            default-language-code="en"
+            default-page-language-code="en"
+            :fetch-browser-language="false"
+            trigger="click"
+            @select="handleGoogleTranslateSelect"
+          /> -->
           <NuxtLink to="/cart" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
@@ -404,7 +413,11 @@ import {
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
 import { getnotification } from "@/services/notificationservice";
+import GoogleTranslateSelect from "@google-translate-select/vue3";
 
+const handleGoogleTranslateSelect = (language) => {
+  console.log(language);
+};
 const isOpen = ref(false);
 function openModal() {
   isOpen.value = !isOpen.value;
@@ -434,6 +447,7 @@ const open = ref(false);
 onBeforeMount(() => {
   window.addEventListener("scroll", handleScroll);
 });
+
 onMounted(() => {
   if (authStore.isLoggedIn) {
     getNotifications();
@@ -441,6 +455,7 @@ onMounted(() => {
       getNotifications();
     }, 2 * 60 * 1000);
   }
+  geoFindMe()
 });
 const notifyParams = reactive({
   PageNumber: 1,

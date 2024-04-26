@@ -29,6 +29,7 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@google-translate-select/vue3": "^0.1.7",
     "@headlessui-float/vue": "^0.13.2",
     "@headlessui/vue": "^1.7.16",
     "@heroicons/vue": "^2.0.8",
