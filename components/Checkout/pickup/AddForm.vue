@@ -101,6 +101,7 @@ import { toast } from "vue3-toastify";
 import { addshipping } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
+import Lgas from "@/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
 const shippingStore = useShippingStore();
@@ -111,7 +112,7 @@ const formValues = {
   street: "",
   country: "",
   state: "",
-  city: "",
+  lga: "",
   phone: "",
   isDefault: false,
 };
@@ -136,6 +137,7 @@ const [street, streetAtt] = defineField("street");
 const [country, countryAtt] = defineField("country");
 const [state, stateAtt] = defineField("state");
 const [phone, phoneAtt] = defineField("phone");
+const [lga, lgaAtt] = defineField("lga");
 const [isDefault, isDefaultAtt] = defineField("isDefault");
 
 const allcountries = computed(() => {

@@ -177,7 +177,6 @@ const [lastName, lastNameAtt] = defineField("lastName");
 const [street, streetAtt] = defineField("street");
 const [country, countryAtt] = defineField("country");
 const [state, stateAtt] = defineField("state");
-const [city, cityAtt] = defineField("city");
 const [lga, lgaAtt] = defineField("lga");
 const [postalCode, postalCodeAtt] = defineField("postalCode");
 const [isDefault] = defineField("isDefault");

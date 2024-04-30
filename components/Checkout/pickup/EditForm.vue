@@ -102,6 +102,7 @@ import { toast } from "vue3-toastify";
 import { editshipping } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
+import Lgas from "@/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
 const detail = inject("detail");
@@ -115,8 +116,7 @@ const formValues = {
   street: "",
   country: "",
   state: "",
-  city: "",
-  postalCode: "",
+  lga: "",
   isDefault: false,
 };
 onMounted(() => {
@@ -128,8 +128,7 @@ const schema = yup.object({
   street: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
-  city: yup.string().required("City is required"),
-  postalCode: yup.string().required("Postal code is required"),
+  lga: yup.string().required("City is required"),
   isDefault: yup.boolean(),
 });
 
@@ -143,8 +142,7 @@ const [lastName, lastNameAtt] = defineField("lastName");
 const [street, streetAtt] = defineField("street");
 const [country, countryAtt] = defineField("country");
 const [state, stateAtt] = defineField("state");
-const [city, cityAtt] = defineField("city");
-const [postalCode, postalCodeAtt] = defineField("postalCode");
+const [lga, lgaAtt] = defineField("lga");
 const [isDefault] = defineField("isDefault");
 
 const allcountries = computed(() => {
