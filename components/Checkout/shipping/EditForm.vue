@@ -56,7 +56,7 @@
       </FormGroup>
       <FormGroup
         v-if="country?.toLowerCase() == 'nigeria'"
-        label="Lga"
+        label="LGA"
         :error="errors.lga"
       >
         <SelectVueSelect
@@ -68,7 +68,7 @@
           :reduce="(lga) => lga.value"
         />
       </FormGroup>
-      <div>
+      <!-- <div>
         <Textinput
           placeholder=""
           label="City"
@@ -79,7 +79,7 @@
           v-bind="cityAtt"
           :error="errors.city"
         />
-      </div>
+      </div> -->
       <!-- <div>
         <Textinput
           placeholder=""
@@ -149,7 +149,6 @@ const formValues = {
   street: "",
   country: "",
   state: "",
-  city: "",
   lga: "",
   postalCode: "",
   isDefault: false,
@@ -164,7 +163,6 @@ const schema = yup.object({
   street: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
-  city: yup.string().required("City is required"),
   lga: yup.string().required("Lga is required"),
   postalCode: yup.string().required("Postal code is required"),
 });
@@ -196,7 +194,7 @@ const allcountries = computed(() => {
 const mystates = computed(() => {
   if (!country.value) return [];
   return countries.find(
-    (item) => item.name.toLowerCase() == country.value.toLowerCase()
+    (item) => item.name.toLowerCase() == country?.value?.toLowerCase()
   ).states;
 });
 
@@ -211,7 +209,7 @@ const states = computed(() => {
 });
 const lgasOption = computed(() => {
   return Lgas.find(
-    (i) => i?.state?.toLowerCase() === state?.value?.label?.toLowerCase()
+    (i) => i?.state?.toLowerCase() === state?.value?.toLowerCase()
   )?.lgas?.map((i) => {
     return { label: i, value: i };
   });

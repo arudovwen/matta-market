@@ -7,7 +7,7 @@
       @submit.prevent="onSubmit"
       class="grid grid-cols-1 xl:grid-cols-2 gap-x-[18px] gap-y-4 w-full"
     >
-    <div class="md:col-span-2">
+      <div class="md:col-span-2">
         <Textinput
           placeholder=""
           label="Store name"
@@ -47,18 +47,20 @@
           }`"
         />
       </FormGroup>
-      <div>
-        <Textinput
-          placeholder=""
-          label="City"
-          type="text"
-          name="city"
-          classInput="!h-[45px]"
-          v-model="city"
-          v-bind="cityAtt"
-          :error="errors.city"
+      <FormGroup
+        v-if="country?.toLowerCase() == 'nigeria'"
+        label="LGA"
+        :error="errors.lga"
+      >
+        <SelectVueSelect
+          class="w-full"
+          v-model.value="lga"
+          :options="lgasOption"
+          placeholder="Select your lga"
+          name="lga"
+          :reduce="(lga) => lga.value"
         />
-      </div>
+      </FormGroup>
       <div class="xl:col-span-2">
         <Textinput
           placeholder=""
@@ -70,20 +72,10 @@
           :error="errors.street"
         />
       </div>
-     
-      <div>
-        <Textinput
-          placeholder=""
-          label="Postal code"
-          type="tel"
-          name="postalCode"
-          classInput="!h-[45px]"
-          v-model="postalCode"
-          v-bind="postalCodeAtt"
-          :error="errors.postalCode"
-        />
-      </div>
-      <div class="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5  mb-9 mt-8">
+
+      <div
+        class="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 mb-9 mt-8"
+      >
         <AppButton
           type="button"
           :isLoading="isLoading"
@@ -178,6 +170,13 @@ const states = computed(() => {
       label: item.name,
       value: item.name,
     };
+  });
+});
+const lgasOption = computed(() => {
+  return Lgas.find(
+    (i) => i?.state?.toLowerCase() === state?.value?.toLowerCase()
+  )?.lgas?.map((i) => {
+    return { label: i, value: i };
   });
 });
 

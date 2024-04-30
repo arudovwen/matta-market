@@ -13,7 +13,7 @@
                 @change="getRequests()"
                 @keyup="debounceSearch"
                 placeholder="Search"
-                class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-full lg:w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
+                class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-full lg:w-[320px] focus:outline-none py-[10px] transition ease-in-out duration-300"
                 type="search"
               />
             </div>

@@ -1,3 +1,4 @@
+
 <template>
   <div class="pt-10 lg:pt-0 w-full max-w-[500px] mx-auto">
     <h1 class="text-[#333] darks:text-white mb-[10px] text-3xl font-bold">

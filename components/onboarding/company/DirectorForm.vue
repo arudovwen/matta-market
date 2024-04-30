@@ -70,7 +70,7 @@
       </div>
       <div class="mb-6">
         <label class="mb-2 font-normal text-xs block" for="phone"
-          >Phone number <span class="text-red-500 pl-[.02rem]">*</span></label
+          >Phone number </label
         >
         <div class="flex relative rounded-lg h-11">
           <input
@@ -144,7 +144,7 @@
     </div>
     <div class="lg:col-span-2 mb-6">
       <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-        >Linkedin</label
+        >Linkedin <span class="text-gray-400 text-xs pl-[.02rem]">(Optional)</span></label
       >
       <input
         v-model="v$.linkedIn.$model"

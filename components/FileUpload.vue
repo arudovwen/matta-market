@@ -109,7 +109,7 @@ function handleEvent(e) {
   reader.readAsDataURL(file);
 }
 function handleMultiple(e) {
-  const files = e.target.files;
+  const files = Object.values(e.target.files);
 
   if(!files.length) return
 
