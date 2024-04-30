@@ -96,6 +96,7 @@
 
                     <ClientOnly>
                       <VueDatePicker
+            auto-apply
                         v-model="v$.dateofIncorporation.$model"
                         placeholder="Select date"
                         :enable-time-picker="false"

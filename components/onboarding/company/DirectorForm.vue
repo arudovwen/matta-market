@@ -70,8 +70,8 @@
       </div>
       <div class="mb-6">
         <label class="mb-2 font-normal text-xs block" for="phone"
-          >Phone number </label
-        >
+          >Phone number
+        </label>
         <div class="flex relative rounded-lg h-11">
           <input
             :class="{ 'border-red-500': v$.phone.$error }"
@@ -123,9 +123,10 @@
         >
         <ClientOnly>
           <VueDatePicker
+            auto-apply
             v-model="v$.dob.$model"
             placeholder="Select date"
-           :enable-time-picker="false"
+            :enable-time-picker="false"
             :input-class-name="`!rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20 ${
               v$.dob.$error ? 'border-red-500' : 'border-[#DCDEE6]'
             }`"
@@ -144,7 +145,8 @@
     </div>
     <div class="lg:col-span-2 mb-6">
       <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-        >Linkedin <span class="text-gray-400 text-xs pl-[.02rem]">(Optional)</span></label
+        >Linkedin
+        <span class="text-gray-400 text-xs pl-[.02rem]">(Optional)</span></label
       >
       <input
         v-model="v$.linkedIn.$model"

@@ -19,14 +19,31 @@
             :error="errors.storeName"
             @keyup="getProfileData()"
           />
-          <Textinput
-            placeholder=""
-            label="Store url"
-            name="storeSlug"
-            :modelValue="`https://dev.matta.trade/${formValues.storeSlug}`"
-            disabled
-            isReadonly
-          />
+          <div>
+            <label
+              class="flex-0 mr-6 md:w-[100px] w-[60px] break-words inline-block input-label text-sm !text-[#1B2B41B8]"
+              for="storeSlug"
+            >
+              Store URL</label
+            >
+            <div
+              class="flex items-center bg-transparent transition duration-300 ease-in-out border border-[#D0D5DD] focus:ring-1 focus:ring-slate-600 focus:outline-none focus:ring-opacity-90 rounded-lg placeholder:text-[#CDD2DA] text-[#344054] text-sm placeholder:font-normal w-full"
+            >
+              <span
+                class="rounded-l-lg h-11 bg-gray-100 pl-[14px] pr-2 py-[10px] text-base"
+                >{{ url }}</span
+              >
+              <Textinput
+                placeholder=""
+                label=""
+                name="storeSlug"
+                v-bind="storeSlugAtt"
+                v-model="storeSlug"
+                :error="errors.storeSlug"
+                classInput="!border-none !pl-2"
+              />
+            </div>
+          </div>
         </div>
 
         <div class="mb-6">
@@ -67,11 +84,11 @@
         <div
           class="bg-white flex justify-between gap-x-6 items-center sticky bottom-0 pb-6"
         >
-          <NuxtLink :to="`/${formValues.storeSlug}`"
+          <NuxtLink :to="`/${storeSlug}`"
             ><button
               type="button"
-              :disabled="!formValues.storeSlug"
-              class="appearance-none leading-none  px-5 md:px-10 py-[10px] rounded-[6px] text-primary-500 border-primary-500 border hover:bg-gray-50 text-sm"
+              :disabled="!storeSlug"
+              class="appearance-none leading-none px-5 md:px-10 py-[10px] rounded-[6px] text-primary-500 border-primary-500 border hover:bg-gray-50 text-sm"
             >
               Preview
             </button></NuxtLink
@@ -110,6 +127,12 @@ import {
   getVendorInfo,
 } from "~/services/userservices";
 
+const url = ref("");
+if (process.client) {
+  url.value = window.location.origin + "/";
+  
+}
+
 const config = useRuntimeConfig();
 const authStore = useAuthStore();
 const isLoading = ref(false);
@@ -147,6 +170,7 @@ const onGetCampaign = (value) => {
 };
 const removeFile = () => {};
 const [storeName, storeNameAtt] = defineField("storeName");
+const [storeSlug, storeSlugAtt] = defineField("storeSlug");
 const vendorInfo = ref(null);
 const isLoadingData = ref(true);
 onMounted(() => {
@@ -182,9 +206,7 @@ const getProfileData = debounce(() => {
       setFieldValue("storeSlug", res.data.data);
     })
     .catch((err) => {
-      toast.error(
-        err.response.data.message || err.response.data.Message
-      );
+      toast.error(err.response.data.message || err.response.data.Message);
       if (vendorInfo.value?.storeSlug) {
         setFieldValue("storeSlug", vendorInfo.value?.storeSlug);
         formValues.storeSlug = vendorInfo.value?.storeSlug;

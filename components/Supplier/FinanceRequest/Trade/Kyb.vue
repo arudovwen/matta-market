@@ -3,13 +3,13 @@
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
       <div class="md:col-span-2">
         <Textinput
-        placeholder=""
-        label="Company name"
-        name="companyName"
-        v-bind="companyNameAtt"
-        v-model="companyName"
-        :error="errors.companyName"
-      />
+          placeholder=""
+          label="Company name"
+          name="companyName"
+          v-bind="companyNameAtt"
+          v-model="companyName"
+          :error="errors.companyName"
+        />
       </div>
 
       <FormGroup
@@ -19,6 +19,7 @@
       >
         <ClientOnly>
           <VueDatePicker
+            auto-apply
             v-model="dateofIncorporation"
             placeholder="Select date"
             :enable-time-picker="false"
