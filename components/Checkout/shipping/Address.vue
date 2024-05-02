@@ -11,9 +11,11 @@
       />
     </div>
     <p class="text-sm mb-[7px] max-w-[280px]">
-      {{ detail.street }}, {{ detail.city }}, {{ detail.country }}
+      {{ detail.street }}
     </p>
-    <p class="text-sm">{{ detail.postalCode }}</p>
+    <p class="text-sm mb-[7px] max-w-[280px]">
+      {{ detail.lga }}, {{ detail.state }}, {{ detail.country }}
+    </p>
   </div>
 </template>
 

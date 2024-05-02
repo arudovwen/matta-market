@@ -1,6 +1,6 @@
 <template>
   <span
-    :class="`px-[6px] py-1 text-xs rounded flex gap-x-1 items-center border max-w-max font-semibold ${Stats[status]?.className}`"
+    :class="`px-[6px] py-1 text-xs rounded-[6px] flex gap-x-1 items-center border max-w-max font-semibold ${Stats[status]?.className}`"
   >
     <!-- <AppIcon icon="octicon:dot-fill-24" /> -->
     <span class=""> {{ Stats[status]?.text }}</span>
@@ -157,6 +157,10 @@ const WalletStatus = {
   0: {
     text: "Withdrawal",
     className: StatusClass[4],
+  },
+  2: {
+    text: "Charge",
+    className: StatusClass[3],
   },
 };
 

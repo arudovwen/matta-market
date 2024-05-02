@@ -286,6 +286,22 @@
                   </div>
                 </div>
               </div>
+
+              <div class="mb-6">
+                <label
+                  class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
+                >
+                  
+                  <span>Pickup location </span>
+                </label>
+                <SelectVueSelect
+                  v-model="v$.pickup.$model"
+                  :options="locations"
+                  :reduce="(location) => location.value"
+                  placeholder="Select location"
+                  :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -709,6 +725,7 @@ import StatesSelect from "~/components/forms/StatesSelect";
 import { uploadfile } from "~/services/onboardingservices";
 import countries from "~/utils/countries.json";
 
+const pickupStore = usePickupStore();
 const route = useRoute();
 const router = useRouter();
 const producerForm = reactive({
@@ -751,6 +768,7 @@ const headers = computed(() => [
   "",
 ]);
 onMounted(() => {
+  pickupStore.getAlladdress();
   getMarkets(queryParams).then((res) => {
     markets.value = res.data.data;
     form.productId = route.query.id;
@@ -759,7 +777,9 @@ onMounted(() => {
 
 const isAddingPackage = ref(false);
 const isLoading = ref(false);
-
+const locations = computed(() =>
+  pickupStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
+);
 const selectedMeasurement = ref(measurements[0]);
 // const newpackage = ref("");
 let query = ref("");
@@ -779,6 +799,9 @@ const rules = {
   name: {
     required,
     maxLength: maxLength(100),
+  },
+  pickup: {
+    
   },
   manufacturer: {
     required: helpers.withMessage("Select a producer", required),

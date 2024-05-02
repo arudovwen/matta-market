@@ -282,6 +282,20 @@
                   </div>
                 </div>
               </div>
+              <div class="mb-6">
+                <label
+                  class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
+                >
+                  <span>Pickup location </span>
+                </label>
+                <SelectVueSelect
+                  v-model="v$.pickup.$model"
+                  :options="locations"
+                  :reduce="(location) => location.value"
+                  placeholder="Select location"
+                  :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -633,6 +647,7 @@ import StatesSelect from "~/components/forms/StatesSelect";
 import countries from "~/utils/countries.json";
 import { uploadfile } from "~/services/onboardingservices";
 
+const pickupStore = usePickupStore();
 const route = useRoute();
 const router = useRouter();
 const detail = ref(null);
@@ -710,6 +725,7 @@ const rules = {
     required,
     maxLength: maxLength(100),
   },
+  pickup: {},
   manufacturer: {
     required: helpers.withMessage("Select a prodicer", required),
   },
@@ -740,7 +756,9 @@ const rules = {
 // const index = ref(null);
 const invalidCredentials = ref(false);
 const v$ = useVuelidate(rules, form);
-
+onMounted(() => {
+  pickupStore.getAlladdress();
+});
 watch(
   () => form.unit,
   () => {
@@ -750,6 +768,9 @@ watch(
       return i;
     });
   }
+);
+const locations = computed(() =>
+  pickupStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
 );
 function create_UUID() {
   var dt = new Date().getTime();

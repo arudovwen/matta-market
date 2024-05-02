@@ -68,41 +68,17 @@
           :reduce="(lga) => lga.value"
         />
       </FormGroup>
-      <!-- <div>
-        <Textinput
+
+      <FormGroup class="xl:col-span-2" label="street" :error="errors.street">
+        <SelectSearchSelect
+          class="w-full"
+          v-model.value="street"
+          :options="addressOptions"
           placeholder=""
-          label="City"
-          type="text"
-          name="city"
-          classInput="!h-[45px]"
-          v-model="city"
-          v-bind="cityAtt"
-          :error="errors.city"
-        />
-      </div> -->
-      <!-- <div>
-        <Textinput
-          placeholder=""
-          label="Postal code"
-          type="tel"
-          name="postalCode"
-          classInput="!h-[45px]"
-          v-model="postalCode"
-          v-bind="postalCodeAtt"
-          :error="errors.postalCode"
-        />
-      </div> -->
-      <div class="xl:col-span-2">
-        <Textinput
-          placeholder=""
-          label="Address"
           name="street"
-          classInput="!h-[45px]"
-          v-model="street"
-          v-bind="streetAtt"
-          :error="errors.street"
+          :reduce="(address) => address.value"
         />
-      </div>
+      </FormGroup>
 
       <div
         class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
@@ -146,7 +122,8 @@ const formValues = {
   country: "",
   state: "",
   lga: "",
-  postalCode: "",
+  postalCode: "1000",
+  city: "lagos",
   isDefault: false,
 };
 
@@ -225,5 +202,16 @@ const onSubmit = handleSubmit((values) => {
         toast.error(err.response.data.message || err.response.data.Message);
       }
     });
+});
+const addressOptions = ref([]);
+watch(street, () => {
+  addressSearch({ text: street.value }).then((res) => {
+    if (res.status === 200) {
+      addressOptions.value = res.data.map((i) => ({
+        label: i.label,
+        value: i.label,
+      }));
+    }
+  });
 });
 </script>

@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { post, get } from "../helpers/api_helpers";
+import { post, get, del } from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
 
@@ -49,7 +49,7 @@ export const getallpickuplocations = withRetryHandling(() => {
 });
 
 export async function deletePickupLocation(data) {
-  return await post(`${urls.DELETE_PICKUP}/${data}`, data, config);
+  return await del(`${urls.DELETE_PICKUP}/${data}`, data, config);
 }
 export async function addPickupLocation(data) {
   return await post(urls.ADD_PICKUP_ADDRESS, data, config);

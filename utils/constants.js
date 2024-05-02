@@ -868,5 +868,6 @@ export const subnavigation = [
 export const LedgerAction = 
   {
    0: "Debit",
-   1: "Credit" 
+   1: "Credit" ,
+   2: "Charge"
 }
