@@ -107,7 +107,7 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { addshipping } from "~/services/cartservice";
+import { addshipping,addressSearch } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
 import Lgas from "@/utils/lgastate.json";
@@ -119,7 +119,7 @@ const formValues = {
   firstName: "",
   lastName: "",
   street: "",
-  country: "",
+  country: "Nigeria",
   state: "",
   lga: "",
   postalCode: "1000",
