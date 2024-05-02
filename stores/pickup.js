@@ -1,22 +1,17 @@
 import { defineStore } from "pinia";
-import { getalladdress } from "~/services/cartservice";
+import { getallpickuplocations } from "~/services/cartservice";
 export const usePickupStore = defineStore("pickup", () => {
   const addresses = ref([]);
   const loading = ref(true);
   const addressesData = computed(() => addresses.value);
   const isLoading = computed(() => loading.value);
-  const defaultAddress = computed(() =>
-    addresses.value.length
-      ? addresses.value.find((i) => i.isDefault) || addresses.value[0]
-      : null
-  );
 
   function setAddresses(data) {
     addresses.value = data;
   }
   function getAlladdress() {
     loading.value = true;
-    getalladdress()
+    getallpickuplocations()
       .then((res) => {
         if (res.data.data.length) {
           addresses.value = res.data.data.some((i) => i.isDefault)
@@ -33,16 +28,15 @@ export const usePickupStore = defineStore("pickup", () => {
         loading.value = false;
       });
   }
-  function deleteAddress(id) {
-    getalladdress(id).then((res) => {
-      getalladdress();
-    });
-  }
+  // function deleteAddress(id) {
+  //   getallpickuplocations(id).then((res) => {
+  //     getallpickuplocations();
+  //   });
+  // }
   return {
     addressesData,
     addresses,
     setAddresses,
-    defaultAddress,
     getAlladdress,
     isLoading,
   };

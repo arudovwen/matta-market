@@ -108,6 +108,11 @@ const urls = {
   DEFAULT_SHIPPING_ADDRESS: "/v1/shippingaddress/setasdefault",
   DELETE_SHIPPING: "/v1/shippingaddress/delete",
 
+  ADD_PICKUP_ADDRESS: "/v1/pickuplocation/add",
+  EDIT_PICKUP_ADDRESS: "/v1/pickuplocation/edit",
+  GET_PICKUP_ADDRESS: "/v1/pickuplocation/get-pickuplocations",
+  DELETE_PICKUP: "/v1/pickuplocation/delete",
+
   //Procurement
   PROCUREMENT_ORDERS: "v1/procurement/orders",
   PROCUREMENT_ORDER_DETAILS: "v1/procurement/orderdetails",
@@ -185,7 +190,6 @@ const urls = {
   GET_WITHDRAW_CHARGE: "v1/wallet/get-withdrawalfee",
   GET_DEPOSIT_CHARGE: "v1/wallet/get-depositfee",
 
-
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",
   GET_BENEFICIARIES: "v1/beneficiaryaccount/get-all",
@@ -226,5 +230,8 @@ const urls = {
   DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",
   GET_BANKS: "v1/bank/get-bank",
   GET_LEDGER_TRANSACTIONS: "v1/ledger/get-all",
+
+  ADDRESS_SEARCH: "Location/address-search",
+  PLACE_SUGGESTION: "Location/place-suggestion",
 };
 export default urls;

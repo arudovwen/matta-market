@@ -10,17 +10,17 @@
       <div class="md:col-span-2">
         <Textinput
           placeholder=""
-          label="Store name"
+          label="Location name"
           type="text"
-          name="firstName"
-          v-bind="firstNameAtt"
-          v-model="firstName"
-          :error="errors.firstName"
+          name="storeName"
+          v-bind="storeNameAtt"
+          v-model="storeName"
+          :error="errors.storeName"
         />
       </div>
       <div>
         <FormGroup label="Phone number">
-          <FormsPhoneCodes v-model="postalCode" />
+          <FormsPhoneCodes v-model="phoneNumber" />
         </FormGroup>
       </div>
       <FormGroup label="Country" :error="errors.country" name="country">
@@ -61,17 +61,16 @@
           :reduce="(lga) => lga.value"
         />
       </FormGroup>
-      <div class="xl:col-span-2">
-        <Textinput
+      <FormGroup  class="xl:col-span-2" label="address" :error="errors.address">
+        <SelectSearchSelect
+          class="w-full"
+          v-model.value="address"
+          :options="addressOptions"
           placeholder=""
-          label="Address"
-          name="street"
-          classInput="!h-[45px]"
-          v-model="street"
-          v-bind="streetAtt"
-          :error="errors.street"
+          name="address"
+          :reduce="(address) => address.value"
         />
-      </div>
+      </FormGroup>
 
       <div
         class="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 mb-9 mt-8"
@@ -99,7 +98,7 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { editshipping } from "~/services/cartservice";
+import { editPickupLocation } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
 import Lgas from "@/utils/lgastate.json";
@@ -108,28 +107,26 @@ const isOpen = inject("isOpen");
 const detail = inject("detail");
 const type = inject("type");
 const isLoading = ref(false);
-const shippingStore = useShippingStore();
+const pickupStore = usePickupStore();
 const formValues = {
   id: "",
-  firstName: "",
-  lastName: "",
-  street: "",
-  country: "",
+  storeName: "",
+  address: "",
+  country: "Nigeria",
   state: "",
   lga: "",
-  isDefault: false,
+  phoneNumber: "",
 };
 onMounted(() => {
   setValues(detail.value);
 });
 const schema = yup.object({
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
-  street: yup.string().required("Address is required"),
+  storeName: yup.string().required("First name is required"),
+  address: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
-  lga: yup.string().required("City is required"),
-  isDefault: yup.boolean(),
+  lga: yup.string(),
+  phoneNumber: yup.string().required("Postal code is required"),
 });
 
 const { handleSubmit, defineField, errors, setValues } = useForm({
@@ -137,13 +134,12 @@ const { handleSubmit, defineField, errors, setValues } = useForm({
   initialValues: formValues,
 });
 
-const [firstName, firstNameAtt] = defineField("firstName");
-const [lastName, lastNameAtt] = defineField("lastName");
-const [street, streetAtt] = defineField("street");
-const [country, countryAtt] = defineField("country");
-const [state, stateAtt] = defineField("state");
-const [lga, lgaAtt] = defineField("lga");
-const [isDefault] = defineField("isDefault");
+const [storeName, storeNameAtt] = defineField("storeName");
+const [country] = defineField("country");
+const [state] = defineField("state");
+const [phoneNumber] = defineField("phoneNumber");
+const [lga] = defineField("lga");
+const [address, addressAtt] = defineField("address");
 
 const allcountries = computed(() => {
   return CountryList.map((item) => {
@@ -180,12 +176,12 @@ const lgasOption = computed(() => {
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  editshipping(values)
+  editPickupLocation(values)
     .then((res) => {
       if (res.status === 200) {
         toast.info("Address updated");
         isOpen.value = false;
-        shippingStore.getAlladdress();
+        pickupStore.getAlladdress();
       }
     })
 

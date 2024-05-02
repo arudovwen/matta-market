@@ -23,7 +23,7 @@
             "
             class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer"
           >
-            <div @click="handleDefault(n.id)" class="mb-1">
+            <div class="mb-1">
               <CheckoutPickupAddress :detail="n" :active="n?.isDefault" />
             </div>
             <div class="flex gap-x-5 mt-3">
@@ -84,7 +84,7 @@
 </template>
 
 <script setup>
-import { setdefaultaddress, deleteAddress } from "~/services/cartservice";
+import {  deletePickupLocation } from "~/services/cartservice";
 import { toast } from "vue3-toastify";
 
 defineProps(["title"]);
@@ -105,19 +105,6 @@ function btnFunction() {
 onMounted(() => {
   pickupStore.getAlladdress();
 });
-function handleDefault(id) {
-  setdefaultaddress(id)
-    .then((res) => {
-      if (res.status === 200) {
-        isOpen.value = false;
-        pickupStore.getAlladdress();
-        toast.success("Default address updated");
-      }
-    })
-    .catch((err) => {
-      toast.error(err.response.data.message || err.response.data.Message);
-    });
-}
 
 function handleEdit(val) {
   detail.value = val;
@@ -131,7 +118,7 @@ function handleDelete(val) {
 }
 function deleteItem() {
   deleteLoading.value = true;
-  deleteAddress(detail.value.id)
+  deletePickupLocation(detail.value.id)
     .then(() => {
       pickupStore.getAlladdress();
       deleteLoading.value = false;

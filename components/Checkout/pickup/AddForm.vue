@@ -12,15 +12,15 @@
           placeholder=""
           label="Location name"
           type="text"
-          name="locationName"
-          v-bind="locationNameAtt"
-          v-model="locationName"
-          :error="errors.locationName"
+          name="storeName"
+          v-bind="storeNameAtt"
+          v-model="storeName"
+          :error="errors.storeName"
         />
       </div>
       <div>
         <FormGroup label="Phone number">
-          <FormsPhoneCodes v-model="phone" />
+          <FormsPhoneCodes v-model="phoneNumber" />
         </FormGroup>
       </div>
       <FormGroup label="Country" :error="errors.country" name="country">
@@ -61,20 +61,21 @@
           :reduce="(lga) => lga.value"
         />
       </FormGroup>
-      <div class="xl:col-span-2">
-        <Textinput
+  
+      <FormGroup  class="xl:col-span-2" label="address" :error="errors.address">
+        <SelectSearchSelect
+          class="w-full"
+          v-model.value="address"
+          :options="addressOptions"
           placeholder=""
-          label="Address"
-          name="street"
-          classInput="!h-[45px]"
-          v-model="street"
-          v-bind="streetAtt"
-          :error="errors.street"
+          name="address"
+          :reduce="(address) => address.value"
         />
-      </div>
-     
+      </FormGroup>
 
-      <div class="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5  mb-9 mt-8">
+      <div
+        class="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 mb-9 mt-8"
+      >
         <AppButton
           type="button"
           :isLoading="isLoading"
@@ -87,7 +88,7 @@
           type="submit"
           :isLoading="isLoading"
           :isDisabled="isLoading"
-          text="Update location"
+          text="Add location"
           btnClass="normal-case btn-primary !py-3"
         />
       </div>
@@ -98,32 +99,31 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { addshipping } from "~/services/cartservice";
+import { addPickupLocation, addressSearch } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
 import Lgas from "@/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
-const shippingStore = useShippingStore();
+const addressOptions = ref([]);
+const pickupStore = usePickupStore();
 const isLoading = ref(false);
 const formValues = {
-  locationName: "",
-  lastName: "",
-  street: "",
-  country: "",
+  storeName: "",
+  address: "",
+  country: "Nigeria",
   state: "",
   lga: "",
-  phone: "",
-  isDefault: false,
+  phoneNumber: "",
 };
 
 const schema = yup.object({
-  locationName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
-  street: yup.string().required("Address is required"),
+  storeName: yup.string().required("First name is required"),
+  address: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
-  phone: yup.string().required("Postal code is required"),
+  lga: yup.string(),
+  phoneNumber: yup.string().required("Postal code is required"),
 });
 
 const { handleSubmit, defineField, errors } = useForm({
@@ -131,14 +131,12 @@ const { handleSubmit, defineField, errors } = useForm({
   initialValues: formValues,
 });
 
-const [locationName, locationNameAtt] = defineField("locationName");
-const [lastName, lastNameAtt] = defineField("lastName");
-const [street, streetAtt] = defineField("street");
-const [country, countryAtt] = defineField("country");
-const [state, stateAtt] = defineField("state");
-const [phone, phoneAtt] = defineField("phone");
-const [lga, lgaAtt] = defineField("lga");
-const [isDefault, isDefaultAtt] = defineField("isDefault");
+const [storeName, storeNameAtt] = defineField("storeName");
+const [country] = defineField("country");
+const [state] = defineField("state");
+const [phoneNumber] = defineField("phoneNumber");
+const [lga] = defineField("lga");
+const [address, addressAtt] = defineField("address");
 
 const allcountries = computed(() => {
   return CountryList.map((item) => {
@@ -176,11 +174,11 @@ const lgasOption = computed(() => {
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  addshipping(values)
+  addPickupLocation(values)
     .then((res) => {
       if (res.status === 200) {
         toast.info("Address added");
-        shippingStore?.getAlladdress();
+        pickupStore?.getAlladdress();
         isOpen.value = false;
       }
     })
@@ -191,5 +189,16 @@ const onSubmit = handleSubmit((values) => {
         toast.error(err.response.data.message || err.response.data.Message);
       }
     });
+});
+
+watch(address, () => {
+  addressSearch({ text: address.value }).then((res) => {
+    if (res.status === 200) {
+      addressOptions.value = res.data.map((i) => ({
+        label: i.label,
+        value: i.label,
+      }));
+    }
+  });
 });
 </script>
