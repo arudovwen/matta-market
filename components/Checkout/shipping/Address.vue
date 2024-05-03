@@ -14,7 +14,7 @@
       {{ detail.street }}
     </p>
     <p class="text-sm mb-[7px] max-w-[280px]">
-      {{ detail.lga }}, {{ detail.state }}, {{ detail.country }}
+      {{ detail.lga }}, &nbsp;{{ detail.state }}, &nbsp;{{ detail.country }}
     </p>
   </div>
 </template>

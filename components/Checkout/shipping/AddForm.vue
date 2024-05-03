@@ -54,11 +54,7 @@
           }`"
         />
       </FormGroup>
-      <FormGroup
-        v-if="country?.toLowerCase() == 'nigeria'"
-        label="LGA"
-        :error="errors.lga"
-      >
+      <FormGroup label="LGA" :error="errors.lga" class="xl:col-span-2">
         <SelectVueSelect
           class="w-full"
           v-model.value="lga"
@@ -66,10 +62,11 @@
           placeholder="Select your lga"
           name="lga"
           :reduce="(lga) => lga.value"
+          :disabled="country?.toLowerCase() !== 'nigeria'"
         />
       </FormGroup>
 
-      <FormGroup class="xl:col-span-2" label="street" :error="errors.street">
+      <FormGroup class="xl:col-span-2" label="Street" :error="errors.street">
         <SelectSearchSelect
           class="w-full"
           v-model.value="street"

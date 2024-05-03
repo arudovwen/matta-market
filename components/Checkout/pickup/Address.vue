@@ -13,7 +13,7 @@
       {{ detail.phoneNumber }}
     </p>
     <p class="text-sm capitalize">
-      {{ detail.lga }}, {{ detail.state }}, {{ detail.country }}
+      {{ detail.lga }},&nbsp; {{ detail.state }},&nbsp; {{ detail.country }}
     </p>
   </div>
 </template>

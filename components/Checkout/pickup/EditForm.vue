@@ -48,7 +48,7 @@
         />
       </FormGroup>
       <FormGroup
-        v-if="country?.toLowerCase() == 'nigeria'"
+       
         label="LGA"
         :error="errors.lga"
       >
@@ -59,6 +59,7 @@
           placeholder="Select your lga"
           name="lga"
           :reduce="(lga) => lga.value"
+          :disabled="country?.toLowerCase() !== 'nigeria'"
         />
       </FormGroup>
       <FormGroup  class="xl:col-span-2" label="address" :error="errors.address">
