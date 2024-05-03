@@ -82,7 +82,7 @@
                 >
                   <AppStatusButton
                     stattype="wallet"
-                    :status="item.legerAction"
+                    :status="item.transactionType"
                   />
                 </td>
               </tr>
@@ -105,8 +105,8 @@
                 <div class="!text-[10px] flex justify-end">
                   <AppStatusButton
                     stattype="wallet"
-                    :status="item.transaction"
-                  />
+                    :status="item.transactionType"
+                  />  
                 </div>
               </div>
             </div>

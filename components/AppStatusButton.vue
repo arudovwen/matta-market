@@ -150,9 +150,9 @@ const ParentOrderStatusText = {
   },
 };
 const WalletStatus = {
-  1: {
+  0: {
     text: "Transaction",
-    className: StatusClass[1],
+    className: StatusClass[3],
   },
   1: {
     text: "Account Funding",
