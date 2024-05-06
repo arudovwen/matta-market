@@ -97,7 +97,7 @@
               <div class="text-left text-matta-black">
                 <span class="block text-sm mb-1"> {{ item.reference }}</span>
                 <span class="block text-sm mb-1">
-                  {{ moment(item.transactionDate).format("ll") }}</span
+                  {{ moment(item.transactionDate).format("lll") }}</span
                 >
                 <span class="block text-base font-semibold">
                   {{ currencyFormat(item.amount, item.currencyCode) }}</span

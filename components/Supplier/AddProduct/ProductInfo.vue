@@ -291,16 +291,24 @@
                 <label
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
                 >
-                  
                   <span>Pickup location </span>
                 </label>
                 <SelectVueSelect
-                  v-model="v$.pickup.$model"
+                  v-model="v$.pickUpLocationId.$model"
                   :options="locations"
                   :reduce="(location) => location.value"
                   placeholder="Select location"
                   :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
                 />
+                <div class="flex justify-start mt-1">
+                  <button
+                  @click="isLocationOpen = true"
+                    class="text-xs text-primary-500 font-medium"
+                    type="button"
+                  >
+                    + Add a new location
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -666,6 +674,14 @@
       </template>
     </Modal>
   </div>
+
+  <ModalCenter>
+    <template #default>
+      <div class="w-full max-w-max p-6 md:py-9 md:px-10 z-[999] relative">
+        <CheckoutPickupAddForm @close="pickUpStore.getAlladdress()" />
+      </div>
+    </template>
+  </ModalCenter>
 </template>
 
 <script setup>
@@ -725,7 +741,8 @@ import StatesSelect from "~/components/forms/StatesSelect";
 import { uploadfile } from "~/services/onboardingservices";
 import countries from "~/utils/countries.json";
 
-const pickupStore = usePickupStore();
+const isLocationOpen = ref(false)
+const pickUpStore = usePickupStore();
 const route = useRoute();
 const router = useRouter();
 const producerForm = reactive({
@@ -768,7 +785,7 @@ const headers = computed(() => [
   "",
 ]);
 onMounted(() => {
-  pickupStore.getAlladdress();
+  pickUpStore.getAlladdress();
   getMarkets(queryParams).then((res) => {
     markets.value = res.data.data;
     form.productId = route.query.id;
@@ -778,7 +795,7 @@ onMounted(() => {
 const isAddingPackage = ref(false);
 const isLoading = ref(false);
 const locations = computed(() =>
-  pickupStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
+  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
 );
 const selectedMeasurement = ref(measurements[0]);
 // const newpackage = ref("");
@@ -800,9 +817,7 @@ const rules = {
     required,
     maxLength: maxLength(100),
   },
-  pickup: {
-    
-  },
+  pickUpLocationId: {},
   manufacturer: {
     required: helpers.withMessage("Select a producer", required),
   },
@@ -1019,6 +1034,7 @@ function handleAddingPackage() {
   isAddingPackage.value = true;
 }
 provide("images", form.gallery);
+provide("isOpen",isLocationOpen)
 </script>
 
 <style lang="scss" scoped>

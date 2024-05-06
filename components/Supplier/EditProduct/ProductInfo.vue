@@ -289,12 +289,21 @@
                   <span>Pickup location </span>
                 </label>
                 <SelectVueSelect
-                  v-model="v$.pickup.$model"
+                  v-model="v$.pickUpLocationId.$model"
                   :options="locations"
                   :reduce="(location) => location.value"
                   placeholder="Select location"
                   :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
                 />
+                <div class="flex justify-start mt-1">
+                  <button
+                  @click="isLocationOpen = true"
+                    class="text-xs text-primary-500 font-medium"
+                    type="button"
+                  >
+                    + Add a new location
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -597,6 +606,13 @@
       </template>
     </IndexModal>
   </div>
+  <ModalCenter>
+    <template #default>
+      <div class="w-full max-w-max p-6 md:py-9 md:px-10 z-[999] relative">
+        <CheckoutPickupAddForm @close="pickUpStore.getAlladdress()" />
+      </div>
+    </template>
+  </ModalCenter>
 </template>
 
 <script setup>
@@ -647,7 +663,8 @@ import StatesSelect from "~/components/forms/StatesSelect";
 import countries from "~/utils/countries.json";
 import { uploadfile } from "~/services/onboardingservices";
 
-const pickupStore = usePickupStore();
+const isLocationOpen = ref(false)
+const pickUpStore = usePickupStore();
 const route = useRoute();
 const router = useRouter();
 const detail = ref(null);
@@ -725,7 +742,7 @@ const rules = {
     required,
     maxLength: maxLength(100),
   },
-  pickup: {},
+  pickUpLocationId: {},
   manufacturer: {
     required: helpers.withMessage("Select a prodicer", required),
   },
@@ -757,7 +774,7 @@ const rules = {
 const invalidCredentials = ref(false);
 const v$ = useVuelidate(rules, form);
 onMounted(() => {
-  pickupStore.getAlladdress();
+  pickUpStore.getAlladdress();
 });
 watch(
   () => form.unit,
@@ -770,7 +787,7 @@ watch(
   }
 );
 const locations = computed(() =>
-  pickupStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
+  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
 );
 function create_UUID() {
   var dt = new Date().getTime();
@@ -925,6 +942,7 @@ function handleAddingPackage() {
   isAddingPackage.value = true;
 }
 provide("images", form.gallery);
+provide("isOpen",isLocationOpen)
 </script>
 
 <style lang="scss" scoped>

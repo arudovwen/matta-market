@@ -47,11 +47,7 @@
           }`"
         />
       </FormGroup>
-      <FormGroup
-       
-        label="LGA"
-        :error="errors.lga"
-      >
+      <FormGroup label="LGA" :error="errors.lga">
         <SelectVueSelect
           class="w-full"
           v-model.value="lga"
@@ -62,8 +58,8 @@
           :disabled="country?.toLowerCase() !== 'nigeria'"
         />
       </FormGroup>
-  
-      <FormGroup  class="xl:col-span-2" label="address" :error="errors.address">
+
+      <FormGroup class="xl:col-span-2" label="address" :error="errors.address">
         <SelectSearchSelect
           class="w-full"
           v-model.value="address"
@@ -79,7 +75,6 @@
       >
         <AppButton
           type="button"
-          :isLoading="isLoading"
           :isDisabled="isLoading"
           @click="isOpen = false"
           text="Cancel"
@@ -105,6 +100,7 @@ import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
 import Lgas from "@/utils/lgastate.json";
 
+const emits = defineEmits(["close"]);
 const isOpen = inject("isOpen");
 const addressOptions = ref([]);
 const pickupStore = usePickupStore();
@@ -180,6 +176,7 @@ const onSubmit = handleSubmit((values) => {
       if (res.status === 200) {
         toast.info("Address added");
         pickupStore?.getAlladdress();
+        emits("close");
         isOpen.value = false;
       }
     })
