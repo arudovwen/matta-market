@@ -234,7 +234,21 @@
           <GoogleTranslateSelect
             default-language-code="en"
             default-page-language-code="en"
-            :fetch-browser-language="false"
+            :fetch-browser-language="true"
+            :languages="[
+              {
+                code: 'en',
+                name: 'En',
+                cname: '英语',
+                ename: 'English',
+              },
+              {
+                code: 'fr',
+                name: 'Fr',
+                cname: '法语',
+                ename: 'French',
+              },
+            ]"
             trigger="click"
             @select="handleGoogleTranslateSelect"
           />
@@ -455,7 +469,7 @@ onMounted(() => {
       getNotifications();
     }, 2 * 60 * 1000);
   }
-  geoFindMe()
+  geoFindMe();
 });
 const notifyParams = reactive({
   PageNumber: 1,
