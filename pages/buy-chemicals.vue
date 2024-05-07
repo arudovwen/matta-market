@@ -10,7 +10,6 @@
     <BuyChemicalLove />
     <BuyChemicalTraditional />
     <BuyChemicalFaqs />
-    <BuyChemicalStart />
   </section>
 </template>
 <script setup>

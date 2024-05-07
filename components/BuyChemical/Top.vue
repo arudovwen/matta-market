@@ -9,7 +9,7 @@
     </p>
 
     <div class="flex gap-x-4 mb-[64px]">
-      <AppButton text="Free sign up" btnClass="bg-transparent border-[#D0D5DD] border !px-[18px] !py-3 text-[#344054]" />
+      <AppButton   @click="navigateTo('/auth/vendor-register')" text="Free sign up" btnClass="bg-transparent border-[#D0D5DD] border !px-[18px] !py-3 text-[#344054]" />
       <AppButton text="Watch demo video" btnClass="bg-primary-500 text-white  border-primary-500  border !px-[18px] !py-3" />
     </div>
 

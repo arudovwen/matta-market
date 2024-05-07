@@ -1,5 +1,30 @@
 <template>
   <footer class="bg-[#0C111D] pt-16 pb-8">
+    <div class="container">
+      <div class="flex justify-between gap-x-20">
+        <div class="flex-1">
+          <div class="">
+            <h2 class="text-white font-semibold text-[30px] leading-[1.2] mb-4">
+              Start selling with Matta
+            </h2>
+            <p class="mb-8 text-lg text-[#EAECF0]">
+              Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying
+              Seamless Procurement and Logistics With Matta.
+            </p>
+          </div>
+        </div>
+        <div>
+          <AppButton
+            @click="navigateTo('/auth/vendor-register')"
+            text="Get started"
+            icon="lets-icons:arrow-right"
+            btnClass="bg-primary-500 text-white  border-primary-500  border !px-[18px] !py-3"
+            iconPosition="right"
+          />
+        </div>
+      </div>
+      <hr class="border-[#182230] mb-6" />
+    </div>
     <div class="rounded-lg container">
       <div
         class="grid text-center lg:text-left grid-cols-1 lg:grid-cols-4 gap-y-8 lg:gap-x-10 lg:pt-8 mb-14"
@@ -79,9 +104,7 @@
             <NuxtLink to="/privacy-policies" class="text-sm md:text-sm"
               >Privacy policy</NuxtLink
             >
-            <span
-              class=" text-[#EAECF0] w-[2px] h-[2px] rounded-full"
-            ></span>
+            <span class="text-[#EAECF0] w-[2px] h-[2px] rounded-full"></span>
             <NuxtLink to="/terms-and-conditions" class="text-sm md:text-sm"
               >Terms of use</NuxtLink
             >

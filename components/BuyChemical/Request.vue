@@ -12,6 +12,7 @@
           Specify your chemical requirements using our easy request form and receive tailored quotes. Our platform is designed to efficiently align your needs with the ideal products and suppliers, simplifying your procurement process.
         </p>
         <AppButton
+        @click="navigateTo('/request-product')"
           text="Submit Your Product Request"
           btnClass="bg-primary-500 text-white  border-primary-500  border !px-[18px] !py-3"
         />

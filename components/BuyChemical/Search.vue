@@ -13,6 +13,7 @@
           construction and FMCGs.
         </p>
         <AppButton
+        @click="navigateTo('/')"
           text="Start your Chemical Search"
           btnClass="bg-primary-500 text-white  border-primary-500  border !px-[18px] !py-3"
         />

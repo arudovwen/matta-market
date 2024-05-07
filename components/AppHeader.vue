@@ -167,7 +167,7 @@
             </li>
           </ul>
         </div>
-        <div class="flex items-center gap-x-4 text-sm">
+        <div class="flex items-center gap-x-2 text-sm">
           <!-- <span
             :class="{
               'hidden md:flex': view.atTopOfPage,
