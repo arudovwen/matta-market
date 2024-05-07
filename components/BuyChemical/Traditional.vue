@@ -1,25 +1,28 @@
 <template>
   <section>
     <div class="container py-[96px]">
-      <h2 class="text-5xl font-semibold text-center mb-5">
+      <h2 data-aos="fade-up"
+      data-aos-once="true" class="text-2xl md:text-5xl font-semibold text-center mb-5">
         Matta vs Traditional Procurement
       </h2>
-      <p class="text-2xl text-[#475467] text-center mb-10">
+      <p  data-aos="fade-up"
+      data-aos-once="true" class="text-base md:text-2xl text-[#475467] text-center mb-10">
         The Advantage is Clear
       </p>
 
-      <div>
-        <table>
+      <div class="mx-auto max-w-4xl">
+        <table data-aos="fade-up"
+      data-aos-once="true" class="w-full table-auto">
           <thead>
             <tr>
               <td></td>
               <td
-                class="border border-[#EAECF0] text-center px-4 py-[10px] text-lg font-semibold rounded-tl-lg overflow-hidden"
+                class="border border-[#EAECF0] text-center px-4 py-[10px] text-xs md:text-sm lg:text-lg font-semibold rounded-tl-lg overflow-hidden"
               >
                 Matta
               </td>
               <td
-                class="border border-[#EAECF0] px-4 py-[10px] text-lg font-semibold rounded-tr-lg"
+                class="border border-[#EAECF0] px-3 md:px-4 py-[10px] text-xs md:text-sm lg:text-lg font-semibold rounded-tr-lg"
               >
                 Traditional procurement
               </td>
@@ -31,16 +34,16 @@
               v-for="i in data"
               :key="i.label"
             >
-              <td class="px-6 py-5 text-sm font-medium flex items-center gap-x-1">
+              <td class="px-3 md:px-6 py-5  text-[11px] md:text-sm font-medium flex items-center gap-x-1">
                 {{ i.label }} <AppIcon icon="octicon:question-24" iconClass="text-[#98A2B3]" />
               </td>
               <td
-                class="px-4 py-5 text-sm border-l border-[#EAECF0] text-[#475467]"
+                class="px-3 md:px-4 py-5 text-[11px] md:text-sm border-l border-[#EAECF0] text-[#475467]"
               >
                 {{ i.matta }}
               </td>
               <td
-                class="px-4 py-5 text-sm border-l border-[#EAECF0] text-[#475467]"
+                class="px-3 md:px-4 py-5 text-[11px] md:text-sm border-l border-[#EAECF0] text-[#475467]"
               >
                 {{ i.trad }}
               </td>

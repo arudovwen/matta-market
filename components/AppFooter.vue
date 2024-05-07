@@ -1,13 +1,17 @@
 <template>
   <footer class="bg-[#0C111D] pt-16 pb-8">
     <div class="container">
-      <div class="flex justify-between gap-x-20">
+      <div
+        class="flex justify-between md:gap-x-20 flex-col md:flex-row mb-6 md:mb-0"
+      >
         <div class="flex-1">
           <div class="">
-            <h2 class="text-white font-semibold text-[30px] leading-[1.2] mb-4">
+            <h2
+              class="text-white font-semibold text-lg md:text-[30px] leading-[1.2] mb-4"
+            >
               Start selling with Matta
             </h2>
-            <p class="mb-8 text-lg text-[#EAECF0]">
+            <p class="mb-8 text-sm md:text-lg text-[#EAECF0]">
               Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying
               Seamless Procurement and Logistics With Matta.
             </p>
@@ -18,7 +22,7 @@
             @click="navigateTo('/auth/vendor-register')"
             text="Get started"
             icon="lets-icons:arrow-right"
-            btnClass="bg-primary-500 text-white  border-primary-500  border !px-[18px] !py-3"
+            btnClass="bg-primary-500 text-white  border-primary-500 !text-sm md:!text-base  border !px-[18px] !py-3"
             iconPosition="right"
           />
         </div>
@@ -27,7 +31,7 @@
     </div>
     <div class="rounded-lg container">
       <div
-        class="grid text-center lg:text-left grid-cols-1 lg:grid-cols-4 gap-y-8 lg:gap-x-10 lg:pt-8 mb-14"
+        class="grid text-center lg:text-left grid-cols-1 lg:grid-cols-4 gap-y-8 lg:gap-x-10 lg:pt-8 md:mb-14"
       >
         <div class="">
           <div class="mb-[15px]">
@@ -88,8 +92,33 @@
               </li>
             </ul>
           </div>
+       
         </div>
+        <div class="text-sm lg:hidden text-white">
+          <GoogleTranslateSelect
+              default-language-code="en"
+              default-page-language-code="en"
+              :fetch-browser-language="true"
+              :languages="[
+                {
+                  code: 'en',
+                  name: 'English',
+                  cname: '英语',
+                  ename: 'English',
+                },
+                {
+                  code: 'fr',
+                  name: 'French',
+                  cname: '法语',
+                  ename: 'French',
+                },
+              ]"
+              trigger="click"
+              @select="handleGoogleTranslateSelect"
+            />
+         </div>
       </div>
+      
       <hr class="border-[#182230] mb-6" />
       <div
         class="flex flex-col-reverse lg:flex-row gap-4 lg:gap-0 justify-between lg:items-center"
@@ -97,9 +126,12 @@
         <div
           class="order-1 md:grid-cols-2 grid gap-y-3 lg:gap-y-6 md:gap-y-0 text-left md:gap-x-4 text-[#EAECF0]"
         >
-          <p class="order-2 lg:order-1 text-sm">
-            © {{ new Date().getFullYear() }} Matta. All Rights Reserved.
-          </p>
+          <div class="order-2 lg:order-1 flex justify-between items-center">
+            <p class="text-sm">
+              © {{ new Date().getFullYear() }} Matta. All Rights Reserved.
+            </p>
+         
+          </div>
           <div class="order-1 lg:order-2 flex gap-x-2 md:gap-x-4 items-center">
             <NuxtLink to="/privacy-policies" class="text-sm md:text-sm"
               >Privacy policy</NuxtLink
@@ -117,6 +149,8 @@
 </template>
 
 <script setup>
+import GoogleTranslateSelect from "@google-translate-select/vue3";
+
 import { ref, provide } from "vue";
 
 const open = ref(false);
