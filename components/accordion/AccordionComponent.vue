@@ -1,26 +1,19 @@
 <template>
-  <div class="accordion">
+  <div class="accordion grid gap-y-8">
     <div
       v-for="(item, index) in items"
       :key="index"
-      class="border rounded-lg overflow-hidden mb-2"
+      class="overflow-hidden"
     >
       <div
         @click="toggleAccordion(index)"
-        class="w-full flex justify-between items-start text-left py-3 r bg-gray-50 gap-x-6"
+        class="w-full flex justify-between items-center text-left gap-x-6"
       >
-        <p class="leading-normal px-2 font-medium">{{ item.title }}</p>
+        <p class="leading-normal px-2 font-semibold text-base">{{ item.title }}</p>
 
-        <i
-          :class="`uil text-xl ${
-            isOpen(index) ? 'uil-angle-up' : 'uil-angle-down'
-          }`"
-        ></i>
+        <AppIcon :icon="!isOpen(index) ? 'ei:plus' : 'ei-minus'" iconClass="text-[#98A2B3] text-lg" />
       </div>
-      <div
-        v-if="isOpen(index)"
-        class="px-2 py-3 text-left bg-white font-normal"
-      >
+      <div v-if="isOpen(index)" class="px-2 py-1 text-left font-normal text-sm text-[#475467]">
         <slot :item="item"></slot>
       </div>
     </div>
