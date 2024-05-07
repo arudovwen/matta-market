@@ -231,7 +231,7 @@
               >
             </span> -->
           <!-- </span> -->
-          <GoogleTranslateSelect
+          <!-- <GoogleTranslateSelect
             default-language-code="en"
             default-page-language-code="en"
             :fetch-browser-language="true"
@@ -251,7 +251,7 @@
             ]"
             trigger="click"
             @select="handleGoogleTranslateSelect"
-          />
+          /> -->
           <NuxtLink to="/cart" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
