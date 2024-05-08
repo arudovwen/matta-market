@@ -12,8 +12,8 @@
       }  inline-block input-label text-sm !text-[#1B2B41B8]`"
       :for="name"
     >
-      {{ label }}</label
-    >
+      {{ label }} <RedDot v-if="isCumpulsory"
+    /></label>
     <div class="relative flex items-center" :class="horizontal ? 'flex-1' : ''">
       <input
         :type="types"
@@ -53,11 +53,15 @@
           @click="toggleType"
           class="cursor-pointer text-secondary-500"
         >
-          <AppIcon icon="la:eye" class="text-[#666]" v-if="types === 'password'" />
+          <AppIcon
+            icon="la:eye"
+            class="text-[#666]"
+            v-if="types === 'password'"
+          />
           <AppIcon icon="la:eye-slash" class="text-[#666]" v-else />
         </span>
 
-        <span v-if="error && types !=='date'" class="text-danger-500">
+        <span v-if="error && types !== 'date'" class="text-danger-500">
           <AppIcon icon="heroicons-outline:information-circle" />
         </span>
 
@@ -122,6 +126,10 @@ export default {
       type: String,
       default: "text",
       //required: true,
+    },
+    isCumpulsory: {
+      type: Boolean,
+      default: false,
     },
     name: {
       type: String,

@@ -10,7 +10,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
         <div class="mb-6">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Full name</label
+            >Full name  <RedDot /></label
           >
           <input
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -31,7 +31,7 @@
         </div>
         <div class="mb-6">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Business name</label
+            >Business name  <RedDot /></label
           >
           <input
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -52,7 +52,7 @@
         </div>
         <div class="mb-6 md:col-span-2">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >E-mail</label
+            >E-mail  <RedDot /></label
           >
           <input
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -74,7 +74,7 @@
 
         <div class="mb-6">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Phone number</label
+            >Phone number  <RedDot /></label
           >
           <div class="flex relative rounded-lg h-11">
             <FormsPhoneCodes v-model="request$.phone.$model" />
@@ -92,7 +92,7 @@
 
         <div class="mb-6">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Chemical name</label
+            >Chemical name  <RedDot /></label
           >
           <input
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -114,7 +114,7 @@
 
         <div class="mb-6">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Quantity</label
+            >Quantity  <RedDot /></label
           >
           <input
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -134,7 +134,7 @@
         </div>
         <div class="mb-6">
           <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Unit</label
+            >Unit  <RedDot /></label
           >
           <select
             v-model="request$.unit.$model"
@@ -157,7 +157,7 @@
 
         <div class="mb-6 md:col-span-2">
           <label class="mb-2 font-normal text-xs block text-matta-black"
-            >Upload document</label
+            >Upload document  <RedDot /></label
           >
           <div class="relative flex items-center">
             <input

@@ -18,7 +18,7 @@
           <label
             class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >
-            <span class="text-red-500 mr-[.5px]">*</span> Package name
+           <RedDot /> Package name
           </label>
         </div>
         <Listbox v-model="title" v-bind="titleAtt" name="title">
@@ -75,7 +75,7 @@
           <label
             class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >
-            <span class="text-red-500 mr-[.5px]">*</span> Size
+           <RedDot /> Size
           </label>
           <div class="relative flex items-center">
             <Textinput
@@ -111,7 +111,7 @@
           <label
             class="mb-2 font-medium text-sm text-[#344054] flex items-center gap-x-1 text-left"
           >
-            <span class="text-red-500 mr-[.5px]">*</span>
+           <RedDot />
             <span>Purchase Price </span>
             <span
               data-toggle="tooltip"

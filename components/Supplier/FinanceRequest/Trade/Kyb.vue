@@ -9,6 +9,7 @@
           v-bind="companyNameAtt"
           v-model="companyName"
           :error="errors.companyName"
+          isCumpulsory
         />
       </div>
 
@@ -16,6 +17,7 @@
         label="Date of incorporation"
         name="dateofIncorporation"
         :error="errors.dateofIncorporation"
+        isCumpulsory
       >
         <ClientOnly>
           <VueDatePicker
@@ -33,6 +35,7 @@
         label="Business type"
         :error="errors.companyType"
         name="companyType"
+        isCumpulsory
       >
         <Select
           v-model="companyType"
@@ -44,7 +47,12 @@
         />
       </FormGroup>
 
-      <FormGroup label="Sector" :error="errors.sector" name="sector">
+      <FormGroup
+        isCumpulsory
+        label="Sector"
+        :error="errors.sector"
+        name="sector"
+      >
         <Select
           v-model="sector"
           :options="sectorOptions"
@@ -70,8 +78,14 @@
         v-bind="tinAtt"
         v-model="tin"
         :error="errors.tin"
+        isCumpulsory
       />
-      <FormGroup label="Country" :error="errors.country" name="sector">
+      <FormGroup
+        isCumpulsory
+        label="Country"
+        :error="errors.country"
+        name="sector"
+      >
         <SelectVueSelect
           :options="allcountries"
           v-model="country"
@@ -81,7 +95,7 @@
           }`"
         />
       </FormGroup>
-      <FormGroup label="State" :error="errors.state" name="state">
+      <FormGroup isCumpulsory label="State" :error="errors.state" name="state">
         <SelectVueSelect
           :options="mystates"
           :reduce="(state) => state.value"
@@ -93,6 +107,7 @@
       </FormGroup>
       <div>
         <Textinput
+          isCumpulsory
           placeholder=""
           label="City"
           name="city"
@@ -103,6 +118,7 @@
       </div>
       <div class="md:col-span-2">
         <Textinput
+          isCumpulsory
           placeholder=""
           label="Business address"
           name="address"
@@ -113,6 +129,7 @@
       </div>
       <div class="md:col-span-2">
         <Textarea
+          isCumpulsory
           placeholder=""
           label="Brief description of the company"
           name="description"
@@ -132,28 +149,40 @@
           "
           class="grid gap-y-6"
         >
-          <FormGroup :error="errors.mermat" class="col-span-2">
+          <FormGroup isCumpulsory :error="errors.mermat" class="col-span-2">
             <FileUpload
               label="Memorandum and Articles of Association"
               id="mermat"
               :modelValue="mermat"
             />
           </FormGroup>
-          <FormGroup :error="errors.incorporation" class="col-span-2">
+          <FormGroup
+            isCumpulsory
+            :error="errors.incorporation"
+            class="col-span-2"
+          >
             <FileUpload
               label="Certificate of Incorporation"
               id="incorporation"
               :modelValue="incorporation"
             />
           </FormGroup>
-          <FormGroup :error="errors.statusReport" class="col-span-2">
+          <FormGroup
+            isCumpulsory
+            :error="errors.statusReport"
+            class="col-span-2"
+          >
             <FileUpload
               label="CAC Status Report"
               id="statusReport"
               :modelValue="statusReport"
             />
           </FormGroup>
-          <FormGroup :error="errors.utilityBill" class="col-span-2">
+          <FormGroup
+            isCumpulsory
+            :error="errors.utilityBill"
+            class="col-span-2"
+          >
             <FileUpload
               label="Utility bill"
               id="utilityBill"

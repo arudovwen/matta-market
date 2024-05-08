@@ -19,10 +19,10 @@
               name="about"
               v-bind="aboutAtt"
               v-model="about"
-              :error="errors.about"
+              :error="errors.about" isCumpulsory
             />
 
-            <FormGroup label="Discount type" :error="errors.tenor" name="tenor">
+            <FormGroup isCumpulsory label="Discount type" :error="errors.tenor" name="tenor">
               <Select
                 v-model="tenor"
                 :options="options"
@@ -33,7 +33,7 @@
               />
             </FormGroup>
 
-            <FormGroup label="Discount value" :error="errors.amount">
+            <FormGroup isCumpulsory label="Discount value" :error="errors.amount">
               <CurrencyInput
                 min="1"
                 :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
@@ -46,7 +46,7 @@
                 }"
               />
             </FormGroup>
-            <FormGroup label="Number of usage per user" :error="errors.amount">
+            <FormGroup isCumpulsory label="Number of usage per user" :error="errors.amount">
               <CurrencyInput
                 min="1"
                 :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
@@ -59,7 +59,7 @@
                 }"
               />
             </FormGroup>
-            <Textinput
+            <Textinput isCumpulsory
               placeholder=""
               label="Expiration Date"
               type="date"

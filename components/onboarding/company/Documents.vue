@@ -19,6 +19,7 @@
             label="Memorandum and Articles of Association"
             id="mermat"
             :modelValue="docUrl(1)"
+            isCumpulsory
           />
           <span
             @click="downloadFile(docUrl(1), 'MERMAT')"
@@ -35,6 +36,7 @@
             label="Certificate of Incorporation"
             id="incorporation"
             :modelValue="docUrl(0)"
+            isCumpulsory
           />
           <span @click="downloadFile(docUrl(0), 'CAC')" v-if="docUrl(0)">
             <span class="block text-xs text-blue-500 mt-1"
@@ -47,6 +49,7 @@
             label="CAC Status Report"
             id="statusReport"
             :modelValue="docUrl(2)"
+            isCumpulsory
           />
           <span
             @click="downloadFile(docUrl(2), 'Status report')"
@@ -62,6 +65,7 @@
             label="Utility bill"
             id="utitlityBill"
             :modelValue="docUrl(3)"
+            isCumpulsory
           />
           <span
             @click="downloadFile(docUrl(3), 'Utility bill')"

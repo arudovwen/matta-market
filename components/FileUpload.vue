@@ -1,6 +1,8 @@
 <template>
   <div>
-    <label class="block text-sm mb-[10px] text-[#344054]">{{ label }}</label>
+    <label class="block text-sm mb-[10px] text-[#344054]"
+      >{{ label }} <RedDot v-if="isCumpulsory"
+    /></label>
     <div
       class="flex-1 rounded-lg py-1 pr-[14px] pl-2 h-11 text-sm w-full border border-[##EAECF0] placeholder:text-[#B6B7B9] bg-[#F9FAFB] focus:outline-matta-black/20 flex items-center"
     >
@@ -61,6 +63,10 @@ const props = defineProps({
   accept: {
     default: "pdf,jpeg,jpg,png",
   },
+  isCumpulsory: {
+    default: false,
+    type: Boolean,
+  },
 });
 
 const handleChange = inject("handleChange");
@@ -77,7 +83,6 @@ function handleEvent(e) {
   const fileExtension = file.name.split(".").pop().toLowerCase();
 
   if (!props.accept.split(",").includes(fileExtension)) {
-   
     // Show an error message or handle accordingly
     toast.error("Invalid file type. Please upload a document.");
     return;
@@ -111,7 +116,7 @@ function handleEvent(e) {
 function handleMultiple(e) {
   const files = Object.values(e.target.files);
 
-  if(!files.length) return
+  if (!files.length) return;
 
   const promises = [];
   files.forEach((file) => {

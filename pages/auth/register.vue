@@ -33,6 +33,7 @@
               v-bind="firstNameAtt"
               v-model="firstName"
               :error="errors.firstName"
+              isCumpulsory
             />
           </div>
           <div>
@@ -44,6 +45,7 @@
               v-bind="lastNameAtt"
               v-model="lastName"
               :error="errors.lastName"
+              isCumpulsory
             />
           </div>
           <div>
@@ -55,6 +57,7 @@
               v-bind="emailAtt"
               v-model="email"
               :error="errors.email"
+              isCumpulsory
             />
           </div>
           <div>
@@ -66,6 +69,7 @@
               v-bind="phoneAtt"
               v-model="phone"
               :error="errors.phone"
+              isCumpulsory
             />
           </div>
           <div>
@@ -77,6 +81,7 @@
               v-bind="passwordAtt"
               v-model="password"
               :error="errors.password"
+              isCumpulsory
             />
           </div>
           <div>
@@ -88,6 +93,7 @@
               v-bind="confirmPasswordAtt"
               v-model="confirmPassword"
               :error="errors.confirmPassword"
+              isCumpulsory
             />
           </div>
           <div

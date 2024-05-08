@@ -18,6 +18,7 @@
             v-model="storeName"
             :error="errors.storeName"
             @keyup="getProfileData()"
+            isCumpulsory
           />
           <div>
             <label
@@ -34,6 +35,7 @@
                 >{{ url }}</span
               >
               <Textinput
+              isCumpulsory
                 placeholder=""
                 label=""
                 name="storeSlug"

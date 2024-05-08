@@ -10,7 +10,8 @@
       :class="`${classLabel} inline-block input-label `"
       :for="name"
     >
-      {{ label }} <span v-if="required" className="text-red-600">*</span> </label
+      {{ label }}  <RedDot v-if="isCumpulsory"
+    /> </label
     >
     <div class="relative">
       <slot></slot>
@@ -82,7 +83,7 @@ export default {
     description: {
       type: String,
     },
-    required: {
+    isCumpulsory: {
       type: Boolean,
       default: false,
     }

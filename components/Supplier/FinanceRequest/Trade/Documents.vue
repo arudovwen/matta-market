@@ -5,7 +5,7 @@
         :error="isFieldTouched('BankStatement') ? errors.BankStatement : ''"
         class="col-span-2"
         label="Bank Statement"
-        required
+        isCumpulsory
       >
         <FileUpload id="BankStatement" :multiple="true" />
         <div
@@ -28,7 +28,7 @@
         :error="isFieldTouched('ProformaInvoice') ? errors.ProformaInvoice : ''"
         class="col-span-2"
         label="Proforma Invoice"
-        required
+        isCumpulsory
       >
         <FileUpload id="ProformaInvoice" :multiple="true" />
         <div
@@ -55,7 +55,7 @@
         "
         class="col-span-2"
         v-if="id == 1 || id == 3"
-        required
+        isCumpulsory
       >
         <FileUpload
           id="EvidenceOfPreviouslySuccessfulSupplyContracts"

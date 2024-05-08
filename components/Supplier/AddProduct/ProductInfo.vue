@@ -16,7 +16,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Product
+                   <RedDot /> Product
                     generic name
                   </label>
                   <input
@@ -67,7 +67,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Producer
+                   <RedDot /> Producer
                   </label>
 
                   <Combobox v-model="form.manufacturer">
@@ -192,7 +192,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Markets
+                   <RedDot /> Markets
                   </label>
                   <MultiInput
                     :markets="allmarkets"
@@ -226,7 +226,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Applications
+                   <RedDot /> Applications
                   </label>
                   <MultiInput
                     :markets="technologies"
@@ -259,7 +259,7 @@
                 <label
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
                 >
-                  <span class="text-red-500 mr-[.5px]">*</span>
+                 <RedDot />
                   <span>Description </span>
                   <span
                     data-toggle="tooltip"
@@ -321,7 +321,7 @@
     >
       <div class="w-[250px]">
         <h2 class="text-sm text-[#101828] font-semibold">
-          Packages & Availability <span class="text-red-500 mr-[.5px]">*</span>
+          Packages & Availability<RedDot />
         </h2>
         <p class="text-xs text-[#475467]">Provide package information here.</p>
       </div>
@@ -477,7 +477,7 @@
     >
       <div class="w-[250px]">
         <h2 class="text-sm text-[#101828] font-semibold">
-          Gallery <span class="text-red-500 mr-[.5px]">*</span>
+          Gallery<RedDot />
         </h2>
         <p class="text-xs text-[#475467]">
           Upload pictures of your products here.

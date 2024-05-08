@@ -4,7 +4,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
         <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >First name</label
+          >First name <RedDot /></label
         >
         <input
           v-model="v$.firstName.$model"
@@ -25,7 +25,7 @@
       </div>
       <div class="mb-6">
         <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >Last name</label
+          >Last name <RedDot /></label
         >
         <input
           v-model="v$.lastName.$model"
@@ -47,7 +47,7 @@
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
-        <label for="email" class="mb-2 font-normal text-xs block">E-mail</label>
+        <label for="email" class="mb-2 font-normal text-xs block">E-mail <RedDot /></label>
         <input
           v-model="v$.email.$model"
           :class="{ 'border-red-500': v$.email.$error }"
@@ -70,7 +70,7 @@
       </div>
       <div class="mb-6">
         <label class="mb-2 font-normal text-xs block" for="phone"
-          >Phone number
+          >Phone number <RedDot />
         </label>
         <div class="flex relative rounded-lg h-11">
           <input
@@ -98,7 +98,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
         <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >BVN</label
+          >BVN <RedDot /></label
         >
         <input
           v-model="v$.bvn.$model"
@@ -119,7 +119,7 @@
       </div>
       <div class="mb-6">
         <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >Date of birth</label
+          >Date of birth <RedDot /></label
         >
         <ClientOnly>
           <VueDatePicker
@@ -172,6 +172,7 @@
         label="Upload ID (Passport, Driver’s License, or NIN)"
         id="identityUrl"
         :modelValue="form.identityUrl"
+        isCumpulsory
       />
       <span
         @click="downloadFile(form.identityUrl, 'Identity card')"
@@ -197,6 +198,7 @@
         label="Upload Signature"
         id="signatureUrl"
         :modelValue="form.signatureUrl"
+        isCumpulsory
       />
       <span
         @click="downloadFile(form.signatureUrl, 'Signature')"

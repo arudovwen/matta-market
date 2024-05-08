@@ -68,7 +68,7 @@
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
                       Company name
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
                     <input
                       v-model="v$.companyName.$model"
@@ -91,7 +91,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >Date Of Incorporation
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
 
                     <ClientOnly>
@@ -121,7 +121,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >Business type
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
 
                     <div class="flex relative items-center">
@@ -156,7 +156,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >Business sector
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
 
                     <div class="flex relative items-center">
@@ -195,7 +195,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >E-mail
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
                     <input
                       v-model="v$.email.$model"
@@ -218,7 +218,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >Phone number
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
                     <div class="flex relative rounded-lg h-11">
                       <FormsPhoneCodes v-model="v$.phone.$model" />
@@ -240,7 +240,7 @@
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
                       Registration number
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
                     <input
                       v-model="v$.registrationNo.$model"
@@ -263,7 +263,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >TIN number
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
 
                     <input
@@ -337,7 +337,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >Company Address
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
                     <input
                       v-model="v$.address.$model"
@@ -360,7 +360,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >City
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
                     <input
                       v-model="v$.city.$model"
@@ -386,7 +386,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >Country
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
                     <div class="relative">
                       <FormsSelectComponent
@@ -413,7 +413,7 @@
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >State
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                    <RedDot /></label
                     >
                     <FormsSelectComponent
                       :options="mystates"
