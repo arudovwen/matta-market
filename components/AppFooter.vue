@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-[#0C111D] pt-16 pb-8">
-    <div class="container">
+    <div class="container" v-if="route.name == 'buy-chemicals'">
       <div
         class="flex justify-between md:gap-x-20 flex-col md:flex-row mb-6 md:mb-0"
       >
@@ -92,33 +92,32 @@
               </li>
             </ul>
           </div>
-       
         </div>
         <div class="text-sm lg:hidden text-white">
           <GoogleTranslateSelect
-              default-language-code="en"
-              default-page-language-code="en"
-              :fetch-browser-language="true"
-              :languages="[
-                {
-                  code: 'en',
-                  name: 'English',
-                  cname: '英语',
-                  ename: 'English',
-                },
-                {
-                  code: 'fr',
-                  name: 'French',
-                  cname: '法语',
-                  ename: 'French',
-                },
-              ]"
-              trigger="click"
-              @select="handleGoogleTranslateSelect"
-            />
-         </div>
+            default-language-code="en"
+            default-page-language-code="en"
+            :fetch-browser-language="true"
+            :languages="[
+              {
+                code: 'en',
+                name: 'English',
+                cname: '英语',
+                ename: 'English',
+              },
+              {
+                code: 'fr',
+                name: 'French',
+                cname: '法语',
+                ename: 'French',
+              },
+            ]"
+            trigger="click"
+            @select="handleGoogleTranslateSelect"
+          />
+        </div>
       </div>
-      
+
       <hr class="border-[#182230] mb-6" />
       <div
         class="flex flex-col-reverse lg:flex-row gap-4 lg:gap-0 justify-between lg:items-center"
@@ -130,7 +129,6 @@
             <p class="text-sm">
               © {{ new Date().getFullYear() }} Matta. All Rights Reserved.
             </p>
-         
           </div>
           <div class="order-1 lg:order-2 flex gap-x-2 md:gap-x-4 items-center">
             <NuxtLink to="/privacy-policies" class="text-sm md:text-sm"
@@ -153,6 +151,7 @@ import GoogleTranslateSelect from "@google-translate-select/vue3";
 
 import { ref, provide } from "vue";
 
+const route = useRoute()
 const open = ref(false);
 const navs = [
   {
