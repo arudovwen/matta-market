@@ -499,6 +499,7 @@
     <IndexModal
       :isOpen="isAddingPackage"
       @toggleModal="isAddingPackage = false"
+      :canClose="false"
     >
       <template #content>
         <form
@@ -601,7 +602,7 @@
             }
           "
           :detail="detail"
-          :canClose="false"
+         
         />
       </template>
     </IndexModal>
@@ -731,7 +732,7 @@ const form = inject("form");
 const headers = computed(() => [
   "Name",
   `Size`,
-  `Purchase Price`,
+  `Unit Price`,
   "Color",
   "Purity",
   "",

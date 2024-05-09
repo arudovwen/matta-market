@@ -779,7 +779,7 @@ const producers = inject("producers");
 const headers = computed(() => [
   "Name",
   `Size`,
-  `Purchase Price`,
+  `Unit Price`,
   "Color",
   "Purity",
   "",

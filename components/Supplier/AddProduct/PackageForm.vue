@@ -1,5 +1,8 @@
 <template>
-  <form @submit.prevent="onSubmit" class="grid bg-white p-6 rounded-[10px]">
+  <form
+    @submit.prevent="onSubmit"
+    class="bg-white p-6 rounded-[10px] min-w-[400px]"
+  >
     <div class="flex gap-x-5 justify-between items-center mb-4">
       <legend class="text-[#18273AF0] text-lg font-bold">
         {{ detail ? "Edit" : "Add" }} Package
@@ -12,170 +15,98 @@
         <AppIcon icon="ph:x-bold" />
       </button>
     </div>
-    <div class="grid relative gap-y-6 mb-7">
-      <div>
-        <div class="flex justify-between items-center">
-          <label
-            class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >
-           <RedDot /> Package name
-          </label>
-        </div>
-        <Listbox v-model="title" v-bind="titleAtt" name="title">
-          <div class="relative mt-1">
-            <ListboxButton
-              class="relative w-full text-left rounded-lg flex items-center appearance-none px-[14px] py-[10px] h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            >
-              <span class="block truncate text-sm">{{
-                title || "Select pack"
-              }}</span>
-              <span class="right-0 pr-2 absolute"
-                ><AppIcon
-                  icon="ph:caret-down-bold"
-                  iconClass="h-4 w-4 text-[#667085]"
-                  aria-hidden="true"
-              /></span>
-            </ListboxButton>
 
-            <transition
-              leave-active-class="transition duration-100 ease-in"
-              leave-from-class="opacity-100"
-              leave-to-class="opacity-0"
-            >
-              <ListboxOptions
-                class="absolute mt-1 w-[200px] z-40 rounded-md bg-white py-4 text-base shadow-lg focus:outline-none sm:text-sm border border-gray-100"
-              >
-                <div class="mx-h-60 overflow-y-auto">
-                  <ListboxOption
-                    v-slot="{ selected }"
-                    v-for="(p, i) in packageForms"
-                    :key="i"
-                    :value="p"
-                    as="template"
-                  >
-                    <li
-                      :class="[
-                        'relative cursor-pointer  text-matta-black  hover:text-primary select-none py-2 pl-6 pr-4 text-left',
-                      ]"
-                    >
-                      <span
-                        :class="[selected ? 'font-medium' : 'font-normal']"
-                        >{{ p }}</span
-                      >
-                    </li>
-                  </ListboxOption>
-                </div>
-              </ListboxOptions>
-            </transition>
-          </div>
-        </Listbox>
-      </div>
-      <div class="grid grid-cols-2 gap-x-4 gap-y-6">
-        <div>
-          <label
-            class="mb-2 font-medium text-sm text-[#344054] block text-left"
+    <div class="grid grid-cols-1 gap-y-5 mb-7">
+      <FormGroup
+        name="title"
+        :error="errors.title"
+        label="Package type"
+        isCumpulsory
+      >
+        <SelectVueSelect
+          v-model="title"
+          :options="packageForms"
+          :reduce="(title) => title.value"
+          placeholder="Select package"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] ! cursor-pointer ${
+            errors.title ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
+        />
+      </FormGroup>
+      <FormGroup
+        name="purchaseAmount"
+        label="Unit price"
+        :error="errors.purchaseAmount"
+        isCumpulsory
+        info
+        infoTitle="Please indicate price with respect to the selected unit of measurement"
+      >
+      <CurrencyInput
+          min="1"
+          :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.purchaseAmount ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
+          v-model="purchaseAmount"
+          :options="{
+            currency: 'ngn',
+            currencyDisplay: 'hidden',
+          }"
+        />
+      </FormGroup>
+     <div>
+      <Textinput
+        v-model="size"
+        v-bind="sizeAtt"
+        name="size"
+        placeholder=""
+        type="text"
+        :error="errors.size"
+        class=" flex-1"
+        isCumpulsory
+        label="Package Size"
+      >
+        <template #content>
+          <select
+            v-model="unit"
+            v-bind="unitAtt"
+            name="unit"
+            class="outline-none absolute right-2 w-max"
           >
-           <RedDot /> Size
-          </label>
-          <div class="relative flex items-center">
-            <Textinput
-              v-model="size"
-              v-bind="sizeAtt"
-              name="size"
-              placeholder=""
-              type="text"
-              :error="errors.size"
-              class="h-11 flex-1"
-              horizontal
-            >
-              <template #content>
-                <select
-                  v-model="unit"
-                  v-bind="unitAtt"
-                  name="unit"
-                  class="outline-none absolute right-2"
-                >
-                  <option
-                    v-for="i in measurements"
-                    :key="i.value"
-                    :value="i.value"
-                  >
-                    {{ i.value }}
-                  </option>
-                </select>
-              </template>
-            </Textinput>
-          </div>
-        </div>
-        <div>
-          <label
-            class="mb-2 font-medium text-sm text-[#344054] flex items-center gap-x-1 text-left"
-          >
-           <RedDot />
-            <span>Purchase Price </span>
-            <span
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Please indicate price with respect to the selected unit of measurement"
-              class="cursor-pointer"
-            >
-              <AppIcon icon="quill:info" iconClass="text-gray-600" />
-            </span>
-          </label>
+            <option v-for="i in measurements" :key="i.value" :value="i.value">
+              {{ i.name }}
+            </option>
+          </select>
+        </template>
+      </Textinput>
 
-          <div class="relative">
-            <div class="relative flex items-center">
-              <CurrencyInput
-                v-model="purchaseAmount"
-                v-bind="purchaseAmountAtt"
-                name="purchaseAmount"
-                class="rounded-lg text-sm px-[14px] py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                placeholder=""
-                :options="{
-                  currency: 'ngn',
-                  currencyDisplay: 'narrowSymbol',
-                }"
-              />
-            </div>
-          </div>
-        </div>
-        <div>
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Color
-          </label>
+      <div class="flex gap-x-1 items-center mt-3"><span class="text-[#344054]">Package price:</span> <span class="font-medium">{{currencyFormat(size * purchaseAmount)}}</span></div>
+     </div>
+      
 
-          <div class="flex relative items-center">
-            <Textinput
-              v-model="color"
-              v-bind="colorAtt"
-              name="color"
-              placeholder=""
-              type="text"
-              :error="errors.color"
-              class="!h-11"
-            />
-          </div>
-        </div>
-        <div>
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Purity
-          </label>
-          <div class="relative">
-            <div class="relative flex items-center">
-              <Textinput
-                v-model="purity"
-                v-bind="purityAtt"
-                name="purity"
-                placeholder=""
-                min="0"
-                max="100"
-                :error="errors.purity"
-              />
-              <span class="absolute right-2 text-xs">%</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Textinput
+        label="Color"
+        v-model="color"
+        v-bind="colorAtt"
+        name="color"
+        placeholder=""
+        type="text"
+        :error="errors.color"
+        class="!"
+      />
+
+      <Textinput
+        label="Purity"
+        v-model="purity"
+        v-bind="purityAtt"
+        name="purity"
+        placeholder=""
+        min="0"
+        max="100"
+        :error="errors.purity"
+        icon="ic:baseline-percent"
+        hasIcon
+      />
+
       <div>
         <label for="isAvailable" class="flex item-center leading-[normal]">
           <input
@@ -239,25 +170,46 @@ onMounted(() => {
 });
 
 const packageForms = [
-  "Plastic drum",
-  "Metal drum",
-  "Keg",
-  "Carton",
-  "Bag",
-  "Cylinder",
-  "Tank",
+  {
+    label: "Plastic drum",
+    value: "Plastic drum",
+  },
+  {
+    label: "Metal drum",
+    value: "Metal drum",
+  },
+  {
+    label: "Keg",
+    value: "Keg",
+  },
+  {
+    label: "Carton",
+    value: "Carton",
+  },
+  {
+    label: "Bag",
+    value: "Bag",
+  },
+  {
+    label: "Cylinder",
+    value: "Cylinder",
+  },
+  {
+    label: "Tank",
+    value: "Tank",
+  },
 ];
 
 const packFormSchema = yup.object({
-  title: yup.string().required(),
-  purchaseAmount: yup.string().required(),
+  title: yup.string().required("Select a package"),
+  purchaseAmount: yup.string().required("Amount is required"),
   color: yup.string().nullable(),
   purity: yup
     .number()
     .typeError("Invalid value")
     .max(100, "Maximum is 100")
     .nullable(),
-  size: yup.number().typeError("Invalid value").required(),
+  size: yup.number().typeError("Invalid value").required("Amount is required"),
   isAvailable: yup.boolean(),
   unit: yup.string(),
   id: yup.string(),

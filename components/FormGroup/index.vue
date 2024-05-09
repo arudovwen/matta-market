@@ -7,12 +7,20 @@
   >
     <label
       v-if="label"
-      :class="`${classLabel} inline-block input-label `"
+      :class="`${classLabel}  input-label flex gap-x-1 items-center`"
       :for="name"
     >
-      {{ label }}  <RedDot v-if="isCumpulsory"
-    /> </label
-    >
+      {{ label }} <RedDot v-if="isCumpulsory" />
+      <span
+        v-if="info"
+        data-toggle="tooltip"
+        data-placement="top"
+        :title="infoTitle"
+        class="cursor-pointer"
+      >
+        <AppIcon icon="quill:info" iconClass="text-gray-600" />
+      </span>
+    </label>
     <div class="relative">
       <slot></slot>
     </div>
@@ -86,7 +94,13 @@ export default {
     isCumpulsory: {
       type: Boolean,
       default: false,
-    }
+    },
+    infoTitle: {
+      type: String,
+    },
+    info: {
+      type: Boolean,
+    },
   },
 };
 </script>

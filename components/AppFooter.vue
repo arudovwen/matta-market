@@ -153,6 +153,9 @@ import { ref, provide } from "vue";
 
 const route = useRoute()
 const open = ref(false);
+const handleGoogleTranslateSelect = (language) => {
+  console.log(language);
+};
 const navs = [
   {
     subject: "company",

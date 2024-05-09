@@ -67,7 +67,7 @@
       <FormGroup
         isCumpulsory
         class="xl:col-span-2"
-        label="address"
+        label="Address"
         :error="errors.address"
       >
         <SelectSearchSelect
