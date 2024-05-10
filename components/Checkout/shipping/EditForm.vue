@@ -15,7 +15,7 @@
           name="firstName"
           v-bind="firstNameAtt"
           v-model="firstName"
-          :error="errors.firstName"
+          :error="errors.firstName" isCumpulsory
         />
       </div>
       <div>
@@ -26,11 +26,11 @@
           name="lasttName"
           v-bind="lastNameAtt"
           v-model="lastName"
-          :error="errors.lastName"
+          :error="errors.lastName" isCumpulsory
         />
       </div>
 
-      <FormGroup label="Country" :error="errors.country" name="country">
+      <FormGroup label="Country" isCumpulsory :error="errors.country" name="country">
         <SelectVueSelect
           v-model="country"
           :options="allcountries"
@@ -42,7 +42,7 @@
         />
       </FormGroup>
 
-      <FormGroup label="State" :error="errors.state" name="state">
+      <FormGroup label="State" isCumpulsory :error="errors.state" name="state">
         <SelectVueSelect
           v-model="state"
           :disabled="!country"
@@ -54,7 +54,7 @@
           }`"
         />
       </FormGroup>
-      <FormGroup label="LGA" :error="errors.lga" class="xl:col-span-2">
+      <FormGroup label="LGA" isCumpulsory :error="errors.lga" class="xl:col-span-2">
         <SelectVueSelect
           class="w-full"
           v-model.value="lga"
@@ -66,7 +66,7 @@
         />
       </FormGroup>
 
-      <FormGroup class="xl:col-span-2" label="Street" :error="errors.street">
+      <FormGroup class="xl:col-span-2" isCumpulsory label="Street" :error="errors.street">
         <SelectSearchSelect
           class="w-full"
           v-model.value="street"

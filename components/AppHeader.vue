@@ -167,7 +167,7 @@
             </li>
           </ul>
         </div>
-        <div class="flex items-center gap-x-4 text-sm">
+        <div class="flex items-center gap-x-2 text-sm">
           <!-- <span
             :class="{
               'hidden md:flex': view.atTopOfPage,
@@ -231,27 +231,29 @@
               >
             </span> -->
           <!-- </span> -->
-          <!-- <GoogleTranslateSelect
+       <span class="hidden lg:inline text-sm">
+        <GoogleTranslateSelect
             default-language-code="en"
             default-page-language-code="en"
             :fetch-browser-language="true"
             :languages="[
               {
                 code: 'en',
-                name: 'En',
+                name: 'English',
                 cname: '英语',
                 ename: 'English',
               },
               {
                 code: 'fr',
-                name: 'Fr',
+                name: 'French',
                 cname: '法语',
                 ename: 'French',
               },
             ]"
             trigger="click"
             @select="handleGoogleTranslateSelect"
-          /> -->
+          />
+       </span>
           <NuxtLink to="/cart" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"

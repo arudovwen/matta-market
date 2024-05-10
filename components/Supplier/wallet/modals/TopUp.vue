@@ -11,6 +11,7 @@
           :error="errors.amount"
           name="amount"
           classLabel="!normal-case"
+          isCumpulsory
         >
           <div class="flex items-center">
             <CurrencyInput
@@ -123,7 +124,7 @@ const getLedgersTrans = inject("getLedgersTrans");
 defineProps(["details", "hasWallet"]);
 const emits = defineEmits(["activate"]);
 const loader = ref(false);
-const loading = ref(false)
+const loading = ref(false);
 const stage = ref(1);
 const handleComplete = inject("handleComplete");
 const handleClose = inject("handleClose");
@@ -205,12 +206,12 @@ watch(
   () => [amount.value],
   () => {
     if (amount.value) {
-      loading.value = true
+      loading.value = true;
       setTimeout(() => {
         getDepositCharge(amount.value).then((res) => {
           if (res.status === 200) {
             charge.value = res.data.data;
-            loading.value = false
+            loading.value = false;
           }
         });
       }, [1200]);

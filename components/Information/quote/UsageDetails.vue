@@ -5,7 +5,7 @@
       This information will help us prepare your quote.
     </p>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Market</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Market <RedDot /></label>
       <FormsSelectComponent
         @onGetData="onGetMarket"
         :options="marketOptions"
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Application</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Application <RedDot /></label>
       <FormsSelectComponent
         @onGetData="onGetApp"
         :options="appOptions"
@@ -46,7 +46,7 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Package type</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Package type <RedDot /></label>
       <select
         v-if="product && product.packagesAvailable"
         v-model="request1$.package.$model"
@@ -70,7 +70,7 @@
     </div>
     <div class="mb-6">
       <label class="mb-2 font-normal text-xs block"
-        >How do you intend to use the product?</label
+        >How do you intend to use the product? <RedDot /></label
       >
       <textarea
         placeholder="Tell us here"
@@ -90,7 +90,7 @@
     </div>
     <div class="mb-6">
       <label class="mb-2 font-normal text-xs block"
-        >Expected annual volume</label
+        >Expected annual volume <RedDot /></label
       >
       <div
         class="flex items-center gap-x-2 h-[46px] placeholder:text-sm w-full text-matta-black bg-transparent px-3 min-w-[150px] cursor-pointer md:px-3 border rounded-lg border-[#ddd] md:leading-5 text-[10px] sm:text-[13px] shadow-sm focus:outline-gray-200"

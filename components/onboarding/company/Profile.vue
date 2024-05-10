@@ -76,7 +76,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div class="mb-6">
                 <label class="mb-2 font-normal text-xs block"
-                  >First name <span class="text-red-500 pl-[.02rem]">*</span>
+                  >First name   <RedDot />
                 </label>
                 <input
                   v-model="v$.firstName.$model"
@@ -97,7 +97,7 @@
               </div>
               <div class="mb-6">
                 <label class="mb-2 font-normal text-xs block"
-                  >Last name <span class="text-red-500 pl-[.02rem]">*</span>
+                  >Last name <RedDot />
                 </label>
                 <input
                   v-model="v$.lastName.$model"
@@ -120,7 +120,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div class="mb-6">
                 <label class="mb-2 font-normal text-xs block"
-                  >Country <span class="text-red-500 pl-[.02rem]">*</span>
+                  >Country <RedDot />
                 </label>
                 <div class="relative">
                   <div class="flex relative items-center w-full">
@@ -164,7 +164,7 @@
 
               <div class="mb-6">
                 <label class="mb-2 font-normal text-xs block"
-                  >State <span class="text-red-500 pl-[.02rem]">*</span>
+                  >State <RedDot />
                 </label>
                 <FormsSelectComponent
                   :options="mystates"
@@ -208,7 +208,7 @@
               <div class="mb-6">
                 <label class="mb-2 font-normal text-xs block"
                   >Phone number
-                  <span class="text-red-500 pl-[.02rem]">*</span></label
+                <RedDot /></label
                 >
                 <div class="flex relative rounded-lg h-11">
                   <FormsPhoneCodes v-model="v$.phone.$model" />
@@ -225,7 +225,7 @@
               </div>
               <div class="mb-6">
                 <label class="mb-2 font-normal text-xs block"
-                  >E-mail <span class="text-red-500 pl-[.02rem]">*</span>
+                  >E-mail <RedDot />
                 </label>
                 <div class="flex relative items-center">
                   <input
@@ -253,7 +253,7 @@
           <hr class="my-8" />
 
           <legend class="font-medium mb-4">
-            Timezone <span class="text-red-500 pl-[.02rem]">*</span>
+            Timezone <RedDot />
           </legend>
           <div class="mb-10">
             <div class="flex relative items-center w-full">

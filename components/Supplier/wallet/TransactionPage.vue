@@ -75,7 +75,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ moment(item.transactionDate).format("ll") }}
+                  {{ moment(item.transactionDate).format("lll") }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
@@ -115,7 +115,7 @@
           <EmptyData
             type="transaction"
             v-if="!tdata.length"
-            title="No Transaction ye"
+            title="No Transaction yet"
             subtext="All your transactions will show up here"
           />
         </div>

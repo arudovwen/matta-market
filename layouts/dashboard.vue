@@ -5,7 +5,7 @@
     <div class="w-full"><AppHeader /></div>
 
     <div class="flex-1 flex flex-col w-full">
-      <div class="flex gap-x-4 flex-1 container">
+      <div class="flex gap-x-4 flex-1 container mb-6">
         <div class="hidden lg:inline">
           <DashboardLayoutSideComponent />
         </div>

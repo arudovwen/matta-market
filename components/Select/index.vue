@@ -10,7 +10,8 @@
       :class="`${classLabel} inline-block input-label `"
       :for="name"
     >
-      {{ label }}</label
+      {{ label }}  <RedDot v-if="isCumpulsory"
+    /></label
     >
     <div class="relative flex items-center">
       <select
@@ -94,6 +95,9 @@ export default {
     modelValue: {
       // type: String || Array,
       default: "",
+    }, isCumpulsory: {
+      type: Boolean,
+      default: false,
     },
     error: {
       type: String,

@@ -115,6 +115,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isCumpulsory: {
+      type: Boolean,
+      default: false,
+    },
     validate: {
       type: String,
     },

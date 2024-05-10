@@ -9,6 +9,7 @@
           :error="errors.withdrawalAmount"
           name="withdrawalAmount"
           classLabel="!normal-case"
+          isCumpulsory
         >
           <div class="flex items-center">
             <CurrencyInput
@@ -26,7 +27,12 @@
             <span class="absolute right-4">NGN</span>
           </div>
         </FormGroup>
-        <FormGroup label="Bank" :error="errors.bankCode" name="bankCode">
+        <FormGroup
+          isCumpulsory
+          label="Bank"
+          :error="errors.bankCode"
+          name="bankCode"
+        >
           <SelectVueSelect
             v-model="bankCode"
             :disabled="!banks.length"
@@ -40,6 +46,7 @@
         </FormGroup>
         <div class="">
           <Textinput
+            isCumpulsory
             placeholder="Account number"
             label="Account number"
             name="accountNumber"
@@ -129,7 +136,7 @@ const props = defineProps({
     default: () => [],
   },
 });
-const loading = ref(false)
+const loading = ref(false);
 const stage = ref(1);
 const handleClose = inject("handleClose");
 const form = reactive({
@@ -230,12 +237,12 @@ watch(
   () => [withdrawalAmount.value],
   () => {
     if (withdrawalAmount.value) {
-      loading.value = true
+      loading.value = true;
       setTimeout(() => {
         getWithdrawalCharge(withdrawalAmount.value).then((res) => {
           if (res.status === 200) {
             charge.value = res.data.data;
-            loading.value = false
+            loading.value = false;
           }
         });
       }, [1200]);

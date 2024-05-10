@@ -1,13 +1,13 @@
 export const measurements = [
-  { value: "g", name: "Gramme (g)" },
-  { value: "kg", name: "Kilogramme (kg)" },
-  { value: "l", name: "Litre (l)" },
-  { value: "m3", name: "Cubic metre (m3)" },
-  { value: "sqm", name: "Square metre (sqm)" },
+  { value: "g", name: "Gramme" },
+  { value: "kg", name: "Kilogramme" },
+  { value: "l", name: "Litre" },
+  { value: "m3", name: "Cubicmetre" },
+  { value: "sqm", name: "Squaremetre" },
   { value: "truck", name: "Truck" },
-  { value: "ton", name: "Ton (ton)" },
-  { value: "ml", name: "Millilitre (ml)" },
-  { value: "mm", name: "Millimetre (mm)" },
+  { value: "ton", name: "Ton" },
+  { value: "ml", name: "Millilitre" },
+  { value: "mm", name: "Millimetre" },
   { value: "bag", name: "Bag" },
   { value: "drum", name: "Drum" },
 ];
@@ -44,8 +44,10 @@ export const buyerRoutes = [
   "procurement-my-orders",
   "procurement-my-requests",
   "wallet-home",
+  "financing",
   "procurement-shipping-addresses",
   "account-saved-searches",
+  "company-settings",
   "profile",
   "sign-out"
 ];

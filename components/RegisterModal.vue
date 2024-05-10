@@ -86,7 +86,7 @@
                       </div>
                       <div class="mb-6">
                         <label class="mb-2 font-normal text-xs block"
-                          >E-mail</label
+                          >E-mail  <RedDot /></label
                         >
                         <input
                           v-model="v$.email.$model"
@@ -111,7 +111,7 @@
                         <div class="mb-6">
                           <label
                             class="mb-2 font-normal text-xs block text-matta-black"
-                            >Password</label
+                            >Password  <RedDot /></label
                           >
                           <div class="relative flex items-center">
                             <input
@@ -148,7 +148,7 @@
                         <div class="mb-6">
                           <label
                             class="mb-2 font-normal text-xs block text-matta-black"
-                            >Confirm Password</label
+                            >Confirm Password  <RedDot /></label
                           >
                           <div class="relative flex items-center">
                             <input

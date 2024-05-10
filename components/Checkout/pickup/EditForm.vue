@@ -16,14 +16,20 @@
           v-bind="storeNameAtt"
           v-model="storeName"
           :error="errors.storeName"
+          isCumpulsory
         />
       </div>
       <div>
-        <FormGroup label="Phone number">
+        <FormGroup label="Phone number" isCumpulsory>
           <FormsPhoneCodes v-model="phoneNumber" />
         </FormGroup>
       </div>
-      <FormGroup label="Country" :error="errors.country" name="country">
+      <FormGroup
+        label="Country"
+        :error="errors.country"
+        name="country"
+        isCumpulsory
+      >
         <SelectVueSelect
           v-model="country"
           :options="allcountries"
@@ -35,7 +41,7 @@
         />
       </FormGroup>
 
-      <FormGroup label="State" :error="errors.state" name="state">
+      <FormGroup label="State" :error="errors.state" name="state" isCumpulsory>
         <SelectVueSelect
           v-model="state"
           :disabled="!country"
@@ -47,11 +53,7 @@
           }`"
         />
       </FormGroup>
-      <FormGroup
-       
-        label="LGA"
-        :error="errors.lga"
-      >
+      <FormGroup isCumpulsory label="LGA" :error="errors.lga">
         <SelectVueSelect
           class="w-full"
           v-model.value="lga"
@@ -62,7 +64,12 @@
           :disabled="country?.toLowerCase() !== 'nigeria'"
         />
       </FormGroup>
-      <FormGroup  class="xl:col-span-2" label="address" :error="errors.address">
+      <FormGroup
+        isCumpulsory
+        class="xl:col-span-2"
+        label="Address"
+        :error="errors.address"
+      >
         <SelectSearchSelect
           class="w-full"
           v-model.value="address"
