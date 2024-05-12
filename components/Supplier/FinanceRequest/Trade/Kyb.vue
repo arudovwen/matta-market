@@ -12,7 +12,24 @@
           isCumpulsory
         />
       </div>
-
+      <Textinput
+          placeholder=""
+          label="Email"
+          name="email"
+          v-bind="emailAtt"
+          v-model="email"
+          :error="errors.email"
+          disabled
+          isCumpulsory
+        />
+        <FormGroup
+        label="Phone number"
+        name="phone"
+        :error="errors.phone"
+        isCumpulsory
+      >
+      <FormsPhoneCodes v-model="phone" />
+    </FormGroup>
       <FormGroup
         label="Date of incorporation"
         name="dateofIncorporation"
@@ -252,6 +269,8 @@ const formSchema = yup.object().shape({
   utilityBill: yup.string().required("Utility Bill is required"),
   country: yup.string().required(),
   state: yup.string().required(),
+  email: yup.string().required(),
+  phone: yup.string().required(),
   city: yup.string(),
   registrationNo: yup
     .string()
@@ -279,6 +298,8 @@ const [companyName, companyNameAtt] = defineField("companyName");
 const [registrationNo, registrationNoAtt] = defineField("registrationNo");
 const [tin, tinAtt] = defineField("tin");
 const [sector] = defineField("sector");
+const [email, emailAtt] = defineField("email");
+const [phone] = defineField("phone");
 const [dateofIncorporation, dateofIncorporationAtt] = defineField(
   "dateofIncorporation"
 );

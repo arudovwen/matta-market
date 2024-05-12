@@ -94,10 +94,8 @@
           </div>
         </div>
         <div class="text-sm lg:hidden text-white">
-          <GoogleTranslateSelect
-            default-language-code="en"
-            default-page-language-code="en"
-            :fetch-browser-language="true"
+          <!-- <GoogleTranslateSelect
+            :fetch-browser-language="false"
             :languages="[
               {
                 code: 'en',
@@ -113,8 +111,7 @@
               },
             ]"
             trigger="click"
-            @select="handleGoogleTranslateSelect"
-          />
+          /> -->
         </div>
       </div>
 
@@ -151,7 +148,7 @@ import GoogleTranslateSelect from "@google-translate-select/vue3";
 
 import { ref, provide } from "vue";
 
-const route = useRoute()
+const route = useRoute();
 const open = ref(false);
 const handleGoogleTranslateSelect = (language) => {
   console.log(language);

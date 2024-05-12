@@ -68,8 +68,8 @@
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
                       Company name
-                    <RedDot /></label
-                    >
+                      <RedDot
+                    /></label>
                     <input
                       v-model="v$.companyName.$model"
                       :class="{ 'border-red-500': v$.companyName.$error }"
@@ -90,13 +90,12 @@
                   </div>
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Date Of Incorporation
-                    <RedDot /></label
-                    >
+                      >Date Of Incorporation <RedDot
+                    /></label>
 
                     <ClientOnly>
                       <VueDatePicker
-            auto-apply
+                        auto-apply
                         v-model="v$.dateofIncorporation.$model"
                         placeholder="Select date"
                         :enable-time-picker="false"
@@ -120,9 +119,8 @@
 
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Business type
-                    <RedDot /></label
-                    >
+                      >Business type <RedDot
+                    /></label>
 
                     <div class="flex relative items-center">
                       <select
@@ -155,9 +153,8 @@
                   </div>
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Business sector
-                    <RedDot /></label
-                    >
+                      >Business sector <RedDot
+                    /></label>
 
                     <div class="flex relative items-center">
                       <select
@@ -194,9 +191,8 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >E-mail
-                    <RedDot /></label
-                    >
+                      >E-mail <RedDot
+                    /></label>
                     <input
                       v-model="v$.email.$model"
                       :class="{ 'border-red-500': v$.email.$error }"
@@ -217,9 +213,8 @@
 
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Phone number
-                    <RedDot /></label
-                    >
+                      >Phone number <RedDot
+                    /></label>
                     <div class="flex relative rounded-lg h-11">
                       <FormsPhoneCodes v-model="v$.phone.$model" />
                     </div>
@@ -240,8 +235,8 @@
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
                       Registration number
-                    <RedDot /></label
-                    >
+                      <RedDot
+                    /></label>
                     <input
                       v-model="v$.registrationNo.$model"
                       :class="{ 'border-red-500': v$.registrationNo.$error }"
@@ -262,9 +257,8 @@
                   </div>
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >TIN number
-                    <RedDot /></label
-                    >
+                      >TIN number <RedDot
+                    /></label>
 
                     <input
                       v-model="v$.tin.$model"
@@ -336,9 +330,8 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Company Address
-                    <RedDot /></label
-                    >
+                      >Company Address <RedDot
+                    /></label>
                     <input
                       v-model="v$.address.$model"
                       :class="{ 'border-red-500': v$.address.$error }"
@@ -359,9 +352,8 @@
                   </div>
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >City
-                    <RedDot /></label
-                    >
+                      >City <RedDot
+                    /></label>
                     <input
                       v-model="v$.city.$model"
                       :class="{ 'border-red-500': v$.city.$error }"
@@ -385,9 +377,8 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Country
-                    <RedDot /></label
-                    >
+                      >Country <RedDot
+                    /></label>
                     <div class="relative">
                       <FormsSelectComponent
                         :options="allcountries"
@@ -412,9 +403,8 @@
                   </div>
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >State
-                    <RedDot /></label
-                    >
+                      >State <RedDot
+                    /></label>
                     <FormsSelectComponent
                       :options="mystates"
                       :showSearch="true"
@@ -444,7 +434,7 @@
     </div>
     <div
       class="flex justify-between gap-x-4 items-center mt-16 pt-6 border-t border-[#EAECF0] w-full"
-      v-if="!companyInfo.approvalStatus"
+      v-if="!companyInfo?.approvalStatus"
     >
       <!-- <button
           type="button"
@@ -690,37 +680,37 @@ function addsocial() {
 }
 onMounted(() => {
   form.companyName = authStore.userInfo?.companyName;
-  form.photo = image.value = companyInfo?.value.photo;
-  form.companyType = companyInfo?.value.companyType;
-  form.website = companyInfo?.value.website;
-  form.fax = companyInfo?.value.fax;
-  form.email = companyInfo?.value.email;
-  form.description = companyInfo?.value.description;
-  form.socials = companyInfo?.value.socials || [
+  form.photo = image.value = companyInfo?.value?.photo;
+  form.companyType = companyInfo?.value?.companyType;
+  form.website = companyInfo?.value?.website;
+  form.fax = companyInfo?.value?.fax;
+  form.email = companyInfo?.value?.email;
+  form.description = companyInfo?.value?.description;
+  form.socials = companyInfo?.value?.socials || [
     {
       name: "",
       link: "",
     },
   ];
-  form.address = companyInfo?.value.address;
-  form.country = companyInfo?.value.country;
-  form.city = companyInfo?.value.city;
-  form.dateofIncorporation = companyInfo?.value.dateofIncorporation;
-  form.sector = companyInfo?.value.sector;
-  form.tin = companyInfo?.value.tin;
-  form.registrationNo = companyInfo?.value.registrationNo;
-  form.phone = companyInfo?.value.phone;
-  image.value = form.logo = companyInfo?.value.logo;
-  form.state = companyInfo?.value.state;
+  form.address = companyInfo?.value?.address;
+  form.country = companyInfo?.value?.country;
+  form.city = companyInfo?.value?.city;
+  form.dateofIncorporation = companyInfo?.value?.dateofIncorporation;
+  form.sector = companyInfo?.value?.sector;
+  form.tin = companyInfo?.value?.tin;
+  form.registrationNo = companyInfo?.value?.registrationNo;
+  form.phone = companyInfo?.value?.phone;
+  image.value = form.logo = companyInfo?.value?.logo;
+  form.state = companyInfo?.value?.state;
 
   var validRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   if (
-    !companyInfo?.value.companyName ||
-    !companyInfo?.value.companyName.match(validRegex)
+    !companyInfo?.value?.companyName ||
+    !companyInfo?.value?.companyName?.match(validRegex)
   ) {
-    form.companyName = companyInfo?.value.companyName;
+    form.companyName = companyInfo?.value?.companyName;
   }
 });
 function removesocial(i) {

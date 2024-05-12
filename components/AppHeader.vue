@@ -231,29 +231,27 @@
               >
             </span> -->
           <!-- </span> -->
-       <span class="hidden lg:inline text-sm">
-        <GoogleTranslateSelect
-            default-language-code="en"
-            default-page-language-code="en"
-            :fetch-browser-language="true"
-            :languages="[
-              {
-                code: 'en',
-                name: 'English',
-                cname: '英语',
-                ename: 'English',
-              },
-              {
-                code: 'fr',
-                name: 'French',
-                cname: '法语',
-                ename: 'French',
-              },
-            ]"
-            trigger="click"
-            @select="handleGoogleTranslateSelect"
-          />
-       </span>
+          <span class="hidden lg:inline text-sm">
+            <GoogleTranslateSelect
+              :fetch-browser-language="false"
+              :languages="[
+                {
+                  code: 'en',
+                  name: 'English',
+                  cname: '英语',
+                  ename: 'English',
+                },
+                {
+                  code: 'fr',
+                  name: 'French',
+                  cname: '法语',
+                  ename: 'French',
+                },
+              ]"
+              trigger="click"
+              @select="handleGoogleTranslateSelect"
+            />
+          </span>
           <NuxtLink to="/cart" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
@@ -374,15 +372,15 @@
   <ModalCenter v-if="isSigniningOut">
     <template #default>
       <div
-        class="bg-white p-6 lg:p-10 sm:p-6 sm:pb-4 rounded-lg"
+        class="bg-white p-6 sm:pb-4 rounded-lg"
         v-if="isSigniningOut"
       >
         <div class="flex justify-between mb-5 items-center">
           <h4 class="font-medium text-matta-black text-xl">Sign Out</h4>
-          <i
+          <!-- <i
             class="uil uil-times cursor-pointer text-lg"
             @click="isSigniningOut = false"
-          ></i>
+          ></i> -->
         </div>
 
         <p class="text-sm text-matta-black mb-2">
@@ -393,7 +391,7 @@
           <button
             type="button"
             @click="isSigniningOut = false"
-            class="appearance-none border w-1/2 leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
+            class="appearance-none border min-w-[140px] w-1/2 leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
           >
             Cancel
           </button>
@@ -401,7 +399,7 @@
           <button
             type="button"
             @click="logOut"
-            class="appearance-none border w-1/2 border-primary-500 leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
+            class="appearance-none border min-w-[140px] w-1/2 border-primary-500 leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
           >
             Yes
           </button>

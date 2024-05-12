@@ -33,12 +33,16 @@ const authStore = useAuthStore();
 const companyInfo = ref(null);
 const isLoading = ref(true);
 onBeforeMount(() => {
-  getCompanyProfile().then((res) => {
-    if (res.status === 200) {
+  getCompanyProfile()
+    .then((res) => {
+      if (res.status === 200) {
+        isLoading.value = false;
+        companyInfo.value = res.data.data;
+      }
+    })
+    .catch(() => {
       isLoading.value = false;
-      companyInfo.value = res.data.data;
-    }
-  });
+    });
 });
 const active = ref(1);
 const tabs = [

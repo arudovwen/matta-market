@@ -101,6 +101,8 @@ const formData = reactive({
     country: "",
     city: "",
     state: "",
+    email:authStore.userInfo.email,
+    phone:authStore.userInfo.phoneNumber
   },
   customerId: authStore.userId,
   loanRequestType: parseInt(id),
@@ -178,6 +180,8 @@ function getCommpanyData() {
     formData.kyb.state = res.data.data.state;
     formData.kyb.state = res.data.data.state;
     formData.kyb.city = res.data.data.city;
+    formData.kyb.email = res.data.data.email;
+    formData.kyb.phone = res.data.data.phone;
 
     if (res.data.data.companyDocuments.length > 0) {
       formData.kyb.incorporation = res.data.data.companyDocuments[0].url;
@@ -185,6 +189,8 @@ function getCommpanyData() {
       formData.kyb.statusReport = res.data.data.companyDocuments[2].url;
       formData.kyb.utilityBill = res.data.data.companyDocuments[3].url;
     }
+  }).catch(()=>{
+    loading.value = false
   });
 }
 onMounted(() => {

@@ -13,7 +13,7 @@
 
         <AppIcon :icon="!isOpen(index) ? 'ei:plus' : 'ei-minus'" iconClass="text-[#98A2B3] text-lg" />
       </div>
-      <div v-if="isOpen(index)" class="px-2 py-1 text-left font-normal text-[13px md:text-sm text-[#475467]">
+      <div v-if="isOpen(index)" class="px-2 py-1 text-left font-normal text-[13px] md:text-[15px] text-[#475467]">
         <slot :item="item"></slot>
       </div>
     </div>
