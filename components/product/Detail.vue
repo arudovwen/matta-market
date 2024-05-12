@@ -70,7 +70,7 @@
         >
           {{ currencyFormat(mypackage?.amount || 0) }}
           <span class="text-sm text-[#444] font-normal"
-            >/{{ `${mypackage?.size || ""}${mypackage?.unit || ""}` }}</span
+            >/{{ `${mypackage?.unit || ""}` }}</span
           >
         </p>
         <p class="text-xs :text-sm mb-6">
