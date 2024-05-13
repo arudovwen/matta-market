@@ -9,11 +9,19 @@
       v-if="label"
       :class="`${classLabel} ${
         horizontal ? 'flex-0 mr-6 md:w-[100px] w-[60px] break-words' : ''
-      }  inline-block input-label text-sm !text-[#1B2B41B8]`"
+      }  flex items-center gap-x-1 input-label text-sm !text-[#1B2B41B8]`"
       :for="name"
     >
       {{ label }} <RedDot v-if="isCumpulsory"
-    /></label>
+    /> <span
+        v-if="info"
+        data-toggle="tooltip"
+        data-placement="top"
+        :title="infoTitle"
+        class="cursor-pointer"
+      >
+        <AppIcon icon="quill:info" iconClass="text-gray-600" />
+      </span></label>
     <div class="relative flex items-center" :class="horizontal ? 'flex-1' : ''">
       <input
         :type="types"
@@ -180,6 +188,12 @@ export default {
         creditCard: true,
         delimiter: "-",
       }),
+    },
+    infoTitle: {
+      type: String,
+    },
+    info: {
+      type: Boolean,
     },
   },
   data() {

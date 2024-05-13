@@ -5,7 +5,8 @@
       data-aos-once="true"
       class="text-4xl md:text-6xl font-semibold mb-6"
     >
-      <span class="">{{`${words[0]}`}}</span> <br /> all in one place
+      Source your {{ `${words[0]}` }} <br />
+      all in one place
     </h1>
     <p
       data-aos="fade-in"

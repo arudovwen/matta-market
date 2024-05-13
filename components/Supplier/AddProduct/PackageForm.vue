@@ -22,6 +22,8 @@
         :error="errors.title"
         label="Package type"
         isCumpulsory
+        info
+        infoTitle="Kindly select from the list the appropriate type of product package"
       >
         <SelectVueSelect
           v-model="title"
@@ -39,9 +41,9 @@
         :error="errors.purchaseAmount"
         isCumpulsory
         info
-        infoTitle="Please indicate price with respect to the selected unit of measurement"
+        infoTitle="Please indicate the selling price for the selected unit of measurement"
       >
-      <CurrencyInput
+        <CurrencyInput
           min="1"
           :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
             errors.purchaseAmount ? 'border-red-500' : 'border-[#D0D5DD]'
@@ -53,35 +55,41 @@
           }"
         />
       </FormGroup>
-     <div>
-      <Textinput
-        v-model="size"
-        v-bind="sizeAtt"
-        name="size"
-        placeholder=""
-        type="text"
-        :error="errors.size"
-        class=" flex-1"
-        isCumpulsory
-        label="Package Size"
-      >
-        <template #content>
-          <select
-            v-model="unit"
-            v-bind="unitAtt"
-            name="unit"
-            class="outline-none absolute right-2 w-max"
-          >
-            <option v-for="i in measurements" :key="i.value" :value="i.value">
-              {{ i.name }}
-            </option>
-          </select>
-        </template>
-      </Textinput>
+      <div>
+        <Textinput
+          v-model="size"
+          v-bind="sizeAtt"
+          name="size"
+          placeholder=""
+          type="text"
+          :error="errors.size"
+          class="flex-1"
+          isCumpulsory
+          label="Package Size"
+          info
+          infoTitle="Indicate what quantity of unit of measurement makes up the selected package type"
+        >
+          <template #content>
+            <select
+              v-model="unit"
+              v-bind="unitAtt"
+              name="unit"
+              class="outline-none absolute right-2 w-max"
+            >
+              <option v-for="i in measurements" :key="i.value" :value="i.value">
+                {{ i.name }}
+              </option>
+            </select>
+          </template>
+        </Textinput>
 
-      <div class="flex gap-x-1 items-center mt-3"><span class="text-[#344054]">Package price:</span> <span class="font-medium">{{currencyFormat(size * purchaseAmount)}}</span></div>
-     </div>
-      
+        <div class="flex gap-x-1 items-center mt-3">
+          <span class="text-[#344054]">Package price:</span>
+          <span class="font-medium">{{
+            currencyFormat(size * purchaseAmount)
+          }}</span>
+        </div>
+      </div>
 
       <Textinput
         label="Color"
@@ -92,6 +100,8 @@
         type="text"
         :error="errors.color"
         class="!"
+        info
+        infoTitle="What is the colour of the product?"
       />
 
       <Textinput
@@ -105,6 +115,8 @@
         :error="errors.purity"
         icon="ic:baseline-percent"
         hasIcon
+        info
+        infoTitle=" Kindly state the purity of the product if known"
       />
 
       <div>
