@@ -195,6 +195,24 @@ useHead(
         crossorigin: "anonymous",
       },
       {
+        src: "https://www.googletagmanager.com/gtag/js?id=AW-11240877250",
+        crossorigin: "anonymous",
+        defer: true,
+      },
+      {
+        innerHTML: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "AW-11240877250");
+          `,
+        type: "text/javascript",
+        defer: true,
+        crossorigin: "anonymous",
+      },
+      {
         innerHTML: `
             (function (h, o, t, j, a, r) {
               h.hj = h.hj || function () {

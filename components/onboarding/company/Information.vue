@@ -783,7 +783,7 @@ const rules = {
     required,
     maxLength: maxLength(250),
   },
-  tin: { required, minLength: minLength(7) },
+  tin: { required},
   registrationNo: { required, minLength: minLength(14) },
   companyType: { required },
   state: {

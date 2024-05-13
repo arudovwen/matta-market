@@ -13,23 +13,23 @@
         />
       </div>
       <Textinput
-          placeholder=""
-          label="Email"
-          name="email"
-          v-bind="emailAtt"
-          v-model="email"
-          :error="errors.email"
-          disabled
-          isCumpulsory
-        />
-        <FormGroup
+        placeholder=""
+        label="Email"
+        name="email"
+        v-bind="emailAtt"
+        v-model="email"
+        :error="errors.email"
+        disabled
+        isCumpulsory
+      />
+      <FormGroup
         label="Phone number"
         name="phone"
         :error="errors.phone"
         isCumpulsory
       >
-      <FormsPhoneCodes v-model="phone" />
-    </FormGroup>
+        <FormsPhoneCodes v-model="phone" />
+      </FormGroup>
       <FormGroup
         label="Date of incorporation"
         name="dateofIncorporation"
@@ -277,11 +277,7 @@ const formSchema = yup.object().shape({
     .min(14, "Value must be 14")
     .max(14, "Value must be 14")
     .required(),
-  tin: yup
-    .string()
-    .required()
-    .min(7, "Value must be 7")
-    .max(7, "Value must be 7"),
+  tin: yup.string().required(),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(
