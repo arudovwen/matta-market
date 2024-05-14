@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#333] rounded-[10px] py-[30px] px-5 w-full lg:w-[250px] xl:w-[360px]"
+    class="bg-[#101828] rounded-[10px] py-[30px] px-5 w-full lg:w-[250px] xl:w-[360px]"
   >
     <div class="font-semibold text-2xl text-white pb-6">Order Details</div>
     <div class="flex flex-col gap-y-5">
@@ -28,17 +28,18 @@
         </p>
       </div>
       <div class="flex justify-between">
+        <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
+
+        <p class="text-white font-medium text-sm">TBD</p>
+      </div>
+      <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
 
         <p class="text-white text-sm font-medium">
           {{ currencyFormat(cartStore?.cartTotalAmount * cartStore?.tax) }}
         </p>
       </div>
-      <div class="flex justify-between">
-        <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
-
-        <p class="text-white font-medium text-sm">TBD</p>
-      </div>
+   
     </div>
     <hr class="my-[20px] border-white/10" />
     <div class="flex justify-between mb-[25px]">

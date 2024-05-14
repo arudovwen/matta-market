@@ -32,7 +32,7 @@ import { getCompanyProfile } from "@/services/settingservices";
 const authStore = useAuthStore();
 const companyInfo = ref(null);
 const isLoading = ref(true);
-onBeforeMount(() => {
+function getData(){
   getCompanyProfile()
     .then((res) => {
       if (res.status === 200) {
@@ -43,6 +43,9 @@ onBeforeMount(() => {
     .catch(() => {
       isLoading.value = false;
     });
+}
+onBeforeMount(() => {
+ getData()
 });
 const active = ref(1);
 const tabs = [
@@ -61,6 +64,7 @@ const tabs = [
 ];
 provide("active", active);
 provide("companyInfo", companyInfo);
+provide("getData", getData)
 </script>
 
 <style lang="scss" scoped>

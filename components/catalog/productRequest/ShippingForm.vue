@@ -162,7 +162,7 @@ const handleReload = inject("handleReload");
 const form = reactive({
   firstName: "",
   lastName: "",
-  country: "",
+  country: "Nigeria",
   city: "",
   street: "",
   postalCode: "",

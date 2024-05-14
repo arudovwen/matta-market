@@ -455,7 +455,7 @@ const form = reactive({
     },
   ],
 
-  country: "",
+  country: "Nigeria",
   city: "",
   state: "",
   address: "",

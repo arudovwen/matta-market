@@ -469,7 +469,7 @@ const form = reactive({
   photo: "",
   firstName: "",
   lastName: "",
-  country: "",
+  country: "Nigeria",
   city: "",
   email: "",
   phone: "",

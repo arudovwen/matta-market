@@ -691,7 +691,7 @@ const states = computed(() => {
 const producerForm = reactive({
   title: "",
   location: "",
-  country: "",
+  country: "Nigeria",
   state: "",
   logo: "",
 });

@@ -4,23 +4,27 @@
       Payment Method
     </h2>
     <div class="p-[30px]">
-      <div class="flex flex-wrap gap-y-6 md:gap-y-0 gap-x-6">
-        <button
+      <div class="grid gap-y-5">
+        <label
           v-for="n in data"
           :key="n.title"
-          @click="active = n.key"
-          :disabled="n.key !== 'card'"
-          :class="`${
-            active === n.key
-              ? 'bg-[rgba(22,94,240,0.12)] border-[#165EF066]'
-              : 'border-[#E7E7E780]'
-          } ${
-            n.key === 'card' ? '' : 'opacity-50 cursor-not-allowed'
-          } shadow-[0px_0px _4px_0px_rgba(0,0,0,0.11)] min-w-[180px] w-full md:max-w-[180px] rounded-[10px] py-6 px-[16px] flex flex-col justify-center items-center border-2`"
+          class="flex gap-x-2 items-start"
+          :class="`${n.key === 'card' ? '' : 'opacity-50'}`"
         >
-          <AppIcon class="text-4xl mb-2" :icon="n.icon" />
-          <p class="text-xs">{{ n.title }}</p>
-        </button>
+          <input
+            type="radio"
+            v-model="active"
+            :value="n.key"
+            class="mt-[5px] accent-primary-500"
+            :disabled="n.key === 'matta'"
+          />
+          <div>
+            <span class="block cursor-pointer">
+              <span class="block font-medium mb-1">{{ n.title }}</span>
+              <span class="block text-sm text-[#475467]">{{n.text}} </span>
+            </span>
+          </div>
+        </label>
       </div>
     </div>
   </div>
@@ -29,22 +33,24 @@
 const active = ref("card");
 const data = [
   {
-    title: "Card / Bank Transfer",
+    title: "Pay Online",
     icon: "uil:credit-card",
     key: "card",
     url: "",
+    text: "Pay instantly and securely with your credit/debit card",
   },
   {
     title: "Matta Wallet",
     icon: "ion:wallet-outline",
     url: "",
     key: "matta",
+    text: "Make payment with funds from your Matta wallet",
   },
-  {
-    title: "Pay with Trade Finance",
-    icon: "teenyicons:credit-card-outline",
-    url: "",
-    key: "finance",
-  },
+  // {
+  //   title: "Pay with Trade Finance",
+  //   icon: "teenyicons:credit-card-outline",
+  //   url: "",
+  //   key: "finance",
+  // },
 ];
 </script>

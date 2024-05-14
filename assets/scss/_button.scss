@@ -14,7 +14,7 @@
   }
 }
 .btn-dark {
-  @apply bg-[#333]   text-white  hover:ring-2 hover:ring-opacity-80 ring-black-900   hover:ring-offset-1;
+  @apply bg-[#101828]   text-white  hover:ring-2 hover:ring-opacity-80 ring-black-900   hover:ring-offset-1;
 }
 .btn-primary {
   @apply bg-primary-500   text-white hover:ring-2 hover:ring-opacity-80 ring-primary-500 hover:ring-offset-1 ;
@@ -40,13 +40,13 @@
 
 // btn outline
 .btn-outline-dark {
-  @apply bg-transparent text-[#333]  border border-black-500  hover:border-black-500   hover:bg-[#333] hover:bg-opacity-5;
+  @apply bg-transparent text-[#333]  border border-black-500  hover:border-black-500   hover:bg-[#101828] hover:bg-opacity-5;
   &.active {
-    @apply bg-[#333] text-white ;
+    @apply bg-[#101828] text-white ;
   }
 }
 [aria-expanded="true"] > .btn-outline-dark {
-  @apply bg-[#333] text-white;
+  @apply bg-[#101828] text-white;
 }
 .btn-outline-primary {
   @apply bg-transparent text-primary-500 border border-primary-500 hover:border-primary-500  hover:bg-primary-500  hover:bg-opacity-5;

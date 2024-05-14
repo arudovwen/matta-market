@@ -11,10 +11,10 @@
       />
     </div>
     <p class="text-sm mb-[7px] max-w-[280px]">
-      {{ detail.street }}
+      {{ detail.street }} ,{{ detail.lga?` ,${detail.lga}`:'' }}
     </p>
     <p class="text-sm mb-[7px] max-w-[280px]">
-      {{ detail.lga }}, &nbsp;{{ detail.state }}, &nbsp;{{ detail.country }}
+      {{ detail.state }}, &nbsp;{{ detail.country }}
     </p>
   </div>
 </template>

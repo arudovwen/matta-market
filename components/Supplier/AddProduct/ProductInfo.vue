@@ -748,7 +748,7 @@ const router = useRouter();
 const producerForm = reactive({
   title: "",
   location: "",
-  country: "",
+  country: "Nigeria",
   state: "",
   logo: "",
 });

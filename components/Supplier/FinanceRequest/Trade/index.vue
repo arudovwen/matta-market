@@ -98,7 +98,7 @@ const formData = reactive({
     incorporation: "", // Assuming incorporation is a dateofIncorporation type
     mermat: "",
     utilityBill: "",
-    country: "",
+    country: "Nigeria",
     city: "",
     state: "",
     email:authStore.userInfo.email,

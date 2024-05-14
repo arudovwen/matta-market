@@ -3,7 +3,7 @@
     class="bg-transparent h-screen w-screen flex items-center justify-center p-6"
   >
     <div
-      class="bg-[#333] rounded-[10px] py-[30px] px-5 w-full max-w-[400px] shadow"
+      class="bg-[#101828] rounded-[10px] py-[30px] px-5 w-full max-w-[400px] shadow"
     >
       <div class="font-semibold text-2xl text-white pb-6">Order Details</div>
       <div class="flex flex-col gap-y-5">

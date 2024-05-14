@@ -1,9 +1,6 @@
 <template>
-  <div class="bg-white rounded-[10px]">
-    <h2 class="px-[30px] py-5 font-bold text-2xl border-b border-[#f3f3f3]">
-      Shipping Address
-    </h2>
-    <div class="px-[30px] pt-6 pb-[30px]">
+  <div class="bg-[#F9FAFB] border border-[#EAECF0] rounded-[10px]">
+    <div class="px-5 pt-3 pb-4">
       <div class="mb-6">
         <CheckoutShippingAddress :detail="shippingStore?.defaultAddress" />
       </div>

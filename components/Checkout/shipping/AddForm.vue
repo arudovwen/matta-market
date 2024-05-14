@@ -15,7 +15,8 @@
           name="firstName"
           v-bind="firstNameAtt"
           v-model="firstName"
-          :error="errors.firstName" isCumpulsory
+          :error="errors.firstName"
+          isCumpulsory
         />
       </div>
       <div>
@@ -26,11 +27,17 @@
           name="lasttName"
           v-bind="lastNameAtt"
           v-model="lastName"
-          :error="errors.lastName" isCumpulsory
+          :error="errors.lastName"
+          isCumpulsory
         />
       </div>
 
-      <FormGroup label="Country" isCumpulsory :error="errors.country" name="country">
+      <FormGroup
+        label="Country"
+        isCumpulsory
+        :error="errors.country"
+        name="country"
+      >
         <SelectVueSelect
           v-model="country"
           :options="allcountries"
@@ -54,7 +61,13 @@
           }`"
         />
       </FormGroup>
-      <FormGroup isCumpulsory label="LGA" :error="errors.lga" class="xl:col-span-2">
+      <FormGroup
+        v-if="country?.toLowerCase() === 'nigeria'"
+        isCumpulsory
+        label="LGA"
+        :error="errors.lga"
+        class="xl:col-span-2"
+      >
         <SelectVueSelect
           class="w-full"
           v-model.value="lga"
@@ -66,7 +79,12 @@
         />
       </FormGroup>
 
-      <FormGroup isCumpulsory class="xl:col-span-2" label="Street" :error="errors.street">
+      <FormGroup
+        isCumpulsory
+        class="xl:col-span-2"
+        label="Street"
+        :error="errors.street"
+      >
         <SelectSearchSelect
           class="w-full"
           v-model.value="street"
@@ -104,7 +122,7 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { addshipping,addressSearch } from "~/services/cartservice";
+import { addshipping, addressSearch } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
 import Lgas from "@/utils/lgastate.json";
@@ -130,7 +148,11 @@ const schema = yup.object({
   street: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
-  lga: yup.string().required("Lga is required"),
+  lga: yup.string().when("country", {
+    is: "Nigeria",
+    then: (schema) => schema.required("Lga is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   postalCode: yup.string().required("Postal code is required"),
 });
 
@@ -151,7 +173,6 @@ const [isDefault, isDefaultAtt] = defineField("isDefault");
 const allcountries = computed(() => {
   return CountryList.map((item) => {
     return {
-      id: "",
       label: `${item.name}`,
       value: item.name,
     };

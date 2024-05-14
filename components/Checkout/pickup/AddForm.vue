@@ -53,7 +53,12 @@
           }`"
         />
       </FormGroup>
-      <FormGroup isCumpulsory label="LGA" :error="errors.lga">
+      <FormGroup
+        v-if="country.toLowerCase() === 'nigeria'"
+        isCumpulsory
+        label="LGA"
+        :error="errors.lga"
+      >
         <SelectVueSelect
           class="w-full"
           v-model.value="lga"
@@ -130,7 +135,11 @@ const schema = yup.object({
   address: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
-  lga: yup.string(),
+  lga: yup.string().when("country", {
+    is: "Nigeria",
+    then: (schema) => schema.required("Lga is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   phoneNumber: yup.string().required("Postal code is required"),
 });
 

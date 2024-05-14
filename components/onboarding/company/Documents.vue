@@ -14,8 +14,9 @@
         v-if="!companyInfo.approvalStatus"
         class="grid gap-y-6 max-w-[560px] w-full"
       >
-        <div>
+        <div v-if="companyInfo.country?.toLowerCase() === 'nigeria'">
           <FileUpload
+           
             label="Memorandum and Articles of Association"
             id="mermat"
             :modelValue="docUrl(1)"
@@ -31,8 +32,9 @@
             ></span
           >
         </div>
-        <div>
+        <div v-if="companyInfo.country?.toLowerCase() === 'nigeria'">
           <FileUpload
+          
             label="Certificate of Incorporation"
             id="incorporation"
             :modelValue="docUrl(0)"

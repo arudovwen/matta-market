@@ -119,6 +119,98 @@
 
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >Country <RedDot
+                    /></label>
+                    <div class="relative">
+                      <FormsSelectComponent
+                        :options="allcountries"
+                        :showSearch="true"
+                        :value="form.country"
+                        @onGetData="getCountry"
+                        containerStyle="w-full"
+                        :classStyles="`${
+                          v$.country.$error && 'border-red-500'
+                        } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full ! placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
+                      />
+                      <div
+                        class="text-red-500 mt-1"
+                        v-for="error of v$.country.$errors"
+                        :key="error.$uid"
+                      >
+                        <div class="error-msg text-error text-xs font-semibold">
+                          {{ error.$message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >State <RedDot
+                    /></label>
+                    <FormsSelectComponent
+                      :options="mystates"
+                      :showSearch="true"
+                      :value="form.state"
+                      @onGetData="getState"
+                      containerStyle="w-full"
+                      :classStyles="`${
+                        v$.state.$error && 'border-red-500'
+                      } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full ! placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
+                    />
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.state.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >E-mail <RedDot
+                    /></label>
+                    <input
+                      v-model="v$.email.$model"
+                      :class="{ 'border-red-500': v$.email.$error }"
+                      class="px-[14px] py-[10px] h-11 text-sm rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      autocomplete="off"
+                      autofocus="on"
+                    />
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.email.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >Phone number <RedDot
+                    /></label>
+                    <div class="flex relative rounded-lg h-11">
+                      <FormsPhoneCodes v-model="v$.phone.$model" />
+                    </div>
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.phone.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >Business type <RedDot
                     /></label>
 
@@ -186,50 +278,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >E-mail <RedDot
-                    /></label>
-                    <input
-                      v-model="v$.email.$model"
-                      :class="{ 'border-red-500': v$.email.$error }"
-                      class="px-[14px] py-[10px] h-11 text-sm rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      autocomplete="off"
-                      autofocus="on"
-                    />
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.email.$errors"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-xs font-semibold">
-                        {{ error.$message }}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Phone number <RedDot
-                    /></label>
-                    <div class="flex relative rounded-lg h-11">
-                      <FormsPhoneCodes v-model="v$.phone.$model" />
-                    </div>
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.phone.$errors"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-xs font-semibold">
-                        {{ error.$message }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
                     <label
                       class="mb-2 font-medium text-sm text-[#344054] block"
@@ -255,7 +304,10 @@
                       </div>
                     </div>
                   </div>
-                  <div class="mb-6">
+                  <div
+                    class="mb-6"
+                    v-if="form.country?.toLowerCase() === 'nigeria'"
+                  >
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >TIN number <RedDot
                     /></label>
@@ -302,27 +354,6 @@
                       <div class="error-msg text-error text-xs font-semibold">
                         {{ error.$message }}
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-6">
-                  <label class="mb-2 font-medium text-sm text-[#344054] block"
-                    >Description</label
-                  >
-                  <textarea
-                    v-model="v$.description.$model"
-                    :class="{ 'border-red-500': v$.description.$error }"
-                    rows="4"
-                    placeholder="Company description"
-                    class="rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                  ></textarea>
-                  <div
-                    class="text-red-500 mt-1"
-                    v-for="error of v$.description.$errors"
-                    :key="error.$uid"
-                  >
-                    <div class="error-msg text-error text-xs font-semibold">
-                      {{ error.$message }}
                     </div>
                   </div>
                 </div>
@@ -373,59 +404,28 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Country <RedDot
-                    /></label>
-                    <div class="relative">
-                      <FormsSelectComponent
-                        :options="allcountries"
-                        :showSearch="true"
-                        :value="form.country"
-                        @onGetData="getCountry"
-                        containerStyle="w-full"
-                        :classStyles="`${
-                          v$.country.$error && 'border-red-500'
-                        } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full ! placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
-                      />
-                      <div
-                        class="text-red-500 mt-1"
-                        v-for="error of v$.country.$errors"
-                        :key="error.$uid"
-                      >
-                        <div class="error-msg text-error text-xs font-semibold">
-                          {{ error.$message }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >State <RedDot
-                    /></label>
-                    <FormsSelectComponent
-                      :options="mystates"
-                      :showSearch="true"
-                      :value="form.state"
-                      @onGetData="getState"
-                      containerStyle="w-full"
-                      :classStyles="`${
-                        v$.state.$error && 'border-red-500'
-                      } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full ! placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
-                    />
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.state.$errors"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-xs font-semibold">
-                        {{ error.$message }}
-                      </div>
+                <div class="mb-6">
+                  <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    >Description</label
+                  >
+                  <textarea
+                    v-model="v$.description.$model"
+                    :class="{ 'border-red-500': v$.description.$error }"
+                    rows="4"
+                    placeholder="Company description"
+                    class="rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  ></textarea>
+                  <div
+                    class="text-red-500 mt-1"
+                    v-for="error of v$.description.$errors"
+                    :key="error.$uid"
+                  >
+                    <div class="error-msg text-error text-xs font-semibold">
+                      {{ error.$message }}
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -587,6 +587,7 @@ import {
   updateCompanyProfile,
 } from "@/services/settingservices";
 
+const getData = inject("getData")
 const active = inject("active");
 const companyInfo = inject("companyInfo");
 const authStore = useAuthStore();
@@ -625,7 +626,7 @@ const form = reactive({
   website: "",
   fax: "",
   description: "",
-  country: "",
+  country: "Nigeria",
   city: "",
   state: "",
   address: "",
@@ -783,7 +784,7 @@ const rules = {
     required,
     maxLength: maxLength(250),
   },
-  tin: { required},
+  tin: form.country?.toLowerCase === "nigeria" ? { required } : {},
   registrationNo: { required, minLength: minLength(14) },
   companyType: { required },
   state: {
@@ -817,6 +818,7 @@ async function handleSubmit() {
   updateCompanyProfile(form)
     .then((res) => {
       if (res.status === 200) {
+        getData()
         toast.success("Information saved");
         active.value = 2;
         getCompanyProfile().then((res) => {

@@ -21,6 +21,7 @@
             DOB
           </th>
           <th
+            v-if="companyInfo?.country?.toLowerCase() === 'nigeria'"
             class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
           >
             BVN
@@ -41,9 +42,11 @@
           >
             Linkedin
           </th>
-          <th v-if="!companyInfo?.approvalStatus"  class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"></th>
+          <th
+            v-if="!companyInfo?.approvalStatus"
+            class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+          ></th>
         </tr>
-
       </thead>
       <tbody>
         <tr
@@ -71,6 +74,7 @@
             {{ moment(director.dob).format("ll") }}
           </td>
           <td
+            v-if="companyInfo?.country?.toLowerCase() === 'nigeria'"
             class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
           >
             {{ director.bvn }}
@@ -96,7 +100,10 @@
           <td
             class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
           >
-            <a class="text-primary-500" :href="director.linkedIn" target="_blank"
+            <a
+              class="text-primary-500"
+              :href="director.linkedIn"
+              target="_blank"
               >View profile</a
             >
           </td>
