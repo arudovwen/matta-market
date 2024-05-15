@@ -292,6 +292,14 @@
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
                 >
                   <span>Pickup location </span>
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Please, specify the location where this product can be picked up"
+                    class="cursor-pointer"
+                  >
+                    <AppIcon icon="quill:info" iconClass="text-gray-600" />
+                  </span>
                 </label>
                 <SelectVueSelect
                   v-model="v$.pickUpLocationId.$model"
