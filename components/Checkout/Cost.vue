@@ -9,34 +9,22 @@
     </p>
 
     <div>
-      <Table :columns="columns" :rows="rows" :isBalance="true" />
+      <Table
+        :columns="columns"
+        :rows="rows"
+        :isBalance="true"
+        :emptyTitle="error"
+        :isLoading="loading"
+      />
     </div>
   </div>
 </template>
 <script setup>
+import { shippingBreakdown } from "@/services/cartservice";
 // const currencyFormat = inject("currencyFormat");
-const rows = ref([
-  {
-    item: "Methyl hydroxyethyl cellulose (Tylose® MH 10000 KG4)",
-    size: "2 tonne",
-    cost: currencyFormat(40000),
-  },
-  {
-    item: "Acrypol 600(Styrene Acrylic)",
-    size: "2 tonne",
-    cost: currencyFormat(4040200),
-  },
-  {
-    item: "IPEA (N,N-Diisopropylethylamine)",
-    size: "4 tonne",
-    cost: currencyFormat(4240000),
-  },
-  {
-    item: "Total Shipping Cost",
-    size: "",
-    cost: currencyFormat(14240000),
-  },
-]);
+const rows = ref([]);
+const error = ref(null);
+const loading = ref(false);
 const columns = [
   {
     header: "Item",
@@ -52,10 +40,40 @@ const columns = [
     isStatus: false,
   },
   {
+    header: "Quantity",
+    key: "quantity",
+    isHtml: false,
+    isStatus: false,
+  },
+  {
     header: "Shipping cost",
-    key: "cost",
+    key: "shippingCost",
     isHtml: false,
     isStatus: false,
   },
 ];
+
+onMounted(() => {
+  loading.value = true;
+  shippingBreakdown()
+    .then((res) => {
+      loading.value = false;
+      if (res.status === 200) {
+        rows.value = [
+          ...res.data.data.items,
+          {
+            item: "Total Cost",
+            size: "",
+            quantity: "",
+            shippingCost: res.data.data.totalShippingCost,
+          },
+        ].map((i) => ({ ...i, shippingCost: currencyFormat(i.shippingCost) }));
+        error.value = null;
+      }
+    })
+    .catch((err) => {
+      loading.value = false;
+      error.value = err.response.data.Message || err.response.data.message;
+    });
+});
 </script>

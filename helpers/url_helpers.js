@@ -107,6 +107,7 @@ const urls = {
   GET_SHIPPING_ADDRESS: "/v1/shippingaddress/getall",
   DEFAULT_SHIPPING_ADDRESS: "/v1/shippingaddress/setasdefault",
   DELETE_SHIPPING: "/v1/shippingaddress/delete",
+  SHIPPONG_COST_BREAKDOWN: "/v1/ShoppingCart/shipping-cost-breakdown",
 
   ADD_PICKUP_ADDRESS: "/v1/pickuplocation/add",
   EDIT_PICKUP_ADDRESS: "/v1/pickuplocation/edit",
