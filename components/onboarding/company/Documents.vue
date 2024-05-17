@@ -16,11 +16,11 @@
       >
         <div v-if="companyInfo.country?.toLowerCase() === 'nigeria'">
           <FileUpload
-           
             label="Memorandum and Articles of Association"
             id="mermat"
             :modelValue="docUrl(1)"
             isCumpulsory
+          
           />
           <span
             @click="downloadFile(docUrl(1), 'MERMAT')"
@@ -32,13 +32,13 @@
             ></span
           >
         </div>
-        <div v-if="companyInfo.country?.toLowerCase() === 'nigeria'">
+        <div>
           <FileUpload
-          
             label="Certificate of Incorporation"
             id="incorporation"
             :modelValue="docUrl(0)"
             isCumpulsory
+            :multiple="companyInfo.country?.toLowerCase() !== 'nigeria'"
           />
           <span @click="downloadFile(docUrl(0), 'CAC')" v-if="docUrl(0)">
             <span class="block text-xs text-blue-500 mt-1"
@@ -46,7 +46,7 @@
             ></span
           >
         </div>
-        <div>
+        <div v-if="companyInfo.country?.toLowerCase() === 'nigeria'">
           <FileUpload
             label="CAC Status Report"
             id="statusReport"
@@ -62,7 +62,7 @@
             ></span
           >
         </div>
-        <div>
+        <div v-if="companyInfo.country?.toLowerCase() === 'nigeria'">
           <FileUpload
             label="Utility bill"
             id="utitlityBill"
@@ -80,7 +80,7 @@
         </div>
       </div>
       <div v-else class="max-w-[560px]">
-        <DocumentsViewer type="kyb" :documents="companyInfo.companyDocuments" />
+        <DocumentsViewer type="kyb" :documents="companyDoc" />
       </div>
     </div>
     <div
@@ -96,9 +96,9 @@
       </button>
 
       <button
-        :disabled="form.companyDocuments.some((i) => i.url === '') || isLoading"
+        :disabled="viewingDoc.some((i) => i.url === '') || isLoading"
         :class="{
-          'opacity-60 cursor-not-allowed': form.companyDocuments.some(
+          'opacity-60 cursor-not-allowed': viewingDoc.some(
             (i) => i.url === ''
           ),
         }"
@@ -152,6 +152,21 @@ const form = reactive({
           },
         ],
 });
+const viewingDoc = computed(() => {
+  if (companyInfo.value.country?.toLowerCase() !== "nigeria") {
+    return form.companyDocuments.filter((i)=>i.documentType === 0);
+  } else {
+    return form.companyDocuments;
+  }
+});
+
+const companyDoc = computed(() => {
+  if (companyInfo.value.country?.toLowerCase() !== "nigeria") {
+    return companyInfo.value.companyDocuments.filter((i)=>i.documentType === 0);
+  } else {
+    return companyInfo.value.companyDocuments;
+  }
+});
 
 const isLoading = ref(false);
 
@@ -198,7 +213,17 @@ const invalidCredentials = ref(false);
 // const isDisabled = ref(false);
 
 async function handleSubmit() {
-  if (form.companyDocuments.some((i) => i.url === "")) return;
+  if (
+    companyInfo.value.country?.toLowerCase() === "nigeria" &&
+    form.companyDocuments.some((i) => i.url === "")
+  )
+    if (
+      companyInfo.value.country?.toLowerCase() !== "nigeria" &&
+      form.companyDocuments
+        .filter((i) => i.documentType === 0)
+        .some((i) => i.url === "")
+    )
+      return;
   isLoading.value = true;
 
   updateDocuments(form)

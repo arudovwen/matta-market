@@ -14,6 +14,7 @@ export const useCartStore = defineStore(
     const authStore = useAuthStore();
     const cartItems = ref([]);
     const tax = ref(0);
+    const shippingTotal = ref(0);
 
     const cart = computed(() => cartItems?.value);
     const cartTotal = computed(() => cartItems?.value.length);
@@ -29,6 +30,7 @@ export const useCartStore = defineStore(
           if (res.status === 200) {
             setCart(res.data.data.items);
             setTax(res.data.data.tax);
+            SetShippingTotal(res.data.data.shippingTotal);
           }
         })
         .catch((err) => {
@@ -37,6 +39,9 @@ export const useCartStore = defineStore(
     }
     function setTax(data) {
       tax.value = data;
+    }
+    function SetShippingTotal(data) {
+      shippingTotal.value = data;
     }
 
     const setCart = (data) => {
@@ -133,8 +138,10 @@ export const useCartStore = defineStore(
       cartTotalAmount,
       cartTotal,
       setTax,
+      SetShippingTotal,
       updateCart,
       cartItems,
+      shippingTotal,
     };
   },
 

@@ -52,9 +52,7 @@ const columns = [
     isStatus: false,
   },
 ];
-
-onMounted(() => {
-  loading.value = true;
+function getData() {
   shippingBreakdown()
     .then((res) => {
       loading.value = false;
@@ -75,5 +73,14 @@ onMounted(() => {
       loading.value = false;
       error.value = err.response.data.Message || err.response.data.message;
     });
+}
+
+onMounted(() => {
+  loading.value = true;
+  getData();
+});
+const refresh = inject("refresh");
+watch(refresh, () => {
+  getData();
 });
 </script>

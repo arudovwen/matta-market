@@ -37,7 +37,7 @@
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
 
-        <p class="text-white font-medium text-sm">TBD</p>
+        <p class="text-white font-medium text-sm"> {{ currencyFormat(cartStore?.shippingTotal) }}</p>
       </div>
     </div>
     <hr class="my-[20px] border-white/10" />

@@ -10,3 +10,8 @@
     </div>
   </div>
 </template>
+<script setup>
+const refresh = ref(false)
+
+provide("refresh",refresh)
+</script>
