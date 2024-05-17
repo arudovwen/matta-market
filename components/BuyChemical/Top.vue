@@ -19,7 +19,7 @@
 
     <div data-aos="fade-in" data-aos-once="true" class="flex gap-x-4 mb-[64px]">
       <AppButton
-        @click="navigateTo('/auth/vendor-register')"
+        @click="navigateTo('/auth/register')"
         text="Free sign up"
         btnClass="bg-transparent border-[#D0D5DD] border !px-[18px] !py-3 text-[#344054]"
       />
