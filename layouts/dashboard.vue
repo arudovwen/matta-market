@@ -46,10 +46,13 @@ onMounted(() => {
         if (res.status === 200) {
           const remoteCartItems = res.data.data.items;
           const remoteTax = res.data.data.tax;
+          const remoteShippingTotal= res.data.data.shippingTotal;
 
           // Set the remote cart items and tax in the store
           cartStore?.setCart(remoteCartItems);
           cartStore?.setTax(remoteTax);
+          cartStore?.SetShippingTotal(remoteShippingTotal);
+          cartStore?.setCartTotalwithTax(res.data.data.cartTotalwithTax);
 
           if (localCart?.length > 0) {
             // Merge remote and local cart items, remove duplicates, and update the minicart
@@ -78,6 +81,10 @@ onMounted(() => {
        
         if (err.response.data.Message.toLowerCase() === "no items in cart") {
           cartStore?.setCart?.([]);
+     
+          cartStore?.setTax(0);
+          cartStore?.SetShippingTotal(0);
+          cartStore?.setCartTotalwithTax(0);
         }
       });
   } else {

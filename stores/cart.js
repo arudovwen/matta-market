@@ -15,6 +15,8 @@ export const useCartStore = defineStore(
     const cartItems = ref([]);
     const tax = ref(0);
     const shippingTotal = ref(0);
+    const cartTotalwithTax = ref(0);
+    const loadingCart = ref(false);
 
     const cart = computed(() => cartItems?.value);
     const cartTotal = computed(() => cartItems?.value.length);
@@ -25,23 +27,36 @@ export const useCartStore = defineStore(
     );
 
     function getMyCart() {
+      loadingCart.value = true;
       getcart()
         .then((res) => {
           if (res.status === 200) {
+            loadingCart.value = false;
             setCart(res.data.data.items);
             setTax(res.data.data.tax);
             SetShippingTotal(res.data.data.shippingTotal);
+            setCartTotalwithTax(res.data.data.cartTotalwithTax);
           }
         })
         .catch((err) => {
-          console.log("🚀 ~ getcart ~ err:", err.response.data.Message);
+          setCart([]);
+          setTax(0);
+          SetShippingTotal(0);
+          setCartTotalwithTax(0);
+          loadingCart.value = false;
         });
     }
     function setTax(data) {
       tax.value = data;
     }
+    function setLoadingCart(data) {
+      loadingCart.value = data;
+    }
     function SetShippingTotal(data) {
       shippingTotal.value = data;
+    }
+    function setCartTotalwithTax(data) {
+      cartTotalwithTax.value = data;
     }
 
     const setCart = (data) => {
@@ -142,6 +157,10 @@ export const useCartStore = defineStore(
       updateCart,
       cartItems,
       shippingTotal,
+      cartTotalwithTax,
+      setCartTotalwithTax,
+      loadingCart,
+      setLoadingCart
     };
   },
 

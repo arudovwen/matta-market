@@ -21,7 +21,6 @@
   </div>
 </template>
 <script setup>
-
 import { createcart, getcart } from "~/services/cartservice";
 const cookie = useCookie("cart");
 const authStore = useAuthStore();
@@ -29,39 +28,49 @@ const cartStore = useCartStore();
 const localCart = [];
 onMounted(() => {
   if (authStore.isLoggedIn) {
-    getcart().then((res) => {
-      if (res.status === 200) {
-        const remoteCartItems = res.data.data.items;
-        const remoteTax = res.data.data.tax;
+    getcart()
+      .then((res) => {
+        if (res.status === 200) {
+          const remoteCartItems = res.data.data.items;
+          const remoteTax = res.data.data.tax;
+          const remoteShippingTotal = res.data.data.shippingTotal;
 
-        // Set the remote cart items and tax in the store
-        cartStore?.setCart(remoteCartItems);
-        cartStore?.setTax(remoteTax);
+          // Set the remote cart items and tax in the store
+          cartStore?.setCart(remoteCartItems);
+          cartStore?.setTax(remoteTax);
+          cartStore?.SetShippingTotal(remoteShippingTotal);
+          cartStore?.setCartTotalwithTax(res.data.data.cartTotalwithTax);
 
-        if (cookie?.value?.cartItems?.length > 0) {
-          // Merge remote and local cart items, remove duplicates, and update the minicart
-          const mergedCart = [...remoteCartItems, ...cookie?.value?.cartItems];
-          const uniqueCart = mergedCart.filter(
-            (item, index, self) =>
-              index === self.findIndex((i) => i.productId === item.productId)
-          );
+          if (cookie?.value?.cartItems?.length > 0) {
+            // Merge remote and local cart items, remove duplicates, and update the minicart
+            const mergedCart = [
+              ...remoteCartItems,
+              ...cookie?.value?.cartItems,
+            ];
+            const uniqueCart = mergedCart.filter(
+              (item, index, self) =>
+                index === self.findIndex((i) => i.productId === item.productId)
+            );
 
-          if (!remoteCartItems.length) {
-            createcart({ items: uniqueCart }).then((createRes) => {
-              if (createRes.status === 200) {
-                // Refresh the minicart after updating with unique items
-                cartStore?.getMyCart();
-              }
-            });
+            if (!remoteCartItems.length) {
+              createcart({ items: uniqueCart }).then((createRes) => {
+                if (createRes.status === 200) {
+                  // Refresh the minicart after updating with unique items
+                  cartStore?.getMyCart();
+                }
+              });
+            }
           }
         }
-      }
-    }) .catch((err) => {
-         
-          if(err.response.data.Message.toLowerCase() === "no items in cart"){
-            cartStore?.setCart?.([])
-          }
-        });
+      })
+      .catch((err) => {
+        if (err.response.data.Message.toLowerCase() === "no items in cart") {
+          cartStore?.setCart?.([]);
+          cartStore?.setTax(0);
+          cartStore?.SetShippingTotal(0);
+          cartStore?.setCartTotalwithTax(0);
+        }
+      });
   } else {
     cartStore?.setCart?.(cookie?.value?.cartItems || []);
   }

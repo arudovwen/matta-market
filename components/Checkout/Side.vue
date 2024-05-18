@@ -30,7 +30,9 @@
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
 
-        <p class="text-white font-medium text-sm"> {{ currencyFormat(cartStore?.shippingTotal) }}</p>
+        <p class="text-white font-medium text-sm">
+          {{ currencyFormat(cartStore?.shippingTotal) }}
+        </p>
       </div>
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
@@ -39,29 +41,24 @@
           {{ currencyFormat(cartStore?.cartTotalAmount * cartStore?.tax) }}
         </p>
       </div>
-   
     </div>
     <hr class="my-[20px] border-white/10" />
     <div class="flex justify-between mb-[25px]">
       <p class="text-sm text-[#E1E1E1]">Total</p>
 
       <p class="text-white font-bold">
-        {{
-          currencyFormat(
-            cartStore?.cartTotalAmount * cartStore?.tax +
-              cartStore?.cartTotalAmount
-          )
-        }}
+        {{ currencyFormat(cartStore?.cartTotalwithTax) }}
       </p>
     </div>
     <AppButton
-      :isLoading="loading"
+      :isLoading="loading || cartStore?.loadingCart"
       @click="confirmOrder"
       :isDisabled="
         !cartStore?.cart ||
         !cartStore?.cartTotalAmount ||
         loading ||
-        !shippingStore?.defaultAddress?.id
+        !shippingStore?.defaultAddress?.id ||
+        cartStore?.loadingCart
       "
       :text="status"
       btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
@@ -92,7 +89,7 @@ const status = ref("Confirm order");
 function onModalClose() {
   loading.value = false;
   toast.error("Payment cancelled");
-  status.value = "Retry order";
+  status.value = "Retry payment";
   loading.value = false;
 }
 function makePayment(reference) {
@@ -102,7 +99,7 @@ function makePayment(reference) {
     shippingAddressId: shippingStore?.defaultAddress.id,
     email: authstore.userInfo?.email,
     name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
-    amount: cartTaxAmount.value,
+    amount: cartStore?.cartTotalwithTax,
     phoneNumber: authstore.userInfo?.phoneNumber,
     reference: `ORD-${reference}-${nanoid(6)}`,
     orderId: reference,

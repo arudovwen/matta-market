@@ -26,4 +26,6 @@ useHead({
   title: "Checkout | Matta",
   meta: [{ name: "description", content: "Checkout" }],
 });
+const cartStore = useCartStore()
+cartStore.getMyCart()
 </script>

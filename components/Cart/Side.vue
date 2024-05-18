@@ -37,7 +37,7 @@
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
 
-        <p class="text-white font-medium text-sm"> {{ currencyFormat(cartStore?.shippingTotal) }}</p>
+        <p class="text-white font-medium text-sm"> TBD</p>
       </div>
     </div>
     <hr class="my-[20px] border-white/10" />
@@ -58,12 +58,13 @@
         @click="handleOrderRequest()"
         text="Submit order request"
         :isLoading="loading"
-        :isDisabled="!shippingStore?.defaultAddress?.id"
+        :isDisabled="!shippingStore?.defaultAddress?.id || !cartStore?.cart || !cartStore?.cartTotalAmount ||   cartStore?.loadingCart"
         btnClass="!rounded-[5px] !text-[#DBDBDB] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
       />
       <NuxtLink href="/checkout">
         <AppButton
-          :isDisabled="!cartStore?.cart || !cartStore?.cartTotalAmount"
+          :isDisabled="!cartStore?.cart || !cartStore?.cartTotalAmount ||   cartStore?.loadingCart"
+          :isLoading="cartStore?.loadingCart"
           text="Proceed to Checkout"
           btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm"
         />

@@ -22,6 +22,9 @@
 <script setup>
 import { shippingBreakdown } from "@/services/cartservice";
 // const currencyFormat = inject("currencyFormat");
+
+const cartStore = useCartStore();
+const shippingStore = useShippingStore();
 const rows = ref([]);
 const error = ref(null);
 const loading = ref(false);
@@ -53,9 +56,12 @@ const columns = [
   },
 ];
 function getData() {
+  loading.value = true;
+  cartStore.setLoadingCart(true)
   shippingBreakdown()
     .then((res) => {
       loading.value = false;
+      cartStore.setLoadingCart(false)
       if (res.status === 200) {
         rows.value = [
           ...res.data.data.items,
@@ -67,10 +73,12 @@ function getData() {
           },
         ].map((i) => ({ ...i, shippingCost: currencyFormat(i.shippingCost) }));
         error.value = null;
+        cartStore.getMyCart();
       }
     })
     .catch((err) => {
       loading.value = false;
+      cartStore.setLoadingCart(false)
       error.value = err.response.data.Message || err.response.data.message;
     });
 }
@@ -83,4 +91,10 @@ const refresh = inject("refresh");
 watch(refresh, () => {
   getData();
 });
+watch(
+  () => [shippingStore?.defaultAddress],
+  () => {
+    getData();
+  }
+);
 </script>
