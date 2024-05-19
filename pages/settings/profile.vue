@@ -123,7 +123,7 @@
               </div>
             </div>
           </div>
-          <div class="grid lg:grid-cols-2 gap-x-6">
+          <!-- <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
               <label class="mb-2 font-normal text-sm block">Country <RedDot /></label>
               <div class="flex relative">
@@ -173,7 +173,7 @@
                 ></i>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="mt-6 flex justify-end">
             <button
