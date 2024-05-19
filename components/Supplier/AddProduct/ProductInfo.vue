@@ -16,8 +16,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
                   >
-                   <RedDot /> Product
-                    generic name
+                    <RedDot /> Product generic name
                   </label>
                   <input
                     v-model="v$.name.$model"
@@ -67,7 +66,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                   <RedDot /> Producer
+                    <RedDot /> Producer
                   </label>
 
                   <Combobox v-model="form.manufacturer">
@@ -192,7 +191,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                   <RedDot /> Markets
+                    <RedDot /> Markets
                   </label>
                   <MultiInput
                     :markets="allmarkets"
@@ -226,7 +225,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                   <RedDot /> Applications
+                    <RedDot /> Applications
                   </label>
                   <MultiInput
                     :markets="technologies"
@@ -259,7 +258,7 @@
                 <label
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
                 >
-                 <RedDot />
+                  <RedDot />
                   <span>Description </span>
                   <span
                     data-toggle="tooltip"
@@ -310,7 +309,7 @@
                 />
                 <div class="flex justify-start mt-1">
                   <button
-                  @click="isLocationOpen = true"
+                    @click="isLocationOpen = true"
                     class="text-xs text-primary-500 font-medium"
                     type="button"
                   >
@@ -484,9 +483,7 @@
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
       <div class="w-[250px]">
-        <h2 class="text-sm text-[#101828] font-semibold">
-          Gallery<RedDot />
-        </h2>
+        <h2 class="text-sm text-[#101828] font-semibold">Gallery<RedDot /></h2>
         <p class="text-xs text-[#475467]">
           Upload pictures of your products here.
         </p>
@@ -749,7 +746,7 @@ import StatesSelect from "~/components/forms/StatesSelect";
 import { uploadfile } from "~/services/onboardingservices";
 import countries from "~/utils/countries.json";
 
-const isLocationOpen = ref(false)
+const isLocationOpen = ref(false);
 const pickUpStore = usePickupStore();
 const route = useRoute();
 const router = useRouter();
@@ -825,7 +822,9 @@ const rules = {
     required,
     maxLength: maxLength(100),
   },
-  pickUpLocationId: {},
+  pickUpLocationId: {
+    required: helpers.withMessage("Select a location", required),
+  },
   manufacturer: {
     required: helpers.withMessage("Select a producer", required),
   },
@@ -1042,7 +1041,7 @@ function handleAddingPackage() {
   isAddingPackage.value = true;
 }
 provide("images", form.gallery);
-provide("isOpen",isLocationOpen)
+provide("isOpen", isLocationOpen);
 </script>
 
 <style lang="scss" scoped>

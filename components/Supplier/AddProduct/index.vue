@@ -265,7 +265,7 @@ const product = ref({
 function updateData() {
   form.id = route.query.id;
   form.ProductId = route.query.id;
-  form.pickUpLocationId = product.value.pickUpLocationId;
+  form.pickUpLocationId = product.value.pickupLocationId;
   form.name = product.value.name;
   form.unit = product.value.packagesAvailable
     ? product.value.packagesAvailable[0].unit
