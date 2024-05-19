@@ -27,6 +27,7 @@ export const useCartStore = defineStore(
     );
 
     function getMyCart() {
+      if(!authStore.isLoggedIn) return;
       loadingCart.value = true;
       getcart()
         .then((res) => {
@@ -36,6 +37,23 @@ export const useCartStore = defineStore(
             setTax(res.data.data.tax);
             SetShippingTotal(res.data.data.shippingTotal);
             setCartTotalwithTax(res.data.data.cartTotalwithTax);
+            
+            const mergedCart = [
+              ...res.data.data.items,
+              ...cartItems?.value,
+            ];
+            const uniqueCart = mergedCart.filter(
+              (item, index, self) =>
+                index === self.findIndex((i) => i.productId === item.productId)
+            );
+            if (!res.data.data.items.length) {
+              createcart({ items: uniqueCart }).then((createRes) => {
+                if (createRes.status === 200) {
+                  // Refresh the minicart after updating with unique items
+                  cartStore?.getMyCart();
+                }
+              });
+            }
           }
         })
         .catch((err) => {

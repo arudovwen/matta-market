@@ -31,6 +31,32 @@
         <FormsPhoneCodes v-model="phone" />
       </FormGroup>
       <FormGroup
+        isCumpulsory
+        label="Country"
+        :error="errors.country"
+        name="sector"
+      >
+        <SelectVueSelect
+          :options="allcountries"
+          v-model.value="country"
+          :reduce="(country) => country.value"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.country ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
+        />
+      </FormGroup>
+      <FormGroup isCumpulsory label="State" :error="errors.state" name="state">
+        <SelectVueSelect
+          :options="mystates"
+          :reduce="(state) => state.value"
+          v-model="state"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.state ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
+        />
+      </FormGroup>
+  
+      <FormGroup
         label="Date of incorporation"
         name="dateofIncorporation"
         :error="errors.dateofIncorporation"
@@ -80,7 +106,9 @@
           }`"
         />
       </FormGroup>
+   
       <Textinput
+        v-if="country.toLowerCase() === 'nigeria'"
         placeholder=""
         label="Registration number"
         name="registrationNo"
@@ -89,6 +117,7 @@
         :error="errors.registrationNo"
       />
       <Textinput
+        v-if="country.toLowerCase() === 'nigeria'"
         placeholder=""
         label="TIN number"
         name="tin"
@@ -97,31 +126,6 @@
         :error="errors.tin"
         isCumpulsory
       />
-      <FormGroup
-        isCumpulsory
-        label="Country"
-        :error="errors.country"
-        name="sector"
-      >
-        <SelectVueSelect
-          :options="allcountries"
-          v-model="country"
-          :reduce="(country) => country.value"
-          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-            errors.country ? 'border-red-500' : 'border-[#D0D5DD]'
-          }`"
-        />
-      </FormGroup>
-      <FormGroup isCumpulsory label="State" :error="errors.state" name="state">
-        <SelectVueSelect
-          :options="mystates"
-          :reduce="(state) => state.value"
-          v-model="state"
-          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-            errors.state ? 'border-red-500' : 'border-[#D0D5DD]'
-          }`"
-        />
-      </FormGroup>
       <div>
         <Textinput
           isCumpulsory
@@ -159,18 +163,25 @@
         <label class="mb-4 mt-3 font-medium text-sm block"
           >Company documents
         </label>
+
         <div
           v-if="
             !company?.companyDocuments?.length ||
-            company?.companyDocuments.some((i) => !i.url)
+            company?.companyDocuments.some((i) => i.urls.length === 0)
           "
           class="grid gap-y-6"
         >
-          <FormGroup isCumpulsory :error="errors.mermat" class="col-span-2">
+          <FormGroup
+            v-if="country.toLowerCase() === 'nigeria'"
+            isCumpulsory
+            :error="errors.mermat"
+            class="col-span-2"
+          >
             <FileUpload
               label="Memorandum and Articles of Association"
               id="mermat"
               :modelValue="mermat"
+              :multiple="true"
             />
           </FormGroup>
           <FormGroup
@@ -182,9 +193,11 @@
               label="Certificate of Incorporation"
               id="incorporation"
               :modelValue="incorporation"
+              :multiple="true"
             />
           </FormGroup>
           <FormGroup
+            v-if="country.toLowerCase() === 'nigeria'"
             isCumpulsory
             :error="errors.statusReport"
             class="col-span-2"
@@ -193,9 +206,11 @@
               label="CAC Status Report"
               id="statusReport"
               :modelValue="statusReport"
+              :multiple="true"
             />
           </FormGroup>
           <FormGroup
+            v-if="country.toLowerCase() === 'nigeria'"
             isCumpulsory
             :error="errors.utilityBill"
             class="col-span-2"
@@ -204,6 +219,7 @@
               label="Utility bill"
               id="utilityBill"
               :modelValue="utilityBill"
+              :multiple="true"
             />
           </FormGroup>
         </div>
@@ -263,10 +279,10 @@ const formSchema = yup.object().shape({
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   description: yup.string().nullable(),
-  statusReport: yup.string().required("Status Report is required"),
-  incorporation: yup.string().required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
-  mermat: yup.string().required("Mermat is required"),
-  utilityBill: yup.string().required("Utility Bill is required"),
+  statusReport: yup.array().required("Status Report is required"),
+  incorporation: yup.array().required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
+  mermat: yup.array().required("Mermat is required"),
+  utilityBill: yup.array().required("Utility Bill is required"),
   country: yup.string().required(),
   state: yup.string().required(),
   email: yup.string().required(),
@@ -274,10 +290,18 @@ const formSchema = yup.object().shape({
   city: yup.string(),
   registrationNo: yup
     .string()
-    .min(14, "Value must be 14")
+    .min(7, "Value must be 14")
     .max(14, "Value must be 14")
-    .required(),
-  tin: yup.string().required(),
+    .when("country", {
+      is: "Nigeria",
+      then: (schema) => schema.required("Registration number is required"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
+  tin: yup.string().when("country", {
+    is: "Nigeria",
+    then: (schema) => schema.required("TIN is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
 const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(
@@ -296,7 +320,7 @@ const [tin, tinAtt] = defineField("tin");
 const [sector] = defineField("sector");
 const [email, emailAtt] = defineField("email");
 const [phone] = defineField("phone");
-const [dateofIncorporation, dateofIncorporationAtt] = defineField(
+const [dateofIncorporation] = defineField(
   "dateofIncorporation"
 );
 const [companyType] = defineField("companyType");
@@ -314,7 +338,7 @@ const allcountries = computed(() => {
     };
   });
 });
-
+const getCommpanyData = inject("getCommpanyData")
 const states = computed(() => {
   if (!country.value) return [];
   return countries.find(
@@ -338,27 +362,29 @@ onMounted(() => {
 function handleChange(id, value) {
   formData.kyb.companyDocuments.map((i) => {
     if (id === "incorporation" && i.documentType === 0) {
-      i.url = value;
+      i.urls = value;
     }
     if (id === "mermat" && i.documentType === 1) {
-      i.url = value;
+      i.urls = value;
     }
     if (id === "statusReport" && i.documentType === 2) {
-      i.url = value;
+      i.urls = value;
     }
     if (id === "utilityBill" && i.documentType === 3) {
-      i.url = value;
+      i.urls = value;
     }
   });
   setFieldValue(id, value);
 }
 
 const onSubmit = handleSubmit((values) => {
+
   isLoading.value = true;
   updateCompanyProfile(values)
     .then((res) => {
       if (res.status === 200) {
-        formData.kyb.companyDocuments.some((i) => i.url) &&
+        !formData.kyb.companyDocuments.some((i) => i.urls?.length === 0) &&
+          
           updateDocuments({
             companyDocuments: formData.kyb.companyDocuments,
           })
@@ -375,6 +401,7 @@ const onSubmit = handleSubmit((values) => {
             });
         active.value = 3;
       }
+      getCommpanyData()
     })
     .catch((err) => {
       isLoading.value = false;

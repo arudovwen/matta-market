@@ -158,7 +158,7 @@ import * as yup from "yup";
 const open = inject("open");
 const formData = inject("form");
 const companyInfo = inject("companyInfo");
-console.log("🚀 ~ companyInfo:", companyInfo);
+
 const props = defineProps(["type", "director", "id"]);
 const form = reactive({
   firstName: "",
@@ -170,7 +170,7 @@ const form = reactive({
   linkedIn: "",
   signatureUrl: "",
   identityUrl: "",
-  country:companyInfo.value.country
+  country:companyInfo?.value?.country
 });
 const schema = yup.object().shape({
   firstName: yup.string().required("First name is required"),

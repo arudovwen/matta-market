@@ -33,7 +33,7 @@
 
       <span
         class="flex-1 px-4 truncate text-[#999999] inline-block max-w-[300px] xl:max-w-[380px]"
-        >{{ multiple ? multiUrls.join() : title }}</span
+        >{{ multiple ? multiUrls.join() || modelValue.join() : title }}</span
       >
     </div>
   </div>

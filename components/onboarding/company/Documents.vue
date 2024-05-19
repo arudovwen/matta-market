@@ -20,17 +20,22 @@
             id="mermat"
             :modelValue="docUrl(1)"
             isCumpulsory
-          
+            :multiple="true"
           />
-          <span
-            @click="downloadFile(docUrl(1), 'MERMAT')"
-            download
-            v-if="docUrl(1)"
+          <div
+            class="flex flex-wrap gap-x-4 gap-y-3"
+            v-if="form.companyDocuments[1]?.urls?.length"
           >
-            <span class="block text-xs text-blue-500 mt-1"
-              >Download Mermat</span
-            ></span
-          >
+            <span
+              v-for="(file, idx) in form.companyDocuments[1]?.urls"
+              :key="file"
+              @click="downloadFile(file, 'Mermat')"
+            >
+              <span class="block text-xs text-blue-500 mt-1"
+                >Download Mermat {{ idx + 1 }}</span
+              ></span
+            >
+          </div>
         </div>
         <div>
           <FileUpload
@@ -38,13 +43,23 @@
             id="incorporation"
             :modelValue="docUrl(0)"
             isCumpulsory
-            :multiple="companyInfo.country?.toLowerCase() !== 'nigeria'"
+            :multiple="true"
           />
-          <span @click="downloadFile(docUrl(0), 'CAC')" v-if="docUrl(0)">
-            <span class="block text-xs text-blue-500 mt-1"
-              >Download Certificate of Incorporation</span
-            ></span
+
+          <div
+            class="flex flex-wrap gap-x-4 gap-y-3"
+            v-if="form.companyDocuments[0]?.urls?.length"
           >
+            <span
+              v-for="(file, idx) in form.companyDocuments[0]?.urls"
+              :key="file"
+              @click="downloadFile(file, 'Certificate of Incorporation')"
+            >
+              <span class="block text-xs text-blue-500 mt-1"
+                >Download Certificate of Incorporation {{ idx + 1 }}</span
+              ></span
+            >
+          </div>
         </div>
         <div v-if="companyInfo.country?.toLowerCase() === 'nigeria'">
           <FileUpload
@@ -52,15 +67,23 @@
             id="statusReport"
             :modelValue="docUrl(2)"
             isCumpulsory
+            :multiple="true"
           />
-          <span
-            @click="downloadFile(docUrl(2), 'Status report')"
-            v-if="docUrl(2)"
+
+          <div
+            class="flex flex-wrap gap-x-4 gap-y-3"
+            v-if="form.companyDocuments[2]?.urls?.length"
           >
-            <span class="block text-xs text-blue-500 mt-1"
-              >Download CAC Status Report</span
-            ></span
-          >
+            <span
+              v-for="(file, idx) in form.companyDocuments[2]?.urls"
+              :key="file"
+              @click="downloadFile(file, 'CAC Status Report')"
+            >
+              <span class="block text-xs text-blue-500 mt-1"
+                >Download CAC Status Report {{ idx + 1 }}</span
+              ></span
+            >
+          </div>
         </div>
         <div v-if="companyInfo.country?.toLowerCase() === 'nigeria'">
           <FileUpload
@@ -68,15 +91,23 @@
             id="utitlityBill"
             :modelValue="docUrl(3)"
             isCumpulsory
+            :multiple="true"
           />
-          <span
-            @click="downloadFile(docUrl(3), 'Utility bill')"
-            v-if="docUrl(3)"
+
+          <div
+            class="flex flex-wrap gap-x-4 gap-y-3"
+            v-if="form.companyDocuments[3]?.urls?.length"
           >
-            <span class="block text-xs text-blue-500 mt-1"
-              >Download Utitlity Bill</span
-            ></span
-          >
+            <span
+              v-for="(file, idx) in form.companyDocuments[3]?.urls"
+              :key="file"
+              @click="downloadFile(file, 'Utility bill')"
+            >
+              <span class="block text-xs text-blue-500 mt-1"
+                >Download Utility bill {{ idx + 1 }}</span
+              ></span
+            >
+          </div>
         </div>
       </div>
       <div v-else class="max-w-[560px]">
@@ -96,10 +127,10 @@
       </button>
 
       <button
-        :disabled="viewingDoc.some((i) => i.url === '') || isLoading"
+        :disabled="viewingDoc.some((i) => i.url?.length === 0) || isLoading"
         :class="{
           'opacity-60 cursor-not-allowed': viewingDoc.some(
-            (i) => i.url === ''
+            (i) => !i.url?.length === 0
           ),
         }"
         class="appearance-none leading-none px-10 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
@@ -135,26 +166,27 @@ const form = reactive({
       ? companyInfo.value.companyDocuments
       : [
           {
-            url: "",
+            urls: [],
             documentType: 0,
           },
           {
-            url: "",
+            urls: [],
             documentType: 1,
           },
           {
-            url: "",
+            urls: [],
             documentType: 2,
           },
           {
-            url: "",
+            urls: [],
             documentType: 3,
           },
         ],
 });
 const viewingDoc = computed(() => {
+ 
   if (companyInfo.value.country?.toLowerCase() !== "nigeria") {
-    return form.companyDocuments.filter((i)=>i.documentType === 0);
+    return form.companyDocuments.filter((i) => i.documentType === 0);
   } else {
     return form.companyDocuments;
   }
@@ -162,7 +194,9 @@ const viewingDoc = computed(() => {
 
 const companyDoc = computed(() => {
   if (companyInfo.value.country?.toLowerCase() !== "nigeria") {
-    return companyInfo.value.companyDocuments.filter((i)=>i.documentType === 0);
+    return companyInfo.value.companyDocuments.filter(
+      (i) => i.documentType === 0
+    );
   } else {
     return companyInfo.value.companyDocuments;
   }
@@ -176,22 +210,22 @@ onMounted(() => {});
 function handleChange(id, value) {
   form.companyDocuments.map((i) => {
     if (id === "incorporation" && i.documentType === 0) {
-      i.url = value;
+      i.urls = value;
     }
     if (id === "mermat" && i.documentType === 1) {
-      i.url = value;
+      i.urls = value;
     }
     if (id === "statusReport" && i.documentType === 2) {
-      i.url = value;
+      i.urls = value;
     }
     if (id === "utitlityBill" && i.documentType === 3) {
-      i.url = value;
+      i.urls = value;
     }
   });
 }
 
 function docUrl(id) {
-  return form.companyDocuments.find((i) => i.documentType === id)?.url || "";
+  return form.companyDocuments.find((i) => i.documentType === id)?.urls || "";
 }
 
 const rules = {
@@ -215,13 +249,13 @@ const invalidCredentials = ref(false);
 async function handleSubmit() {
   if (
     companyInfo.value.country?.toLowerCase() === "nigeria" &&
-    form.companyDocuments.some((i) => i.url === "")
+    form.companyDocuments.some((i) => !i.urls.length)
   )
     if (
       companyInfo.value.country?.toLowerCase() !== "nigeria" &&
       form.companyDocuments
         .filter((i) => i.documentType === 0)
-        .some((i) => i.url === "")
+        .some((i) => !i.urls.length)
     )
       return;
   isLoading.value = true;

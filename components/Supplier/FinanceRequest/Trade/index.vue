@@ -78,19 +78,19 @@ const formData = reactive({
     dateofIncorporation: null,
     companyDocuments: [
       {
-        url: "",
+        urls: [],
         documentType: 0,
       },
       {
-        url: "",
+        urls: [],
         documentType: 1,
       },
       {
-        url: "",
+        urls: [],
         documentType: 2,
       },
       {
-        url: "",
+        urls: [],
         documentType: 3,
       },
     ],
@@ -184,10 +184,10 @@ function getCommpanyData() {
     formData.kyb.phone = res.data.data.phone;
 
     if (res.data.data.companyDocuments.length > 0) {
-      formData.kyb.incorporation = res.data.data.companyDocuments[0].url;
-      formData.kyb.mermat = res.data.data.companyDocuments[1].url;
-      formData.kyb.statusReport = res.data.data.companyDocuments[2].url;
-      formData.kyb.utilityBill = res.data.data.companyDocuments[3].url;
+      formData.kyb.incorporation = res.data.data.companyDocuments[0].urls;
+      formData.kyb.mermat = res.data.data.companyDocuments[1].urls;
+      formData.kyb.statusReport = res.data.data.companyDocuments[2].urls;
+      formData.kyb.utilityBill = res.data.data.companyDocuments[3].urls;
     }
   }).catch(()=>{
     loading.value = false
@@ -220,6 +220,8 @@ function getFinanceData() {
 }
 
 provide("company", company);
+provide("companyInfo", company);
 provide("active", active);
 provide("formData", formData);
+provide("getCommpanyData", getCommpanyData);
 </script>

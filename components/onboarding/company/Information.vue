@@ -658,6 +658,7 @@ const mystates = computed(() => {
 });
 
 function getCountry(data) {
+  form.state = ""
   form.country = data.value;
 }
 function getState(data) {
