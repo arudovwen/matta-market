@@ -1,17 +1,17 @@
 <template>
-  <div class="container pt-[96px] pb-6">
+  <div class="container pt-[64px] md:pt-[96px] pb-6">
     <h1
       data-aos="fade-in"
       data-aos-once="true"
-      class="text-4xl md:text-6xl font-semibold mb-6"
+      class="text-4xl md:text-6xl font-bold mb-6"
     >
-      Source your <span class="text-primary-500"> {{ `${words[0]}` }}</span> <br />
+      Source your <span class="text-primary-500"> {{ `${words[0]}` }}</span> <br class="md:hidden">
       all in one place
     </h1>
     <p
       data-aos="fade-in"
       data-aos-once="true"
-      class="text-lg md:text-xl mb-12 max-w-[640px] text-[#475467]"
+      class="text-base sm:text-lg md:text-xl mb-12 max-w-[640px] text-[#475467]"
     >
       Search products. Request samples. Request quotes. Explore flexible payment
       options. Enjoy fast delivery.
