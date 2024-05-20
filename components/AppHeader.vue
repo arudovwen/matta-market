@@ -47,17 +47,17 @@
       </div>
     </div>
   </ClientOnly> -->
-  <div class="bg-[#1849A9] text-sm px-5 py-2">
+  <div class="bg-[#1849A9] text-sm py-2">
     <div class="container flex gap-x-2 items-center text-white font-normal">
-      <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" /> Get N50,000
+      <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" /> <span>Get N50,000
       off when you sign up and make your first purchase. &nbsp; Use the code
       <span
         v-clipboard="'MATTA25'"
         @click="toast.success('Copied')"
-        class="border border-white rounded-[4px] px-1 py-[2px] cursor-pointer font-semibold"
+        class="border border-white rounded-[4px] px-1 py-[2px] cursor-pointer font-semibold text-xs"
         >MATTA25</span
       >
-      on checkout
+      on checkout</span>
     </div>
   </div>
 
