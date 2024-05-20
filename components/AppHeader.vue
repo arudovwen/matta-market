@@ -234,20 +234,6 @@
           <span class="hidden lg:inline text-sm">
             <GoogleTranslateSelect
               :fetch-browser-language="false"
-              :languages="[
-                {
-                  code: 'en',
-                  name: 'English',
-                  cname: '英语',
-                  ename: 'English',
-                },
-                {
-                  code: 'fr',
-                  name: 'French',
-                  cname: '法语',
-                  ename: 'French',
-                },
-              ]"
               trigger="click"
               @select="handleGoogleTranslateSelect"
             />
