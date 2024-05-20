@@ -18,7 +18,7 @@
         data-toggle="tooltip"
         data-placement="top"
         :title="infoTitle"
-        class="cursor-pointer"
+        class="cursor-pointer h-4 w-4 flex items-center justify-center"
       >
         <AppIcon icon="quill:info" iconClass="text-gray-600" />
       </span></label>

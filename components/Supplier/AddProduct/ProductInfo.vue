@@ -264,7 +264,7 @@
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Brief general information about the chemicals, its chemical composition, other names, important uses or any specificity"
-                    class="cursor-pointer"
+                    class="cursor-pointer h-4 w-4 flex items-center justify-center"
                   >
                     <AppIcon icon="quill:info" iconClass="text-gray-600" />
                   </span>
@@ -295,7 +295,7 @@
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Please, specify the location where this product can be picked up"
-                    class="cursor-pointer"
+                    class="cursor-pointer h-4 w-4 flex items-center justify-center"
                   >
                     <AppIcon icon="quill:info" iconClass="text-gray-600" />
                   </span>
