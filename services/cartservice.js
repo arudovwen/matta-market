@@ -31,6 +31,9 @@ export async function addshipping(data) {
 export async function editshipping(data) {
   return await post(urls.EDIT_SHIPPING_ADDRESS, data, config);
 }
+export async function applyDiscount(data) {
+  return await post(urls.APPLY_DISCOUNT, data, config);
+}
 
 export async function setdefaultaddress(addressId) {
   return await post(

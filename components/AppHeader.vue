@@ -1,5 +1,5 @@
 <template>
-  <ClientOnly>
+  <!-- <ClientOnly>
     <div
       v-if="$pwa?.offlineReady || $pwa?.needRefresh"
       class="flex justify-start items-center gap-x-6 py-2 container"
@@ -46,7 +46,20 @@
         </button>
       </div>
     </div>
-  </ClientOnly>
+  </ClientOnly> -->
+  <div class="bg-[#1849A9] text-sm px-5 py-2">
+    <div class="container flex gap-x-2 items-center text-white font-normal">
+      <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" /> Get N50,000
+      off when you sign up and make your first purchase. &nbsp; Use the code
+      <span
+        v-clipboard="'MATTA25'"
+        @click="toast.success('Copied')"
+        class="border border-white rounded-[4px] px-1 py-[2px] cursor-pointer font-semibold"
+        >MATTA25</span
+      >
+      on checkout
+    </div>
+  </div>
 
   <nav
     :class="{
@@ -357,10 +370,7 @@
 
   <ModalCenter v-if="isSigniningOut">
     <template #default>
-      <div
-        class="bg-white p-6 sm:pb-4 rounded-lg"
-        v-if="isSigniningOut"
-      >
+      <div class="bg-white p-6 sm:pb-4 rounded-lg" v-if="isSigniningOut">
         <div class="flex justify-between mb-5 items-center">
           <h4 class="font-medium text-matta-black text-xl">Sign Out</h4>
           <!-- <i
@@ -414,6 +424,7 @@ import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
 import { getnotification } from "@/services/notificationservice";
 import GoogleTranslateSelect from "@google-translate-select/vue3";
+import { toast } from "vue3-toastify";
 
 const handleGoogleTranslateSelect = (language) => {
   console.log(language);

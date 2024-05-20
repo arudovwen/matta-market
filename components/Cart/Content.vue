@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="grid gap-y-[30px]">
     <div class="bg-white rounded-[10px]">
       <div class="px-[30px] py-5 font-bold text-2xl border-b border-[#f3f3f3]">
         Cart
@@ -14,6 +14,7 @@
 
       <EmptyData v-else title="You have no item in your cart" />
     </div>
+    <CheckoutDiscount />
   </div>
 </template>
 <script setup>

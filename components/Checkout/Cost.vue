@@ -57,11 +57,11 @@ const columns = [
 ];
 function getData() {
   loading.value = true;
-  cartStore.setLoadingCart(true)
+  cartStore.setLoadingCart(true);
   shippingBreakdown()
     .then((res) => {
       loading.value = false;
-      cartStore.setLoadingCart(false)
+      cartStore.setLoadingCart(false);
       if (res.status === 200) {
         rows.value = [
           ...res.data.data.items,
@@ -78,19 +78,16 @@ function getData() {
     })
     .catch((err) => {
       loading.value = false;
-      cartStore.setLoadingCart(false)
+      cartStore.setLoadingCart(false);
       error.value = err.response.data.Message || err.response.data.message;
     });
 }
 
 onMounted(() => {
-  loading.value = true;
-  getData();
+  // getData();
 });
-const refresh = inject("refresh");
-watch(refresh, () => {
-  getData();
-});
+// const refresh = inject("refresh");
+
 watch(
   () => [shippingStore?.defaultAddress],
   () => {

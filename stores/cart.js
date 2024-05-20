@@ -17,6 +17,7 @@ export const useCartStore = defineStore(
     const shippingTotal = ref(0);
     const cartTotalwithTax = ref(0);
     const loadingCart = ref(false);
+    const cartId = ref(null);
 
     const cart = computed(() => cartItems?.value);
     const cartTotal = computed(() => cartItems?.value.length);
@@ -27,7 +28,7 @@ export const useCartStore = defineStore(
     );
 
     function getMyCart() {
-      if(!authStore.isLoggedIn) return;
+      if (!authStore.isLoggedIn) return;
       loadingCart.value = true;
       getcart()
         .then((res) => {
@@ -37,11 +38,9 @@ export const useCartStore = defineStore(
             setTax(res.data.data.tax);
             SetShippingTotal(res.data.data.shippingTotal);
             setCartTotalwithTax(res.data.data.cartTotalwithTax);
-            
-            const mergedCart = [
-              ...res.data.data.items,
-              ...cartItems?.value,
-            ];
+            setCartId(res.data.data.cartId);
+
+            const mergedCart = [...res.data.data.items, ...cartItems?.value];
             const uniqueCart = mergedCart.filter(
               (item, index, self) =>
                 index === self.findIndex((i) => i.productId === item.productId)
@@ -66,6 +65,9 @@ export const useCartStore = defineStore(
     }
     function setTax(data) {
       tax.value = data;
+    }
+    function setCartId(value) {
+      cartId.value = value;
     }
     function setLoadingCart(data) {
       loadingCart.value = data;
@@ -178,7 +180,9 @@ export const useCartStore = defineStore(
       cartTotalwithTax,
       setCartTotalwithTax,
       loadingCart,
-      setLoadingCart
+      setLoadingCart,
+      cartId,
+      setCartId,
     };
   },
 

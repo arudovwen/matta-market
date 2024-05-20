@@ -234,5 +234,7 @@ const urls = {
 
   ADDRESS_SEARCH: "Location/address-search",
   PLACE_SUGGESTION: "Location/place-suggestion",
+
+  APPLY_DISCOUNT: "v1/discount/apply-discount",
 };
 export default urls;
