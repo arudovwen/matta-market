@@ -65,7 +65,7 @@
           </div>
         </div>
         <div
-          class="grid md:grid-cols-3 gap-y-8 md:gap-x-10 col-span-3 text-left"
+          class="grid grid-cols-2 md:grid-cols-3 gap-y-8 md:gap-x-10 col-span-3 text-left"
         >
           <div v-for="n in navs" :key="n.subject">
             <span

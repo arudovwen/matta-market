@@ -8,7 +8,7 @@
       @submit.prevent="handleSubmit"
       class="px-[30px] pt-6 pb-[30px] flex items-center gap-x-3"
     >
-      <div class="w-[313px]">
+      <div class="max-flex-1 w-[313px]">
         <Textinput placeholder="Discount code" required v-model="code" />
       </div>
       <AppButton

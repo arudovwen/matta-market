@@ -76,7 +76,7 @@
             <img
               src="/images/logo.png"
               alt="Matta"
-              class="w-20 md:w-[100px] h-auto object-contain"
+              class="w-[90px] md:w-[100px] h-auto object-contain"
           /></NuxtLink>
 
           <ul class="lg:flex items-center gap-x-6 hidden">
