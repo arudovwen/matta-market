@@ -55,7 +55,7 @@
           }`"
         />
       </FormGroup>
-  
+
       <FormGroup
         label="Date of incorporation"
         name="dateofIncorporation"
@@ -106,9 +106,9 @@
           }`"
         />
       </FormGroup>
-   
+
       <Textinput
-        v-if="country.toLowerCase() === 'nigeria'"
+        v-if="country?.toLowerCase() === 'nigeria'"
         placeholder=""
         label="Registration number"
         name="registrationNo"
@@ -117,7 +117,7 @@
         :error="errors.registrationNo"
       />
       <Textinput
-        v-if="country.toLowerCase() === 'nigeria'"
+        v-if="country?.toLowerCase() === 'nigeria'"
         placeholder=""
         label="TIN number"
         name="tin"
@@ -167,12 +167,14 @@
         <div
           v-if="
             !company?.companyDocuments?.length ||
-            company?.companyDocuments.some((i) => (!i.urls && !i.url) || i.urls?.length === 0)
+            company?.companyDocuments.some(
+              (i) => (!i.urls && !i.url) || i.urls?.length === 0
+            )
           "
           class="grid gap-y-6"
         >
           <FormGroup
-            v-if="country.toLowerCase() === 'nigeria'"
+            v-if="country?.toLowerCase() === 'nigeria'"
             isCumpulsory
             :error="errors.mermat"
             class="col-span-2"
@@ -197,7 +199,7 @@
             />
           </FormGroup>
           <FormGroup
-            v-if="country.toLowerCase() === 'nigeria'"
+            v-if="country?.toLowerCase() === 'nigeria'"
             isCumpulsory
             :error="errors.statusReport"
             class="col-span-2"
@@ -210,7 +212,7 @@
             />
           </FormGroup>
           <FormGroup
-            v-if="country.toLowerCase() === 'nigeria'"
+            v-if="country?.toLowerCase() === 'nigeria'"
             isCumpulsory
             :error="errors.utilityBill"
             class="col-span-2"
@@ -225,7 +227,14 @@
         </div>
 
         <div v-else class="">
-          <DocumentsViewer type="kyb" :documents="company?.companyDocuments" />
+          <DocumentsViewer
+            type="kyb"
+            :documents="
+              country?.toLowerCase() === 'nigeria'
+                ? company?.companyDocuments
+                : company?.companyDocuments.filter((i) => i.documentType == 0)
+            "
+          />
         </div>
       </div>
     </div>
@@ -320,9 +329,7 @@ const [tin, tinAtt] = defineField("tin");
 const [sector] = defineField("sector");
 const [email, emailAtt] = defineField("email");
 const [phone] = defineField("phone");
-const [dateofIncorporation] = defineField(
-  "dateofIncorporation"
-);
+const [dateofIncorporation] = defineField("dateofIncorporation");
 const [companyType] = defineField("companyType");
 const [address, addressAtt] = defineField("address");
 const [description, descriptionAtt] = defineField("description");
@@ -338,7 +345,7 @@ const allcountries = computed(() => {
     };
   });
 });
-const getCommpanyData = inject("getCommpanyData")
+const getCommpanyData = inject("getCommpanyData");
 const states = computed(() => {
   if (!country.value) return [];
   return countries.find(
@@ -378,13 +385,11 @@ function handleChange(id, value) {
 }
 
 const onSubmit = handleSubmit((values) => {
-
   isLoading.value = true;
   updateCompanyProfile(values)
     .then((res) => {
       if (res.status === 200) {
         !formData.kyb.companyDocuments.some((i) => i.urls?.length === 0) &&
-          
           updateDocuments({
             companyDocuments: formData.kyb.companyDocuments,
           })
@@ -401,7 +406,7 @@ const onSubmit = handleSubmit((values) => {
             });
         active.value = 3;
       }
-      getCommpanyData()
+      getCommpanyData();
     })
     .catch((err) => {
       isLoading.value = false;
