@@ -9,7 +9,7 @@
       >
         <span class="flex items-center justify-between text-white">
           <span class="text-lg font-semibold">{{
-            currencyFormat(balance)
+            currencyFormat(balance.ledgerBalance)
           }}</span>
           <span></span> <img src="/images/pass.svg"
         /></span>
