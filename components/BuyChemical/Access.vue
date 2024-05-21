@@ -24,7 +24,7 @@
       <div
         data-aos="fade-in"
         data-aos-once="true"
-        class="w-full bg-cover h-[200px] lg:h-[500px] bg-[url('/images/access.png')]"
+        class="w-full bg-cover h-[200px] lg:h-[500px] bg-[url('/images/access-new.png')] rounded-lg"
       ></div>
     </div>
   </section>

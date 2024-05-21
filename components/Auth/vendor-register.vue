@@ -1,28 +1,26 @@
 <template>
-  <div
-    class="py-8 w-full h-full flex flex-col gap-y-8 max-h-max overflow-y-auto"
-  >
+  <div class="flex flex-col h-full gap-x-8">
     <div
-      class="hidden lg:flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-end"
+      class="hidden lg:flex items-center text-center text-sm gap-x-1 justify-start mb-3"
     >
-      Need a vendor account?
-      <NuxtLink to="/auth/vendor-register" class="font-semibold text-[#2176FF]"
-        >Click here</NuxtLink
+      Not a vendor?
+      <span
+        @click="type = 'register'"
+        class="cursor-pointer font-semibold text-[#2176FF]"
+        >Click here</span
       >
     </div>
-    <div
-      class="flex-1 flex flex-col justify-center w-full lg:max-w-[600px] 2xl:max-w-[650px] mx-auto"
-    >
-      <div class="">
-        <h1 class="text-[#333] darks:text-white mb-[10px] text-3xl font-bold">
-          Sign Up
+    <div class="flex flex-col justify-center flex-1">
+      <div class="w-full max-w-[650px] mx-auto py-2">
+        <h1 class="text-[#333] darks:text-white mb-1 text-2xl font-bold">
+          Create a vendor account
         </h1>
         <p class="mb-[31px] text-sm text-[#666] darks:text-white/80">
           Enter your details to create an account.
         </p>
         <form
           @submit.prevent="onSubmit"
-          class="grid grid-cols-1 xl:grid-cols-2 gap-x-[18px] gap-y-5"
+          class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-5"
         >
           <div>
             <Textinput
@@ -72,6 +70,18 @@
               isCumpulsory
             />
           </div>
+          <div class="lg:col-span-2">
+            <Textinput
+              placeholder=""
+              label="Company name"
+              type="text"
+              name="companyName"
+              v-bind="companyNameAtt"
+              v-model="companyName"
+              :error="errors.companyName"
+              isCumpulsory
+            />
+          </div>
           <div>
             <Textinput
               placeholder=""
@@ -97,12 +107,12 @@
             />
           </div>
           <div
-            class="xl:col-span-2 flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
+            class="lg:col-span-2 flex items-center text-[#333] darks:text-slate-400 text-xs lg:text-sm gap-x-[2px]"
           >
             <Checkbox
               v-model.value="agree"
               label="I agree to the "
-              labelClass="text-xs md:text-sm"
+              labelClass="text-xs lg:text-sm"
             />
             <span
               ><NuxtLink to="/terms" class="text-[#2176FF]">Terms </NuxtLink>
@@ -112,7 +122,7 @@
             >
           </div>
 
-          <div class="xl:col-span-2 grid gap-y-[22px] mb-9 mt-4">
+          <div class="lg:col-span-2 grid gap-y-[22px] mb-9 mt-4">
             <AppButton
               type="submit"
               :isLoading="isLoading"
@@ -122,11 +132,13 @@
             />
           </div>
           <span
-            class="xl:col-span-2 flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
+            class="lg:col-span-2 flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
           >
             Already have an account?
-            <NuxtLink to="/auth/login" class="font-semibold text-[#2176FF]"
-              >Login</NuxtLink
+            <span
+              @click="type = 'login'"
+              class="cursor-pointer font-semibold text-[#2176FF]"
+              >Login</span
             >
           </span>
         </form>
@@ -140,15 +152,16 @@ definePageMeta({
   middleware: "auth",
 });
 useHead({
-  title: "Register | Matta",
+  title: "Register vendor | Matta",
 });
+
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { registerUser } from "~/services/authservices";
 
+const type = inject("type");
 const agree = ref(false);
-
 const isLoading = ref(false);
 const formValues = {
   email: "",
@@ -157,7 +170,8 @@ const formValues = {
   phone: "",
   password: "",
   confirmPassword: "",
-  business_UserType: 0,
+  business_UserType: 1,
+  companyName: "",
 };
 
 const schema = yup.object({
@@ -166,9 +180,9 @@ const schema = yup.object({
     .required("Email is required")
     .email("Please enter a valid email address"),
   firstName: yup.string().required("First name is required"),
+  companyName: yup.string().required("Company name is required"),
   lastName: yup.string().required("Last name is required"),
   phone: yup.string().required("Phone number is required"),
-
   password: yup
     .string()
     .required("Password is required")
@@ -194,19 +208,18 @@ const [firstName, firstNameAtt] = defineField("firstName");
 const [lastName, lastNameAtt] = defineField("lastName");
 const [phone, phoneAtt] = defineField("phone");
 const [confirmPassword, confirmPasswordAtt] = defineField("confirmPassword");
-
-const route = useRoute();
+const [companyName, companyNameAtt] = defineField("companyName");
 const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  registerUser({ ...values, business_UserType: 0 })
+  registerUser({ ...values, business_UserType: 1 })
     .then((res) => {
       if (res.status === 200) {
         toast.info(
           "Sign up successful, Complete registration via link sent to your email"
         );
-        router.push("/auth/login");
+        type.value = "login";
       }
     })
 

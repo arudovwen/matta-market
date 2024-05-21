@@ -5,18 +5,24 @@
         Cart
       </div>
       <div class="flex flex-col gap-y-5" v-if="cartStore?.cart?.length">
-       <div v-for="item in cartStore?.cart" class="border-b last:border-none border-[#f3f3f3]">
-        <CartItem :detail="item"  />
-      
-       </div>
-        
+        <div
+          v-for="item in cartStore?.cart"
+          class="border-b last:border-none border-[#f3f3f3]"
+        >
+          <CartItem :detail="item" />
+        </div>
       </div>
 
       <EmptyData v-else title="You have no item in your cart" />
     </div>
     <CheckoutDiscount />
+    <ModalAuth />
   </div>
 </template>
 <script setup>
-const cartStore = useCartStore()
+const cartStore = useCartStore();
+const isOpen = inject("isOpen");
+const type = ref("login")
+
+provide("type", type)
 </script>

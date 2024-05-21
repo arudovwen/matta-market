@@ -1,17 +1,14 @@
 <template>
   <div
-    class="grid grid-cols-1 lg:grid-cols-12 h-screen w-screen bg-cover bg-center"
-    :style="{ backgroundImage: `url('${AuthBg}')` }"
+    class="bg-[#0C111D] grid grid-cols-1 lg:grid-cols-12 h-screen w-screen bg-contain bg-center"
+    :style="{ backgroundImage: `url('https://res.cloudinary.com/arudovwen-me/image/upload/f_auto,q_auto/cuu0iqo5yhh8rzgqev13')` }"
   >
     <div
-      class="relative hidden lg:flex items-center lg:col-span-7 bg-[rgba(3,14,46,0.85)]"
+      class="relative hidden lg:flex items-center lg:col-span-7"
     >
       <div class="top-8 left-10 logo absolute z-10">
         <NuxtLink to="/">
-          <img
-            src="/logo-matta-white.png"
-            alt="Matta"
-            class="w-[120px] h-auto"
+          <img src="/logo-matta-white.png" alt="Matta" class="w-[120px] h-auto"
         /></NuxtLink>
       </div>
 
@@ -54,4 +51,5 @@
 
 <script setup>
 import AuthBg from "~/assets/images/authbg.png";
+
 </script>

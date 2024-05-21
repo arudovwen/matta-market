@@ -3,18 +3,18 @@
     class="py-8 w-full h-full flex flex-col gap-y-8 max-h-max overflow-y-auto"
   >
     <div
-      class="hidden lg:flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-end"
+      class="mb-2 hidden lg:flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-start"
     >
       Need a vendor account?
-      <NuxtLink to="/auth/vendor-register" class="font-semibold text-[#2176FF]"
-        >Click here</NuxtLink
+      <span  @click="type = 'vendor-register'" class="cursor-pointer font-semibold text-[#2176FF]"
+        >Click here</span
       >
     </div>
     <div
       class="flex-1 flex flex-col justify-center w-full lg:max-w-[600px] 2xl:max-w-[650px] mx-auto"
     >
       <div class="">
-        <h1 class="text-[#333] darks:text-white mb-[10px] text-3xl font-bold">
+        <h1 class="text-[#333] darks:text-white mb-1 text-2xl font-bold">
           Sign Up
         </h1>
         <p class="mb-[31px] text-sm text-[#666] darks:text-white/80">
@@ -125,10 +125,14 @@
             class="xl:col-span-2 flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
           >
             Already have an account?
-            <NuxtLink to="/auth/login" class="font-semibold text-[#2176FF]"
-              >Login</NuxtLink
+            <span
+              @click="type = 'login'"
+            
+              class="cursor-pointer font-semibold text-[#2176FF]"
+              >Login</span
             >
           </span>
+         
         </form>
       </div>
     </div>
@@ -148,7 +152,7 @@ import { toast } from "vue3-toastify";
 import { registerUser } from "~/services/authservices";
 
 const agree = ref(false);
-
+const type = inject("type");
 const isLoading = ref(false);
 const formValues = {
   email: "",
@@ -206,7 +210,7 @@ const onSubmit = handleSubmit((values) => {
         toast.info(
           "Sign up successful, Complete registration via link sent to your email"
         );
-        router.push("/auth/login");
+        type.value = "login"
       }
     })
 

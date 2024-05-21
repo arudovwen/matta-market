@@ -31,7 +31,7 @@
 definePageMeta({
   layout: "default",
 });
-
+import debounce from "lodash/debounce";
 import { getProducts, getProductsByTag } from "~/services/productservices";
 import { useProductStore } from "~/stores/products";
 
@@ -124,7 +124,15 @@ onMounted(() => {
   getAllProducts();
   // store.getAllProducers()
 });
-
+const debounceSearch = debounce(() => {
+  getAllProducts();
+}, 1500);
+watch(
+  () => query.Search,
+  () => {
+    debounceSearch();
+  }
+);
 watch(
   () => [
     query.PageNumber,

@@ -3,10 +3,13 @@
     <h1
       data-aos="fade-in"
       data-aos-once="true"
-      class="text-4xl md:text-6xl font-bold mb-6"
+      class="text-4xl md:text-6xl md:leading-[72px] font-bold mb-6 relative max-w-[731px]
+      "
     >
-      Source your <span class="text-primary-500"> {{ `${words[0]}` }}</span> <br class="md:hidden">
-      all in one place
+     
+      <span class="relative z-[2]"> Source your <span class="text-primary-500"> {{ `${words[0]}` }}</span> <br class="md:hidden">
+      all in one place</span>
+        <span  class="z-[1] absolute top-[50px] right-0 bg-contain bg-no-repeat rounded-r-lg bg-[url('/images/underline.png')] block w-[334px] h-[28px]"></span>
     </h1>
     <p
       data-aos="fade-in"

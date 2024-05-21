@@ -37,7 +37,7 @@
           <div class="mb-[15px]">
             <NuxtLink to="/">
               <img
-                src="/images/logo-white.png"
+                src="/logo-matta-white.png"
                 class="w-[132px]"
                 alt="Matta"
                 width="132"
@@ -184,7 +184,7 @@ const navs = [
       },
       {
         title: "Sell chemicals",
-        url: "/auth/vendor-register",
+        url: "/sell-chemicals",
       },
       {
         title: "Logistics solutions",
