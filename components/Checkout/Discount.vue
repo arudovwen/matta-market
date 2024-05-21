@@ -8,7 +8,7 @@
       @submit.prevent="handleSubmit"
       class="px-[30px] pt-6 pb-[30px] flex items-center gap-x-3"
     >
-      <div class="max-flex-1 w-[313px]">
+      <div class="flex-1 max-w-[313px]">
         <Textinput placeholder="Discount code" required v-model="code" />
       </div>
       <AppButton
@@ -26,7 +26,7 @@ import { applyDiscount } from "@/services/cartservice";
 const code = ref(null);
 const loading = ref(false);
 const cartStore = useCartStore();
-console.log("🚀 ~ cartStore:", cartStore);
+
 function handleSubmit() {
   loading.value = true;
   applyDiscount({
