@@ -18,7 +18,7 @@ export const useCartStore = defineStore(
     const cartTotalwithTax = ref(0);
     const loadingCart = ref(false);
     const cartId = ref(null);
-
+    const discountValue = ref(0);
     const cart = computed(() => cartItems?.value);
     const cartTotal = computed(() => cartItems?.value.length);
     const cartTotalAmount = computed(() =>
@@ -39,6 +39,7 @@ export const useCartStore = defineStore(
             SetShippingTotal(res.data.data.shippingTotal);
             setCartTotalwithTax(res.data.data.cartTotalwithTax);
             setCartId(res.data.data.cartId);
+            setDiscount(res.data.data.discountValue);
 
             const mergedCart = [...res.data.data.items, ...cartItems?.value];
             const uniqueCart = mergedCart.filter(
@@ -65,6 +66,9 @@ export const useCartStore = defineStore(
     }
     function setTax(data) {
       tax.value = data;
+    }
+    function setDiscount(data) {
+      discountValue.value = data;
     }
     function setCartId(value) {
       cartId.value = value;
@@ -183,6 +187,8 @@ export const useCartStore = defineStore(
       setLoadingCart,
       cartId,
       setCartId,
+      discountValue,
+      setDiscount,
     };
   },
 

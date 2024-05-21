@@ -22,6 +22,7 @@
   </div>
 </template>
 <script setup>
+import { toast } from "vue3-toastify";
 import { applyDiscount } from "@/services/cartservice";
 const code = ref(null);
 const loading = ref(false);
@@ -37,6 +38,7 @@ function handleSubmit() {
       if (res.status === 200) {
         cartStore.getMyCart();
         loading.value = false;
+        toast.success("Discount applied");
       }
     })
     .catch(() => {

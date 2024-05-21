@@ -41,6 +41,7 @@ onMounted(() => {
           cartStore?.SetShippingTotal(remoteShippingTotal);
           cartStore?.setCartTotalwithTax(res.data.data.cartTotalwithTax);
           cartStore?.setCartId(res.data.data.cartId);
+          cartStore?.setDiscount(res.data.data.discountValue);
 
           if (cookie?.value?.cartItems?.length > 0) {
             // Merge remote and local cart items, remove duplicates, and update the minicart
