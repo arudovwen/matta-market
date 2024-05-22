@@ -9,7 +9,7 @@
           v-bind="companyNameAtt"
           v-model="companyName"
           :error="errors.companyName"
-          isCumpulsory
+          :isCumpulsory="true"
         />
       </div>
       <Textinput
@@ -20,18 +20,18 @@
         v-model="email"
         :error="errors.email"
         disabled
-        isCumpulsory
+        :isCumpulsory="true"
       />
       <FormGroup
         label="Phone number"
         name="phone"
         :error="errors.phone"
-        isCumpulsory
+        :isCumpulsory="true"
       >
         <FormsPhoneCodes v-model="phone" />
       </FormGroup>
       <FormGroup
-        isCumpulsory
+        :isCumpulsory="true"
         label="Country"
         :error="errors.country"
         name="sector"
@@ -45,7 +45,12 @@
           }`"
         />
       </FormGroup>
-      <FormGroup isCumpulsory label="State" :error="errors.state" name="state">
+      <FormGroup
+        :isCumpulsory="true"
+        label="State"
+        :error="errors.state"
+        name="state"
+      >
         <SelectVueSelect
           :options="mystates"
           :reduce="(state) => state.value"
@@ -60,7 +65,7 @@
         label="Date of incorporation"
         name="dateofIncorporation"
         :error="errors.dateofIncorporation"
-        isCumpulsory
+        :isCumpulsory="true"
       >
         <ClientOnly>
           <VueDatePicker
@@ -78,7 +83,7 @@
         label="Business type"
         :error="errors.companyType"
         name="companyType"
-        isCumpulsory
+        :isCumpulsory="true"
       >
         <Select
           v-model="companyType"
@@ -91,7 +96,7 @@
       </FormGroup>
 
       <FormGroup
-        isCumpulsory
+        :isCumpulsory="true"
         label="Sector"
         :error="errors.sector"
         name="sector"
@@ -124,11 +129,11 @@
         v-bind="tinAtt"
         v-model="tin"
         :error="errors.tin"
-        isCumpulsory
+        :isCumpulsory="true"
       />
       <div>
         <Textinput
-          isCumpulsory
+          :isCumpulsory="true"
           placeholder=""
           label="City"
           name="city"
@@ -139,7 +144,7 @@
       </div>
       <div class="md:col-span-2">
         <Textinput
-          isCumpulsory
+          :isCumpulsory="true"
           placeholder=""
           label="Business address"
           name="address"
@@ -150,7 +155,7 @@
       </div>
       <div class="md:col-span-2">
         <Textarea
-          isCumpulsory
+          :isCumpulsory="true"
           placeholder=""
           label="Brief description of the company"
           name="description"
@@ -168,61 +173,175 @@
           v-if="
             !company?.companyDocuments?.length ||
             company?.companyDocuments.some(
-              (i) => (!i.url) || i.urls?.length === 0
+              (i) => !i.url && i.urls?.length === 0
             )
           "
           class="grid gap-y-6"
         >
           <FormGroup
             v-if="country?.toLowerCase() === 'nigeria'"
-            isCumpulsory
-            :error="errors.mermat"
+            :isCumpulsory="true"
+            :error="isFieldTouched('mermat') && errors.mermat"
             class="col-span-2"
           >
             <FileUpload
               label="Memorandum and Articles of Association"
               id="mermat"
-              :modelValue="mermat"
               :multiple="true"
             />
+            <div
+              class="flex flex-wrap gap-x-4 gap-y-3"
+              v-if="company.companyDocuments[1]?.urls?.length"
+            >
+              <span
+                v-for="(file, idx) in company.companyDocuments[1]?.urls"
+                :key="file"
+                @click="downloadFile(file, 'Mermat')"
+              >
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download mermat {{ idx + 1 }}</span
+                ></span
+              >
+            </div>
+            <div
+              class="flex flex-wrap gap-x-4 gap-y-3"
+              v-else-if="company.companyDocuments[1]?.url"
+            >
+              <span
+                @click="
+                  downloadFile(company.companyDocuments[1]?.url, 'Mermat')
+                "
+              >
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Mermat</span
+                ></span
+              >
+            </div>
           </FormGroup>
           <FormGroup
-            isCumpulsory
-            :error="errors.incorporation"
+            :isCumpulsory="true"
+            :error="isFieldTouched('incorporation') && errors.incorporation"
             class="col-span-2"
           >
             <FileUpload
               label="Certificate of Incorporation"
               id="incorporation"
-              :modelValue="incorporation"
               :multiple="true"
             />
+            <div
+              class="flex flex-wrap gap-x-4 gap-y-3"
+              v-if="company.companyDocuments[0]?.urls?.length"
+            >
+              <span
+                v-for="(file, idx) in company.companyDocuments[0]?.urls"
+                :key="file"
+                @click="downloadFile(file, 'Certificate of Incorporation')"
+              >
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Certificate of Incorporation {{ idx + 1 }}</span
+                ></span
+              >
+            </div>
+            <div
+              class="flex flex-wrap gap-x-4 gap-y-3"
+              v-else-if="company.companyDocuments[0]?.url"
+            >
+              <span
+                @click="
+                  downloadFile(
+                    company.companyDocuments[0]?.url,
+                    'Certificate of Incorporation'
+                  )
+                "
+              >
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Certificate of Incorporation</span
+                ></span
+              >
+            </div>
           </FormGroup>
           <FormGroup
             v-if="country?.toLowerCase() === 'nigeria'"
-            isCumpulsory
-            :error="errors.statusReport"
+            :isCumpulsory="true"
+            :error="isFieldTouched('statusReport') && errors.statusReport"
             class="col-span-2"
           >
             <FileUpload
               label="CAC Status Report"
               id="statusReport"
-              :modelValue="statusReport"
               :multiple="true"
             />
+            <div
+              class="flex flex-wrap gap-x-4 gap-y-3"
+              v-if="company.companyDocuments[2]?.urls?.length"
+            >
+              <span
+                v-for="(file, idx) in company.companyDocuments[2]?.urls"
+                :key="file"
+                @click="downloadFile(file, 'Status Report')"
+              >
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Status Report {{ idx + 1 }}</span
+                ></span
+              >
+            </div>
+            <div
+              class="flex flex-wrap gap-x-4 gap-y-3"
+              v-else-if="company.companyDocuments[2]?.url"
+            >
+              <span
+                @click="
+                  downloadFile(
+                    company.companyDocuments[2]?.url,
+                    'Status Report'
+                  )
+                "
+              >
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Status Report</span
+                ></span
+              >
+            </div>
           </FormGroup>
           <FormGroup
             v-if="country?.toLowerCase() === 'nigeria'"
-            isCumpulsory
-            :error="errors.utilityBill"
+            :isCumpulsory="true"
+            :error="isFieldTouched('utilityBill') && errors.utilityBill"
             class="col-span-2"
           >
             <FileUpload
               label="Utility bill"
               id="utilityBill"
-              :modelValue="utilityBill"
               :multiple="true"
             />
+            <div
+              class="flex flex-wrap gap-x-4 gap-y-3"
+              v-if="company.companyDocuments[3]?.urls?.length"
+            >
+              <span
+                v-for="(file, idx) in company.companyDocuments[3]?.urls"
+                :key="file"
+                @click="downloadFile(file, 'Utility bill')"
+              >
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Utility bill {{ idx + 1 }}</span
+                ></span
+              >
+            </div>
+            <div
+              class="flex flex-wrap gap-x-4 gap-y-3"
+              v-else-if="company.companyDocuments[3]?.url"
+            >
+              <span
+                @click="
+                  downloadFile(company.companyDocuments[3]?.url, 'Utility bill')
+                "
+              >
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Utility bill</span
+                ></span
+              >
+            </div>
           </FormGroup>
         </div>
 
@@ -288,10 +407,22 @@ const formSchema = yup.object().shape({
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   description: yup.string().nullable(),
-  statusReport: yup.array().required("Status Report is required"),
+  statusReport: yup.array().when("country", {
+    is: "Nigeria",
+    then: (schema) => schema.required("Status Report is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   incorporation: yup.array().required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
-  mermat: yup.array().required("Mermat is required"),
-  utilityBill: yup.array().required("Utility Bill is required"),
+  mermat: yup.array().when("country", {
+    is: "Nigeria",
+    then: (schema) => schema.required("Mermat is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+  utilityBill: yup.array().when("country", {
+    is: "Nigeria",
+    then: (schema) => schema.required("Utility Bill is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   country: yup.string().required(),
   state: yup.string().required(),
   email: yup.string().required(),
@@ -299,8 +430,7 @@ const formSchema = yup.object().shape({
   city: yup.string(),
   registrationNo: yup
     .string()
-    .min(7, "Value must be 14")
-    .max(14, "Value must be 14")
+    .min(7, "Value must be more than 14")
     .when("country", {
       is: "Nigeria",
       then: (schema) => schema.required("Registration number is required"),
@@ -313,12 +443,18 @@ const formSchema = yup.object().shape({
   }),
 });
 
-const { handleSubmit, defineField, errors, setFieldValue, setValues } = useForm(
-  {
-    validationSchema: formSchema,
-    initialValues: formData.kyb,
-  }
-);
+const {
+  handleSubmit,
+  defineField,
+  errors,
+  setFieldValue,
+  setValues,
+  isFieldTouched,
+} = useForm({
+  validationSchema: formSchema,
+  initialValues: formData.kyb,
+});
+  console.log("🚀 ~ errors:", errors.value)
 const [utilityBill] = defineField("utilityBill");
 const [mermat] = defineField("mermat");
 const [statusReport] = defineField("statusReport");
@@ -345,7 +481,8 @@ const allcountries = computed(() => {
     };
   });
 });
-const getCommpanyData = inject("getCommpanyData");
+const getCompanyData = inject("getCompanyData");
+
 const states = computed(() => {
   if (!country.value) return [];
   return countries.find(
@@ -365,6 +502,43 @@ const mystates = computed(() => {
 
 onMounted(() => {
   setValues(company?.value || {});
+  console.log("🚀 ~ onMounted ~ company?.companyDocuments:", company?.value?.companyDocuments)
+
+  if (!company?.value?.companyDocuments && !company?.value?.companyDocuments?.length) {
+
+    setFieldValue("incorporation", null);
+    setFieldValue("mermat", null);
+    setFieldValue("utilityBill", null);
+    setFieldValue("statusReport", null);
+    formData.kyb.companyDocuments = [
+      {
+        url: "",
+        urls: [],
+        documentType: 0,
+      },
+      {
+        url: "",
+        urls: [],
+        documentType: 1,
+      },
+      {
+        url: "",
+        urls: [],
+        documentType: 2,
+      },
+      {
+        url: "",
+        urls: [],
+        documentType: 3,
+      },
+    ];
+  }else{
+   
+    setFieldValue("incorporation", company?.value?.companyDocuments[0].urls || company?.value?.companyDocuments[0].url || []);
+    setFieldValue("mermat", company?.value?.companyDocuments[0].urls || company?.value?.companyDocuments[1].url || []);
+    setFieldValue("utilityBill", company?.value?.companyDocuments[0].urls || company?.value?.companyDocuments[3].url || []);
+    setFieldValue("statusReport", company?.value?.companyDocuments[0].urls || company?.value?.companyDocuments[2].url || []);
+  }
 });
 function handleChange(id, value) {
   formData.kyb.companyDocuments.map((i) => {
@@ -389,24 +563,25 @@ const onSubmit = handleSubmit((values) => {
   updateCompanyProfile(values)
     .then((res) => {
       if (res.status === 200) {
-        !formData.kyb.companyDocuments.some((i) => i.urls?.length === 0) &&
-          updateDocuments({
-            companyDocuments: formData.kyb.companyDocuments,
+        // if(!formData?.kyb?.companyDocuments?.some((i) => i.urls?.length === 0)){
+        updateDocuments({
+          companyDocuments: formData.kyb.companyDocuments,
+        })
+          .then((res) => {
+            isLoading.value = false;
           })
-            .then((res) => {
-              isLoading.value = false;
-            })
-            .catch((err) => {
-              isLoading.value = false;
-              toast.error(
-                err.response.data.message ||
-                  err.response.data.Message ||
-                  "Something went wrong, try again later"
-              );
-            });
+          .catch((err) => {
+            isLoading.value = false;
+            toast.error(
+              err.response.data.message ||
+                err.response.data.Message ||
+                "Something went wrong, try again later"
+            );
+          });
+        // }
         active.value = 3;
       }
-      getCommpanyData();
+      getCompanyData();
     })
     .catch((err) => {
       isLoading.value = false;

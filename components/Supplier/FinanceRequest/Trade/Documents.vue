@@ -222,7 +222,7 @@ const onSubmit = handleSubmit((values) => {
 });
 
 function handleChange(id, value) {
-  console.log("🚀 ~ handleChange ~ value:", value);
+
   if (!value) return;
   setFieldValue(id, value);
   setFieldTouched(id, value);

@@ -38,7 +38,12 @@
         <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
 
         <p class="text-white text-sm font-medium">
-          {{ currencyFormat(cartStore?.cartTotalAmount * cartStore?.tax) }}
+          {{
+            currencyFormat(
+              (cartStore?.cartTotalAmount - cartStore?.discountValue) *
+                cartStore?.tax
+            )
+          }}
         </p>
       </div>
       <div class="flex justify-between" v-if="cartStore?.discountValue">
@@ -72,8 +77,8 @@
     />
 
     <p class="text-xs text-[#E1E1E1]">
-      After placing an order, you can contact our support for details of your
-      order.
+      When your order and payment is confirmed, someone on our end will reach
+      out to you to discuss the fulfilment of your order
     </p>
   </div>
 </template>

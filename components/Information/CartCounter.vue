@@ -91,7 +91,8 @@
           @click="counter -= 1"
           :disabled="counter <= 1"
         >
-          <i class="uil uil-minus text-lg"></i>
+         
+          <AppIcon icon="lucide:minus" />
         </button>
         <CurrencyInput
           min="1"
@@ -103,7 +104,8 @@
           }"
         />
         <button @click="counter += 1" class="p-2">
-          <i class="uil uil-plus"></i>
+        
+          <AppIcon icon="lucide:plus" />
         </button>
       </div>
     </div>

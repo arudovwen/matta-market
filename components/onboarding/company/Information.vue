@@ -122,16 +122,15 @@
                       >Country <RedDot
                     /></label>
                     <div class="relative">
-                      <FormsSelectComponent
-                        :options="allcountries"
-                        :showSearch="true"
-                        :value="form.country"
-                        @onGetData="getCountry"
-                        containerStyle="w-full"
-                        :classStyles="`${
-                          v$.country.$error && 'border-red-500'
-                        } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full ! placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
-                      />
+                      <FormGroup label="" name="state">
+                        <SelectVueSelect
+                          v-model="form.country"
+                          :options="allcountries"
+                          :reduce="(country) => country.value"
+                          placeholder="Select country"
+                          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+                        />
+                      </FormGroup>
                       <div
                         class="text-red-500 mt-1"
                         v-for="error of v$.country.$errors"
@@ -147,16 +146,17 @@
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
                       >State <RedDot
                     /></label>
-                    <FormsSelectComponent
-                      :options="mystates"
-                      :showSearch="true"
-                      :value="form.state"
-                      @onGetData="getState"
-                      containerStyle="w-full"
-                      :classStyles="`${
-                        v$.state.$error && 'border-red-500'
-                      } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full ! placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
-                    />
+
+                    <FormGroup label="" name="state">
+                      <SelectVueSelect
+                        v-model="form.state"
+                        :disabled="!form.country"
+                        :options="mystates"
+                        :reduce="(state) => state.value"
+                        placeholder="Select state"
+                        :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+                      />
+                    </FormGroup>
                     <div
                       class="text-red-500 mt-1"
                       v-for="error of v$.state.$errors"
@@ -425,7 +425,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -587,7 +586,7 @@ import {
   updateCompanyProfile,
 } from "@/services/settingservices";
 
-const getData = inject("getData")
+const getData = inject("getData");
 const active = inject("active");
 const companyInfo = inject("companyInfo");
 const authStore = useAuthStore();
@@ -651,24 +650,17 @@ const mystates = computed(() => {
   return states.value.map((item) => {
     return {
       id: item.code,
-      name: item.name,
+      label: item.name,
       value: item.name,
     };
   });
 });
 
-function getCountry(data) {
-  form.state = ""
-  form.country = data.value;
-}
-function getState(data) {
-  form.state = data.value;
-}
 const allcountries = computed(() => {
   return CountryList.map((item) => {
     return {
       id: "",
-      name: `${item.name}`,
+      label: `${item.name}`,
       value: item.name,
     };
   });
@@ -786,7 +778,7 @@ const rules = {
     maxLength: maxLength(250),
   },
   tin: form.country?.toLowerCase === "nigeria" ? { required } : {},
-  registrationNo: { required, minLength: minLength(14) },
+  registrationNo: { required, minLength: minLength(7) },
   companyType: { required },
   state: {
     required,
@@ -819,7 +811,7 @@ async function handleSubmit() {
   updateCompanyProfile(form)
     .then((res) => {
       if (res.status === 200) {
-        getData()
+        getData();
         toast.success("Information saved");
         active.value = 2;
         getCompanyProfile().then((res) => {

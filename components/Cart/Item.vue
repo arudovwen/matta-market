@@ -3,7 +3,7 @@
     class="flex flex-col sm:flex-row justify-between p-5 sm:p-6 lg:p-[30px] gap-y-5 md:gap-y-0"
   >
     <div class="flex gap-x-4 md:gap-x-6">
-       <img
+      <img
         :src="detail.productImg || '/images/imgplace.png'"
         alt="img"
         width="117"
@@ -47,6 +47,7 @@
       <AppButton
         @click="cartStore?.removeFromCart(detail.id)"
         text="Remove item"
+        :isLoading="cartStore.removeLoading && detail.id === cartStore.removeId"
         icon="bx:trash"
         btnClass=" !px-0  !py-[0] !text-[11px] sm:text-xs md:text-sm !font-normal"
         iconClass="!text-[10px] md:!text-base !mr-1"

@@ -36,14 +36,15 @@ onMounted(() => {
           const remoteShippingTotal = res.data.data.shippingTotal;
 
           // Set the remote cart items and tax in the store
-          cartStore?.setCart(remoteCartItems);
-          cartStore?.setTax(remoteTax);
-          cartStore?.SetShippingTotal(remoteShippingTotal);
-          cartStore?.setCartTotalwithTax(res.data.data.cartTotalwithTax);
-          cartStore?.setCartId(res.data.data.cartId);
-          cartStore?.setDiscount(res.data.data.discountValue);
-
+          // cartStore?.setCart(remoteCartItems);
+          // cartStore?.setTax(remoteTax);
+          // cartStore?.SetShippingTotal(remoteShippingTotal);
+          // cartStore?.setCartTotalwithTax(res.data.data.cartTotalwithTax);
+          // cartStore?.setCartId(res.data.data.cartId);
+          // cartStore?.setDiscount(res.data.data.discountValue);
+          // cartStore?.setCartData(res.data.data)
           if (cookie?.value?.cartItems?.length > 0) {
+          
             // Merge remote and local cart items, remove duplicates, and update the minicart
             const mergedCart = [
               ...remoteCartItems,
@@ -54,14 +55,14 @@ onMounted(() => {
                 index === self.findIndex((i) => i.productId === item.productId)
             );
 
-            if (!remoteCartItems.length) {
-              createcart({ items: uniqueCart }).then((createRes) => {
-                if (createRes.status === 200) {
-                  // Refresh the minicart after updating with unique items
-                  cartStore?.getMyCart();
-                }
-              });
-            }
+            // if (!remoteCartItems.length) {
+            //   createcart({ items: uniqueCart }).then((createRes) => {
+            //     if (createRes.status === 200) {
+            //       // Refresh the minicart after updating with unique items
+            //       cartStore?.getMyCart();
+            //     }
+            //   });
+            // }
           }
         }
       })
@@ -71,6 +72,9 @@ onMounted(() => {
           cartStore?.setTax(0);
           cartStore?.SetShippingTotal(0);
           cartStore?.setCartTotalwithTax(0);
+          cartStore?.setCartId(0);
+          cartStore?.setDiscount(0);
+          cartStore?.setCartData(null)
         }
       });
   } else {

@@ -206,7 +206,7 @@ const onSubmit = handleSubmit((values) => {
         toast.info(
           "Sign up successful, Complete registration via link sent to your email"
         );
-        router.push("/auth/login");
+        router.push("/registration-success");
       }
     })
 

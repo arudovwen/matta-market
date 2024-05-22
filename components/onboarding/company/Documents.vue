@@ -36,6 +36,18 @@
               ></span
             >
           </div>
+          <div
+            class="flex flex-wrap gap-x-4 gap-y-3"
+            v-if="form.companyDocuments[1]?.url"
+          >
+            <span
+              @click="downloadFile(form.companyDocuments[1]?.url, 'Mermat')"
+            >
+              <span class="block text-xs text-blue-500 mt-1"
+                >Download Mermat
+              </span></span
+            >
+          </div>
         </div>
         <div>
           <FileUpload
@@ -60,6 +72,23 @@
               ></span
             >
           </div>
+          <div
+            class="flex flex-wrap gap-x-4 gap-y-3"
+            v-if="form.companyDocuments[0]?.url"
+          >
+            <span
+              @click="
+                downloadFile(
+                  form.companyDocuments[0]?.url,
+                  'Certificate of Incorporation'
+                )
+              "
+            >
+              <span class="block text-xs text-blue-500 mt-1"
+                >Download Certificate of Incorporation</span
+              ></span
+            >
+          </div>
         </div>
         <div v-if="companyInfo.country?.toLowerCase() === 'nigeria'">
           <FileUpload
@@ -77,10 +106,24 @@
             <span
               v-for="(file, idx) in form.companyDocuments[2]?.urls"
               :key="file"
-              @click="downloadFile(file, 'CAC Status Report')"
+              @click="downloadFile(file, 'Status Report')"
             >
               <span class="block text-xs text-blue-500 mt-1"
-                >Download CAC Status Report {{ idx + 1 }}</span
+                >Download Status Report {{ idx + 1 }}</span
+              ></span
+            >
+          </div>
+          <div
+            class="flex flex-wrap gap-x-4 gap-y-3"
+            v-else-if="form.companyDocuments[2]?.url"
+          >
+            <span
+              @click="
+                downloadFile(form.companyDocuments[2]?.url, 'CAC Status Report')
+              "
+            >
+              <span class="block text-xs text-blue-500 mt-1"
+                >Download CAC Status Report</span
               ></span
             >
           </div>
@@ -93,10 +136,9 @@
             isCumpulsory
             :multiple="true"
           />
-
           <div
             class="flex flex-wrap gap-x-4 gap-y-3"
-            v-if="form.companyDocuments[3]?.urls?.length "
+            v-if="form.companyDocuments[3]?.urls?.length"
           >
             <span
               v-for="(file, idx) in form.companyDocuments[3]?.urls"
@@ -105,6 +147,20 @@
             >
               <span class="block text-xs text-blue-500 mt-1"
                 >Download Utility bill {{ idx + 1 }}</span
+              ></span
+            >
+          </div>
+          <div
+            class="flex flex-wrap gap-x-4 gap-y-3"
+            v-else-if="form.companyDocuments[3]?.url"
+          >
+            <span
+              @click="
+                downloadFile(form.companyDocuments[3]?.url, 'Utility bill')
+              "
+            >
+              <span class="block text-xs text-blue-500 mt-1"
+                >Download Utility bill</span
               ></span
             >
           </div>
@@ -127,11 +183,9 @@
       </button>
 
       <button
-        :disabled="viewingDoc.some((i) => i.url?.length === 0) || isLoading"
+        :disabled="isLoading"
         :class="{
-          'opacity-60 cursor-not-allowed': viewingDoc.some(
-            (i) => !i.url?.length === 0
-          ),
+          'opacity-60 cursor-not-allowed': isLoading,
         }"
         class="appearance-none leading-none px-10 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
       >
@@ -162,29 +216,20 @@ const router = useRouter();
 const active = inject("active");
 const form = reactive({
   companyDocuments:
-    companyInfo.value.companyDocuments.length === 4
+    companyInfo.value?.companyDocuments?.length === 4
       ? companyInfo.value.companyDocuments
       : [
           {
+            url: "",
             urls: [],
             documentType: 0,
           },
-          {
-            urls: [],
-            documentType: 1,
-          },
-          {
-            urls: [],
-            documentType: 2,
-          },
-          {
-            urls: [],
-            documentType: 3,
-          },
+          { url: "", urls: [], documentType: 1 },
+          { url: "", urls: [], documentType: 2 },
+          { url: "", urls: [], documentType: 3 },
         ],
 });
 const viewingDoc = computed(() => {
- 
   if (companyInfo.value.country?.toLowerCase() !== "nigeria") {
     return form.companyDocuments.filter((i) => i.documentType === 0);
   } else {
@@ -249,15 +294,15 @@ const invalidCredentials = ref(false);
 async function handleSubmit() {
   if (
     companyInfo.value.country?.toLowerCase() === "nigeria" &&
-    form.companyDocuments.some((i) => !i.urls.length)
+    form.companyDocuments.some((i) => i.urls.length === 0)
   )
-    if (
-      companyInfo.value.country?.toLowerCase() !== "nigeria" &&
-      form.companyDocuments
-        .filter((i) => i.documentType === 0)
-        .some((i) => !i.urls.length)
-    )
-      return;
+    return;
+  const nonNigerian = form.companyDocuments
+    .filter((i) => i.documentType === 0)
+    .some((i) => i.urls.length == 0);
+
+  if (companyInfo.value.country?.toLowerCase() !== "nigeria" && nonNigerian)
+    return;
   isLoading.value = true;
 
   updateDocuments(form)

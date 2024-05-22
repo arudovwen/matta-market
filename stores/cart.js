@@ -13,12 +13,15 @@ export const useCartStore = defineStore(
   () => {
     const authStore = useAuthStore();
     const cartItems = ref([]);
+    const cartData = ref(null);
     const tax = ref(0);
     const shippingTotal = ref(0);
+    const removeId = ref(null);
     const cartTotalwithTax = ref(0);
     const loadingCart = ref(false);
     const cartId = ref(null);
     const discountValue = ref(0);
+    const removeLoading = ref(false);
     const cart = computed(() => cartItems?.value);
     const cartTotal = computed(() => cartItems?.value.length);
     const cartTotalAmount = computed(() =>
@@ -40,6 +43,7 @@ export const useCartStore = defineStore(
             setCartTotalwithTax(res.data.data.cartTotalwithTax);
             setCartId(res.data.data.cartId);
             setDiscount(res.data.data.discountValue);
+            setCartData(res.data.data);
 
             const mergedCart = [...res.data.data.items, ...cartItems?.value];
             const uniqueCart = mergedCart.filter(
@@ -61,8 +65,15 @@ export const useCartStore = defineStore(
           setTax(0);
           SetShippingTotal(0);
           setCartTotalwithTax(0);
+          setCartId(0);
+          setDiscount(0);
           loadingCart.value = false;
+          setCartData(null);
         });
+    }
+
+    function setCartData(data) {
+      cartData.value = data;
     }
     function setTax(data) {
       tax.value = data;
@@ -149,13 +160,28 @@ export const useCartStore = defineStore(
     }
 
     function removeFromCart(id) {
+      removeId.value = id;
       if (authStore.isLoggedIn) {
-        removecartitem(id).then((res) => {
-          if (res.status === 200) {
-            const tempCart = cartItems?.value.filter((item) => item.id !== id);
-            setCart(tempCart);
-          }
-        });
+        removeLoading.value = true;
+        removecartitem(id)
+          .then((res) => {
+            if (res.status === 200) {
+              const tempCart = cartItems?.value.filter(
+                (item) => item.id !== id
+              );
+              setCart(tempCart);
+              getMyCart();
+              removeLoading.value = false;
+            }
+          })
+          .catch(() => {
+            removeLoading.value = false;
+            toast.error(
+              err.response.data.message ||
+                err.response.data.Message ||
+                "Invalid code"
+            );
+          });
       } else {
         const tempCart = cartItems?.value.filter((item) => item.id !== id);
         setCart(tempCart);
@@ -189,6 +215,10 @@ export const useCartStore = defineStore(
       setCartId,
       discountValue,
       setDiscount,
+      removeLoading,
+      removeId,
+      setCartData,
+      cartData,
     };
   },
 

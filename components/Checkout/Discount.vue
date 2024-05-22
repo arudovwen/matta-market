@@ -13,7 +13,7 @@
       </div>
       <AppButton
         :isLoading="loading"
-        :isDisabled="!cartStore.cartId"
+        :isDisabled="(!cartStore.cartId && authStore.isLoggedIn) || !code"
         type="submit"
         text="Apply Voucher"
         btnClass="!px-[14px] !py-[10px] h-11 bg-primary-500 text-sm text-white leading-normal"
@@ -27,8 +27,15 @@ import { applyDiscount } from "@/services/cartservice";
 const code = ref(null);
 const loading = ref(false);
 const cartStore = useCartStore();
+const authStore = useAuthStore();
+const isOpen = inject("isOpen");
 
 function handleSubmit() {
+  if (!authStore.isLoggedIn) {
+    isOpen.value = true;
+    return;
+  }
+
   loading.value = true;
   applyDiscount({
     discountCode: code.value,
@@ -42,7 +49,9 @@ function handleSubmit() {
       }
     })
     .catch((err) => {
-      toast.error((err.response.data.message || err.response.data.Message || "Invalid code"));
+      toast.error(
+        err.response.data.message || err.response.data.Message || "Invalid code"
+      );
       loading.value = false;
     });
 }
