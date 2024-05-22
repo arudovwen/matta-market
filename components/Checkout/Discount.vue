@@ -41,7 +41,7 @@ function handleSubmit() {
         toast.success("Discount applied");
       }
     })
-    .catch(() => {
+    .catch((err) => {
       toast.error((err.response.data.message || err.response.data.Message || "Invalid code"));
       loading.value = false;
     });
