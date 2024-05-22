@@ -168,7 +168,7 @@
           v-if="
             !company?.companyDocuments?.length ||
             company?.companyDocuments.some(
-              (i) => (!i.urls && !i.url) || i.urls?.length === 0
+              (i) => (!i.url) || i.urls?.length === 0
             )
           "
           class="grid gap-y-6"

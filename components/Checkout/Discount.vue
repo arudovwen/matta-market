@@ -42,6 +42,7 @@ function handleSubmit() {
       }
     })
     .catch(() => {
+      toast.error((err.response.data.message || err.response.data.Message || "Invalid code"));
       loading.value = false;
     });
 }
