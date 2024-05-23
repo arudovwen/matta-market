@@ -27,6 +27,13 @@
           {{ currencyFormat(cartStore?.cartTotalAmount) }}
         </p>
       </div>
+      <div class="flex justify-between" v-if="cartStore?.discountValue">
+        <p class="text-sm text-[#E1E1E1]">Discount</p>
+
+        <p class="text-white font-medium text-sm">
+          -{{ currencyFormat(cartStore?.discountValue) }}
+        </p>
+      </div>
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
 
@@ -43,13 +50,6 @@
         <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
 
         <p class="text-white font-medium text-sm">TBD</p>
-      </div>
-      <div class="flex justify-between" v-if="cartStore?.discountValue">
-        <p class="text-sm text-[#E1E1E1]">Discount</p>
-
-        <p class="text-white font-medium text-sm">
-          {{ currencyFormat(cartStore?.discountValue) }}
-        </p>
       </div>
     </div>
     <hr class="my-[20px] border-white/10" />
