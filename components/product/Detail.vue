@@ -68,7 +68,7 @@
           v-if="!productData.hidePrice"
           class="text-xl lg:text-2xl font-[800] mb-6"
         >
-          {{ currencyFormat(mypackage?.amount || 0) }}
+        <span class="font-normal text-base">Starting from</span>  {{ currencyFormat(mypackage?.amount || 0) }}
           <span class="text-sm text-[#444] font-normal"
             >/{{ `${mypackage?.unit || ""}` }}</span
           >
