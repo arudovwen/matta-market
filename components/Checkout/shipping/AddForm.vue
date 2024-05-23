@@ -95,7 +95,7 @@
         />
       </FormGroup>
 
-      <div
+      <!-- <div
         class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
       >
         <Checkbox
@@ -104,7 +104,7 @@
           v-model="isDefault"
           v-bind="isDefaultAtt"
         />
-      </div>
+      </div> -->
 
       <div class="xl:col-span-2 grid gap-y-[22px] mt-4">
         <AppButton
@@ -139,7 +139,7 @@ const formValues = {
   lga: "",
   postalCode: "1000",
   city: "lagos",
-  isDefault: false,
+  isDefault: true,
 };
 
 const schema = yup.object({
