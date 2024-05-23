@@ -59,8 +59,9 @@
       <p class="text-white font-bold">
         {{
           currencyFormat(
-            cartStore?.cartTotalAmount * cartStore?.tax +
-              cartStore?.cartTotalAmount
+            (cartStore?.cartTotalAmount - cartStore?.discountValue) *
+              cartStore?.tax +
+              (cartStore?.cartTotalAmount - cartStore?.discountValue)
           )
         }}
       </p>
