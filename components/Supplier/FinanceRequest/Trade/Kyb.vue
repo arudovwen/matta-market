@@ -410,7 +410,7 @@ const formSchema = yup.object().shape({
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   description: yup.string().nullable(),
-  statusReport: yup.array(.typeError("Document is required")).when("country", {
+  statusReport: yup.array().typeError("Document is required").when("country", {
     is: "Nigeria",
     then: (schema) => schema.required("Status Report is required"),
     otherwise: (schema) => schema.notRequired(),
