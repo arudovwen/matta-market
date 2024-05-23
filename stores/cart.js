@@ -142,6 +142,7 @@ export const useCartStore = defineStore(
               return dt;
             });
             setCart(tempCart);
+            getMyCart()
           }
         });
       } else {
