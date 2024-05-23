@@ -110,6 +110,7 @@
     @close="() => (isErrorOpen = false)"
   />
   <RequestLoader :open="isLoading" />
+
 </template>
 <script setup>
 import { useForm } from "vee-validate";
@@ -142,7 +143,7 @@ const handleClose = inject("handleClose");
 const form = reactive({
   withdrawalAmount: null,
   narration: "withdraw",
-  balance: props.balance,
+  balance: props.balance.availableBalance,
   accountNumber: "",
   currency: "NGN",
   bankCode: "",
