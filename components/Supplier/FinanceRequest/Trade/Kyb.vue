@@ -172,9 +172,8 @@
         <div
           v-if="
             !company?.companyDocuments?.length ||
-            company?.companyDocuments.some(
-              (i) => !i.url && i.urls?.length === 0
-            )
+            (company?.companyDocuments.some((i) => i.urls?.length === 0) &&
+              company?.companyDocuments.some((i) => !i.url))
           "
           class="grid gap-y-6"
         >
@@ -454,7 +453,7 @@ const {
   validationSchema: formSchema,
   initialValues: formData.kyb,
 });
-  console.log("🚀 ~ errors:", errors.value)
+
 const [utilityBill] = defineField("utilityBill");
 const [mermat] = defineField("mermat");
 const [statusReport] = defineField("statusReport");
@@ -502,10 +501,11 @@ const mystates = computed(() => {
 
 onMounted(() => {
   setValues(company?.value || {});
-  console.log("🚀 ~ onMounted ~ company?.companyDocuments:", company?.value?.companyDocuments)
 
-  if (!company?.value?.companyDocuments && !company?.value?.companyDocuments?.length) {
-
+  if (
+    !company?.value?.companyDocuments &&
+    !company?.value?.companyDocuments?.length
+  ) {
     setFieldValue("incorporation", null);
     setFieldValue("mermat", null);
     setFieldValue("utilityBill", null);
@@ -532,12 +532,31 @@ onMounted(() => {
         documentType: 3,
       },
     ];
-  }else{
-   
-    setFieldValue("incorporation", company?.value?.companyDocuments[0].urls || company?.value?.companyDocuments[0].url || []);
-    setFieldValue("mermat", company?.value?.companyDocuments[0].urls || company?.value?.companyDocuments[1].url || []);
-    setFieldValue("utilityBill", company?.value?.companyDocuments[0].urls || company?.value?.companyDocuments[3].url || []);
-    setFieldValue("statusReport", company?.value?.companyDocuments[0].urls || company?.value?.companyDocuments[2].url || []);
+  } else {
+    setFieldValue(
+      "incorporation",
+      company?.value?.companyDocuments[0].urls ||
+        company?.value?.companyDocuments[0].url ||
+        []
+    );
+    setFieldValue(
+      "mermat",
+      company?.value?.companyDocuments[0].urls ||
+        company?.value?.companyDocuments[1].url ||
+        []
+    );
+    setFieldValue(
+      "utilityBill",
+      company?.value?.companyDocuments[0].urls ||
+        company?.value?.companyDocuments[3].url ||
+        []
+    );
+    setFieldValue(
+      "statusReport",
+      company?.value?.companyDocuments[0].urls ||
+        company?.value?.companyDocuments[2].url ||
+        []
+    );
   }
 });
 function handleChange(id, value) {
