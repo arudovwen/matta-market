@@ -238,7 +238,7 @@
     v-if="isAdded"
     :selectedPackage="mypackage.package"
     @close="isAdded = false"
-    :totalAmount="mypackage?.amount"
+    :totalAmount="mypackage?.amount * mypackage?.size"
     :quantity="counter"
     :name="productData.name"
     :hidePrice="productData.hidePrice"
@@ -315,7 +315,7 @@ const packageOptions = computed(() =>
   productData?.value?.packagesAvailable?.map((i) => {
     return {
       label: `${i.package.title}/${i.size}${i.unit} - ${currencyFormat(
-        i.amount
+        i.amount * i.size
       )}`,
       value: JSON.stringify({ ...i }),
     };
@@ -385,7 +385,7 @@ function handleCart(type) {
     supplierId: productData?.value.supplierId,
     producer: productData.value?.manufacturer,
     quantity: counter.value,
-    packagePrice: mypackage?.value.amount,
+    packagePrice: mypackage?.value.amount * mypackage?.value.size,
   };
 
   cartStore?.addToCart(data, type).then((res) => {
