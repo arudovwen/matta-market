@@ -133,7 +133,7 @@
       />
       <div>
         <Textinput
-          :isCumpulsory="true"
+        :isCumpulsory="true"
           placeholder=""
           label="City"
           name="city"
@@ -187,6 +187,7 @@
               label="Memorandum and Articles of Association"
               id="mermat"
               :multiple="true"
+              :isCumpulsory="true"
             />
             <div
               class="flex flex-wrap gap-x-4 gap-y-3"
@@ -226,6 +227,7 @@
               label="Certificate of Incorporation"
               id="incorporation"
               :multiple="true"
+              :isCumpulsory="true"
             />
             <div
               class="flex flex-wrap gap-x-4 gap-y-3"
@@ -269,6 +271,7 @@
               label="CAC Status Report"
               id="statusReport"
               :multiple="true"
+              :isCumpulsory="true"
             />
             <div
               class="flex flex-wrap gap-x-4 gap-y-3"
@@ -312,6 +315,7 @@
               label="Utility bill"
               id="utilityBill"
               :multiple="true"
+              :isCumpulsory="true"
             />
             <div
               class="flex flex-wrap gap-x-4 gap-y-3"
@@ -406,18 +410,18 @@ const formSchema = yup.object().shape({
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   description: yup.string().nullable(),
-  statusReport: yup.array().when("country", {
+  statusReport: yup.array(.typeError("Document is required")).when("country", {
     is: "Nigeria",
     then: (schema) => schema.required("Status Report is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
-  incorporation: yup.array().required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
-  mermat: yup.array().when("country", {
+  incorporation: yup.array().typeError("Document is required").required("Incorporation is required"), // Assuming incorporation is a dateofIncorporation type
+  mermat: yup.array().typeError("Document is required").when("country", {
     is: "Nigeria",
     then: (schema) => schema.required("Mermat is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
-  utilityBill: yup.array().when("country", {
+  utilityBill: yup.array().typeError("Document is required").when("country", {
     is: "Nigeria",
     then: (schema) => schema.required("Utility Bill is required"),
     otherwise: (schema) => schema.notRequired(),
@@ -426,10 +430,10 @@ const formSchema = yup.object().shape({
   state: yup.string().required(),
   email: yup.string().required(),
   phone: yup.string().required(),
-  city: yup.string(),
+  city: yup.string().required(),
   registrationNo: yup
     .string()
-    .min(7, "Value must be more than 14")
+    .min(7, "Provide a valid number")
     .when("country", {
       is: "Nigeria",
       then: (schema) => schema.required("Registration number is required"),

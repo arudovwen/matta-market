@@ -73,7 +73,7 @@ onMounted(() => {
         }
       })
       .catch((err) => {
-        if (err.response.data.Message.toLowerCase() === "no items in cart") {
+        if (err.response.data.Message.toLowerCase() === "no items in cart" && !cookie?.value?.cartItems?.length) {
           cartStore?.setCart?.([]);
           cartStore?.setTax(0);
           cartStore?.SetShippingTotal(0);
