@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup>
-import { createcart, getcart } from "~/services/cartservice";
+import { createcart, getcart,clearcart } from "~/services/cartservice";
 const cookie = useCookie("cart");
 const authStore = useAuthStore();
 const cartStore = useCartStore();
@@ -32,8 +32,8 @@ onMounted(() => {
       .then((res) => {
         if (res.status === 200) {
           const remoteCartItems = res.data.data.items;
-          const remoteTax = res.data.data.tax;
-          const remoteShippingTotal = res.data.data.shippingTotal;
+          // const remoteTax = res.data.data.tax;
+          // const remoteShippingTotal = res.data.data.shippingTotal;
 
           // Set the remote cart items and tax in the store
           // cartStore?.setCart(remoteCartItems);
@@ -44,7 +44,6 @@ onMounted(() => {
           // cartStore?.setDiscount(res.data.data.discountValue);
           // cartStore?.setCartData(res.data.data)
           if (cookie?.value?.cartItems?.length > 0) {
-          
             // Merge remote and local cart items, remove duplicates, and update the minicart
             const mergedCart = [
               ...remoteCartItems,
@@ -54,15 +53,22 @@ onMounted(() => {
               (item, index, self) =>
                 index === self.findIndex((i) => i.productId === item.productId)
             );
-
-            // if (!remoteCartItems.length) {
-            //   createcart({ items: uniqueCart }).then((createRes) => {
-            //     if (createRes.status === 200) {
-            //       // Refresh the minicart after updating with unique items
-            //       cartStore?.getMyCart();
-            //     }
-            //   });
-            // }
+            clearcart()
+              .then(() => {
+                if (res.status === 200) {
+                  createcart({ items: uniqueCart }).then((createRes) => {
+                    if (createRes.status === 200) {
+                      // Refresh the minicart after updating with unique items
+                      cartStore?.getMyCart();
+                    }
+                  });
+                }
+              })
+              .catch(() => {
+                cartStore?.getMyCart();
+              });
+          } else {
+            cartStore?.getMyCart();
           }
         }
       })
@@ -74,7 +80,7 @@ onMounted(() => {
           cartStore?.setCartTotalwithTax(0);
           cartStore?.setCartId(0);
           cartStore?.setDiscount(0);
-          cartStore?.setCartData(null)
+          cartStore?.setCartData(null);
         }
       });
   } else {

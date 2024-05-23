@@ -17,7 +17,9 @@ export async function updatecart(data) {
 export async function getcart() {
   return await get(urls.GET_CART, config);
 }
-
+export async function clearcart() {
+  return await get(urls.CLEAR_CART, config);
+}
 export async function removecartitem(data) {
   return await post(`${urls.REMOVE_CART}/${data}`, data, config);
 }

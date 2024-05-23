@@ -98,6 +98,7 @@ const urls = {
   GET_ORDER: "/v1/shoppingcart/get-order",
   GET_CUSTOMER_INFO: "/v1/shoppingcart/customer-info",
   REMOVE_CART: "/v1/shoppingcart/remove-cartitem",
+  CLEAR_CART: "/v1/shoppingcart/clear-cart",
   CONFIRM_PURCHASE: "/v1/shoppingcart/confirm-purchase",
   CONFIRM_PAYMENT: "v1/ShoppingCart/confirm-payment",
 
