@@ -76,12 +76,10 @@
           {{ currencyFormat(order?.orderTotal) }}
         </div>
       </div>
-      <div class="flex justify-between gap-x-2">
-        <div class="text-sm text-[#E1E1E1]">
-          Discount <span class="text-xs">(7.5%)</span>
-        </div>
+      <div class="flex justify-between gap-x-2" v-if="order?.discountValue">
+        <div class="text-sm text-[#E1E1E1]">Discount</div>
         <div class="text-right py-1">
-          - {{ currencyFormat(order?.discount) }}
+          - {{ currencyFormat(order?.discountValue) }}
         </div>
       </div>
       <div class="flex justify-between gap-x-2">
@@ -89,7 +87,7 @@
           VAT <span class="text-xs">(7.5%)</span>
         </div>
         <div class="text-right py-1">
-          {{ currencyFormat(order?.orderTotalwithTax - order?.orderTotal) }}
+          {{ currencyFormat(order?.orderTotalwithTax - order?.orderTotal- order?.shippingTotal + order?.discountValue) }}
         </div>
       </div>
       <div class="flex justify-between gap-x-2 border-b border-[#ddd] mb-6">
