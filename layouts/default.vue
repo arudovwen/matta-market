@@ -21,28 +21,19 @@
   </div>
 </template>
 <script setup>
-import { createcart, getcart,clearcart } from "~/services/cartservice";
+import { createcart, getcart, clearcart } from "~/services/cartservice";
 const cookie = useCookie("cart");
 const authStore = useAuthStore();
 const cartStore = useCartStore();
 const localCart = [];
 onMounted(() => {
-  if (authStore.isLoggedIn) {
+  if (authStore.isLoggedIn && localStorage.getItem("fetchCart")) {
+    localStorage.removeItem("fetchCart");
     getcart()
       .then((res) => {
         if (res.status === 200) {
           const remoteCartItems = res.data.data.items;
-          // const remoteTax = res.data.data.tax;
-          // const remoteShippingTotal = res.data.data.shippingTotal;
 
-          // Set the remote cart items and tax in the store
-          // cartStore?.setCart(remoteCartItems);
-          // cartStore?.setTax(remoteTax);
-          // cartStore?.SetShippingTotal(remoteShippingTotal);
-          // cartStore?.setCartTotalwithTax(res.data.data.cartTotalwithTax);
-          // cartStore?.setCartId(res.data.data.cartId);
-          // cartStore?.setDiscount(res.data.data.discountValue);
-          // cartStore?.setCartData(res.data.data)
           if (cookie?.value?.cartItems?.length > 0) {
             // Merge remote and local cart items, remove duplicates, and update the minicart
             const mergedCart = [
@@ -73,7 +64,10 @@ onMounted(() => {
         }
       })
       .catch((err) => {
-        if (err.response.data.Message.toLowerCase() === "no items in cart" && !cookie?.value?.cartItems?.length) {
+        if (
+          err.response.data.Message.toLowerCase() === "no items in cart" &&
+          !cookie?.value?.cartItems?.length
+        ) {
           cartStore?.setCart?.([]);
           cartStore?.setTax(0);
           cartStore?.SetShippingTotal(0);
@@ -81,6 +75,13 @@ onMounted(() => {
           cartStore?.setCartId(0);
           cartStore?.setDiscount(0);
           cartStore?.setCartData(null);
+        } else {
+          createcart({ items: cookie?.value?.cartItems }).then((createRes) => {
+            if (createRes.status === 200) {
+              // Refresh the minicart after updating with unique items
+              cartStore?.getMyCart();
+            }
+          });
         }
       });
   } else {

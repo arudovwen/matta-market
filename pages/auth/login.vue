@@ -1,4 +1,3 @@
-
 <template>
   <div class="pt-10 lg:pt-0 w-full max-w-[500px] mx-auto">
     <h1 class="text-[#333] darks:text-white mb-[10px] text-3xl font-bold">
@@ -111,6 +110,7 @@ const onSubmit = handleSubmit((values) => {
     .then((res) => {
       if (res.status === 200) {
         authStore.setLoggedUser(res.data.data);
+        localStorage.setItem("fetchCart", true);
         if (
           !res.data.data.onboardingPageStatus &&
           res.data.data?.businessUserType.toLowerCase() === "supplier"
@@ -147,7 +147,6 @@ const onSubmit = handleSubmit((values) => {
 });
 
 const handleLoginSuccess = (response) => {
-
   const { access_token } = response;
   let data = {
     provider: "GOOGLE",

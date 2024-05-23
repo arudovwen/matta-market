@@ -40,6 +40,13 @@
             {{ currencyFormat(order?.cartTotal) }}
           </p>
         </div>
+        <div class="flex justify-between" v-if="order.discountValue">
+          <p class="text-sm text-matta-black">Discount</p>
+
+          <p class="text-matta-black font-medium text-sm">
+            {{ currencyFormat(order?.discountValue) }}
+          </p>
+        </div>
         <div class="flex justify-between">
           <p class="text-sm text-matta-black">VAT (7.5%)</p>
 
