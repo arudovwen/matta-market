@@ -61,7 +61,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ moment(item.created).format("ll") }}
+                  {{ moment(item.created).format("lll") }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
