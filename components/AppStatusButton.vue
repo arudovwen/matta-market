@@ -174,6 +174,10 @@ const WalletStatus = {
     text: "Order Payment",
     className: StatusClass[1],
   },
+  6: {
+    text: "Order Debit",
+    className: StatusClass[4],
+  },
 };
 
 const Stats = computed(() => {

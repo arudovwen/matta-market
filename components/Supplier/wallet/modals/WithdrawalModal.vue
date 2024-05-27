@@ -6,7 +6,7 @@
       <div class="grid gap-x-[25px] gap-y-4 mb-5">
         <FormGroup
           label="How much do you require?"
-          :error="errors.withdrawalAmount"
+          :error="errors.totalAmount"
           name="withdrawalAmount"
           classLabel="!normal-case"
           isCumpulsory
@@ -15,7 +15,7 @@
             <CurrencyInput
               min="1"
               :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-                errors.withdrawalAmount ? 'border-red-500' : 'border-[#D0D5DD]'
+                errors.totalAmount ? 'border-red-500' : 'border-[#D0D5DD]'
               }`"
               placeholder="Amount"
               v-model="withdrawalAmount"
@@ -87,7 +87,9 @@
           text="Cancel"
         />
         <AppButton
-          :disabled="isLoading || loading"
+          :disabled="
+            isLoading || loading || withdrawalAmount + charge > balance
+          "
           :isLoading="isLoading"
           btnClass="bg-primary-500 text-white !px-[14px]  !text-sm !py-[10px] disabled:cursor-not-allowed w-full"
           type="submit"
@@ -110,7 +112,6 @@
     @close="() => (isErrorOpen = false)"
   />
   <RequestLoader :open="isLoading" />
-
 </template>
 <script setup>
 import { useForm } from "vee-validate";
@@ -147,6 +148,7 @@ const form = reactive({
   accountNumber: "",
   currency: "NGN",
   bankCode: "",
+  totalAmount: null,
 });
 const isValidating = ref(false);
 const formSchema = yup.object().shape({
@@ -184,7 +186,7 @@ const formSchema = yup.object().shape({
   withdrawalAmount: yup
     .number()
     .required("Amount is required")
-    .test("balance-validation", "Exceeded current balance", function (value) {
+    .test("balance-validation", "Exceeded available balance", function (value) {
       const balance = this.parent.balance;
 
       if (value && balance) {
@@ -193,6 +195,17 @@ const formSchema = yup.object().shape({
       return true; // Return true if no validation needed
     })
     .positive("Amount must be a positive number"),
+  totalAmount: yup
+    .number()
+    .test("balance-validation", "Exceeded available balance", function (value) {
+      const balance = this.parent.balance;
+
+      if (value && balance) {
+        return value <= balance;
+      }
+      return true; // Return true if no validation needed
+    })
+    .nullable(),
 });
 
 const isLoading = ref(false);
@@ -229,11 +242,10 @@ watch(props.banks, () => {
         i.label.toLowerCase() ===
         defaultsettlement.value?.bankName.toLowerCase()
     );
-    console.log("🚀 ~ watch ~ bankCode:", bankCode.value);
     setFieldValue("bankCode", bankCode.value);
   }
 });
-const charge = ref(5);
+const charge = ref(0);
 watch(
   () => [withdrawalAmount.value],
   () => {
@@ -241,8 +253,12 @@ watch(
       loading.value = true;
       setTimeout(() => {
         getWithdrawalCharge(withdrawalAmount.value).then((res) => {
-          if (res.status === 200) {
+          if (res.status === 200 && res.data.data) {
             charge.value = res.data.data;
+            setFieldValue(
+              "totalAmount",
+              res.data.data + withdrawalAmount.value || 0
+            );
             loading.value = false;
           }
         });
