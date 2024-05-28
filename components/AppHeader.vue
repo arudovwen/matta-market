@@ -1,5 +1,5 @@
 <template>
-  <!-- <ClientOnly>
+  <ClientOnly>
     <div
       v-if="$pwa?.offlineReady || $pwa?.needRefresh"
       class="flex justify-start items-center gap-x-6 py-2 container"
@@ -46,18 +46,21 @@
         </button>
       </div>
     </div>
-  </ClientOnly> -->
+  </ClientOnly>
   <div class="bg-[#1849A9] text-xs sm:text-sm py-3">
     <div class="container flex gap-x-2 items-center text-white font-normal">
-      <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" /> <span>Get N50,000
-      off when you sign up and make your first purchase. &nbsp; Use the code
+      <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" />
       <span
-        v-clipboard="'MATTA25'"
-        @click="toast.success('Copied')"
-        class="md:border md:border-white rounded-[4px] md:px-1 md:py-[2px] cursor-pointer font-semibold md:font-bold text-xs"
-        >MATTA25</span
+        >Get N50,000 off when you sign up and make your first purchase. &nbsp;
+        Use the code
+        <span
+          v-clipboard="'MATTA25'"
+          @click="toast.success('Copied')"
+          class="md:border md:border-white rounded-[4px] md:px-1 md:py-[2px] cursor-pointer font-semibold md:font-bold text-xs"
+          >MATTA25</span
+        >
+        on checkout</span
       >
-      on checkout</span>
     </div>
   </div>
 
@@ -76,7 +79,7 @@
             <img
               src="/images/logo.png"
               alt="Matta"
-              class="w-[90px] md:w-[100px] h-auto object-contain"
+              class="w-20 md:w-[100px] h-auto object-contain"
           /></NuxtLink>
 
           <ul class="lg:flex items-center gap-x-6 hidden">
@@ -256,7 +259,7 @@
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
             >
               <AppIcon
-                class="text-lg text-[#484848]"
+                class="text-base md:text-lg text-[#484848]"
                 icon="lucide:shopping-cart"
               />
               <span

@@ -8,15 +8,15 @@ export const useAuthStore = defineStore(
     const languages = [
       {
         code: "en",
-        name: "English",
+        name: "En",
         cname: "英语",
-        ename: "English",
+        ename: "EnEnglish",
       },
       {
         code: "fr",
-        name: "French",
+        name: "Fr",
         cname: "法语",
-        ename: "French",
+        ename: "Fr",
       },
     ];
     const isLoggedIn = computed(() => !!loggedUser.value);

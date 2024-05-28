@@ -11,6 +11,44 @@ export const measurements = [
   { value: "bag", name: "Bag" },
   { value: "drum", name: "Drum" },
 ];
+export const languagesOptions = [
+  {
+    code: "en",
+    name: "En",
+    cname: "英语",
+    ename: "English",
+  },
+  {
+    code: "fr",
+    name: "Fr",
+    cname: "法语",
+    ename: "Fr",
+  },
+  {
+    code: "es",
+    name: "Es",
+    cname: "西班牙语",
+    ename: "Spanish",
+  },
+  {
+    code: "de",
+    name: "De",
+    cname: "德语",
+    ename: "German",
+  },
+  {
+    code: "zh-CN",
+    name: "Zh-CN",
+    cname: "简体中文",
+    ename: "Simplified Chinese",
+  },
+  {
+    code: "ja",
+    name: "Ja",
+    cname: "日语",
+    ename: "Japanese",
+  },
+];
 
 export const FinancesOptions = [
   {
