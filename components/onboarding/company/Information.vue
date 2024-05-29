@@ -279,7 +279,10 @@
                     </div>
                   </div>
 
-                  <div class="mb-6">
+                  <div
+                    class="mb-6"
+                    v-if="form.country?.toLowerCase() === 'nigeria'"
+                  >
                     <label
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
@@ -778,7 +781,10 @@ const rules = {
     maxLength: maxLength(250),
   },
   tin: form.country?.toLowerCase === "nigeria" ? { required } : {},
-  registrationNo: { required, minLength: minLength(7) },
+  registrationNo:
+    form.country?.toLowerCase === "nigeria"
+      ? { required, minLength: minLength(7) }
+      : {},
   companyType: { required },
   state: {
     required,
