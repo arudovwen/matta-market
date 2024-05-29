@@ -261,7 +261,6 @@ import { getMarkets, getTechLevels } from "~/services/productservices";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-
 const store = useMarketStore();
 const appStore = useApplicationStore();
 const query = reactive({
@@ -287,7 +286,6 @@ onMounted(() => {
   getAllApplications();
   getAllMarkets();
   const cookie = useCookie("googtrans");
-cookie.value = languages[navigator.language];
-console.log("navigator",navigator.language)
+  cookie.value = languages[navigator.language];
 });
 </script>
