@@ -72,6 +72,7 @@
     }"
     class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 z-[999] transition-all duration-500 ease-in-out"
   >
+  
     <div class="container mx-auto">
       <div class="flex justify-between items-center gap-x-5">
         <div class="logo flex gap-x-10 items-center">
