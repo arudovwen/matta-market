@@ -462,7 +462,7 @@ const form = reactive({
 });
 const isLoading = ref(false);
 const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 12 : true;
+  form.code === "+234" ? value.length > 9 && value.length < 15 : true;
 function addsocial() {
   form.socials.push({
     name: "",

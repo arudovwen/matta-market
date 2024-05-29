@@ -428,7 +428,7 @@ onMounted(() => {
   });
 });
 const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 12 : true;
+  form.code === "+234" ? value.length > 9 && value.length < 15 : true;
 const mystates = computed(() => {
   return states.value.map((item) => {
     return {
