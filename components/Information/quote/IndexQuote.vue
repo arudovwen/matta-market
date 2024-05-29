@@ -149,12 +149,11 @@ const myrules1 = {
   unit: { required },
 };
 const validPhoneLength = (value) =>
-  quoteForm.phoneCode === "+234" ? value.length > 9 && value.length < 12 : true;
+  quoteForm.phoneCode === "+234" ? value.length > 9 && value.length < 15 : true;
 const myrules2 = {
   deliverAddress: { required },
   phone: {
     required,
-    numeric,
     validPhoneLength: helpers.withMessage(
       "Phone number must be between 10 0r 11 digits",
       validPhoneLength

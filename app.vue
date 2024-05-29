@@ -291,3 +291,4 @@ cookie.value = languages[navigator.language];
 console.log("navigator",navigator.language)
 });
 </script>
+ 
