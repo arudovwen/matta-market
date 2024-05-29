@@ -479,10 +479,6 @@ const rules = {
   phone: {
     numeric,
     required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 15 digits",
-      validPhoneLength
-    ),
   },
   timeZone: {
     required,
