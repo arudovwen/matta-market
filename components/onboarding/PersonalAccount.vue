@@ -406,7 +406,7 @@ const form = reactive({
 });
 const isLoading = ref(false);
 const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 12 : true;
+  form.code === "+234" ? value.length > 9 && value.length < 15 : true;
 const abbrs = {
   EST: "Eastern Standard Time",
   EDT: "Eastern Daylight Time",
@@ -480,7 +480,7 @@ const rules = {
     numeric,
     required,
     validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
+      "Phone number must be between 10 0r 15 digits",
       validPhoneLength
     ),
   },

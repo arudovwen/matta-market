@@ -289,3 +289,4 @@ onMounted(() => {
   cookie.value = languages[navigator.language];
 });
 </script>
+ 
