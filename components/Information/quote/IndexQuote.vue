@@ -154,10 +154,6 @@ const myrules2 = {
   deliverAddress: { required },
   phone: {
     required,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
   },
   additionalInformation: {},
 };
