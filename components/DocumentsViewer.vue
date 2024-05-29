@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="documents.length"
-    class="w-full rounded-[10px] border border-[#EAECF0] overflow-hidden md:min-w-[560px]"
+    class="w-full rounded-[10px] border border-[#EAECF0] overflow-x-auto md:min-w-[560px]"
   >
     <table class="w-full">
       <thead>
@@ -19,7 +19,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(document, id) in documents.filter((i) => i.url)"
+          v-for="(document, id) in documents.filter((i) => i.urls || i.url)"
           :key="id"
           class="border-b last:border-none"
         >
@@ -30,14 +30,27 @@
           </td>
 
           <td
-            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+            v-if="document.urls?.length"
+            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap flex gap-x-4 items-center"
           >
             <span
-              v-if="document.url"
+              v-for="(url, i) in document.urls"
+              :key="url"
+              @click="openMedia(url)"
+              class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
+            >
+              View document {{ i + 1 }}
+            </span>
+          </td>
+          <td
+            v-else
+            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap flex gap-x-4 items-center"
+          >
+            <span
               @click="openMedia(document.url)"
               class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
             >
-              View
+              View document
             </span>
           </td>
         </tr>

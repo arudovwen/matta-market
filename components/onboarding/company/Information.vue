@@ -68,8 +68,8 @@
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
                       Company name
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
+                      <RedDot
+                    /></label>
                     <input
                       v-model="v$.companyName.$model"
                       :class="{ 'border-red-500': v$.companyName.$error }"
@@ -90,12 +90,12 @@
                   </div>
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Date Of Incorporation
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
+                      >Date Of Incorporation <RedDot
+                    /></label>
 
                     <ClientOnly>
                       <VueDatePicker
+                        auto-apply
                         v-model="v$.dateofIncorporation.$model"
                         placeholder="Select date"
                         :enable-time-picker="false"
@@ -119,9 +119,100 @@
 
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Business type
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
+                      >Country <RedDot
+                    /></label>
+                    <div class="relative">
+                      <FormGroup label="" name="state">
+                        <SelectVueSelect
+                          v-model="form.country"
+                          :options="allcountries"
+                          :reduce="(country) => country.value"
+                          placeholder="Select country"
+                          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+                        />
+                      </FormGroup>
+                      <div
+                        class="text-red-500 mt-1"
+                        v-for="error of v$.country.$errors"
+                        :key="error.$uid"
+                      >
+                        <div class="error-msg text-error text-xs font-semibold">
+                          {{ error.$message }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >State <RedDot
+                    /></label>
+
+                    <FormGroup label="" name="state">
+                      <SelectVueSelect
+                        v-model="form.state"
+                        :disabled="!form.country"
+                        :options="mystates"
+                        :reduce="(state) => state.value"
+                        placeholder="Select state"
+                        :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+                      />
+                    </FormGroup>
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.state.$errors"
+                      :key="error.$uid"
                     >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >E-mail <RedDot
+                    /></label>
+                    <input
+                      v-model="v$.email.$model"
+                      :class="{ 'border-red-500': v$.email.$error }"
+                      class="px-[14px] py-[10px] h-11 text-sm rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      autocomplete="off"
+                      autofocus="on"
+                    />
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.email.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >Phone number <RedDot
+                    /></label>
+                    <div class="flex relative rounded-lg h-11">
+                      <FormsPhoneCodes v-model="v$.phone.$model" />
+                    </div>
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.phone.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >Business type <RedDot
+                    /></label>
 
                     <div class="flex relative items-center">
                       <select
@@ -154,9 +245,8 @@
                   </div>
                   <div class="mb-6">
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Business sector
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
+                      >Business sector <RedDot
+                    /></label>
 
                     <div class="flex relative items-center">
                       <select
@@ -188,59 +278,14 @@
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >E-mail
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
-                    <input
-                      v-model="v$.email.$model"
-                      :class="{ 'border-red-500': v$.email.$error }"
-                      class="px-[14px] py-[10px] h-11 text-sm rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      autocomplete="off"
-                      autofocus="on"
-                    />
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.email.$errors"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-xs font-semibold">
-                        {{ error.$message }}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Phone number
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
-                    <div class="flex relative rounded-lg h-11">
-                      <FormsPhoneCodes v-model="v$.phone.$model" />
-                    </div>
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.phone.$errors"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-xs font-semibold">
-                        {{ error.$message }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
                     <label
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
                       Registration number
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
+                      <RedDot
+                    /></label>
                     <input
                       v-model="v$.registrationNo.$model"
                       :class="{ 'border-red-500': v$.registrationNo.$error }"
@@ -259,11 +304,13 @@
                       </div>
                     </div>
                   </div>
-                  <div class="mb-6">
+                  <div
+                    class="mb-6"
+                    v-if="form.country?.toLowerCase() === 'nigeria'"
+                  >
                     <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >TIN number
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
+                      >TIN number <RedDot
+                    /></label>
 
                     <input
                       v-model="v$.tin.$model"
@@ -310,6 +357,53 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >Company Address <RedDot
+                    /></label>
+                    <input
+                      v-model="v$.address.$model"
+                      :class="{ 'border-red-500': v$.address.$error }"
+                      class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      autocomplete="off"
+                      autofocus="on"
+                      placeholder="Company address"
+                    />
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.address.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                      >City <RedDot
+                    /></label>
+                    <input
+                      v-model="v$.city.$model"
+                      :class="{ 'border-red-500': v$.city.$error }"
+                      class="px-[14px] py-[10px] h-11 text-sm w-full border rounded-lg placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                      autocomplete="off"
+                      autofocus="on"
+                      placeholder="Company city"
+                    />
+                    <div
+                      class="text-red-500 mt-1"
+                      v-for="error of v$.city.$errors"
+                      :key="error.$uid"
+                    >
+                      <div class="error-msg text-error text-xs font-semibold">
+                        {{ error.$message }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="mb-6">
                   <label class="mb-2 font-medium text-sm text-[#344054] block"
                     >Description</label
@@ -331,110 +425,6 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Company Address
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
-                    <input
-                      v-model="v$.address.$model"
-                      :class="{ 'border-red-500': v$.address.$error }"
-                      class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      autocomplete="off"
-                      autofocus="on"
-                      placeholder="Company address"
-                    />
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.address.$errors"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-xs font-semibold">
-                        {{ error.$message }}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >City
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
-                    <input
-                      v-model="v$.city.$model"
-                      :class="{ 'border-red-500': v$.city.$error }"
-                      class="px-[14px] py-[10px] h-11 text-sm w-full border rounded-lg placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      autocomplete="off"
-                      autofocus="on"
-                      placeholder="Company city"
-                    />
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.city.$errors"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-xs font-semibold">
-                        {{ error.$message }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >Country
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
-                    <div class="relative">
-                      <FormsSelectComponent
-                        :options="allcountries"
-                        :showSearch="true"
-                        :value="form.country"
-                        @onGetData="getCountry"
-                        containerStyle="w-full"
-                        :classStyles="`${
-                          v$.country.$error && 'border-red-500'
-                        } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full ! placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
-                      />
-                      <div
-                        class="text-red-500 mt-1"
-                        v-for="error of v$.country.$errors"
-                        :key="error.$uid"
-                      >
-                        <div class="error-msg text-error text-xs font-semibold">
-                          {{ error.$message }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
-                      >State
-                      <span class="text-red-500 pl-[.02rem]">*</span></label
-                    >
-                    <FormsSelectComponent
-                      :options="mystates"
-                      :showSearch="true"
-                      :value="form.state"
-                      @onGetData="getState"
-                      containerStyle="w-full"
-                      :classStyles="`${
-                        v$.state.$error && 'border-red-500'
-                      } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full ! placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
-                    />
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.state.$errors"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-xs font-semibold">
-                        {{ error.$message }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -443,7 +433,7 @@
     </div>
     <div
       class="flex justify-between gap-x-4 items-center mt-16 pt-6 border-t border-[#EAECF0] w-full"
-      v-if="!companyInfo.approvalStatus"
+      v-if="!companyInfo?.approvalStatus"
     >
       <!-- <button
           type="button"
@@ -596,6 +586,7 @@ import {
   updateCompanyProfile,
 } from "@/services/settingservices";
 
+const getData = inject("getData");
 const active = inject("active");
 const companyInfo = inject("companyInfo");
 const authStore = useAuthStore();
@@ -634,7 +625,7 @@ const form = reactive({
   website: "",
   fax: "",
   description: "",
-  country: "",
+  country: "Nigeria",
   city: "",
   state: "",
   address: "",
@@ -659,23 +650,17 @@ const mystates = computed(() => {
   return states.value.map((item) => {
     return {
       id: item.code,
-      name: item.name,
+      label: item.name,
       value: item.name,
     };
   });
 });
 
-function getCountry(data) {
-  form.country = data.value;
-}
-function getState(data) {
-  form.state = data.value;
-}
 const allcountries = computed(() => {
   return CountryList.map((item) => {
     return {
       id: "",
-      name: `${item.name}`,
+      label: `${item.name}`,
       value: item.name,
     };
   });
@@ -689,37 +674,37 @@ function addsocial() {
 }
 onMounted(() => {
   form.companyName = authStore.userInfo?.companyName;
-  form.photo = image.value = companyInfo?.value.photo;
-  form.companyType = companyInfo?.value.companyType;
-  form.website = companyInfo?.value.website;
-  form.fax = companyInfo?.value.fax;
-  form.email = companyInfo?.value.email;
-  form.description = companyInfo?.value.description;
-  form.socials = companyInfo?.value.socials || [
+  form.photo = image.value = companyInfo?.value?.photo;
+  form.companyType = companyInfo?.value?.companyType;
+  form.website = companyInfo?.value?.website;
+  form.fax = companyInfo?.value?.fax;
+  form.email = companyInfo?.value?.email;
+  form.description = companyInfo?.value?.description;
+  form.socials = companyInfo?.value?.socials || [
     {
       name: "",
       link: "",
     },
   ];
-  form.address = companyInfo?.value.address;
-  form.country = companyInfo?.value.country;
-  form.city = companyInfo?.value.city;
-  form.dateofIncorporation = companyInfo?.value.dateofIncorporation;
-  form.sector = companyInfo?.value.sector;
-  form.tin = companyInfo?.value.tin;
-  form.registrationNo = companyInfo?.value.registrationNo;
-  form.phone = companyInfo?.value.phone;
-  image.value = form.logo = companyInfo?.value.logo;
-  form.state = companyInfo?.value.state;
+  form.address = companyInfo?.value?.address;
+  form.country = companyInfo?.value?.country;
+  form.city = companyInfo?.value?.city;
+  form.dateofIncorporation = companyInfo?.value?.dateofIncorporation;
+  form.sector = companyInfo?.value?.sector;
+  form.tin = companyInfo?.value?.tin;
+  form.registrationNo = companyInfo?.value?.registrationNo;
+  form.phone = companyInfo?.value?.phone;
+  image.value = form.logo = companyInfo?.value?.logo;
+  form.state = companyInfo?.value?.state;
 
   var validRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   if (
-    !companyInfo?.value.companyName ||
-    !companyInfo?.value.companyName.match(validRegex)
+    !companyInfo?.value?.companyName ||
+    !companyInfo?.value?.companyName?.match(validRegex)
   ) {
-    form.companyName = companyInfo?.value.companyName;
+    form.companyName = companyInfo?.value?.companyName;
   }
 });
 function removesocial(i) {
@@ -792,8 +777,8 @@ const rules = {
     required,
     maxLength: maxLength(250),
   },
-  tin: { required, minLength: minLength(7) },
-  registrationNo: { required, minLength: minLength(14) },
+  tin: form.country?.toLowerCase === "nigeria" ? { required } : {},
+  registrationNo: { required, minLength: minLength(7) },
   companyType: { required },
   state: {
     required,
@@ -826,6 +811,7 @@ async function handleSubmit() {
   updateCompanyProfile(form)
     .then((res) => {
       if (res.status === 200) {
+        getData();
         toast.success("Information saved");
         active.value = 2;
         getCompanyProfile().then((res) => {

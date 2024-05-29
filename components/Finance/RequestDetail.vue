@@ -73,13 +73,14 @@
         </p>
       </div>
     </div>
-    <DocumentsViewer :documents="requestDetail?.supportingDocuments || []" />
+    <DocumentsViewer :documents="documents || []" />
   </div>
 </template>
 <script setup>
 import moment from "moment";
 import { getFinance } from "~/services/financeservice";
 
+const documents = ref([]);
 const props = defineProps(["detail"]);
 const isFetching = ref(true);
 const requestDetail = ref(null);
@@ -112,6 +113,18 @@ function getFinanceData() {
     .then((res) => {
       if (res.status === 200) {
         requestDetail.value = res.data.data;
+        documents.value = res.data.data?.supportingDocuments
+          .map((item) =>
+            item.urls.map((url) => ({
+              url,
+              documentType: item.documentType,
+            }))
+          )
+          .reduce(
+            (accumulator, currentValue) => accumulator.concat(currentValue),
+            []
+          );
+
         isFetching.value = false;
       }
     })

@@ -98,6 +98,7 @@ const urls = {
   GET_ORDER: "/v1/shoppingcart/get-order",
   GET_CUSTOMER_INFO: "/v1/shoppingcart/customer-info",
   REMOVE_CART: "/v1/shoppingcart/remove-cartitem",
+  CLEAR_CART: "/v1/shoppingcart/clear-cart",
   CONFIRM_PURCHASE: "/v1/shoppingcart/confirm-purchase",
   CONFIRM_PAYMENT: "v1/ShoppingCart/confirm-payment",
 
@@ -107,6 +108,12 @@ const urls = {
   GET_SHIPPING_ADDRESS: "/v1/shippingaddress/getall",
   DEFAULT_SHIPPING_ADDRESS: "/v1/shippingaddress/setasdefault",
   DELETE_SHIPPING: "/v1/shippingaddress/delete",
+  SHIPPONG_COST_BREAKDOWN: "/v1/ShoppingCart/shipping-cost-breakdown",
+
+  ADD_PICKUP_ADDRESS: "/v1/pickuplocation/add",
+  EDIT_PICKUP_ADDRESS: "/v1/pickuplocation/edit",
+  GET_PICKUP_ADDRESS: "/v1/pickuplocation/get-pickuplocations",
+  DELETE_PICKUP: "/v1/pickuplocation/delete",
 
   //Procurement
   PROCUREMENT_ORDERS: "v1/procurement/orders",
@@ -182,6 +189,8 @@ const urls = {
   VALIDATE_BVN: "v1/wallet/verify-bvn",
   CONFIRM_FUNDING: "v1/wallet/confirm-wallet-funding",
   WITHDRAW_FUNDS: "v1/wallet/withdraw",
+  GET_WITHDRAW_CHARGE: "v1/wallet/get-withdrawalfee",
+  GET_DEPOSIT_CHARGE: "v1/wallet/get-depositfee",
 
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",
@@ -223,5 +232,10 @@ const urls = {
   DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",
   GET_BANKS: "v1/bank/get-bank",
   GET_LEDGER_TRANSACTIONS: "v1/ledger/get-all",
+
+  ADDRESS_SEARCH: "Location/address-search",
+  PLACE_SUGGESTION: "Location/place-suggestion",
+
+  APPLY_DISCOUNT: "v1/discount/apply-discount",
 };
 export default urls;

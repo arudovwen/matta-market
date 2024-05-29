@@ -16,7 +16,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Product
+                   <RedDot /> Product
                     generic name
                   </label>
                   <input
@@ -67,7 +67,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Producer
+                   <RedDot /> Producer
                   </label>
 
                   <Combobox v-model="form.manufacturer">
@@ -188,7 +188,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Markets
+                   <RedDot /> Markets
                   </label>
                   <MultiInput
                     :markets="allmarkets"
@@ -222,7 +222,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Applications
+                   <RedDot /> Applications
                   </label>
                   <MultiInput
                     :markets="technologies"
@@ -255,7 +255,7 @@
                 <label
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center"
                 >
-                  <span class="text-red-500 mr-[.5px]">*</span>
+                 <RedDot />
                   <span>Description </span>
                   <span
                     data-toggle="tooltip"
@@ -282,6 +282,37 @@
                   </div>
                 </div>
               </div>
+              <div class="mb-6">
+                <label
+                  class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
+                >
+                  <span>Pickup location </span>
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Please, specify the location where this product can be picked up"
+                    class="cursor-pointer"
+                  >
+                    <AppIcon icon="quill:info" iconClass="text-gray-600" />
+                  </span>
+                </label>
+                <SelectVueSelect
+                  v-model="v$.pickUpLocationId.$model"
+                  :options="locations"
+                  :reduce="(location) => location.value"
+                  placeholder="Select location"
+                  :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+                />
+                <div class="flex justify-start mt-1">
+                  <button
+                  @click="isLocationOpen = true"
+                    class="text-xs text-primary-500 font-medium"
+                    type="button"
+                  >
+                    + Add a new location
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -293,7 +324,7 @@
     >
       <div class="w-[250px]">
         <h2 class="text-sm text-[#101828] font-semibold">
-          Packages & Availability <span class="text-red-500 mr-[.5px]">*</span>
+          Packages & Availability<RedDot />
         </h2>
         <p class="text-xs text-[#475467]">Provide package information here.</p>
       </div>
@@ -476,6 +507,7 @@
     <IndexModal
       :isOpen="isAddingPackage"
       @toggleModal="isAddingPackage = false"
+      :canClose="false"
     >
       <template #content>
         <form
@@ -578,11 +610,18 @@
             }
           "
           :detail="detail"
-          :canClose="false"
+         
         />
       </template>
     </IndexModal>
   </div>
+  <ModalCenter>
+    <template #default>
+      <div class="w-full max-w-max p-6 md:py-9 md:px-10 z-[999] relative">
+        <CheckoutPickupAddForm @close="pickUpStore.getAlladdress()" />
+      </div>
+    </template>
+  </ModalCenter>
 </template>
 
 <script setup>
@@ -633,6 +672,8 @@ import StatesSelect from "~/components/forms/StatesSelect";
 import countries from "~/utils/countries.json";
 import { uploadfile } from "~/services/onboardingservices";
 
+const isLocationOpen = ref(false)
+const pickUpStore = usePickupStore();
 const route = useRoute();
 const router = useRouter();
 const detail = ref(null);
@@ -658,7 +699,7 @@ const states = computed(() => {
 const producerForm = reactive({
   title: "",
   location: "",
-  country: "",
+  country: "Nigeria",
   state: "",
   logo: "",
 });
@@ -699,7 +740,7 @@ const form = inject("form");
 const headers = computed(() => [
   "Name",
   `Size`,
-  `Purchase Price`,
+  `Unit Price`,
   "Color",
   "Purity",
   "",
@@ -710,6 +751,7 @@ const rules = {
     required,
     maxLength: maxLength(100),
   },
+  pickUpLocationId: {},
   manufacturer: {
     required: helpers.withMessage("Select a prodicer", required),
   },
@@ -740,7 +782,9 @@ const rules = {
 // const index = ref(null);
 const invalidCredentials = ref(false);
 const v$ = useVuelidate(rules, form);
-
+onMounted(() => {
+  pickUpStore.getAlladdress();
+});
 watch(
   () => form.unit,
   () => {
@@ -750,6 +794,9 @@ watch(
       return i;
     });
   }
+);
+const locations = computed(() =>
+  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
 );
 function create_UUID() {
   var dt = new Date().getTime();
@@ -904,6 +951,7 @@ function handleAddingPackage() {
   isAddingPackage.value = true;
 }
 provide("images", form.gallery);
+provide("isOpen",isLocationOpen)
 </script>
 
 <style lang="scss" scoped>

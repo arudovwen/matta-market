@@ -4,7 +4,7 @@
     <form @submit.prevent="handleSubmit">
       <div class="grid grid-cols-2 gap-x-4">
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">First name</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">First name  <RedDot /></label>
           <input
             v-model="v$.firstName.$model"
             :class="{ 'border-red-500': v$.firstName.$error }"
@@ -23,7 +23,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Last name</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Last name  <RedDot /></label>
           <input
             v-model="v$.lastName.$model"
             :class="{ 'border-red-500': v$.lastName.$error }"
@@ -44,7 +44,7 @@
       </div>
       <div class="grid grid-cols-2 gap-x-4">
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Country</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Country  <RedDot /></label>
           <div class="relative">
             <CountriesSelect v-model="v$.country.$model" />
             <div
@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">City</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">City  <RedDot /></label>
           <input
             v-model="v$.city.$model"
             :class="{ 'border-red-500': v$.city.$error }"
@@ -81,7 +81,7 @@
       </div>
       <div class="grid grid-cols-2 gap-x-4">
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Street</label>
+          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Street  <RedDot /></label>
           <input
             v-model="v$.street.$model"
             :class="{ 'border-red-500': v$.street.$error }"
@@ -162,7 +162,7 @@ const handleReload = inject("handleReload");
 const form = reactive({
   firstName: "",
   lastName: "",
-  country: "",
+  country: "Nigeria",
   city: "",
   street: "",
   postalCode: "",

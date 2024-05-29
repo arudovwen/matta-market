@@ -16,8 +16,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Product
-                    generic name
+                    <RedDot /> Product generic name
                   </label>
                   <input
                     v-model="v$.name.$model"
@@ -67,7 +66,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Producer
+                    <RedDot /> Producer
                   </label>
 
                   <Combobox v-model="form.manufacturer">
@@ -192,7 +191,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Markets
+                    <RedDot /> Markets
                   </label>
                   <MultiInput
                     :markets="allmarkets"
@@ -226,7 +225,7 @@
                   <label
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
-                    <span class="text-red-500 mr-[.5px]">*</span> Applications
+                    <RedDot /> Applications
                   </label>
                   <MultiInput
                     :markets="technologies"
@@ -259,13 +258,13 @@
                 <label
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
                 >
-                  <span class="text-red-500 mr-[.5px]">*</span>
+                  <RedDot />
                   <span>Description </span>
                   <span
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Brief general information about the chemicals, its chemical composition, other names, important uses or any specificity"
-                    class="cursor-pointer"
+                    class="cursor-pointer h-4 w-4 flex items-center justify-center"
                   >
                     <AppIcon icon="quill:info" iconClass="text-gray-600" />
                   </span>
@@ -286,6 +285,38 @@
                   </div>
                 </div>
               </div>
+
+              <div class="mb-6">
+                <label
+                  class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
+                >
+                  <span>Pickup location </span>
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Please, specify the location where this product can be picked up"
+                    class="cursor-pointer h-4 w-4 flex items-center justify-center"
+                  >
+                    <AppIcon icon="quill:info" iconClass="text-gray-600" />
+                  </span>
+                </label>
+                <SelectVueSelect
+                  v-model="v$.pickUpLocationId.$model"
+                  :options="locations"
+                  :reduce="(location) => location.value"
+                  placeholder="Select location"
+                  :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+                />
+                <div class="flex justify-start mt-1">
+                  <button
+                    @click="isLocationOpen = true"
+                    class="text-xs text-primary-500 font-medium"
+                    type="button"
+                  >
+                    + Add a new location
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -297,7 +328,7 @@
     >
       <div class="w-[250px]">
         <h2 class="text-sm text-[#101828] font-semibold">
-          Packages & Availability <span class="text-red-500 mr-[.5px]">*</span>
+          Packages & Availability<RedDot />
         </h2>
         <p class="text-xs text-[#475467]">Provide package information here.</p>
       </div>
@@ -452,9 +483,7 @@
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
       <div class="w-[250px]">
-        <h2 class="text-sm text-[#101828] font-semibold">
-          Gallery <span class="text-red-500 mr-[.5px]">*</span>
-        </h2>
+        <h2 class="text-sm text-[#101828] font-semibold">Gallery<RedDot /></h2>
         <p class="text-xs text-[#475467]">
           Upload pictures of your products here.
         </p>
@@ -650,6 +679,14 @@
       </template>
     </Modal>
   </div>
+
+  <ModalCenter>
+    <template #default>
+      <div class="w-full max-w-max p-6 md:py-9 md:px-10 z-[999] relative">
+        <CheckoutPickupAddForm @close="pickUpStore.getAlladdress()" />
+      </div>
+    </template>
+  </ModalCenter>
 </template>
 
 <script setup>
@@ -709,12 +746,14 @@ import StatesSelect from "~/components/forms/StatesSelect";
 import { uploadfile } from "~/services/onboardingservices";
 import countries from "~/utils/countries.json";
 
+const isLocationOpen = ref(false);
+const pickUpStore = usePickupStore();
 const route = useRoute();
 const router = useRouter();
 const producerForm = reactive({
   title: "",
   location: "",
-  country: "",
+  country: "Nigeria",
   state: "",
   logo: "",
 });
@@ -745,12 +784,13 @@ const producers = inject("producers");
 const headers = computed(() => [
   "Name",
   `Size`,
-  `Purchase Price`,
+  `Unit Price`,
   "Color",
   "Purity",
   "",
 ]);
 onMounted(() => {
+  pickUpStore.getAlladdress();
   getMarkets(queryParams).then((res) => {
     markets.value = res.data.data;
     form.productId = route.query.id;
@@ -759,7 +799,9 @@ onMounted(() => {
 
 const isAddingPackage = ref(false);
 const isLoading = ref(false);
-
+const locations = computed(() =>
+  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
+);
 const selectedMeasurement = ref(measurements[0]);
 // const newpackage = ref("");
 let query = ref("");
@@ -779,6 +821,9 @@ const rules = {
   name: {
     required,
     maxLength: maxLength(100),
+  },
+  pickUpLocationId: {
+    required: helpers.withMessage("Select a location", required),
   },
   manufacturer: {
     required: helpers.withMessage("Select a producer", required),
@@ -996,6 +1041,7 @@ function handleAddingPackage() {
   isAddingPackage.value = true;
 }
 provide("images", form.gallery);
+provide("isOpen", isLocationOpen);
 </script>
 
 <style lang="scss" scoped>

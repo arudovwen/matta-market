@@ -1,9 +1,15 @@
 <template>
-  <div class="gap-y-8 flex flex-col bg-white rounded-[10px]  border border-[#F4F7FE]">
+  <div
+    class="gap-y-8 flex flex-col bg-white rounded-[10px] border border-[#F4F7FE]"
+  >
     <!-- Top bar   -->
-    <HeaderComponent title="Add a product" className="!px-5" :canGoback="true" />
+    <HeaderComponent
+      title="Add a product"
+      className="!px-5"
+      :canGoback="true"
+    />
     <Stepper :tabs="tabs" />
-  
+
     <div class="mt-[50px]" v-if="!isPageLoading">
       <ProductInfo v-if="active == 1" />
       <ProductProperties v-if="active == 2" />
@@ -94,6 +100,7 @@ const producers = ref([]);
 const form = reactive({
   id: "",
   name: "",
+  pickUpLocationId: "",
   manufacturer: "",
   markets: [],
   marketApplications: [],
@@ -105,8 +112,7 @@ const form = reactive({
   gallery: [],
   price: 0,
   sampleAvailable: false,
-  packagesAvailable: [
-  ],
+  packagesAvailable: [],
   packages: [],
   hideProduct: false,
   hidePrice: false,
@@ -235,6 +241,7 @@ const product = ref({
   id: "",
   ProductId: "",
   name: "",
+  pickUpLocationId: "",
   manufacturer: "",
   markets: [],
   marketApplications: [],
@@ -246,8 +253,7 @@ const product = ref({
   gallery: [],
   price: 0,
   sampleAvailable: false,
-  packagesAvailable: [
-  ],
+  packagesAvailable: [],
   supplierId: null,
   packages: [],
   hideProduct: false,
@@ -259,6 +265,7 @@ const product = ref({
 function updateData() {
   form.id = route.query.id;
   form.ProductId = route.query.id;
+  form.pickUpLocationId = product.value.pickupLocationId;
   form.name = product.value.name;
   form.unit = product.value.packagesAvailable
     ? product.value.packagesAvailable[0].unit
@@ -353,7 +360,7 @@ provide("togglePreview", togglePreview);
 provide("toggleNext", toggleNext);
 provide("producers", producers);
 provide("getProducers", getProducers);
-provide("active", active)
+provide("active", active);
 </script>
 
 <style lang="scss" scoped>

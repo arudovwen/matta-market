@@ -8,9 +8,22 @@
         :style="{ backgroundImage: `url('/images/card.png')` }"
       >
         <span class="flex items-center justify-between text-white">
-          <span class="text-lg font-semibold">{{
-            currencyFormat(balance)
-          }}</span>
+          <div>
+            <span class="text-lg font-semibold block">{{
+              currencyFormat(balance.availableBalance)
+            }}</span>
+            <span class="text-[11px] font-normal flex items-center gap-x-[2px]"
+              >Ledger balance
+              <span
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Ledger balance"
+                class="cursor-pointer h-3 w-3 flex items-center justify-center"
+              >
+                <AppIcon icon="quill:info"  /> </span
+              >: {{ currencyFormat(balance.ledgerBalance) }}</span
+            >
+          </div>
           <span></span> <img src="/images/pass.svg"
         /></span>
 
@@ -167,7 +180,7 @@ function handleClose() {
 function handleComplete(text, type = null) {
   checkSettlement();
   handleWalletDetails();
-  getLedgersTrans()
+  getLedgersTrans();
   if (type === "withdraw") {
     isCreatingWallet.value = false;
     isWithdraw.value = true;

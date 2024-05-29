@@ -32,13 +32,20 @@ import { getCompanyProfile } from "@/services/settingservices";
 const authStore = useAuthStore();
 const companyInfo = ref(null);
 const isLoading = ref(true);
-onBeforeMount(() => {
-  getCompanyProfile().then((res) => {
-    if (res.status === 200) {
+function getData(){
+  getCompanyProfile()
+    .then((res) => {
+      if (res.status === 200) {
+        isLoading.value = false;
+        companyInfo.value = res.data.data;
+      }
+    })
+    .catch(() => {
       isLoading.value = false;
-      companyInfo.value = res.data.data;
-    }
-  });
+    });
+}
+onBeforeMount(() => {
+ getData()
 });
 const active = ref(1);
 const tabs = [
@@ -57,6 +64,7 @@ const tabs = [
 ];
 provide("active", active);
 provide("companyInfo", companyInfo);
+provide("getData", getData)
 </script>
 
 <style lang="scss" scoped>

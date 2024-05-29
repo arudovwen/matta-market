@@ -1,16 +1,17 @@
 <template>
-  <div class="max-w-[400px] w-full min-w-[350px] py-6 px-6">
+  <div class="max-w-[450px] w-full min-w-[350px] py-6 px-6">
     <form @submit.prevent="onSubmit" v-if="stage === 1">
       <h1 class="text-lg font-semibold text-[#101828] mb-4">
         Fund via monnify
       </h1>
 
-      <div class="grid gap-x-[25px] gap-y-4 mb-6">
+      <div class="grid gap-x-[25px] gap-y-4 mb-5">
         <FormGroup
           label="How much do you wish to fund?"
           :error="errors.amount"
           name="amount"
           classLabel="!normal-case"
+          isCumpulsory
         >
           <div class="flex items-center">
             <CurrencyInput
@@ -29,9 +30,19 @@
           </div>
         </FormGroup>
       </div>
+
+      <div class="mb-6" v-if="amount">
+        <p class="flex gap-x-2 text-sm text-right justify-start">
+          <span>You will receive:</span>
+          <span>{{ currencyFormat(amount - charge) }}</span>
+        </p>
+        <p class="flex gap-x-2 text-sm text-right justify-start">
+          <span>Fee:</span> <span>{{ currencyFormat(charge) }}</span>
+        </p>
+      </div>
       <div class="flex gap-x-4 items-center justify-end">
         <AppButton
-          :disabled="isLoading"
+          :disabled="isLoading || loading"
           :isLoading="isLoading"
           btnClass="bg-primary-500 text-white !px-[14px]  !text-sm !py-[10px] disabled:cursor-not-allowed w-full"
           type="submit"
@@ -104,7 +115,7 @@ import * as yup from "yup";
 import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
-import { confirmFunding } from "~/services/walletservice";
+import { confirmFunding, getDepositCharge } from "~/services/walletservice";
 import { nanoid } from "nanoid";
 
 const isErrorOpen = ref(false);
@@ -113,6 +124,7 @@ const getLedgersTrans = inject("getLedgersTrans");
 defineProps(["details", "hasWallet"]);
 const emits = defineEmits(["activate"]);
 const loader = ref(false);
+const loading = ref(false);
 const stage = ref(1);
 const handleComplete = inject("handleComplete");
 const handleClose = inject("handleClose");
@@ -189,6 +201,23 @@ const onSubmit = handleSubmit((values) => {
 
   payWithMonnify(data, onModalClose, onSuccess);
 });
+const charge = ref(5);
+watch(
+  () => [amount.value],
+  () => {
+    if (amount.value) {
+      loading.value = true;
+      setTimeout(() => {
+        getDepositCharge(amount.value).then((res) => {
+          if (res.status === 200) {
+            charge.value = res.data.data;
+            loading.value = false;
+          }
+        });
+      }, [1200]);
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>

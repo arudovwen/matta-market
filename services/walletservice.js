@@ -78,5 +78,15 @@ export const withdrawFunds = (data) => {
 };
 
 export const getLedgerTransactions = (data) => {
-  return get(`${urls.GET_LEDGER_TRANSACTIONS}?${new URLSearchParams(cleanObject(data))}`, config);
+  return get(
+    `${urls.GET_LEDGER_TRANSACTIONS}?${new URLSearchParams(cleanObject(data))}`,
+    config
+  );
+};
+
+export const getWithdrawalCharge = (data) => {
+  return get(`${urls.GET_WITHDRAW_CHARGE}/${data}?amount=${data}`, config);
+};
+export const getDepositCharge = (data) => {
+  return get(`${urls.GET_DEPOSIT_CHARGE}/${data}?amount=${data}`, config);
 };

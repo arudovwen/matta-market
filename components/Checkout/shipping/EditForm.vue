@@ -16,6 +16,7 @@
           v-bind="firstNameAtt"
           v-model="firstName"
           :error="errors.firstName"
+          isCumpulsory
         />
       </div>
       <div>
@@ -27,10 +28,16 @@
           v-bind="lastNameAtt"
           v-model="lastName"
           :error="errors.lastName"
+          isCumpulsory
         />
       </div>
 
-      <FormGroup label="Country" :error="errors.country" name="country">
+      <FormGroup
+        label="Country"
+        isCumpulsory
+        :error="errors.country"
+        name="country"
+      >
         <SelectVueSelect
           v-model="country"
           :options="allcountries"
@@ -42,7 +49,7 @@
         />
       </FormGroup>
 
-      <FormGroup label="State" :error="errors.state" name="state">
+      <FormGroup label="State" isCumpulsory :error="errors.state" name="state">
         <SelectVueSelect
           v-model="state"
           :disabled="!country"
@@ -54,42 +61,39 @@
           }`"
         />
       </FormGroup>
+      <FormGroup
+        v-if="country.toLowerCase() === 'nigeria'"
+        label="LGA"
+        isCumpulsory
+        :error="errors.lga"
+        class="xl:col-span-2"
+      >
+        <SelectVueSelect
+          class="w-full"
+          v-model.value="lga"
+          :options="lgasOption"
+          placeholder="Select your lga"
+          name="lga"
+          :reduce="(lga) => lga.value"
+          :disabled="country?.toLowerCase() !== 'nigeria'"
+        />
+      </FormGroup>
 
-      <div>
-        <Textinput
+      <FormGroup
+        class="xl:col-span-2"
+        isCumpulsory
+        label="Street"
+        :error="errors.street"
+      >
+        <SelectSearchSelect
+          class="w-full"
+          v-model.value="street"
+          :options="addressOptions"
           placeholder=""
-          label="City"
-          type="text"
-          name="city"
-          classInput="!h-[45px]"
-          v-model="city"
-          v-bind="cityAtt"
-          :error="errors.city"
-        />
-      </div>
-      <div>
-        <Textinput
-          placeholder=""
-          label="Postal code"
-          type="tel"
-          name="postalCode"
-          classInput="!h-[45px]"
-          v-model="postalCode"
-          v-bind="postalCodeAtt"
-          :error="errors.postalCode"
-        />
-      </div>
-      <div class="xl:col-span-2">
-        <Textinput
-          placeholder=""
-          label="Address"
           name="street"
-          classInput="!h-[45px]"
-          v-model="street"
-          v-bind="streetAtt"
-          :error="errors.street"
+          :reduce="(address) => address.value"
         />
-      </div>
+      </FormGroup>
 
       <div
         class="flex items-center text-[#333] text-xs md:text-sm gap-x-[2px] max-w-max"
@@ -119,9 +123,10 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { editshipping } from "~/services/cartservice";
+import { editshipping, addressSearch } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "@/utils/countries.json";
+import Lgas from "@/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
 const detail = inject("detail");
@@ -133,24 +138,29 @@ const formValues = {
   firstName: "",
   lastName: "",
   street: "",
-  country: "",
+  country: "Nigeria",
   state: "",
-  city: "",
-  postalCode: "",
+  lga: "",
+  postalCode: "1000",
+  city: "lagos",
   isDefault: false,
 };
 onMounted(() => {
   setValues(detail.value);
 });
+
 const schema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
   street: yup.string().required("Address is required"),
   country: yup.string().required("Country is required"),
   state: yup.string().required("State is required"),
-  city: yup.string().required("City is required"),
+  lga: yup.string().when("country", {
+    is: "Nigeria",
+    then: (schema) => schema.required("Lga is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   postalCode: yup.string().required("Postal code is required"),
-  isDefault: yup.boolean(),
 });
 
 const { handleSubmit, defineField, errors, setValues } = useForm({
@@ -163,7 +173,7 @@ const [lastName, lastNameAtt] = defineField("lastName");
 const [street, streetAtt] = defineField("street");
 const [country, countryAtt] = defineField("country");
 const [state, stateAtt] = defineField("state");
-const [city, cityAtt] = defineField("city");
+const [lga, lgaAtt] = defineField("lga");
 const [postalCode, postalCodeAtt] = defineField("postalCode");
 const [isDefault] = defineField("isDefault");
 
@@ -179,7 +189,7 @@ const allcountries = computed(() => {
 const mystates = computed(() => {
   if (!country.value) return [];
   return countries.find(
-    (item) => item.name.toLowerCase() == country.value.toLowerCase()
+    (item) => item.name.toLowerCase() == country?.value?.toLowerCase()
   ).states;
 });
 
@@ -190,6 +200,13 @@ const states = computed(() => {
       label: item.name,
       value: item.name,
     };
+  });
+});
+const lgasOption = computed(() => {
+  return Lgas.find(
+    (i) => i?.state?.toLowerCase() === state?.value?.toLowerCase()
+  )?.lgas?.map((i) => {
+    return { label: i, value: i };
   });
 });
 
@@ -210,5 +227,17 @@ const onSubmit = handleSubmit((values) => {
         toast.error(err.response.data.message || err.response.data.Message);
       }
     });
+});
+
+const addressOptions = ref([]);
+watch(street, () => {
+  addressSearch({ text: street.value }).then((res) => {
+    if (res.status === 200) {
+      addressOptions.value = res.data.map((i) => ({
+        label: i.label,
+        value: i.label,
+      }));
+    }
+  });
 });
 </script>

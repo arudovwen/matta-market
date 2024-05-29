@@ -28,7 +28,7 @@ const isOpen = ref(false);
 const detail = ref(null);
 const authStore = useAuthStore();
 const defaultText =
-  "To start selling on Matta, we are required to verify your company registration information. Kindly proceed t o provide your company details";
+  "To use some of our features, we are required to verify your company registration information. Kindly proceed t o provide your company details";
 const walletText =
   "To request for a wallet, we are required to verifiy your company registration information. Kindly proceed t o provide your company details";
 onMounted(() => {

@@ -21,7 +21,7 @@
             </div>
             <div class="flex relative items-center">
               <Select
-                v-model="queryParams.Status"
+                v-model="queryParams.OrderItemStatus"
                 :options="options"
                 placeholder="Select status"
                 :classInput="`text-sm min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !border !h-11 cursor-pointer border-[#D0D5DD]`"
@@ -30,7 +30,7 @@
 
             <AppButton
               @click="
-                queryParams.Status = '';
+                queryParams.OrderItemStatus = '';
                 queryParams.Search = '';
               "
               text="Clear filter"
@@ -201,7 +201,7 @@ const pendingCheckout = ref({});
 const timeline = ref([]);
 const orders = ref([]);
 const queryParams = reactive({
-  Status: "",
+  OrderItemStatus: "",
   SortOrder: "",
   Role: "",
   PageSize: 10,
@@ -218,7 +218,7 @@ const options = [
   },
   {
     label: "Order created",
-    value: `StatusClass[0]`,
+    value: 1,
   },
   {
     label: "Payment confirmed",
@@ -306,9 +306,9 @@ const debounceSearch = debounce(() => {
 watch(
   () => [
     queryParams.PageNumber,
-    queryParams.Status,
+    queryParams.OrderItemStatus,
     queryParams.PageSize,
-    queryParams.Status,
+  
   ],
   () => {
     getData();

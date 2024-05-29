@@ -114,7 +114,7 @@ function getAllProducts() {
       }
     })
     .catch(() => {
-      setLoader(false);
+      store.setLoader(false);
     });
 }
 onMounted(() => {

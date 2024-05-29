@@ -47,6 +47,22 @@
       </div>
     </div>
   </ClientOnly>
+  <div class="bg-[#1849A9] text-xs sm:text-sm py-3">
+    <div class="container flex gap-x-2 items-center text-white font-normal">
+      <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" />
+      <span
+        >Get N50,000 off when you sign up and make your first purchase. &nbsp;
+        Use the code
+        <span
+          v-clipboard="'MATTA25'"
+          @click="toast.success('Copied')"
+          class="md:border md:border-white rounded-[4px] md:px-1 md:py-[2px] cursor-pointer font-semibold md:font-bold text-xs"
+          >MATTA25</span
+        >
+        on checkout</span
+      >
+    </div>
+  </div>
 
   <nav
     :class="{
@@ -65,6 +81,7 @@
               alt="Matta"
               class="w-20 md:w-[100px] h-auto object-contain"
           /></NuxtLink>
+
           <ul class="lg:flex items-center gap-x-6 hidden">
             <li
               v-for="n in navigations"
@@ -154,9 +171,19 @@
                 >
               </NuxtLink>
             </li>
+            <li
+              class="flex gap-x-[6px] items-center text-sm border-transparent group"
+            >
+              <NuxtLink
+                to="/request-product"
+                class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
+              >
+                Request a product</NuxtLink
+              >
+            </li>
           </ul>
         </div>
-        <div class="flex items-center gap-x-4 smd:gap-x-6 text-sm">
+        <div class="flex items-center gap-x-2 text-sm">
           <!-- <span
             :class="{
               'hidden md:flex': view.atTopOfPage,
@@ -220,12 +247,19 @@
               >
             </span> -->
           <!-- </span> -->
+          <span class="hidden lg:inline text-sm">
+            <GoogleTranslateSelect
+              :fetch-browser-language="false"
+              trigger="click"
+              @select="handleGoogleTranslateSelect"
+            />
+          </span>
           <NuxtLink to="/cart" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
             >
               <AppIcon
-                class="text-lg text-[#484848]"
+                class="text-base md:text-lg text-[#484848]"
                 icon="lucide:shopping-cart"
               />
               <span
@@ -339,16 +373,13 @@
 
   <ModalCenter v-if="isSigniningOut">
     <template #default>
-      <div
-        class="bg-white p-6 lg:p-10 sm:p-6 sm:pb-4 rounded-lg"
-        v-if="isSigniningOut"
-      >
+      <div class="bg-white p-6 sm:pb-4 rounded-lg" v-if="isSigniningOut">
         <div class="flex justify-between mb-5 items-center">
           <h4 class="font-medium text-matta-black text-xl">Sign Out</h4>
-          <i
+          <!-- <i
             class="uil uil-times cursor-pointer text-lg"
             @click="isSigniningOut = false"
-          ></i>
+          ></i> -->
         </div>
 
         <p class="text-sm text-matta-black mb-2">
@@ -359,7 +390,7 @@
           <button
             type="button"
             @click="isSigniningOut = false"
-            class="appearance-none border w-1/2 leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
+            class="appearance-none border min-w-[140px] w-1/2 leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
           >
             Cancel
           </button>
@@ -367,7 +398,7 @@
           <button
             type="button"
             @click="logOut"
-            class="appearance-none border w-1/2 border-primary-500 leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
+            class="appearance-none border min-w-[140px] w-1/2 border-primary-500 leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
           >
             Yes
           </button>
@@ -395,7 +426,12 @@ import {
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
 import { getnotification } from "@/services/notificationservice";
+import GoogleTranslateSelect from "@google-translate-select/vue3";
+import { toast } from "vue3-toastify";
 
+const handleGoogleTranslateSelect = (language) => {
+  console.log(language);
+};
 const isOpen = ref(false);
 function openModal() {
   isOpen.value = !isOpen.value;
@@ -425,6 +461,7 @@ const open = ref(false);
 onBeforeMount(() => {
   window.addEventListener("scroll", handleScroll);
 });
+
 onMounted(() => {
   if (authStore.isLoggedIn) {
     getNotifications();
@@ -432,6 +469,7 @@ onMounted(() => {
       getNotifications();
     }, 2 * 60 * 1000);
   }
+  geoFindMe();
 });
 const notifyParams = reactive({
   PageNumber: 1,

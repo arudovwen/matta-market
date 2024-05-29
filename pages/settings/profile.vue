@@ -45,7 +45,7 @@
         <div>
           <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block">First name</label>
+              <label class="mb-2 font-normal text-sm block">First name <RedDot /></label>
               <input
                 v-model="v$.firstName.$model"
                 :class="{ 'border-red-500': v$.firstName.$error }"
@@ -64,7 +64,7 @@
               </div>
             </div>
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block">Last name</label>
+              <label class="mb-2 font-normal text-sm block">Last name <RedDot /></label>
               <input
                 v-model="v$.lastName.$model"
                 :class="{ 'border-red-500': v$.lastName.$error }"
@@ -85,7 +85,7 @@
           </div>
           <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block">E-mail</label>
+              <label class="mb-2 font-normal text-sm block">E-mail <RedDot /></label>
               <div class="flex relative items-center">
                 <input
                   :value="form.email"
@@ -108,7 +108,7 @@
               </div>
             </div>
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block">Phone number</label>
+              <label class="mb-2 font-normal text-sm block">Phone number <RedDot /></label>
               <div class="flex relative rounded-lg h-11">
                 <FormsPhoneCodes v-model="v$.phone.$model" />
               </div>
@@ -123,9 +123,9 @@
               </div>
             </div>
           </div>
-          <div class="grid lg:grid-cols-2 gap-x-6">
+          <!-- <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block">Country</label>
+              <label class="mb-2 font-normal text-sm block">Country <RedDot /></label>
               <div class="flex relative">
                 <FormsCountriesSelect v-model="v$.country.$model" />
               </div>
@@ -141,7 +141,7 @@
             </div>
 
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block">State</label>
+              <label class="mb-2 font-normal text-sm block">State <RedDot /></label>
 
               <FormsStatesSelect v-model="v$.city.$model" :states="states" />
               <div
@@ -173,7 +173,7 @@
                 ></i>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="mt-6 flex justify-end">
             <button
@@ -361,7 +361,7 @@ const form = reactive({
   photo: "",
   firstName: "",
   lastName: "",
-  country: "",
+  country: "Nigeria",
   city: "",
   email: "",
   phone: "",

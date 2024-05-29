@@ -25,7 +25,7 @@
           v-if="icon"
           ><AppIcon :icon="icon"
         /></span>
-        <span v-if="text">{{ text }}</span>
+        <span v-if="text" class="leading-normal">{{ text }}</span>
       </span>
     </template>
     <template v-if="isLoading">

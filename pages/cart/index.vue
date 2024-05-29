@@ -26,4 +26,9 @@ useHead({
   title: "Cart | Matta",
   meta: [{ name: "description", content: "Cart" }],
 });
+const isOpen = ref(false);
+const cartStore = useCartStore();
+
+cartStore.getMyCart()
+provide("isOpen", isOpen);
 </script>

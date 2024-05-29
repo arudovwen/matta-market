@@ -9,9 +9,9 @@ const config = {
 //Orders
 
 export const procurementorders = withRetryHandling(
-  ({ Status, SortOrder, Search, PageNumber, PageSize }) => {
+  (payload) => {
     return get(
-      `${urls.PROCUREMENT_ORDERS}?PageSize=${PageSize}&PageNumber=${PageNumber}&Search=${Search}&SortOrder=${SortOrder}&Status=${Status}`,
+      `${urls.PROCUREMENT_ORDERS}?${new URLSearchParams(cleanObject(payload))}`,
       config
     );
   }

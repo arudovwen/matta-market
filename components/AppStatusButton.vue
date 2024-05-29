@@ -1,6 +1,6 @@
 <template>
   <span
-    :class="`px-[6px] py-1 text-xs rounded flex gap-x-1 items-center border max-w-max font-semibold ${Stats[status]?.className}`"
+    :class="`px-[6px] py-1 text-xs rounded-[6px] flex gap-x-1 items-center border max-w-max font-semibold ${Stats[status]?.className}`"
   >
     <!-- <AppIcon icon="octicon:dot-fill-24" /> -->
     <span class=""> {{ Stats[status]?.text }}</span>
@@ -150,12 +150,32 @@ const ParentOrderStatusText = {
   },
 };
 const WalletStatus = {
+  0: {
+    text: "Transaction",
+    className: StatusClass[3],
+  },
   1: {
     text: "Account Funding",
     className: StatusClass[1],
   },
-  0: {
+  2: {
     text: "Withdrawal",
+    className: StatusClass[4],
+  },
+  3: {
+    text: "Charge",
+    className: StatusClass[4],
+  },
+  4: {
+    text: "Vendor Settlement",
+    className: StatusClass[1],
+  },
+  5: {
+    text: "Order Payment",
+    className: StatusClass[1],
+  },
+  6: {
+    text: "Order Debit",
     className: StatusClass[4],
   },
 };

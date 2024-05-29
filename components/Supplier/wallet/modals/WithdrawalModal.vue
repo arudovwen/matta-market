@@ -3,18 +3,19 @@
     <form @submit.prevent="onSubmit" v-if="stage === 1">
       <h1 class="text-lg font-semibold text-[#101828] mb-4">Withdrawal</h1>
 
-      <div class="grid gap-x-[25px] gap-y-4 mb-[50px]">
+      <div class="grid gap-x-[25px] gap-y-4 mb-5">
         <FormGroup
           label="How much do you require?"
-          :error="errors.withdrawalAmount"
+          :error="errors.totalAmount"
           name="withdrawalAmount"
           classLabel="!normal-case"
+          isCumpulsory
         >
           <div class="flex items-center">
             <CurrencyInput
               min="1"
               :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-                errors.withdrawalAmount ? 'border-red-500' : 'border-[#D0D5DD]'
+                errors.totalAmount ? 'border-red-500' : 'border-[#D0D5DD]'
               }`"
               placeholder="Amount"
               v-model="withdrawalAmount"
@@ -26,7 +27,12 @@
             <span class="absolute right-4">NGN</span>
           </div>
         </FormGroup>
-        <FormGroup label="Bank" :error="errors.bankCode" name="bankCode">
+        <FormGroup
+          isCumpulsory
+          label="Bank"
+          :error="errors.bankCode"
+          name="bankCode"
+        >
           <SelectVueSelect
             v-model="bankCode"
             :disabled="!banks.length"
@@ -40,6 +46,7 @@
         </FormGroup>
         <div class="">
           <Textinput
+            isCumpulsory
             placeholder="Account number"
             label="Account number"
             name="accountNumber"
@@ -63,6 +70,15 @@
           ></div>
         </div>
       </div>
+      <div class="mb-[50px]" v-if="withdrawalAmount">
+        <p class="flex gap-x-2 text-sm text-right justify-start">
+          <span>You will be charged:</span>
+          <span>{{ currencyFormat(withdrawalAmount + charge) }}</span>
+        </p>
+        <!-- <p class="flex gap-x-2 text-sm text-right justify-end">
+          <span>Fee:</span> <span>{{ currencyFormat(charge) }}</span>
+        </p> -->
+      </div>
       <div class="flex gap-x-4 items-center justify-end">
         <AppButton
           @click="handleClose"
@@ -71,7 +87,9 @@
           text="Cancel"
         />
         <AppButton
-          :disabled="isLoading"
+          :disabled="
+            isLoading || loading || withdrawalAmount + charge > balance
+          "
           :isLoading="isLoading"
           btnClass="bg-primary-500 text-white !px-[14px]  !text-sm !py-[10px] disabled:cursor-not-allowed w-full"
           type="submit"
@@ -101,7 +119,11 @@ import * as yup from "yup";
 import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
-import { withdrawFunds, validateAccount } from "~/services/walletservice";
+import {
+  withdrawFunds,
+  validateAccount,
+  getWithdrawalCharge,
+} from "~/services/walletservice";
 
 const isErrorOpen = ref(false);
 const errorText = ref("Wallet creation request failed");
@@ -116,16 +138,17 @@ const props = defineProps({
     default: () => [],
   },
 });
-
+const loading = ref(false);
 const stage = ref(1);
 const handleClose = inject("handleClose");
 const form = reactive({
   withdrawalAmount: null,
   narration: "withdraw",
-  balance: props.balance,
+  balance: props.balance.availableBalance,
   accountNumber: "",
   currency: "NGN",
   bankCode: "",
+  totalAmount: null,
 });
 const isValidating = ref(false);
 const formSchema = yup.object().shape({
@@ -163,7 +186,7 @@ const formSchema = yup.object().shape({
   withdrawalAmount: yup
     .number()
     .required("Amount is required")
-    .test("balance-validation", "Exceeded current balance", function (value) {
+    .test("balance-validation", "Exceeded available balance", function (value) {
       const balance = this.parent.balance;
 
       if (value && balance) {
@@ -172,6 +195,17 @@ const formSchema = yup.object().shape({
       return true; // Return true if no validation needed
     })
     .positive("Amount must be a positive number"),
+  totalAmount: yup
+    .number()
+    .test("balance-validation", "Exceeded available balance", function (value) {
+      const balance = this.parent.balance;
+
+      if (value && balance) {
+        return value <= balance;
+      }
+      return true; // Return true if no validation needed
+    })
+    .nullable(),
 });
 
 const isLoading = ref(false);
@@ -208,10 +242,30 @@ watch(props.banks, () => {
         i.label.toLowerCase() ===
         defaultsettlement.value?.bankName.toLowerCase()
     );
-    console.log("🚀 ~ watch ~ bankCode:", bankCode.value);
     setFieldValue("bankCode", bankCode.value);
   }
 });
+const charge = ref(0);
+watch(
+  () => [withdrawalAmount.value],
+  () => {
+    if (withdrawalAmount.value) {
+      loading.value = true;
+      setTimeout(() => {
+        getWithdrawalCharge(withdrawalAmount.value).then((res) => {
+          if (res.status === 200 && res.data.data) {
+            charge.value = res.data.data;
+            setFieldValue(
+              "totalAmount",
+              res.data.data + withdrawalAmount.value || 0
+            );
+            loading.value = false;
+          }
+        });
+      }, [1200]);
+    }
+  }
+);
 </script>
 
 <style lang="scss" scoped>

@@ -33,7 +33,7 @@ function getAProduct() {
       }
     })
     .catch(() => {
-      setLoader(false);
+      store.setLoader(false);
     });
 }
 

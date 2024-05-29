@@ -189,9 +189,12 @@ async function handleSubmit() {
         toast.success("Directors saved");
         isLoading.value = false;
 
-        if (route.query.redirected_from) {
-          navigateTo(route.query.redirected_from);
-        }
+        setTimeout(() => {
+          if (route.query.redirected_from) {
+            navigateTo(route.query.redirected_from);
+          }
+          navigateTo("/storefront?page=settings");
+        }, 1000);
       }
     })
 

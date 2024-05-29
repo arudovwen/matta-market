@@ -68,9 +68,9 @@
           v-if="!productData.hidePrice"
           class="text-xl lg:text-2xl font-[800] mb-6"
         >
-          {{ currencyFormat(mypackage?.amount || 0) }}
+        <span class="font-normal text-base">Starting from</span>  {{ currencyFormat(mypackage?.amount || 0) }}
           <span class="text-sm text-[#444] font-normal"
-            >/{{ `${mypackage?.size || ""}${mypackage?.unit || ""}` }}</span
+            >/{{ `${mypackage?.unit || ""}` }}</span
           >
         </p>
         <p class="text-xs :text-sm mb-6">
@@ -243,7 +243,7 @@
     v-if="isAdded"
     :selectedPackage="mypackage.package"
     @close="isAdded = false"
-    :totalAmount="mypackage?.amount"
+    :totalAmount="mypackage?.amount * mypackage?.size"
     :quantity="counter"
     :name="productData.name"
     :hidePrice="productData.hidePrice"
@@ -320,7 +320,7 @@ const packageOptions = computed(() =>
   productData?.value?.packagesAvailable?.map((i) => {
     return {
       label: `${i.package.title}/${i.size}${i.unit} - ${currencyFormat(
-        i.amount
+        i.amount * i.size
       )}`,
       value: JSON.stringify({ ...i }),
     };
@@ -390,7 +390,7 @@ function handleCart(type) {
     supplierId: productData?.value.supplierId,
     producer: productData.value?.manufacturer,
     quantity: counter.value,
-    packagePrice: mypackage?.value.amount,
+    packagePrice: mypackage?.value.amount * mypackage?.value.size,
   };
 
   cartStore?.addToCart(data, type).then((res) => {

@@ -110,12 +110,13 @@ const onSubmit = handleSubmit((values) => {
     .then((res) => {
       if (res.status === 200) {
         authStore.setLoggedUser(res.data.data);
+        localStorage.setItem("fetchCart", true);
         if (
           !res.data.data.onboardingPageStatus &&
           res.data.data?.businessUserType.toLowerCase() === "supplier"
         ) {
-          toast.info("Login successful, Complete your onboarding");
-          window.location.replace("/company/settings");
+          toast.info("Login successful");
+          window.location.replace("/products");
           return;
         }
         toast.success("Login successful");
@@ -146,7 +147,6 @@ const onSubmit = handleSubmit((values) => {
 });
 
 const handleLoginSuccess = (response) => {
-
   const { access_token } = response;
   let data = {
     provider: "GOOGLE",

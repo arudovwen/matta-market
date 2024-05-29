@@ -9,11 +9,19 @@
       v-if="label"
       :class="`${classLabel} ${
         horizontal ? 'flex-0 mr-6 md:w-[100px] w-[60px] break-words' : ''
-      }  inline-block input-label text-sm !text-[#1B2B41B8]`"
+      }  flex items-center gap-x-1 input-label text-sm !text-[#1B2B41B8]`"
       :for="name"
     >
-      {{ label }}</label
-    >
+      {{ label }} <RedDot v-if="isCumpulsory"
+    /> <span
+        v-if="info"
+        data-toggle="tooltip"
+        data-placement="top"
+        :title="infoTitle"
+        class="cursor-pointer h-4 w-4 flex items-center justify-center"
+      >
+        <AppIcon icon="quill:info" iconClass="text-gray-600" />
+      </span></label>
     <div class="relative flex items-center" :class="horizontal ? 'flex-1' : ''">
       <input
         :type="types"
@@ -21,7 +29,7 @@
         :placeholder="placeholder"
         :class="`${classInput} input-control w-full block focus:outline-none h-[44px] ${
           hasicon ? 'pr-10' : ''
-        } `"
+        } ${iconPosition === 'left' ? '!pl-10' : 'pr-10'} `"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
         :error="error"
@@ -47,25 +55,29 @@
         modelValue="modelValue"
       />
 
-      <div class="flex text-xl absolute right-[14px] top-1/2 -translate-y-1/2">
+      <div :class="`flex text-xl absolute  ${iconPosition === 'left' ? 'left-[14px]' : 'right-[14px]'} top-1/2 -translate-y-1/2`">
         <span
           v-if="hasicon"
           @click="toggleType"
-          class="cursor-pointer text-secondary-500"
+          iconClass="cursor-pointer text-secondary-500"
         >
-          <AppIcon icon="la:eye" class="text-[#666]" v-if="types === 'password'" />
-          <AppIcon icon="la:eye-slash" class="text-[#666]" v-else />
+          <AppIcon
+            icon="la:eye"
+            iconClass="text-[#667085]"
+            v-if="types === 'password'"
+          />
+          <AppIcon icon="la:eye-slash" iconClass="text-[#667085]" v-else />
         </span>
 
-        <span v-if="error && types !=='date'" class="text-danger-500">
+        <span v-if="error && types !== 'date'" class="text-danger-500">
           <AppIcon icon="heroicons-outline:information-circle" />
         </span>
 
         <span v-if="validate" class="text-success-500">
           <AppIcon icon="bi:check-lg" />
         </span>
-        <span v-if="icon" class="text-[#666]">
-          <AppIcon :icon="icon" />
+        <span v-if="icon" class="text-[#667085]">
+          <AppIcon :icon="icon"  iconClass="text-[#667085]" />
         </span>
       </div>
       <slot name="content"></slot>
@@ -123,6 +135,10 @@ export default {
       default: "text",
       //required: true,
     },
+    isCumpulsory: {
+      type: Boolean,
+      default: false,
+    },
     name: {
       type: String,
     },
@@ -162,6 +178,9 @@ export default {
     icon: {
       type: String,
     },
+    iconPosition: {
+      type: String,
+    },
     isMask: {
       type: Boolean,
       default: false,
@@ -172,6 +191,12 @@ export default {
         creditCard: true,
         delimiter: "-",
       }),
+    },
+    infoTitle: {
+      type: String,
+    },
+    info: {
+      type: Boolean,
     },
   },
   data() {

@@ -5,7 +5,7 @@
       data-aos-once="true"
       class="text-xl font-semibold mb-10 text-center darks:text-white/80"
     >
-      Trusted by Leading Global Customers & Suppliers
+      {{title}}
     </h2>
 
     <div
@@ -25,6 +25,11 @@
 </template>
 
 <script setup>
+defineProps({
+  title:{
+    default:"Trusted by Leading Global Customers & Suppliers"
+  }
+})
 const Brand1 = "/images/coke.png";
 const Brand2 = "/images/cormart.png";
 const Brand3 = "/images/honywell.png";

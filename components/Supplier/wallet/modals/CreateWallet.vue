@@ -22,27 +22,27 @@
             name="bvn"
             v-bind="bvnAtt"
             v-model="bvn"
-            :error="errors?.['bvnDetails.bvn']"
+            :error="errors?.['bvn']" isCumpulsory
           />
         </div>
 
-        <div class="">
+        <!-- <div class="">
           <Textinput
             placeholder=""
             label="Date of Birth"
             name="bvnDateOfBirth"
             v-bind="bvnDateOfBirthAtt"
             v-model="bvnDateOfBirth"
-            :error="errors?.['bvnDetails.bvnDateOfBirth']"
+            :error="errors?.['bvnDateOfBirth']"
             type="date"
           />
-        </div>
+        </div> -->
 
         <FormGroup
           v-if="!hasSettlement"
           label="Bank"
           :error="errors.bankCode"
-          name="bankCode"
+          name="bankCode" isCumpulsory
         >
           <SelectVueSelect
             v-model="bankCode"
@@ -56,7 +56,7 @@
           />
         </FormGroup>
         <div class="" v-if="!hasSettlement">
-          <Textinput
+          <Textinput isCumpulsory
             placeholder="Account number"
             label="Account number"
             name="accountNumber"
@@ -117,7 +117,7 @@ import * as yup from "yup";
 import { ref, reactive, inject } from "vue";
 import { addSettlement } from "~/services/settlementservice";
 
-const  isValidating = ref(false)
+const isValidating = ref(false);
 const props = defineProps({
   hasSettlement: {
     default: true,
@@ -142,10 +142,10 @@ const form = reactive({
   accountNumber: "",
   bankCode: "", // Assuming you'll populate this somewhere
   customerName: defaultCustomerName,
-  bvnDetails: {
-    bvn: "",
-    bvnDateOfBirth: "",
-  },
+
+  bvn: "",
+  bvnDateOfBirth: "",
+
   customerEmail: defaultCustomerEmail,
   hasSettlement: null,
 });
@@ -163,18 +163,18 @@ const formSchema = yup.object().shape({
         .test("test-account", "Invalid account number", function (value) {
           const { bankCode } = this.parent || {}; // Destructure bankCode safely
           if (value && value.length === 10 && bankCode) {
-            isValidating.value=true;
+            isValidating.value = true;
             return validateAccount({
               bankCode: bankCode,
               accountNumber: value,
             })
               .then((res) => {
-                isValidating.value=false
+                isValidating.value = false;
                 form.accountName = res.data.data.responseBody.accountName;
                 return true; // Resolve the promise if validation is successful
               })
               .catch((err) => {
-                isValidating.value=false
+                isValidating.value = false;
                 throw new yup.ValidationError(
                   "Invalid account number",
                   null,
@@ -189,17 +189,15 @@ const formSchema = yup.object().shape({
     otherwise: (schema) => schema.notRequired(),
   }),
   customerName: yup.string().required("Customer name is required"),
-  bvnDetails: yup.object().shape({
-    bvn: yup
-      .string()
-      .required("BVN is required")
-      .matches(/^\d{11}$/, "BVN must be 11 digits"),
-    bvnDateOfBirth: yup
-      .date()
-      .typeError("Invalid date")
-      .required("Date of birth is required")
-      .max(new Date(), "Date of birth must be in the past"),
-  }),
+  bvn: yup
+    .string()
+    .required("BVN is required")
+    .matches(/^\d{11}$/, "BVN must be 11 digits"),
+  // bvnDateOfBirth: yup
+  //   .date()
+  //   .typeError("Invalid date")
+  //   .required("Date of birth is required")
+    // .max(new Date(), "Date of birth must be in the past"),
   customerEmail: yup.string().email("Invalid email address"),
 });
 
@@ -211,19 +209,20 @@ const { handleSubmit, defineField, errors, setFieldError } = useForm({
 
 const [bankCode] = defineField("bankCode");
 const [accountNumber, accountNumberAtt] = defineField("accountNumber");
-const [bvn, bvnAtt] = defineField("bvnDetails.bvn");
-const [bvnDateOfBirth, bvnDateOfBirthAtt] = defineField(
-  "bvnDetails.bvnDateOfBirth"
-);
-
+const [bvn, bvnAtt] = defineField("bvn");
+// const [bvnDateOfBirth, bvnDateOfBirthAtt] = defineField("bvnDateOfBirth");
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  if (!props.hasSettlement) {
-    addSettlement({ ...values, isPrimaryAccount: true });
-  }
 
-  createWallet(values)
+  const data = {
+    accountNumber: values.accountNumber,
+    bankCode: values.bankCode,
+    customerName: defaultCustomerName,
+    bvn: values.bvn,
+    customerEmail: defaultCustomerEmail,
+  };
+  createWallet(data)
     .then((res) => {
       if (res.status === 200) {
         handleComplete(
@@ -235,9 +234,7 @@ const onSubmit = handleSubmit((values) => {
     })
     .catch((err) => {
       errorText.value =
-        err.response.data.message ||
-        JSON.parse(err.response.data.Message)?.responseMessage ||
-        "Wallet creation request failed";
+        err.response.data.message || "Wallet creation request failed";
       isErrorOpen.value = true;
       isLoading.value = false;
     });

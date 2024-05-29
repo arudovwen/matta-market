@@ -48,19 +48,19 @@ const formData = reactive({
 
   supportingDocuments: [
     {
-      url: "",
+      urls: [],
       documentType: 0,
     },
     {
-      url: "",
+      urls: [],
       documentType: 1,
     },
     {
-      url: "",
+      urls: [],
       documentType: 2,
     },
     {
-      url: "",
+      urls: [],
       documentType: 3,
     },
   ],
@@ -78,19 +78,20 @@ const formData = reactive({
     dateofIncorporation: null,
     companyDocuments: [
       {
-        url: "",
+        url:"",
+        urls: [],
         documentType: 0,
       },
-      {
-        url: "",
+      { url:"",
+        urls: [],
         documentType: 1,
       },
-      {
-        url: "",
+      { url:"",
+        urls: [],
         documentType: 2,
       },
-      {
-        url: "",
+      { url:"",
+        urls: [],
         documentType: 3,
       },
     ],
@@ -98,9 +99,11 @@ const formData = reactive({
     incorporation: "", // Assuming incorporation is a dateofIncorporation type
     mermat: "",
     utilityBill: "",
-    country: "",
+    country: "Nigeria",
     city: "",
     state: "",
+    email:authStore.userInfo.email,
+    phone:authStore.userInfo.phoneNumber
   },
   customerId: authStore.userId,
   loanRequestType: parseInt(id),
@@ -120,19 +123,19 @@ const formData = reactive({
   documents: {
     supportingDocuments: [
       {
-        url: "",
+        urls: [],
         documentType: 0,
       },
       {
-        url: "",
+        urls: [],
         documentType: 1,
       },
       {
-        url: "",
+        urls: [],
         documentType: 2,
       },
       {
-        url: "",
+        urls: [],
         documentType: 3,
       },
     ],
@@ -165,7 +168,7 @@ const tabs = [
   //   value: 5,
   // },
 ];
-function getCommpanyData() {
+function getCompanyData() {
   getCompanyProfile().then((res) => {
     loading.value = false;
     company.value = res.data.data;
@@ -178,17 +181,22 @@ function getCommpanyData() {
     formData.kyb.state = res.data.data.state;
     formData.kyb.state = res.data.data.state;
     formData.kyb.city = res.data.data.city;
+    formData.kyb.email = res.data.data.email;
+    formData.kyb.phone = res.data.data.phone;
 
     if (res.data.data.companyDocuments.length > 0) {
-      formData.kyb.incorporation = res.data.data.companyDocuments[0].url;
-      formData.kyb.mermat = res.data.data.companyDocuments[1].url;
-      formData.kyb.statusReport = res.data.data.companyDocuments[2].url;
-      formData.kyb.utilityBill = res.data.data.companyDocuments[3].url;
+      formData.kyb.companyDocuments = res.data.data.companyDocuments
+      formData.kyb.incorporation = res.data.data.companyDocuments[0].urls;
+      formData.kyb.mermat = res.data.data.companyDocuments[1].urls;
+      formData.kyb.statusReport = res.data.data.companyDocuments[2].urls;
+      formData.kyb.utilityBill = res.data.data.companyDocuments[3].urls;
     }
+  }).catch(()=>{
+    loading.value = false
   });
 }
 onMounted(() => {
-  getCommpanyData();
+  getCompanyData();
   getFinanceData();
 });
 function getFinanceData() {
@@ -214,6 +222,8 @@ function getFinanceData() {
 }
 
 provide("company", company);
+provide("companyInfo", company);
 provide("active", active);
 provide("formData", formData);
+provide("getCompanyData", getCompanyData);
 </script>

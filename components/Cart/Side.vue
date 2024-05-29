@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#333] rounded-[10px] py-[30px] px-5 w-full lg:w-[250px] xl:w-[360px]"
+    class="bg-[#101828] rounded-[10px] py-[30px] px-5 w-full lg:w-[250px] xl:w-[360px]"
   >
     <div class="font-semibold text-2xl text-white pb-6">Order Summary</div>
     <div class="flex flex-col gap-y-5">
@@ -27,11 +27,23 @@
           {{ currencyFormat(cartStore?.cartTotalAmount) }}
         </p>
       </div>
+      <div class="flex justify-between" v-if="cartStore?.discountValue">
+        <p class="text-sm text-[#E1E1E1]">Discount</p>
+
+        <p class="text-white font-medium text-sm">
+          -{{ currencyFormat(cartStore?.discountValue) }}
+        </p>
+      </div>
       <div class="flex justify-between">
-        <p class="text-sm text-[#E1E1E1]">Tax (7.5%)</p>
+        <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
 
         <p class="text-white text-sm font-medium">
-          {{ currencyFormat(cartStore?.cartTotalAmount * cartStore?.tax) }}
+          {{
+            currencyFormat(
+              (cartStore?.cartTotalAmount - cartStore?.discountValue) *
+                cartStore?.tax
+            )
+          }}
         </p>
       </div>
       <div class="flex justify-between">
@@ -47,8 +59,9 @@
       <p class="text-white font-bold">
         {{
           currencyFormat(
-            cartStore?.cartTotalAmount * cartStore?.tax +
-              cartStore?.cartTotalAmount
+            (cartStore?.cartTotalAmount - cartStore?.discountValue) *
+              cartStore?.tax +
+              (cartStore?.cartTotalAmount - cartStore?.discountValue)
           )
         }}
       </p>
@@ -58,16 +71,26 @@
         @click="handleOrderRequest()"
         text="Submit order request"
         :isLoading="loading"
-        :isDisabled="!shippingStore?.defaultAddress?.id"
+        :isDisabled="
+          !shippingStore?.defaultAddress?.id ||
+          !cartStore?.cart ||
+          !cartStore?.cartTotalAmount ||
+          cartStore?.loadingCart
+        "
         btnClass="!rounded-[5px] !text-[#DBDBDB] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
       />
-      <NuxtLink href="/checkout">
-        <AppButton
-          :isDisabled="!cartStore?.cart || !cartStore?.cartTotalAmount"
-          text="Proceed to Checkout"
-          btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm"
-        />
-      </NuxtLink>
+
+      <AppButton
+        :isDisabled="
+          !cartStore?.cart ||
+          !cartStore?.cartTotalAmount ||
+          cartStore?.loadingCart
+        "
+        @click="handleProceed"
+        :isLoading="cartStore?.loadingCart"
+        text="Proceed to Checkout"
+        btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm"
+      />
     </div>
   </div>
 </template>
@@ -76,13 +99,27 @@ import { confirmpurchase } from "~/services/cartservice";
 import { toast } from "vue3-toastify";
 
 const shippingStore = useShippingStore();
+const authStore = useAuthStore();
 const cartStore = useCartStore();
 const loading = ref(false);
-
+const isOpen = inject("isOpen");
 onMounted(() => {
   shippingStore.getAlladdress();
 });
+
+function handleProceed() {
+  if (!authStore.isLoggedIn) {
+    isOpen.value = true;
+    return;
+  }
+
+  navigateTo("/checkout");
+}
 function handleOrderRequest() {
+  if (!authStore.isLoggedIn) {
+    isOpen.value = true;
+    return;
+  }
   loading.value = true;
   confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
     .then((res) => {

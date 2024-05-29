@@ -32,6 +32,7 @@
           <div class="max-w-[200px] hidden lg:inline">
             <ClientOnly>
               <VueDatePicker
+                auto-apply
                 v-model="date"
                 range
                 multi-calendars
@@ -43,7 +44,6 @@
           </div>
         </div>
 
-        
         <div class="flex flex-col lg:flex-row gap-x-8 w-full">
           <div class="flex-1">
             <div class="">

@@ -5,41 +5,46 @@
         :error="isFieldTouched('BankStatement') ? errors.BankStatement : ''"
         class="col-span-2"
         label="Bank Statement"
-        required
+        isCumpulsory
       >
-        <FileUpload id="BankStatement" />
-        <span
-          @click="
-            downloadFile(formData?.supportingDocuments[0]?.url, 'BankStatement')
-          "
-          v-if="formData?.supportingDocuments[0]?.url"
+        <FileUpload id="BankStatement" :multiple="true" />
+        <div
+          class="flex flex-wrap gap-x-4 gap-y-3"
+          v-if="formData?.supportingDocuments[0]?.urls?.length"
         >
-          <span class="block text-xs text-blue-500 mt-1"
-            >Download Bank Statement</span
-          ></span
-        >
+          <span
+            v-for="(file, idx) in formData?.supportingDocuments[0]?.urls"
+            :key="file"
+            @click="downloadFile(file, 'BankStatement')"
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Bank Statement {{ idx + 1 }}</span
+            ></span
+          >
+        </div>
       </FormGroup>
 
       <FormGroup
         :error="isFieldTouched('ProformaInvoice') ? errors.ProformaInvoice : ''"
         class="col-span-2"
         label="Proforma Invoice"
-        required
+        isCumpulsory
       >
-        <FileUpload id="ProformaInvoice" />
-        <span
-          @click="
-            downloadFile(
-              formData?.supportingDocuments[1]?.url,
-              'ProformaInvoice'
-            )
-          "
-          v-if="formData?.supportingDocuments[1]?.url"
+        <FileUpload id="ProformaInvoice" :multiple="true" />
+        <div
+          class="flex flex-wrap gap-x-4 gap-y-3"
+          v-if="formData?.supportingDocuments[1]?.urls?.length"
         >
-          <span class="block text-xs text-blue-500 mt-1"
-            >Download Proforma Invoice</span
-          ></span
-        >
+          <span
+            v-for="(file, idx) in formData?.supportingDocuments[1]?.urls"
+            :key="file"
+            @click="downloadFile(file, 'ProformaInvoice')"
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Proforma Invoice {{ idx + 1 }}</span
+            ></span
+          >
+        </div>
       </FormGroup>
       <FormGroup
         label="Evidence of previously successful supply contracts (PO and Paid Invoices)"
@@ -50,37 +55,52 @@
         "
         class="col-span-2"
         v-if="id == 1 || id == 3"
-        required
+        isCumpulsory
       >
-        <FileUpload id="EvidenceOfPreviouslySuccessfulSupplyContracts" />
-        <span
-          @click="
-            downloadFile(
-              formData?.supportingDocuments[2]?.url,
-              'EvidenceOfPreviouslySuccessfulSupplyContracts'
-            )
-          "
-          v-if="formData?.supportingDocuments[2]?.url"
+        <FileUpload
+          id="EvidenceOfPreviouslySuccessfulSupplyContracts"
+          :multiple="true"
+        />
+        <div
+          class="flex flex-wrap gap-x-4 gap-y-3"
+          v-if="formData?.supportingDocuments[2]?.urls?.length"
         >
-          <span class="block text-xs text-blue-500 mt-1"
-            >Download Evidence Of Previously Successful Supply Contracts</span
-          ></span
-        >
+          <span
+            v-for="(file, idx) in formData?.supportingDocuments[2]?.urls"
+            :key="file"
+            @click="
+              downloadFile(
+                file,
+                'EvidenceOfPreviouslySuccessfulSupplyContracts'
+              )
+            "
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Contract {{ idx + 1 }}</span
+            ></span
+          >
+        </div>
       </FormGroup>
       <FormGroup
         label="Other documents"
         :error="isFieldTouched('OtherDocuments') ? errors.OtherDocuments : ''"
         class="col-span-2"
       >
-        <FileUpload id="OtherDocuments" />
-        <span
-          @click="downloadFile(formData?.supportingDocuments[3]?.url, 'Others')"
-          v-if="formData?.supportingDocuments[3]?.url"
+        <FileUpload id="OtherDocuments" :multiple="true" />
+        <div
+          class="flex flex-wrap gap-x-4 gap-y-3"
+          v-if="formData?.supportingDocuments[3]?.urls?.length"
         >
-          <span class="block text-xs text-blue-500 mt-1"
-            >Download Others</span
-          ></span
-        >
+          <span
+            v-for="(file, idx) in formData?.supportingDocuments[3]?.urls"
+            :key="file"
+            @click="downloadFile(file, 'Others')"
+          >
+            <span class="block text-xs text-blue-500 mt-1"
+              >Download Other document {{ idx + 1 }}</span
+            ></span
+          >
+        </div>
       </FormGroup>
 
       <div class="md:col-span-2" v-if="id == 0 || id == 3">
@@ -137,10 +157,10 @@ const formData = inject("formData");
 const formSchema = yup.object().shape({
   haveyouexportedtotheothercourty: yup.string(),
   haveyoudonebusiness: yup.string(),
-  EvidenceOfPreviouslySuccessfulSupplyContracts: yup.string(),
-  ProformaInvoice: yup.string().required("Proforma Invoice is required"),
-  BankStatement: yup.string().required("Bank statement is required"),
-  OtherDocuments: yup.string(),
+  EvidenceOfPreviouslySuccessfulSupplyContracts: yup.array(),
+  ProformaInvoice: yup.array().required("Proforma Invoice is required"),
+  BankStatement: yup.array().required("Bank statement is required"),
+  OtherDocuments: yup.array(),
 });
 
 const {
@@ -156,10 +176,10 @@ const {
     haveyouexportedtotheothercourty: formData.haveyouexportedtotheothercourty,
     haveyoudonebusiness: formData.haveyoudonebusiness,
     EvidenceOfPreviouslySuccessfulSupplyContracts:
-      formData?.supportingDocuments[2]?.url || "",
-    ProformaInvoice: formData?.supportingDocuments[1]?.url || "",
-    BankStatement: formData?.supportingDocuments[0]?.url || "",
-    OtherDocuments: formData?.supportingDocuments[3]?.url || "",
+      formData?.supportingDocuments[2]?.urls || [],
+    ProformaInvoice: formData?.supportingDocuments[1]?.urls || [],
+    BankStatement: formData?.supportingDocuments[0]?.urls || [],
+    OtherDocuments: formData?.supportingDocuments[3]?.urls || [],
   },
 });
 
@@ -168,15 +188,6 @@ const [haveyoudonebusiness, haveyoudonebusinessAtt] = defineField(
 );
 const [haveyouexportedtotheothercourty, haveyouexportedtotheothercourtyAtt] =
   defineField("haveyouexportedtotheothercourty");
-const [BankStatement, BankStatementAtt] = defineField("haveyoudonebusiness");
-const [ProformaInvoice, ProformaInvoiceAtt] = defineField(
-  "haveyouexportedtotheothercourty"
-);
-const [OtherDocuments, OtherDocumentsAtt] = defineField("haveyoudonebusiness");
-const [
-  EvidenceOfPreviouslySuccessfulSupplyContracts,
-  EvidenceOfPreviouslySuccessfulSupplyContractsAtt,
-] = defineField("haveyouexportedtotheothercourty");
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
@@ -211,6 +222,7 @@ const onSubmit = handleSubmit((values) => {
 });
 
 function handleChange(id, value) {
+
   if (!value) return;
   setFieldValue(id, value);
   setFieldTouched(id, value);
@@ -218,19 +230,19 @@ function handleChange(id, value) {
   formData.supportingDocuments.map((i) => {
     setFieldValue(id, value);
     if (id === "BankStatement" && i.documentType === 0) {
-      i.url = value;
+      i.urls = value;
     }
     if (id === "ProformaInvoice" && i.documentType === 1) {
-      i.url = value;
+      i.urls = value;
     }
     if (
       id === "EvidenceOfPreviouslySuccessfulSupplyContracts" &&
       i.documentType === 2
     ) {
-      i.url = value;
+      i.urls = value;
     }
     if (id === "OtherDocuments" && i.documentType === 3) {
-      i.url = value;
+      i.urls = value;
     }
   });
 }
@@ -239,7 +251,7 @@ provide("handleChange", handleChange);
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("~/assets/img/bee.svg");
+  background-image: urls("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

@@ -150,7 +150,7 @@ const filteredMarkets = computed(() => {
 function getMarketName(id) {
   const result = props.markets.find((m) => m.id === id);
 
-  return result.title;
+  return result?.title;
 }
 function handleSave() {
   emits("getValue", data.value);

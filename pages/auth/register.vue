@@ -33,6 +33,7 @@
               v-bind="firstNameAtt"
               v-model="firstName"
               :error="errors.firstName"
+              isCumpulsory
             />
           </div>
           <div>
@@ -44,6 +45,7 @@
               v-bind="lastNameAtt"
               v-model="lastName"
               :error="errors.lastName"
+              isCumpulsory
             />
           </div>
           <div>
@@ -55,6 +57,7 @@
               v-bind="emailAtt"
               v-model="email"
               :error="errors.email"
+              isCumpulsory
             />
           </div>
           <div>
@@ -66,6 +69,7 @@
               v-bind="phoneAtt"
               v-model="phone"
               :error="errors.phone"
+              isCumpulsory
             />
           </div>
           <div>
@@ -77,6 +81,7 @@
               v-bind="passwordAtt"
               v-model="password"
               :error="errors.password"
+              isCumpulsory
             />
           </div>
           <div>
@@ -88,6 +93,7 @@
               v-bind="confirmPasswordAtt"
               v-model="confirmPassword"
               :error="errors.confirmPassword"
+              isCumpulsory
             />
           </div>
           <div
@@ -130,7 +136,7 @@
 </template>
 <script setup>
 definePageMeta({
-  layout: "auth",
+  layout: "register",
   middleware: "auth",
 });
 useHead({
@@ -168,8 +174,8 @@ const schema = yup.object({
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character"
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&#)"
     ),
   confirmPassword: yup
     .string()
@@ -200,7 +206,7 @@ const onSubmit = handleSubmit((values) => {
         toast.info(
           "Sign up successful, Complete registration via link sent to your email"
         );
-        router.push("/auth/login");
+        router.push("/registration-success");
       }
     })
 

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { getalladdress } from "~/services/cartservice";
 export const useShippingStore = defineStore("shipping", () => {
+  const authStore = useAuthStore();
   const addresses = ref([]);
   const loading = ref(true);
   const addressesData = computed(() => addresses.value);
@@ -15,6 +16,7 @@ export const useShippingStore = defineStore("shipping", () => {
     addresses.value = data;
   }
   function getAlladdress() {
+    if(!authStore.isLoggedIn) return;
     loading.value = true;
     getalladdress()
       .then((res) => {

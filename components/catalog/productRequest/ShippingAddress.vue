@@ -5,7 +5,7 @@
       Choose your shipping options for samples requested.
     </p>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail  <RedDot /></label>
       <input
         class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
         placeholder="E-mail"
@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number  <RedDot /></label>
       <div class="flex relative rounded-lg h-11">
         <PhoneCodes v-model="phoneCode" />
 
@@ -49,7 +49,7 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address  <RedDot /></label>
       <Listbox v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton

@@ -14,7 +14,7 @@
           <span class="block text-sm text-[#8F8C9A] whitespace-nowrap" v-else>{{
             placeholder
           }}</span>
-          <i class="uil uil-angle-down text-[#101828]"></i>
+          <AppIcon icon="uil:angle-down" />
         </ListboxButton>
 
         <transition
@@ -37,7 +37,7 @@
                 v-slot="{ active, selected }"
                 v-for="z in filteredCodes"
                 :key="z"
-                :value="z"
+                :value="z.dial_code"
                 as="template"
               >
                 <li
@@ -114,11 +114,11 @@ watch(
   () => {
     if (!props.modelValue) return {};
     if (props.modelValue.includes("-")) {
-    code.value = props.modelValue.split("-")[0] || "+234";
-    phone.value = props.modelValue.split("-")[1];
-  } else {
-    phone.value = props.modelValue;
-  }
+      code.value = props.modelValue.split("-")[0] || "+234";
+      phone.value = props.modelValue.split("-")[1];
+    } else {
+      phone.value = props.modelValue;
+    }
   }
 );
 </script>

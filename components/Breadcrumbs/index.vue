@@ -1,10 +1,10 @@
 <template>
   <div>
-    <ul class="flex gap-x-1">
+    <ul class="flex gap-x-2">
       <li
         v-for="(link, idx) in links"
         :key="idx"
-        :class="` ${className} ${link.title && `after:content-['/']`}  font-light last:font-semibold text-[10px] sm:text-xs lg:text-sm capitalize  last:after:content-[''] flex gap-x-1 items-center`"
+        :class="`text-[#475467] ${className} ${link.title && `after:content-['>']`}  font-light last:font-semibold text-[10px] sm:text-xs lg:text-sm capitalize  last:after:content-[''] flex gap-x-2 items-center`"
       >
         <NuxtLink :to="link.url" class="">
           {{ link.title }}

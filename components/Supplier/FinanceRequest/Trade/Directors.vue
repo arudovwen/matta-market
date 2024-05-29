@@ -116,6 +116,7 @@ import { updateDirectors } from "~/services/settingservices";
 import { toast } from "vue3-toastify";
 
 const company = inject("company");
+const getCompanyData = inject("getCompanyData");
 const id = ref(null);
 const director = ref(null);
 const action = ref("");
@@ -155,7 +156,7 @@ async function handleSubmit() {
   updateDirectors(form)
     .then((res) => {
       if (res.status === 200) {
-       
+        getCompanyData();
         isLoading.value = false;
         active.value = 4;
       }

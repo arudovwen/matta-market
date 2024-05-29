@@ -4,7 +4,7 @@
       {{ detail ? "Update" : "Add" }} Settlement Account
     </legend>
     <form @submit.prevent="onSubmit" class="flex flex-col gap-y-6 w-full">
-      <FormGroup label="Bank" :error="errors.bankCode" name="bankCode">
+      <FormGroup label="Bank" isCumpulsory :error="errors.bankCode" name="bankCode">
         <SelectVueSelect
           v-model="bankCode"
           :disabled="loadingBanks"
@@ -17,7 +17,7 @@
         />
       </FormGroup>
       <div>
-        <Textinput
+        <Textinput isCumpulsory
           placeholder=""
           label="Account number"
           name="accountNumber"
