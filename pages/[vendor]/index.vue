@@ -63,7 +63,7 @@ const query = reactive({
   pagecount: 0,
   totalData: 0,
   sortOrder: "",
-  sortBy: 0,
+  sortBy: "",
   storelug: vendor,
 });
 const tagQuery = reactive({
