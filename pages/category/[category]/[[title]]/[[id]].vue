@@ -72,7 +72,7 @@ const query = reactive({
   pagecount: 0,
   totalData: 0,
   sortOrder: "",
-  sortBy: 0,
+  sortBy: "",
 });
 const tagQuery = reactive({
   PageNumber: 1,

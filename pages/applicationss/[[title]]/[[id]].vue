@@ -38,13 +38,15 @@ const store = useProductStore();
 const { productsData, loading } = storeToRefs(store);
 const route = useRoute();
 useHead({
-  title: `${ucFirst(route.query.title || route.query.search_query || "Application")} | Matta`,
+  title: `${ucFirst(
+    route.query.title || route.query.search_query || "Application"
+  )} | Matta`,
   meta: [
     {
       name: "description",
-      content: ` ${
-        ucFirst(route.query.title || route.query.search_query || "Application")
-      } | Matta`,
+      content: ` ${ucFirst(
+        route.query.title || route.query.search_query || "Application"
+      )} | Matta`,
     },
   ],
 });
@@ -65,7 +67,7 @@ const query = reactive({
   pagecount: 0,
   totalData: 0,
   sortOrder: 0,
-  sortBy: 0,
+  sortBy: "",
 });
 
 const pageRange = 5;
