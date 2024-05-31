@@ -26,7 +26,7 @@
       >
         <AppButton
           @click="navigateTo('/auth/register')"
-          text="Free sign up"
+          text="Sign up for free"
           btnClass="bg-transparent border-[#D0D5DD] border !px-[18px] !py-3 text-[#344054]"
         />
         <AppButton

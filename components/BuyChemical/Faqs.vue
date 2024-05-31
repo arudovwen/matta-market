@@ -40,11 +40,7 @@ const content = [
     answer:
       "Yes, We understand that as a seller, you may need to procure from other Matta platform stores. However, if you created a buyer account, you are limited to making procurements on the platform.",
   },
-  {
-    title: "What other services does Matta offer to Chemical vendors?",
-    answer:
-      "Matta offers a range of services that facilitates the trade of chemicals, raw materials and minerals in a seamless fashion. We also provide credit financing, cross border payment and enable the importation and exportation of these goods. You can contact us via our customer care line to discuss your needs.",
-  },
+
   {
     title: "Can I request Samples of Chemicals?",
     answer:
@@ -76,9 +72,6 @@ const content = [
     answer:
       "Please refer to our Return Policy to see if and when a product can be returned.",
   },
-  {
-    title: "How does MATTA protect my personal and payment information, and what measures are in place to ensure the security of transactions conducted on the platform? Is my data shared with third parties, and how is my privacy protected?",
-    answer: "Matta takes the security and privacy of your personal and payment information very seriously. We employ robust security measures to protect your data, including encryption, secure servers, and compliance with industry-standard data protection regulations. All transactions on our platform are safeguarded with advanced security protocols to ensure their integrity and confidentiality. We do not share your personal information with third parties without your explicit consent, except as necessary to process your transactions (like with payment processing partners) or comply with legal requirements. Rest assured, your privacy and the security of your transactions are our top priorities at Matta.",
-  },
+
 ];
 </script>

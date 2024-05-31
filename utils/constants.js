@@ -11,6 +11,16 @@ export const measurements = [
   { value: "bag", name: "Bag" },
   { value: "drum", name: "Drum" },
 ];
+
+export const testimonialData = [
+  {
+    text: "Switching to Matta's digital platform has significantly streamlined our procurement process.",
+    name: "Operations Director, Water Treatment Company",
+  }, {
+    text: "Matta's digital platform offers unparalleled convenience and efficiency compared to traditional services.",
+    name: "Senior Manager, Industrial & Consumer Goods Company",
+  },
+];
 export const languagesOptions = [
   {
     code: "en",
@@ -88,7 +98,7 @@ export const buyerRoutes = [
   "company-settings",
   "profile",
   "sign-out",
-  "financing-requests-type-id-financeId"
+  "financing-requests-type-id-financeId",
 ];
 export const vendorRoutes = [
   "overview",
@@ -108,7 +118,7 @@ export const vendorRoutes = [
   "company-settings",
   "profile",
   "sign-out",
-  "financing-requests-type-id-financeId"
+  "financing-requests-type-id-financeId",
 ];
 export const navigation = [
   {
@@ -939,5 +949,4 @@ export const languages = {
   "ja-JP": "/en/ja",
   "ar-AE": "/en/ar",
   "ru-RU": "/en/ru",
-
 };
