@@ -253,6 +253,7 @@
               :fetch-browser-language="false"
               trigger="click"
               @select="handleGoogleTranslateSelect"
+              :languages="languagesOptions"
             />
           </span>
           <NuxtLink to="/cart" class="flex items-center relative">
