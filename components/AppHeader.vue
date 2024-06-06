@@ -72,7 +72,6 @@
     }"
     class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 z-[999] transition-all duration-500 ease-in-out"
   >
-  
     <div class="container mx-auto">
       <div class="flex justify-between items-center gap-x-5">
         <div class="logo flex gap-x-10 items-center">
@@ -176,7 +175,8 @@
               class="flex gap-x-[6px] items-center text-sm border-transparent group"
             >
               <NuxtLink
-                to="/request-product"
+                to="/request-products"
+                activeClass="text-[#165EF0] font-medium"
                 class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
               >
                 Request a product</NuxtLink
@@ -248,14 +248,17 @@
               >
             </span> -->
           <!-- </span> -->
-          <span class="hidden lg:inline text-sm">
+          <span class="text-sm">
             <GoogleTranslateSelect
               :fetch-browser-language="false"
               trigger="click"
               @select="handleGoogleTranslateSelect"
-              :languages="languagesOptions"
+              :languages="
+                windowWidth > 768 ? languagesOptions : languagesOptionsMini
+              "
             />
           </span>
+
           <NuxtLink to="/cart" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
@@ -286,7 +289,7 @@
             <AppButton
               v-if="!authStore.isLoggedIn"
               link="/auth/vendor-register"
-              text="Become a Supplier"
+              text="Sign up"
               btnClass="!text-[12px] sm:!text-sm text-white  !font-semibold !px-[15px] !py-[6px] !normal-case bg-primary-500 flex"
             />
 
@@ -431,6 +434,12 @@ import { getnotification } from "@/services/notificationservice";
 import GoogleTranslateSelect from "@google-translate-select/vue3";
 import { toast } from "vue3-toastify";
 
+const windowWidth = ref(
+  window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth ||
+    0
+);
 const handleGoogleTranslateSelect = (language) => {
   console.log(language);
 };
@@ -462,6 +471,7 @@ const view = ref({
 const open = ref(false);
 onBeforeMount(() => {
   window.addEventListener("scroll", handleScroll);
+  window.addEventListener("resize", getWindowSize);
 });
 
 onMounted(() => {
@@ -471,6 +481,7 @@ onMounted(() => {
       getNotifications();
     }, 2 * 60 * 1000);
   }
+
   geoFindMe();
 });
 const notifyParams = reactive({
@@ -498,6 +509,18 @@ function handleScroll() {
     // user is at top of page
     if (!view.value.atTopOfPage) view.value.atTopOfPage = true;
   }
+}
+function handleWidth() {
+  windowWidth.value = window.innerWidth;
+}
+function getWindowSize() {
+  windowWidth.value =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+  // const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+  // return { width, height };
 }
 function handleDropDown(val) {
   if (val === "markets") {
