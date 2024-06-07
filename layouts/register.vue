@@ -4,7 +4,7 @@
     :style="backgroundStyles"
   >
     <div
-      class="h-full hidden lg:flex flex-col px-10 py-8 gap-y-8 lg:col-span-7"
+      class="h-full hidden lg:flex flex-col px-10 xl:px-16 py-8 gap-y-8 lg:col-span-7"
     >
       <div class="flex justify-between">
         <NuxtLink to="/">
@@ -16,22 +16,21 @@
             class="w-[100px] h-auto"
         /></NuxtLink>
       </div>
-
       <div class="relative flex-1 flex flex-col justify-center">
-        <div class="max-w-[600px] w-full">
+        <div class="max-w-[600px] xl:max-w-[800px] w-full">
           <h1
             class="text-3xl xl:text-4xl  text-white font-semibold mb-[27px]"
           >
             {{
-              route.name === "auth-vendor-register" ? vendorHeader : buyerHeader
+              route.path === "/auth/vendor-register" ? vendorHeader : buyerHeader
             }}
           </h1>
-          <p class="text-base xl:text-lg  text-white mb-6">
-            {{ route.name === "auth-vendor-register" ? vendorText : buyerText }}
+          <p class="text-base xl:text-lg  text-white mb-10">
+            {{ route.path === "/auth/vendor-register" ? vendorText : buyerText }}
           </p>
           <div class="grid gap-y-2">
             <div
-              v-for="n in route.name === 'auth-vendor-register'
+              v-for="n in route.path === '/auth/vendor-register'
                 ? vendorData
                 : buyerData"
               :key="n"

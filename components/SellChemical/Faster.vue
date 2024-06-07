@@ -28,7 +28,7 @@
             class="mx-auto lg:mx-0 h-12 text-xl w-12 mb-5 text-primary-500 rounded-full flex items-center justify-center bg-[#EFF8FF]"
           >
             <div
-              class="h-9 text-xl w-9 text-primary-500 rounded-full flex items-center justify-center bg-[#D1E9FF]"
+              class="h-10 text-xl w-10 text-primary-500 rounded-full flex items-center justify-center bg-[#D1E9FF]"
             >
               <AppIcon :icon="n.icon" />
             </div>
