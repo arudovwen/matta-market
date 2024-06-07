@@ -30,6 +30,7 @@
           btnClass="bg-transparent border-[#D0D5DD] border !px-[18px] !py-3 text-[#344054]"
         />
         <AppButton
+        @click="isOpen = true"
           text="Watch demo video"
           btnClass="bg-primary-500 text-white  border-primary-500  border !px-[18px] !py-3"
         />
@@ -39,18 +40,32 @@
       class="bg-cover bg-no-repeat rounded-r-lg bg-[url('/images/looking.png')] rounded-lg overflow-hidden h-[200px] md:h-auto"
     ></div>
   </div>
+  <ModalCenter>
+    <template #default>
+     <div class="w-[90vw] h-[80vh] bg-white">
+      <iframe
+        src="https://res.cloudinary.com/arudovwen-me/video/upload/v1717768112/Matta_Demo_-_Buy_Chemicals_1_kfbwwf.mp4"
+        width="1400"
+        height="800"
+        allow="autoplay"
+        class="h-full w-full"
+      ></iframe>
+     </div>
+    </template>
+  </ModalCenter>
 </template>
 <script setup>
-const words = ref(["Chemicals", "Raw Materials", "Commodities", "Ingredients"]);
-function toggleWords() {
-  const first = words.value.shift();
-  words.value = words.value.concat(first);
-}
-onMounted(() => {
-  setInterval(() => {
-    toggleWords();
-  }, 5000);
-});
+const isOpen = ref(false);
+// const words = ref(["Chemicals", "Raw Materials", "Commodities", "Ingredients"]);
+// function toggleWords() {
+//   const first = words.value.shift();
+//   words.value = words.value.concat(first);
+// }
+// onMounted(() => {
+//   setInterval(() => {
+//     toggleWords();
+//   }, 5000);
+// });
 </script>
 <style scoped>
 .top_image {

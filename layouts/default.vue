@@ -1,7 +1,9 @@
 <template>
-  <div class="bg-[#F4F4F4] darks:bg-gray-800 relative w-screen">
+  <div class="bg-[#F4F4F4] darks:bg-gray-800 relative w-screen flex flex-col h-screen overflow-y-auto">
     <AppHeader />
+  <div class="flex-1">
     <slot />
+  </div>
     <AppFooter />
     <!-- <AppScrollTop /> -->
 

@@ -45,10 +45,10 @@
 
   <ModalCenter>
     <template #default>
-     <div class="w-[800px] h-[80vh] bg-white">
+     <div class="w-[90vw] h-[80vh] bg-white">
       <iframe
-        src="https://drive.google.com/file/d/1Wan3WL-dqyjlhvmf6i-xQNNiWS-nj1On/preview"
-        width="800"
+        src="https://res.cloudinary.com/arudovwen-me/video/upload/v1717768112/Matta_Demo_-_Buy_Chemicals_1_kfbwwf.mp4"
+        width="1400"
         height="800"
         allow="autoplay"
         class="h-full w-full"
