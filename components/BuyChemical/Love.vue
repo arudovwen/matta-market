@@ -1,30 +1,28 @@
 <template>
   <section class="bg-[#101828]">
     <div class="container py-[96px] text-center">
-      <div data-aos="fade-in"
-      data-aos-once="true" class="max-w-[1024px] mx-auto text-center pl-6 pr-6">
-        <carousel class=" mx-auto text-center">
-          <slide v-for="slide in 2" :key="slide">
+      <div
+        data-aos="fade-in"
+        data-aos-once="true"
+        class="max-w-[1024px] mx-auto text-center pl-6 pr-6"
+      >
+        <carousel class="mx-auto text-center">
+          <slide v-for="slide in testimonialData" :key="slide">
             <div class="carousel__item px-5">
-              <p
-                class="text-base xl:text-3xl text-white font-medium mb-8"
+              <p class="text-base xl:text-3xl text-white font-medium mb-10">
+                “{{ slide.text }}”
+              </p>
+              <div
+                class="flex flex-col justify-center gap-y-1 mb-6 items-center"
               >
-                Love the simplicity of the service and the prompt customer
-                support. We can’t imagine working without it.
-              </p>
-             <div class="flex flex-col justify-center gap-y-1 mb-6 items-center">
-                <span class="inline h-10 md:h-16 w-10 md:w-16 rounded-full bg-gray-100 mb-1"></span>
-                <p
-                class="font-medium text-[11px] sm:text-xs md:text-sm xl:text-xl text-white text-center"
-              >
-                James Orji
-              </p>
-              <p class="text-xs xl:text-base text-[#D0D5DD] text-center">
-                Head of Design, Layers.
-              </p>
-             </div>
+             
+                <p class="text-xs xl:text-base text-[#D0D5DD] text-center">
+                  {{ slide.name }}
+                </p>
+              </div>
             </div>
           </slide>
+
           <template #addons>
             <Pagination />
           </template>

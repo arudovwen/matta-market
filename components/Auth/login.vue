@@ -139,6 +139,7 @@ const handleLoginSuccess = (response) => {
   sociallogin(data)
     .then((res) => {
       if (res.status === 200) {
+        localStorage.setItem("fetchCart", "true");
         store.commit("setUser", res.data.data);
         toast.success(res.data.message ? res.data.message : "Login successful");
         if (res.data.message.includes("Email has not verified yet")) {

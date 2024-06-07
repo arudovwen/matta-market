@@ -71,8 +71,12 @@
         </div>
       </div>
       <div class="mb-[50px]" v-if="withdrawalAmount">
-        <p class="flex gap-x-2 text-sm text-right justify-start">
+        <p class="flex gap-x-2 text-sm text-right justify-between mb-1">
           <span>You will be charged:</span>
+          <span>{{ currencyFormat(charge) }}</span>
+        </p>
+        <p class="flex gap-x-2 font-semibold text-right justify-between">
+          <span>Total:</span>
           <span>{{ currencyFormat(withdrawalAmount + charge) }}</span>
         </p>
         <!-- <p class="flex gap-x-2 text-sm text-right justify-end">

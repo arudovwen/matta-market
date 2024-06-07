@@ -21,7 +21,7 @@
             to construction and FMCGs.
           </p>
           <AppButton
-            @click="navigateTo('/category/market/all')"
+            @click="navigateTo('/')"
             text="Start Your chemical search"
             btnClass="bg-primary-500 text-white  border-primary-500  border !px-[18px] !py-3"
           />

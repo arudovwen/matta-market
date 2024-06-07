@@ -1,34 +1,36 @@
 <template>
   <footer class="bg-[#0C111D] pt-16 pb-8">
-    <div class="container" v-if="route.name == 'buy-chemicals'">
-      <div
-        class="flex justify-between md:gap-x-20 flex-col md:flex-row mb-6 md:mb-0"
-      >
-        <div class="flex-1">
-          <div class="">
-            <h2
-              class="text-white font-semibold text-lg md:text-[30px] leading-[1.2] mb-4"
-            >
-              Start selling with Matta
-            </h2>
-            <p class="mb-8 text-sm md:text-lg text-[#EAECF0]">
-              Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying
-              Seamless Procurement and Logistics With Matta.
-            </p>
+    <div v-for="n in extraContent" :key="n.key">
+      <div class="container" v-if="route.name == n.key">
+        <div
+          class="flex justify-between md:gap-x-20 flex-col md:flex-row mb-6 md:mb-0"
+        >
+          <div class="flex-1">
+            <div class="">
+              <h2
+                class="text-white font-semibold text-lg md:text-[30px] leading-[1.2] mb-4"
+              >
+                {{ n.title }}
+              </h2>
+              <p class="mb-8 text-sm md:text-lg text-[#EAECF0] max-w-[768px]">
+                {{ n.text }}
+              </p>
+            </div>
+          </div>
+          <div>
+            <AppButton
+              @click="navigateTo(n.url)"
+              text="Get started"
+              icon="lets-icons:arrow-right"
+              btnClass="bg-primary-500 text-white  border-primary-500 !text-sm md:!text-base  border !px-[18px] !py-3"
+              iconPosition="right"
+            />
           </div>
         </div>
-        <div>
-          <AppButton
-            @click="navigateTo('/auth/vendor-register')"
-            text="Get started"
-            icon="lets-icons:arrow-right"
-            btnClass="bg-primary-500 text-white  border-primary-500 !text-sm md:!text-base  border !px-[18px] !py-3"
-            iconPosition="right"
-          />
-        </div>
+        <hr class="border-[#182230] mb-6" />
       </div>
-      <hr class="border-[#182230] mb-6" />
     </div>
+
     <div class="rounded-lg container">
       <div
         class="grid text-center lg:text-left grid-cols-1 lg:grid-cols-4 gap-y-8 lg:gap-x-10 lg:pt-8 md:mb-14"
@@ -206,8 +208,8 @@ const navs = [
     subject: "quick links",
     links: [
       {
-        title: "Request product",
-        url: "/request-product",
+        title: "Request products",
+        url: "/request-products",
       },
       {
         title: "Become a Verified Supplier",
@@ -242,6 +244,26 @@ const socials = [
     title: "Instagram",
     icon: "fe:instagram",
     link: "https://www.instagram.com/matta_trade/",
+  },
+];
+const extraContent = [
+  {
+    title: "Ready to Transform Your Procurement Process?",
+    text: "Get started with Matta today and experience a new level of sourcing efficiency. Upload your RFQ and let us connect you to the world’s best suppliers in no time.",
+    url: "/submit-request",
+    key: "request-products",
+  },
+  {
+    title: " Start selling with Matta",
+    text: "Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying  Seamless Procurement and Logistics With Matta.",
+    url: "/auth/vendor-register",
+    key: "buy-chemicals",
+  },
+  {
+    title: "Start selling with Matta",
+    text: "Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying  Seamless Procurement and Logistics With Matta.",
+    url: "/auth/vendor-register",
+    key: "sell-chemicals",
   },
 ];
 function togglePopup() {

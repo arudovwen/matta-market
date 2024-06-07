@@ -30,11 +30,12 @@ defineProps({
     default:"Trusted by Leading Global Customers & Suppliers"
   }
 })
-const Brand1 = "/images/coke.png";
-const Brand2 = "/images/cormart.png";
-const Brand3 = "/images/honywell.png";
+
+const Brand1 = "/images/cormart.png";
+const Brand2 = "/images/dow.png";
+const Brand3 = "/images/nycil.png";
 const Brand4 = "/images/basf.png";
-const Brand5 = "/images/liquide.png";
+const Brand5 = "/images/dairy.png";
 const Brand6 = "/images/cargill.svg";
 const brands = [Brand1, Brand2, Brand3, Brand4, Brand5, Brand6];
 </script>

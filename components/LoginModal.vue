@@ -239,6 +239,7 @@ async function handleSubmit() {
   loginUser(form)
     .then((res) => {
       if (res.status === 200) {
+        localStorage.setItem("fetchCart", "true");
         store.commit("setUser", res.data.data);
         store.dispatch("handleToken", res.data.data.jwToken).then(() => {
           handleclose("success");
