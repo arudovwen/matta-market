@@ -66,6 +66,7 @@ const isOpen = ref(false);
 //     toggleWords();
 //   }, 5000);
 // });
+provide("isOpen", isOpen);
 </script>
 <style scoped>
 .top_image {
