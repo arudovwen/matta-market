@@ -4,8 +4,7 @@
       class="bg-white darks:bg-gray-800 rounded-[20px] pt-5 px-4 md:px-[32px] mb-[30px]"
     >
       <div
-        data-aos="fade-up"
-        data-aos-once="true"
+       
         class="flex justify-between items-center mb-4"
       >
         <h2

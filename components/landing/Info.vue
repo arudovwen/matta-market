@@ -5,8 +5,7 @@
         class="p-[30px] rounded-[16px] bg-[rgba(255,255,255,0.03)]"
         v-for="n in content"
         :key="n.title"
-        data-aos="fade-up"
-        data-aos-once="true"
+       
       >
         <div>
           <span
