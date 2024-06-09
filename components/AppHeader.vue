@@ -482,7 +482,7 @@ onMounted(() => {
     }, 2 * 60 * 1000);
   }
 
-  geoFindMe();
+  // geoFindMe();
 });
 const notifyParams = reactive({
   PageNumber: 1,

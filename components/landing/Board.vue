@@ -1,8 +1,7 @@
 <template>
   <div class="">
     <div
-      data-aos="fade-up"
-      data-aos-once="true"
+      
       class="rounded-[10px]"
     >
       <!-- <NuxtLink to="/market/products" class="h-full block"> -->

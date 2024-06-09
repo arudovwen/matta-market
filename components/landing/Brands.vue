@@ -1,8 +1,7 @@
 <template>
   <div class="py-10 container hidden lg:block">
     <h2
-      data-aos="fade-up"
-      data-aos-once="true"
+     
       class="text-xl font-semibold mb-10 text-center darks:text-white/80"
     >
       {{title}}
@@ -12,8 +11,7 @@
       class="grid grid-cols-3 lg:grid-cols-6 gap-6 justify-between items-center"
     >
       <img
-        data-aos="fade-up"
-        data-aos-once="true"
+       
         v-for="n in brands"
         :src="n"
         :alt="n"
