@@ -2,8 +2,7 @@
   <div class="container mb-[30px]">
     <div
       v-if="content.length && !isLoading"
-      data-aos="fade-up"
-      data-aos-once="true"
+ 
       class="flex justify-between items-center mb-4"
     >
       <h2
@@ -25,8 +24,7 @@
       class="flex xl:grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar overflow-x-auto pb-6"
     >
       <ProductCard
-        data-aos="fade-up"
-        data-aos-once="true"
+       
         v-for="(n, idx) in content.slice(0, 5)"
         :key="idx"
         :index="idx"
