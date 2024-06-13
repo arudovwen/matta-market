@@ -457,11 +457,11 @@
         -->
 
         <button
-          :disabled="isLoading"
+          :disabled="isLoading || (form.country?.toLowerCase() === 'nigeria' && (!form.registrationNo || !form.tin))"
           :class="{
             'opacity-60 cursor-not-allowed': v$.$silentErrors.length,
           }"
-          class="appearance-none leading-none px-10 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
+          class="disabled:opacity-50 appearance-none leading-none px-10 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
         >
           <i
             class="fa fa-spinner fa-spin"

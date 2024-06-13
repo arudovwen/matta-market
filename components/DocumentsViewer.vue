@@ -19,7 +19,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(document, id) in documents.filter((i) => i.urls || i.url)"
+          v-for="(document, id) in documents.filter((i) => i.urls)"
           :key="id"
           class="border-b last:border-none"
         >

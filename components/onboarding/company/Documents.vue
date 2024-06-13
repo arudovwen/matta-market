@@ -220,6 +220,7 @@ import { useStore } from "vuex";
 
 const authStore = useAuthStore();
 const companyInfo = inject("companyInfo");
+console.log("🚀 ~ companyInfo:", companyInfo)
 const getData = inject("getData");
 const router = useRouter();
 const active = inject("active");

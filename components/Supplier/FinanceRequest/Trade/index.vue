@@ -228,15 +228,15 @@ function getCompanyData() {
         ...res.data.data,
         companyDocuments: res.data.data.companyDocuments?.map((doc) => ({
           ...doc,
-          urls: doc.urls.length
-            ? doc.urls.map((urlObj) => ({
-                url: urlObj?.url ?? urlObj ?? doc.url ?? null,
-              }))
-            : [
+          urls: !doc.urls.length
+            ? [
                 {
-                  url: "",
+                  url: doc.url || "",
                 },
-              ],
+              ]
+            : doc.urls.map((i) => ({
+                url: i?.url ?? i ?? "",
+              })),
         })),
       };
 
@@ -246,15 +246,13 @@ function getCompanyData() {
       if (res.data.data?.companyDocuments?.length > 0) {
         const tempData = res.data.data.companyDocuments?.map((doc) => ({
           ...doc,
-          urls: doc.urls.length
-            ? doc.urls.map((urlObj) => ({
-                url: urlObj?.url ?? urlObj ?? doc.url ?? null,
-              }))
-            : [
+          urls: !doc.urls.length
+            ? [
                 {
-                  url: "",
+                  url: doc.url || "",
                 },
-              ],
+              ]
+            : doc.urls,
         }));
         formData.kyb.companyDocuments =
           res.data.data.country.toLowerCase() === "nigeria"

@@ -64,7 +64,7 @@
     </div>
     <AppButton
       :isLoading="loading || cartStore?.loadingCart"
-      @click="confirmOrder"
+      @click="handleOrderRequest"
       :isDisabled="
         !cartStore?.cart ||
         !cartStore?.cartTotalAmount ||
@@ -87,13 +87,11 @@ import { toast } from "vue3-toastify";
 import { confirmpurchase, confirmpayment } from "~/services/cartservice";
 import { nanoid } from "nanoid";
 
-const cartTaxAmount = computed(
-  () => cartStore?.cartTotalAmount * cartStore?.tax + cartStore?.cartTotalAmount
-);
+
 const shippingStore = useShippingStore();
-const authstore = useAuthStore();
-const loading = ref(false);
+const authStore = useAuthStore();
 const cartStore = useCartStore();
+const loading = ref(false);
 const router = useRouter();
 
 const data = ref(null);
@@ -109,10 +107,10 @@ function makePayment(reference) {
   loading.value = true;
   data.value = {
     shippingAddressId: shippingStore?.defaultAddress.id,
-    email: authstore.userInfo?.email,
-    name: `${authstore.userInfo?.firstName} ${authstore.userInfo?.lastName}`,
+    email: authStore.userInfo?.email,
+    name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
     amount: cartStore?.cartTotalwithTax,
-    phoneNumber: authstore.userInfo?.phoneNumber,
+    phoneNumber: authStore.userInfo?.phoneNumber,
     reference: `ORD-${reference}-${nanoid(6)}`,
     orderId: reference,
   };
@@ -155,5 +153,27 @@ function onSuccess(response) {
         loading.value = false;
       });
   }
+}
+function handleOrderRequest() {
+  if (!authStore.isLoggedIn) {
+    isOpen.value = true;
+    return;
+  }
+  loading.value = true;
+  confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
+    .then((res) => {
+      if (res.status === 200) {
+        loading.value = false;
+        cartStore?.clearCart();
+        window.location.replace(`/order-success?orderId=${res.data.data}&order_type=requests`);
+      }
+    })
+    .catch((err) => {
+      const error = `${
+        err.response.data.Message || err.response.data.message
+      }, Contact us for assistance on your order`;
+      toast.error(error);
+      loading.value = false;
+    });
 }
 </script>

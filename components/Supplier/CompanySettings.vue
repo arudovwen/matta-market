@@ -40,21 +40,22 @@ function getData() {
 
         const tempData = {
           ...res.data.data,
-          companyDocuments: res.data.data.companyDocuments?.map((doc) => ({
+          companyDocuments: res.data.data?.companyDocuments?.map((doc) => ({
             ...doc,
-            urls: doc.urls.length
-              ? doc.urls.map((urlObj) => ({
-                  url: urlObj?.url ?? urlObj ?? doc.url ?? null,
-                }))
-              : [
+            urls: !doc.urls.length
+              ? [
                   {
-                    url: "",
+                    url: doc.url || "",
                   },
-                ],
+                ]
+              : doc.urls.map((i) => ({
+                  url: i?.url ?? i ?? "",
+                })),
           })),
         };
-       
+
         companyInfo.value = tempData;
+        console.log("🚀 ~ .then ~ tempData:", tempData);
       }
     })
     .catch((err) => {

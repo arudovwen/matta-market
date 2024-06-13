@@ -228,9 +228,14 @@
         text="Previous"
       />
       <AppButton
-        :disabled="isLoading"
+        :disabled="
+          isLoading ||
+          (country.toLowerCase() === 'nigeria' && (!registrationNo || !tin))
+        "
         :isLoading="isLoading"
-        btnClass="bg-primary-500 text-white !px-16  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
+        btnClass="bg-primary-500
+      text-white !px-16 !text-sm !py-[10px] disabled:cursor-not-allowed border
+      !rounded-lg border-primary-500"
         type="submit"
         text="Next"
       />
