@@ -16,11 +16,39 @@ export const testimonialData = [
   {
     text: "Switching to Matta's digital platform has significantly streamlined our procurement process.",
     name: "Operations Director, Water Treatment Company",
-  }, {
+  },
+  {
     text: "Matta's digital platform offers unparalleled convenience and efficiency compared to traditional services.",
     name: "Senior Manager, Industrial & Consumer Goods Company",
   },
 ];
+
+export const documentsOptions = {
+  1: {
+    title: "Memorandum and Articles of Association",
+    short: "Mermat",
+    isNigeria: true,
+    isNonNigeria: false,
+  },
+  0: {
+    title: "Certificate of incorporation",
+    short: "Certificate of incorporation",
+    isNigeria: true,
+    isNonNigeria: true,
+  },
+  2: {
+    title: "CAC  Status report",
+    short: "CAC  Status report",
+    isNigeria: true,
+    isNonNigeria: false,
+  },
+  3: {
+    title: "Utility Bill",
+    short: "Utility Bill",
+    isNigeria: true,
+    isNonNigeria: false,
+  },
+};
 export const languagesOptions = [
   {
     code: "en",

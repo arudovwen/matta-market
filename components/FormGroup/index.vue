@@ -3,7 +3,7 @@
     class="formGroup relative w-full md:w-auto"
     :class="`${error ? 'has-error' : ''}  ${horizontal ? 'flex' : ''}  ${
       validate ? 'is-valid' : ''
-    } `"
+    } ${formClass}`"
   >
     <label
       v-if="label"
@@ -100,6 +100,9 @@ export default {
     },
     info: {
       type: Boolean,
+    },
+    formClass: {
+      type: String,
     },
   },
 };

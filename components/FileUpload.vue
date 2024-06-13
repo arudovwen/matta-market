@@ -65,10 +65,10 @@ const props = defineProps({
   },
   isCumpulsory: {
     default: false,
-    type: Boolean,
+  
   },
 });
-
+const emits = defineEmits(["update:modelValue"]);
 const handleChange = inject("handleChange");
 const fileInputRef = ref(null);
 const title = ref("");
@@ -95,11 +95,12 @@ function handleEvent(e) {
     loading.value = true;
     const data = { base64: base64String, ext: `.${fileExtension}` };
     // Assuming canvas and uploaddocument are available
-    console.log("🚀 ~ handleEvent ~ data:", data);
+   
     uploaddocument(data)
       .then((res) => {
         loading.value = false;
-        handleChange(props.id, res.data.message);
+        handleChange &&  handleChange(props.id, res.data.message);
+        emits("update:modelValue", res.data.message);
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
@@ -168,7 +169,8 @@ function handleMultiple(e) {
   Promise.all(promises)
     .then(() => {
       // All files have been successfully uploaded
-      handleChange(props.id, multiUrls.value);
+      handleChange && handleChange(props.id, multiUrls.value);
+      emits("update:modelValue", multiUrls.value);
       console.log("All files uploaded successfully.");
     })
     .catch((error) => {
