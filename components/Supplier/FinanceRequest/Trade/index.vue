@@ -80,7 +80,44 @@ const formData = reactive({
       documentType: 3,
     },
   ],
-  companyDocuments: [],
+  companyDocuments: [
+    {
+      url: "",
+      urls: [
+        {
+          url: "",
+        },
+      ],
+      documentType: 0,
+    },
+    {
+      url: "",
+      urls: [
+        {
+          url: "",
+        },
+      ],
+      documentType: 1,
+    },
+    {
+      url: "",
+      urls: [
+        {
+          url: "",
+        },
+      ],
+      documentType: 2,
+    },
+    {
+      url: "",
+      urls: [
+        {
+          url: "",
+        },
+      ],
+      documentType: 3,
+    },
+  ],
   haveyoudonebusiness: "",
   haveyouexportedtotheothercourty: "",
 
@@ -226,7 +263,65 @@ function getCompanyData() {
 
       const tempData = {
         ...res.data.data,
-        companyDocuments: res.data.data.companyDocuments?.map((doc) => ({
+        companyDocuments:
+          res.data.data.companyDocuments.length > 0
+            ? res.data.data.companyDocuments?.map((doc) => ({
+                ...doc,
+                urls: !doc.urls.length
+                  ? [
+                      {
+                        url: doc.url || "",
+                      },
+                    ]
+                  : doc.urls.map((i) => ({
+                      url: i?.url || i || "",
+                    })),
+              }))
+            : [
+                {
+                  url: "",
+                  urls: [
+                    {
+                      url: "",
+                    },
+                  ],
+                  documentType: 0,
+                },
+                {
+                  url: "",
+                  urls: [
+                    {
+                      url: "",
+                    },
+                  ],
+                  documentType: 1,
+                },
+                {
+                  url: "",
+                  urls: [
+                    {
+                      url: "",
+                    },
+                  ],
+                  documentType: 2,
+                },
+                {
+                  url: "",
+                  urls: [
+                    {
+                      url: "",
+                    },
+                  ],
+                  documentType: 3,
+                },
+              ],
+      };
+      console.log("🚀 ~ .then ~ tempData:", tempData);
+      company.value = tempData;
+      formData.kyb = { ...tempData };
+
+      if (res.data.data?.companyDocuments?.length > 0) {
+        const tempDocData = res.data.data.companyDocuments?.map((doc) => ({
           ...doc,
           urls: !doc.urls.length
             ? [
@@ -235,29 +330,13 @@ function getCompanyData() {
                 },
               ]
             : doc.urls.map((i) => ({
-                url: i?.url ?? i ?? "",
+                url: i?.url || i || "",
               })),
-        })),
-      };
-
-      company.value = tempData;
-      formData.kyb = { ...tempData };
-
-      if (res.data.data?.companyDocuments?.length > 0) {
-        const tempData = res.data.data.companyDocuments?.map((doc) => ({
-          ...doc,
-          urls: !doc.urls.length
-            ? [
-                {
-                  url: doc.url || "",
-                },
-              ]
-            : doc.urls,
         }));
         formData.kyb.companyDocuments =
           res.data.data.country.toLowerCase() === "nigeria"
-            ? tempData
-            : tempData.filter((i) => i.documentType === 0);
+            ? tempDocData
+            : tempDocData.filter((i) => i.documentType === 0);
       }
     })
     .catch(() => {

@@ -212,7 +212,7 @@
                   type="button"
                   class="block text-primary-500 text-xs font-medium ml-auto"
                 >
-                  + Add field
+                  + Add document
                 </button>
               </div>
             </FormGroup>
@@ -260,6 +260,7 @@ import SelectComponent from "@/components/forms/SelectComponent";
 
 const company = inject("company");
 const formData = inject("formData");
+console.log("🚀 ~ formData:", formData)
 const isLoading = ref(false);
 const active = inject("active");
 const authStore = useAuthStore();

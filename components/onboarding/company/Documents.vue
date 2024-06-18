@@ -49,7 +49,7 @@
               type="button"
               class="block text-primary-500 text-xs font-medium ml-auto"
             >
-              + Add field
+              + Add document
             </button>
           </div>
         </div>
@@ -89,7 +89,7 @@
               type="button"
               class="block text-primary-500 text-xs font-medium ml-auto"
             >
-              + Add field
+              + Add document
             </button>
           </div>
         </div>
@@ -129,7 +129,7 @@
               type="button"
               class="block text-primary-500 text-xs font-medium ml-auto"
             >
-              + Add field
+              + Add document
             </button>
           </div>
         </div>
@@ -169,7 +169,7 @@
                 type="button"
                 class="block text-primary-500 text-xs font-medium ml-auto"
               >
-                + Add field
+                + Add document
               </button>
             </div>
         </div>

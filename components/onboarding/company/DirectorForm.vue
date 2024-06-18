@@ -42,7 +42,7 @@
         />
       </div>
       <div class="mb-6">
-        <FormGroup label="Phone number" :error="errors.phone">
+        <FormGroup  isCumpulsory label="Phone number" :error="errors.phone">
           <FormsPhoneCodes v-model="phone" />
         </FormGroup>
       </div>
@@ -61,7 +61,7 @@
         />
       </div>
       <div class="mb-6">
-        <FormGroup label="Date of birth" :error="errors.dob" name="dob">
+        <FormGroup isCumpulsory label="Date of birth" :error="errors.dob" name="dob">
           <ClientOnly>
             <VueDatePicker
               auto-apply
@@ -89,14 +89,14 @@
     </div>
 
     <div class="lg:col-span-2 mb-6">
-      <FormGroup
+      <FormGroup  
         :error="isFieldTouched('identityUrl') ? errors.identityUrl : ''"
       >
         <FileUpload
           label="Upload ID (Passport, Driver’s License, or NIN)"
           id="identityUrl"
           :modelValue="form.identityUrl"
-          isCumpulsory
+          :isCumpulsory="true"
         />
         <span
           @click="downloadFile(form.identityUrl, 'Identity card')"
@@ -117,7 +117,7 @@
           label="Upload Signature"
           id="signatureUrl"
           :modelValue="form.signatureUrl"
-          isCumpulsory
+          :isCumpulsory="true"
         />
         <span
           @click="downloadFile(form.signatureUrl, 'Signature')"
@@ -140,7 +140,7 @@
       </button>
       <button
         type="submit"
-        :disabled="isLoading"
+        :disabled="isLoading || !form.signatureUrl || !form.identityUrl"
         class="text-xs uppercase bg-primary-500 text-white px-5 py-4 rounded-lg hover:bg-primary/70 disabled:opacity-60 w-full"
       >
         Submit
