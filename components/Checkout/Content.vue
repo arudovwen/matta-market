@@ -5,7 +5,7 @@
       <div class="flex flex-col gap-y-8">
         <CheckoutShippingOptions />
         <CheckoutCost />
-        <!-- <CheckoutPayment /> -->
+        <CheckoutPayment />
       </div>
     </div>
   </div>

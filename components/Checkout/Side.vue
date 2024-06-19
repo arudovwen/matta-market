@@ -64,7 +64,7 @@
     </div>
     <AppButton
       :isLoading="loading || cartStore?.loadingCart"
-      @click="handleOrderRequest"
+      @click="confirmOrder"
       :isDisabled="
         !cartStore?.cart ||
         !cartStore?.cartTotalAmount ||
