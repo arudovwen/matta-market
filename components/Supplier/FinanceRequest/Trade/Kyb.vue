@@ -115,7 +115,7 @@
       <Textinput
         v-if="country?.toLowerCase() === 'nigeria'"
         placeholder=""
-        label="Registration number"
+        label="CAC Registration number"
         name="registrationNo"
         v-bind="registrationNoAtt"
         v-model="registrationNo"
@@ -300,7 +300,7 @@ const formSchema = yup.object().shape({
     then: (schema) =>
       schema
         .min(7, "Provide a valid number")
-        .required("Registration number is required"),
+        .required("CAC Registration number is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
   tin: yup.string().when("country", {

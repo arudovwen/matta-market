@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label class="block text-sm mb-[10px] text-[#344054]"
+    <label v-if="label" class="block text-sm mb-[10px] text-[#344054]"
       >{{ label }} <RedDot v-if="isCumpulsory"
     /></label>
     <div

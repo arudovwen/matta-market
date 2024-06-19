@@ -135,7 +135,7 @@ export const FinancesOptions = [
     url: "/financing/requests/trade/0",
   },
   {
-    title: "supply finance",
+    title: "inventory finance",
     img: "/images/finance2.png",
     text: "How do you create compelling presentations that wow your colleagues and impress your managers?",
     url: "/financing/requests/supply/1",

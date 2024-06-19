@@ -245,8 +245,8 @@ export const financeMenu = [
     url: "#",
   },
   {
-    title: "Supply Finance",
-    key: "supply-finance",
+    title: "Inventory finance",
+    key: "inventory-finance",
     url: "#",
   },
   {

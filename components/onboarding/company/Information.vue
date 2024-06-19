@@ -286,7 +286,7 @@
                     <label
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
-                      Registration number
+                      CAC Registration number
                       <RedDot
                     /></label>
                     <input

@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit" class="w-full mt-6">
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
-      <FormGroup class="col-span-2" label="Bank Statement" isCumpulsory>
+      <FormGroup class="col-span-2" label="Bank Statement (6 months statement is required)" isCumpulsory>
         <div class="grid gap-y-7 mb-4">
           <div
             v-for="(file, idx) in formData?.supportingDocuments[0].urls"
