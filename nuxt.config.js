@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "nuxt-security",
     "@nuxt/devtools",
+		"@nuxt/test-utils/module"
   ],
   security: {
     headers: {
