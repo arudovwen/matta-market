@@ -9,6 +9,5 @@ describe("tst", () => {
 		const component = await mount(AccountType);
 		expect(component.html()).toContain("Create account on behalf of the company.");
 		expect(component.find("a")).not.toBeNull()
-		console.log(component.find("i").classes())
 	})
 })
