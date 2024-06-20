@@ -48,7 +48,7 @@ const handleTokenRefresh = async () => {
 axiosApi.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error.response.status === 403) {
+    if (error?.response?.status === 403) {
       try {
         // Attempt to refresh the token
         const newAccessToken = await handleTokenRefresh();
