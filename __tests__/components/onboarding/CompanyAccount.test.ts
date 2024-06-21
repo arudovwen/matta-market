@@ -8,7 +8,7 @@ import * as vueRouter from "vue-router";
 const mockRoutePush = vi.fn();
 
 describe("CompanyAccount", () => {
-  vi.mock("vue-router", async () => {
+  vi.mock("vue-router", () => {
     return {
       RouterView: {},
       useRouter: () => {
@@ -33,8 +33,8 @@ describe("CompanyAccount", () => {
     },
     redirectedFrom: undefined,
   }));
-  it("Renders without error", async () => {
-    const component = await mount(CompanyAccount, {
+  it("Renders without error", () => {
+    const component = mount(CompanyAccount, {
       props: {},
     });
     expect(component.html()).toContain("STEP 1/4");

@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Content > Mounts without error 1`] = `
+"<div>
+  <!--v-if-->
+  <div class="flex items-center justify-center p-4 h-[300px] text-gray-400">No data available</div>
+</div>
+<!--v-if-->"
+`;

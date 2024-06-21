@@ -4,9 +4,9 @@ import AccountType from "../components/onboarding/AccountType.vue";
 import {mount} from "@vue/test-utils"
 import { not } from "@vuelidate/validators";
 
-describe("tst", () => {
-	it("w", async () => {
-		const component = await mount(AccountType);
+describe("AccountType", () => {
+	it("renders", () => {
+		const component = mount(AccountType);
 		expect(component.html()).toContain("Create account on behalf of the company.");
 		expect(component.find("a")).not.toBeNull()
 	})
