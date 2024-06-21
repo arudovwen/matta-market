@@ -7,7 +7,7 @@
     >
       <div class="flex justify-between items-start mb-8">
         <div
-          class="h-12 w-12 rounded-full flex items-center justify-center border border-matta-black/20"
+          class="h-11 w-12 rounded-full flex items-center justify-center border border-matta-black/20"
           :style="{
             borderColor:
               activeIndex === index

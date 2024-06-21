@@ -1,52 +1,40 @@
 <template>
-  <div class="gap-y-2 flex flex-col">
+  <div
+    class=" flex flex-col bg-white rounded-[10px] border border-[#F4F7FE]"
+  >
     <!-- Top bar   -->
-    <div class="p-6 lg:p-8 bg-white rounded-lg bg-img">
-      <div class="mb-12"><Breadcrumbs /></div>
-      <div class="">
-        <div class="flex gap-x-3 items-center mb-3">
-          <h1
-            class="text-3xl lg:text-[48px] text-matta-black col-span-1 font-medium capitalize"
-          >
-            Users management
-          </h1>
-          <span class="mt-3">/</span>
-          <span class="text-primary text-3xl lg:text-[48px]">{{
-            queryParams.totalCount
-          }}</span>
-        </div>
+    <HeaderComponent
+      title="User management"
+      subtext="Invite and assign roles to your company users"
+      btnText="Add users"
+      btnIcon="humbleicons:plus"
+      @onClick="openmodal('method')"
+      className="!border-[#EAECF0]"
+      :count="queryParams.totalCount"
+    />
 
-        <p class="text-sm lg:text-base">
-          Invite new or edit existing users within your business along with
-          assigning each a specific role.
-        </p>
-      </div>
-    </div>
-
-    <div class="p-6 lg:p-8 rounded-lg bg-white">
-      <div class="flex justify-between items-center mb-8">
+    <div class="rounded-lg bg-white pt-4">
+      <div class="flex justify-between items-center mb-4 px-6">
         <div class="flex gap-x-4">
           <div class="relative flex items-center">
+            <span
+              class="absolute left-4 peer-focus:right-3 pointer-events-none text-[#667085]"
+              ><i class="uil uil-search"></i
+            ></span>
             <input
               v-model="queryParams.Search"
               @change="getAllInvites()"
               @keyup="debounceSearch"
-              :class="
-                queryParams.Search.length && 'pl-3 pr-10 rounded-lg w-[280px]'
-              "
-              class="border focus:pl-3 focus:pr-10 rounded-full focus:rounded-lg h-12 peer focus:w-[280px] focus:outline-matta-black/20 w-12 border-[#E7EBEE] transition ease-in-out duration-300"
+              placeholder="Search"
+              class="border border-[#D0D5DD] focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
               type="search"
             />
-            <span
-              class="absolute right-4 peer-focus:right-3 pointer-events-none"
-              ><i class="uil uil-search"></i
-            ></span>
           </div>
           <div class="flex relative items-center">
             <select
               v-model="queryParams.Role"
               @change="getAllInvites()"
-              class="appearance-none border border-[#E7EBEE] rounded-full px-8 py-3"
+              class="appearance-none border border-[#D0D5DD] rounded-lg py-[10px] px-[14px] w-[180px] focus:outline-none"
             >
               <option value="">Role</option>
               <option v-for="role in roles" :key="role" :value="role">
@@ -67,7 +55,7 @@
             <select
               v-model="queryParams.Status"
               @change="getAllInvites()"
-              class="appearance-none border border-[#E7EBEE] rounded-full px-8 py-3"
+              class="appearance-none border border-[#D0D5DD] rounded-lg py-[10px] px-[14px] w-[180px] focus:outline-none"
             >
               <option value="">Status</option>
               <option value="0">Unverified</option>
@@ -78,20 +66,6 @@
             ></i>
           </div>
         </div>
-        <span class="flex gap-x-3">
-          <button
-            @click="openmodal('method')"
-            class="flex gap-x-2 items-center uppercase text-primary hover:text-white hover:bg-primary-500 py-2 px-2 md:py-3 md:px-6 border rounded-full border-primary md:leading-5 text-[10px] sm:text-[13px] shadow-sm"
-          >
-            <i class="uil uil-plus hidden md:inline"></i>
-            <span class="hidden md:inline text-gray-200">|</span>
-            invite user
-          </button>
-          <span
-            class="flex items-center justify-center border border-[#E7EBEE] rounded-full h-12 w-12"
-            ><i class="uil uil-exchange-alt rotate-[90deg]"></i
-          ></span>
-        </span>
       </div>
       <div v-if="!isPageLoading">
         <div v-if="!isEmpty" class="max-w-[80vw]">
@@ -101,7 +75,7 @@
                 <th
                   v-for="item in theads"
                   :key="item"
-                  class="uppercase text-[#B6B7B9] text-[13px] text-left font-normal border-b py-6 px-3 border-[#E7EBEE]"
+                  class="capitalize text-[#475467] text-sm text-left font-medium border-b border-t py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
                 >
                   {{ item }}
                 </th>
@@ -111,25 +85,17 @@
             <tbody>
               <tr v-for="item in tdata" :key="item">
                 <td
-                  class="capitalize text-matta-black text-[13px] border-b py-6 px-3 border-[#E7EBEE] whitespace-nowrap"
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <span class="flex items-center">
-                    <input
-                      type="checkbox"
-                      :value="item.id"
-                      v-model="multi"
-                      class="mr-2"
-                    />
-                    {{ item.fullName }}
-                  </span>
+                  {{ item.fullName }}
                 </td>
                 <td
-                  class="text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
+                  class=" text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
                   {{ item.email }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
                   <select
                     :value="item.role"
@@ -150,25 +116,37 @@
                 </td>
 
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
                   <span
                     v-if="item.invitationStatusText == 'Expired'"
-                    class="px-2 py-2 text-xs rounded-lg border text-[#EE5C5C] border-[#EE5C5C]"
+                    class="px-2 py-1 text-xs rounded-full text-[#B42318] bg-[#FEF3F2] flex gap-x-1 items-center max-w-max border border-[#FECDCA]"
                   >
-                    {{ item.invitationStatusText }}</span
+                    <AppIcon
+                      icon="octicon:dot-fill-24"
+                      iconClass="text-[#B42318]"
+                    />
+                    Suspended</span
                   >
                   <span
                     v-if="item.invitationStatusText == 'Invited'"
-                    class="px-2 py-2 text-xs rounded-lg border text-primary border-primary"
+                    class="px-2 py-1 text-xs rounded-full text-[#B54708] bg-[#FFFAEB] flex gap-x-1 items-center max-w-max border border-[#FEDF89]"
                   >
-                    {{ item.invitationStatusText }}</span
+                    <AppIcon
+                      icon="octicon:dot-fill-24"
+                      iconClass="text-[#B54708]"
+                    />
+                    Pending</span
                   >
                   <span
                     v-if="item.invitationStatusText == 'Verified'"
-                    class="px-2 py-2 text-xs rounded-lg text-white bg-[#59B221]"
+                    class="px-2 py-1 text-xs rounded-full text-[#067647] bg-[#ECFDF3] flex gap-x-1 items-center max-w-max border border-[#ABEFC6]"
                   >
-                    Verified</span
+                    <AppIcon
+                      icon="octicon:dot-fill-24"
+                      iconClass="text-[#067647]"
+                    />
+                    Active</span
                   >
                   <!-- <span
                     v-if="item.invitationStatusText.toLowerCase() === 'invited'"
@@ -183,7 +161,7 @@
                 >
                   <Menu class="relative" as="div">
                     <MenuButton class="outline-none">
-                      <i class="uil uil-ellipsis-h"></i>
+                       <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                     </MenuButton>
                     <MenuItems
                       class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[140px] rounded-xl overflow-hidden"
@@ -208,74 +186,30 @@
             </tbody>
           </table>
         </div>
-        <div
+        <EmptyData
+          @btnFunction="openmodal('method')"
+          btnText="New User"
+          title="No users found"
+          subtext="You havent't added any user to your team"
+          type="user"
+          btnIcon="humbleicons:plus"
           v-else
-          class="h-[310px] rounded-lg w-full flex items-center justify-center bg-[#F1F3F5]"
-        >
-          <div class="text-center max-w-sm mx-auto">
-             <img
-              src="~/assets/img/nofound.svg"
-              class="w-[52px] h-auto mx-auto mb-4"
-            />
-            <p class="text-matta-black font-medium text-xl">
-              No invited user yet
-            </p>
-
-            <button
-              @click="openmodal('method')"
-              type="button"
-              class="bg-primary-500 text-white rounded-full px-6 py-3 uppercase"
-            >
-              Invite user
-            </button>
-          </div>
-        </div>
+        />
       </div>
       <div class="text-center p-6 lg:p-8 my-24" v-else>
         <AppLoader />
       </div>
     </div>
 
-    <div
-      v-if="multi.length"
-      class="px-6 py-5 rounded-lg bg-white flex justify-between items-center text-[13px]"
-    >
-      <span class="flex items-center gap-x-3">
-        <span>{{ multi.length }} items selected</span>
-        <span class="text-gray-300">|</span>
-        <span class="flex gap-x-3 items-center">
-          <button
-            class="uppercase px-2"
-            @click="multi = tdata.map((i) => i.id)"
-          >
-            select all
-          </button>
-          <button class="uppercase px-2" @click="multi = []">
-            deselect
-          </button></span
-        ></span
-      >
-      <span class="flex gap-x-4 items-center"
-        ><button
-          class="py-4 px-5 uppercase bg-primary-500 text-white rounded-lg hover:bg-primary/80"
-        >
-          select role
-        </button>
-        <button
-          class="bg-[#E7EBEE] text-matta-black rounded-lg px-5 py-4 uppercase"
-        >
-          select status
-        </button></span
-      >
+    <div class="px-5 py-4">
+      <PaginationSimple
+        :total="queryParams.totalCount"
+        :current="queryParams.PageNumber"
+        :per-page="queryParams.PageSize"
+        :pageRange="5"
+        @page-changed="queryParams.PageNumber = $event"
+      />
     </div>
-
-    <Pagination
-      :total="queryParams.totalCount"
-      :current="queryParams.PageNumber"
-      :per-page="queryParams.PageSize"
-      :pageRange="5"
-      @page-changed="queryParams.PageNumber = $event"
-    />
   </div>
   <IndexModal :isOpen="isOpen" @togglePopup="isOpen = false">
     <template #content>
@@ -305,9 +239,7 @@ import {
   resendInvite,
 } from "~/services/userservices";
 import debounce from "lodash/debounce";
-import { toast } from 'vue3-toastify';
-
-
+import { toast } from "vue3-toastify";
 
 const multi = ref([]);
 const showing = ref("");
@@ -415,7 +347,7 @@ function updateRole(e, user) {
     }
   });
 }
-const theads = ["user", "email", "role", "status", ""];
+const theads = ["name", "email address", "role", "status", ""];
 const tdata = ref([]);
 provide("deleteInvite", deleteInvite);
 provide("deleteUser", deleteUser);

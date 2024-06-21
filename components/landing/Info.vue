@@ -5,14 +5,13 @@
         class="p-[30px] rounded-[16px] bg-[rgba(255,255,255,0.03)]"
         v-for="n in content"
         :key="n.title"
-        data-aos="fade-up"
-        data-aos-once="true"
+       
       >
         <div>
           <span
             class="bg-[rgba(255,255,255,0.08)] h-[60px] w-[60px] rounded-full flex items0center justify-center mb-[30px]"
           >
-             <NuxtImg :src="n.img" :alt="n.title" width="40" height="40" />
+             <img :src="n.img" :alt="n.title" width="40" height="40" />
           </span>
           <p class="mb-3 text-white text-lg md:text-xl max-w-[200px] leading-normal">{{ n.title }}</p>
           <p class="mb-2 text-white text-sm">{{ n.text }}</p>

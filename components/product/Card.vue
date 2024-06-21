@@ -3,10 +3,10 @@
     :to="`/product/${encodeURIComponent(detail.title)}${
       route?.params?.title ? `/${encodeURIComponent(route?.params?.title)}` : ''
     }/${detail?.id}?categoryId=${route?.params?.id ? route?.params?.id : ''}`"
-    class="w-full"
+    class="w-full block"
   >
     <div
-      class="min-w-[130px] sm:min-w-[160px] md:min-w-[200px] bg-white darks:bg-gray-800 rounded-[10px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.05)] darks:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.1)] overflow-hidden"
+      class="w-full min-w-[160px] sm:max-w-[160px] md:min-w-[200px] md:max-w-[200px] xl:max-w-[280px] bg-white darks:bg-gray-800 rounded-[10px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.05)] darks:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.1)] overflow-hidden"
     >
       <div
         class="w-full h-[90px] sm:h-[120px] lg:h-[140px] xl:h-[160px] bg-gray-200 bg-cover bg-center relative"
@@ -17,7 +17,7 @@
             :icon="!detail.liked ? 'ph:heart' : 'ph:heart-fill'"
             class="text-xs sm:text-sm md:text-base darks:text-white"
         /></span>
-        <NuxtImg
+        <img
           v-if="detail.converPhoto"
           :src="detail.converPhoto"
           alt="image"
@@ -35,7 +35,7 @@
       </div>
       <div class="w-full py-3 md:py-5 px-3 xl:px-5">
         <span
-          class="block mb-1 font-medium truncate max-w-max text-[12px] sm:text-sm xl:text-base darks:text-white leading-tight"
+          class="block mb-1 font-medium truncate max-w-[120px] md:max-w-max text-[12px] sm:text-sm xl:text-base darks:text-white leading-tight"
           >{{ detail.title }}</span
         >
         <span
@@ -45,7 +45,7 @@
 
         <div class="flex justify-between items-start md:items-center">
           <span
-            v-if="detail.type === 'request'"
+            v-if="detail.hidePrice"
             class="font-semibold text-[12px] sm:text-sm xl:text-base text-[#2176FF] leading-tight"
             >Request Quote</span
           >

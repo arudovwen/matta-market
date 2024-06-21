@@ -1,0 +1,134 @@
+<template>
+  <section
+    class="bg-[#343434] h-screen w-screen flex items-center justify-center p-6"
+  >
+    <div
+      v-if="status === 'initiate'"
+      class="rounded-[10px] py-[30px] px-5 w-full max-w-[400px] text-white flex itemx-center justify-center"
+    >
+      <AppIcon
+        icon="ei:spinner"
+        iconClass="animate-spin duration-[2500ms] text-[100px]"
+      />
+    </div>
+    <div
+      v-else
+      class="bg-white rounded-[10px] py-[30px] px-5 w-full max-w-[400px] shadow"
+    >
+      <div class="font-semibold text-2xl text-matta-black pb-6">Order Details</div>
+      <div class="flex flex-col gap-y-5">
+        <div class="flex justify-between" v-for="item in order?.items">
+          <div>
+            <p class="font-semibold text-sm text-matta-black mb-[2px]">
+              {{ item.product }}
+            </p>
+            <p class="text-xs text-[#959595]">
+              Qty: {{ item.quantity }} {{ item.selectedPackage }}
+            </p>
+          </div>
+          <p class="font-medium text-sm text-matta-black">
+            {{ currencyFormat(item.packagePrice) }}
+          </p>
+        </div>
+      </div>
+      <hr class="my-[20px] border-white/10" />
+      <div class="flex flex-col gap-y-3">
+        <div class="flex justify-between">
+          <p class="text-sm text-matta-black">Sub-total</p>
+
+          <p class="text-matta-black font-medium text-sm">
+            {{ currencyFormat(order?.cartTotal) }}
+          </p>
+        </div>
+        <div class="flex justify-between" v-if="order.discountValue">
+          <p class="text-sm text-matta-black">Discount</p>
+
+          <p class="text-matta-black font-medium text-sm">
+            {{ currencyFormat(order?.discountValue) }}
+          </p>
+        </div>
+        <div class="flex justify-between">
+          <p class="text-sm text-matta-black">VAT (7.5%)</p>
+
+          <p class="text-matta-black text-sm font-medium">
+            {{ currencyFormat(order?.cartTotalwithTax - order?.cartTotal) }}
+          </p>
+        </div>
+        <div class="flex justify-between">
+          <p class="text-sm text-matta-black">Shipping & Handling</p>
+
+          <p class="text-matta-black font-medium text-sm">{{currencyFormat(order?.shippingTotal)}}</p>
+        </div>
+      </div>
+      <hr class="my-[20px] border-white/10" />
+      <div class="flex justify-between mb-[25px]">
+        <p class="text-sm text-matta-black">Total</p>
+
+        <p class="text-matta-black font-bold">
+          {{ currencyFormat(order?.cartTotalwithTax) }}
+        </p>
+      </div>
+      <AppButton
+        :isLoading="loading"
+        @click="handlePayment"
+        :isDisabled="loading"
+        text="Make payment"
+        btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
+      />
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { getcartorder, getcartcustomer } from "~/services/cartservice";
+import { toast } from "vue3-toastify";
+import { nanoid } from "nanoid";
+definePageMeta({
+  layout: "custom",
+});
+const order = ref({});
+const status = ref("initiate");
+const route = useRoute();
+const { orderId } = route.params;
+const loading = ref(false);
+const userInfo = ref(null);
+
+function handlePayment() {
+  status.value = "Processing payment...";
+  loading.value = true;
+  const data = {
+    email: userInfo?.value?.email,
+    name: userInfo?.value.companyName,
+    amount: order?.value?.cartTotalwithTax,
+    phoneNumber: userInfo?.value?.phoneNumber,
+    reference: `ORD-${orderId}-${nanoid(6)}`,
+    orderId: orderId,
+  };
+
+  payWithMonnify(data, onModalClose, onSuccess);
+}
+function onSuccess(response) {
+  if (response.status.toLowerCase() === "success") {
+    window.location.href = `/order-success?orderId=${orderId}`;
+  }
+}
+function onModalClose() {
+  loading.value = false;
+  status.value = "cancelled";
+  toast.error("Payment cancelled");
+}
+
+onMounted(() => {
+  getcartorder({ orderNo: orderId }).then((res) => {
+    if (res.status === 200) {
+      order.value = res.data.data;
+      getcartcustomer({ businessId: res.data.data.businessId }).then((resp) => {
+        if (resp.status === 200) {
+          userInfo.value = resp.data.data;
+          handlePayment();
+        }
+      });
+    }
+  });
+});
+</script>

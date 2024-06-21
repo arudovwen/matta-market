@@ -9,7 +9,7 @@
       :class="btnClass"
       class="h-full px-[15px] flex items-center justify-center bg-white disabled:opacity-60 border-r border-[#E7E7E7]"
     >
-      <AppIcon icon="uiw:minus" :class="`text-lg ${iconClass}`" />
+      <AppIcon icon="lucide:minus" :class="`text-lg ${iconClass}`" />
     </button>
     <div class="flex-1 flex items-center">
       <input
@@ -24,7 +24,7 @@
       class="h-full px-[15px] flex items-center justify-center bg-white border-l border-[#E7E7E7]"
       :class="btnClass"
     >
-      <AppIcon icon="uiw:plus" :class="`text-lg ${iconClass}`" />
+      <AppIcon icon="lucide:plus" :class="`text-lg ${iconClass}`" />
     </button>
   </div>
 </template>

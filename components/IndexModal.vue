@@ -43,9 +43,9 @@
             <slot name="content"> </slot>
             <span
               v-if="canClose"
-              class="cursor-pointer hover:border w-6 h-6 absolute top-4 right-3 rounded-full flex items-center justify-center"
+              class="cursor-pointer border w-6 h-6 absolute top-4 right-3 rounded-full flex items-center justify-center"
               @click="togglePopup"
-              ><XMarkIcon class="text-white w-4 h-4"
+              ><XMarkIcon class=" w-4 h-4"
             /></span>
           </div>
         </TransitionChild>

@@ -3,7 +3,7 @@
   <div class="bg-[#F1F3F5] p-6 rounded-lg" @click="markNotification">
     <div class="flex items-start gap-x-4 group cursor-pointer">
       <span
-        class="w-12 h-12 flex items-center justify-center rounded-full bg-white group-hover:bg-primary"
+        class="w-12 h-11 flex items-center justify-center rounded-full bg-white group-hover:bg-primary"
       >
         <i
           v-if="type == 3"
@@ -24,7 +24,7 @@
       </span>
       <div class="flex-1">
         <p class="text-xs text-[#666] mb-1">
-          {{ moment(new Date(time)).format("lll") }}
+          {{ moment(new Date(time)).format("ll") }}
         </p>
         <p
           class="text-sm text-[#333] flex-1 mb-2"

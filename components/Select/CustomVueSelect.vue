@@ -10,7 +10,8 @@
       :class="`${classLabel} inline-block input-label `"
       :for="name"
     >
-      {{ label }}
+      {{ label }}  <RedDot v-if="isCumpulsory"
+    />
       <span
         class="ml-4 text-blue-400"
         @click="$store.dispatch(`${request.toggle}`, true)"
@@ -119,7 +120,10 @@ export default {
     error: {
       type: String,
     },
-
+    isCumpulsory: {
+      type: Boolean,
+      default: false,
+    },
     isReadonly: {
       type: Boolean,
       default: false,

@@ -3,11 +3,11 @@
   <form @submit.prevent="handleSubmit">
     <div class="grid grid-cols-2 gap-x-4">
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">First name</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">First name</label>
         <input
           v-model="v$.firstName.$model"
           :class="{ 'border-red-500': v$.firstName.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           autocomplete="off"
           autofocus="on"
         />
@@ -22,11 +22,11 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Last name</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Last name</label>
         <input
           v-model="v$.lastName.$model"
           :class="{ 'border-red-500': v$.lastName.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           autocomplete="off"
           autofocus="on"
         />
@@ -43,7 +43,7 @@
     </div>
     <div class="grid grid-cols-2 gap-x-4">
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Country</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Country</label>
         <div class="relative">
           <CountriesSelect v-model="v$.country.$model" />
           <div
@@ -58,11 +58,11 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">City</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">City</label>
         <input
           v-model="v$.city.$model"
           :class="{ 'border-red-500': v$.city.$error }"
-          class="px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] rounded-lg focus:outline-matta-black/20"
+          class="px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] rounded-lg focus:outline-matta-black/20"
           autocomplete="off"
           autofocus="on"
           placeholder="Company city"
@@ -80,11 +80,11 @@
     </div>
     <div class="grid grid-cols-2 gap-x-4">
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Street</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Street</label>
         <input
           v-model="v$.street.$model"
           :class="{ 'border-red-500': v$.street.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           autocomplete="off"
           autofocus="on"
         />
@@ -99,11 +99,11 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Postal code</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Postal code</label>
         <input
           v-model="v$.postalCode.$model"
           :class="{ 'border-red-500': v$.postalCode.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           autocomplete="off"
           autofocus="on"
         />
@@ -151,7 +151,7 @@ const route = useRoute();
 const form = reactive({
   firstName: "",
   lastName: "",
-  country: "",
+  country: "Nigeria",
   city: "",
   street: "",
   postalCode: "",

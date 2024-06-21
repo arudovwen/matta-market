@@ -6,7 +6,7 @@
         <OnboardingCompanySideBar :active="active" />
       </div>
       <div class="w-full lg:w-[75%] bg-white rounded-lg">
-        <OnboardingCompanyInfo v-if="active == 2" />
+        <OnboardingCompanyInformation v-if="active == 2" />
         <OnboardingCompanyDirectors v-if="active == 4" />
         <OnboardingCompanyProfile v-if="active == 1" />
         <OnboardingCompanyDocuments v-if="active == 3" />
@@ -28,6 +28,7 @@ onMounted(() => {
 watch(route, () => {
   active.value = route?.query?.onboarding_stage;
 });
+provide("active", active)
 </script>
 
 <style lang="scss" scoped>

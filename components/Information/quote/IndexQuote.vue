@@ -1,7 +1,7 @@
 <template>
   <form
     @submit.prevent="handleSubmit"
-    class="flex flex-col h-full overflow-y-auto"
+    class="flex flex-col h-full overflow-y-auto pr-4"
   >
     <div class="flex-1">
       <div class="flex justify-between items-center mb-6">
@@ -57,7 +57,7 @@
         <button
           @click="toggleNext"
           type="button"
-          class="appearance-none border w-1/2 border-primary leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
+          class="appearance-none border w-1/2 border-primary- leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
         >
           Next
         </button>
@@ -65,19 +65,19 @@
     </div>
     <div v-if="active === 3">
       <div class="grid grid-cols-2 justify-between gap-x-2 items-center mt-8">
-        <router-link to="/procurement/my-requests">
+        <NuxtLink to="/procurement/my-requests">
           <button
             type="button"
             class="appearance-none whitespace-nowrap border w-full leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
           >
             My Quotes
           </button>
-        </router-link>
+        </NuxtLink>
 
         <button
           @click="togglePopup"
           type="button"
-          class="appearance-none border w-full border-primary leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
+          class="appearance-none border w-full border-primary- leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
         >
           product page
         </button>
@@ -149,16 +149,11 @@ const myrules1 = {
   unit: { required },
 };
 const validPhoneLength = (value) =>
-  quoteForm.phoneCode === "+234" ? value.length > 9 && value.length < 12 : true;
+  quoteForm.phoneCode === "+234" ? value.length > 9 && value.length < 15 : true;
 const myrules2 = {
   deliverAddress: { required },
   phone: {
     required,
-    numeric,
-    validPhoneLength: helpers.withMessage(
-      "Phone number must be between 10 0r 11 digits",
-      validPhoneLength
-    ),
   },
   additionalInformation: {},
 };

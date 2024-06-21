@@ -8,7 +8,7 @@
     <button
       @click="isComplete = false"
       type="button"
-      class="appearance-none border border-matta-black leading-none px-5 py-3 rounded-lg text-white bg-matta-black hover:opacity-70 text-[13px] uppercase"
+      class="appearance-none border border-matta-black leading-none px-[14px] py-[10px] rounded-lg text-white bg-matta-black hover:opacity-70 text-[13px] uppercase"
     >
       Request another
     </button>

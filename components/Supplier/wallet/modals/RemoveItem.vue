@@ -14,7 +14,7 @@
       <button
         type="button"
         @click="emit('remove')"
-        class="border text-[13px] border-primary uppercase w-full text-white bg-primary-500 rounded-lg px-2 py-3 hover:bg-primary/80"
+        class="border text-[13px] border-primary- uppercase w-full text-white bg-primary-500 rounded-lg px-2 py-3 hover:bg-primary/80"
       >
         remove
       </button>

@@ -36,7 +36,7 @@
         >
           <div class="px-4 py-4">
             <input
-              class="text-xs rounded-lg px-3 py-1 h-10 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20 text-matta-black"
+              class="text-xs rounded-lg px-3 py-1 h-10 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20 text-matta-black"
               v-model="query"
               placeholder="Search customer name"
               type="text"

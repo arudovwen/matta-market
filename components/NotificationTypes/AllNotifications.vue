@@ -25,12 +25,7 @@
       </div>
     </div>
   </div>
-  <div class="text-center py-8 px-2 h-[60vh] flex justify-center" v-else>
-    <span class="mt-24">
-      <div class="h-16 w-16 rounded-lg bg-green-200 mb-3 mx-auto"></div>
-      <p class="text-xs text-[#333]">Nothing to see here.</p>
-    </span>
-  </div>
+  <EmptyData v-else title="No new notification" />
 </template>
 <script setup>
 import Info from "./InfoType.vue";
@@ -65,7 +60,7 @@ function getDate(val) {
     return moment(val).fromNow();
   }
 
-  return moment(new Date(val)).format("lll");
+  return moment(new Date(val)).format("ll");
 }
 const filteredNotification = computed(() => {
   if (!selectedOption.value.length) return notifications.value;

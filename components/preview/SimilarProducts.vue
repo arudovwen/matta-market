@@ -6,13 +6,13 @@
       </h2>
       <span class="flex gap-x-5">
         <div
-          class="w-8 h-8 lg:w-12 lg:h-12 bg-[#E7EBEE] rounded-full flex items-center justify-center cursor-pointer"
+          class="w-8 h-8 lg:w-12 lg:h-11 bg-[#E7EBEE] rounded-full flex items-center justify-center cursor-pointer"
           @click="prev"
         >
           <i class="uil uil-arrow-left text-base lg:text-lg"></i>
         </div>
         <div
-          class="w-8 h-8 lg:w-12 lg:h-12 text-lg bg-[#E7EBEE] rounded-full flex items-center justify-center cursor-pointer"
+          class="w-8 h-8 lg:w-12 lg:h-11 text-lg bg-[#E7EBEE] rounded-full flex items-center justify-center cursor-pointer"
           @click="next"
         >
           <i class="uil uil-arrow-right text-base lg:text-lg"></i>
@@ -22,12 +22,12 @@
     <div class="" v-if="products.length">
       <carousel :breakpoints="breakpoints" ref="myslide" snapAlign="start">
         <slide v-for="(item, index) in products" :key="index" class="px-2">
-          <router-link
+          <NuxtLink
             :to="`/product/${encodeURIComponent(item.title)}/${item.id}`"
             class="w-full h-full text-left"
           >
             <SingleProduct :product="item" />
-          </router-link>
+          </NuxtLink>
         </slide>
       </carousel>
     </div>

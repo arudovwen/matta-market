@@ -13,7 +13,7 @@
           <input
             v-model="v$.pin.$model"
             :class="{ 'border-red-500 ': v$.pin.$error }"
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Enter new pin"
           />
           <EyeIcon
@@ -45,7 +45,7 @@
           <input
             v-model="v$.confirmPin.$model"
             :class="{ 'border-red-500 ': v$.confirmPin.$error }"
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Confirm your pin"
           />
           <EyeIcon
@@ -74,7 +74,7 @@
         <button
           type="submit"
           :disabled="isLoading"
-          class="border text-[13px] mb-4 border-primary uppercase text-white lg:min-w-[120px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-12"
+          class="border text-[13px] mb-4 border-primary- uppercase text-white lg:min-w-[120px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
         >
           <span>
             <span
@@ -101,7 +101,7 @@
           <input
             v-model="v1$.otp.$model"
             :class="{ 'border-red-500 ': v1$.otp.$error }"
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Enter otp code"
           />
         </div>
@@ -120,7 +120,7 @@
         <button
           type="submit"
           :disabled="isLoading"
-          class="border text-[13px] mb-4 border-primary uppercase text-white lg:min-w-[120px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-12"
+          class="border text-[13px] mb-4 border-primary- uppercase text-white lg:min-w-[120px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
         >
           <span>
             <span

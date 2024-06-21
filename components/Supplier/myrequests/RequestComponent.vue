@@ -4,7 +4,7 @@
       <span
         class="mr-3 h-10 w-10 rounded-lg flex items-center justify-center border border-[#E7EBEE] p-2"
       >
-         <NuxtImg class="" :src="request?.image" alt="alt" />
+         <!-- <img class="" :src="request?.image" alt="alt" /> -->
       </span>
       <span>
         <span class="text-xs font-medium"> {{ request.productName }} </span>
@@ -14,7 +14,7 @@
     </div>
     <div class="grid grid-cols-2 gap-y-8 gap-x-4 mb-8">
       <div>
-        <p class="text-[12px] text-[#B6B7B9] mb-2 uppercase">STATUS</p>
+        <p class="text-[12px] text-[#98A2B3] mb-1 capitalize">Status</p>
         <!-- <span class="px-2 py-2 text-xs rounded-lg bg-[#D0C9FF]"> New</span> -->
         <span
           v-if="request.requestStatus == 0"
@@ -30,17 +30,17 @@
         >
       </div>
       <div>
-        <p class="text-[12px] text-[#B6B7B9] mb-2 uppercase">created</p>
-        <span class="text-xs"> {{ moment(request.date).format("lll") }}</span>
+        <p class="text-[12px] text-[#98A2B3] mb-1 capitalize">created</p>
+        <span class="text-xs"> {{ moment(request.date).format("ll") }}</span>
       </div>
       <div>
-        <p class="text-[12px] text-[#B6B7B9] mb-2 uppercase">
+        <p class="text-[12px] text-[#98A2B3] mb-1 capitalize">
           number of samples
         </p>
         <span class="text-xs">{{ request.numberofSamples }}</span>
       </div>
       <div>
-        <p class="text-[12px] text-[#B6B7B9] mb-2 uppercase">
+        <p class="text-[12px] text-[#98A2B3] mb-1 capitalize">
           Expected annual usage
         </p>
         <span class="text-xs">{{ request.expectedAnualUsage }}</span>
@@ -56,9 +56,9 @@
         </p>
       </div>
     </div>
-    <div class="bg-[#F1F3F5] rounded-lg p-6 text-matta-black">
-      <div class="flex justify-between mb-6">
-        <h3 class="text-lg font-medium">Shipping Address</h3>
+    <div class=" border border-[#D0D5DD] rounded-lg px-6 py-5 text-matta-black">
+      <div class="flex justify-between mb-2">
+        <h3 class="text-base font-medium">Shipping Address</h3>
         <span><i class="uil uil-minusext-lg"></i></span>
       </div>
       <div class="text-xs">

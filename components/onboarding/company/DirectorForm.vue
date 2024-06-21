@@ -1,134 +1,134 @@
 <template>
   <h3 class="font-medium text-2xl mb-8">Add director</h3>
-  <form @submit.prevent="handleSubmit">
-    <div class="grid grid-cols-2 gap-x-4">
+  <form @submit.prevent="onSubmit">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">First name</label>
-        <input
-          v-model="v$.firstName.$model"
-          :class="{ 'border-red-500': v$.firstName.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          autocomplete="off"
-          autofocus="on"
+        <Textinput
+          placeholder=""
+          label="First name"
+          type="text"
+          name="firstName"
+          v-bind="firstNameAtt"
+          v-model="firstName"
+          :error="errors.firstName"
+          isCumpulsory
         />
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.firstName.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
       </div>
+
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Last name</label>
-        <input
-          v-model="v$.lastName.$model"
-          :class="{ 'border-red-500': v$.lastName.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          autocomplete="off"
-          autofocus="on"
+        <Textinput
+          placeholder=""
+          label="Last name"
+          type="text"
+          name="lastName"
+          v-bind="lastNameAtt"
+          v-model="lastName"
+          :error="errors.lastName"
+          isCumpulsory
         />
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.lastName.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
       </div>
     </div>
-    <div class="mb-6">
-      <label for="email" class="mb-2 font-normal text-xs block">E-mail</label>
-      <input
-        v-model="v$.email.$model"
-        :class="{ 'border-red-500': v$.email.$error }"
-        class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-        placeholder="E-mail"
-        autocomplete="off"
-        aria-autocomplete="none"
-        type="email"
-        id="email"
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
+      <div class="mb-6">
+        <Textinput
+          placeholder=""
+          label="E-mail"
+          type="email"
+          name="email"
+          v-bind="emailAtt"
+          v-model="email"
+          :error="errors.email"
+          isCumpulsory
+        />
+      </div>
+      <div class="mb-6">
+        <FormGroup  isCumpulsory label="Phone number" :error="errors.phone">
+          <FormsPhoneCodes v-model="phone" />
+        </FormGroup>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
+      <div class="mb-6" v-if="companyInfo?.country?.toLowerCase()=== 'nigeria'">
+        <Textinput
+          placeholder=""
+          label="BVN"
+          type="text"
+          name="bvn"
+          v-bind="bvnAtt"
+          v-model="bvn"
+          :error="errors.bvn"
+          isCumpulsory
+        />
+      </div>
+      <div class="mb-6">
+        <FormGroup isCumpulsory label="Date of birth" :error="errors.dob" name="dob">
+          <ClientOnly>
+            <VueDatePicker
+              auto-apply
+              v-model="dob"
+              placeholder="Select date"
+              :enable-time-picker="false"
+              :input-class-name="`!rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20 ${
+                errors.dob ? 'border-red-500' : 'border-[#DCDEE6]'
+              }`"
+            />
+          </ClientOnly>
+        </FormGroup>
+      </div>
+    </div>
+    <div class="lg:col-span-2 mb-6">
+      <Textinput
+        placeholder=""
+        label="Linkedin url"
+        type="text"
+        name="linkedIn"
+        v-bind="linkedInAtt"
+        v-model="linkedIn"
+        :error="errors.linkedIn"
       />
-      <div
-        class="text-red-500 mt-1"
-        v-for="error of v$.email.$errors"
-        :key="error.$uid"
-      >
-        <div class="error-msg text-error text-xs font-semibold">
-          {{ error.$message }}
-        </div>
-      </div>
     </div>
-    <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block" for="phone"
-        >Phone number <span class="text-red-500 pl-[.02rem]">*</span></label
+
+    <div class="lg:col-span-2 mb-6">
+      <FormGroup  
+        :error="isFieldTouched('identityUrl') ? errors.identityUrl : ''"
       >
-      <div class="flex relative rounded-lg h-12">
-        <input
-          :class="{ 'border-red-500': v$.phone.$error }"
-          v-model="v$.phone.$model"
-          class="flex-1 rounded-r-lg px-4 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          autocomplete="off"
-          aria-autocomplete="none"
-          placeholder="08160723884"
-          role="presentation"
-          id="phone"
+        <FileUpload
+          label="Upload ID (Passport, Driver’s License, or NIN)"
+          id="identityUrl"
+          :modelValue="form.identityUrl"
+          :isCumpulsory="true"
         />
-      </div>
-      <div
-        class="text-red-500 mt-1"
-        v-for="error of v$.phone.$errors"
-        :key="error.$uid"
-      >
-        <div class="error-msg text-error text-xs font-semibold">
-          {{ error.$message }}
-        </div>
-      </div>
+        <span
+          @click="downloadFile(form.identityUrl, 'Identity card')"
+          download
+          v-if="form.identityUrl"
+        >
+          <span class="block text-xs text-blue-500 mt-1"
+            >Download Identity card</span
+          ></span
+        >
+      </FormGroup>
     </div>
-    <div class="grid grid-cols-2 gap-x-4">
-      <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">BVN</label>
-        <input
-          v-model="v$.bvn.$model"
-          :class="{ 'border-red-500': v$.bvn.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          autocomplete="off"
-          autofocus="on"
+    <div class="lg:col-span-2 mb-6">
+      <FormGroup
+        :error="isFieldTouched('signatureUrl') ? errors.signatureUrl : ''"
+      >
+        <FileUpload
+          label="Upload Signature"
+          id="signatureUrl"
+          :modelValue="form.signatureUrl"
+          :isCumpulsory="true"
         />
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.bvn.$errors"
-          :key="error.$uid"
+        <span
+          @click="downloadFile(form.signatureUrl, 'Signature')"
+          download
+          v-if="form.signatureUrl"
         >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
-      </div>
-      <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Date of birth</label>
-        <input
-          v-model="v$.dob.$model"
-          :class="{ 'border-red-500': v$.dob.$error }"
-          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          autocomplete="off"
-          autofocus="on"
-          type="date"
-        />
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.dob.$errors"
-          :key="error.$uid"
+          <span class="block text-xs text-blue-500 mt-1"
+            >Download Signature</span
+          ></span
         >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
-      </div>
+      </FormGroup>
     </div>
     <div class="flex justify-end gap-x-4 mt-8 w-full">
       <button
@@ -140,7 +140,7 @@
       </button>
       <button
         type="submit"
-        :disabled="isLoading"
+        :disabled="isLoading || !form.signatureUrl || !form.identityUrl"
         class="text-xs uppercase bg-primary-500 text-white px-5 py-4 rounded-lg hover:bg-primary/70 disabled:opacity-60 w-full"
       >
         Submit
@@ -150,19 +150,16 @@
 </template>
 
 <script setup>
-import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  email,
-  helpers,
-  maxLength,
-  minLength,
-  numeric,
-} from "@vuelidate/validators";
+import moment from "moment";
+import VueDatePicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import * as yup from "yup";
 
 const open = inject("open");
-const directors = inject("directors");
+const formData = inject("form");
+const companyInfo = inject("companyInfo");
 
+const props = defineProps(["type", "director", "id"]);
 const form = reactive({
   firstName: "",
   lastName: "",
@@ -170,50 +167,120 @@ const form = reactive({
   phone: "",
   bvn: "",
   dob: "",
+  linkedIn: "",
+  signatureUrl: "",
+  identityUrl: "",
+  country:companyInfo?.value?.country
+});
+const schema = yup.object().shape({
+  firstName: yup.string().required("First name is required"),
+  lastName: yup.string().required("Last name is required"),
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  phone: yup.string().required("Phone number is required"),
+  dob: yup.date().typeError("Invalid date").required("Date of birth is required").nullable(),
+  linkedIn: yup.string(), // No validation for LinkedIn URL
+  signatureUrl: yup.string().required("Signature URL is required"),
+  identityUrl: yup.string().required("Identity URL is required"),
+  bvn: yup.string().when("country", {
+    is: "Nigeria",
+    then: (schema) => schema.required("BVN is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
+});
+const {
+  handleSubmit,
+  defineField,
+  errors,
+  setFieldValue,
+  setFieldTouched,
+  isFieldTouched,
+} = useForm({
+  validationSchema: schema,
+  initialValues: form,
+});
+const [firstName, firstNameAtt] = defineField("firstName");
+const [lastName, lastNameAtt] = defineField("lastName");
+const [email, emailAtt] = defineField("email");
+const [phone] = defineField("phone");
+const [bvn, bvnAtt] = defineField("bvn");
+const [dob] = defineField("dob");
+const [linkedIn, linkedInAtt] = defineField("linkedIn");
+
+onMounted(() => {
+  if (props.director) {
+    form.firstName = props.director.firstName;
+    form.lastName = props.director.lastName;
+    form.email = props.director.email;
+    form.phone = props.director.phone;
+    form.bvn = props.director.bvn;
+    form.dob = new Date(props.director.dob);
+    form.linkedIn = props.director.linkedIn;
+    form.signatureUrl = props.director.signatureUrl;
+    form.identityUrl = props.director.identityUrl;
+    Object.keys(props.director).forEach(item=>{
+       setFieldValue(item, props.director[item])
+    })
+  }
 });
 const isLoading = ref(false);
-const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 12 : true;
-const rules = {
-  firstName: {
-    required,
-    maxLength: maxLength(50),
-  },
 
-  lastName: {
-    required,
-  },
-  bvn: {
-    required,
-    minLength: minLength(10),
-  },
-  dob: {
-    required,
-  },
-  email: {
-    required: helpers.withMessage("Email field cannot be empty", required),
-    email: helpers.withMessage("Email is invalid", email),
-    maxLength: maxLength(50),
-  },
-  phone: {
-    numeric,
-    required,
-  },
-};
+function handleChange(id, value) {
+  setFieldValue(id, value);
+  setFieldTouched(id, true);
+  if (id === "signatureUrl") {
+    form.signatureUrl = value;
+  }
+  if (id === "identityUrl") {
+    form.identityUrl = value;
+  }
+}
+const onSubmit = handleSubmit((values) => {
+  isLoading.value = true;
+  if (props.type === "add") {
+    formData.directors.push(values);
+  } else {
+    formData.directors.map((i, index) => {
+      if (index === props.id) {
+        i.firstName = values.firstName;
+        i.lastName = values.lastName;
+        i.email = values.email;
+        i.phone = values.phone;
+        i.bvn = values.bvn;
+        i.dob = values.dob;
+        i.linkedIn = values.linkedIn;
+        i.signatureUrl = values.signatureUrl;
+        i.identityUrl = values.identityUrl;
+      }
+      return i;
+    });
+  }
 
-const v$ = useVuelidate(rules, form);
+  open.value = false;
+});
+async function handleSubmifft() {
+  if (props.type === "add") {
+    formData.directors.push(form);
+  } else {
+    formData.directors.map((i, index) => {
+      if (index === props.id) {
+        i.firstName = fo.firstName;
+        i.lastName = form.lastName;
+        i.email = form.email;
+        i.phone = form.phone;
+        i.bvn = form.bvn;
+        i.dob = form.dob;
+        i.linkedIn = form.linkedIn;
+        i.signatureUrl = form.signatureUrl;
+        i.identityUrl = form.identityUrl;
+      }
+      return i;
+    });
+  }
 
-async function handleSubmit() {
-  const validity = await v$.value.$validate();
-  if (!validity) return;
-  directors.push(form);
-  // form.phone =
-  //   form.bvn =
-  //   form.dob =
-  //   form.firstName =
-  //   form.lastName =
-  //   form.email =
-  //     "";
   open.value = false;
 }
+provide("handleChange", handleChange);
 </script>

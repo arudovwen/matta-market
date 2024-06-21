@@ -122,7 +122,7 @@
     v-if="isFilterOpen"
   >
     <template #content>
-      <div class="bg-white py-10 px-4 rounded-lg min-w-[300px]">
+      <div class="bg-white py-10 px-4 rounded-lg min-w-[250px]">
         <div class="flex flex-col gap-4 items-center">
           <SelectComponent
             @onGetData="onGetPrice"
@@ -200,7 +200,7 @@
           <button
             type="button"
             @click="isClearing = false"
-            class="appearance-none border w-1/2 border-primary leading-none px-8 py-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
+            class="appearance-none border w-1/2 border-primary- leading-none px-8 py-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
           >
             clear filters
           </button>

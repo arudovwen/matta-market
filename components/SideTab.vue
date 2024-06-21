@@ -13,7 +13,7 @@
           v-for="list in lists"
           :key="list.title"
         >
-          <Checkbox
+          <CheckboxMulti
             v-model="selected"
             :label="list.title.toLowerCase()"
             labelClass="text-xs md:text-sm"
