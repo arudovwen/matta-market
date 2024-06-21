@@ -55,10 +55,6 @@
 </template>
 
 <script setup>
-import { inject } from "vue";
-import Pagination from "~/components/PaginationComponent";
-// import { useRoute } from "vue-router";
-import SingleProduct from "~/components/SingleProduct";
 
 // const route = useRoute();
 const isPageLoading = inject("isPageLoading");

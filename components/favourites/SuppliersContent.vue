@@ -51,10 +51,6 @@
 </template>
 
 <script setup>
-import SingleSupplier from "~/components/SingleSupplier";
-import { inject } from "vue";
-import Pagination from "~/components/PaginationComponent";
-
 const isPageLoading = inject("isPageLoading");
 const supplierParams = inject("supplierParams");
 const suppliers = inject("suppliers");

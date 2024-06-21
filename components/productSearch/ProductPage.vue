@@ -27,7 +27,6 @@
 
 <script setup>
 import { inject } from "vue";
-import Pagination from "~/components/PaginationComponent";
 import SingleProduct from "~/components/SingleProduct";
 
 const isPageLoading = inject("isPageLoading");
