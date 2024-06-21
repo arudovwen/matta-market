@@ -1,0 +1,13 @@
+// import { it, expect, describe, vi, afterEach } from "vitest";
+// import { mount } from "@vue/test-utils";
+// import { createTestingPinia } from "@pinia/testing";
+// import CatalogsComponent from "~/components/catalog/CatalogsComponent.vue";
+
+// const store = useProductStore();
+
+// describe("Content", () => {
+// 	const component = mount(CatalogsComponent);
+//   it("Mounts without error", () => {
+// 		expect(component.html()).toContain("You have no item in your cart")
+//   });
+// });
