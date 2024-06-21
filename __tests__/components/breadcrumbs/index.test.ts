@@ -1,4 +1,4 @@
-import { mountSuspended } from "@nuxt/test-utils/runtime";
+import { render, screen } from '@testing-library/vue'
 import { it, expect, describe, vi, afterEach } from "vitest";
 import CompanyAccount from "~/components/onboarding/CompanyAccount.vue";
 import { mount } from "@vue/test-utils";
@@ -13,7 +13,7 @@ const store = useProductStore();
 
 describe("Breadcrubms index", () => {
 
-  const component = mount(index, {
+  const component = render(index, {
     props: {
       links: [
         {

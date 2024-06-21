@@ -1,4 +1,4 @@
-import { mountSuspended } from "@nuxt/test-utils/runtime";
+import { render, screen } from '@testing-library/vue'
 import { it, expect, describe, vi, afterEach } from "vitest";
 import CompanyAccount from "~/components/onboarding/CompanyAccount.vue";
 import { mount } from "@vue/test-utils";
@@ -11,7 +11,7 @@ import { createTestingPinia } from "@pinia/testing";
 const store = useProductStore();
 
 describe("Content", () => {
-	const component = mount(Content, {
+	const component = render(Content, {
 		global: {
 			plugins: [createTestingPinia({createSpy: vi.fn})]
 		}

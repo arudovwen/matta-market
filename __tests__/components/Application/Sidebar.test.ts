@@ -1,4 +1,4 @@
-import { mountSuspended } from "@nuxt/test-utils/runtime";
+import { render, screen } from '@testing-library/vue'
 import { it, expect, describe, vi, afterEach } from "vitest";
 import CompanyAccount from "~/components/onboarding/CompanyAccount.vue";
 import { mount } from "@vue/test-utils";
@@ -12,7 +12,7 @@ import SideBar from "~/components/Application/SideBar.vue";
 const store = useProductStore();
 
 describe("Sidebar", () => {
-	const component = mount(SideBar, {
+	const component = render(SideBar, {
 		global: {
 			provide: {
 				query : {

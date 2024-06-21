@@ -1,13 +1,12 @@
 <template>
   <div class="rounded-[20px] bg-white p-4">
     <div class="mb-4 sm:mb-8 relative h-[100px] sm:h-[150px]">
-       <NuxtImg
+       <img src="" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
         class="h-[100px] sm:h-[150px] w-full rounded-[20px] object-cover z-[2] relative"
         :src="
           product.converPhoto && product.converPhoto !== 'null'
             ? product.converPhoto
-            : require('~/assets/img/img1.png')
-        "
+            : require('../assets/img/img1.png')"
       />
       <div
         class="bg-gray-200 animate-pulse h-[100px] sm:h-[150px] w-full rounded-[20px] z-[1] absolute top-0"
@@ -18,7 +17,7 @@
          <img
           alt="image"
           class=""
-          src="~/assets/img/logo.svg"
+          src="../assets/img/logo.svg"
           width="80"
           height="80"
         />

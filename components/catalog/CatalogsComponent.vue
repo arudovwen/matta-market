@@ -38,7 +38,7 @@
 import { getMarkets } from "~/services/productservices";
 import { onMounted, ref, reactive } from "vue";
 import TabComponent from "~/components/TabComponent";
-import generateRandomColor from "~/utils/generateRandomColor";
+// import generateRandomColor from "~/utils/generateRandomColor";
 
 const markets = ref(null);
 const isLoading = ref(true);
@@ -56,11 +56,11 @@ const queryParams = reactive({
 });
 
 function getMarket() {
-  getMarkets(queryParams)
-    .then((res) => {
+	getMarkets(queryParams)
+	.then((res) => {
       markets.value = res.data.data.map((i) => {
         i.imagePath = i.imagePath?.replace("~/assets", "");
-        i.marketColor = generateRandomColor();
+        // i.marketColor = generateRandomColor();
         return i;
       });
       queryParams.totalData = res.data.totalCount;

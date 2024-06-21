@@ -1,4 +1,4 @@
-import { mountSuspended } from "@nuxt/test-utils/runtime";
+import { render, screen } from '@testing-library/vue'
 import { it, expect, describe, vi, afterEach } from "vitest";
 import CompanyAccount from "~/components/onboarding/CompanyAccount.vue";
 import { mount } from "@vue/test-utils";
@@ -10,7 +10,7 @@ import Banner from "~/components/Application/Banner.vue";
 describe("bannner", () => {
 
   it("Renders", () => {
-    const component = mount(Banner, {
+    const component = render(Banner, {
       global: {
         provide: {
           query: {

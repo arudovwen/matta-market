@@ -1,4 +1,4 @@
-import { mountSuspended } from "@nuxt/test-utils/runtime";
+import { render, screen } from '@testing-library/vue'
 import { it, expect, describe, vi, afterEach } from "vitest";
 import CompanyAccount from "~/components/onboarding/CompanyAccount.vue";
 import { mount } from "@vue/test-utils";
@@ -34,7 +34,7 @@ describe("CompanyAccount", () => {
     redirectedFrom: undefined,
   }));
   it("Renders without error", () => {
-    const component = mount(CompanyAccount, {
+    const component = render(CompanyAccount, {
       props: {},
     });
     expect(component.html()).toContain("STEP 1/4");

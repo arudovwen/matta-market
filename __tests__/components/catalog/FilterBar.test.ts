@@ -1,12 +1,12 @@
 import { it, expect, describe, vi, afterEach } from "vitest";
-import { mount } from "@vue/test-utils";
+import { render, screen } from '@testing-library/vue'
 import FilterBar from "~/components/catalog/FilterBar.vue";
 
 const store = useProductStore();
 
 describe("Content", () => {
   const sortPrice = vi.fn;
-  const component = mount(FilterBar, {
+  const component = render(FilterBar, {
     global: {
       provide: {
         sortPrice: sortPrice,

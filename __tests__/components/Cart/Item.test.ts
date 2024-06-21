@@ -1,12 +1,12 @@
 import { it, expect, describe, vi, afterEach } from "vitest";
-import { mount } from "@vue/test-utils";
+import { render, screen } from '@testing-library/vue'
 import { createTestingPinia } from "@pinia/testing";
 import Item from "~/components/Cart/Item.vue";
 
 const store = useProductStore();
 
 describe("Item", () => {
-	const component = mount(Item, {
+	const component = render(Item, {
 		props: {
 			detail: {
 				productImg: "",
