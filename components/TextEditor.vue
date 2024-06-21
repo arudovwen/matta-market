@@ -18,7 +18,7 @@
       v-model="value"
       @keyup="emit('update:modelValue', value)"
       ref="input"
-      class="rounded-lg px-5 py-3 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+      class="rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
     />
   </div>
 </template>

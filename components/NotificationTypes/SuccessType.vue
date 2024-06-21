@@ -13,13 +13,13 @@
           {{ text }}
         </p>
         <p class="text-xs text-[#666] mb-2">{{ time }}</p>
-        <!-- <router-link :to="url">
+        <!-- <NuxtLink :to="url">
           <button
             class="text-xs btn-secondary flex items-center justify-center h-8 rounded-lg px-4 py-2"
           >
             See more
           </button>
-        </router-link> -->
+        </NuxtLink> -->
       </div>
       <i
         v-if="!isViewed"

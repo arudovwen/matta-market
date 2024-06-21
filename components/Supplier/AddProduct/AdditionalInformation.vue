@@ -31,7 +31,7 @@
             <div class="mb-6">
               <input
                 v-model="n.question"
-                class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                 autocomplete="off"
                 placeholder="Enter question"
               />
@@ -41,7 +41,7 @@
                 v-model="n.answer"
                 rows="3"
                 placeholder="Enter answer"
-                class="rounded-lg px-5 py-3 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                class="rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               ></textarea>
             </div>
           </div>
@@ -77,7 +77,7 @@
             <div class="relative flex-1">
               <Combobox v-model="form.productExperts[id]">
                 <ComboboxInput
-                  class="px-5 py-1 h-10 rounded-lg w-full text-left flex items-center justify-between border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  class="px-5 py-1 h-10 rounded-lg w-full text-left flex items-center justify-between border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   @change="query = $event.target.value"
                   :displayValue="
                     (p) =>
@@ -137,7 +137,7 @@
             >
               <div class="relative mt-1">
                 <ListboxButton
-                  class="px-5 py-1 h-10 rounded-lg w-full text-left flex items-center justify-between border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  class="px-5 py-1 h-10 rounded-lg w-full text-left flex items-center justify-between border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                 >
                   <div class="" v-if="e">
                     <div class="flex items-center gap-x-3">
@@ -238,7 +238,7 @@
           <Listbox v-model="form.tags">
             <div class="relative mt-1">
               <ListboxButton
-                class="px-5 py-1 rounded-lg min-h-[40px] w-full text-left flex items-center justify-between border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                class="px-5 py-1 rounded-lg min-h-[40px] w-full text-left flex items-center justify-between border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               >
                 <div class="" v-if="form.tags.length">
                   <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -320,7 +320,7 @@
       <button
         type="button"
         @click="togglePreview"
-        class="appearance-none leading-none px-10 py-4 rounded-full text-primary border-primary border hover:bg-gray-100 text-[13px] uppercase"
+        class="appearance-none leading-none px-10 py-4 rounded-full text-primary border-primary- border hover:bg-gray-100 text-[13px] uppercase"
       >
         PREVIEW
       </button>
@@ -361,33 +361,33 @@
           </div>
           <input
             v-model="expertAnswer.name"
-            class="rounded-lg px-3 py-3 h-12 mb-5 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-3 py-3 h-11 mb-5 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             autocomplete="off"
             placeholder="Enter expert name..."
           />
           <input
             v-model="expertAnswer.role"
-            class="rounded-lg px-3 py-3 h-12 mb-5 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-3 py-3 h-11 mb-5 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             autocomplete="off"
             placeholder="Enter expert role..."
           />
           <input
             v-model="expertAnswer.phone"
-            class="rounded-lg px-3 py-3 h-12 mb-5 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-3 py-3 h-11 mb-5 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             autocomplete="off"
             placeholder="Enter phone number.."
             type="number"
           />
           <input
             v-model="expertAnswer.email"
-            class="rounded-lg px-3 py-3 h-12 mb-5 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-3 py-3 h-11 mb-5 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             autocomplete="off"
             placeholder="Enter email..."
             type="email"
           />
           <input
             v-model="expertAnswer.language"
-            class="rounded-lg px-3 py-3 h-12 mb-5 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-3 py-3 h-11 mb-5 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             autocomplete="off"
             placeholder="Enter language..."
           />
@@ -430,7 +430,7 @@
           </div>
           <input
             v-model="answer"
-            class="rounded-lg px-3 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-3 py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             autocomplete="off"
             placeholder="Enter package name..."
           />

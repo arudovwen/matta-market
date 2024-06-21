@@ -26,7 +26,7 @@
                 >
                   <input
                     v-model="n.email"
-                    class="flex-1 rounded-lg text-sm px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                    class="flex-1 rounded-lg text-sm px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                     autocomplete="off"
                     autofocus="on"
                     type="email"
@@ -35,7 +35,7 @@
                   <Listbox v-model="n.role">
                     <div class="relative">
                       <ListboxButton
-                        class="relative cursor-default rounded-lg min-w-[160px] h-12 border border-[#D0D5DD] bg-[#F1F3F5] py-2 px-[15px] text-left sm:text-sm"
+                        class="relative cursor-default rounded-lg min-w-[160px] h-11 border border-[#D0D5DD] bg-[#F1F3F5] py-2 px-[15px] text-left sm:text-sm"
                       >
                         <span
                           class="block text-[#101828] text-sm"
@@ -130,7 +130,7 @@
             </div>
 
             <div class="flex justify-center gap-x-4 items-center mt-8">
-              <router-link
+              <NuxtLink
                 to="/onboarding/company?onboarding_stage=2"
                 class="w-1/2 lg:w-auto"
               >
@@ -139,7 +139,7 @@
                 >
                   Back
                 </button>
-              </router-link>
+              </NuxtLink>
               <button
                 :disabled="isLoading"
                 :class="{

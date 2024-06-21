@@ -57,7 +57,7 @@ export default defineComponent({
     },
     activeClass: {
       type: String,
-      default: "ring-slate-500 darks:ring-slate-400",
+      default:"ring-primary-400  bg-primary-500",
     },
     value: {
       type: null,

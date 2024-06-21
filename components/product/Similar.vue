@@ -9,7 +9,7 @@
         </h2>
       </div>
 
-      <div v-if="!loading" class="flex gap-x-6 overflow-x-hidden hover:overflow-x-auto pb-6">
+      <div v-if="!loading" class="flex gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar overflow-x-auto pb-6">
         <div
           v-for="slide in productsData.slice(0, 10)"
           :key="slide"
@@ -20,7 +20,7 @@
               )}/${slide.id}`
             )
           "
-          class="w-full  min-w-[130px] sm:min-w-[160px] lg:min-w-[250px] max-w-[250px]  bg-white darks:bg-gray-800 rounded-[10px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.05)] overflow-hidden"
+          class="w-full cursor-pointer min-w-[140px] sm:min-w-[160px] lg:min-w-[250px] max-w-[250px]  bg-white darks:bg-gray-800 rounded-[10px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.05)] overflow-hidden"
         >
           <div
             class="w-full h-[90px] sm:h-[120px] lg:h-[140px] xl:h-[160px] bg-gray-200 bg-cover bg-center relative"
@@ -32,7 +32,7 @@
                 :icon="!slide.liked ? 'ph:heart' : 'ph:heart-fill'"
                 class="text-xs sm:text-sm md:text-base darks:text-white"
             /></span>
-            <NuxtImg :src="slide.converPhoto" alt="image" width="276" height="160" class="w-full  h-full object-cover" fit="cover" loading="lazy" />
+            <img :src="slide.converPhoto" alt="image" width="276" height="160" class="w-full  h-full object-cover" fit="cover" loading="lazy" />
           </div>
           <div class="w-full py-3 md:py-5 px-3 xl:px-5">
             <span
@@ -46,7 +46,7 @@
 
             <div class="flex justify-between items-start md:items-center">
               <span
-                v-if="slide.type === 'request'"
+                v-if="slide.hidePrice"
                 class="font-semibold text-[12px] sm:text-sm xl:text-base text-[#2176FF] leading-tight"
                 >Request Quote</span
               >
@@ -75,7 +75,7 @@
       </div>
       <div
       v-if="loading"
-      class="flex xl:grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 overflow-x-hidden hover:overflow-x-auto pb-6"
+      class="flex xl:grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar pb-6"
     >
       <div v-for="n in 5" :key="n">
         <ProductSkelenton />
@@ -140,7 +140,7 @@ function getAllProducts() {
       }
     })
     .catch(() => {
-      setLoader(false);
+      store.setLoader(false);
     });
 }
 

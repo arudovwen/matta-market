@@ -1,43 +1,24 @@
 <template>
   <div
-    v-if="isOpen && route.path !== '/company-settings'"
-    class="p-8 bg-matta-black rounded-xl flex justify-between gap-x-40 relative mb-3"
+    v-if="!authStore?.userInfo?.onboardingPageStatus"
+    class="px-5 py-[14px] bg-[#182230] rounded-[5px] flex flex-col lg:flex-row justify-between gap-y-5 lg:gap-y-0 lg:gap-x-40 relative mb-3"
   >
-    <div>
-      <p
-        class="text-[13px] uppercase text-[#ABABAB] mb-4"
-        style="word-spacing: 4px"
-      >
-        Company verification
-      </p>
-      <p class="text-white text-base">
-        To ensure the high quality of all participants on Matta, we verify each
-        company. During the registration process, you didn’t fill in all the
-        data required for verification.
+    <div class="flex gap-x-4 items-center">
+      <AppIcon icon="quill:info" iconClass="text-white text-2xl" />
+      <p class="text-white text-sm max-w-[660px]">
+        {{ route.name.includes("wallet") ? walletText : defaultText }}
       </p>
     </div>
     <div class="flex items-end">
-      <!-- <button
-        v-if="!showing === 'email'"
-        class="px-8 py-4 rounded-full bg-primary-500 hover:bg-primary/80 uppercase text-[13px] text-white whitespace-nowrap"
-      >
-        validate your email
-      </button> -->
-      <router-link to="/company/settings"
+      <NuxtLink to="/company/settings" class="w-full lg:w-auto"
         ><button
-          class="px-8 py-4 rounded-full bg-primary-500 hover:bg-primary/80 uppercase text-white text-[13px] whitespace-nowrap"
+          class="px-8 py-[11px] rounded-[5px] bg-primary-500 hover:bg-primary/80 text-white text-sm whitespace-nowrap w-full lg:w-auto"
         >
-          Add Company Info
-        </button></router-link
+          Add Company details
+        </button></NuxtLink
       >
     </div>
-    <span
-      @click="isOpen = false"
-      class="cursor-pointer rounded-full h-6 w-6 flex items-center text-white justify-center absolute top-4 right-4"
-      ><AppIcon icon="heroicons-solid:x" class="w-4 h-4 text-white"
-    /></span>
   </div>
-
 </template>
 <script setup>
 import { useRoute } from "vue-router";
@@ -45,7 +26,11 @@ import { getCompanyProfile } from "~/services/settingservices";
 const route = useRoute();
 const isOpen = ref(false);
 const detail = ref(null);
-
+const authStore = useAuthStore();
+const defaultText =
+  "To use some of our features, we are required to verify your company registration information. Kindly proceed t o provide your company details";
+const walletText =
+  "To request for a wallet, we are required to verifiy your company registration information. Kindly proceed t o provide your company details";
 onMounted(() => {
   getData();
 });

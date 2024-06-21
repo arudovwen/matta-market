@@ -9,9 +9,9 @@ const config = {
 //Orders
 
 export const procurementorders = withRetryHandling(
-  ({ Status, SortOrder, Search, PageNumber, PageSize }) => {
+  (payload) => {
     return get(
-      `${urls.PROCUREMENT_ORDERS}?PageSize=${PageSize}&PageNumber=${PageNumber}&Search=${Search}&SortOrder=${SortOrder}&Status=${Status}`,
+      `${urls.PROCUREMENT_ORDERS}?${new URLSearchParams(cleanObject(payload))}`,
       config
     );
   }
@@ -23,5 +23,5 @@ export const buyerordertimeline = withRetryHandling((salesorderId) => {
   );
 });
 export const procurementorderdetails = withRetryHandling((orderId) => {
-  return get(`${urls.PROCUREMENT_ORDER_DETAILS}?orderNo=${orderId}`, config);
+  return get(`${urls.PROCUREMENT_ORDER_DETAILS}?orderId=${orderId}`, config);
 });

@@ -33,7 +33,7 @@ export default {
     },
     extend: {
       colors: {
-        "matta-black": "#2C2C2C",
+        "matta-black": "#475467",
         primary: {
           50: "#EAF2FF", // Lightest shade
           100: "#D3E2FF",

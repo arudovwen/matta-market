@@ -42,11 +42,11 @@
       </div>
 
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">E-mail</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
         <input
           v-model="v$.email.$model"
           :class="{ 'border-red-500': v$.email.$error }"
-          class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           placeholder="E-mail"
           autocomplete="off"
           autofocus="on"
@@ -69,7 +69,7 @@
           <input
             v-model="v$.password.$model"
             :class="{ 'border-red-500 ': v$.password.$error }"
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Password"
             autocomplete="off"
             :type="!isShowingPasword ? 'password' : 'text'"
@@ -103,7 +103,7 @@
           <input
             v-model="v$.confirmPassword.$model"
             :class="{ 'border-red-500 ': v$.confirmPassword.$error }"
-            class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Password"
             autocomplete="off"
             :type="!isShowingPasword ? 'password' : 'text'"
@@ -136,7 +136,7 @@
             'opacity-70 cursor-not-allowed':
               v$.$silentErrors.length || isLoading,
           }"
-          class="border mb-4 text-[13px] border-primary uppercase text-white w-full min-w-[55px] bg-primary-500 text-center opacity-80 rounded-full px-6 py-2 hover:opacity-100 h-12 leading-[normal]"
+          class="border mb-4 text-[13px] border-primary- uppercase text-white w-full min-w-[55px] bg-primary-500 text-center opacity-80 rounded-full px-6 py-2 hover:opacity-100 h-11 leading-[normal]"
         >
           <span v-if="isLoading"
             >Signing up
@@ -157,7 +157,7 @@
           </p>
           <div class="flex justify-center gap-x-6 mt-6">
             <button
-              class="border border-[#E7EBEE] rounded-full flex items-center h-12 w-12 justify-center text-center hover:bg-gray-400 hover:shadow-sm relative"
+              class="border border-[#E7EBEE] rounded-full flex items-center h-11 w-12 justify-center text-center hover:bg-gray-400 hover:shadow-sm relative"
             >
                <img
                 src="~/assets/img/google.png"

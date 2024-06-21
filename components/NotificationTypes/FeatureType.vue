@@ -15,7 +15,7 @@
           {{ text }}
         </p>
         <p class="text-xs text-[#666] mb-2">{{ time }}</p>
-        <router-link :to="url">
+        <NuxtLink :to="url">
           <button
             class="text-xs btn-secondary flex justify-center items-center h-8 rounded-lg px-4 py-2"
           >
@@ -24,7 +24,7 @@
               class="uis uil-arrow-up text-primary ml-1 rotate-45 flex text-sm"
             ></i>
           </button>
-        </router-link>
+        </NuxtLink>
       </div>
       <i
         v-if="!isViewed"

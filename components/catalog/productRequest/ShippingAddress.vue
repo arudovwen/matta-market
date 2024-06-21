@@ -5,9 +5,9 @@
       Choose your shipping options for samples requested.
     </p>
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block">E-mail</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail  <RedDot /></label>
       <input
-        class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+        class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
         placeholder="E-mail"
         autocomplete="off"
         autofocus="on"
@@ -24,13 +24,13 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block">Phone number</label>
-      <div class="flex relative rounded-lg h-12">
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number  <RedDot /></label>
+      <div class="flex relative rounded-lg h-11">
         <PhoneCodes v-model="phoneCode" />
 
         <input
           v-model="request2$.phone.$model"
-          class="flex-1 rounded-r-lg text-[13px] px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+          class="flex-1 rounded-r-lg text-[13px] px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           autocomplete="off"
           autofocus="on"
           placeholder="08160723884"
@@ -49,7 +49,7 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block">Address</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address  <RedDot /></label>
       <Listbox v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton
@@ -144,12 +144,12 @@
     </div>
     <!-- 
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block">Description</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Description</label>
       <textarea
         v-model="request2$.addressDescription.$model"
         placeholder=""
         row="4"
-        class="placeholder:text-xs rounded-lg px-4 py-3 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+        class="placeholder:text-xs rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
       ></textarea>
       <div
         class="text-red-500 mt-1"

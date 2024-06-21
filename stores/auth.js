@@ -3,45 +3,59 @@ import { defineStore } from "pinia";
 export const useAuthStore = defineStore(
   "auth",
   () => {
-    const cookie = useCookie("auth");
     const loggedUser = ref("");
-
-    const isLoggedIn = computed(() => !!cookie.value?.loggedUser);
-    const refresh_token = computed(() => cookie.value?.loggedUser?.jwToken);
-    const access_token = computed(() => cookie.value?.loggedUser?.jwToken);
-    const roles = computed(() => cookie.value?.loggedUser?.roles);
-    const userId = computed(() => cookie.value?.loggedUser?.id);
-    const userType = computed(() => cookie.value?.loggedUser?.businessUserType);
-    const userInfo = computed(() => cookie.value?.loggedUser);
+    const language = ref(window.navigator.language);
+    const languages = [
+      {
+        code: "en",
+        name: "En",
+        cname: "英语",
+        ename: "EnEnglish",
+      },
+      {
+        code: "fr",
+        name: "Fr",
+        cname: "法语",
+        ename: "Fr",
+      },
+    ];
+    const isLoggedIn = computed(() => !!loggedUser.value);
+    const refresh_token = computed(() => loggedUser?.value?.jwToken);
+    const access_token = computed(() => loggedUser?.value?.jwToken);
+    const roles = computed(() => loggedUser?.value?.roles);
+    const userId = computed(() => loggedUser?.value?.id);
+    const userType = computed(() => loggedUser?.value?.businessUserType);
+    const businessId = computed(() => loggedUser?.value?.businessId);
+    const userInfo = computed(() => loggedUser?.value);
 
     function setLoggedUser(data) {
       loggedUser.value = data;
     }
 
     function setAccessToken(value) {
-      let userInfo = { ...cookie.value?.loggedUser, access_token: value };
+      let userInfo = { ...loggedUser?.value, access_token: value };
       setLoggedUser(userInfo);
     }
     function setRefreshToken(value) {
-      let userInfo = { ...cookie.value?.loggedUser, refresh_token: value };
+      let userInfo = { ...loggedUser?.value, refresh_token: value };
       setLoggedUser(userInfo);
     }
     function updateUser(value) {
-      let userInfo = { ...cookie.value?.loggedUser, fullName: value };
+      let userInfo = { ...loggedUser?.value, fullName: value };
       setLoggedUser(userInfo);
     }
     function updateAccountType(value) {
-      let userInfo = { ...cookie.value?.loggedUser, accountType: value };
+      let userInfo = { ...loggedUser?.value, accountType: value };
 
       setLoggedUser(userInfo);
     }
     function updateUserInfo(data) {
-      let userInfo = { ...cookie.value?.loggedUser, ...data };
+      let userInfo = { ...loggedUser?.value, ...data };
       setLoggedUser(userInfo);
     }
 
     const logOut = () => {
-      cookie.value = "";
+      setLoggedUser(null)
       window.location.href = "/";
     };
     return {
@@ -60,13 +74,13 @@ export const useAuthStore = defineStore(
       setLoggedUser,
       logOut,
       loggedUser,
+      businessId,
+      language,
     };
   },
   {
     persist: {
-      storage: persistedState.cookiesWithOptions({
-        sameSite: "strict",
-      }),
+      storage: persistedState.localStorage,
     },
   }
 );

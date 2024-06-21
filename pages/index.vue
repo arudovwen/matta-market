@@ -2,13 +2,13 @@
   <div class="min-h-screen mx-auto">
     <LandingBanner />
 
-    <div class="bg-[#F4F4F4] darks:bg-gray-700 pt-8 sm:pt-[60px] pb-10">
-      <div class="hidden lg:block">
+    <div class="bg-[#F4F4F4] darks:bg-gray-700 pt-8 sm:pt-[60px]">
+      <div class="hidden lg:block  mb-6 sm:mb-10 container">
         <LandingBoard />
       </div>
       <div class="pb-8 xl:pb-[70px]">
         <LandingHot :content="hotDeals" tag="hotdeals" />
-        <div class="lg:hidden">
+        <div class="lg:hidden  mb-6 sm:mb-10 container">
           <LandingBoard />
         </div>
         <!-- <LandingRecommended tag="recommended" /> -->
@@ -17,10 +17,16 @@
       </div>
       <LandingInfo />
     </div>
-    <LandingCategories />
-    <LandingBrands />
-    <LandingTestimonials />
-    <LandingCall />
+    <div class="bg-white pt-6 md:pt-10">
+      <LandingCategories />
+      <LandingBrands />
+      <LandingTestimonials />
+      <LandingCall />
+    </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+definePageMeta({
+  layout: "default",
+});
+</script>

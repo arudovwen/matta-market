@@ -9,6 +9,7 @@ export default function (
     currency,
     currencyDisplay: "narrowSymbol",
     minimumFractionDigits: fraction,
+    maximumFractionDigits:2
   });
 
   const formattedValue = formatter.format(value || 0);

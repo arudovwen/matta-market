@@ -4,8 +4,7 @@
       class="bg-white darks:bg-gray-800 rounded-[20px] pt-5 px-4 md:px-[32px] mb-[30px]"
     >
       <div
-        data-aos="fade-up"
-        data-aos-once="true"
+       
         class="flex justify-between items-center mb-4"
       >
         <h2
@@ -13,15 +12,15 @@
         >
           Recommended
         </h2>
-        <router-link
-          :to="`/market/${encodeURIComponent('recommended')}?tag=${tag}`"
+        <NuxtLink
+          :to="`/category/market/${encodeURIComponent('recommended')}?tag=${tag}`"
         >
           <button
             class="hover:border-b text-[10px] sm:text-sm lg:text-base border-[#333] darks:text-white darks:border-white leading-tight"
           >
             See all items
           </button>
-        </router-link>
+        </NuxtLink>
       </div>
       <div class="flex overflow-x-hidden hover:overflow-x-auto gap-x-4 md:gP-X-6 pb-6" data-aos="fade-up" data-aos-once="true">
      
@@ -114,7 +113,7 @@ function getAllProducts() {
       }
     })
     .catch(() => {
-      setLoader(false);
+      store.setLoader(false);
     });
 }
 onMounted(() => {

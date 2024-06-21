@@ -13,7 +13,7 @@
             <input
               v-model="v$.bvn.$model"
               :class="{ 'border-red-500 ': v$.bvn.$error }"
-              class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               placeholder="Provide your bvn"
               @keyup="isBvnError = false"
             />
@@ -41,7 +41,7 @@
             <input
               v-model="v$.nin.$model"
               :class="{ 'border-red-500 ': v$.nin.$error }"
-              class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               placeholder="Provide your NIN"
               @keyup="isNinError = false"
             />
@@ -63,12 +63,12 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Company name</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Company name</label>
         <div class="flex relative items-center">
           <input
             :value="v$.companyName.$model"
             :class="{ 'border-red-500 ': v$.companyName.$error }"
-            class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             readonly
           />
         </div>
@@ -92,7 +92,7 @@
             <select
               v-model="v$.companyType.$model"
               :class="{ 'border-red-500': v$.companyType.$error }"
-              class="appearance-none rounded-lg px-5 py-3 h-12 text-sm w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="appearance-none rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             >
               <option disabled value="">Select sector</option>
               <option v-for="item in sectors" :key="item" :value="item">
@@ -121,7 +121,7 @@
             <input
               v-model="v$.cac.$model"
               :class="{ 'border-red-500 ': v$.cac.$error }"
-              class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               placeholder="Provide your CAC"
               @keyup="isBvnError = false"
             />
@@ -171,11 +171,11 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block">Address</label>
+        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
         <div class="flex relative items-center">
           <input
             :value="form.address"
-            class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             readonly
           />
           <i class="uil uil-home absolute right-4 text-gray-600"></i>
@@ -200,7 +200,7 @@
                 <input
                   data-testid="fullName"
                   v-model="director.name"
-                  class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   placeholder="Enter director's name"
                 />
               </div>
@@ -223,7 +223,7 @@
                 <input
 									data-testid="director-title"
                   v-model="director.title"
-                  class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   placeholder="Enter director's title"
                 />
               </div>
@@ -246,7 +246,7 @@
                 <input
                   data-testid="address"
                   v-model="director.address"
-                  class="rounded-lg px-4 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   placeholder="Enter director's address"
                 />
               </div>
@@ -289,7 +289,7 @@
         <button
           type="submit"
           :disabled="isLoading"
-          class="border text-[13px] mb-4 border-primary uppercase text-white w-full lg:w-auto lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-12"
+          class="border text-[13px] mb-4 border-primary- uppercase text-white w-full lg:w-auto lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
         >
           <span>
             <span

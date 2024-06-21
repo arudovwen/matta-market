@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="max-w-[300px] mx-auto">
+  <form @submit.prevent="handleSubmit" class="max-w-[250px] mx-auto">
     <span class="block text-2xl font-medium text-center mb-2">Enter OTP</span>
     <p class="mb-6 text-sm text-center font-base text-gray-500">
       Provide 4 digit otp code sent to your email
@@ -26,7 +26,7 @@
       <button
         type="submit"
         :disabled="isLoading"
-        class="border text-[13px] border-primary uppercase text-white lg:min-w-[100px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-12 active:scale-95"
+        class="border text-[13px] border-primary- uppercase text-white lg:min-w-[100px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11 active:scale-95"
       >
         <span>
           <span

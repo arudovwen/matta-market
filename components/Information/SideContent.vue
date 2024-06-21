@@ -38,7 +38,7 @@
               <div
                 class="w-28 h-28 rounded-full mx-auto border border-white mb-4 overflow-hidden flex items-center justify-center"
               >
-                 <NuxtImg
+                 <img
                   :src="
                     item.photo
                       ? item.photo
@@ -103,7 +103,7 @@
         <div
           class="w-20 h-20 rounded-xl bg-white flex items-center justify-center"
         >
-           <NuxtImg
+           <img
             v-if="producer.logo"
             :src="producer.logo"
             class="rounded-xl"
@@ -126,8 +126,8 @@
           </p>
         </div>
       </div>
-      <router-link
-        :to="`/market/${route.query.market}/${
+      <NuxtLink
+        :to="`/category/market/${route.query.market}/${
           route.query.marketId || route.query.TechnologyId
         }?producer=${producer.title}`"
       >
@@ -136,7 +136,7 @@
         >
           <span>view more products</span>
         </button>
-      </router-link>
+      </NuxtLink>
     </article>
 
     <!-- <article

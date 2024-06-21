@@ -86,7 +86,7 @@
       ></SortFilter>
       <span class="hidden gap-x-3" @click="sortProduct">
         <span
-          class="flex items-center justify-center border border-[#E7EBEE] rounded-full h-12 w-12"
+          class="flex items-center justify-center border border-[#E7EBEE] rounded-full h-11 w-12"
         >
            <img src="~/assets/img/sorting.svg" alt="alt"
         /></span>
@@ -149,7 +149,7 @@
           <button
             type="button"
             @click="isClearing = false"
-            class="appearance-none border w-1/2 border-primary leading-none px-8 py-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
+            class="appearance-none border w-1/2 border-primary- leading-none px-8 py-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
           >
             clear filters
           </button>

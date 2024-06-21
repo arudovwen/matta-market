@@ -20,7 +20,7 @@
       >
         <div v-if="!$slots.menus">
           <MenuItem v-slot="{ active }" v-for="(item, i) in items" :key="i">
-            <router-link
+            <NuxtLink
               :class="`${
                 active
                   ? 'bg-slate-100 text-slate-900 darks:bg-slate-600 darks:text-slate-300 darks:bg-opacity-50'
@@ -40,7 +40,7 @@
                 <span class="block text-sm">{{ item.label }}</span>
               </div>
               <span v-else class="block text-sm">{{ item.label }}</span>
-            </router-link>
+            </NuxtLink>
             <span
               :class="`${active ? 'bg-slate-100 text-slate-800' : ''}  ${
                 item.hasDivider === true

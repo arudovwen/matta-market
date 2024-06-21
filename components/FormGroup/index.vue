@@ -3,15 +3,24 @@
     class="formGroup relative w-full md:w-auto"
     :class="`${error ? 'has-error' : ''}  ${horizontal ? 'flex' : ''}  ${
       validate ? 'is-valid' : ''
-    } `"
+    } ${formClass}`"
   >
     <label
       v-if="label"
-      :class="`${classLabel} inline-block input-label `"
+      :class="`${classLabel}  input-label flex gap-x-1 items-center`"
       :for="name"
     >
-      {{ label }}</label
-    >
+      {{ label }} <RedDot v-if="isCumpulsory" />
+      <span
+        v-if="info"
+        data-toggle="tooltip"
+        data-placement="top"
+        :title="infoTitle"
+        class="cursor-pointer h-4 w-4 flex items-center justify-center"
+      >
+        <AppIcon icon="quill:info" iconClass="text-gray-600" />
+      </span>
+    </label>
     <div class="relative">
       <slot></slot>
     </div>
@@ -80,6 +89,19 @@ export default {
     },
 
     description: {
+      type: String,
+    },
+    isCumpulsory: {
+      type: Boolean,
+      default: false,
+    },
+    infoTitle: {
+      type: String,
+    },
+    info: {
+      type: Boolean,
+    },
+    formClass: {
       type: String,
     },
   },

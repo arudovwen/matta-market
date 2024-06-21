@@ -8,18 +8,15 @@
       >
       <div class="max-w-[937px] mx-auto text-center pl-6 pr-6">
         <carousel class="max-w-[937px] mx-auto text-center testimonial">
-          <slide v-for="slide in 2" :key="slide">
+          <slide v-for="slide in testimonialData" :key="slide">
             <div class="carousel__item px-5">
               <p class="text-xs sm:text-sm lg:text-base xl:text-2xl text-white font-semibold mb-8">
-                “Ever since we discovered Matta, our production process has been
-                more streamlined. From sourcing for materials, to logistics and
-                delivery. Matta handles all aspects with exemplary proficiency
-                and professionalism”
+                “{{slide.text}}”
               </p>
               <p
                 class="font-medium text-[11px] sm:text-xs md:text-sm xl:text-xl text-white mb-8"
               >
-                James Orji - CEO, Mudally Nig. Ltd.
+                {{slide.name}}
               </p>
             </div>
           </slide>

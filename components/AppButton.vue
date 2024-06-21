@@ -2,7 +2,7 @@
   
   <button
     :disabled="isDisabled"
-   
+    :type="type"
     :class="`
       ${isLoading ? ' pointer-events-none' : ''}
       ${isDisabled ? ' opacity-40 cursor-not-allowed' : ''}
@@ -25,7 +25,7 @@
           v-if="icon"
           ><AppIcon :icon="icon"
         /></span>
-        <span v-if="text">{{ text }}</span>
+        <span v-if="text" class="leading-normal">{{ text }}</span>
       </span>
     </template>
     <template v-if="isLoading">
@@ -210,6 +210,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    type:{
+      type: String,
+      default: "button"
+    }
   },
 };
 </script>

@@ -86,12 +86,12 @@
                       </div>
                       <div class="mb-6">
                         <label class="mb-2 font-normal text-xs block"
-                          >E-mail</label
+                          >E-mail  <RedDot /></label
                         >
                         <input
                           v-model="v$.email.$model"
                           :class="{ 'border-red-500': v$.email.$error }"
-                          class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                          class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                           placeholder="E-mail"
                           type="email"
                         />
@@ -111,13 +111,13 @@
                         <div class="mb-6">
                           <label
                             class="mb-2 font-normal text-xs block text-matta-black"
-                            >Password</label
+                            >Password  <RedDot /></label
                           >
                           <div class="relative flex items-center">
                             <input
                               v-model="v$.password.$model"
                               :class="{ 'border-red-500 ': v$.password.$error }"
-                              class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                               placeholder="Password"
                               autocomplete="off"
                               :type="!isShowingPasword ? 'password' : 'text'"
@@ -148,7 +148,7 @@
                         <div class="mb-6">
                           <label
                             class="mb-2 font-normal text-xs block text-matta-black"
-                            >Confirm Password</label
+                            >Confirm Password  <RedDot /></label
                           >
                           <div class="relative flex items-center">
                             <input
@@ -156,7 +156,7 @@
                               :class="{
                                 'border-red-500 ': v$.confirmPassword.$error,
                               }"
-                              class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                              class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                               placeholder="Password"
                               autocomplete="off"
                               :type="!isShowingPasword ? 'password' : 'text'"
@@ -193,7 +193,7 @@
                         <button
                           :disabled="isLoading || v$.$silentErrors.length"
                           type="submit"
-                          class="border text-[13px] border-primary uppercase min-w-[150px] w-full text-white bg-primary-500 text-center rounded-full px-6 py-4 hover:bg-primary/80 leading-[normal]"
+                          class="border text-[13px] border-primary- uppercase min-w-[150px] w-full text-white bg-primary-500 text-center rounded-full px-6 py-4 hover:bg-primary/80 leading-[normal]"
                         >
                           <span v-if="!isLoading">Sign up</span>
                           <span v-if="isLoading"

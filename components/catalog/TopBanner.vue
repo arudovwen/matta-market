@@ -34,11 +34,11 @@ const emitter = inject("emitter");
 const crumbsData = ref([
   {
     name: "Markets",
-    url: "/markets",
+    url: "/category/markets",
   },
   {
     name: route.params.type,
-    url: `/market/${route.params.type}/${route.params.marketId}?showing=parent`,
+    url: `/category/market/${route.params.type}/${route.params.marketId}?showing=parent`,
   },
 ]);
 onMounted(() => {
