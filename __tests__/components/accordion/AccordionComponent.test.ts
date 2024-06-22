@@ -6,7 +6,7 @@ import AccordionComponent from "~/components/accordion/AccordionComponent.vue";
 
 describe("AccordionComponnent", () => {
 	it("renders", async () => {
-		const component = render(AccordionComponent, {
+		const component = mount(AccordionComponent, {
 			props: {
 				items: [
 					{

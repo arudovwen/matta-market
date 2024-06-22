@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     "@nuxt/devtools",
     "nuxt-ssr-cache",
     "@vite-pwa/nuxt",
+		"@nuxt/test-utils/module"
   ],
 
   security: {

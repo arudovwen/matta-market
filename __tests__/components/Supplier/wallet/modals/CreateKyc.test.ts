@@ -2,8 +2,8 @@ import { render, screen, fireEvent } from "@testing-library/vue";
 import { it, expect, describe, vi } from "vitest";
 import Vuex, { createStore, mapActions } from "vuex";
 import { mount, shallowMount } from "@vue/test-utils";
-import CreateKyc from "~/components/Supplier/wallet/modals/CreateKyc.vue";
-import type { getKycDetail } from "~/services/walletservice";
+
+import CreateKyc from "../../../../../components/Supplier/wallet/modals/CreateKyc.vue";
 
 const store = createStore({
   state: {
@@ -58,6 +58,6 @@ describe("CreateKyc", () => {
 		fireEvent.click(screen.getByTestId("add-director"))
 		.then(() => {
 		})
-		screen.debug();
+		// screen.debug();
   });
 });
