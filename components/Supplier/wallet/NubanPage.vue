@@ -30,7 +30,7 @@
             <tbody>
               <tr v-for="item in tdata" :key="item">
                 <td
-                  class="capitalize text-matta-black text-[13px] border-b py-6 px-3 border-[#E7EBEE] whitespace-nowrap"
+                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 ></td>
                 <td
                   class="text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
@@ -38,11 +38,11 @@
                   {{ item.email }}
                 </td>
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 ></td>
 
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
+                  class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
                   <span
                     v-if="item.invitationStatusText == 'Expired'"

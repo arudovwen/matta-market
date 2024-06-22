@@ -1,0 +1,57 @@
+<template>
+  <div class="mb-8 rounded-[10px] border border-[#F4F7FE]">
+    <div class=" mb-4">
+    <div class="mb-2">
+        <HeaderComponent
+        title="Account settings"
+        className="!px-0 lg:!px-6 !border-none "
+        subtext="Manage your team members and their account permissions here."
+      />
+    </div>
+      <AppTab :tabs="tabs" className="lg:px-6" />
+      <div class="lg:px-6">
+        <div class="">
+          <Profile v-if="active === 'profile'" />
+          <Notifications v-if="active === 'notifications'" />
+          <Password v-if="active === 'password'" />
+          <Settlements v-if="active === 'bank accounts'" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import Profile from "./profile";
+import Password from "./password";
+import Notifications from "./notifications";
+import Settlements from "./settlements";
+
+definePageMeta({
+  layout: "dashboard",
+  middleware: "auth",
+});
+
+const tabs = [
+  {
+    title: "profile",
+    key: "profile",
+  },
+  {
+    title: "password",
+    key: "password",
+  },
+
+  // {
+  //   title: "notifications",
+  //   key: "notifications",
+  // },
+  {
+    title: "bank accounts",
+    key: "bank accounts",
+  },
+];
+
+const active = ref("profile");
+provide("active", active);
+</script>

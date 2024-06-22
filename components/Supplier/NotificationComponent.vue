@@ -20,7 +20,7 @@
             </p>
             <div>
               <input
-                class="rounded-lg px-5 py-3 h-12 w-[350px] border bg-[#F1F3F5] text-[#B6B7B9] focus:outline-matta-black/20"
+                class="rounded-lg px-[14px] py-[10px] h-11 w-[350px] border border-[#DCDEE6] text-[#B6B7B9] focus:outline-matta-black/20"
                 autocomplete="off"
                 autofocus="on"
                 placeholder="team@pharmazell.com"

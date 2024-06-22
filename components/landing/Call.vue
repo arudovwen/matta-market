@@ -39,15 +39,13 @@
       >
         <div class="mx-auto">
           <p
-            data-aos="fade-up"
-            data-aos-once="true"
+       
             class="font-bold text-[#fff] text-3xl md:text-5xl xl:leading-[58px] mb-[23px]"
           >
             Ready to get started?
           </p>
           <p
-            data-aos="fade-up"
-            data-aos-once="true"
+           
             class="font-medium text-[#fff] text-base lg:text-xl mb-9 max-w-[700px] mx-auto"
           >
             Effortlessly source your chemicals, raw materials, ingredients, and
@@ -55,8 +53,7 @@
           </p>
           <NuxtLink to="/auth/register">
             <AppButton
-              data-aos="fade-up"
-              data-aos-once="true"
+              
               text="Begin Your Journey with Matta"
               btnClass="bg-white text-[#333] !px-10 !py-[10px] !normal-case !font-medium"
             />

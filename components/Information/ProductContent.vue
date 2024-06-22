@@ -13,7 +13,7 @@
             v-if="product.gallery && product.gallery.length"
           >
             <slide v-for="item in product.gallery" :key="item" class="">
-               <NuxtImg
+               <img
                 :src="item"
                 class="h-[350px] w-full object-cover bg-white"
                 alt="alt"

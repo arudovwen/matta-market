@@ -26,7 +26,7 @@
         <span class="flex gap-x-3 items-center">
           <button
             @click="handleRequest"
-            class="text-[13px] border border-primary text-primary px-3 py-2 h-10 rounded-full whitespace-nowrap"
+            class="text-[13px] border border-primary- text-primary px-3 py-2 h-10 rounded-full whitespace-nowrap"
           >
             Request a document
           </button>
@@ -89,7 +89,7 @@
         <div class="flex justify-center items-center">
           <span>Saftey data sheet</span>
           <button
-            class="text-[13px] text-primary border-primary border rounded-full px-2 py-3"
+            class="text-[13px] text-primary border-primary- border rounded-full px-2 py-3"
           >
             Download
           </button>

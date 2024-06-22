@@ -2,11 +2,11 @@
   <h3 class="font-medium text-2xl mb-6">Update payment method</h3>
   <form @submit.prevent="handleSubmit">
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block">Card number</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Card number</label>
       <input
         v-model="v$.card_number.$model"
         :class="{ 'border-red-500': v$.card_number.$error }"
-        class="rounded-full px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+        class="rounded-full px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
         placeholder="1234  5678  9123  4567"
         autocomplete="off"
         autofocus="on"
@@ -30,7 +30,7 @@
           <input
             v-model="v$.expiry_date.$model"
             :class="{ 'border-red-500 ': v$.expiry_date.$error }"
-            class="rounded-full px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-full px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="03/24"
             autocomplete="off"
           />
@@ -53,7 +53,7 @@
           <input
             v-model="v$.cvv.$model"
             :class="{ 'border-red-500 ': v$.cvv.$error }"
-            class="rounded-full px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-full px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="***"
             autocomplete="off"
           />

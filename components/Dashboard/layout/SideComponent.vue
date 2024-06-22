@@ -1,216 +1,87 @@
 <template>
   <aside
-    class="flex flex-col gap-y-2 min-w-[340px] pb-4 h-full max-h-full overflow-y-auto"
-    :style="{ height: 'calc(100vh - 115px)' }"
+    class="z-[9] bg-white relative py-5 border rounded-lg border-[#EAECF0] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] min-w-[245px]"
   >
-    <div
-      class="bg-white py-6 px-8 rounded-lg flex items-center gap-x-4"
-      v-if="company"
-    >
-      <div
-        class="w-16 md:w-16 h-16 md:h-16 rounded-lg bg-white shadow p-4 flex items-center justify-center border border-[#E7EBEE]"
-      >
-         <NuxtImg v-if="company.logo" class="" :src="company.logo" alt="logo" />
-        <span class="uppercase" v-else>{{
-          company.companyName.slice(0, 2)
-        }}</span>
-      </div>
-
-      <div class="flex-1">
-        <p
-          class="font-medium text-sm md:text-base text-matta-black capitalize truncate max-w-[180px] mb-1"
-        >
-          {{ company.companyName }}
-        </p>
-        <p
-          class="font-normal text-[13px] text-matta-black capitalize flex gap-x-1 items-center"
-          v-if="company.state && company.country"
-        >
-          <AppIcon icon="fa-solid:map-marker-alt" />
-          <span class="max-w-max truncate">{{
-            `${company.state}, ${company.country}.`
-          }}</span>
-        </p>
-        <p
-          class="font-normal text-sm text-matta-black capitalize flex gap-x-1 items-center"
-          v-else
-        >
-          <AppIcon icon="fa-solid:map-marker-alt" />
-          Not available
-        </p>
-      </div>
-    </div>
-    <nav class="bg-white py-6 px-8 rounded-lg flex-1">
-      <ul>
-        <li v-for="n in navigation" :key="n.title">
-          <div
-            v-if="
-              n.role.includes(userType?.toLowerCase().toLowerCase()) 
-              // &&
-              // n.accountType.includes(authstore.userInfo?.accountType) &&
-              // n.allowed.includes(authstore.userInfo?.businessUserType.toLowerCase())
-            "
-            class="py-4"
+    <nav class="">
+      <ul class="grid grid-cols-1 gap-y-1">
+        <li v-for="item in mappedNav" :key="item.name">
+          <NuxtLink
+        
+            :to="item.url"
+            class="text-sm flex items-center px-5 border-r-[3px] border-transparent font-medium hover:bg-[#2270FA0F] hover:text-primary-500 hover:border-primary-500"
+            :activeClass="`${
+              storeOpen ? '' : ' bg-[#2270FA0F] text-primary-500 block'
+            }`"
           >
-            <span class="flex justify-between items-center py-1"
-              ><h5 class="text-base text-matta-black font-semibold">
-                {{ n.title }}
-              </h5>
-              <span
-                class="text-right text-lg"
-                @click="handleIndex(n.title)"
-                v-if="!openIndex.includes(n.title)"
-                ><AppIcon icon="uil-plus"
-              /></span>
-              <span
-                class="text-right text-lg"
-                @click="dropIndex(n.title)"
-                v-if="openIndex.includes(n.title)"
-                ><AppIcon icon="uil-minus" /></span
-            ></span>
-            <hr class="my-2" />
-            <ul v-if="openIndex.includes(n.title)">
-              <router-link
-                v-for="item in n.subs"
-                :key="item.name"
-                :to="item.url"
-              >
-                <li class="text-sm text-matta-black flex items-center">
-                  <span class="flex items-center flex-1 py-2">
-                    <AppIcon icon="uil-corner-down-right" class="mr-2 hidden" />
-                    <span>
-                      {{
-                        item.name.toLowerCase() === "company settings"
-                          ? "Settings"
-                          : item.name
-                      }}</span
+            <span class="flex items-center gap-x-[10px] flex-1 py-[9px]">
+              <AppIcon :icon="item.icon" iconClass="text-xl text-[#667085]" />
+              <span> {{ item.name }}</span>
+            </span>
+          </NuxtLink>
+          <!-- <span
+            v-else
+            @click="storeOpen = true"
+            class="text-sm flex items-center px-5 border-r-[3px] border-transparent group font-medium hover:bg-[#2270FA0F] hover:text-primary-500 hover:border-primary-500 cursor-pointer"
+            :class="` ${
+              storeOpen || route.path.includes('storefront')
+                ? 'bg-[#2270FA0F] text-primary-500'
+                : ''
+            }`"
+          >
+            <span class="flex items-center gap-x-[10px] flex-1 py-[9px]">
+              <AppIcon :icon="item.icon" iconClass="text-xl text-[#667085]" />
+              <span> {{ item.name }}</span>
+            </span>
+            <div
+              v-if="storeOpen"
+              class="border-r border-[#EAECF0] absolute top-0 -right-[245px] h-screen z-[9999] bg-white py-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] min-w-[245px]"
+            >
+              <ul>
+                <li v-for="item in subnavigation" :key="item.name">
+                  <NuxtLink
+                    :to="item.url"
+                    class="text-sm flex items-center px-5 border-r-[3px] border-transparent text-matta-black hoverborder-primary-500 hover:bg-[#2270FA0F] hover:text-primary-500"
+                  >
+                    <span
+                      class="flex items-center gap-x-[10px] flex-1 py-[9px]"
                     >
-                  </span>
-                  <span
-                    class="h-[.25rem] w-[.25rem] hidden bg-primary-500 rounded-full"
-                  ></span>
+                      <AppIcon :icon="item.icon" iconClass="text-xl" />
+                      <span> {{ item.name }}</span>
+                    </span>
+                  </NuxtLink>
                 </li>
-              </router-link>
-            </ul>
-          </div>
+              </ul>
+            </div>
+          </span> -->
         </li>
       </ul>
     </nav>
   </aside>
 </template>
 <script setup>
+import { getVendorInfo } from "~/services/userservices";
+
+const route = useRoute();
+const storeOpen = ref(false);
+const authStore = useAuthStore();
+const formValues = reactive({
+  storeUrl: "",
+});
+onMounted(() => {
+  getVendorInfo().then((res) => {
+    formValues.storeSlug = res.data.data.storeSlug;
+  });
+});
 const authstore = useAuthStore();
-const company = inject("company");
 
-const navigation = [
-{
-    title: "My Account",
-    role: ["supplier", "buyer"],
-    accountType: [0, 1],
-    allowed: ["CompanyAdmin", "CompanyUser"],
-    subs: [
-      {
-        name: "Settings",
-        url: "/account/settings",
-      },
-      {
-        name: "Notifications",
-        url: "/account/notifications",
-      },
-      {
-        name: "Saved Searches",
-        url: "/account/saved-searches",
-      },
-    ],
-  },
-  {
-    title: "Storefront",
-    role: ["supplier"],
-    accountType: [0, 1],
-    allowed: ["CompanyAdmin"],
-    subs: [
-      {
-        name: "Overview",
-        url: "/storefront/overview",
-      },
-      {
-        name: "Products",
-        url: "/storefront/products",
-      },
-      {
-        name: "Orders",
-        url: "/storefront/orders",
-      },
-      {
-        name: "Requests",
-        url: "/storefront/requests",
-      },
-    ],
-  },
-  {
-    title: "Procurement",
-    role: ["supplier", "buyer"],
-    allowed: ["CompanyAdmin", "CompanyUser"],
-    accountType: [0, 1],
-    subs: [
-      {
-        name: "My Orders",
-        url: "/procurement/my-orders",
-      },
-      {
-        name: "My Requests",
-        url: "/procurement/my-requests",
-      },
-
-      // {
-      //   name: "Payments",
-      //   url: "/account/procurement/payment",
-      // },
-      {
-        name: "Shipping Addresses",
-        url: "/procurement/shipping-addresses",
-      },
-    ],
-  },
-  {
-    title: "Wallet",
-    role: ["supplier", "buyer"],
-    allowed: ["CompanyAdmin", "CompanyUser"],
-    accountType: [0, 1],
-    subs: [
-      {
-        name: "Home",
-        url: "/wallet/home",
-      },
-      {
-        name: "Transactions",
-        url: "/wallet/transactions",
-      },
-      {
-        name: "Settings",
-        url: "/wallet/settings",
-      },
-    ],
-  },
- 
-  {
-    title: "Company",
-    role: ["supplier"],
-    allowed: ["CompanyAdmin"],
-    accountType: [1],
-    subs: [
-      {
-        name: "Company Settings",
-        url: "/company/settings",
-      },
-      {
-        name: "User Management",
-        url: "/company/user-management",
-      },
-    ],
-  },
-];
-
+const mappedNav = computed(() => {
+  return navigation.filter((i) =>
+    (authStore?.userType?.toLowerCase() === "supplier"
+      ? vendorRoutes
+      : buyerRoutes
+    ).includes(i.key)
+  );
+});
 const openIndex = ref([
   "Company",
   "Procurement",
@@ -218,25 +89,22 @@ const openIndex = ref([
   "Storefront",
   "Wallet",
 ]);
-const userType = computed(() => {
-  return authstore.userType;
-});
-function handleIndex(val) {
-  openIndex.value.push(val);
-}
-function dropIndex(val) {
-  openIndex.value = openIndex.value.filter((i) => i !== val);
-}
-</script>
-<style scoped lang="scss">
-.router-link-active li span {
-  .uil {
-    display: flex;
-  }
+// const userType = computed(() => {
+//   return authstore.userType;
+// });
+// function handleIndex(val) {
+//   openIndex.value.push(val);
+// }
+// function dropIndex(val) {
+//   openIndex.value = openIndex.value.filter((i) => i !== val);
+// }
 
-  span {
-    font-weight: 500;
-  }
-  display: flex;
-}
-</style>
+watch(
+  () => route.path,
+  () => {
+    storeOpen.value = false;
+  },
+  { deep: true, immediate: true }
+);
+</script>
+<style scoped lang="scss"></style>

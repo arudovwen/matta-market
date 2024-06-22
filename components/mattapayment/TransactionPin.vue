@@ -31,7 +31,7 @@
       <button
         type="submit"
         :disabled="isLoading"
-        class="border text-[13px] border-primary uppercase block text-white lg:min-w-[100px] w-full lg:max-w-[180px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-12 active:scale-95"
+        class="border text-[13px] border-primary- uppercase block text-white lg:min-w-[100px] w-full lg:max-w-[180px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11 active:scale-95"
       >
         <span>
           <span

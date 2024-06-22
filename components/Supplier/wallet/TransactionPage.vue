@@ -1,54 +1,53 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
-  <div class="gap-y-2 flex flex-col">
-    <!-- Top bar   -->
-    <div class="p-6 lg:p-8 bg-white rounded-lg">
-      <div class="mb-12"><Breadcrumbs /></div>
-      <div class="grid  justify-between items-end mb-8">
-        <div>
-          <h1
-            class="text-3xl lg:text-[48px] lg:leading-[56px] text-matta-black col-span-1 font-medium capitalize mb-4"
-          >
-          Transactions
-          </h1>
-          <p class="text-sm lg:text-base">
-            Manage your wallet transactions here.
-          </p>
+  <div class="gap-y-2 flex flex-col w-full">
+    <div class="mb-4">
+      <div class="flex gap-x-4 justify-between">
+        <div class="relative flex items-center max-w-[280px]">
+          <span class="absolute left-4 pointer-events-none text-[#667085]"
+            ><i class="uil uil-search"></i
+          ></span>
+          <input
+            v-model="queryParams.Search"
+            placeholder="Search"
+            class="border border-[#E7E7E7] focus:pr-3 pl-10 rounded-lg w-full text-sm focus:outline-none py-[10px] transition ease-in-out duration-300"
+            type="search"
+          />
         </div>
-        <div />
-      </div>
-      <div class="flex justify-end gap-4">
-        <button
-          @click="type = '1'"
-          :class="
-            type === '1' ? 'bg-matta-black text-white' : 'text-matta-black'
-          "
-          class="border border-matta-black py-3 text-xs md:text-[13px] px-6 flex justify-center rounded-lg items-center hover:bg-matta-black/80 uppercase font-normal leading-[normal] gap-x-1"
-        >
-          Credit
-        </button>
-        <button
-          @click="type = '2'"
-          :class="
-            type === '2' ? 'bg-matta-black text-white' : 'text-matta-black'
-          "
-          class="border border-matta-black py-3 text-xs md:text-[13px] px-6 flex justify-center rounded-lg items-center hover:bg-matta-black/80 uppercase font-normal leading-[normal] gap-x-1"
-        >
-          Debit
-        </button>
+        <div class="flex relative items-center">
+          <select
+            v-model="queryParams.Type"
+            class="appearance-none border border-[#E7E7E7] rounded-lg max-w-[150px] text-sm py-[10px] px-[14px] focus:outline-matta-black/20"
+          >
+            <option value="" disabled>Filter</option>
+            <option value="">Default</option>
+            <option value="1">Credit</option>
+            <option value="0">Debit</option>
+          </select>
+          <i
+            class="uil uil-angle-down absolute right-2 pointer-events-none"
+          ></i>
+        </div>
+        <!-- 
+        <AppButton
+          @click="queryParams.Status = ''"
+          text="Clear filter"
+          btnClass="text-xs text-[#98A2B3] font-normal"
+        /> -->
       </div>
     </div>
-
-    <div class="p-6 lg:p-8 bg-white rounded-lg">
-      <div v-if="!isPageLoading">
-        <div v-if="!isEmpty" class="max-w-[80vw]">
-          <table class="w-full">
+    <div class="w-full">
+      <div v-if="!isPageLoading" class="w-full">
+        <div
+          class="overflow-x-auto border border-[#EAECF0] rounded-lg w-full max-w-full bg-white"
+        >
+          <table class="table-auto w-full hidden lg:inline-table">
             <thead>
               <tr>
                 <th
                   v-for="item in theads"
                   :key="item"
-                  class="uppercase text-[#B6B7B9] text-[13px] text-left font-normal border-b py-6 px-3 border-[#E7EBEE]"
+                  class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
                 >
                   {{ item }}
                 </th>
@@ -56,56 +55,83 @@
             </thead>
 
             <tbody>
-              <tr v-for="item in tdata" :key="item">
+              <tr
+                v-for="item in tdata"
+                :key="item"
+                class="border-b border-[#EAECF0] last:border-none"
+              >
                 <td
-                  class="capitalize text-matta-black text-[13px] border-b py-6 px-3 border-[#E7EBEE] whitespace-nowrap"
-                ></td>
-                <td
-                  class="text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item.email }}
+                  {{ item.reference }}
                 </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
-                ></td>
 
                 <td
-                  class="capitalize text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE]"
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  <span
-                    v-if="item.invitationStatusText == 'Expired'"
-                    class="px-2 py-2 text-xs rounded-lg border text-[#EE5C5C] border-[#EE5C5C]"
-                  >
-                    {{ item.invitationStatusText }}</span
-                  >
-                  <span
-                    v-if="item.invitationStatusText == 'Invited'"
-                    class="px-2 py-2 text-xs rounded-lg border text-primary border-primary"
-                  >
-                    {{ item.invitationStatusText }}</span
-                  >
-                  <span
-                    v-if="item.invitationStatusText == 'Verified'"
-                    class="px-2 py-2 text-xs rounded-lg text-white bg-[#59B221]"
-                  >
-                    Verified</span
-                  >
+                  {{ currencyFormat(item.amount, item.currencyCode) }}
+                </td>
+
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
+                >
+                  {{ moment(item.transactionDate).format("lll") }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
+                >
+                  <AppStatusButton
+                    stattype="wallet"
+                    :status="item.transactionType"
+                  />
                 </td>
               </tr>
             </tbody>
           </table>
-        </div>
-        <div
-          v-else
-          class="h-[310px] rounded-lg w-full flex items-center justify-center bg-[#F1F3F5]"
-        >
-          <div class="text-center max-w-sm mx-auto">
-            <p class="text-matta-black font-medium">No transaction available</p>
+          <div class="lg:hidden">
+            <div
+              class="border-b border-[#EAECF0] last:border-none px-3 py-4"
+              v-for="item in tdata"
+              :key="item"
+            >
+              <div class="text-left text-matta-black">
+                <span class="block text-sm mb-1"> {{ item.reference }}</span>
+                <span class="block text-sm mb-1">
+                  {{ moment(item.transactionDate).format("lll") }}</span
+                >
+                <span class="block text-base font-semibold">
+                  {{ currencyFormat(item.amount, item.currencyCode) }}</span
+                >
+                <div class="!text-[10px] flex justify-end">
+                  <AppStatusButton
+                    stattype="wallet"
+                    :status="item.transactionType"
+                  />  
+                </div>
+              </div>
+            </div>
           </div>
+
+          <EmptyData
+            type="transaction"
+            v-if="!tdata.length"
+            title="No Transaction yet"
+            subtext="All your transactions will show up here"
+          />
+        </div>
+        <div class="py-5" v-if="tdata.length">
+          <PaginationSimple
+            v-if="tdata.length"
+            :total="queryParams.totalCount"
+            :current="queryParams.PageNumber"
+            :per-page="queryParams.PageSize"
+            :pageRange="5"
+            @page-changed="queryParams.PageNumber = $event"
+          />
         </div>
       </div>
-      <div class="text-center p-6 lg:p-8 my-24" v-else>
-         <AppLoader />
+      <div class="text-center p-6 lg:p-8 my-16" v-else>
+        <AppLoader />
       </div>
     </div>
   </div>
@@ -113,32 +139,34 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { reactive, ref } from "vue";
+import moment from "moment";
+import debounce from "lodash/debounce";
 
-const route = useRoute();
-const type = ref("1");
-const theads = [
-  "date",
-  "transaction ID",
-  "amount",
-  "Payment method",
-  "type",
-  "merchant",
-  "description",
-];
-const tdata = [];
-const isEmpty = ref(true);
-const isPageLoading = ref(false);
+const theads = ["reference", "amount", "date", "type"];
+const tdata = inject("tdata");
+const isPageLoading = inject("isPageLoading");
 // eslint-disable-next-line no-unused-vars
-const queryParams = reactive({
-  Status: "",
-  Role: "",
-  PageSize: 10,
-  PageNumber: 1,
-  pagecount: 0,
-  totalCount: 0,
-  Search: "",
+const queryParams = inject("queryParams");
+const getLedgersTrans = inject("getLedgersTrans");
+onMounted(() => {
+  getLedgersTrans();
 });
+
+const debounceSearch = debounce(() => {
+  getLedgersTrans();
+}, 1000);
+watch(
+  () => queryParams.Search,
+  () => {
+    debounceSearch();
+  }
+);
+watch(
+  () => [queryParams.Type, queryParams.PageNumber],
+  () => {
+    getLedgersTrans();
+  }
+);
 </script>
 
 <style lang="scss" scoped>

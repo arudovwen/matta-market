@@ -1,21 +1,27 @@
 <template>
-  <form class="grid gap-y-4" @submit.prevent="handleSubmit">
-    <div class="p-8 bg-white rounded-lg">
-      <h3 class="text-matta-black mb-6">Product info</h3>
-      <div class="md:max-w-[85%]">
+  <form class="px-6 lg:px-[30px] text-left" @submit.prevent="handleSubmit">
+    <div
+      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    >
+      <div class="w-[250px] text-left">
+        <h2 class="text-sm text-[#101828] font-semibold">Product info</h2>
+        <p class="text-xs text-[#475467]">Add your product details here.</p>
+      </div>
+      <div class="max-w-[654px] w-full">
         <div class="">
           <div>
             <div>
               <div class="grid grid-cols-2 gap-x-4">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block">
-                    <span class="text-red-500 mr-[.5px]">*</span>
-                    Product generic name
+                  <label
+                    class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
+                  >
+                   <RedDot /> Product
+                    generic name
                   </label>
                   <input
                     v-model="v$.name.$model"
-                    :class="{ 'border-red-500': v$.name.$error }"
-                    class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                    class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                     autocomplete="off"
                     autofocus="on"
                     placeholder=""
@@ -31,17 +37,16 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block">
+                  <label
+                    class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
+                  >
                     Product brand name
                   </label>
 
                   <div class="flex relative items-center">
                     <input
                       v-model="v$.productBrandName.$model"
-                      :class="{ 'border-red-500': v$.productBrandName.$error }"
-                      class="rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      autocomplete="off"
-                      autofocus="on"
+                      class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                       placeholder=""
                     />
                   </div>
@@ -56,10 +61,13 @@
                   </div>
                 </div>
               </div>
+
               <div class="">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block">
-                    <span class="text-red-500 mr-[.5px]">*</span> Producer
+                  <label
+                    class="mb-2 font-medium text-sm text-[#344054] block text-left"
+                  >
+                   <RedDot /> Producer
                   </label>
 
                   <Combobox v-model="form.manufacturer">
@@ -68,8 +76,7 @@
                         class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
                       >
                         <ComboboxInput
-                          :class="{ 'border-red-500': v$.manufacturer.$error }"
-                          class="px-5 py-3 h-12 rounded-lg w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                          class="px-[14px] py-[10px] h-11 rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                           :displayValue="(i) => i"
                           @change="query = $event.target.value"
                           placeholder="Type a producer name"
@@ -77,10 +84,12 @@
                         <ComboboxButton
                           class="absolute inset-y-0 right-0 flex items-center pr-2"
                         >
-                          <ChevronUpDownIcon
-                            class="h-5 w-5 text-gray-400"
-                            aria-hidden="true"
-                          />
+                          <span
+                            ><AppIcon
+                              icon="ph:caret-down-bold"
+                              iconClass="h-4 w-4 text-[#667085]"
+                              aria-hidden="true"
+                          /></span>
                         </ComboboxButton>
                       </div>
                       <TransitionRoot
@@ -90,7 +99,7 @@
                         @after-leave="query = ''"
                       >
                         <ComboboxOptions
-                          class="absolute mt-1 max-h-80 md:min-w-[350px] px-8 overflow-auto rounded-md z-40 bg-white py-4 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                          class="absolute mt-1 max-h-80 md:min-w-[350px] px-3 overflow-y-auto rounded-lg z-40 bg-white py-4 text-base shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] border border-[#DCDEE6] sm:text-sm"
                         >
                           <div
                             v-if="
@@ -102,7 +111,7 @@
                             <hr class="my-4" />
                             <div class="flex justify-end">
                               <button
-                                @click="handleAddingPackage"
+                                @click="handleAddingProducer"
                                 type="button"
                                 class="appearance-none text-xs leading-none px-6 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 uppercase"
                               >
@@ -110,7 +119,6 @@
                               </button>
                             </div>
                           </div>
-
                           <ComboboxOption
                             v-for="i in filteredProducers"
                             as="template"
@@ -123,29 +131,29 @@
                             >
                               <div class="flex items-center gap-x-4">
                                 <span
-                                  class="h-12 w-12 rounded-lg bg-white shadow p-4 flex items-center justify-center mr-4 border border-[#E7EBEE]"
+                                  class="h-11 w-12 rounded-lg bg-white shadow p-4 flex items-center justify-center mr-4 border border-[#E7EBEE]"
                                 >
-                                   <NuxtImg v-if="i.logo" :src="i.logo" alt="logo" />
+                                  <img v-if="i.logo" :src="i.logo" alt="logo" />
                                   <p class="uppercase text-base" v-else>
                                     {{ i.title.slice(0, 2) }}
                                   </p>
                                 </span>
 
                                 <div>
-                                  <span
-                                    class="block truncate"
+                                  <p
+                                    class="block truncate mb-1"
                                     :class="{
                                       'font-medium': selected,
                                       'font-normal': !selected,
                                     }"
                                   >
                                     {{ i.title }}
-                                  </span>
-                                  <span
-                                    class="block truncate text-matta-black text-sm"
+                                  </p>
+                                  <p
+                                    class="block truncate text-matta-black/80 text-sm"
                                   >
                                     {{ i.location }}
-                                  </span>
+                                  </p>
                                 </div>
                               </div>
                               <span
@@ -175,11 +183,12 @@
                   </div>
                 </div>
               </div>
-
               <div class="">
-                <div class="mb-6" v-if="allmarkets.length">
-                  <label class="mb-2 font-normal text-xs block">
-                    <span class="text-red-500 mr-[.5px]">*</span> Markets
+                <div class="mb-6">
+                  <label
+                    class="mb-2 font-medium text-sm text-[#344054] block text-left"
+                  >
+                   <RedDot /> Markets
                   </label>
                   <MultiInput
                     :markets="allmarkets"
@@ -209,9 +218,11 @@
                 </div>
               </div>
               <div class="">
-                <div class="mb-6" v-if="technologies.length">
-                  <label class="mb-2 font-normal text-xs block">
-                    <span class="text-red-500 mr-[.5px]">*</span> Applications
+                <div class="mb-6">
+                  <label
+                    class="mb-2 font-medium text-sm text-[#344054] block text-left"
+                  >
+                   <RedDot /> Applications
                   </label>
                   <MultiInput
                     :markets="technologies"
@@ -242,9 +253,9 @@
               </div>
               <div class="mb-6">
                 <label
-                  class="mb-2 font-normal text-xs flex gap-x-1 items-center"
+                  class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center"
                 >
-                  <span class="text-red-500 mr-[.5px]">*</span>
+                 <RedDot />
                   <span>Description </span>
                   <span
                     data-toggle="tooltip"
@@ -252,15 +263,14 @@
                     title="Brief general information about the chemicals, its chemical composition, other names, important uses or any specificity"
                     class="cursor-pointer"
                   >
-                    <InformationCircleIcon class="w-4 h-4 text-gray-600" />
+                    <AppIcon icon="quill:info" iconClass="text-gray-600" />
                   </span>
                 </label>
                 <textarea
                   v-model="v$.description.$model"
-                  :class="{ 'border-red-500': v$.description.$error }"
                   rows="3"
                   placeholder="Product description"
-                  class="rounded-lg px-5 py-3 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                  class="rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20 resize-none"
                 ></textarea>
                 <div
                   class="text-red-500 mt-1"
@@ -272,371 +282,220 @@
                   </div>
                 </div>
               </div>
+              <div class="mb-6">
+                <label
+                  class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
+                >
+                  <span>Pickup location </span>
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Please, specify the location where this product can be picked up"
+                    class="cursor-pointer"
+                  >
+                    <AppIcon icon="quill:info" iconClass="text-gray-600" />
+                  </span>
+                </label>
+                <SelectVueSelect
+                  v-model="v$.pickUpLocationId.$model"
+                  :options="locations"
+                  :reduce="(location) => location.value"
+                  placeholder="Select location"
+                  :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+                />
+                <div class="flex justify-start mt-1">
+                  <button
+                  @click="isLocationOpen = true"
+                    class="text-xs text-primary-500 font-medium"
+                    type="button"
+                  >
+                    + Add a new location
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-2 gap-x-4 text-left">
-      <div class="p-8 bg-white rounded-lg">
-        <h3 class="text-matta-black mb-6">Packages & Availability</h3>
-        <div class="mb-6">
-          <Listbox v-model="form.unit">
-            <div class="relative mt-1">
-              <ListboxButton
-                class="relative w-[200px] text-left rounded-lg appearance-none px-5 py-3 h-12 border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-              >
-                <span class="block truncate">{{
-                  measurements.find((i) => i.value == form.unit)?.name
-                }}</span>
-                <span
-                  class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
-                >
-                  <ChevronUpDownIcon
-                    class="h-5 w-5 text-gray-400"
-                    aria-hidden="true"
-                  />
-                </span>
-              </ListboxButton>
-              <transition
-                leave-active-class="transition duration-100 ease-in"
-                leave-from-class="opacity-100"
-                leave-to-class="opacity-0"
-              >
-                <ListboxOptions
-                  class="absolute mt-1 mx-h-60 w-[200px] z-40 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                >
-                  <ListboxOption
-                    v-slot="{ selected }"
-                    v-for="i in measurements"
-                    :key="i.name"
-                    :value="i.value"
-                    as="template"
-                  >
-                    <li
-                      :class="[
-                        'relative cursor-pointer  text-matta-black  hover:text-primary select-none py-2 pl-10 pr-4 text-left',
-                      ]"
-                    >
-                      <span
-                        :class="[selected ? 'font-medium' : 'font-normal']"
-                        >{{ i.name }}</span
-                      >
-                    </li>
-                  </ListboxOption>
-                </ListboxOptions>
-              </transition>
-            </div>
-          </Listbox>
-
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of v$.unit.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
-        </div>
-
-        <div class="overflow-y-auto max-h-[40vh] mb-3">
-          <div
-            class="grid relative"
-            v-for="(pack, i) in form.packagesAvailable"
-            :key="i"
-          >
-            <i
-              class="uil uil-times cursor-pointer absolute right-4 top-4 text-lg hover:ring-1 w-6 h-6 ring-gray-200 flex items-center justify-center hover:ring-offset-2 rounded-full"
-              @click="removepackage(i)"
-            ></i>
-            <div class="p-8 rounded-lg border border-[#DDDDDD] mb-4">
-              <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block">
-                  <span class="text-red-500 mr-[.5px]">*</span> Package name
-                </label>
-                <Listbox v-model="pack.package.title">
-                  <div class="relative mt-1">
-                    <ListboxButton
-                      class="relative w-full text-left rounded-lg appearance-none px-5 py-3 h-12 border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                    >
-                      <span class="block truncate text-sm">{{
-                        pack.package.title
-                      }}</span>
-                      <span
-                        class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
-                      >
-                        <ChevronUpDownIcon
-                          class="h-5 w-5 text-gray-400"
-                          aria-hidden="true"
-                        />
-                      </span>
-                    </ListboxButton>
-
-                    <transition
-                      leave-active-class="transition duration-100 ease-in"
-                      leave-from-class="opacity-100"
-                      leave-to-class="opacity-0"
-                    >
-                      <ListboxOptions
-                        class="absolute mt-1 w-[200px] z-40 rounded-md bg-white py-4 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                      >
-                        <div class="mx-h-60 overflow-y-auto">
-                          <ListboxOption
-                            v-slot="{ selected }"
-                            v-for="(p, i) in packageForms"
-                            :key="i"
-                            :value="p"
-                            as="template"
-                          >
-                            <li
-                              :class="[
-                                'relative cursor-pointer  text-matta-black  hover:text-primary select-none py-2 pl-6 pr-4 text-left',
-                              ]"
-                            >
-                              <span
-                                :class="[
-                                  selected ? 'font-medium' : 'font-normal',
-                                ]"
-                                >{{ p }}</span
-                              >
-                            </li>
-                          </ListboxOption>
-                        </div>
-                      </ListboxOptions>
-                    </transition>
-                  </div>
-                </Listbox>
-                <div
-                  class="text-red-500 mt-1"
-                  v-for="error of v$.packagesAvailable.$each.$response.$errors[
-                    i
-                  ].package"
-                  :key="error.$uid"
-                >
-                  <div class="error-msg text-error text-xs font-semibold">
-                    {{ error.$message }}
-                  </div>
-                </div>
-              </div>
-              <div class="grid grid-cols-2 gap-x-4">
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block">
-                    <span class="text-red-500 mr-[.5px]">*</span> Size
-                  </label>
-                  <div class="relative flex items-center">
-                    <input
-                      v-model="pack.size"
-                      class="rounded-lg px-5 text-sm py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                      placeholder=""
-                    />
-                    <span class="absolute right-2 text-xs">{{
-                      form.unit
-                    }}</span>
-                  </div>
-                  <div
-                    class="text-red-500 mt-1"
-                    v-for="error of v$.packagesAvailable.$each.$response
-                      .$errors[i].size"
-                    :key="error.$uid"
-                  >
-                    <div class="error-msg text-error text-xs font-semibold">
-                      {{ error.$message }}
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-6">
-                  <label
-                    class="mb-2 font-normal text-xs flex gap-x-1 items-center"
-                  >
-                    <span class="text-red-500 mr-[.5px]">*</span>
-                    <span>Price </span>
-                    <span
-                      data-toggle="tooltip"
-                      data-placement="top"
-                      title="Please indicate price with respect to the selected unit of measurement"
-                      class="cursor-pointer"
-                    >
-                      <InformationCircleIcon class="w-4 h-4 text-gray-600" />
-                    </span>
-                  </label>
-
-                  <div class="relative">
-                    <div class="relative flex items-center">
-                      <CurrencyInput
-                        v-model="pack.amount"
-                        class="rounded-lg px-5 text-sm py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                        placeholder=""
-                        :options="{
-                          currency: 'ngn',
-                          currencyDisplay: 'narrowSymbol',
-                        }"
-                      />
-                      <span class="absolute right-2 text-xs"
-                        >/{{ form.unit }}</span
-                      >
-                    </div>
-                  </div>
-                  <div
-                    class="text-red-500 mt-1"
-                    v-for="error of v$.packagesAvailable.$each.$response
-                      .$errors[i].amount"
-                    :key="error.$uid"
-                  >
-                    <div class="error-msg text-error text-xs font-semibold">
-                      {{ error.$message }}
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block"
-                    >Colour
-                    <!-- <span class="font-light text-xs text-[#ABABAB]"
-                      >(Optional)</span
-                    > -->
-                  </label>
-
-                  <div class="flex relative items-center">
-                    <div class="relative flex items-center">
-                      <input
-                        v-model="pack.color"
-                        class="rounded-lg px-5 py-3 text-sm h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                        placeholder=""
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block">
-                    Purity
-                    <!-- <span class="font-light text-xs text-[#ABABAB]"
-                      >(Optional)</span
-                    > -->
-                  </label>
-
-                  <div class="relative">
-                    <div class="relative flex items-center">
-                      <input
-                        v-model="pack.purity"
-                        class="rounded-lg px-5 py-3 text-sm h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                        min="0"
-                        max="100"
-                      />
-                      <span class="absolute right-2 text-xs">%</span>
-                    </div>
-                    <div
-                      class="text-red-500 mt-1"
-                      v-for="error of v$.packagesAvailable.$each.$response
-                        .$errors[i].purity"
-                      :key="error.$uid"
-                    >
-                      <div class="error-msg text-error text-xs font-semibold">
-                        {{ error.$message }}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <label
-                  for="isAvailable"
-                  class="flex item-center leading-[normal]"
-                >
-                  <input
-                    id="isAvailable"
-                    type="checkbox"
-                    class="mr-2 accent-matta-black"
-                    v-model="pack.isAvailable"
-                  />
-                  <span>Is available</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
+    <hr class="border-[#F4F7FE] my-10" />
+    <div
+      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    >
+      <div class="w-[250px]">
+        <h2 class="text-sm text-[#101828] font-semibold">
+          Packages & Availability<RedDot />
+        </h2>
+        <p class="text-xs text-[#475467]">Provide package information here.</p>
+      </div>
+      <div class="max-w-[654px] w-full">
         <button
           type="button"
-          class="text-primary text-sm text-left leading-[normal]"
-          @click="addnewpackage"
+          class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-[11px] text-left leading-[normal] block"
+          @click="handleAddingPackage"
         >
-          <i class="uil uil-plus"></i> Add new package
+          <i class="uil uil-plus"></i> Add a package
         </button>
-      </div>
-      <div class="p-8 rounded-lg bg-white flex flex-col gap-y-3 h-[500px]">
-        <h3 class="text-matta-black mb-2">
-          Gallery <span class="text-[#ABABAB]">(Optional)</span>
-        </h3>
-        <Uploader
-          @onGetFiles="onGetFiles"
-          @removeFile="removeFile"
-          :isMultiple="true"
-          :gallery="form.gallery"
-        />
         <div
           class="text-red-500 mt-1"
-          v-for="error of v$.name.$errors"
+          v-for="error of v$.packagesAvailable.$errors"
           :key="error.$uid"
         >
           <div class="error-msg text-error text-xs font-semibold">
             {{ error.$message }}
           </div>
         </div>
+        <div
+          class="border border-[#DCDEE6] rounded-[10px] overflow-hidden mt-6"
+        >
+          <table class="w-full">
+            <thead>
+              <tr>
+                <th
+                  v-for="(item, i) in headers"
+                  :key="item"
+                  class="text-[#475467] text-xs text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+                >
+                  {{ item }}
+                </th>
+              </tr>
+            </thead>
+            <tbody v-if="form.packagesAvailable?.length">
+              <tr
+                v-for="item in form.packagesAvailable"
+                :key="item.id"
+                class="border-b border-[#EAECF0] last:border-none"
+              >
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
+                >
+                  {{ item?.package?.title }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
+                >
+                  {{ item?.size }}{{ item?.size }}{{ item.unit }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
+                >
+                  {{ currencyFormat(item?.purchaseAmount) }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
+                >
+                  {{ item?.color || "-" }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
+                >
+                  {{ item?.purity || "-" }}{{ item?.purity && "%" }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 ] whitespace-nowrap"
+                >
+                  <span class="flex gap-x-6">
+                    <span @click="removepackage(i)" class="cursor-pointer p-1"
+                      ><AppIcon icon="fa-trash-o" iconClass="text-[#E53F3F]"
+                    /></span>
+                    <span class="p-1" @click="editPackage(item)"
+                      ><AppIcon icon="prime:pencil" iconClass="text-[#475467]"
+                    /></span>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <EmptyData
+            v-if="!form.packagesAvailable?.length"
+            title="No package added yet"
+            titleClass="text-xs !font-normal text-[#475467]"
+            className="!h-auto py-6"
+            classIcon="!text-3xl w-[120px]"
+          />
+        </div>
       </div>
     </div>
-
-    <div class="bg-white rounded-lg px-10 py-6 flex gap-x-10 items-center">
-      <label class="flex item-center leading-[normal]">
-        <input
-          type="checkbox"
-          v-model="form.sampleAvailable"
-          class="mr-2 accent-matta-black"
-        /><span> Sample is available</span>
-      </label>
-      <label class="flex item-center leading-[normal]">
-        <input
-          type="checkbox"
-          v-model="form.hideProduct"
-          class="mr-2 accent-matta-black"
+    <hr class="border-[#F4F7FE] my-10" />
+    <div
+      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    >
+      <div class="w-[250px]">
+        <h2 class="text-sm text-[#101828] font-semibold">Gallery</h2>
+        <p class="text-xs text-[#475467]">
+          Upload pictures of your products here.
+        </p>
+      </div>
+      <div class="max-w-[654px] w-full">
+        <Uploader
+          @onGetFiles="onGetFiles"
+          @removeFile="removeFile"
+          :isMultiple="true"
+          :gallery="form.gallery"
+          support="SVG, PNG, JPG or GIF (max. 800x400px)"
         />
-        <span>Hide product</span>
-      </label>
-      <label class="flex item-center leading-[normal]">
-        <input
-          type="checkbox"
-          v-model="form.hidePrice"
-          class="mr-2 accent-matta-black"
-        />
-        <span>Hide price</span>
-      </label>
+        <div
+          class="text-red-500 mt-1"
+          v-for="error of v$.gallery.$errors"
+          :key="error.$uid"
+        >
+          <div class="error-msg text-error text-xs font-semibold">
+            {{ error.$message }}
+          </div>
+        </div>
+        <div class="bg-white rounded-lg py-6 mt-6 flex gap-x-10 items-center">
+          <label class="flex item-center leading-[normal]">
+            <input
+              type="checkbox"
+              v-model="form.sampleAvailable"
+              class="mr-2 accent-primary-500"
+            /><span class="text-[#344054]"> Sample is available</span>
+          </label>
+          <label class="flex item-center leading-[normal]">
+            <input
+              type="checkbox"
+              v-model="form.hideProduct"
+              class="mr-2 accent-primary-500"
+            />
+            <span class="text-[#344054]">Hide product</span>
+          </label>
+          <label class="flex item-center leading-[normal]">
+            <input
+              type="checkbox"
+              v-model="form.hidePrice"
+              class="mr-2 accent-primary-500"
+            />
+            <span class="text-[#344054]">Hide price</span>
+          </label>
+        </div>
+      </div>
     </div>
     <div
-      class="bg-white rounded-lg px-10 py-6 flex justify-between gap-x-10 items-center sticky bottom-0"
+      class="bg-white flex justify-between gap-x-10 items-center sticky bottom-0 py-6 mt-10 border-t border-[#F4F7FE] z-[99p]"
     >
       <button
         type="button"
         @click="togglePreview"
-        class="appearance-none leading-none px-10 py-4 rounded-full text-primary border-primary border hover:bg-gray-100 text-[13px] uppercase"
+        class="appearance-none leading-none px-5 lg:px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
       >
-        PREVIEW
+        Preview
       </button>
-      <div class="flex justify-center gap-x-4 items-center">
-        <router-link to="/storefront/products"
+      <div class="flex gap-x-4 items-center">
+        <NuxtLink to="/storefront/products"
           ><button
             type="button"
-            class="appearance-none leading-none px-10 py-4 rounded-full text-matta-black bg-[#F1F3F5] hover:bg-gray-300 text-[13px] uppercase"
+            class="appearance-none leading-none px-5 lg:px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
           >
-            Back
-          </button></router-link
+            Cancel
+          </button></NuxtLink
         >
         <button
-          :disabled="v$.$silentErrors.length || isLoading"
+          :disabled="isLoading"
           :class="{
-            'bg-primary/60 cursor-not-allowed':
-              v$.$silentErrors.length || isLoading,
+            'bg-primary/60 cursor-not-allowed': isLoading,
           }"
           type="submit"
-          class="appearance-none leading-none px-10 py-4 rounded-full text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
+          class="appearance-none leading-none px-6 lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
         >
           Next
         </button>
@@ -645,9 +504,14 @@
   </form>
 
   <div>
-    <Modal :isOpen="isAddingPackage" @toggleModal="isAddingPackage = false">
+    <IndexModal
+      :isOpen="isAddingPackage"
+      @toggleModal="isAddingPackage = false"
+      :canClose="false"
+    >
       <template #content>
         <form
+          v-if="typeForm === 'producer'"
           class="bg-white px-4 pt-5 pb-8 sm:p-6 sm:pb-4 w-[500px] rounded-lg"
           @submit.prevent="handleProducer"
         >
@@ -659,29 +523,37 @@
             ></i>
           </div>
           <div class="mb-5">
-            <label class="mb-2 font-normal text-xs block">
-              <span class="text-red-500 mr-[.5px]">*</span> Name
-              <span class="text-red-500 pl-[.5px]">*</span></label
+            <label class="mb-2 font-normal text-xs block"
+              >Name <span class="text-red-500 pl-[.5px]">*</span></label
             >
             <input
               v-model="producerForm.title"
-              class="rounded-lg px-3 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="rounded-lg px-[14px] py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               placeholder="Enter producer name"
               required
             />
           </div>
           <div class="flex gap-x-6 mb-5">
             <div class="w-full">
-              <label class="mb-2 font-normal text-xs block">Country</label>
+              <label
+                class="mb-2 font-medium text-sm text-[#344054] block text-left"
+                >Country</label
+              >
               <CountriesSelect v-model="producerForm.country" />
             </div>
             <div class="w-full">
-              <label class="mb-2 font-normal text-xs block">State</label>
+              <label
+                class="mb-2 font-medium text-sm text-[#344054] block text-left"
+                >State</label
+              >
               <StatesSelect v-model="producerForm.state" :states="states" />
             </div>
           </div>
           <div>
-            <label class="mb-2 font-normal text-xs block">Producer Logo</label>
+            <label
+              class="mb-2 font-medium text-sm text-[#344054] block text-left"
+              >Producer Logo</label
+            >
             <label for="upload" class="cursor-pointer">
               <input
                 @change="handleEvent($event)"
@@ -696,7 +568,7 @@
                   class="h-16 w-16 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                   >Logo</span
                 >
-                 <NuxtImg
+                <img
                   v-else
                   :src="producerForm.logo"
                   class="h-16 w-16 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
@@ -709,6 +581,7 @@
               ></i>
             </label>
           </div>
+
           <hr class="my-6" />
           <div class="flex justify-end gap-x-2 items-center mt-8">
             <button
@@ -720,17 +593,35 @@
             </button>
 
             <button
-              type="submit"
               :disabled="isLoading"
-              class="appearance-none text-xs leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 uppercase"
+              type="submit"
+              class="appearance-none text-xs leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 uppercase disabled:opacity-50"
             >
               Save
             </button>
           </div>
-        </form></template
-      >
-    </Modal>
+        </form>
+        <PackageForm
+          v-if="typeForm === 'package'"
+          @close="
+            () => {
+              isAddingPackage = false;
+              detail = null;
+            }
+          "
+          :detail="detail"
+         
+        />
+      </template>
+    </IndexModal>
   </div>
+  <ModalCenter>
+    <template #default>
+      <div class="w-full max-w-max p-6 md:py-9 md:px-10 z-[999] relative">
+        <CheckoutPickupAddForm @close="pickUpStore.getAlladdress()" />
+      </div>
+    </template>
+  </ModalCenter>
 </template>
 
 <script setup>
@@ -749,10 +640,9 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
-// import { Cropper } from "vue-advanced-cropper";
+import PackageForm from "../AddProduct/PackageForm";
 // import "vue-advanced-cropper/dist/style.css";
-import Modal from "~/components/IndexModal";
-import { ref, computed, provide, inject, watch, reactive } from "vue";
+
 import useVuelidate from "@vuelidate/core";
 import {
   required,
@@ -764,14 +654,12 @@ import {
   integer,
   decimal,
 } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
-import { measurements } from "~/utils";
+import { toast } from "vue3-toastify";
 import {
   addProduct,
   updateProduct,
   addproducer,
 } from "~/services/productservices";
-import MultiInput from "./MultiInput";
 import Uploader from "~/components/UploadComponent";
 import {
   CheckIcon,
@@ -784,9 +672,11 @@ import StatesSelect from "~/components/forms/StatesSelect";
 import countries from "~/utils/countries.json";
 import { uploadfile } from "~/services/onboardingservices";
 
+const isLocationOpen = ref(false)
+const pickUpStore = usePickupStore();
 const route = useRoute();
 const router = useRouter();
-
+const detail = ref(null);
 // const queryParams = reactive({
 //   Search: "",
 //   PageSize: 10,
@@ -809,7 +699,7 @@ const states = computed(() => {
 const producerForm = reactive({
   title: "",
   location: "",
-  country: "",
+  country: "Nigeria",
   state: "",
   logo: "",
 });
@@ -824,18 +714,13 @@ function getMarketValue(data) {
   form.marketApplications = data.applications;
   form.marketSubapplications = data.subapplications;
 }
+function editPackage(val) {
+  typeForm.value = "package";
+  detail.value = val;
+  isAddingPackage.value = true;
+}
 const isAddingPackage = ref(false);
 const isLoading = ref(false);
-
-const packageForms = [
-  "Plastic drum",
-  "Metal drum",
-  "Keg",
-  "Carton",
-  "Bag",
-  "Cylinder",
-  "Tank",
-];
 const selectedMeasurement = ref(measurements[0]);
 // const newpackage = ref("");
 let query = ref("");
@@ -852,11 +737,21 @@ let filteredProducers = computed(() =>
 );
 
 const form = inject("form");
+const headers = computed(() => [
+  "Name",
+  `Size`,
+  `Unit Price`,
+  "Color",
+  "Purity",
+  "",
+]);
+
 const rules = {
   name: {
     required,
     maxLength: maxLength(100),
   },
+  pickUpLocationId: {},
   manufacturer: {
     required: helpers.withMessage("Select a prodicer", required),
   },
@@ -878,24 +773,7 @@ const rules = {
   unit: { required },
   productBrandName: { maxLength: maxLength(100) },
   packagesAvailable: {
-    required,
-    $each: helpers.forEach({
-      purity: {
-        maxValue: maxValue(100),
-        minValue: minValue(0),
-        integerOrDecimal: or(integer, decimal),
-      },
-      amount: {
-        required,
-      },
-      size: {
-        required,
-        integerOrDecimal: or(integer, decimal),
-      },
-      package: {
-        required,
-      },
-    }),
+    required: helpers.withMessage("At least 1 package is required", required),
   },
   gallery: {
     required: helpers.withMessage("At least 1 imaage is required", required),
@@ -904,7 +782,9 @@ const rules = {
 // const index = ref(null);
 const invalidCredentials = ref(false);
 const v$ = useVuelidate(rules, form);
-
+onMounted(() => {
+  pickUpStore.getAlladdress();
+});
 watch(
   () => form.unit,
   () => {
@@ -914,6 +794,9 @@ watch(
       return i;
     });
   }
+);
+const locations = computed(() =>
+  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
 );
 function create_UUID() {
   var dt = new Date().getTime();
@@ -936,8 +819,8 @@ function handleEvent(e) {
   const file = files[0];
 
   // Check file type
-  if (!file.type.startsWith('image/')) {
-    toast.error('Please upload an image file.');
+  if (!file.type.startsWith("image/")) {
+    toast.error("Please upload an image file.");
     isLoadingLogo.value = false;
     return;
   }
@@ -945,7 +828,7 @@ function handleEvent(e) {
   // Check file size (in bytes)
   const maxSize = 800 * 1024; // 800 KB
   if (file.size > maxSize) {
-    toast.error('File size exceeds the limit (800 KB).');
+    toast.error("File size exceeds the limit (800 KB).");
     isLoadingLogo.value = false;
     return;
   }
@@ -960,7 +843,7 @@ function handleEvent(e) {
     const base64String = reader.result;
 
     uploadfile({
-      base64: base64String.replace(/^data:image\/[a-z]+;base64,/, ''),
+      base64: base64String.replace(/^data:image\/[a-z]+;base64,/, ""),
     })
       .then((res) => {
         producerForm.logo = res.data.message;
@@ -996,7 +879,7 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error((err.response.data.message || err.response.data.Message));
+        toast.error(err.response.data.message || err.response.data.Message);
       });
   } else {
     addProduct(form)
@@ -1016,7 +899,7 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error((err.response.data.message || err.response.data.Message));
+        toast.error(err.response.data.message || err.response.data.Message);
       });
   }
 }
@@ -1026,12 +909,7 @@ function onGetFiles(file) {
 function removeFile(id) {
   form.gallery.splice(id, 1);
 }
-// function addPackage() {
-//   form.packages.push({ id: create_UUID(), title: newpackage.value });
-//   form.packagesAvailable[index.value].package.title = newpackage.value;
-//   newpackage.value = "";
-//   isAddingPackage.value = false;
-// }
+
 function addnewpackage() {
   form.packagesAvailable.push({
     package: {
@@ -1040,7 +918,7 @@ function addnewpackage() {
     },
     unit: selectedMeasurement.value.value,
     size: null,
-    amount: null,
+    purchaseAmount: null,
     isAvailable: true,
     color: "",
     purity: "",
@@ -1063,10 +941,17 @@ function handleProducer() {
     }
   });
 }
+const typeForm = ref("");
+function handleAddingProducer() {
+  typeForm.value = "producer";
+  isAddingPackage.value = true;
+}
 function handleAddingPackage() {
+  typeForm.value = "package";
   isAddingPackage.value = true;
 }
 provide("images", form.gallery);
+provide("isOpen",isLocationOpen)
 </script>
 
 <style lang="scss" scoped>

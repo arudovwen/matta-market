@@ -19,7 +19,7 @@
             >
               <input
                 v-model="n.email"
-                class="flex-1 rounded-lg px-5 py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                class="flex-1 rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                 autocomplete="off"
                 autofocus="on"
                 type="email"
@@ -28,7 +28,7 @@
               <!-- <div class="flex relative items-center">
                 <select
                   v-model="n.role"
-                  class="appearance-none rounded-lg px-7 py-3 h-12 border bg-[#F1F3F5] placeholder:text-[#B6B7B9] text-sm focus:outline-matta-black/20"
+                  class="appearance-none rounded-lg px-7 py-3 h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] text-sm focus:outline-matta-black/20"
                 >
                   <option v-for="role in roles" :key="role" :value="role">
                     {{
@@ -47,7 +47,7 @@
               <Listbox v-model="n.role">
                 <div class="relative">
                   <ListboxButton
-                    class="relative cursor-default rounded-lg min-w-[160px] h-12 border border-[#D0D5DD] bg-[#F1F3F5] py-2 px-[15px] text-left sm:text-sm"
+                    class="relative cursor-default rounded-lg min-w-[160px] h-11 border border-[#D0D5DD] bg-[#F1F3F5] py-2 px-[15px] text-left sm:text-sm"
                   >
                     <span class="block text-[#101828] text-sm" v-if="n.role">
                       {{
@@ -129,13 +129,14 @@
               ></i>
             </div>
           </div>
-          <button class="text-xs text-primary" @click="addnew" type="button">
+          <button class="text-xs text-primary-500" @click="addnew" type="button">
             <i class="uil uil-plus"></i> Add new member
           </button>
         </div>
 
         <div class="flex justify-end gap-x-4 items-center mt-12">
           <button
+          type="button"
             @click="emits('toggleBar', 2)"
             class="appearance-none leading-none px-10 py-4 rounded-lg text-matta-black bg-[#F1F3F5] hover:bg-gray-100 text-[13px] uppercase"
           >

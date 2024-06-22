@@ -50,7 +50,7 @@
               </span>
               <span class="flex gap-2 items-center flex-wrap">
                 <NuxtLink
-                  :to="`/market/${i.name}?search_query=${i.name}`"
+                  :to="`/category/market/${i.name}?search_query=${i.name}`"
                   v-for="i in frequentlySearched"
                   :key="i.name"
                 >
@@ -70,9 +70,9 @@
 
 <script setup>
 
-const nuxtImg = useImage();
+const img = useImage();
 const backgroundStyles = computed(() => {
-  const imgUrl = nuxtImg(`https://res.cloudinary.com/arudovwen-me/image/upload/f_webp/c_scale,h_600/xddierf8sf3w2gn1csau.jpg`, {
+  const imgUrl = img(`https://res.cloudinary.com/arudovwen-me/image/upload/f_webp/c_scale,h_600/xddierf8sf3w2gn1csau.jpg`, {
     sizes: { xl: "100vw", lg: "100vw", md: "100vw", sm: "100vw", xs: "100vw" },
   });
   return { backgroundImage: `url('${imgUrl}')` };
@@ -96,7 +96,7 @@ const frequentlySearched = [
 
 function handleSearch() {
   if (!search) return;
-  router.push(`/market/${search.value}?search_query=${search.value}`);
+  router.push(`/category/market/${search.value}?search_query=${search.value}`);
 }
 </script>
 

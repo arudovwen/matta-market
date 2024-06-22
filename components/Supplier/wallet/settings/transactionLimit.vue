@@ -17,7 +17,7 @@
         <div class="flex gap-x-2 items-center mb-5">
           <CurrencyInput
             v-model="v$.amount.$model"
-            class="rounded-lg px-5 text-sm py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20 flex-1"
+            class="rounded-lg px-5 text-sm py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20 flex-1"
             placeholder=""
             :options="{
               currency: 'ngn',
@@ -54,7 +54,7 @@
         <div class="flex gap-x-2 items-center mb-5">
           <CurrencyInput
             v-model="v1$.upperLimit.$model"
-            class="rounded-lg px-5 text-sm py-3 h-12 w-full border bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg px-5 text-sm py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder=""
             :options="{
               currency: 'ngn',

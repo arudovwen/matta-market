@@ -5,13 +5,13 @@
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-5"
       v-if="!isLoading"
     >
-      <router-link
+      <NuxtLink
         :to="`/page/supplier/${s.name}/${s.id}`"
         v-for="(s, i) in suppliers"
         :key="i"
       >
         <SingleSupplier :supplier="s"
-      /></router-link>
+      /></NuxtLink>
     </div>
     <div class="text-center p-6 lg:p-8 my-24" v-else>
        <AppLoader />
@@ -29,9 +29,6 @@
 
 <script setup>
 import { getsuppliers } from "~/services/productservices";
-import { onMounted, ref, reactive } from "vue";
-import Pagination from "~/components/PaginationComponent";
-import SingleSupplier from "~/components/SingleSupplier";
 
 const queryParams = reactive({
   Search: "",

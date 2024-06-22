@@ -3,20 +3,24 @@
 
 import { confirmpurchase } from "@/services/cartservice";
 
-export function payWithMonnify(data, onModalClose, onSuccess) {
+export function payWithMonnify(
+  data,
+  onModalClose,
+  onSuccess,
+) {
   const config = useRuntimeConfig();
 
   const cartstore = useCartStore();
   window.MonnifySDK.initialize({
     amount: data.amount,
     currency: "NGN",
-    reference: "" + Math.floor(Math.random() * 1000000000 + 1),
+    reference: data.reference || "" + Math.floor(Math.random() * 1000000000 + 1),
     customerName: data.name,
     customerEmail: data.email,
-    apiKey: config.public.APP_MONNIFYISTEST,
+    apiKey: config.public.APP_MONNIFYAPIKEY,
     contractCode: config.public.APP_MONNIFYCONTRACTCODE,
 
-    paymentDescription: "Order payment",
+    paymentDescription: data.type || "Order payment",
     isTestMode: config.public.APP_MONNIFYISTESTMODE,
     metadata: {},
     paymentMethods: ["CARD", "ACCOUNT_TRANSFER", "USSD", "PHONE_NUMBER"],
@@ -32,7 +36,7 @@ export function payWithMonnify(data, onModalClose, onSuccess) {
       if (data.status === "FAILED") {
         onModalClose();
       }
-    
+
       //Implement what should happen when the modal is closed here
     },
   });
