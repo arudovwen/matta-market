@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/vue'
 import { it, expect, describe, vi, afterEach } from "vitest";
 import CompanyAccount from "~/components/onboarding/CompanyAccount.vue";
-import { mount } from "@vue/test-utils";
+import { RouterLinkStub } from "@vue/test-utils";
 import { not } from "@vuelidate/validators";
 import * as vueRouter from "vue-router";
 
@@ -35,7 +35,11 @@ describe("CompanyAccount", () => {
   }));
   it("Renders without error", () => {
     const component = render(CompanyAccount, {
-      props: {},
+			global: {
+				stubs: {
+					RouterLink: RouterLinkStub
+				}
+			}
     });
     expect(component.html()).toContain("STEP 1/4");
   });

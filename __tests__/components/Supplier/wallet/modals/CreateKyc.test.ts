@@ -50,7 +50,9 @@ describe("CreateKyc", () => {
 		fireEvent.input(screen.getByTestId("address"), {target: {value: "1007 Mountain Drive"}})
 		fireEvent.input(screen.getByTestId("director-title"), {target: {value: "1007 Mountain Drive"}})
 		
+		// @ts-ignore
 		expect(screen.getByTestId("fullName").value).toBe("Bruce Wayne")
+		// @ts-ignore
 		expect(screen.getByTestId("address").value).toBe("1007 Mountain Drive")
 
 		fireEvent.click(screen.getByTestId("add-director"))

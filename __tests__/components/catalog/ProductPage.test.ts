@@ -2,10 +2,11 @@ import { it, expect, describe, vi, afterEach } from "vitest";
 import { render, screen } from '@testing-library/vue'
 import ProductPage from "~/components/catalog/ProductPage.vue";
 import * as vueRouter from "vue-router";
+import { RouterLinkStub } from "@vue/test-utils";
 
 const store = useProductStore();
 
-describe("Content", () => {
+describe("ProductPage", () => {
   vi.mock("vue-router", () => {
     return {
       RouterView: {},
@@ -60,6 +61,9 @@ describe("Content", () => {
             pageCount: 5,
           },
         },
+				stubs: {
+					RouterLink: RouterLinkStub
+				}
       },
     });
     expect(component.html()).toContain("Item One");

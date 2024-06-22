@@ -6,8 +6,9 @@ import {
 } from "@testing-library/vue";
 import CatalogsComponent from "~/components/catalog/CatalogsComponent.vue";
 import * as prodServices from "~/services/productservices";
+import {mount, RouterLinkStub} from "@vue/test-utils"
 
-describe("Content", () => {
+describe("CatalogsComponent", () => {
   vi.mock("../../../services/productservices", () => ({
     getMarkets: vi.fn().mockResolvedValue({
       data: {
@@ -26,11 +27,16 @@ describe("Content", () => {
     }),
   }));
   it("Mounts without error", async () => {
-    const component = render(CatalogsComponent);
+    const component = render(CatalogsComponent, {
+			global: {
+				stubs: {
+					RouterLink: RouterLinkStub
+				}
+			}
+		});
     expect(prodServices.getMarkets).toBeCalled();
     expect(screen.getByTestId("spinner")).toBeDefined();
-    waitForElementToBeRemoved(screen.getByTestId("spinner")).then(() => {
-			expect(screen.getByText("Market One")).toBeDefined();
-		})
+    await waitForElementToBeRemoved(screen.getByTestId("spinner"))
+		expect(screen.getByText("Market One")).toBeDefined();
   });
 });

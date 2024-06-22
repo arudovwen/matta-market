@@ -5,8 +5,14 @@ import Content from "~/components/Cart/Content.vue";
 
 const store = useProductStore();
 
-describe("Content", () => {
-	const component = render(Content);
+describe("CartContent", () => {
+	const component = render(Content, {
+		global: {
+			provide: {
+				isOpen: false
+			}
+		}
+	});
   it("Mounts without error", () => {
 		expect(component.html()).toContain("You have no item in your cart")
   });

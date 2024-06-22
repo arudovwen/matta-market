@@ -10,6 +10,7 @@
       `"
        class="btn inline-flex justify-center"
     v-bind="$attrs"
+		data-testid="btn"
     v-if="!link && !div"
   >
     <template v-if="!isLoading && !$slots.default">

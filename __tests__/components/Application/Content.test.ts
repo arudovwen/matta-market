@@ -10,7 +10,7 @@ import { createTestingPinia } from "@pinia/testing";
 
 const store = useProductStore();
 
-describe("Content", () => {
+describe("ApplicationContent", () => {
 	const component = render(Content, {
 		global: {
 			plugins: [createTestingPinia({createSpy: vi.fn})]
