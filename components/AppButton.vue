@@ -12,7 +12,6 @@
     v-bind="$attrs"
 		data-testid="btn"
     v-if="!link && !div"
-		data-testid="btn"
   >
     <template v-if="!isLoading && !$slots.default">
       <span class="flex items-center">
