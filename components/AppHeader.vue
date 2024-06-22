@@ -47,7 +47,7 @@
       </div>
     </div>
   </ClientOnly>
-  <div class="bg-[#1849A9] text-xs sm:text-sm py-3">
+  <div data-testid="deal-container" class="bg-[#1849A9] text-xs sm:text-sm py-3">
     <div class="container flex gap-x-2 items-center text-white font-normal">
       <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" />
       <span
