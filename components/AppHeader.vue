@@ -66,9 +66,9 @@
 
   <nav
     :class="{
-      relative: view.atTopOfPage,
+      relative: view?.atTopOfPage,
       'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 border-b border-[rgba(242, 242, 242, 1)] darks:border-gray-900':
-        !view.atTopOfPage,
+        !view?.atTopOfPage,
     }"
     class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 z-[999] transition-all duration-500 ease-in-out"
   >
@@ -280,14 +280,14 @@
 
           <div class="flex gap-x-3 ml-3">
             <AppButton
-              v-if="!authStore.isLoggedIn"
+              v-if="!authStore?.isLoggedIn"
               link="/auth/login"
               text="Log in"
               btnClass="text-[#475467] !px-4 !sm:px-6 !py-[6px] !font-semibold text-xs sm:!text-base hidden md:flex"
             />
 
             <AppButton
-              v-if="!authStore.isLoggedIn"
+              v-if="!authStore?.isLoggedIn"
               link="/auth/vendor-register"
               text="Sign up"
               btnClass="!text-[12px] sm:!text-sm text-white  !font-semibold !px-[15px] !py-[6px] !normal-case bg-primary-500 flex"
@@ -296,7 +296,7 @@
             <Menu
               as="div"
               class="relative hidden lg:inline-flex text-left"
-              v-if="authStore.isLoggedIn"
+              v-if="authStore?.isLoggedIn"
             >
               <div>
                 <MenuButton
@@ -435,7 +435,7 @@ import GoogleTranslateSelect from "@google-translate-select/vue3";
 import { toast } from "vue3-toastify";
 
 const windowWidth = ref(
-  window.innerWidth ||
+  window?.innerWidth ||
     document.documentElement.clientWidth ||
     document.body.clientWidth ||
     0
@@ -470,12 +470,12 @@ const view = ref({
 });
 const open = ref(false);
 onBeforeMount(() => {
-  window.addEventListener("scroll", handleScroll);
-  window.addEventListener("resize", getWindowSize);
+  window?.addEventListener("scroll", handleScroll);
+  window?.addEventListener("resize", getWindowSize);
 });
 
 onMounted(() => {
-  if (authStore.isLoggedIn) {
+  if (authStore?.isLoggedIn) {
     getNotifications();
     setInterval(() => {
       getNotifications();
@@ -502,7 +502,7 @@ function getNotifications() {
 
 function handleScroll() {
   // when the user scrolls, check the pageYOffset
-  if (window.pageYOffset > 500) {
+  if (window?.pageYOffset > 500) {
     // user is scrolled
     if (view.value.atTopOfPage) view.value.atTopOfPage = false;
   } else {
@@ -511,14 +511,14 @@ function handleScroll() {
   }
 }
 function handleWidth() {
-  windowWidth.value = window.innerWidth;
+  windowWidth.value = window?.innerWidth;
 }
 function getWindowSize() {
   windowWidth.value =
-    window.innerWidth ||
+    window?.innerWidth ||
     document.documentElement.clientWidth ||
     document.body.clientWidth;
-  // const height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+  // const height = window?.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
   // return { width, height };
 }

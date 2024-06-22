@@ -4,7 +4,7 @@ export const useAuthStore = defineStore(
   "auth",
   () => {
     const loggedUser = ref("");
-    const language = ref(window.navigator.language);
+    const language = ref(window?.navigator?.language);
     const languages = [
       {
         code: "en",

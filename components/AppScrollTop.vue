@@ -16,7 +16,7 @@ onBeforeMount(() => {
 });
 function handleScroll() {
   // when the user scrolls, check the pageYOffset
-  if (window.pageYOffset > 600) {
+  if (window?.pageYOffset > 600) {
     // user is scrolled
     if (view.value.atTopOfPage) view.value.atTopOfPage = false;
   } else {
