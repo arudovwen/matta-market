@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library'
+import { render, screen } from '@testing-library/vue'
 import {it, expect, describe} from "vitest";
 import AccountType from "../components/onboarding/AccountType.vue";
 import {mount} from "@vue/test-utils"
@@ -6,7 +6,7 @@ import AccordionComponent from "~/components/accordion/AccordionComponent.vue";
 
 describe("AccordionComponnent", () => {
 	it("renders", async () => {
-		const component = render(AccordionComponent, {
+		const component = mount(AccordionComponent, {
 			props: {
 				items: [
 					{
