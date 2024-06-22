@@ -6,7 +6,7 @@
         :src="
           product.converPhoto && product.converPhoto !== 'null'
             ? product.converPhoto
-            : '../assets/img/img1.png'
+            : require('../assets/img/img1.png')
         "
       />
       <div
