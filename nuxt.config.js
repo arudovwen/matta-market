@@ -7,7 +7,6 @@ export default defineNuxtConfig({
     baseURL: "/",
     prerender: {
       crawlLinks: true,
-      // failOnError: false,
     },
   },
   image: {
@@ -28,28 +27,24 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "nuxt-swiper",
     "@nuxt/image",
-    "nuxt-security",
+    // "nuxt-security",
     "@nuxt/devtools",
-		"@nuxt/test-utils/module"
+    "nuxt-ssr-cache",
+    "@vite-pwa/nuxt",
   ],
+
   security: {
+    hidePoweredBy: false,
     headers: {
-      crossOriginEmbedderPolicy:
-        process.env.NODE_ENV === "development" ? "unsafe-none" : "require-corp",
+      crossOriginEmbedderPolicy: "unsafe-none",
       contentSecurityPolicy: {
-        "base-uri": ["'none'"],
-        "font-src": ["'self'", "https:", "data:"],
         "img-src": [
           "'self'",
           "https:",
           "data:",
-          "http://localhost:3000",
-          "https://dev.gateway.matta.trade",
+          "https://gateway.matta.trade",
           "https://res.cloudinary.com",
         ],
-        "object-src": ["'none'"],
-        "script-src-attr": ["'self'", "https:", "'unsafe-inline'"],
-        "style-src": ["'self'", "https:", "'unsafe-inline'"],
         "script-src": [
           "'self'",
           "https:",
@@ -57,22 +52,42 @@ export default defineNuxtConfig({
           "'strict-dynamic'",
           "'nonce-{{nonce}}'",
         ],
+        "upgrade-insecure-requests": true,
       },
       xFrameOptions: "deny",
+    },
+  },
+  cache: {
+    useHostPrefix: false,
+    pages: ["/"],
+
+    store: {
+      type: "memory",
+      max: 100,
+      // number of seconds to store this page in cache
+      ttl: 60,
     },
   },
   runtimeConfig: {
     public: {
       API_BASE_URL: process.env.API_BASE_URL,
+      APP_BASE_URL: process.env.APP_BASE_URL,
       APP_MONNIFYAPIKEY: process.env.APP_MONNIFYAPIKEY,
       APP_MONNIFYCONTRACTCODE: process.env.APP_MONNIFYCONTRACTCODE,
       APP_MONNIFYISTEST: process.env.APP_MONNIFYISTEST,
       APP_MONNIFYISTESTMODE: process.env.APP_MONNIFYISTESTMODE,
+      TINY_MCE: process.env.APP_TINYMCE_KEY,
     },
   },
-  ssr: true,
-  plugins: [],
-  // @ts-ignore
+  ssr: false,
+  spaLoadingTemplate: true,
+  router: {
+    options: {
+      hashMode: false,
+    },
+  },
+  // plugins: ["~/plugins/pdf-viewer.client.js"],
+
   googleSignIn: {
     clientId:
       "56799988480-4d51egljupar9la4djc2tknjodn2vsj5.apps.googleusercontent.com",
@@ -81,10 +96,12 @@ export default defineNuxtConfig({
     classSuffix: "",
   },
   css: [
-    "~/assets/scss/_button.scss",
-    "~/assets/scss/_form.scss",
     "vue-toastification/dist/index.css",
     "vue3-carousel/dist/carousel.css",
+    "@programic/vue3-tooltip/dist/index.css",
+    "~/assets/css/tailwind.css",
+    "~/assets/scss/_button.scss",
+    "~/assets/scss/_form.scss",
     "~/assets/scss/style.scss",
   ],
   googleFonts: {
@@ -92,12 +109,61 @@ export default defineNuxtConfig({
       Manrope: [100, 200, 300, 400, 500, 600, 700, 800], // Enable the IntManropeer font
     },
   },
-  devtools: { enabled: true },
+  devtools: { enabled: process.env.NODE_ENV === "development" },
+  pwa: {
+    registerType: "autoUpdate",
+    manifest: {
+      name: "Matta trade",
+      short_name: "Matta",
+      theme_color: "#165EF0",
+      display: "standalone",
+      icons: [
+        {
+          src: "/icons/android-icon-96x96.png",
+          sizes: "96x96",
+          type: "image/png",
+        },
+        {
+          src: "/icons/android-icon-144x144.png",
+          sizes: "144x144",
+          type: "image/png",
+        },
+        {
+          src: "/icons/android-icon-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+          purpose: "any",
+        },
+      ],
+      screenshots: [
+        {
+          src: "/shot2.png",
+          type: "image/png",
+          sizes: "436x720",
+          form_factor: "narrow",
+        },
+        {
+          src: "/shot1.png",
+          type: "image/png",
+          sizes: "1280x686",
+          form_factor: "wide",
+        },
+      ],
+    },
+    workbox: {
+      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
+    },
+    client: {
+      installPrompt: true,
+      periodicSyncForUpdates: 3600,
+    },
+  },
+
   app: {
     head: {
       title: "Matta - Africa's Leading B2B Marketplace for chemicals",
       charset: "utf-8",
-      viewport: "width=device-width, initial-scale=1",
+      viewport: "width=device-width, initial-scale=1 ",
       meta: [
         {
           hid: "description",
@@ -151,60 +217,6 @@ export default defineNuxtConfig({
         { name: "author", content: "Success Ahon" }, // Add author information
         { name: "robots", content: "index, follow" }, // Control search engine indexing
         { name: "theme-color", content: "#165EF0" }, // Set the theme color for mobile browsers
-      ],
-      script: [
-        {
-          src: "https://sdk.monnify.com/plugin/monnify.js",
-          crossorigin: "anonymous",
-          defer: true,
-        },
-        {
-          src: "https://kit.fontawesome.com/c1a534ffdb.js",
-          crossorigin: "anonymous",
-          defer: true,
-        },
-        {
-          src: "https://www.googletagmanager.com/gtag/js?id=G-295L8F9LEF",
-          crossorigin: "anonymous",
-          defer: true,
-        },
-        {
-          innerHTML: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-            gtag("config", "G-295L8F9LEF");
-          `,
-          type: "text/javascript",
-          defer: true,
-          crossorigin: "anonymous",
-        },
-        {
-          innerHTML: `
-            (function (h, o, t, j, a, r) {
-              h.hj = h.hj || function () {
-                (h.hj.q = h.hj.q || []).push(arguments);
-              };
-              h._hjSettings = { hjid: 3748112, hjsv: 6 };
-              a = o.getElementsByTagName("head")[0];
-              r = o.createElement("script");
-              r.async = 1;
-              r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-              a.appendChild(r);
-            })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
-          `,
-          type: "text/javascript",
-          crossorigin: "anonymous",
-          defer: true,
-        },
-      ],
-      link: [
-        {
-          rel: "stylesheet",
-          href: "https://unicons.iconscout.com/release/v4.0.0/css/line.css",
-        },
       ],
     },
   },

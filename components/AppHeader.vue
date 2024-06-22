@@ -436,8 +436,8 @@ import { toast } from "vue3-toastify";
 
 const windowWidth = ref(
   window?.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth ||
+    document?.documentElement?.clientWidth ||
+    document?.body?.clientWidth ||
     0
 );
 const handleGoogleTranslateSelect = (language) => {
@@ -516,8 +516,8 @@ function handleWidth() {
 function getWindowSize() {
   windowWidth.value =
     window?.innerWidth ||
-    document.documentElement.clientWidth ||
-    document.body.clientWidth;
+    document?.documentElement?.clientWidth ||
+    document?.body?.clientWidth;
   // const height = window?.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
   // return { width, height };
