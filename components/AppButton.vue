@@ -11,6 +11,7 @@
        class="btn inline-flex justify-center"
     v-bind="$attrs"
     v-if="!link && !div"
+		data-testid="btn"
   >
     <template v-if="!isLoading && !$slots.default">
       <span class="flex items-center">

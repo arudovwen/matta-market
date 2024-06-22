@@ -198,6 +198,7 @@
               >
               <div class="relative flex items-center">
                 <input
+									data-testid="fullName"
                   v-model="director.name"
                   class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   placeholder="Enter director's name"
@@ -220,6 +221,7 @@
               >
               <div class="relative flex items-center">
                 <input
+								data-testid="director-title"
                   v-model="director.title"
                   class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   placeholder="Enter director's title"
@@ -242,6 +244,7 @@
               >
               <div class="relative flex items-center">
                 <input
+									data-testid="address"
                   v-model="director.address"
                   class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   placeholder="Enter director's address"
@@ -276,6 +279,7 @@
             "
             type="button"
             class="text-xs"
+						data-testid="add-director"
           >
             + Add director
           </button>

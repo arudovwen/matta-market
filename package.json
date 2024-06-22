@@ -22,6 +22,7 @@
     "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@pinia/nuxt": "^0.5.1",
     "@vite-pwa/nuxt": "^0.4.0",
+    "@vitest/coverage-v8": "^1.6.0",
     "nuxt": "^3.8.1",
     "nuxt-security": "^1.0.0",
     "nuxt-simple-sitemap": "^4.2.1",

@@ -6,6 +6,7 @@ import { not } from "@vuelidate/validators";
 import * as vueRouter from "vue-router";
 import Banner from "~/components/Application/Banner.vue";
 import Content from "~/components/Application/Content.vue";
+import { createTestingPinia } from "@pinia/testing";
 
 const store = useProductStore();
 

@@ -1,7 +1,7 @@
 <template>
   <div class="loader-container">
     <div
-      class="loader border-t-8 border-blue-500 border-solid rounded-full h-16 w-16 animate-spin"
+      class="loader border-t-8 border-blue-500 border-solid rounded-full h-16 w-16 animate-spin" data-testid="spinner"
     ></div>
   </div>
 </template>

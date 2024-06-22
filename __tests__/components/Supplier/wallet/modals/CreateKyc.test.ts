@@ -41,7 +41,7 @@ describe("CreateKyc", () => {
     }),
   }));
   it("renders", async () => {
-    const component = mount(CreateKyc, {
+    const component = render(CreateKyc, {
       global: {
         plugins: [store],
       },
@@ -58,6 +58,6 @@ describe("CreateKyc", () => {
 		fireEvent.click(screen.getByTestId("add-director"))
 		.then(() => {
 		})
-		screen.debug();
+		// screen.debug();
   });
 });

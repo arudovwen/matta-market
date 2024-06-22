@@ -6,7 +6,7 @@
         :src="
           product.converPhoto && product.converPhoto !== 'null'
             ? product.converPhoto
-            : require('~/assets/img/img1.png')
+            : '../assets/img/img1.png'
         "
       />
       <div
@@ -18,7 +18,7 @@
          <img
           alt="image"
           class=""
-          src="~/assets/img/logo.svg"
+          src="../assets/img/logo.svg"
           width="80"
           height="80"
         />
