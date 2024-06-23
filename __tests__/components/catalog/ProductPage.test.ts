@@ -84,5 +84,6 @@ describe("ProductPage", () => {
       },
     });
     expect(component.html()).toContain("No data available");
+		component.unmount();
   });
 });

@@ -8,5 +8,6 @@ describe("AccountType", () => {
 	it("renders", () => {
 		const component = render(AccountType);
 		expect(component.html()).toContain("Create account on behalf of the company.");
+		component.unmount()
 	})
 })

@@ -5,7 +5,7 @@ import {mount} from "@vue/test-utils"
 import AccordionComponent from "~/components/accordion/AccordionComponent.vue";
 
 describe("AccordionComponnent", () => {
-	it("renders", async () => {
+	it("renders", () => {
 		const component = mount(AccordionComponent, {
 			props: {
 				items: [

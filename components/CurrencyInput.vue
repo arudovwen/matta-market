@@ -1,5 +1,5 @@
 <template>
-  <input ref="inputRef" type="text"  :class="classInput"/>
+  <input data-testid="currency-input" ref="inputRef" type="text"  :class="classInput"/>
 </template>
 
 <script>

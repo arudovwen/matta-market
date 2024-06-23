@@ -33,6 +33,7 @@
           :multiple="multiple"
           :options="options"
           :modelValue="modelValue"
+					data-testid="input"
           @update:modelValue="$emit('update:modelValue', $event)"
         >
         </vSelect>
@@ -83,7 +84,6 @@ import "vue-select/dist/vue-select.css";
 export default {
   components: {
     vSelect,
-    Icon,
   },
   props: {
     canRequest: {

@@ -91,10 +91,11 @@ const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField(
 );
 
 const onSubmit = handleSubmit((values) => {
-  formData.amountRequired = values.amountRequired;
+	formData.amountRequired = values.amountRequired;
   formData.tenor = values.tenor;
   formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs;
   active.value = 2;
+	console.log("Yppp",values, active.value)
 });
 
 const options = [

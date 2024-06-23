@@ -6,7 +6,7 @@ import AccordionComponent from "~/components/accordion/AccordionComponent.vue";
 import VendorSignUp from '~/components/Auth/VendorSignUp.vue';
 
 describe("VendorSignup", () => {
-	it("renders", async () => {
+	it("renders", () => {
 		const {getByPlaceholderText} = render(VendorSignUp);
 		const someInputs = screen.getAllByPlaceholderText("")
 		fireEvent.input(someInputs[0], {target: {value: "Bruce"}})

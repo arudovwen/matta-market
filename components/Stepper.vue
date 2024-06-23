@@ -94,6 +94,7 @@
     <div
       v-for="tab in tabs"
       :key="tab.value"
+			data-testid="tab.value"
       @click="selectValue(tab.value)"
       class="cursor-pointer relative after:content-[''] after:border-green-700 after:absolute after:border-b-2 after:w-32 after:top-1/2 after:translate-y-[-50%] after:left-[14px] after:last:content-none after:z-10"
     >
