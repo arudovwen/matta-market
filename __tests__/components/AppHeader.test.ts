@@ -35,6 +35,6 @@ describe("AppHeader", () => {
 		await fireEvent.click(screen.getByText("Markets"))
 		await fireEvent.click(screen.getByText(	"Applications"))
 		await fireEvent.click(screen.getByText(	"Request a product"))
-		screen.debug();
+		component.unmount();
   });
 });

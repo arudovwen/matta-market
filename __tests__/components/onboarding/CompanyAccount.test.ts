@@ -42,5 +42,6 @@ describe("CompanyAccount", () => {
 			}
     });
     expect(component.html()).toContain("STEP 1/4");
+		component.unmount()
   });
 });

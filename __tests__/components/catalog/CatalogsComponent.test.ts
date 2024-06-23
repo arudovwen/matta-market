@@ -38,5 +38,6 @@ describe("CatalogsComponent", () => {
     expect(screen.getByTestId("spinner")).toBeDefined();
     await waitForElementToBeRemoved(screen.getByTestId("spinner"))
 		expect(screen.getByText("Market One")).toBeDefined();
+		component.unmount();
   });
 });

@@ -58,6 +58,7 @@ describe("CreateKyc", () => {
 		fireEvent.click(screen.getByTestId("add-director"))
 		.then(() => {
 		})
-		// screen.debug();
+		component.unmount();
+		// ;
   });
 });

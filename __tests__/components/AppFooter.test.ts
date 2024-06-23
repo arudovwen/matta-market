@@ -22,7 +22,7 @@ const store = createStore({
 });
 
 describe("AppFooter", () => {
-  it("renders", async () => {
+  it("renders", () => {
     const component = render(AppFooter, {
       global: {
         plugins: [store],
@@ -30,5 +30,6 @@ describe("AppFooter", () => {
     });
     expect(screen.getByText("Discover and buy chemicals, raw materials, ingredients, and commodities all in one place.")).toBeTruthy();
 		expect(component.html()).toMatchSnapshot()
+		component.unmount()
   });
 });

@@ -42,6 +42,6 @@ describe("PersonalAccount", () => {
 				}
 			}
     });
-		screen.debug();
+		component.unmount()
   });
 });

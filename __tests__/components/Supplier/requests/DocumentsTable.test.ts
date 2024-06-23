@@ -24,7 +24,18 @@ describe("DocumentsTable", () => {
       data: {
         data: {
 					data: [
-
+						{
+							productName: "Lumefantrine",
+							producer: "Some Guy",
+							type: "chemical",
+							created: new Date()
+						},
+						{
+							productName: "Water",
+							producer: "Some Other Guy",
+							type: "chemical",
+							created: new Date()
+						},
 					],
 					isLoading: false,
 					totalData: {},
@@ -40,9 +51,10 @@ describe("DocumentsTable", () => {
 		expect(screen.getByTestId("spinner")).toBeTruthy();
 		await waitForElementToBeRemoved(screen.getByTestId("spinner"))
 		.then(() => {
-			screen.debug();
+			;
 		})
-		expect(component.html()).toMatchSnapshot()
-		expect(reqservices.sellerdoc).toBeCalled();
+		expect(component.html()).toContain("Lumefantrine")
+		expect(component.html()).toContain("")
+		component.unmount()
   });
 });

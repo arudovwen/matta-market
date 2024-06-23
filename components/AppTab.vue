@@ -6,6 +6,7 @@
     <button
       v-for="tab in tabs"
       :key="tab.title"
+			:data-testid="tab.title"
       @click="active = tab.title"
       :class="`capitalize text-xs md:text-sm font-semibold pb-3 border-b-2 px-1 flex items-center gap-x-1 ${
         active === tab.title

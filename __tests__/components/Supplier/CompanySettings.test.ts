@@ -20,7 +20,7 @@ const store = createStore({
   },
 });
 
-describe("AppFooter", () => {
+describe("CompanySettings", () => {
   it("renders", async () => {
     const component = render(settings, {
       global: {

@@ -21,5 +21,6 @@ describe("bannner", () => {
     expect(component.html()).toContain(
       "We found 0 Products” matching your search criteria"
     );
+		component.unmount()
   });
 });
