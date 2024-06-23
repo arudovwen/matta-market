@@ -4,7 +4,8 @@ import Vuex, { createStore, mapActions } from "vuex";
 import { flushPromises, mount, shallowMount } from "@vue/test-utils";
 
 import CreatePin from "../../../../../components/Supplier/wallet/modals/CreatePin.vue";
-import { setWalletpin } from "~/services/walletservice";
+import { setWalletpin, verifyPin } from "~/services/walletservice";
+import { retry } from "~/__mocks__/retry";
 
 const store = createStore({
   state: {
@@ -24,6 +25,14 @@ const store = createStore({
 describe("CreatePin", () => {
   vi.mock("~/services/walletservice", () => ({
     setWalletpin: vi.fn().mockResolvedValue({
+      status: 200,
+      data: {
+        data: {
+          message: "Success",
+        },
+      },
+    }),
+    verifyPin: vi.fn().mockResolvedValue({
       status: 200,
       data: {
         data: {
@@ -58,6 +67,18 @@ describe("CreatePin", () => {
     );
     expect(screen.queryByText("Pins must match")).toBeNull();
     await fireEvent.click(screen.getByText("Submit"));
+    await retry(() =>
+      expect(screen.getByPlaceholderText("Enter otp code")).toBeDefined()
+    );
+    screen.debug();
+    await fireEvent.update(
+      screen.getByPlaceholderText("Enter otp code"),
+      "1244"
+    );
+		await fireEvent.click(screen.getByText("Create pin"))
+		await retry(() =>
+      expect(screen.getByText("Success")).toBeDefined()
+    );
     component.unmount();
     // ;
   });
