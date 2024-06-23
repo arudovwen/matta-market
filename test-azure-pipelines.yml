@@ -42,6 +42,15 @@ steps:
 ##     pushd $(projectFolder) && npm run build && popd
 ## Copy the client to the staging directory
 
+- task: SonarCloudPrepare@2
+  inputs:
+    SonarCloud: 'Sonar Cloud'
+    organization: 'mattadevopsteam'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'mattadevopsteam_matta-frontend'
+    cliProjectName: 'matta.frontend'
+    cliSources: '.'
 
 - task: CopyFiles@2
   inputs:
