@@ -71,3 +71,11 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+
+- task: SonarCloudAnalyze@2
+  displayName: 'Run SonarCloud analysis'
+
+- task: SonarCloudPublish@2
+  displayName: 'Publish results on build summary'
+  inputs:
+    pollingTimeoutSec: '300'
