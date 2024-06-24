@@ -30,7 +30,6 @@ steps:
 ## Run the npm install/build
 - script: |
     pushd $(projectFolder) && npm install && popd
-    pushd $(projectFolder) && npm run build && popd
     pushd $(projectFolder) && npm run generate
     pushd $(projectFolder) && npm run coverage
 ##    pushd $(projectFolder) && npm install && popd
@@ -43,11 +42,15 @@ steps:
 ##     pushd $(projectFolder) && npm run build && popd
 ## Copy the client to the staging directory
 
+##- task: PublishCodeCoverageResults@2
+##  inputs:  
+##    summaryFileLocation: |
+##      coverage/*.*
+##    pathToSources: |
+##      coverage/clover.xml
 - task: PublishCodeCoverageResults@2
-  inputs:
-    summaryFileLocation: |
-      **
-      !coverage/**
+  inputs: 
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*clover.xml'
 
 - task: SonarCloudPrepare@2
   inputs:
