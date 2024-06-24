@@ -48,7 +48,7 @@ steps:
     summaryFileLocation: |
       coverage/*.*
     pathToSources: |
-      coverage/index.html
+      coverage/clover.xml
 
 - task: SonarCloudPrepare@2
   inputs:
