@@ -46,7 +46,9 @@ steps:
 - task: PublishCodeCoverageResults@2
   inputs:
     summaryFileLocation: |
-      !coverage/index.html
+      coverage/*.*
+    pathToSources: |
+      coverage/index.html
 
 - task: SonarCloudPrepare@2
   inputs:
