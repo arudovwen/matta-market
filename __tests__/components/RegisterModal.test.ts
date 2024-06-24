@@ -29,6 +29,6 @@ describe("RegisterModal", () => {
 				isOpen: true
 			}
 		})
-		screen.debug()
+
 	})
 })

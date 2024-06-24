@@ -121,7 +121,7 @@ vi.spyOn(reqservices, "sellerdoc").mockResolvedValue({
         },
       });
       expect(screen.getByTestId("spinner")).toBeTruthy();
-			screen.debug();
+		
       // await waitForElementToBeRemoved(screen.getByTestId("spinner")).then(
       //   async () => {
       //     expect(screen.getByText("Joy")).toBeTruthy();

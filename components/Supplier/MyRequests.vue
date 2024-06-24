@@ -51,11 +51,9 @@
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
 import { procurementrequestcount } from "~/services/procurementservice";
 import { buyerquotes } from "~/services/quoteservice";
 
-const route = useRoute();
 defineProps(["title"]);
 const isOpen = ref(false);
 const active = ref("samples");

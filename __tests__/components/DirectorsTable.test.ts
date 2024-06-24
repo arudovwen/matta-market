@@ -33,7 +33,6 @@ const store = createStore({
 
 describe("DirectorsTable", () => {
   it("renders", async () => {
-    console.log(new Date().toLocaleDateString());
     const component = render(DirectorsTable, {
       global: {
         plugins: [store],

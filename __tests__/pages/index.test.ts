@@ -500,6 +500,6 @@ describe("IndexPage", () => {
     expect(component.html()).toContain(
       "Discover and buy chemicals and raw materials all in one place"
     );
-		console.log(component.html())
+	
   });
 });
