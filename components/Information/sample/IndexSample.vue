@@ -128,7 +128,7 @@ const sampleForm = reactive({
 });
 
 
-const store = useStore();
+
 const showAuth = ref(false);
 const isOpen = ref(false);
 const active = ref(1);
