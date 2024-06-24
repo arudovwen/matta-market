@@ -46,7 +46,6 @@ steps:
 - task: PublishCodeCoverageResults@2
   inputs:
     summaryFileLocation: |
-      **
       !coverage/**
 
 - task: SonarCloudPrepare@2
