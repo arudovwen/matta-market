@@ -42,12 +42,15 @@ steps:
 ##     pushd $(projectFolder) && npm run build && popd
 ## Copy the client to the staging directory
 
+##- task: PublishCodeCoverageResults@2
+##  inputs:  
+##    summaryFileLocation: |
+##      coverage/*.*
+##    pathToSources: |
+##      coverage/clover.xml
 - task: PublishCodeCoverageResults@2
-  inputs:
-    summaryFileLocation: |
-      coverage/*.*
-    pathToSources: |
-      coverage/clover.xml
+  inputs: 
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
 
 - task: SonarCloudPrepare@2
   inputs:
