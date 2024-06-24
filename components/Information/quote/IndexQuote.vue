@@ -84,12 +84,6 @@
       </div>
     </div>
   </form>
-  <LoginModal
-    v-if="isOpen"
-    :showSignup="false"
-    :isOpen="isOpen"
-    @close="handleclose"
-  />
 </template>
 <script setup>
 import { useStore } from "vuex";

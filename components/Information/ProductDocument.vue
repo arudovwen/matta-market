@@ -108,22 +108,9 @@
       </template>
     </SideModal>
   </div>
-  <LoginModal
-    v-if="isAuthOpen && active == 'signin'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
-  <RegisterModal
-    v-if="isAuthOpen && active == 'signup'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
+
 </template>
 <script setup>
-import LoginModal from "~/components/LoginModal";
-import RegisterModal from "~/components/RegisterModal";
 import { inject, ref, provide, computed } from "vue";
 import Modal from "~/components/IndexModal";
 import SideModal from "~/components/SideModal";
