@@ -32,6 +32,7 @@
     />
   </div>
   <input
+		data-testid="upload"
     type="file"
     :id="id"
     class="hidden"

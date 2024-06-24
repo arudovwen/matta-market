@@ -27,6 +27,7 @@
         :formatter="formatter"
         :size="size"
         :multiple="multiple"
+				data-testid="select"
       >
         <option value="" disabled selected>{{ placeholder }}</option>
         <template v-if="!$slots.default && options">

@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Breadcrubms index > Mounts without error 1`] = `
+"<div>
+  <ul class="flex gap-x-2">
+    <li class="text-[#475467] text-matta-black/80 last:text-matta-black after:content-['>']  font-light last:font-semibold text-[10px] sm:text-xs lg:text-sm capitalize  last:after:content-[''] flex gap-x-2 items-center">
+      <routerlink to="/home" class=""></routerlink>
+    </li>
+    <li class="text-[#475467] text-matta-black/80 last:text-matta-black after:content-['>']  font-light last:font-semibold text-[10px] sm:text-xs lg:text-sm capitalize  last:after:content-[''] flex gap-x-2 items-center">
+      <routerlink to="/markets" class=""></routerlink>
+    </li>
+  </ul>
+</div>"
+`;

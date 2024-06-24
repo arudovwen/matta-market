@@ -286,7 +286,8 @@ onMounted(() => {
   getAllApplications();
   getAllMarkets();
   const cookie = useCookie("googtrans");
-  cookie.value = languages[navigator.language];
+  if (window?.navigator) {
+    cookie.value = languages[navigator.language];
+  }
 });
 </script>
- 

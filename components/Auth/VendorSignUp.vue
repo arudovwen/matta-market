@@ -179,6 +179,7 @@ const [companyName, companyNameAtt] = defineField("companyName");
 const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
+	console.log("Submitting");
   isLoading.value = true;
   registerUser({ ...values, business_UserType: 1 })
     .then((res) => {

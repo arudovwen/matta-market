@@ -39,8 +39,7 @@
       >
         <div class="mx-auto">
           <p
-            data-aos="fade-up"
-            data-aos-once="true"
+       
             class="font-bold text-[#fff] text-3xl md:text-5xl xl:leading-[58px] mb-[23px]"
           >
             Ready to get started?

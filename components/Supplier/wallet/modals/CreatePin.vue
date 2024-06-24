@@ -197,15 +197,15 @@ const v1$ = useVuelidate(rule, form1);
 const isShowingPasword = ref(false);
 
 async function handleSubmit() {
-  const validity = await v$.value.$validate();
+	const validity = await v$.value.$validate();
   if (!validity) return;
   isLoading.value = true;
   form.pin = form.pin.toString();
   form.confirmPin = form.confirmPin.toString();
   form.walletId = props.details.walletId;
   setWalletpin(form).then((res) => {
-    if (res.status === 200) {
-      step.value = 2;
+		if (res.status === 200) {
+			step.value = 2;
       isLoading.value = false;
       toast.info(res.data.data.message);
     }

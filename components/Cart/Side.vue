@@ -67,7 +67,7 @@
       </p>
     </div>
     <div class="flex flex-col gap-y-4 mt-3">
-      <AppButton
+      <!-- <AppButton
         @click="handleOrderRequest()"
         text="Submit order request"
         :isLoading="loading"
@@ -78,7 +78,7 @@
           cartStore?.loadingCart
         "
         btnClass="!rounded-[5px] !text-[#DBDBDB] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
-      />
+      /> -->
 
       <AppButton
         :isDisabled="

@@ -154,9 +154,10 @@
                 <div>
                   <MenuButton
                     id="myaccount"
+                    data-testid="myaccount"
                     class="bg-gray-100 rounded-full h-[38px] w-[38px] flex justify-center items-center uppercase text-matta-black font-bold"
                   >
-                  {{ authStore.userInfo?.firstName.slice(0, 1) }}{{ authStore.userInfo?.lastName.slice(0, 1) }}
+                  {{ authStore.userInfo?.firstName?.slice(0, 1) }}{{ authStore.userInfo?.lastName?.slice(0, 1) }}
                   </MenuButton>
                 </div>
   
@@ -177,8 +178,8 @@
                       <div
                         class="h-8 w-8 rounded-full flex items-center justify-center text-sm text-white bg-[#f90] font-semibold"
                       >
-                        {{ authStore.userInfo?.firstName.slice(0, 1) }}
-                        {{ authStore.userInfo?.lastName.slice(0, 1) }}
+                        {{ authStore.userInfo?.firstName?.slice(0, 1) }}
+                        {{ authStore.userInfo?.lastName?.slice(0, 1) }}
                       </div>
                       <div class="flex-1">
                         <span
@@ -257,6 +258,7 @@
             </button>
   
             <button
+							data-testid="logout"
               type="button"
               @click="logOut"
               class="appearance-none border w-1/2 min-w-[140px] border-primary-500 leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
@@ -278,9 +280,6 @@
   <script setup>
   import { ref } from "vue";
   import {
-    categories,
-    navigations,
-    mobileNavigation,
     financeMenu,
     mobileMenu,
   } from "~/utils/data";
@@ -318,6 +317,7 @@
     window.addEventListener("scroll", handleScroll);
   });
   onMounted(() => {
+		console.log("store",authStore.isLoggedIn, authStore.userInfo);
     if (authStore.isLoggedIn) {
       getNotifications();
       setInterval(() => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="gap-y-2 flex flex-col bg-white rounded-[10px]  border border-[#F4F7FE]">
+  <div class="gap-y-2 flex flex-col bg-white rounded-[10px]  border border-[rgb(244,247,254)]">
     <!-- Top bar   -->
  
     <HeaderComponent title="My requests" subtext="List of your requests for samples and documents." />
@@ -51,11 +51,9 @@
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
 import { procurementrequestcount } from "~/services/procurementservice";
 import { buyerquotes } from "~/services/quoteservice";
 
-const route = useRoute();
 defineProps(["title"]);
 const isOpen = ref(false);
 const active = ref("samples");

@@ -59,14 +59,14 @@ function getData() {
   loading.value = true;
   cartStore.setLoadingCart(true);
   shippingBreakdown()
-    .then((res) => {
-      loading.value = false;
+	.then((res) => {
+			console.log("yooo");
       cartStore.setLoadingCart(false);
       if (res.status === 200) {
-        rows.value = [
-          ...res.data.data.items,
+				rows.value = [
+					...res.data.data.items,
           {
-            item: "Total Cost",
+						item: "Total Cost",
             size: "",
             quantity: "",
             shippingCost: res.data.data.totalShippingCost,
@@ -74,6 +74,7 @@ function getData() {
         ].map((i) => ({ ...i, shippingCost: currencyFormat(i.shippingCost) }));
         error.value = null;
         cartStore.getMyCart();
+				loading.value = false;
       }
     })
     .catch((err) => {
@@ -84,7 +85,7 @@ function getData() {
 }
 
 onMounted(() => {
-  // getData();
+  getData();
 });
 // const refresh = inject("refresh");
 

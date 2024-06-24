@@ -26,7 +26,7 @@ onMounted(() => {
   }
 });
 watch(route, () => {
-  active.value = route.query.onboarding_stage;
+  active.value = route?.query?.onboarding_stage;
 });
 provide("active", active)
 </script>

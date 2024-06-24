@@ -2,6 +2,7 @@
   <div class="loader-container">
     <div
       class="loader border-t-4 border-blue-500 border-solid rounded-full h-8 w-8 animate-spin"
+			data-testid="table-loader"
     ></div>
   </div>
 </template>

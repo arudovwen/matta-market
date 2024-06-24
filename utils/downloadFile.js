@@ -1,7 +1,5 @@
 export default function(fileUrl, fileName) {
-    console.log("🚀 ~ function ~ fileUrl:", fileUrl)
-    // Replace 'your_file_url' with the actual URL of the file you want to download
-  
+ 
     fetch(fileUrl)
       .then((response) => {
         if (!response.ok) {

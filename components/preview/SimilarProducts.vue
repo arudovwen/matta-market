@@ -20,7 +20,7 @@
       </span>
     </div>
     <div class="" v-if="products.length">
-      <carousel :breakpoints="breakpoints" ref="myslide" snapAlign="start">
+      <carousel :breakpoints="breakpoints" ref="slider" snapAlign="start">
         <slide v-for="(item, index) in products" :key="index" class="px-2">
           <NuxtLink
             :to="`/product/${encodeURIComponent(item.title)}/${item.id}`"
@@ -41,7 +41,6 @@ import { onMounted, ref, reactive, inject } from "vue";
 import SingleProduct from "~/components/SingleProduct";
 
 const product = inject("product");
-const myslide = ref(null);
 const queryParams = reactive({
   MarketApplication: product.value.marketApplications.length
     ? product.value.marketApplications.shift()
@@ -51,36 +50,31 @@ const queryParams = reactive({
   MarketSubApplication: product.value.marketSubapplications.length
     ? product.value.marketSubapplications.shift()
     : "",
+    pagecount: 0,
+  totalData: 0,
+  SortOrder: "A",
+  Pricefilter: "",
   productId: "",
   Search: "",
   PageSize: 10,
   PageNumber: 1,
   ShowSubMenu: true,
   Producer: "",
-  pagecount: 0,
-  totalData: 0,
-  SortOrder: "A",
-  Pricefilter: "",
+ 
 });
-onMounted(() => {
-  getAllProducts();
-});
+const slider = ref(null);
+
+
 const products = ref([]);
-function getAllProducts() {
-  getProducts(queryParams).then((res) => {
-    products.value = res.data.data.data.filter(
-      (item) => item.id != product.value.id
-    );
-  });
-}
+
 const breakpoints = {
   250: {
-    itemsToShow: 1.2,
+    itemsToShow: 1.3,
     snapAlign: "center",
   },
   // 700px and up
   700: {
-    itemsToShow: 2.5,
+    itemsToShow: 2.6,
     snapAlign: "center",
   },
   // 1024 and up
@@ -91,10 +85,19 @@ const breakpoints = {
 };
 
 function next() {
-  myslide.value.next();
+  slider.value.next();
 }
-
+function getAllProducts() {
+  getProducts(queryParams).then((res) => {
+    products.value = res.data.data.data.filter(
+      (item) => item.id != product.value.id
+    );
+  });
+}
 function prev() {
-  myslide.value.prev();
+  slider.value.prev();
 }
+onMounted(() => {
+  getAllProducts();
+});
 </script>

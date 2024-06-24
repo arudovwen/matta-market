@@ -94,8 +94,13 @@
               text="Request quote"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
             />
+            <!-- <AppButton
+              @click="handleOrderRequest()"
+              text="Add to order request"
+              btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
+            />
           </div>
-          <!-- <AppButton
+          <AppButton
             @click="handleSave"
             :icon="isSaved ? 'tdesign:heart-filled' : 'tdesign:heart'"
             text="Save for later"
@@ -222,18 +227,7 @@
       </div>
     </template>
   </SideModal>
-  <LoginModal
-    v-if="isAuthOpen && active == 'signin'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
-  <RegisterModal
-    v-if="isAuthOpen && active == 'signup'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
+
   <AddedToCart
     v-if="isAdded"
     :selectedPackage="mypackage.package"
