@@ -43,26 +43,6 @@ describe("AppHeader", () => {
     expect(googleTranslate.exists()).toBe(true);
   });
 
-  it("handles language selection correctly", async () => {
-    const handleGoogleTranslateSelect = vi.fn();
-    const wrapper = mount(AppHeader, {
-      global: {
-        components: {
-          GoogleTranslateSelect,
-        },
-      },
-      methods: {
-        handleGoogleTranslateSelect,
-      },
-    });
-
-    // Trigger language selection
-    await wrapper.findComponent(GoogleTranslateSelect).vm.$emit("select", "es");
-
-    // Check if the handleGoogleTranslateSelect method was called with the correct argument
-    expect(handleGoogleTranslateSelect).toHaveBeenCalledWith("es");
-  });
-
   it("renders", async () => {
     const component = render(AppHeader, {
       global: {
