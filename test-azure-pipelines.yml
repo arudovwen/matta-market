@@ -50,7 +50,7 @@ steps:
 ##      coverage/clover.xml
 - task: PublishCodeCoverageResults@2
   inputs: 
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*coverage.xml'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*clover.xml'
 
 - task: SonarCloudPrepare@2
   inputs:
