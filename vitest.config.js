@@ -14,6 +14,12 @@ export default defineVitestConfig({
 				'plugins/*.js',   
 				'middleware/*.js',   
 			  ],
+			  exclude: [
+			            
+				'__tests__/**',
+				'__mocks__/**',                  
+				
+			  ],
 		}
 	},
 })
