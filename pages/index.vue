@@ -7,7 +7,7 @@
         <LandingBoard />
       </div>
       <div class="pb-8 xl:pb-[70px]">
-        <LandingHot :content="hotDeals" tag="hotdeals" />
+        <LandingHot tag="hotdeals" />
         <div class="lg:hidden  mb-6 sm:mb-10 container">
           <LandingBoard />
         </div>
