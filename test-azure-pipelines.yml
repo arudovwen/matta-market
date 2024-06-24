@@ -45,7 +45,10 @@ steps:
 
 - task: PublishCodeCoverageResults@2
   inputs:
-    summaryFileLocation: '/home/vsts/work/1/s/coverage'
+    summaryFileLocation: |
+      **
+      !coverage/**
+
 - task: SonarCloudPrepare@2
   inputs:
     SonarCloud: 'Sonar Cloud'
