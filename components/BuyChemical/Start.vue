@@ -4,15 +4,13 @@
       <div class="flex-1">
         <div class="">
           <h2
-            data-aos="fade-up"
-            data-aos-once="true"
+            
             class="text-white font-semibold text-[30px] leading-[1.2] mb-4"
           >
             Start selling with Matta
           </h2>
           <p
-            data-aos="fade-up"
-            data-aos-once="true"
+           
             class="mb-8 text-lg text-[#EAECF0]"
           >
             Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying
@@ -20,7 +18,7 @@
           </p>
         </div>
       </div>
-      <div data-aos="fade-up" data-aos-once="true">
+      <div >
         <AppButton
           text="Get started"
           icon="lets-icons:arrow-right"

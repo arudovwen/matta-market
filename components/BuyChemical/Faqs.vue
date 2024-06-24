@@ -6,15 +6,13 @@
       <div class="flex-1">
         <div class="max-w-[630px]">
           <h2
-            data-aos="fade-up"
-            data-aos-once="true"
+         
             class="font-semibold text-xl md:text-[36px] md:leading-[1.2] mb-3 lg:mb-8"
           >
             FAQs
           </h2>
           <p
-            data-aos="fade-up"
-            data-aos-once="true"
+           
             class="mb-8 text-sm md:text-lg text-[#475467]"
           >
             Everything you need to know about our products and services. Can’t

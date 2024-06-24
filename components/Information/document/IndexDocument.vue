@@ -38,9 +38,6 @@
       </div>
       <div>
         <DocumentList v-if="active === 1 && !showAuth" />
-        <div v-if="active === 1 && showAuth">
-          <RegisterComponent />
-        </div>
         <RequestComplete v-if="active === 2" />
       </div>
     </div>
@@ -99,17 +96,10 @@
       </div>
     </div>
   </section>
-  <LoginModal
-    v-if="isOpen"
-    :showSignup="false"
-    :isOpen="isOpen"
-    @close="handleclose"
-  />
+
 </template>
 <script setup>
 import DocumentList from "./DocumentList";
-import LoginModal from "~/components/LoginModal";
-import RegisterComponent from "./RegisterComponent";
 import RequestComplete from "./RequestComplete";
 import { ref, defineEmits, provide, computed, reactive, inject } from "vue";
 import { useStore } from "vuex";
@@ -171,8 +161,6 @@ function handleclose() {
   isOpen.value = false;
   if (active.value == 2) {
     handleSubmit();
-  } else {
-    showAuth.value = false;
   }
 }
 provide("handleSubmit", handleSubmit);

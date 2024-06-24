@@ -220,6 +220,7 @@ function getProducers() {
 }
 onMounted(() => {
   if (route.query.stage) {
+		console.log("q = ", route.query.stage);
     active.value = route.query.stage;
   }
 });

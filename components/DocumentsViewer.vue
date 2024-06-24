@@ -19,7 +19,7 @@
       </thead>
       <tbody>
         <tr
-          v-for="(document, id) in documents.filter((i) => i.urls || i.url)"
+          v-for="(document, id) in documents.filter((i) => i.urls)"
           :key="id"
           class="border-b last:border-none"
         >
@@ -30,27 +30,15 @@
           </td>
 
           <td
-            v-if="document.urls?.length"
             class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap flex gap-x-4 items-center"
           >
             <span
-              v-for="(url, i) in document.urls"
-              :key="url"
-              @click="openMedia(url)"
+              v-for="(file, i) in document.urls"
+              :key="file.url"
+              @click="openMedia(file.url)"
               class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
             >
               View document {{ i + 1 }}
-            </span>
-          </td>
-          <td
-            v-else
-            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap flex gap-x-4 items-center"
-          >
-            <span
-              @click="openMedia(document.url)"
-              class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
-            >
-              View document
             </span>
           </td>
         </tr>
@@ -65,7 +53,6 @@
   />
 </template>
 <script setup>
-const authStore = useAuthStore();
 const props = defineProps(["documents", "type"]);
 
 const media = ref(null);
@@ -74,44 +61,5 @@ const isMediaOpen = ref(false);
 function openMedia(val) {
   media.value = val;
   isMediaOpen.value = true;
-}
-function downloadFile(fileUrl, fileName) {
-  // Replace 'your_file_url' with the actual URL of the file you want to download
-
-  fetch(fileUrl)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.blob();
-    })
-    .then((blob) => {
-      // Create a link element
-      const link = document.createElement("a");
-
-      // Create a Blob URL for the file data
-      const blobUrl = window.URL.createObjectURL(blob);
-
-      // Set the link's href attribute to the Blob URL
-      link.href = blobUrl;
-
-      // Set the download attribute with the desired file name
-      link.download = fileName || "downloaded_file"; // Change the file name as needed
-
-      // Append the link to the document
-      document.body.appendChild(link);
-
-      // Trigger a click on the link to start the download
-      link.click();
-
-      // Remove the link from the document
-      document.body.removeChild(link);
-
-      // Revoke the Blob URL to free up resources
-      window.URL.revokeObjectURL(blobUrl);
-    })
-    .catch((error) => {
-      console.error("Error downloading file:", error);
-    });
 }
 </script>

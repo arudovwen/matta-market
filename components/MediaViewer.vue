@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { VuePdf, createLoadingTask } from "vue3-pdfjs/esm";
+const { VuePdf, createLoadingTask } = require("vue-pdf");
 
 const numOfPages = ref(1);
 const loading = ref(true);

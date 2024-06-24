@@ -86,23 +86,9 @@
       </div>
     </template>
   </Modal>
-  <LoginModal
-    v-if="isAuthOpen && active == 'signin'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
-  <RegisterModal
-    v-if="isAuthOpen && active == 'signup'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
+
 </template>
 <script setup>
-import LoginModal from "~/components/LoginModal";
-import RegisterModal from "~/components/RegisterModal";
-
 import CartCounter from "./CartCounter.vue";
 import { HeartIcon } from "@heroicons/vue/24/outline";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/vue/24/solid";

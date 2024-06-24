@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     "@nuxt/devtools",
     "nuxt-ssr-cache",
     "@vite-pwa/nuxt",
+		"@nuxt/test-utils/module"
   ],
 
   security: {
@@ -87,7 +88,7 @@ export default defineNuxtConfig({
     },
   },
   // plugins: ["~/plugins/pdf-viewer.client.js"],
-  // @ts-ignore
+
   googleSignIn: {
     clientId:
       "56799988480-4d51egljupar9la4djc2tknjodn2vsj5.apps.googleusercontent.com",

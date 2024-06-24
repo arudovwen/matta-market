@@ -29,9 +29,6 @@
 
 <script setup>
 import { getsuppliers } from "~/services/productservices";
-import { onMounted, ref, reactive } from "vue";
-import Pagination from "~/components/PaginationComponent";
-import SingleSupplier from "~/components/SingleSupplier";
 
 const queryParams = reactive({
   Search: "",

@@ -196,7 +196,7 @@ const docLoading = ref(true);
 
 const isOpen = ref(false);
 function getRequestDoc() {
-  docLoading.value = true;
+	docLoading.value = true;
   sellerdoc(queryParams).then((res) => {
     documents.value = res.data.data.data;
     queryParams.totalCount = res.data.data.totalCount;

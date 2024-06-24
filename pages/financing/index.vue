@@ -83,7 +83,7 @@ const FinancesOptions = [
     url: "/financing/requests/trade/0",
   },
   {
-    label: "supply finance",
+    label: "inventory finance",
     key: 1,
     value: 1,
     url: "/financing/requests/supply/1",

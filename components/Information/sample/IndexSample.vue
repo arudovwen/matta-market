@@ -85,12 +85,6 @@
       </div>
     </div>
   </form>
-  <LoginModal
-    v-if="isOpen"
-    :showSignup="false"
-    :isOpen="isOpen"
-    @close="handleclose"
-  />
 </template>
 <script setup>
 import { useStore } from "vuex";
@@ -128,7 +122,7 @@ const sampleForm = reactive({
 });
 
 
-const store = useStore();
+
 const showAuth = ref(false);
 const isOpen = ref(false);
 const active = ref(1);

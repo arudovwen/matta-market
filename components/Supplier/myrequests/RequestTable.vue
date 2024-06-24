@@ -108,6 +108,7 @@
                   class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[140px] rounded-xl overflow-hidden"
                 >
                   <div
+									data-testid="rqbtn"
                     class="py-2 px-4 hover:bg-gray-50 text-xs whitespace-nowrap cursor-pointer"
                     @click="openRequests(item.id)"
                   >
@@ -240,9 +241,9 @@ const queryParams = reactive({
 });
 const isLoading = ref(true);
 function getRequests() {
-  isLoading.value = true;
+	isLoading.value = true;
   procurementrequests(queryParams).then((res) => {
-    requests.value = res.data.data.data;
+		requests.value = res.data.data.data;
     queryParams.totalCount = res.data.data.totalCount;
     isLoading.value = false;
   });

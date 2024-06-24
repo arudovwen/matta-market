@@ -1,3 +1,3 @@
 <template>
-    <span class="text-red-500">*</span>
+    <span data-testid="red-dot" class="text-red-500">*</span>
 </template>

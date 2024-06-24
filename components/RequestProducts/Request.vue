@@ -14,8 +14,6 @@
           <div
             v-for="n in content"
             :key="n.title"
-            data-aos="fade-up"
-            data-aos-once="true"
             class="max-w-[500px] flex gap-x-4"
           >
             <div>

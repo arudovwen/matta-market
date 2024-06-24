@@ -1,105 +1,165 @@
 <template>
   <form @submit.prevent="onSubmit" class="w-full mt-6">
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
-      <FormGroup
-        :error="isFieldTouched('BankStatement') ? errors.BankStatement : ''"
-        class="col-span-2"
-        label="Bank Statement"
-        isCumpulsory
-      >
-        <FileUpload id="BankStatement" :multiple="true" />
-        <div
-          class="flex flex-wrap gap-x-4 gap-y-3"
-          v-if="formData?.supportingDocuments[0]?.urls?.length"
-        >
-          <span
-            v-for="(file, idx) in formData?.supportingDocuments[0]?.urls"
-            :key="file"
-            @click="downloadFile(file, 'BankStatement')"
+      <FormGroup class="col-span-2" label="Bank Statement (6 months statement is required)" isCumpulsory>
+        <div class="grid gap-y-7 mb-4">
+          <div
+            v-for="(file, idx) in formData?.supportingDocuments[0].urls"
+            :key="idx"
           >
-            <span class="block text-xs text-blue-500 mt-1"
-              >Download Bank Statement {{ idx + 1 }}</span
-            ></span
+            <div class="relative">
+              <FileUpload id="BankStatement" v-model="file.url" />
+              <button
+                v-if="formData?.supportingDocuments[0]?.urls.length > 1"
+                type="button"
+                class="text-red-500 text-xs font-medium right-0 -top-5 absolute"
+                @click="removeField(0, idx)"
+              >
+                Remove
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-x-4 gap-y-3" v-if="file.url">
+              <span @click="downloadFile(file.url, 'BankStatement')">
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Bank Statement {{ idx + 1 }}</span
+                ></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="mt-1">
+          <button
+            @click="addField(0)"
+            type="button"
+            class="block text-primary-500 text-xs font-medium ml-auto"
           >
+            + Add document
+          </button>
         </div>
       </FormGroup>
 
-      <FormGroup
-        :error="isFieldTouched('ProformaInvoice') ? errors.ProformaInvoice : ''"
-        class="col-span-2"
-        label="Proforma Invoice"
-        isCumpulsory
-      >
-        <FileUpload id="ProformaInvoice" :multiple="true" />
-        <div
-          class="flex flex-wrap gap-x-4 gap-y-3"
-          v-if="formData?.supportingDocuments[1]?.urls?.length"
-        >
-          <span
-            v-for="(file, idx) in formData?.supportingDocuments[1]?.urls"
-            :key="file"
-            @click="downloadFile(file, 'ProformaInvoice')"
+      <FormGroup class="col-span-2" label="Proforma Invoice" isCumpulsory>
+        <div class="grid gap-y-7 mb-4">
+          <div
+            v-for="(file, idx) in formData?.supportingDocuments[1].urls"
+            :key="idx"
           >
-            <span class="block text-xs text-blue-500 mt-1"
-              >Download Proforma Invoice {{ idx + 1 }}</span
-            ></span
+            <div class="relative">
+              <FileUpload id="ProformaInvoice" v-model="file.url" />
+              <button
+                v-if="formData?.supportingDocuments[1]?.urls.length > 1"
+                type="button"
+                class="text-red-500 text-xs font-medium right-0 -top-5 absolute"
+                @click="removeField(1, idx)"
+              >
+                Remove
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-x-4 gap-y-3" v-if="file.url">
+              <span @click="downloadFile(file.url, 'ProformaInvoice')">
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Proforma Invoice {{ idx + 1 }}</span
+                ></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="mt-1">
+          <button
+            @click="addField(1)"
+            type="button"
+            class="block text-primary-500 text-xs font-medium ml-auto"
           >
+            + Add document
+          </button>
         </div>
       </FormGroup>
       <FormGroup
         label="Evidence of previously successful supply contracts (PO and Paid Invoices)"
-        :error="
-          isFieldTouched('EvidenceOfPreviouslySuccessfulSupplyContracts')
-            ? errors.EvidenceOfPreviouslySuccessfulSupplyContracts
-            : ''
-        "
         class="col-span-2"
         v-if="id == 1 || id == 3"
         isCumpulsory
       >
-        <FileUpload
-          id="EvidenceOfPreviouslySuccessfulSupplyContracts"
-          :multiple="true"
-        />
-        <div
-          class="flex flex-wrap gap-x-4 gap-y-3"
-          v-if="formData?.supportingDocuments[2]?.urls?.length"
-        >
-          <span
-            v-for="(file, idx) in formData?.supportingDocuments[2]?.urls"
-            :key="file"
-            @click="
-              downloadFile(
-                file,
-                'EvidenceOfPreviouslySuccessfulSupplyContracts'
-              )
-            "
+        <div class="grid gap-y-7 mb-6">
+          <div
+            v-for="(file, idx) in formData?.supportingDocuments[2].urls"
+            :key="idx"
           >
-            <span class="block text-xs text-blue-500 mt-1"
-              >Download Contract {{ idx + 1 }}</span
-            ></span
+            <div class="relative">
+              <FileUpload
+                id="EvidenceOfPreviouslySuccessfulSupplyContracts"
+                v-model="file.url"
+              />
+              <button
+                v-if="formData?.supportingDocuments[2]?.urls.length > 1"
+                type="button"
+                class="text-red-500 text-xs font-medium right-0 -top-5 absolute"
+                @click="removeField(2, idx)"
+              >
+                Remove
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-x-4 gap-y-3" v-if="file.url">
+              <span
+                @click="
+                  downloadFile(
+                    file.url,
+                    'EvidenceOfPreviouslySuccessfulSupplyContracts'
+                  )
+                "
+              >
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Contract {{ idx + 1 }}</span
+                ></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="mt-1">
+          <button
+            @click="addField(2)"
+            type="button"
+            class="block text-primary-500 text-xs font-medium ml-auto"
           >
+            + Add document
+          </button>
         </div>
       </FormGroup>
-      <FormGroup
-        label="Other documents"
-        :error="isFieldTouched('OtherDocuments') ? errors.OtherDocuments : ''"
-        class="col-span-2"
-      >
-        <FileUpload id="OtherDocuments" :multiple="true" />
-        <div
-          class="flex flex-wrap gap-x-4 gap-y-3"
-          v-if="formData?.supportingDocuments[3]?.urls?.length"
-        >
-          <span
-            v-for="(file, idx) in formData?.supportingDocuments[3]?.urls"
-            :key="file"
-            @click="downloadFile(file, 'Others')"
+
+      <FormGroup label="Other documents" class="col-span-2">
+        <div class="grid gap-y-7 mb-6">
+          <div
+            v-for="(file, idx) in formData?.supportingDocuments[3].urls"
+            :key="idx"
           >
-            <span class="block text-xs text-blue-500 mt-1"
-              >Download Other document {{ idx + 1 }}</span
-            ></span
+            <div class="relative">
+              <FileUpload id="OtherDocuments" v-model="file.url" />
+              <button
+                v-if="formData?.supportingDocuments[3]?.urls.length > 1"
+                type="button"
+                class="text-red-500 text-xs font-medium right-0 -top-5 absolute"
+                @click="removeField(3, idx)"
+              >
+                Remove
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-x-4 gap-y-3" v-if="file.url">
+              <span @click="downloadFile(file.url, 'Others')">
+                <span class="block text-xs text-blue-500 mt-1"
+                  >Download Other document {{ idx + 1 }}</span
+                ></span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="mt-1">
+          <button
+            @click="addField(3)"
+            type="button"
+            class="block text-primary-500 text-xs font-medium ml-auto"
           >
+            + Add document
+          </button>
         </div>
       </FormGroup>
 
@@ -132,7 +192,9 @@
         @click="active--"
       />
       <AppButton
-        :disabled="isLoading"
+        :disabled="
+          isLoading || errors?.BankStatement || errors?.ProformaInvoice
+        "
         :isLoading="isLoading"
         btnClass="bg-primary-500 text-white !px-16  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
         type="submit"
@@ -154,13 +216,17 @@ const { id, financeId } = route.params;
 
 const active = inject("active");
 const formData = inject("formData");
+
 const formSchema = yup.object().shape({
   haveyouexportedtotheothercourty: yup.string(),
   haveyoudonebusiness: yup.string(),
-  EvidenceOfPreviouslySuccessfulSupplyContracts: yup.array(),
-  ProformaInvoice: yup.array().required("Proforma Invoice is required"),
-  BankStatement: yup.array().required("Bank statement is required"),
-  OtherDocuments: yup.array(),
+  EvidenceOfPreviouslySuccessfulSupplyContracts: yup.string().nullable(),
+  ProformaInvoice: yup
+    .string()
+    .required("Proforma Invoice is required")
+    .nullable(),
+  BankStatement: yup.string().required("Bank statement is required").nullable(),
+  OtherDocuments: yup.string().nullable(),
 });
 
 const {
@@ -175,11 +241,10 @@ const {
   initialValues: {
     haveyouexportedtotheothercourty: formData.haveyouexportedtotheothercourty,
     haveyoudonebusiness: formData.haveyoudonebusiness,
-    EvidenceOfPreviouslySuccessfulSupplyContracts:
-      formData?.supportingDocuments[2]?.urls || [],
-    ProformaInvoice: formData?.supportingDocuments[1]?.urls || [],
-    BankStatement: formData?.supportingDocuments[0]?.urls || [],
-    OtherDocuments: formData?.supportingDocuments[3]?.urls || [],
+    EvidenceOfPreviouslySuccessfulSupplyContracts: "",
+    ProformaInvoice: "",
+    BankStatement: "",
+    OtherDocuments: "",
   },
 });
 
@@ -189,13 +254,30 @@ const [haveyoudonebusiness, haveyoudonebusinessAtt] = defineField(
 const [haveyouexportedtotheothercourty, haveyouexportedtotheothercourtyAtt] =
   defineField("haveyouexportedtotheothercourty");
 
+function addField(id) {
+  formData?.supportingDocuments[id].urls.push({
+    url: "",
+  });
+}
+
+function removeField(id, idx) {
+  formData?.supportingDocuments[id].urls.splice(idx, 1);
+}
+
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
   formData.haveyoudonebusiness = values.haveyoudonebusiness;
   formData.haveyouexportedtotheothercourty =
     values.haveyouexportedtotheothercourty;
   if (financeId) {
-    editFinance({ ...formData, id: financeId })
+    editFinance({
+      ...formData,
+      supportingDocuments: formData?.supportingDocuments.map((i) => ({
+        ...i,
+        urls: i.urls.map((j) => j.url),
+      })),
+      id: financeId,
+    })
       .then((res) => {
         if (res.status === 200) {
           active.value = 5;
@@ -207,7 +289,13 @@ const onSubmit = handleSubmit((values) => {
         isLoading.value = false;
       });
   } else {
-    addFinance(formData)
+    addFinance({
+      ...formData,
+      supportingDocuments: formData?.supportingDocuments.map((i) => ({
+        ...i,
+        urls: i.urls.map((j) => j.url),
+      })),
+    })
       .then((res) => {
         if (res.status === 200) {
           active.value = 5;
@@ -221,31 +309,21 @@ const onSubmit = handleSubmit((values) => {
   }
 });
 
-function handleChange(id, value) {
+function handleChange(id, value) {}
+watch(
+  formData,
 
-  if (!value) return;
-  setFieldValue(id, value);
-  setFieldTouched(id, value);
-
-  formData.supportingDocuments.map((i) => {
-    setFieldValue(id, value);
-    if (id === "BankStatement" && i.documentType === 0) {
-      i.urls = value;
-    }
-    if (id === "ProformaInvoice" && i.documentType === 1) {
-      i.urls = value;
-    }
-    if (
-      id === "EvidenceOfPreviouslySuccessfulSupplyContracts" &&
-      i.documentType === 2
-    ) {
-      i.urls = value;
-    }
-    if (id === "OtherDocuments" && i.documentType === 3) {
-      i.urls = value;
-    }
-  });
-}
+  () => {
+    setFieldValue(
+      "ProformaInvoice",
+      formData?.supportingDocuments[1].urls.some((i) => !i.url) ? "" : "Valid"
+    );
+    setFieldValue(
+      "BankStatement",
+      formData?.supportingDocuments[0].urls.some((i) => !i.url) ? "" : "Valid"
+    );
+  }
+);
 provide("handleChange", handleChange);
 </script>
 

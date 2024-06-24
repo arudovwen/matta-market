@@ -18,7 +18,7 @@
             class="flex flex-col justify-center gap-y-[6px] items-center rounded-xl p-6 flex-1"
             :class="
               n.type === type
-                ? 'border-2 border-[#53B1FD] shadow-[0px_4px_6px_-2px_#10182808_0px_12px_16px_-4px_#10182814]'
+                ? 'border-2 border-[#53B1FD] text-primary-500 shadow-[0px_4px_6px_-2px_#10182808_0px_12px_16px_-4px_#10182814]'
                 : 'border border-[#D0D5DD]'
             "
           >

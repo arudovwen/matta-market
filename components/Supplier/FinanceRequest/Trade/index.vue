@@ -48,23 +48,76 @@ const formData = reactive({
 
   supportingDocuments: [
     {
-      urls: [],
+      urls: [
+        {
+          url: "",
+        },
+      ],
       documentType: 0,
     },
     {
-      urls: [],
+      urls: [
+        {
+          url: "",
+        },
+      ],
       documentType: 1,
     },
     {
-      urls: [],
+      urls: [
+        {
+          url: "",
+        },
+      ],
       documentType: 2,
     },
     {
-      urls: [],
+      urls: [
+        {
+          url: "",
+        },
+      ],
       documentType: 3,
     },
   ],
-  companyDocuments: [],
+  companyDocuments: [
+    {
+      url: "",
+      urls: [
+        {
+          url: "",
+        },
+      ],
+      documentType: 0,
+    },
+    {
+      url: "",
+      urls: [
+        {
+          url: "",
+        },
+      ],
+      documentType: 1,
+    },
+    {
+      url: "",
+      urls: [
+        {
+          url: "",
+        },
+      ],
+      documentType: 2,
+    },
+    {
+      url: "",
+      urls: [
+        {
+          url: "",
+        },
+      ],
+      documentType: 3,
+    },
+  ],
   haveyoudonebusiness: "",
   haveyouexportedtotheothercourty: "",
 
@@ -78,20 +131,39 @@ const formData = reactive({
     dateofIncorporation: null,
     companyDocuments: [
       {
-        url:"",
-        urls: [],
+        url: "",
+        urls: [
+          {
+            url: "",
+          },
+        ],
         documentType: 0,
       },
-      { url:"",
-        urls: [],
+      {
+        url: "",
+        urls: [
+          {
+            url: "",
+          },
+        ],
         documentType: 1,
       },
-      { url:"",
-        urls: [],
+      {
+        url: "",
+        urls: [
+          {
+            url: "",
+          },
+        ],
         documentType: 2,
       },
-      { url:"",
-        urls: [],
+      {
+        url: "",
+        urls: [
+          {
+            url: "",
+          },
+        ],
         documentType: 3,
       },
     ],
@@ -102,8 +174,8 @@ const formData = reactive({
     country: "Nigeria",
     city: "",
     state: "",
-    email:authStore.userInfo.email,
-    phone:authStore.userInfo.phoneNumber
+    email: authStore.userInfo.email,
+    phone: authStore.userInfo.phoneNumber,
   },
   customerId: authStore.userId,
   loanRequestType: parseInt(id),
@@ -123,19 +195,35 @@ const formData = reactive({
   documents: {
     supportingDocuments: [
       {
-        urls: [],
+        urls: [
+          {
+            url: "",
+          },
+        ],
         documentType: 0,
       },
       {
-        urls: [],
+        urls: [
+          {
+            url: "",
+          },
+        ],
         documentType: 1,
       },
       {
-        urls: [],
+        urls: [
+          {
+            url: "",
+          },
+        ],
         documentType: 2,
       },
       {
-        urls: [],
+        urls: [
+          {
+            url: "",
+          },
+        ],
         documentType: 3,
       },
     ],
@@ -169,31 +257,91 @@ const tabs = [
   // },
 ];
 function getCompanyData() {
-  getCompanyProfile().then((res) => {
-    loading.value = false;
-    company.value = res.data.data;
-    formData.kyb.companyName = res.data.data.companyName;
-    formData.kyb.sector = res.data.data.companyType;
-    formData.kyb.businessType = res.data.data.companyType;
-    formData.kyb.address = res.data.data.address;
-    formData.kyb.productDesc = res.data.data.description;
-    formData.kyb.country = res.data.data.country;
-    formData.kyb.state = res.data.data.state;
-    formData.kyb.state = res.data.data.state;
-    formData.kyb.city = res.data.data.city;
-    formData.kyb.email = res.data.data.email;
-    formData.kyb.phone = res.data.data.phone;
+  getCompanyProfile()
+    .then((res) => {
+      loading.value = false;
 
-    if (res.data.data.companyDocuments.length > 0) {
-      formData.kyb.companyDocuments = res.data.data.companyDocuments
-      formData.kyb.incorporation = res.data.data.companyDocuments[0].urls;
-      formData.kyb.mermat = res.data.data.companyDocuments[1].urls;
-      formData.kyb.statusReport = res.data.data.companyDocuments[2].urls;
-      formData.kyb.utilityBill = res.data.data.companyDocuments[3].urls;
-    }
-  }).catch(()=>{
-    loading.value = false
-  });
+      const tempData = {
+        ...res.data.data,
+        companyDocuments:
+          res.data.data.companyDocuments.length > 0
+            ? res.data.data.companyDocuments?.map((doc) => ({
+                ...doc,
+                urls: !doc.urls.length
+                  ? [
+                      {
+                        url: doc.url || "",
+                      },
+                    ]
+                  : doc.urls.map((i) => ({
+                      url: i?.url || i || "",
+                    })),
+              }))
+            : [
+                {
+                  url: "",
+                  urls: [
+                    {
+                      url: "",
+                    },
+                  ],
+                  documentType: 0,
+                },
+                {
+                  url: "",
+                  urls: [
+                    {
+                      url: "",
+                    },
+                  ],
+                  documentType: 1,
+                },
+                {
+                  url: "",
+                  urls: [
+                    {
+                      url: "",
+                    },
+                  ],
+                  documentType: 2,
+                },
+                {
+                  url: "",
+                  urls: [
+                    {
+                      url: "",
+                    },
+                  ],
+                  documentType: 3,
+                },
+              ],
+      };
+      console.log("🚀 ~ .then ~ tempData:", tempData);
+      company.value = tempData;
+      formData.kyb = { ...tempData };
+
+      if (res.data.data?.companyDocuments?.length > 0) {
+        const tempDocData = res.data.data.companyDocuments?.map((doc) => ({
+          ...doc,
+          urls: !doc.urls.length
+            ? [
+                {
+                  url: doc.url || "",
+                },
+              ]
+            : doc.urls.map((i) => ({
+                url: i?.url || i || "",
+              })),
+        }));
+        formData.kyb.companyDocuments =
+          res.data.data.country.toLowerCase() === "nigeria"
+            ? tempDocData
+            : tempDocData.filter((i) => i.documentType === 0);
+      }
+    })
+    .catch(() => {
+      loading.value = false;
+    });
 }
 onMounted(() => {
   getCompanyData();

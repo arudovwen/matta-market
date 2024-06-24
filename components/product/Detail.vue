@@ -227,18 +227,7 @@
       </div>
     </template>
   </SideModal>
-  <LoginModal
-    v-if="isAuthOpen && active == 'signin'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
-  <RegisterModal
-    v-if="isAuthOpen && active == 'signup'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
+
   <AddedToCart
     v-if="isAdded"
     :selectedPackage="mypackage.package"

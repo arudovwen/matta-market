@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 // import { nanoid } from "nanoid"; //if using nanoid
 
-import { confirmpurchase } from "@/services/cartservice";
-
 export function payWithMonnify(
   data,
   onModalClose,
@@ -10,7 +8,6 @@ export function payWithMonnify(
 ) {
   const config = useRuntimeConfig();
 
-  const cartstore = useCartStore();
   window.MonnifySDK.initialize({
     amount: data.amount,
     currency: "NGN",

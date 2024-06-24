@@ -198,6 +198,7 @@
               >
               <div class="relative flex items-center">
                 <input
+                  data-testid="fullName"
                   v-model="director.name"
                   class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   placeholder="Enter director's name"
@@ -220,6 +221,7 @@
               >
               <div class="relative flex items-center">
                 <input
+									data-testid="director-title"
                   v-model="director.title"
                   class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   placeholder="Enter director's title"
@@ -242,6 +244,7 @@
               >
               <div class="relative flex items-center">
                 <input
+                  data-testid="address"
                   v-model="director.address"
                   class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                   placeholder="Enter director's address"
@@ -276,6 +279,7 @@
             "
             type="button"
             class="text-xs"
+            data-testid="add-director"
           >
             + Add director
           </button>
@@ -312,9 +316,8 @@ import { required, helpers, minLength, maxLength } from "@vuelidate/validators";
 import { useStore } from "vuex";
 import { uploaddocument } from "~/services/onboardingservices";
 import { createUpdateKyc, getKycDetail } from "~/services/walletservice";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { getCompanyProfile } from "~/services/settingservices";
-
 
 const store = useStore();
 const emits = defineEmits(["success"]);
@@ -343,6 +346,7 @@ const form = reactive({
   ],
 });
 const isLoading = ref(false);
+const isL = ref(true);
 const rules = {
   cac: {
     required: helpers.withMessage("CAC field cannot be empty", required),
@@ -425,7 +429,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 async function downloadUsingFetch() {
@@ -445,13 +449,13 @@ async function downloadUsingFetch() {
   URL.revokeObjectURL(fileURL);
 }
 onMounted(() => {
+  isL.value = false;
   getCompanyProfile().then((res) => {
     company.value = res.data.data;
     form.companyName = company?.value?.companyName;
   });
   getKycDetail().then((res) => {
     if (res.status === 200 && res.data) {
-  
       form.fullName = res.data.data.fullName;
       form.phoneCode = res.data.data.phoneCode;
       form.phone = res.data.data.phone;
