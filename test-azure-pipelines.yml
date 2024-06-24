@@ -32,6 +32,7 @@ steps:
     pushd $(projectFolder) && npm install && popd
     pushd $(projectFolder) && npm run build && popd
     pushd $(projectFolder) && npm run generate
+    pushd $(projectFolder) && npm run coverage
 ##    pushd $(projectFolder) && npm install && popd
 ##    pushd $(projectFolder) && npm run build && popd
 ##    pushd $(projectFolder) && npm run export
