@@ -94,13 +94,8 @@
               text="Request quote"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
             />
-            <!-- <AppButton
-              @click="handleOrderRequest()"
-              text="Add to order request"
-              btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
-            />
           </div>
-          <AppButton
+          <!-- <AppButton
             @click="handleSave"
             :icon="isSaved ? 'tdesign:heart-filled' : 'tdesign:heart'"
             text="Save for later"
