@@ -43,6 +43,9 @@ steps:
 ##     pushd $(projectFolder) && npm run build && popd
 ## Copy the client to the staging directory
 
+- task: PublishCodeCoverageResults@2
+  inputs:
+    summaryFileLocation: '$(projectFolder)/coverage'
 - task: SonarCloudPrepare@2
   inputs:
     SonarCloud: 'Sonar Cloud'
