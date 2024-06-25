@@ -14,6 +14,7 @@ export default defineVitestConfig({
 				'plugins/*.js',   
 				'middleware/*.js',   
 			  ],
-		}
+		},
+		// setupFiles: ["./setup.ts"]
 	},
 })

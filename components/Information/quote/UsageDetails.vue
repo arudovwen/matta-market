@@ -5,7 +5,7 @@
       This information will help us prepare your quote.
     </p>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Market <RedDot /></label>
+      <label data-testid="usage" class="mb-2 font-medium text-sm text-[#344054] block text-left">Market<RedDot /></label>
       <FormsSelectComponent
         @onGetData="onGetMarket"
         :options="marketOptions"
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Application <RedDot /></label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Application<RedDot /></label>
       <FormsSelectComponent
         @onGetData="onGetApp"
         :options="appOptions"

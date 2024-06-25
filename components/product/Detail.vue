@@ -474,6 +474,8 @@ function handleLike(value) {
 function togglePopup() {
   isOpen.value = false;
 }
+
+
 watch(
   () => [packageOptions.value],
   () => {
@@ -483,6 +485,7 @@ watch(
   }
 );
 watch(productData, () => {
+	console.log(productData);
   supplierStore.fetchSupplier(productData.value.supplierId);
   imageUrl.value = productData?.value?.featuredPhoto;
 });

@@ -27,6 +27,7 @@
           >
             <div class="relative flex items-center mb-3 mt-3 px-4">
               <input
+								
                 v-model="query"
                 placeholder="Search"
                 class="text-xs rounded-lg px-3 py-1 h-10 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"

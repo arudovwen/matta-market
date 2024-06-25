@@ -21,7 +21,7 @@ describe("DashboardHeader", () => {
 						initialState: {
 							auth: {
 								loggedUser: {
-									fistName: "Bruce",
+									firstName: "Bruce",
 									lastName: "Wayne"
 								},
 							}

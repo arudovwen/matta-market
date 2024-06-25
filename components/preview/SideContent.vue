@@ -41,7 +41,8 @@
                   :src="
                     item.photo
                       ? item.photo
-                      : require('~/assets/img/avatar1.svg')
+                      : defaultImage
+
                   "
                   class="w-full h-full"
                 />
@@ -209,6 +210,7 @@ function prev() {
 const producer = ref(null);
 const supplier = ref(null);
 const openIndex = ref([]);
+const defaultImage = '../../assets/img/avatar1.svg'
 
 // eslint-disable-next-line no-unused-vars
 function handleIndex(val) {
@@ -219,6 +221,7 @@ function dropIndex(val) {
   openIndex.value = openIndex.value.filter((i) => i !== val);
 }
 onMounted(() => {
+	console.log(product);
   getProducers({ Search: product.manufacturer }).then((res) => {
     producer.value = res.data.data.data[0];
   });

@@ -36,6 +36,7 @@
                   Upload photo
                 </span>
                 <input
+									data-testid="imgup"
                   @change="handleEvent($event)"
                   type="file"
                   accept="image/*"
@@ -53,6 +54,7 @@
                     >First name   <RedDot /></label
                   >
                   <input
+										data-testid="fName"
                     v-model="v$.firstName.$model"
                     :class="{ 'border-red-500': v$.firstName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -74,6 +76,7 @@
                     >Last name   <RedDot /></label
                   >
                   <input
+										data-testid="lName"
                     v-model="v$.lastName.$model"
                     :class="{ 'border-red-500': v$.lastName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -96,6 +99,7 @@
                   <label class="mb-2 font-normal text-sm block">E-mail   <RedDot /></label>
                   <div class="flex relative items-center">
                     <input
+											data-testid="email"
                       :value="form.email"
                       class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                       autocomplete="off"
@@ -558,14 +562,15 @@ function setTimezone() {
   });
 }
 function handleEvent(e) {
-  var files = e.target.files || e.dataTransfer.files;
+	var files = e.target.files || e.dataTransfer.files;
   if (!files.length) return;
   if (img.value) {
-    URL.revokeObjectURL(img.value);
+		URL.revokeObjectURL(img.value);
   }
   img.value = URL.createObjectURL(files[0]);
   isShowing.value = "crop";
   open.value = true;
+	console.log("fire event", files)
 }
 
 function crop() {
