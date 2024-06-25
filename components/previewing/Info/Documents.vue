@@ -58,7 +58,7 @@ const documents = [
 
 const documentList = computed(() => {
   return detail.filter((i) =>
-    i.category.toLowerCase().includes(documentType.value.toLowerCase())
+    i.category.toLowerCase().includes(udocumentType.value.toLowerCase())
   );
 });
 </script>

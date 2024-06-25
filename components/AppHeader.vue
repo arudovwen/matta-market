@@ -481,7 +481,7 @@ onMounted(() => {
       getNotifications();
     }, 2 * 60 * 1000);
   }
-
+	console.log(authStore.isLoggedIn);
   // geoFindMe();
 });
 const notifyParams = reactive({

@@ -42,7 +42,7 @@ vi.mock("vue-router", () => {
       name: "",
       meta: {},
       params: {
-				category: "testcat"
+				vendor: ""
 			},
       path: "",
       query: {

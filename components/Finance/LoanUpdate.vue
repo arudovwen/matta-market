@@ -49,6 +49,7 @@
         type="button"
         text=" Accept conditional offer"
         class="appearance-none leading-none px-10 py-4 w-full rounded-lg text-white bg-[#0E9384] hover:opacity-70 mb-4"
+				data-testid="accept"
       />
 
       <AppButton
