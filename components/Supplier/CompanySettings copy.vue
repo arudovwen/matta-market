@@ -32,6 +32,7 @@
                 accept="image/*"
                 id="upload"
                 class="hidden"
+								data-testid="upload"
               />
             </label>
             <i
@@ -325,6 +326,7 @@
 
             <div class="mt-8 justify-end flex">
               <button
+								data-testid="submit-form"
                 :disabled="isLoading"
                 :class="isLoading && 'bg-primary/80'"
                 type="submit"
@@ -392,6 +394,7 @@
                     </button>
 
                     <button
+											data-testid="save-img"
                       @click="crop"
                       class="appearance-none leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] uppercase"
                     >
@@ -506,7 +509,7 @@ function removesocial(i) {
   form.socials.splice(i, 1);
 }
 function handleEvent(e) {
-  var files = e.target.files || e.dataTransfer.files;
+	var files = e.target.files || e.dataTransfer.files;
   if (!files.length) return;
   if (img.value) {
     URL.revokeObjectURL(img.value);
@@ -516,6 +519,7 @@ function handleEvent(e) {
 }
 
 function crop() {
+	console.log("fire - crop");
   const { coordinates, canvas } = cropper.value.getResult();
   coordinate.value = coordinates;
   image.value = canvas.toDataURL();

@@ -115,4 +115,18 @@ describe("MyOrders", () => {
 		await fireEvent.click(screen.getByText("View Details"))
     component.unmount();
   });
+  it("renders", async () => {
+    const component = render(MyOrders, {
+      global: {
+        plugins: [store],
+        stubs: {
+          RouterLink: RouterLinkStub,
+        },
+      },
+    });
+		expect(screen.getByTestId("spinner")).toBeTruthy();
+		await waitForElementToBeRemoved(screen.getByTestId("spinner"))
+		expect(screen.getByText("Metal rod")).toBeTruthy();
+    component.unmount();
+  });
 });

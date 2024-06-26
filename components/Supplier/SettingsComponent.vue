@@ -519,19 +519,19 @@ const states = computed(() => {
     ).states || []
   );
 });
-function handleDelete(val) {
-  isShowing.value = val;
-  open.value = true;
-}
-function deleteAccount() {
-  deleteaccount.then((res) => {
-    if (res.status == 200) {
-      toast.info("Account deleted successfully");
-      store.logOut();
-      window.location.href = "/";
-    }
-  });
-}
+// function handleDelete(val) {
+//   isShowing.value = val;
+//   open.value = true;
+// }
+// function deleteAccount() {
+//   deleteaccount.then((res) => {
+//     if (res.status == 200) {
+//       toast.info("Account deleted successfully");
+//       store.logOut();
+//       window.location.href = "/";
+//     }
+//   });
+// }
 async function handlePassword() {
   const validity = await newv$.value.$validate();
   if (!validity) return;
@@ -573,15 +573,15 @@ function handleEvent(e) {
 	console.log("fire event", files)
 }
 
-function crop() {
-  const { coordinates, canvas } = cropper.value.getResult();
-  coordinate.value = coordinates;
-  image.value = canvas.toDataURL();
-  open.value = false;
-  form.photo = canvas.toDataURL().replace("data:", "").replace(/^.+,/, "");
-}
-const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 15 : true;
+// function crop() {
+//   const { coordinates, canvas } = cropper.value.getResult();
+//   coordinate.value = coordinates;
+//   image.value = canvas.toDataURL();
+//   open.value = false;
+//   form.photo = canvas.toDataURL().replace("data:", "").replace(/^.+,/, "");
+// }
+// const validPhoneLength = (value) =>
+//   form.code === "+234" ? value.length > 9 && value.length < 15 : true;
 const rules = {
   email: {
     required,
