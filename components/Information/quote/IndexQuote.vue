@@ -10,7 +10,7 @@
 
       <div class="flex justify-between items-center mb-2 text-[13px] uppercase">
         <h4 class="text-[13px] uppercase">{{ product.name }}</h4>
-        <span>Step {{ active }}/3</span>
+        <span data-testid="step-header">Step {{ active }}/3</span>
       </div>
       <div class="grid grid-cols-3 border-b border-[#E7EBEE]">
         <span

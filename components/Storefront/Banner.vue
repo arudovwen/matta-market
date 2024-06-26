@@ -30,7 +30,7 @@
           </div>
           <div>
             <h1 class="text-[#202939] text-xl font-bold capitalize mb-1">
-              {{ vendorInfo?.storeName || vendor.replace("-", " ") }}
+              {{ vendorInfo?.storeName || vendor?.replace("-", " ") }}
             </h1>
             <p class="text-sm text-[#364152] font-medium">
               {{ total }} Products

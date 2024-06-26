@@ -222,9 +222,10 @@ const subOptions = [
 const isLoading = ref(true);
 const isOrderLoading = ref(false);
 function getData() {
-  isLoading.value = true;
+	isLoading.value = true;
+	console.log("omo");
   storefrontorders(queryParams)
-    .then((res) => {
+	.then((res) => {
       if (res.status) {
         orders.value = res.data.data;
         queryParams.totalCount = res.data.totalCount;

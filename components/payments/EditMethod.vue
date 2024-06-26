@@ -4,6 +4,7 @@
     <div class="mb-6">
       <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Card number</label>
       <input
+				data-testid="card-number-input"
         v-model="v$.card_number.$model"
         :class="{ 'border-red-500': v$.card_number.$error }"
         class="rounded-full px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -28,6 +29,7 @@
         >
         <div class="relative flex items-center">
           <input
+						data-testid="exp"
             v-model="v$.expiry_date.$model"
             :class="{ 'border-red-500 ': v$.expiry_date.$error }"
             class="rounded-full px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -51,6 +53,7 @@
         >
         <div class="relative flex items-center">
           <input
+						data-testid="cvv-input"
             v-model="v$.cvv.$model"
             :class="{ 'border-red-500 ': v$.cvv.$error }"
             class="rounded-full px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"

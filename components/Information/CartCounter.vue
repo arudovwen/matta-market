@@ -110,7 +110,7 @@
       </div>
     </div>
     <div class="w-full lg:w-auto" v-if="!product.hidePrice">
-      <button
+      <button data-testid="add-to-cart"
         :class="isAvailable ? 'bg-matta-black' : 'bg-matta-black/70'"
         @click="addTocart"
         class="py-4 md:py-5 text-xs md:text-[13px] h-[60px] px-6 w-full lg:w-[290px] flex justify-center text-white rounded-lg items-center hover:bg-matta-black/80 uppercase font-normal leading-[unset] gap-x-4"

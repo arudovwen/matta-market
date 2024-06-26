@@ -70,7 +70,7 @@
       </div>
     </div>
     <CartCounter :isAvailable="isAvailable" />
-    <AddedToFav :name="product.name" v-if="isFav" @close="isFav = false" />
+    <!-- <AddedToFav :name="product.name" v-if="isFav" @close="isFav = false" /> -->
   </div>
   <Modal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #content>
@@ -94,7 +94,7 @@ import { HeartIcon } from "@heroicons/vue/24/outline";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/vue/24/solid";
 import { inject, onMounted, ref, provide } from "vue";
 import { useRoute } from "vue-router";
-import AddedToFav from "~/components/AddedToFav";
+// import AddedToFav from "~/components/AddedToFav";
 import Modal from "~/components/SideModal";
 import IndexSample from "./sample/IndexSample";
 import IndexQuote from "./quote/IndexQuote";
