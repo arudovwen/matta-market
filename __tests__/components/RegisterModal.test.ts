@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, it, expect } from "vitest";
 import RegisterModal from "../components/RegisterModal.vue";
 import { render, screen } from "@testing-library/vue";
 import { createStore } from "vuex";
@@ -15,20 +15,21 @@ const store = createStore({
       fullName: "Oduro Tolulope",
       phoneNumber: "07036845422",
     }),
-		isLoggedIn: () => true
+    isLoggedIn: () => true,
   },
 });
 
 describe("RegisterModal", () => {
-	it("runs", () => {
-		render(RegisterModal, {
-			global: {
-				plugins: [store]
-			},
-			props: {
-				isOpen: true
-			}
-		})
-		screen.debug()
-	})
-})
+  it("runs", () => {
+    render(RegisterModal, {
+      global: {
+        plugins: [store],
+      },
+      props: {
+        isOpen: true,
+      },
+    });
+    screen.debug();
+    expect(screen).toMatchSnapshot();
+  });
+});

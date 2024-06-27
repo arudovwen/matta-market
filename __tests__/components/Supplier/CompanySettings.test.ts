@@ -27,5 +27,6 @@ describe("CompanySettings", () => {
         plugins: [store],
       },
     });
+		expect(screen).toMatchSnapshot()
   });
 });
