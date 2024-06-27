@@ -17,46 +17,19 @@ import {
 } from "@vuelidate/validators";
 
 describe("ShippingAddress", () => {
-  vi.spyOn(authServices, "logOut").mockReturnValue({
-    then: function <TResult1 = void, TResult2 = never>(
-      onfulfilled?:
-        | ((value: void) => TResult1 | PromiseLike<TResult1>)
-        | null
-        | undefined,
-      onrejected?:
-        | ((reason: any) => TResult2 | PromiseLike<TResult2>)
-        | null
-        | undefined
-    ): Promise<TResult1 | TResult2> {
-      throw new Error("Function not implemented.");
-    },
-    catch: function <TResult = never>(
-      onrejected?:
-        | ((reason: any) => TResult | PromiseLike<TResult>)
-        | null
-        | undefined
-    ): Promise<void | TResult> {
-      throw new Error("Function not implemented.");
-    },
-    finally: function (
-      onfinally?: (() => void) | null | undefined
-    ): Promise<void> {
-      throw new Error("Function not implemented.");
-    },
-    [Symbol.toStringTag]: "",
-  });
+  vi.spyOn(authServices, "logOut").mockReturnValue({});
   vi.spyOn(cartService, "getalladdress").mockResolvedValue({
-    data: {
-      data: [
-        {
-          firstName: "Bruce",
-          lastName: "Wayne",
-          country: "United States of America",
-          street: "Mountain Drive",
-        },
-      ],
-    },
-  });
+		data: {
+			data: [
+				{
+					firstName: "Bruce",
+					lastName: "Wayne",
+					country: "United States of America",
+					street: "Mountain Drive"
+				}
+			]
+		}
+	});
 
   const myrules2 = {
     email: { required, email },
@@ -77,7 +50,7 @@ describe("ShippingAddress", () => {
             seller: "",
             productId: "",
             productImg: "",
-            productName: "",
+            productName:"",
             producerId: "",
             producer: "",
             numberofSamples: 1,
@@ -88,14 +61,13 @@ describe("ShippingAddress", () => {
             shippingAddressId: null,
             addressDescription: "",
           }),
-          sampleForm: {
-            shippingAddressId: "1",
-          },
         },
       },
     });
-    expect(component.html()).toContain("Choose your shipping adress...");
-    await fireEvent.click(screen.getByText("Choose your shipping adress..."));
-    component.unmount();
+		expect(component.html()).toContain("Choose your shipping adress...")
+		await fireEvent.click(screen.getByText("Choose your shipping adress..."))
+		component.unmount()
+		;
   });
+
 });

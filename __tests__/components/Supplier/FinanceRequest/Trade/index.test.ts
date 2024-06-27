@@ -12,7 +12,7 @@ import { not } from "@vuelidate/validators";
 import * as vueRouter from "vue-router";
 import index from "~/components/Supplier/FinanceRequest/Trade/index.vue";
 import * as settingServices from "~/services/settingservices";
-// import userEvent from "@testing-library/user-event"
+import userEvent from "@testing-library/user-event"
 
 const mockRoutePush = vi.fn();
 
@@ -65,11 +65,11 @@ describe("FinanceRequestTradeIndex", () => {
     await fireEvent.update(screen.getByTestId("currency-input"), "20000");
 		await fireEvent.select(screen.getByText("7 days"))
 		await fireEvent.change(screen.getByTestId('select'), { target: { value: 7 } })
-		// await userEvent.click(screen.getByRole("combobox"))
+		await userEvent.click(screen.getByRole("combobox"))
 		
     await fireEvent.update(screen.getByPlaceholderText(""), "Somewhere");
     await waitFor(() => fireEvent.click(screen.getByText("Next")));
 		// await retry(() => expect(screen.queryByText("How much do you require?")).toBeNull())
-
+		screen.debug()
   });
 });

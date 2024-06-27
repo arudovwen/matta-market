@@ -6,6 +6,7 @@ export default defineVitestConfig({
     environment: "nuxt",
     // setupFiles: 'test.setup.js',
     coverage: {
+      reporter: ['text', 'lcov'],
       include: [
         'components/**/*.{js,ts,vue}', // Include all JavaScript, TypeScript, and Vue files in 'components' directory
         'pages/**/*.vue',              // Include all Vue files in 'pages' directory

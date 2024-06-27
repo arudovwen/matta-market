@@ -33,6 +33,7 @@ const store = createStore({
 
 describe("DirectorsTable", () => {
   it("renders", async () => {
+ 
     const component = render(DirectorsTable, {
       global: {
         plugins: [store],

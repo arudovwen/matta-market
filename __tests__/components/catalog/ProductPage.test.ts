@@ -54,8 +54,6 @@ describe("ProductPage", () => {
             //   title: "item Three",
             // },
           ],
-          next:vi.fn(),
-          prev:vi.fn(),
           isPageLoading: false,
           totalData: {
             totalData: {},
@@ -77,8 +75,6 @@ describe("ProductPage", () => {
         provide: {
           products: [],
           isPageLoading: false,
-          next:vi.fn(),
-          prev:vi.fn(),
           totalData: {
             totalData: {},
             pageNumber: 2,

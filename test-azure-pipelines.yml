@@ -30,8 +30,8 @@ steps:
 ## Run the npm install/build
 - script: |
     pushd $(projectFolder) && npm install && popd
+    pushd $(projectFolder) && npm run build && popd
     pushd $(projectFolder) && npm run generate
-    pushd $(projectFolder) && npm run coverage
 ##    pushd $(projectFolder) && npm install && popd
 ##    pushd $(projectFolder) && npm run build && popd
 ##    pushd $(projectFolder) && npm run export
@@ -42,25 +42,6 @@ steps:
 ##     pushd $(projectFolder) && npm run build && popd
 ## Copy the client to the staging directory
 
-##- task: PublishCodeCoverageResults@2
-##  inputs:  
-##    summaryFileLocation: |
-##      coverage/*.*
-##    pathToSources: |
-##      coverage/clover.xml
-- task: PublishCodeCoverageResults@2
-  inputs: 
-    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*clover.xml'
-
-- task: SonarCloudPrepare@2
-  inputs:
-    SonarCloud: 'Sonar Cloud'
-    organization: 'mattadevopsteam'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'mattadevopsteam_matta-frontend'
-    cliProjectName: 'matta.frontend'
-    cliSources: '.'
 
 - task: CopyFiles@2
   inputs:
@@ -81,11 +62,3 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-
-- task: SonarCloudAnalyze@2
-  displayName: 'Run SonarCloud analysis'
-
-- task: SonarCloudPublish@2
-  displayName: 'Publish results on build summary'
-  inputs:
-    pollingTimeoutSec: '300'
