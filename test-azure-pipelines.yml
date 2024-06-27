@@ -30,7 +30,7 @@ stages:
     - task: PublishCodeCoverageResults@2
       inputs:
         summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*lcov.info'
-        reportDirectory: '$(projectFolder)/coverage/lcov-report'
+        reportDirectory: '$(System.DefaultWorkingDirectory)'
     - task: SonarCloudPrepare@2
       inputs:
         SonarCloud: 'Sonar Cloud'
