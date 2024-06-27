@@ -29,7 +29,8 @@ stages:
           pushd $(projectFolder) && npm run coverage
     - task: PublishCodeCoverageResults@2
       inputs:
-        summaryFileLocation: '$(Build.ArtifactStagingDirectory)/**/*clover.xml'
+        summaryFileLocation: '$(projectFolder)/coverage/clover.xml'
+        reportDirectory: '$(projectFolder)/coverage'
     - task: SonarCloudPrepare@2
       inputs:
         SonarCloud: 'Sonar Cloud'
