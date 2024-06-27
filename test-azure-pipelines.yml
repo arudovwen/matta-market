@@ -1,69 +1,63 @@
 trigger:
-- development
-
-pool:
-  vmImage: ubuntu-latest
-
+  branches:
+    include:
+    - development
 variables:
-  projectFolder: '$(System.DefaultWorkingDirectory)'
-  buildOutputFolder: '.output/public'
+- name: projectFolder
+  value: '$(System.DefaultWorkingDirectory)'
+- name: buildOutputFolder
+  value: '.output/public'
+stages:
+- stage: __default
+  jobs:
+  - job: Job
+    pool:
+      vmImage: ubuntu-latest
+    strategy:
+      matrix:
+        node_20_x:
+          node_version: 20.x
+    steps:
+    - task: UseNode@1
+      inputs:
+        version: '20.x'
+    - task: CmdLine@2
+      inputs:
+        script: |
+          pushd $(projectFolder) && npm install && popd
+          pushd $(projectFolder) && npm run generate
+          pushd $(projectFolder) && npm run coverage
+    - task: PublishCodeCoverageResults@2
+      inputs:
+        summaryFileLocation: '$(Build.ArtifactStagingDirectory)/**/*clover.xml'
+    - task: SonarCloudPrepare@2
+      inputs:
+        SonarCloud: 'Sonar Cloud'
+        organization: 'mattadevopsteam'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectKey: 'mattadevopsteam_matta-frontend'
+        cliProjectName: 'matta.frontend'
+        cliSources: '.'
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: '$(buildOutputFolder)'
+        contents: '**/*'
+        targetFolder: '$(Build.ArtifactStagingDirectory)'
+        cleanTargetFolder: true
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: $(Build.ArtifactStagingDirectory)
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        includeRootFolder: false
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    - task: SonarCloudAnalyze@2
+      displayName: 'Run SonarCloud analysis'
+    - task: SonarCloudPublish@2
+      displayName: 'Publish results on build summary'
+      inputs:
+        pollingTimeoutSec: '300'
 
-strategy:
-  matrix:
-    node_20_x:
-      node_version: 20.x
-
-steps:
-
-- task: UseNode@1 
-  inputs:
-    version: '20.x'
-      
-- script: |
-    pushd $(projectFolder) && npm install && popd
-    pushd $(projectFolder) && npm run generate
-    pushd $(projectFolder) && npm run coverage
-
-- task: PublishCodeCoverageResults@2
-  inputs: 
-    summaryFileLocation: '$(projectFolder)'
-    
-
-- task: SonarCloudPrepare@2
-  inputs:
-    SonarCloud: 'Sonar Cloud'
-    organization: 'mattadevopsteam'
-    scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'mattadevopsteam_matta-frontend'
-    cliProjectName: 'matta.frontend'
-    cliSources: '.'
-    extraProperties: |
-      sonar.javascript.lcov.reportPaths=$(projectFolder)
-
-- task: CopyFiles@2
-  inputs:
-    sourceFolder: '$(buildOutputFolder)' 
-    contents: '**/*' 
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
-    cleanTargetFolder: true
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: $(Build.ArtifactStagingDirectory)
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    includeRootFolder: false
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-
-- task: SonarCloudAnalyze@2
-  displayName: 'Run SonarCloud analysis'
-
-
-- task: SonarCloudPublish@2
-  displayName: 'Publish results on build summary'
-  inputs:
-    pollingTimeoutSec: '300'
