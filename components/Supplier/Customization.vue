@@ -196,8 +196,8 @@ const onSubmit = handleSubmit((values) => {
     })
     .catch((err) => {
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
-        toast.error(err.response.data.message || err.response.data.Message);
+      if (err?.response?.data?.message || err.response.data.Message) {
+        toast.error(err?.response?.data?.message || err.response.data.Message);
       }
     });
 });
@@ -208,7 +208,7 @@ const getProfileData = debounce(() => {
       setFieldValue("storeSlug", res.data.data);
     })
     .catch((err) => {
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err.response.data.Message);
       if (vendorInfo.value?.storeSlug) {
         setFieldValue("storeSlug", vendorInfo.value?.storeSlug);
         formValues.storeSlug = vendorInfo.value?.storeSlug;

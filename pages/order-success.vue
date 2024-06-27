@@ -106,7 +106,7 @@ function onSuccess(response) {
       })
       .catch((err) => {
         const error = `${
-          err.response.data.Message || err.response.data.message
+          err.response.data.Message || err?.response?.data?.message
         }, Contact us for assistance on your order`;
         toast.error(error);
         loading.value = false;

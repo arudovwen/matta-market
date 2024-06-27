@@ -4,6 +4,7 @@ export default defineVitestConfig({
   test: {
     globals: true,
     environment: "nuxt",
+    // reporters: "lcov",
     // setupFiles: 'test.setup.js',
     coverage: {
       reporter: ['text', 'lcov'],

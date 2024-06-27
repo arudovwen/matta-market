@@ -128,7 +128,7 @@ function confirmOrder() {
     })
     .catch((err) => {
       const error = `${
-        err.response.data.Message || err.response.data.message
+        err.response.data.Message || err?.response?.data?.message
       }, Contact us for assistance on your order`;
       toast.error(error);
       status.value = "Retry order";
@@ -146,7 +146,7 @@ function onSuccess(response) {
       })
       .catch((err) => {
         const error = `${
-          err.response.data.Message || err.response.data.message
+          err.response.data.Message || err?.response?.data?.message
         }, Contact us for assistance on your order`;
         toast.error(error);
         status.value = "Retry order";
@@ -170,7 +170,7 @@ function handleOrderRequest() {
     })
     .catch((err) => {
       const error = `${
-        err.response.data.Message || err.response.data.message
+        err.response.data.Message || err?.response?.data?.message
       }, Contact us for assistance on your order`;
       toast.error(error);
       loading.value = false;

@@ -178,7 +178,7 @@ export const useCartStore = defineStore(
           .catch(() => {
             removeLoading.value = false;
             toast.error(
-              err.response.data.message ||
+              err?.response?.data?.message ||
                 err.response.data.Message ||
                 "Invalid code"
             );

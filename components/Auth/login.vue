@@ -113,11 +113,11 @@ const onSubmit = handleSubmit((values) => {
 
     .catch((err) => {
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
-        toast.error(err.response.data.message || err.response.data.Message);
+      if (err?.response?.data?.message || err.response.data.Message) {
+        toast.error(err?.response?.data?.message || err.response.data.Message);
       }
       if (
-        (err.response.data.message || err.response.data.Message).includes(
+        (err?.response?.data?.message || err.response.data.Message).includes(
           "Email has not verified yet"
         )
       ) {
@@ -165,11 +165,11 @@ const handleLoginSuccess = (response) => {
     .catch((err) => {
       invalidCredentials.value = true;
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
-        toast.error(err.response.data.message || err.response.data.Message);
+      if (err?.response?.data?.message || err.response.data.Message) {
+        toast.error(err?.response?.data?.message || err.response.data.Message);
       }
       if (
-        (err.response.data.message || err.response.data.Message).includes(
+        (err?.response?.data?.message || err.response.data.Message).includes(
           "Email has not verified yet"
         )
       ) {

@@ -439,7 +439,7 @@ const onSubmit = handleSubmit((values) => {
           .catch((err) => {
             isLoading.value = false;
             toast.error(
-              err.response.data.message ||
+              err?.response?.data?.message ||
                 err.response.data.Message ||
                 "Something went wrong, try again later"
             );
@@ -452,7 +452,7 @@ const onSubmit = handleSubmit((values) => {
     .catch((err) => {
       isLoading.value = false;
       toast.error(
-        err.response.data.message ||
+        err?.response?.data?.message ||
           err.response.data.Message ||
           "Something went wrong, try again later"
       );
