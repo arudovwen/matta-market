@@ -44,7 +44,7 @@ steps:
 - task: CopyFiles@2
   inputs:
     sourceFolder: '$(buildOutputFolder)' 
-    contents: '*/' 
+    contents: '**/*' 
     targetFolder: '$(Build.ArtifactStagingDirectory)'
     cleanTargetFolder: true
 
@@ -61,6 +61,7 @@ steps:
 
 - task: SonarCloudAnalyze@2
   displayName: 'Run SonarCloud analysis'
+
 
 - task: SonarCloudPublish@2
   displayName: 'Publish results on build summary'
