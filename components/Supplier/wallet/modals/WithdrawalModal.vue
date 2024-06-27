@@ -232,7 +232,7 @@ const onSubmit = handleSubmit((values) => {
     })
     .catch((err) => {
       errorText.value =
-        err?.response?.data?.message ||
+        err.response.data.message ||
         JSON.parse(err.response.data.Message)?.responseMessage ||
         "Wallet creation request failed";
       isErrorOpen.value = true;

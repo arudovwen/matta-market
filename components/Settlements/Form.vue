@@ -198,7 +198,7 @@ const onSubmit = handleSubmit((values) => {
 
     .catch((err) => {
       errorText.value =
-        err?.response?.data?.message ||
+        err.response.data.message ||
         err.response.data.Message ||
         "Settlement creation failed";
       isErrorOpen.value = true;

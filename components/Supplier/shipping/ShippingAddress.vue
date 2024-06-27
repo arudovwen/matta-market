@@ -89,7 +89,7 @@ function handleDefault(id) {
       toast.success("Default address updated")
     }
   }).catch(err=>{
-    toast.error(err?.response?.data?.message || err.response.data.Message)
+    toast.error(err.response.data.message || err.response.data.Message)
   });;
 }
 

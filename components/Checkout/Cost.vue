@@ -80,7 +80,7 @@ function getData() {
     .catch((err) => {
       loading.value = false;
       cartStore.setLoadingCart(false);
-      error.value = err.response.data.Message || err?.response?.data?.message;
+      error.value = err.response.data.Message || err.response.data.message;
     });
 }
 

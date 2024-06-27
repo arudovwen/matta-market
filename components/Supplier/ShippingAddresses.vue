@@ -110,7 +110,7 @@ function handleDefault(id) {
       toast.success("Default address updated")
     }
   }).catch(err=>{
-    toast.error(err?.response?.data?.message || err.response.data.Message)
+    toast.error(err.response.data.message || err.response.data.Message)
   });
 }
 
@@ -134,7 +134,7 @@ function deleteItem() {
     })
     .catch((err) => {
       deleteLoading.value = false;
-      toast.error(err.response.data.Message || err?.response?.data?.message);
+      toast.error(err.response.data.Message || err.response.data.message);
     });
 }
 

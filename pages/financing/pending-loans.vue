@@ -355,8 +355,8 @@ const handleDelete = () => {
     })
     .catch((err) => {
       toast.error(
-        err?.response?.data?.message ||
-          err?.response?.data?.message ||
+        err.response.data.message ||
+          err.response.data.message ||
           "Withdraw request failed"
       );
     });

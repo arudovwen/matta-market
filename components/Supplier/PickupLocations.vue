@@ -126,7 +126,7 @@ function deleteItem() {
     })
     .catch((err) => {
       deleteLoading.value = false;
-      toast.error(err.response.data.Message || err?.response?.data?.message);
+      toast.error(err.response.data.Message || err.response.data.message);
     });
 }
 
