@@ -29,7 +29,8 @@ stages:
           pushd $(projectFolder) && npm run coverage
     - task: PublishCodeCoverageResults@2
       inputs:
-        summaryFileLocation: '$(Build.ArtifactStagingDirectory)/**/*clover.xml'
+        summaryFileLocation: '$(projectFolder)/coverage/clover.xml'
+        reportDirectory: '$(projectFolder)/coverage'
     - task: SonarCloudPrepare@2
       inputs:
         SonarCloud: 'Sonar Cloud'
@@ -39,10 +40,12 @@ stages:
         cliProjectKey: 'mattadevopsteam_matta-frontend'
         cliProjectName: 'matta.frontend'
         cliSources: '.'
+        extraProperties: |
+          sonar.javascript.lcov.reportPaths=$(Agent.BuildDirectory)/coverage/lcov.info
     - task: CopyFiles@2
       inputs:
         sourceFolder: '$(buildOutputFolder)'
-        contents: '**/*'
+        contents: '*/'
         targetFolder: '$(Build.ArtifactStagingDirectory)'
         cleanTargetFolder: true
     - task: ArchiveFiles@2
