@@ -29,8 +29,8 @@ stages:
           pushd $(projectFolder) && npm run coverage
     - task: PublishCodeCoverageResults@2
       inputs:
-        summaryFileLocation: '$(projectFolder)/coverage/'
-        reportDirectory: '$(projectFolder)/coverage'
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/*lcov.info'
+        reportDirectory: '$(projectFolder)/coverage/lcov-report'
     - task: SonarCloudPrepare@2
       inputs:
         SonarCloud: 'Sonar Cloud'
