@@ -9,7 +9,7 @@ import onboarding from "~/layouts/onboarding.vue";
 describe("onboarding", () => {
   it("Mounts without error", async () => {
     const component = render(onboarding);
-    screen.debug();
+    
     expect(screen).toMatchSnapshot();
     component.unmount();
   });

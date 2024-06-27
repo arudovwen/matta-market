@@ -9,7 +9,7 @@ import Top from "~/components/RequestProducts/Top.vue";
 describe("Top", () => {
   it("Mounts without error", async () => {
     const component = render(Top);
-    screen.debug();
+    
     expect(screen).toMatchSnapshot();
     component.unmount();
   });

@@ -9,7 +9,7 @@ import auth from "~/layouts/auth.vue";
 describe("auth", () => {
   it("Mounts without error", async () => {
     const component = render(auth);
-    screen.debug();
+    
     expect(screen).toMatchSnapshot();
     component.unmount();
   });

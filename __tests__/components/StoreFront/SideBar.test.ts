@@ -44,7 +44,7 @@ it("Mounts without error", async () => {
 			}
 		}
 	});
-  screen.debug();
+  
   expect(screen).toMatchSnapshot();
   component.unmount();
 });

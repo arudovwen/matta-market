@@ -56,7 +56,7 @@ describe("SideBar", () => {
 				}
 			}
 		});
-		screen.debug();
+		
 		expect(screen).toMatchSnapshot();
 		component.unmount();
   });

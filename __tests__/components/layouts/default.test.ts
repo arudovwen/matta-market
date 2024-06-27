@@ -9,7 +9,7 @@ import defaultC from "~/layouts/default.vue";
 describe("default", () => {
   it("Mounts without error", async () => {
     const component = render(defaultC);
-    screen.debug();
+    
     expect(screen).toMatchSnapshot();
     component.unmount();
   });

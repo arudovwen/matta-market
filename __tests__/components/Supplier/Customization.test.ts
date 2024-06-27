@@ -121,7 +121,7 @@ describe("MyOrders", () => {
     });
 		await userEvent.type(screen.getAllByPlaceholderText("")[0], "NewVal")
 		await userEvent.click(screen.getByText("Save"));
-		screen.debug();
+		
 		component.unmount();
   });
 });

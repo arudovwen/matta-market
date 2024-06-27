@@ -406,7 +406,7 @@ describe("SimilarProducts", () => {
         },
       },
     });
-    screen.debug();
+    
     component.unmount();
   });
 });

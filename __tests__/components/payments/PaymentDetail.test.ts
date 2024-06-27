@@ -75,7 +75,7 @@ describe("SideContent", () => {
     await fireEvent.input(screen.getByTestId("exp"), {target: {value: "03/27"}});
 
     await fireEvent.click(screen.getByText("Submit"));
-    screen.debug();
+    
     component.unmount();
   });
 });

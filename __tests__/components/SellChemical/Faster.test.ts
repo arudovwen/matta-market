@@ -9,7 +9,7 @@ import Faster from "~/components/SellChemical/Faster.vue";
 describe("Faster", () => {
   it("Mounts without error", async () => {
     const component = render(Faster);
-    screen.debug();
+    
     expect(screen).toMatchSnapshot();
     component.unmount();
   });

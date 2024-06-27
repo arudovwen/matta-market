@@ -126,7 +126,7 @@ vi.spyOn(reqservices, "sellerdoc").mockResolvedValue({
       //   async () => {
       //     expect(screen.getByText("Joy")).toBeTruthy();
       //     fireEvent.click(screen.getByTestId("documents")).then(() => {
-      //       screen.debug();
+      //       
       //     });
       //   }
       // );
