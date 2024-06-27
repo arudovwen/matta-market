@@ -26,8 +26,8 @@ steps:
 
 - task: PublishCodeCoverageResults@2
   inputs: 
-    summaryFileLocation: '$(projectFolder)/coverage/clover.xml'
-    reportDirectory: '$(projectFolder)/coverage'
+    summaryFileLocation: '$(projectFolder)'
+    
 
 - task: SonarCloudPrepare@2
   inputs:
@@ -39,7 +39,7 @@ steps:
     cliProjectName: 'matta.frontend'
     cliSources: '.'
     extraProperties: |
-      sonar.javascript.lcov.reportPaths=$(projectFolder)/coverage/lcov.info
+      sonar.javascript.lcov.reportPaths=$(projectFolder)
 
 - task: CopyFiles@2
   inputs:
