@@ -29,7 +29,7 @@ stages:
           pushd $(projectFolder) && npm run coverage
     - task: PublishCodeCoverageResults@2
       inputs:
-        summaryFileLocation: '$(projectFolder)/coverage/clover.xml'
+        summaryFileLocation: '$(projectFolder)/coverage/'
         reportDirectory: '$(projectFolder)/coverage'
     - task: SonarCloudPrepare@2
       inputs:
