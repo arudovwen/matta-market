@@ -9,7 +9,7 @@
       >
          <img
           class=""
-          alt="product image"
+          alt="product"
           width="80"
           height="80"
           :src="

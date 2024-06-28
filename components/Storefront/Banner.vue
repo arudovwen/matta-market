@@ -13,7 +13,7 @@
                 : '/images/storebanner.png'
             "
             class="w-full h-full rounded-t-[5px] object-cover"
-            alt="banner image"
+            alt="banner"
           />
         </div>
         <div
@@ -26,7 +26,7 @@
               :src="
                 vendorInfo?.logo ? vendorInfo?.logo : '/images/matta-icon.png'
               "
-              class="" alt="banner image"
+              class="" alt="banner"
             />
           </div>
           <div>

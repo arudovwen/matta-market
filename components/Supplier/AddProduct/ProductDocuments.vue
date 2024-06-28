@@ -23,7 +23,7 @@
             >
               <div class="border rounded-xl p-4 flex flex-1 justify-between">
                 <div class="flex gap-x-3 items-center">
-                  <img alt=" prodcut image" src="~/assets/images/filetype.png" class="w-8 h-auto" />
+                  <img alt=" prodcut" src="~/assets/images/filetype.png" class="w-8 h-auto" />
                   <div>
                     <p
                       class="text-sm text-matta-black capitalize truncate max-w-[250px]"

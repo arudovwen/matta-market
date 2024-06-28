@@ -1,6 +1,6 @@
 <template>
   <div class="p-10 mt-20 flex flex-col justify-center items-center">
-    <img alt="Final image" src="/images/sent.png" class="mx-auto mb-2" />
+    <img alt="Final" src="/images/sent.png" class="mx-auto mb-2" />
     <h1 class="mb-3 font-semibold text-2xl text-[#333]">
       Request {{ !financeId ? "Sent" : "Updated" }}
     </h1>

@@ -4,7 +4,7 @@
       <img
         src="/images/financeimg.png"
         class="w-full h-full object-fill"
-        alt="finance image"
+        alt="finance"
       />
     </header>
 
@@ -24,7 +24,7 @@
             <img
               :src="n.img"
               class="w-full h-full object-cover rounded-[10px]"
-              alt=" finance image"
+              alt=" finance"
             />
           </div>
           <div class="text-left">

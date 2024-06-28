@@ -19,6 +19,7 @@ export default defineVitestConfig({
       exclude: [
         'plugins/**',
         '__tests__/**',
+        '__tests__/',
         '__mocks__/**',
         'node_modules/',
         'coverage/',

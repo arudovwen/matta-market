@@ -17,7 +17,7 @@
         <img
           v-if="detail.converPhoto"
           :src="detail.converPhoto"
-          alt="Card image"
+          alt="Card"
           width="276"
           height="160"
           class="w-full h-full object-cover"

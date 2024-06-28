@@ -1,6 +1,6 @@
 <template>
   <div class="h-20 w-20 mx-auto" v-if="!isLoading">
-     <img src="~/assets/images/svg/loader.svg" alt="loader image" />
+     <img src="~/assets/images/svg/loader.svg" alt="loader" />
   </div>
 </template>
 <script>

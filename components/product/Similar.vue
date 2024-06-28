@@ -32,7 +32,7 @@
                 :icon="!slide.liked ? 'ph:heart' : 'ph:heart-fill'"
                 class="text-xs sm:text-sm md:text-base darks:text-white"
             /></span>
-            <img :src="slide.converPhoto" alt="Similar image" width="276" height="160" class="w-full  h-full object-cover" fit="cover" loading="lazy" />
+            <img :src="slide.converPhoto" alt="Similar" width="276" height="160" class="w-full  h-full object-cover" fit="cover" loading="lazy" />
           </div>
           <div class="w-full py-3 md:py-5 px-3 xl:px-5">
             <span

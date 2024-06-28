@@ -45,7 +45,7 @@
 
                   "
                   class="w-full h-full"
-                  alt="default image"
+                  alt="default"
                 />
               </div>
               <div>

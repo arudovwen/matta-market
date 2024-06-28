@@ -24,7 +24,7 @@
               >: {{ currencyFormat(balance.ledgerBalance) }}</span
             >
           </div>
-          <span></span> <img src="/images/pass.svg" alt="side image"
+          <span></span> <img src="/images/pass.svg" alt="side"
         /></span>
 
         <span class="font-medium text-sm text-white capitalize">

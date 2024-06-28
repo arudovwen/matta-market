@@ -23,7 +23,7 @@
                 <div
                   class="h-10 text-xl w-10 text-primary-500 rounded-full flex items-center justify-center bg-[#D1E9FF]"
                 >
-                  <img alt="request image" :src="n.icon" />
+                  <img alt="request" :src="n.icon" />
                 </div>
               </div>
             </div>

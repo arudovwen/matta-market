@@ -31,7 +31,7 @@
                 >
                  <img
                   v-else
-                  alt="persoanl image"
+                  alt="persoanl"
                   :src="image"
                   class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
                 />

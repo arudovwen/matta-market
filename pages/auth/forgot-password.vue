@@ -2,7 +2,7 @@
   <div class="pt-0 lg:pt-0 max-w-[500px] mx-auto items-center grid flex-1">
     <div class="w-full">
       <div class="mb-6" v-if="isSent">
-         <img src="~/assets/images/mail.svg" class="mx-auto" alt="forgot password image" />
+         <img src="~/assets/images/mail.svg" class="mx-auto" alt="forgot password" />
       </div>
       <h1
         class="text-[#333] darks:text-white mb-[10px] text-[28px] font-bold text-center"

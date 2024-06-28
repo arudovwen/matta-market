@@ -26,7 +26,7 @@
       >
         <img
           src="~/assets/images/icon/ck-white.svg"
-          alt="check image"
+          alt="check"
           class="h-[10px] w-[10px] block m-auto"
           v-if="ck"
         />

@@ -1,7 +1,7 @@
 <template>
   <div class="grid bg-white rounded-[10px] md:min-w-[320px] w-full">
     <div class="mb-4">
-      <img alt="loan image" src="/images/approve.png" />
+      <img alt="loan" src="/images/approve.png" />
     </div>
     <div class="mb-4">
       <legend class="text-[#18273AF0] text-lg font-bold mb-1">
