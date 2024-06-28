@@ -9,11 +9,11 @@
         :iconClass="`${classIcon} text-6xl text-[#E8E8E8]`"
         v-if="type == 'shipping'"
       />
-      <img src="~/assets/images/emptyuser.png" v-else-if="type == 'user'" :class="classIcon" />
-      <img src="/images/campaign.png" v-else-if="type == 'campaign'"  :class="classIcon"/>
-      <img src="/images/settlements.svg" v-else-if="type == 'settlements'"  :class="classIcon"/>
-      <img src="/images/transaction.svg" v-else-if="type == 'transaction'"  :class="classIcon"/>
-      <img src="~/assets/images/empty.svg" v-else :class="classIcon" />
+      <img alt="user image" src="~/assets/images/emptyuser.png" v-else-if="type == 'user'" :class="classIcon" />
+      <img alt="campaign image" src="/images/campaign.png" v-else-if="type == 'campaign'"  :class="classIcon"/>
+      <img alt="settlements image" src="/images/settlements.svg" v-else-if="type == 'settlements'"  :class="classIcon"/>
+      <img alt="transactions image" src="/images/transaction.svg" v-else-if="type == 'transaction'"  :class="classIcon"/>
+      <img alt="empty image" src="~/assets/images/empty.svg" v-else :class="classIcon" />
     </div>
     <p :class="titleClass" class="text-lg text-[#101828] font-semibold mb-2">
       {{ title || "No data available" }}

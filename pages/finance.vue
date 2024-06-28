@@ -4,6 +4,7 @@
       <img
         src="/images/financeimg.png"
         class="w-full h-full object-fill"
+        alt="finance image"
       />
     </header>
 
@@ -23,6 +24,7 @@
             <img
               :src="n.img"
               class="w-full h-full object-cover rounded-[10px]"
+              alt=" finance image"
             />
           </div>
           <div class="text-left">

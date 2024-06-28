@@ -24,17 +24,17 @@
         >
           <thead>
             <tr>
-              <td></td>
-              <td
+              <th></th>
+              <th
                 class="border border-[#EAECF0] text-center px-4 py-[10px] text-xs md:text-sm lg:text-lg font-semibold rounded-tl-lg overflow-hidden"
               >
                 Matta
-              </td>
-              <td
+              </th>
+              <th
                 class="border border-[#EAECF0] px-3 md:px-4 py-[10px] text-xs md:text-sm lg:text-lg font-semibold rounded-tr-lg"
               >
                 Traditional procurement
-              </td>
+              </th>
             </tr>
           </thead>
           <tbody>

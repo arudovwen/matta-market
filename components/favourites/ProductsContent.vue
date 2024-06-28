@@ -6,6 +6,7 @@
     >
       <div class="text-center max-w-sm mx-auto">
          <img
+         alt="market image"
           src="~/assets/img/nofound.svg"
           class="w-[52px] h-auto mx-auto mb-4"
         />

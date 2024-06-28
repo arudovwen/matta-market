@@ -39,6 +39,12 @@
       </div>
       <div class="overflow-x-auto">
         <table class="w-full">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
           <tbody class="">
             <tr class="" v-for="(n, id) in documentList" :key="id">
               <td class="border-b border-[#ddd] py-4 px-3">

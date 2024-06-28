@@ -25,7 +25,7 @@
       <p class="text-xs text-[#ABABAB] mb-1" v-if="support">{{ support }}</p>
       <p class="text-xs text-[#ABABAB]" v-if="recommended">{{ recommended }}</p>
     </div>
-    <img
+    <img alt="upload image"
       v-if="!isMultiple && (image || url)"
       :src="image || url"
       class="w-full h-full object-cover absolute z-10 group-hover:opacity-10 backdrop-blur-sm"

@@ -24,6 +24,7 @@
                 <img
                   v-else
                   :src="image"
+                  alt="settings image"
                   class="h-24 w-24 rounded-full flex items-center justify-center bg-[#F1F3F5]"
                 />
               </span>

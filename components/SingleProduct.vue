@@ -1,12 +1,14 @@
 <template>
   <div class="rounded-[20px] bg-white p-4">
     <div class="mb-4 sm:mb-8 relative h-[100px] sm:h-[150px]">
-       <img class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">
+      <img
+        alt="cover image"
         class="h-[100px] sm:h-[150px] w-full rounded-[20px] object-cover z-[2] relative"
         :src="
           product.converPhoto && product.converPhoto !== 'null'
             ? product.converPhoto
-            : require('../assets/img/img1.png')"
+            : require('../assets/img/img1.png')
+        "
       />
       <div
         class="bg-gray-200 animate-pulse h-[100px] sm:h-[150px] w-full rounded-[20px] z-[1] absolute top-0"
@@ -14,8 +16,8 @@
       <span
         class="w-16 sm:w-20 h-16 sm:h-20 rounded-lg bg-white shadow p-4 flex items-center justify-center absolute left-5 -bottom-10 z-[2]"
       >
-         <img
-          alt="image"
+        <img
+          alt="prod image"
           class=""
           src="../assets/img/logo.svg"
           width="80"
@@ -90,7 +92,6 @@
 import { HeartIcon } from "@heroicons/vue/24/outline";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/vue/24/solid";
 import { defineProps, inject } from "vue";
-
 
 defineProps(["product"]);
 </script>

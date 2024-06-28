@@ -9,7 +9,7 @@
     </p>
 
     <div>
-      <Table
+      <CustomTable
         :columns="columns"
         :rows="rows"
         :isBalance="true"

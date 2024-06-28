@@ -89,7 +89,7 @@
                     :value="option"
                     as="template"
                   >
-                    <li
+                    <span
                       :class="[
                         active ? 'bg-gray-100' : '',
                         'relative cursor-default select-none pt-6 pb-6 text-loft-black border-b hover:bg-gray-50',
@@ -107,7 +107,7 @@
                         ></span>
                         <span class="line-clamp-1">{{ option.street }}</span>
                       </p>
-                    </li>
+                    </span>
                   </ListboxOption>
                 </div>
                 <button

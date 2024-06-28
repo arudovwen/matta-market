@@ -31,6 +31,7 @@
                     </span>
                     <img
                       v-else
+                      alt="informationimage"
                       :src="image"
                       class="h-[64px] w-[64px] rounded-full flex items-center bg-[#F1F3F5] justify-center"
                     />

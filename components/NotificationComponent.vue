@@ -79,7 +79,7 @@
     v-if="!notifications"
   >
     <div class="text-center max-w-sm mx-auto">
-      <img
+      <img alt="notification image"
         src="@/assets/img/nofound.svg"
         class="w-[52px] h-auto mx-auto mb-2"
       />

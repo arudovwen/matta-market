@@ -15,11 +15,12 @@
       </p>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Phone number</label
+      >
 
       <div class="flex relative rounded-lg h-11">
-        <FormsPhoneCodes  v-model="request2$.phone.$model" />
-
+        <FormsPhoneCodes v-model="request2$.phone.$model" />
       </div>
       <div
         class="text-red-500 mt-1"
@@ -33,7 +34,9 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
+      <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Address</label
+      >
       <Listbox v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton
@@ -82,7 +85,7 @@
                     :value="option"
                     as="template"
                   >
-                    <li
+                    <span
                       :class="[
                         active ? 'bg-gray-100' : '',
                         'relative cursor-default select-none pt-6 pb-6 text-loft-black border-b hover:bg-gray-50',
@@ -100,7 +103,7 @@
                         ></span>
                         <span class="line-clamp-1">{{ option.street }}</span>
                       </p>
-                    </li>
+                    </span>
                   </ListboxOption>
                 </div>
                 <button
@@ -167,7 +170,7 @@ import { inject, onMounted, watch, provide } from "vue";
 import { getalladdress } from "~/services/cartservice";
 import { useStore } from "vuex";
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 const store = useStore();
 const request2$ = inject("request2$");
 const quoteForm = inject("quoteForm");
