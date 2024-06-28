@@ -5,12 +5,12 @@ import {
   waitForElementToBeRemoved,
 } from "@testing-library/vue";
 import { it, expect, describe, vi } from "vitest";
-import Vuex, { createStore, mapActions } from "vuex";
-import { RouterLinkStub, mount, shallowMount } from "@vue/test-utils";
-
+import { createStore } from "vuex";
+import { RouterLinkStub } from "@vue/test-utils";
 import MyOrders from "~/components/Supplier/MyOrders.vue";
-import { procurementorders, procurementorderdetails} from '~/services/orderservice';
+import { procurementorders, procurementorderdetails } from '~/services/orderservice';
 
+// Create a Vuex store
 const store = createStore({
   state: {
     loggedUser: {
@@ -19,19 +19,16 @@ const store = createStore({
     },
   },
   getters: {
-    loggedUser: () => ({
-      fullName: "Oduro Tolulope",
-      phoneNumber: "07036845422",
-    }),
+    loggedUser: (state) => state.loggedUser,
   },
 });
 
+// Mock the order service
 vi.mock("~/services/orderservice", async (importOriginal) => {
   const actual = await importOriginal();
   return {
-    // @ts-ignore
     ...actual,
-    procurementorders: vi.fn().mockResolvedValueOnce({
+    procurementorders: vi.fn().mockResolvedValue({
       status: 200,
       data: {
         data: [
@@ -39,7 +36,7 @@ vi.mock("~/services/orderservice", async (importOriginal) => {
             product: "Metal rod",
             soldBy: "Some Guy",
             amountWithTax: 100000,
-            shippingName: "New Shippng",
+            shippingName: "New Shipping",
             shippingAddress: "10007 Mountain Drive",
             orderNumber: "456789",
           },
@@ -47,7 +44,7 @@ vi.mock("~/services/orderservice", async (importOriginal) => {
         totalCount: 1,
       },
     }),
-    procurementorderdetails: vi.fn().mockResolvedValueOnce({
+    procurementorderdetails: vi.fn().mockResolvedValue({
       status: 200,
       data: {
         orderDate: "12/01/24",
@@ -105,7 +102,7 @@ vi.mock("~/services/orderservice", async (importOriginal) => {
 });
 
 describe("MyOrders", () => {
-  it("renders", async () => {
+  it("renders and displays orders", async () => {
     const component = render(MyOrders, {
       global: {
         plugins: [store],
@@ -114,38 +111,22 @@ describe("MyOrders", () => {
         },
       },
     });
+
+    // Check for the spinner
     expect(screen.getByTestId("spinner")).toBeTruthy();
-    await waitForElementToBeRemoved(screen.getByTestId("spinner"));
+    
+    // Wait for the spinner to be removed
+    await waitForElementToBeRemoved(() => screen.getByTestId("spinner"));
+
+    // Check that the order is displayed
     expect(screen.getByText("Metal rod")).toBeTruthy();
+
+    // Simulate clicking on "View Details"
     await fireEvent.click(screen.getByText("View Details"));
+
+    // Add additional assertions here for the details view if necessary
+
+    // Unmount the component
     component.unmount();
   });
-  // it("renders", async () => {
-  //   const component = render(MyOrders, {
-  //     global: {
-  //       plugins: [store],
-  //       stubs: {
-  //         RouterLink: RouterLinkStub,
-  //       },
-  //     },
-  //   });
-	// 	expect(screen.getByTestId("spinner")).toBeTruthy();
-	// 	await waitForElementToBeRemoved(screen.getByTestId("spinner"))
-	// 	expect(screen.getByText("Metal rod")).toBeTruthy();
-  //   component.unmount();
-  // });
-  // it("renders", async () => {
-  //   const component = render(MyOrders, {
-  //     global: {
-  //       plugins: [store],
-  //       stubs: {
-  //         RouterLink: RouterLinkStub,
-  //       },
-  //     },
-  //   });
-	// 	expect(screen.getByTestId("spinner")).toBeTruthy();
-	// 	await waitForElementToBeRemoved(screen.getByTestId("spinner"))
-	// 	expect(screen.getByText("Metal rod")).toBeTruthy();
-  //   component.unmount();
-  // });
 });
