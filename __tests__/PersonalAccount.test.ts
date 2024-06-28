@@ -5,9 +5,29 @@ import { RouterLinkStub } from "@vue/test-utils";
 import { not } from "@vuelidate/validators";
 import * as vueRouter from "vue-router";
 import PersonalAccount from '~/components/onboarding/PersonalAccount.vue';
+import { getProfile } from "@/services/settingservices";
 
-const mockRoutePush = vi.fn();
-
+// Mocking settingservices/getProfile
+vi.mock("@/services/settingservices", async (importOriginal) => {
+  const originalModule = await importOriginal();
+  return {
+    ...originalModule,
+    getProfile: vi.fn().mockResolvedValue({
+      data: {
+        data: {
+          photo: "https://example.com/profile.jpg",
+          firstName: "Bruce",
+          lastName: "Wayne",
+          country: "Gotham",
+          city: "Gotham City",
+          email: "bruce.wayne@example.com",
+          phone: "+234123456789",
+          timeZone: "GMT",
+        },
+      },
+    }),
+  };
+});
 describe("PersonalAccount", () => {
 
   it("Renders without error", () => {

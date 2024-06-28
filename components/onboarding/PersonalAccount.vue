@@ -370,9 +370,7 @@ import {
   setOnboardingcomplete,
 } from "@/services/onboardingservices";
 import { getProfile } from "@/services/settingservices";
-import { useStore } from "vuex";
 
-const store = useStore();
 onMounted(() => {
   getProfile().then((res) => {
     form.photo = image.value = res.data.data.photo;
