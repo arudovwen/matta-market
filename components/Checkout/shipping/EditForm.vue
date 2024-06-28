@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white w-full">
     <legend class="block text-[20px] font-bold mb-8 text-left">
-      Update Shipping address
+      {{ detail ? "Update" : "Add" }} Shipping address
     </legend>
     <form
       @submit.prevent="onSubmit"
@@ -112,7 +112,7 @@
           type="submit"
           :isLoading="isLoading"
           :isDisabled="isLoading"
-          text="Update address"
+          text="Submit"
           btnClass="normal-case btn-primary !py-3"
         />
       </div>
@@ -212,10 +212,10 @@ const lgasOption = computed(() => {
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  editshipping(values)
+  (!detail.value ? addshipping : editshipping)(values)
     .then((res) => {
       if (res.status === 200) {
-        toast.info("Address updated");
+        toast.info(detail.value ? "Address updated" : "Address added");
         isOpen.value = false;
         shippingStore.getAlladdress();
       }
@@ -224,7 +224,9 @@ const onSubmit = handleSubmit((values) => {
     .catch((err) => {
       isLoading.value = false;
       if (err?.response?.data?.message || err?.response?.data?.Message) {
-        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       }
     });
 });
