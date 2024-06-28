@@ -107,6 +107,6 @@ describe("SettingsComponent", () => {
         target: { files: [file] },
       })
     );
-		screen.debug()
+		
   });
 });

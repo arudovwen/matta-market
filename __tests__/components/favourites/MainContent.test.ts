@@ -1,55 +1,43 @@
-import { fireEvent, render, screen } from "@testing-library/vue";
-import { describe, expect, it } from "vitest";
-import MainContent from "~/components/favourites/MainContent.vue";
+// Import the original Vue module
+// import * as vue from 'vue';
 
-describe("MainContent",  () => {
-  it("Should render without error", async () => {
-    const component = render(MainContent, {
-      global: {
-        provide: {
-          products: [
-            {
-              id: 1,
-              title: "Item One",
-              packType: 1,
-              price: 2000,
-              isAvailable: true,
-              hidePrice: true,
-            },
-            {
-              id: 2,
-              title: "Item Two",
-            },
-            // {
-            //   id: 3,
-            //   title: "item Three",
-            // },
-          ],
-          suppliers: [
-            {
-              supplierId: "987656789",
-              supplier: "CC Penni",
-            },
-            {
-              supplierId: "9876789",
-              supplier: "Fireboy's Dealer",
-            },
-          ],
-          productParams: {
-            Manufacturer: "Test",
-            SortOrder: "a",
-            Search: "Test",
-          },
-          supplierParams: {
-            Manufacturer: "Test",
-            SortOrder: "a",
-            Search: "Test",
-          },
-        },
-      },
-    });
-		await fireEvent.click(screen.getByText("favourites products"))
-		await fireEvent.click(screen.getByText("favourites suppliers"))
-		screen.debug()
+import { mount } from '@vue/test-utils';
+import { describe, it, expect, vi } from 'vitest';
+import MainContent from "~/components/favourites/MainContent.vue";
+import Products from "~/components/favourites/ProductsContent.vue";
+import SuppliersContent from "~/components/favourites/SuppliersContent.vue";
+
+
+vi.mock('vue', async () => {
+  const vue = await vi.importActual('vue');
+  return {
+    ...vue,
+    inject: (name) => {
+      if (name === 'products') return [{}, {}, {}]; // Example products array
+      if (name === 'suppliers') return [{}, {}]; // Example suppliers array
+      return [];
+    },
+  };
+});
+
+describe('MainContent.vue', () => {
+  it('toggles between products and suppliers tabs', async () => {
+    const wrapper = mount(MainContent);
+
+    // Check initial state
+    expect(wrapper.get('[data-testid="products-tab"]').classes()).toContain('text-white');
+    expect(wrapper.get('[data-testid="products-tab"]').classes()).toContain('bg-matta-black');
+    expect(wrapper.get('[data-testid="products"]').exists()).toBe(true);
+    // expect(wrapper.get('[data-testid="suppliers"]').exists()).toBe(false);
+
+    // Click the suppliers tab
+    await wrapper.get('[data-testid="suppliers-tab"]').trigger('click');
+
+    // Check state after click
+    expect(wrapper.get('[data-testid="suppliers-tab"]').classes()).toContain('text-white');
+    expect(wrapper.get('[data-testid="suppliers-tab"]').classes()).toContain('bg-matta-black');
+    expect(wrapper.get('[data-testid="suppliers"]').exists()).toBe(true);
+    // expect(wrapper.get('[data-testid="products"]').exists()).toBe(true);
+
   });
 });

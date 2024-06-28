@@ -1,33 +1,39 @@
-import { render, screen } from '@testing-library/vue'
-import { it, expect, describe, vi, afterEach } from "vitest";
-import CompanyAccount from "~/components/onboarding/CompanyAccount.vue";
-import { mount } from "@vue/test-utils";
-import { not } from "@vuelidate/validators";
-import * as vueRouter from "vue-router";
-import Banner from "~/components/Application/Banner.vue";
-import Content from "~/components/Application/Content.vue";
-import { createTestingPinia } from "@pinia/testing";
-import index from "~/components/Breadcrumbs/index.vue";
+// Breadcrumbs.test.js
+import { mount } from '@vue/test-utils';
+import { describe, it, expect } from 'vitest';
+import Breadcrumbs from "~/components/Breadcrumbs/index.vue";
 
-const store = useProductStore();
+describe('Breadcrumbs.vue', () => {
+  const links = [
+    { title: 'home', url: '/' },
+    { title: 'about', url: '/about' },
+    { title: 'contact', url: '/contact' },
+  ];
 
-describe("Breadcrubms index", () => {
+  it('renders breadcrumbs correctly', () => {
+    const wrapper = mount(Breadcrumbs, {
+      props: { links },
+    });
 
-  const component = render(index, {
-    props: {
-      links: [
-        {
-          title: "Home",
-          url: "/home",
-        },
-        {
-          title: "Markets",
-          url: "/markets",
-        },
-      ],
-    },
+    // Check if all links are rendered
+    const linkElements = wrapper.findAll('li');
+    expect(linkElements.length).toBe(links.length);
+
+    // Check if the titles are correct
+    linkElements.forEach((linkElement, index) => {
+      expect(linkElement.text()).toContain(links[index].title);
+    });
   });
-  it("Mounts without error", () => {
-    expect(component.html()).toMatchSnapshot();
+
+
+  it('applies custom className', () => {
+    const className = 'custom-class';
+    const wrapper = mount(Breadcrumbs, {
+      props: { links, className },
+    });
+
+    // Check if custom className is applied
+    const linkElement = wrapper.find('li');
+    expect(linkElement.classes()).toContain(className);
   });
 });

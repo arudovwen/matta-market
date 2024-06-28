@@ -177,7 +177,7 @@ describe("ProductsComponent", () => {
 		// ["product", "created", "views", "orders", ""]
 		// await retry(() => expect(screen.getByText("views")).toBeTruthy())
 		expect(screen).toMatchSnapshot();
-		screen.debug()
+		
     component.unmount();
   });
 });

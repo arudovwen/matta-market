@@ -70,7 +70,7 @@ describe("CreatePin", () => {
     await retry(() =>
       expect(screen.getByPlaceholderText("Enter otp code")).toBeDefined()
     );
-    screen.debug();
+    ;
     await fireEvent.update(
       screen.getByPlaceholderText("Enter otp code"),
       "1244"

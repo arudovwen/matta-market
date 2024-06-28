@@ -44,7 +44,7 @@ describe("Transaction pin", () => {
         },
       },
     });
-		screen.debug()
+		
     expect(screen).toMatchSnapshot();
   });
 });

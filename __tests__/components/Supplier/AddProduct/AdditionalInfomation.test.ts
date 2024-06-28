@@ -21,7 +21,7 @@ describe("Content", () => {
 				}
 			}
 		});
-		screen.debug();
+		;
 		component.unmount();
   });
 });

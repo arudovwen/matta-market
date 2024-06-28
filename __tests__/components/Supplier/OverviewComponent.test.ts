@@ -105,7 +105,7 @@ describe("OverviewComponent", () => {
         mocks: {},
       },
     });
-		screen.debug()
+		
 		expect(screen.getByText("Welcome back, Bruce"))
   });
 });

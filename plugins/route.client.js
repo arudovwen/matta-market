@@ -26,19 +26,23 @@ async function clearCookies() {
 }
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.$router.afterEach((to, from) => {
-    fetch("/version.json").then((serverPromise) =>
-      serverPromise.json().then((response) => {
-        const latestVersion = response.version;
-        const clientStoredVersion = getClientAppVersion();
-
-        if (clientStoredVersion != latestVersion) {
-          clearCookies();
-          localStorage.clear()
-          setClientAppVersion(latestVersion);
-          window.location.reload(true);
-        } else return;
-      })
-    );
-  });
+  try {
+    nuxtApp.$router.afterEach((to, from) => {
+      fetch("/version.json").then((serverPromise) =>
+        serverPromise.json().then((response) => {
+          const latestVersion = response.version;
+          const clientStoredVersion = getClientAppVersion();
+  
+          if (clientStoredVersion != latestVersion) {
+            clearCookies();
+            localStorage.clear()
+            setClientAppVersion(latestVersion);
+            window.location.reload(true);
+          } else return;
+        })
+      );
+    });
+  } catch (error) {
+    
+  }
 });

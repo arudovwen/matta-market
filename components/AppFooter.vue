@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-[#0C111D] pt-16 pb-8">
-    <div v-for="n in extraContent" :key="n.key">
+    <div v-for="n in extraContent" :key="n.key" data-testid="extraContent">
       <div class="container" v-if="route.name == n.key">
         <div
           class="flex justify-between md:gap-x-20 flex-col md:flex-row mb-6 md:mb-0"
@@ -19,6 +19,7 @@
           </div>
           <div>
             <AppButton
+              data-testid="get-started"
               @click="navigateTo(n.url)"
               text="Get started"
               icon="lets-icons:arrow-right"
@@ -39,6 +40,7 @@
           <div class="mb-[15px]">
             <NuxtLink to="/">
               <img
+                data-testid="logo"
                 src="/logo-matta-white.png"
                 class="w-[132px]"
                 alt="Matta"
