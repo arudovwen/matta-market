@@ -59,7 +59,7 @@ const store = useProductStore();
 const { total } = storeToRefs(store);
 const detail = ref(null);
 const router = useRoute();
-const { vendor, id } = router.params;
+const { vendor } = router.params;
 
 const links = [
   {

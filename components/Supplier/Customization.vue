@@ -35,7 +35,7 @@
                 >{{ url }}</span
               >
               <Textinput
-              isCumpulsory
+                isCumpulsory
                 placeholder=""
                 label=""
                 name="storeSlug"
@@ -132,7 +132,6 @@ import {
 const url = ref("");
 if (process.client) {
   url.value = window.location.origin + "/";
-  
 }
 
 const config = useRuntimeConfig();
@@ -188,8 +187,8 @@ onMounted(() => {
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
   updateVendorInfo(values)
-	.then((res) => {
-		if (res.status === 200) {
+    .then((res) => {
+      if (res.status === 200) {
         toast.success("Information saved");
         isLoading.value = false;
       }
@@ -197,7 +196,9 @@ const onSubmit = handleSubmit((values) => {
     .catch((err) => {
       isLoading.value = false;
       if (err?.response?.data?.message || err?.response?.data?.Message) {
-        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       }
     });
 });

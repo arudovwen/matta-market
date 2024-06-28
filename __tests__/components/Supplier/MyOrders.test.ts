@@ -8,7 +8,11 @@ import { it, expect, describe, vi } from "vitest";
 import { createStore } from "vuex";
 import { RouterLinkStub } from "@vue/test-utils";
 import MyOrders from "~/components/Supplier/MyOrders.vue";
-import { procurementorders, procurementorderdetails } from '~/services/orderservice';
+import {
+  procurementorders,
+  procurementorderdetails,
+} from "~/services/orderservice";
+import { getcart } from "~/services/cartservice";
 
 // Create a Vuex store
 const store = createStore({
@@ -96,6 +100,29 @@ vi.mock("~/services/orderservice", async (importOriginal) => {
             orderItemStatus: 5,
           },
         ],
+      },
+    }),
+  };
+});
+
+vi.mock("~/services/cartservice", async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    getcart: vi.fn().mockResolvedValue({
+      status: 200,
+      data: {
+        data: [
+          {
+            product: "Metal rod",
+            soldBy: "Some Guy",
+            amountWithTax: 100000,
+            shippingName: "New Shipping",
+            shippingAddress: "10007 Mountain Drive",
+            orderNumber: "456789",
+          },
+        ],
+        totalCount: 1,
       },
     }),
   };
