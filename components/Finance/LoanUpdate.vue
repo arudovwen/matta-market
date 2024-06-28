@@ -90,8 +90,8 @@ function handleReject() {
     .catch((err) => {
       loading.value = false;
       toast.error(
-        err.response.data.message ||
-          err.response.data.Message ||
+        err?.response?.data?.message ||
+          err?.response?.data?.Message ||
           "Unable to complete request"
       );
     });
@@ -114,8 +114,8 @@ function handleApprove() {
     .catch((err) => {
       approveloading.value = false;
       toast.error(
-        err.response.data.message ||
-          err.response.data.Message ||
+        err?.response?.data?.message ||
+          err?.response?.data?.Message ||
           "Unable to complete request"
       );
     });

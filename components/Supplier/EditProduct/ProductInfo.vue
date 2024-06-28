@@ -880,7 +880,7 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err.response.data.message || err.response.data.Message);
+        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
       });
   } else {
     addProduct(form)
@@ -900,7 +900,7 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err.response.data.message || err.response.data.Message);
+        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
       });
   }
 }

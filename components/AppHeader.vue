@@ -50,7 +50,7 @@
   <div data-testid="deal-container" class="bg-[#1849A9] text-xs sm:text-sm py-3">
     <div class="container flex gap-x-2 items-center text-white font-normal">
       <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" />
-      <span
+      <span data-testid="promo"
         >Get N50,000 off when you sign up and make your first purchase. &nbsp;
         Use the code
         <span
@@ -248,7 +248,7 @@
               >
             </span> -->
           <!-- </span> -->
-          <span class="text-sm">
+          <span class="text-sm" v-if="showlang">
             <GoogleTranslateSelect
               :fetch-browser-language="false"
               trigger="click"
@@ -434,6 +434,11 @@ import { getnotification } from "@/services/notificationservice";
 import GoogleTranslateSelect from "@google-translate-select/vue3";
 import { toast } from "vue3-toastify";
 
+defineProps({
+  showlang:{
+    default:false
+  }
+})
 const windowWidth = ref(
   window?.innerWidth ||
     document?.documentElement?.clientWidth ||

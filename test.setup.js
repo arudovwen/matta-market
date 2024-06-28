@@ -8,8 +8,22 @@ config.global.stubs = {
     props: ["to"],
     template: "<a><slot /></a>",
   }),
-};
 
+};
+// config.global.directives = {
+//   clipboard: {
+//     beforeMount(el, binding) {
+//       el.copyText = binding.value;
+//     },
+//     mounted(el) {
+//       el.addEventListener('click', () => {
+//         if (el.copyText) {
+//           VueClipboard.copyText(el.copyText);
+//         }
+//       });
+//     },
+//   },
+// };
 class ResizeObserver {
   observe() {}
   unobserve() {}

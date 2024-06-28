@@ -303,8 +303,8 @@ const handleDelete = () => {
     })
     .catch((err) => {
       errorText.value =
-        err.response.data.message ||
-        err.response.data.Message ||
+        err?.response?.data?.message ||
+        err?.response?.data?.Message ||
         "Account deletion failed";
       isErrorOpen.value = true;
       isLoading.value = false;

@@ -13,6 +13,7 @@
         :value="value"
         v-model="localValue"
         v-bind="$attrs"
+        :data-testid="name"
       />
 
       <span
@@ -23,7 +24,7 @@
             : 'bg-white border border-[rgba(223,223,223,1)] '
         "
       >
-         <img
+        <img
           src="~/assets/images/icon/ck-white.svg"
           alt="check image"
           class="h-[10px] w-[10px] block m-auto"
@@ -33,6 +34,7 @@
       <span
         :class="`text-[#333] darks:text-slate-400 text-sm leading-6 ${labelClass}`"
         v-if="label"
+        :data-testid="label"
       >
         {{ label }}
       </span>
@@ -63,8 +65,7 @@ export default defineComponent({
     },
     activeClass: {
       type: String,
-      default:
-        " ring-primary-400  bg-primary-500",
+      default: " ring-primary-400  bg-primary-500",
     },
     labelClass: {
       type: String,
@@ -97,9 +98,12 @@ export default defineComponent({
       set: (newValue) => context.emit("update:modelValue", newValue),
     });
 
-    watch(()=> [props.checked], ()=>{
-      ck.value = props.checked
-    })
+    watch(
+      () => [props.checked],
+      () => {
+        ck.value = props.checked;
+      }
+    );
 
     return { localValue, ck, onChange };
   },
