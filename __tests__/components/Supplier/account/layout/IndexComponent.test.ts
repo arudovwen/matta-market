@@ -31,7 +31,15 @@ describe("IndexComponent", () => {
     },
     redirectedFrom: undefined,
   });
-
+  vi.mock("@/services/settingservices", () => ({
+    getCompanyProfile: vi.fn().mockResolvedValue({
+      data: {
+        bannerUrl: "/images/test-banner.png",
+        logo: "/images/test-logo.png",
+        storeName: "Test Store",
+      },
+    }),
+  }));
   const store = createStore({
     state: {
       auth: {
@@ -64,7 +72,10 @@ describe("IndexComponent", () => {
         stubs: {
           RouterLink: RouterLinkStub,
           SideComponent: true,
-          MainComponent: true
+          MainComponent: true,
+        },
+        provide: {
+          company: ref(null),
         },
         mocks: {
           $store: store,
