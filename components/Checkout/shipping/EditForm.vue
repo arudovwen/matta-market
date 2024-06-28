@@ -146,7 +146,9 @@ const formValues = {
   isDefault: false,
 };
 onMounted(() => {
-  setValues(detail.value);
+  if (detail.value) {
+    setValues(detail.value);
+  }
 });
 
 const schema = yup.object({
