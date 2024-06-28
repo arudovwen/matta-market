@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/vue";
+import { render, screen } from "@testing-library/vue";
 import { RouterLinkStub } from "@vue/test-utils";
 import { it, expect, describe, vi } from "vitest";
 import DashboardHeader from "~/components/DashboardHeader.vue";
@@ -15,26 +15,26 @@ describe("OverviewComponent", () => {
   vi.spyOn(authServices, "logOut").mockReturnValue({});
 
   vi.mock("~/services/settingservices", async (importOriginal) => {
-		const actual = await importOriginal()
+    const actual = await importOriginal();
     return {
-			...actual,
+      ...actual,
       getesfrontstats: vi.fn().mockResolvedValue({
-				data: {
-					data: {data: {}}
-				}
-			}),
+        data: {
+          data: {}
+        }
+      }),
       getstorefronttrending: vi.fn().mockResolvedValue({
-				data: {
-					data: []
-				}
-			}),
+        data: {
+          data: []
+        }
+      }),
     };
   });
 
   vi.mock("~/services/chartservice", async (importOriginal) => {
-		const actual = await importOriginal()
+    const actual = await importOriginal();
     return {
-			...actual,
+      ...actual,
       getorderchart: vi.fn().mockResolvedValue({
         status: 200,
         data: {
@@ -50,24 +50,21 @@ describe("OverviewComponent", () => {
           },
         },
       }),
-			getchart: vi.fn().mockResolvedValue({
-				data: {
-					data: {
-						
-					}
-				}
-			})
+      getchart: vi.fn().mockResolvedValue({
+        data: {
+          data: {}
+        }
+      })
     };
   });
+
   vi.mock("vue-router", () => {
     return {
       RouterView: {},
-      useRouter: () => {
-        return {
-          push: vi.fn,
-        };
-      },
-      useRoute: vi.fn().mockImplementation(() => ({
+      useRouter: () => ({
+        push: vi.fn(),
+      }),
+      useRoute: () => ({
         fullPath: "",
         hash: "",
         matched: [],
@@ -76,16 +73,15 @@ describe("OverviewComponent", () => {
         params: {},
         path: "",
         query: {
-          // @ts-ignore
           onboarding_stage: 2,
         },
         redirectedFrom: undefined,
-      })),
+      }),
     };
   });
 
   it("renders", async () => {
-    const component = render(OverviewComponent, {
+    render(OverviewComponent, {
       global: {
         stubs: {
           RouterLink: RouterLinkStub,
@@ -102,10 +98,11 @@ describe("OverviewComponent", () => {
             },
           }),
         ],
-        mocks: {},
       },
     });
-		
-		expect(screen.getByText("Welcome back, Bruce"))
+
+    await screen.findByText("Welcome back, Bruce");
+
+    expect(screen.getByText("Welcome back, Bruce")).toBeTruthy();
   });
 });

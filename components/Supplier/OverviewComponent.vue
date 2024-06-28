@@ -11,7 +11,7 @@
     <VerificationBox />
 
     <div class="pb-10" v-if="stats">
-			hhh
+	
       <div
         class="p-4 lg:p-6 rounded-[10px] bg-white mb-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
       >
@@ -301,7 +301,6 @@ function getAllCharts() {
     }
   });
   getchart(query).then((res) => {
-		console.log("hey");
     if (res.status === 200) {
       viewmonth.value = res.data.data.viewTrends.data[0].chartrecords.map(
         (item) => item.month

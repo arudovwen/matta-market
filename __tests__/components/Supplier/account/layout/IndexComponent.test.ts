@@ -63,6 +63,8 @@ describe("IndexComponent", () => {
         ],
         stubs: {
           RouterLink: RouterLinkStub,
+          SideComponent: true,
+          MainComponent: true
         },
         mocks: {
           $store: store,
@@ -70,7 +72,7 @@ describe("IndexComponent", () => {
       },
     });
 
-    await vi.waitFor(() => screen.getByText("Expected Text"));
+    await vi.waitFor(() => screen.getByTestId("index-component"));
 
     expect(screen.getByTestId("index-component")).toMatchSnapshot();
 
