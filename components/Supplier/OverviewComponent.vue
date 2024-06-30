@@ -119,7 +119,7 @@
         <HeaderComponent title="Trending Products" className="!px-5" />
         <div>
           <div class="overflow-x-auto max-w-[80vw] lg:max-w-full">
-            <table class="w-full" v-if="trending.length">
+            <table aria-describedby="" class="w-full" v-if="trending.length">
               <thead>
                 <tr>
                   <th

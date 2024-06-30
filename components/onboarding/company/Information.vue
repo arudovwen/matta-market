@@ -781,9 +781,9 @@ const rules = {
     required,
     maxLength: maxLength(250),
   },
-  tin: form.country?.toLowerCase === "nigeria" ? { required } : {},
+  tin: form.country?.toLowerCase() === "nigeria" ? { required } : {},
   registrationNo:
-    form.country?.toLowerCase === "nigeria"
+    form.country?.toLowerCase() === "nigeria"
       ? { required, minLength: minLength(7) }
       : {},
   companyType: { required },

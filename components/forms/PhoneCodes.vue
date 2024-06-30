@@ -41,7 +41,7 @@
                 :value="z.dial_code"
                 as="template"
               >
-                <li
+                <span
                   :class="[
                     active || selected ? 'bg-gray-50' : '',
                     'relative cursor-pointer select-none py-[11px] px-[20px] text-loft-black hover:bg-gray-100  flex items-center justify-between',
@@ -51,7 +51,7 @@
                     {{ z.dial_code }} - &nbsp; {{ z.name }}
                   </p>
                   <i class="uil uil-check text-[#101828]" v-show="selected"></i>
-                </li>
+                </span>
               </ListboxOption>
             </div>
           </ListboxOptions>

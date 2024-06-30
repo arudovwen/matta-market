@@ -348,7 +348,7 @@
         <div
           class="border border-[#DCDEE6] rounded-[10px] overflow-hidden mt-6"
         >
-          <table class="w-full">
+          <table aria-describedby="" class="w-full">
             <thead>
               <tr>
                 <th
@@ -692,7 +692,7 @@ const states = computed(() => {
   if (!producerForm.country) return [];
   return (
     countries.find(
-      (item) => producerForm.country.toLowerCase === item.name.toLowerCase()
+      (item) => producerForm.country.toLowerCase == item.name.toLowerCase()
     ).states || []
   );
 });

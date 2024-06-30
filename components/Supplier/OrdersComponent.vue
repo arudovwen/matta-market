@@ -45,7 +45,7 @@
           class="overflow-x-auto max-w-[80vw] lg:max-w-full"
           v-if="orders.length"
         >
-          <table class="w-full" v-if="orders.length">
+          <table aria-describedby="" class="w-full" v-if="orders.length">
             <thead>
               <tr>
                 <th

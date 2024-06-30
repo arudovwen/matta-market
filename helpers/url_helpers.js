@@ -220,7 +220,6 @@ const urls = {
   UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
   GET_FINANCE: "v1/financing/get",
   WITHDRAW_FINANCE: "v1/financing/withdraw",
-  UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
 
   //Settlements
 

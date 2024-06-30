@@ -27,7 +27,7 @@
       </div>
     </div>
     <div v-if="documents.length">
-      <table class="w-full">
+      <table aria-describedby="" class="w-full">
         <thead>
           <tr>
             <th

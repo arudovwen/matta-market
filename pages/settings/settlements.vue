@@ -13,7 +13,7 @@
           />
         </div>
         <div class="rounded-[10px] border border-[#F4F7FE] bg-white">
-          <table class="w-full" v-if="financeData?.length">
+          <table aria-describedby="" class="w-full" v-if="financeData?.length">
             <thead>
               <tr>
                 <th

@@ -75,7 +75,7 @@
                               :value="p.value"
                               as="template"
                             >
-                              <li
+                              <span
                                 :class="[
                                   selected
                                     ? 'text-blue-800 bg-blue-50'
@@ -95,7 +95,7 @@
                                     v-if="selected"
                                   ></i>
                                 </div>
-                              </li>
+                              </span>
                             </ListboxOption>
                             <p
                               v-if="!form.documentproperties.length"

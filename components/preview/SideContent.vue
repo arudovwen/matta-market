@@ -57,7 +57,10 @@
                 </p>
               </div>
             </div>
-            <table class="mb-6 w-full table-auto">
+            <table aria-describedby="" class="mb-6 w-full table-auto">
+              <thead>
+                <tr><th></th><th></th></tr>
+              </thead>
               <tbody>
                 <tr>
                   <td class="font-normal text-sm text-[#ABABAB] text-left">

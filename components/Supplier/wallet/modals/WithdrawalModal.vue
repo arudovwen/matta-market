@@ -246,7 +246,7 @@ watch(props.banks, () => {
         i.label.toLowerCase() ===
         defaultsettlement.value?.bankName.toLowerCase()
     );
-    setFieldValue("bankCode", bankCode.value);
+    setFieldValue("bankCode", bankCode?.value);
   }
 });
 const charge = ref(0);
