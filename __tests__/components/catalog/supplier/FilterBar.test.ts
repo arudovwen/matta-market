@@ -55,7 +55,7 @@ describe("FilterBar", () => {
 				}
 			}
 		});
-		screen.debug();
+		
 		expect(screen).toMatchSnapshot();
 		component.unmount();
   });

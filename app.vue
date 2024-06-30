@@ -154,7 +154,7 @@ useHead(
       {
         hid: "twitter:image",
         name: "twitter:image",
-        content: "URL to your Twitter image",
+        content: "URL to your Twitter",
       }, // Add Twitter image URL
       {
         name: "keywords",

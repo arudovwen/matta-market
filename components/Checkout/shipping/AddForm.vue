@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="bg-white w-full">
     <legend class="block text-[20px] font-bold mb-8 text-left">
       Shipping address
@@ -95,17 +95,7 @@
         />
       </FormGroup>
 
-      <!-- <div
-        class="flex items-center text-[#333] darks:text-slate-400 text-xs md:text-sm gap-x-[2px]"
-      >
-        <Checkbox
-          label="Set as default"
-          labelClass="text-xs md:text-sm"
-          v-model="isDefault"
-          v-bind="isDefaultAtt"
-        />
-      </div> -->
-
+ 
       <div class="xl:col-span-2 grid gap-y-[22px] mt-4">
         <AppButton
           type="submit"
@@ -216,8 +206,8 @@ const onSubmit = handleSubmit((values) => {
 
     .catch((err) => {
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
-        toast.error(err.response.data.message || err.response.data.Message);
+      if (err?.response?.data?.message || err?.response?.data?.Message) {
+        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
       }
     });
 });
@@ -232,4 +222,4 @@ watch(street, () => {
     }
   });
 });
-</script>
+</script> -->

@@ -348,7 +348,7 @@
         <div
           class="border border-[#DCDEE6] rounded-[10px] overflow-hidden mt-6"
         >
-          <table class="w-full">
+          <table aria-describedby="" class="w-full">
             <thead>
               <tr>
                 <th
@@ -570,6 +570,7 @@
                 >
                 <img
                   v-else
+                  alt="info"
                   :src="producerForm.logo"
                   class="h-16 w-16 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
                 />
@@ -691,7 +692,7 @@ const states = computed(() => {
   if (!producerForm.country) return [];
   return (
     countries.find(
-      (item) => producerForm.country.toLowerCase === item.name.toLowerCase()
+      (item) => producerForm.country.toLowerCase == item.name.toLowerCase()
     ).states || []
   );
 });
@@ -879,7 +880,7 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err.response.data.message || err.response.data.Message);
+        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
       });
   } else {
     addProduct(form)
@@ -899,7 +900,7 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err.response.data.message || err.response.data.Message);
+        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
       });
   }
 }

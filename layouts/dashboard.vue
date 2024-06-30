@@ -1,8 +1,8 @@
-	<template>
+<template>
   <div
     class="flex flex-col gap-y-4 lg:gap-y-7 bg-[#F9FAFB] pb-2 min-h-screen max-w-screen"
   >
-    <div class="w-full"><AppHeader /></div>
+    <div class="w-full"><AppHeader :showlang="true" /></div>
 
     <div class="flex-1 flex flex-col w-full">
       <div class="flex gap-x-4 flex-1 container mb-6">
@@ -39,7 +39,6 @@ onMounted(() => {
   getCompanyProfile().then((res) => {
     company.value = res.data.data;
   });
-
 });
 provide("company", company);
 </script>

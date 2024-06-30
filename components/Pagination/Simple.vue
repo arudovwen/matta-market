@@ -1,6 +1,6 @@
 <template>
   <div
-  v-if="totalPages"
+    v-if="totalPages"
     class="flex justify-between items-center relative z-[999]"
     :class="wrapperClass"
   >
@@ -33,22 +33,19 @@
 <script>
 import { defineComponent } from "vue";
 export default defineComponent({
-  name: "Pagination",
+  name: "Simple-Pagination",
 
   props: {
     options: {
       type: Array,
       default: () => [{}],
     },
-    enableText: {
-      type: Boolean,
-      default: false,
-    },
+
     enableInput: {
       type: Boolean,
       default: false,
     },
-    enableSelect: {
+    enableText: {
       type: Boolean,
       default: false,
     },
@@ -56,47 +53,54 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    enableSelect: {
+      type: Boolean,
+      default: false,
+    },
     pageChanged: {
       type: Function,
     },
-    perPageChanged: {
-      type: Function,
-    },
+
     current: {
       type: Number,
       default: 1,
+    },
+    perPageChanged: {
+      type: Function,
     },
     total: {
       type: Number,
       default: 0,
     },
-    perPage: {
-      type: Number,
-      default: 10,
-    },
+
     pageRange: {
       type: Number,
       default: 2,
+    },
+    perPage: {
+      type: Number,
+      default: 10,
     },
     textBeforeInput: {
       type: String,
       default: "Go to page",
     },
-    textAfterInput: {
-      type: String,
-      default: "Go",
-    },
+
     paginationClass: {
-      type: String,
-      default: "default",
-    },
-    searchClasss: {
       type: String,
       default: "default",
     },
     wrapperClass: {
       type: String,
       default: "justify-between",
+    },
+    searchClasss: {
+      type: String,
+      default: "default",
+    },
+    textAfterInput: {
+      type: String,
+      default: "Go",
     },
   },
   data() {
@@ -105,32 +109,13 @@ export default defineComponent({
       input2: null,
     };
   },
-  methods: {
-    hasFirst: function () {
-      return this.rangeStart !== 1;
-    },
-    hasLast: function () {
-      return this.rangeEnd < this.totalPages;
-    },
-    hasPrev: function () {
-      return this.current > 1;
-    },
-    hasNext: function () {
-      return this.current < this.totalPages;
-    },
-    changePage: function (page) {
-      if (page > 0 && page <= this.totalPages) {
-        this.$emit("page-changed", page);
-      }
-      if (this.pageChanged) {
-        this.pageChanged({ currentPage: page });
-      }
-    },
-    customPerPageChange(page) {
-      this.perPageChanged({ currentPerPage: page });
-    },
-  },
+
   computed: {
+    rangeStart: function () {
+      var start = this.current - this.pageRange;
+
+      return start > 0 ? start : 1;
+    },
     pages: function () {
       var pages = [];
 
@@ -140,11 +125,6 @@ export default defineComponent({
 
       return pages;
     },
-    rangeStart: function () {
-      var start = this.current - this.pageRange;
-
-      return start > 0 ? start : 1;
-    },
     rangeEnd: function () {
       var end = this.current + this.pageRange;
 
@@ -153,11 +133,38 @@ export default defineComponent({
     totalPages: function () {
       return Math.ceil(this.total / this.perPage);
     },
+
+    prevPage: function () {
+      return this.current - 1;
+    },
     nextPage: function () {
       return this.current + 1;
     },
-    prevPage: function () {
-      return this.current - 1;
+  },
+  methods: {
+    hasLast: function () {
+      return this.rangeEnd < this.totalPages;
+    },
+    hasFirst: function () {
+      return this.rangeStart !== 1;
+    },
+
+    hasNext: function () {
+      return this.current < this.totalPages;
+    },
+    hasPrev: function () {
+      return this.current > 1;
+    },
+    customPerPageChange(page) {
+      this.perPageChanged({ currentPerPage: page });
+    },
+    changePage: function (page) {
+      if (this.pageChanged) {
+        this.pageChanged({ currentPage: page });
+      }
+      if (page > 0 && page <= this.totalPages) {
+        this.$emit("page-changed", page);
+      }
     },
   },
 });

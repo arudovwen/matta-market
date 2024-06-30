@@ -1,7 +1,7 @@
 <template>
   <div class="grid bg-white rounded-[10px] md:min-w-[320px] w-full">
     <div class="mb-4">
-      <img src="/images/approve.png" />
+      <img alt="loan" src="/images/approve.png" />
     </div>
     <div class="mb-4">
       <legend class="text-[#18273AF0] text-lg font-bold mb-1">
@@ -90,8 +90,8 @@ function handleReject() {
     .catch((err) => {
       loading.value = false;
       toast.error(
-        err.response.data.message ||
-          err.response.data.Message ||
+        err?.response?.data?.message ||
+          err?.response?.data?.Message ||
           "Unable to complete request"
       );
     });
@@ -114,8 +114,8 @@ function handleApprove() {
     .catch((err) => {
       approveloading.value = false;
       toast.error(
-        err.response.data.message ||
-          err.response.data.Message ||
+        err?.response?.data?.message ||
+          err?.response?.data?.Message ||
           "Unable to complete request"
       );
     });

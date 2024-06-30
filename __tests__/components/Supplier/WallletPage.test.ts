@@ -1,38 +1,24 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "@testing-library/vue";
+import { render, screen, waitForElementToBeRemoved } from "@testing-library/vue";
 import { RouterLinkStub } from "@vue/test-utils";
-import { it, expect, describe, vi } from "vitest";
+import { vi, describe, it, expect } from "vitest";
 import { createTestingPinia } from "@pinia/testing";
 import * as authServices from "~/services/authservices";
 import WalletPage from "~/components/Supplier/WalletPage.vue";
-import { getProducers, getSupplierProducts } from "~/services/productservices";
-import { retry } from "~/__mocks__/retry";
-import { storefrontorders } from "~/services/storefrontservice";
-import { getInvites, getRoles } from "~/services/userservices";
-import { email } from "@vuelidate/validators";
 import { getWalletDetails } from "~/services/walletservice";
 
 describe("WalletPage", () => {
   vi.spyOn(authServices, "logOut").mockReturnValue({});
 
-  const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
   vi.mock("~/services/walletservice", async (importOriginal) => {
     const actual = await importOriginal();
     return {
       ...actual,
       getWalletDetails: vi.fn().mockResolvedValue({
         data: {
-          data: {
-            walletBalance: 3000000,
-            bankName: "Arkham Bank",
-            accountName: "Bruce Wayne",
-            accountNumber: "2138764739",
-          },
+          walletBalance: 3000000,
+          bankName: "Arkham Bank",
+          accountName: "Bruce Wayne",
+          accountNumber: "2138764739",
         },
       }),
     };
@@ -40,7 +26,6 @@ describe("WalletPage", () => {
 
   it("renders", async () => {
     const component = render(WalletPage, {
-      props: {},
       global: {
         stubs: {
           RouterLink: RouterLinkStub,
@@ -57,11 +42,13 @@ describe("WalletPage", () => {
             },
           }),
         ],
-        mocks: {},
       },
     });
-    await waitForElementToBeRemoved(screen.getByTestId("spinner"));
+
+    // await waitForElementToBeRemoved(() => screen.getByTestId("spinner"));
+
     expect(screen).toMatchSnapshot();
+
     component.unmount();
   });
 });

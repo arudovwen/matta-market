@@ -54,7 +54,7 @@
       <div
         class="w-full rounded-[10px] border border-[#EAECF0] overflow-hidden md:min-w-[560px] md:col-span-2"
       >
-        <table class="w-full">
+        <table aria-describedby="" class="w-full">
           <thead>
             <tr>
               <th

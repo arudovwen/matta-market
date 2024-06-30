@@ -6,7 +6,7 @@
     </p>
 
     <div class="border rounded-lg bg-white px-4 py-5 text-center">
-       <img src="~/assets/img/upload.svg" class="mx-auto mb-3" />
+       <img alt="file upload" src="~/assets/img/upload.svg" class="mx-auto mb-3" />
       <span class="text-sm text-[#667085]"
         ><span class="text-[#1570EF]">Click to upload</span> or drag and drop
         files here</span

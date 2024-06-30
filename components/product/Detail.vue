@@ -222,18 +222,7 @@
       </div>
     </template>
   </SideModal>
-  <LoginModal
-    v-if="isAuthOpen && active == 'signin'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
-  <RegisterModal
-    v-if="isAuthOpen && active == 'signup'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
+
   <AddedToCart
     v-if="isAdded"
     :selectedPackage="mypackage.package"
@@ -252,7 +241,7 @@
       <div class="bg-white px-6 py-6">
         <div class="flex justify-between mb-5 items-center">
           <div>
-            <img src="/images/box.svg" />
+            <img src="/images/box.svg" alt="Detail" />
           </div>
           <!-- <span @click="handleclose" class="absolute top-3 right-4">
               <i

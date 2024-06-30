@@ -33,7 +33,7 @@ describe("RegisterModal", () => {
 				isOpen: true,
 			}
 		})
-		// screen.debug()
+		// 
 		console.log(component.html());
 		
 	})

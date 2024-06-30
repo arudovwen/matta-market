@@ -31,6 +31,7 @@
                 >
                  <img
                   v-else
+                  alt="persoanl"
                   :src="image"
                   class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
                 />
@@ -369,9 +370,7 @@ import {
   setOnboardingcomplete,
 } from "@/services/onboardingservices";
 import { getProfile } from "@/services/settingservices";
-import { useStore } from "vuex";
 
-const store = useStore();
 onMounted(() => {
   getProfile().then((res) => {
     form.photo = image.value = res.data.data.photo;
@@ -522,7 +521,7 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
     });
 }
 </script>

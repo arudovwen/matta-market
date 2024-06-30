@@ -1,34 +1,24 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "@testing-library/vue";
+import { render, screen } from "@testing-library/vue";
 import { RouterLinkStub } from "@vue/test-utils";
-import { it, expect, describe, vi } from "vitest";
 import { createTestingPinia } from "@pinia/testing";
+import { vi, describe, it, expect } from "vitest";
 import * as authServices from "~/services/authservices";
 import * as vueRouter from "vue-router";
 import IndexComponent from "~/components/Supplier/account/layout/IndexComponent.vue";
 import { createStore } from "vuex";
-import AccountType from "~/components/onboarding/AccountType.vue";
 
-describe("ProjectGrid", () => {
+describe("IndexComponent", () => {
   vi.spyOn(authServices, "logOut").mockReturnValue({});
 
-  vi.mock("vue-router", () => {
-    return {
-      RouterView: {},
-      useRouter: () => {
-        return {
-          push: vi.fn(),
-        };
-      },
-      useRoute: vi.fn(),
-    };
-  });
-  vi.spyOn(vueRouter, "useRoute").mockImplementation(() => ({
+  vi.mock("vue-router", () => ({
+    RouterView: {},
+    useRouter: () => ({
+      push: vi.fn(),
+    }),
+    useRoute: vi.fn(),
+  }));
+
+  vi.spyOn(vueRouter, "useRoute").mockReturnValue({
     fullPath: "",
     hash: "",
     matched: [],
@@ -37,43 +27,66 @@ describe("ProjectGrid", () => {
     params: {},
     path: "",
     query: {
-      // @ts-ignore
       onboarding_stage: 1,
     },
     redirectedFrom: undefined,
+  });
+  vi.mock("@/services/settingservices", () => ({
+    getCompanyProfile: vi.fn().mockResolvedValue({
+      data: {
+        bannerUrl: "/images/test-banner.png",
+        logo: "/images/test-logo.png",
+        storeName: "Test Store",
+      },
+    }),
   }));
-
   const store = createStore({
     state: {
-      loggedUser: {
-        fullName: "Oduro Tolulope",
-        phoneNumber: "07036845422",
+      auth: {
+        loggedUser: {
+          fullName: "Oduro Tolulope",
+          phoneNumber: "07036845422",
+          AccountType: "customer",
+          userType: 0,
+          accountType: 1,
+        },
       },
-    },
-    getters: {
-      loggedUser: () => ({
-        fullName: "Oduro Tolulope",
-        phoneNumber: "07036845422",
-				AccountType: "customer",
-				userType: 0,
-				accountType: 1
-      }),
-			userType: () => "admin"
     },
   });
 
-  it("renders", async () => {
+  it("renders IndexComponent correctly", async () => {
     const component = render(IndexComponent, {
-      props: {},
       global: {
+        plugins: [
+          createTestingPinia({
+            initialState: {
+              auth: {
+                loggedUser: {
+                  firstName: "Bruce",
+                  lastName: "Wayne",
+                },
+              },
+            },
+          }),
+        ],
         stubs: {
           RouterLink: RouterLinkStub,
+          SideComponent: true,
+          MainComponent: true,
         },
-        plugins: [store],
-        mocks: {},
+        provide: {
+          company: ref(null),
+        },
+        mocks: {
+          $store: store,
+        },
       },
     });
-    expect(screen).toMatchSnapshot();
+
+    await vi.waitFor(() => screen.getByTestId("index-component"));
+
+    expect(screen.getByTestId("index-component")).toMatchSnapshot();
+
     component.unmount();
   });
 });

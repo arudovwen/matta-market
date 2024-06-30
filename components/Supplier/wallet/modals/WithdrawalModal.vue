@@ -232,8 +232,8 @@ const onSubmit = handleSubmit((values) => {
     })
     .catch((err) => {
       errorText.value =
-        err.response.data.message ||
-        JSON.parse(err.response.data.Message)?.responseMessage ||
+        err?.response?.data?.message ||
+        JSON.parse(err?.response?.data?.Message)?.responseMessage ||
         "Wallet creation request failed";
       isErrorOpen.value = true;
       isLoading.value = false;
@@ -246,7 +246,7 @@ watch(props.banks, () => {
         i.label.toLowerCase() ===
         defaultsettlement.value?.bankName.toLowerCase()
     );
-    setFieldValue("bankCode", bankCode.value);
+    setFieldValue("bankCode", bankCode?.value);
   }
 });
 const charge = ref(0);

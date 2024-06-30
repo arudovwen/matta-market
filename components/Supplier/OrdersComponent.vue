@@ -45,7 +45,7 @@
           class="overflow-x-auto max-w-[80vw] lg:max-w-full"
           v-if="orders.length"
         >
-          <table class="w-full" v-if="orders.length">
+          <table aria-describedby="" class="w-full" v-if="orders.length">
             <thead>
               <tr>
                 <th
@@ -234,7 +234,7 @@ function getData() {
     })
     .catch((err) => {
       isLoading.value = false;
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 const route = useRoute();
@@ -252,7 +252,7 @@ function openOrder(val) {
     })
     .catch((err) => {
       isOrderLoading.value = false;
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 

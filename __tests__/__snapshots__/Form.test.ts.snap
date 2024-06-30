@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`CompanySettings > renders 1`] = `
+exports[`Form > renders 1`] = `
 {
   "debug": [Function],
   "findAllByAltText": [Function],

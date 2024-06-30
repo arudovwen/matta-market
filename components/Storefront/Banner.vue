@@ -13,6 +13,7 @@
                 : '/images/storebanner.png'
             "
             class="w-full h-full rounded-t-[5px] object-cover"
+            alt="banner"
           />
         </div>
         <div
@@ -25,7 +26,7 @@
               :src="
                 vendorInfo?.logo ? vendorInfo?.logo : '/images/matta-icon.png'
               "
-              class=""
+              class="" alt="banner"
             />
           </div>
           <div>
@@ -58,7 +59,7 @@ const store = useProductStore();
 const { total } = storeToRefs(store);
 const detail = ref(null);
 const router = useRoute();
-const { vendor, id } = router.params;
+const { vendor } = router.params;
 
 const links = [
   {

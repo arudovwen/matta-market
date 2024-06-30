@@ -5,35 +5,31 @@ import { RouterLinkStub } from "@vue/test-utils";
 import { not } from "@vuelidate/validators";
 import * as vueRouter from "vue-router";
 import PersonalAccount from '~/components/onboarding/PersonalAccount.vue';
+import { getProfile } from "@/services/settingservices";
 
-const mockRoutePush = vi.fn();
-
+// Mocking settingservices/getProfile
+vi.mock("@/services/settingservices", async (importOriginal) => {
+  const originalModule = await importOriginal();
+  return {
+    ...originalModule,
+    getProfile: vi.fn().mockResolvedValue({
+      data: {
+        data: {
+          photo: "https://example.com/profile.jpg",
+          firstName: "Bruce",
+          lastName: "Wayne",
+          country: "Gotham",
+          city: "Gotham City",
+          email: "bruce.wayne@example.com",
+          phone: "+234123456789",
+          timeZone: "GMT",
+        },
+      },
+    }),
+  };
+});
 describe("PersonalAccount", () => {
-  // vi.mock("vue-router", () => {
-  //   return {
-  //     RouterView: {},
-  //     useRouter: () => {
-  //       return {
-  //         push: mockRoutePush,
-  //       };
-  //     },
-  //     useRoute: vi.fn(),
-  //   };
-  // });
-  // vi.spyOn(vueRouter, "useRoute").mockImplementation(() => ({
-  //   fullPath: "",
-  //   hash: "",
-  //   matched: [],
-  //   name: "",
-  //   meta: {},
-  //   params: {},
-  //   path: "",
-  //   query: {
-  //     // @ts-ignore
-  //     onboarding_stage: 1,
-  //   },
-  //   redirectedFrom: undefined,
-  // }));
+
   it("Renders without error", () => {
     const component = render(PersonalAccount, {
 			global: {

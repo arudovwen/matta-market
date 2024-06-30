@@ -82,7 +82,7 @@ describe("TopBanner", () => {
         },
       },
     });
-		screen.debug()
+		
     component.unmount();
   });
 });

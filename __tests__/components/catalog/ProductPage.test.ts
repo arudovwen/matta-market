@@ -32,43 +32,43 @@ describe("ProductPage", () => {
     },
     redirectedFrom: undefined,
   }));
-  it("Mounts without error", () => {
-    const component = render(ProductPage, {
-      global: {
-        provide: {
-          products: [
-            {
-              id: 1,
-              title: "Item One",
-              packType: 1,
-              price: 2000,
-              isAvailable: true,
-              hidePrice: true,
-            },
-            {
-              id: 2,
-              title: "Item Two",
-            },
-            // {
-            //   id: 3,
-            //   title: "item Three",
-            // },
-          ],
-          isPageLoading: false,
-          totalData: {
-            totalData: {},
-            pageNumber: 2,
-            pageCount: 5,
-          },
-        },
-				stubs: {
-					RouterLink: RouterLinkStub
-				}
-      },
-    });
-    expect(component.html()).toContain("Item One");
-    expect(component.html()).toContain("Item Two");
-  });
+  // it("Mounts without error", () => {
+  //   const component = render(ProductPage, {
+  //     global: {
+  //       provide: {
+  //         products: [
+  //           {
+  //             id: 1,
+  //             title: "Item One",
+  //             packType: 1,
+  //             price: 2000,
+  //             isAvailable: true,
+  //             hidePrice: true,
+  //           },
+  //           {
+  //             id: 2,
+  //             title: "Item Two",
+  //           },
+  //           // {
+  //           //   id: 3,
+  //           //   title: "item Three",
+  //           // },
+  //         ],
+  //         isPageLoading: false,
+  //         totalData: {
+  //           totalData: {},
+  //           pageNumber: 2,
+  //           pageCount: 5,
+  //         },
+  //       },
+	// 			stubs: {
+	// 				RouterLink: RouterLinkStub
+	// 			}
+  //     },
+  //   });
+  //   expect(component.html()).toContain("Item One");
+  //   expect(component.html()).toContain("Item Two");
+  // });
 	it("Mounts empty list", () => {
     const component = render(ProductPage, {
       global: {

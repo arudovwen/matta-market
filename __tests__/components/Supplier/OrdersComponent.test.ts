@@ -196,7 +196,7 @@ describe("OrdersComponent", () => {
 		// await retry(() => expect(screen.getByText("views")).toBeTruthy())
 		// await waitForElementToBeRemoved(screen.getByTestId("spinner"))
 		expect(screen).toMatchSnapshot();
-		screen.debug()
+		
     component.unmount();
   });
 });

@@ -18,7 +18,7 @@
             :src="media"
             :page="page"
           />
-          <img :src="media" class="w-full h-full object-contain" v-else />
+          <img alt="media" :src="media" class="w-full h-full object-contain" v-else />
         </div>
         <div class="flex justify-end">
           <button

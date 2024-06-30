@@ -25,7 +25,7 @@
             </div>
           </div>
           <div v-if="financeData.length">
-            <table class="w-full">
+            <table aria-describedby="" class="w-full">
               <thead>
                 <tr>
                   <th

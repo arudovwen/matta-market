@@ -4,12 +4,12 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "@testing-library/vue";
-import defaultC from "~/layouts/default.vue";
+import onboarding from "~/layouts/onboarding.vue";
 
-describe("default", () => {
+describe("onboarding", () => {
   it("Mounts without error", async () => {
-    const component = render(defaultC);
-    screen.debug();
+    const component = render(onboarding);
+    
     expect(screen).toMatchSnapshot();
     component.unmount();
   });

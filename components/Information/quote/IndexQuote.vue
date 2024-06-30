@@ -84,12 +84,6 @@
       </div>
     </div>
   </form>
-  <LoginModal
-    v-if="isOpen"
-    :showSignup="false"
-    :isOpen="isOpen"
-    @close="handleclose"
-  />
 </template>
 <script setup>
 import { useStore } from "vuex";
@@ -177,7 +171,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
     });
 }
 function toggleAuth() {

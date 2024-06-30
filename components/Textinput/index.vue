@@ -11,6 +11,7 @@
         horizontal ? 'flex-0 mr-6 md:w-[100px] w-[60px] break-words' : ''
       }  flex items-center gap-x-1 input-label text-sm !text-[#1B2B41B8]`"
       :for="name"
+      :data-testid="label"
     >
       {{ label }} <RedDot v-if="isCumpulsory"
     /> <span
@@ -26,6 +27,7 @@
       <input
         :type="types"
         :name="name"
+        :data-testid="name"
         :placeholder="placeholder"
         :class="`${classInput} input-control w-full block focus:outline-none h-[44px] ${
           hasicon ? 'pr-10' : ''

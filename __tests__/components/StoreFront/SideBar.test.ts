@@ -8,6 +8,25 @@ import * as prodServices from "~/services/productservices";
 import { mount, RouterLinkStub } from "@vue/test-utils";
 import SideBar from "~/components/Storefront/SideBar.vue";
 
+vi.mock("~/stores/supplier", () => ({
+	useSupplierStore: () => ({
+	  fetchProducers: vi.fn(),
+	  producersData: [{ title: "Producer1" }, { title: "Producer2" }],
+	}),
+  }));
+  vi.mock("~/stores/market", () => ({
+	useMarketStore: () => ({
+	  getMarketMenu: vi.fn(),
+	  marketMenuData: [{ id: "1", value: "Market1" }, { id: "2", value: "Market2" }],
+	}),
+  }));
+   // Mocking the router
+   vi.mock("vue-router", () => ({
+    useRoute: vi.fn().mockReturnValue({
+      params: { id: "1", category: "market" },
+    }),
+    }));
+    
 it("Mounts without error", async () => {
   vi.mock("vue-router", () => {
     return {
@@ -44,7 +63,7 @@ it("Mounts without error", async () => {
 			}
 		}
 	});
-  screen.debug();
+  
   expect(screen).toMatchSnapshot();
   component.unmount();
 });

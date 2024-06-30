@@ -38,7 +38,13 @@
         </span>
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full">
+        <table aria-describedby="" class="w-full">
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
           <tbody class="">
             <tr class="" v-for="(n, id) in documentList" :key="id">
               <td class="border-b border-[#ddd] py-4 px-3">
@@ -108,22 +114,9 @@
       </template>
     </SideModal>
   </div>
-  <LoginModal
-    v-if="isAuthOpen && active == 'signin'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
-  <RegisterModal
-    v-if="isAuthOpen && active == 'signup'"
-    :showSignup="true"
-    :isOpen="isAuthOpen"
-    @close="handleclose"
-  />
+
 </template>
 <script setup>
-import LoginModal from "~/components/LoginModal";
-import RegisterModal from "~/components/RegisterModal";
 import { inject, ref, provide, computed } from "vue";
 import Modal from "~/components/IndexModal";
 import SideModal from "~/components/SideModal";

@@ -25,6 +25,34 @@ describe("Market SideBar", () => {
 			}
 		})
   }));
+// Mocking the stores
+vi.mock("~/stores/supplier", () => ({
+	useSupplierStore: () => ({
+	  fetchProducers: vi.fn(),
+	  producersData: [{ title: "Producer1" }, { title: "Producer2" }],
+	}),
+  }));
+  vi.mock("~/stores/market", () => ({
+	useMarketStore: () => ({
+	  getMarketMenu: vi.fn(),
+	  marketMenuData: [{ id: "1", value: "Market1" }, { id: "2", value: "Market2" }],
+	}),
+  }));
+  
+  vi.mock("~/stores/application", () => ({
+	useApplicationStore: () => ({
+	  getAppMenu: vi.fn(),
+	  applicationMenuData: [{ id: "1", value: "App1" }, { id: "2", value: "App2" }],
+	}),
+  }));
+  
+  // Mocking the router
+  vi.mock("vue-router", () => ({
+	useRoute: vi.fn().mockReturnValue({
+	  params: { id: "1", category: "market" },
+	}),
+  }));
+  
 
   it("Should render without error", async () => {
     const component = render(SideBar, {

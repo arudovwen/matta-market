@@ -70,6 +70,6 @@ describe("FinanceRequestTradeIndex", () => {
     await fireEvent.update(screen.getByPlaceholderText(""), "Somewhere");
     await waitFor(() => fireEvent.click(screen.getByText("Next")));
 		// await retry(() => expect(screen.queryByText("How much do you require?")).toBeNull())
-		screen.debug()
+		
   });
 });

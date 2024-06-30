@@ -1,5 +1,5 @@
 import { it, expect, describe } from "vitest";
-import getDocumentType from "../../utils/docName";
+import getDocumentType from "~/utils/docName";
 import { mount } from "@vue/test-utils";
 
 describe('getDocumentType function', () => {

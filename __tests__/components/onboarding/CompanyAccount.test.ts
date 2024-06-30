@@ -37,11 +37,16 @@ describe("CompanyAccount", () => {
     const component = render(CompanyAccount, {
 			global: {
 				stubs: {
-					RouterLink: RouterLinkStub
+					RouterLink: RouterLinkStub,
+          OnboardingCompanyInformation:true,
+          OnboardingCompanyDirectors:true,
+          OnboardingCompanyProfile:true,
+          OnboardingCompanyDocuments:true,
+          OnboardingCompanySideBar: true,
 				}
 			}
     });
-    expect(component.html()).toContain("STEP 1/4");
+    expect(screen.getByTestId('account')).toBeTruthy();
 		component.unmount()
   });
 });

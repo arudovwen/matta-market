@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`StoreRequests > Renders without error 1`] = `
+exports[`WalletPage > renders 1`] = `
 {
   "debug": [Function],
   "findAllByAltText": [Function],

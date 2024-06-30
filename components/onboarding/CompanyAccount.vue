@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#E7EBEE] p-4 lg:p-6 flex flex-col gap-y-2 min-h-screen">
+  <div data-testid="account" class="bg-[#E7EBEE] p-4 lg:p-6 flex flex-col gap-y-2 min-h-screen">
     <OnboardingLayoutTopBar :active="active" />
     <div class="gap-x-2 flex flex-1 justify-center">
       <div class="w-[25%] rounded-lg hidden lg:block">

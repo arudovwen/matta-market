@@ -1,52 +1,63 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "@testing-library/vue";
+import { render, screen } from "@testing-library/vue";
 import { RouterLinkStub } from "@vue/test-utils";
-import { it, expect, describe, vi } from "vitest";
+import { vi } from "vitest";
 import { createTestingPinia } from "@pinia/testing";
 import * as authServices from "~/services/authservices";
-import * as vueRouter  from "vue-router";
 import Form from "~/components/Settlements/Form.vue";
 
-describe("Form", () => {
-  vi.spyOn(authServices, "logOut").mockReturnValue({});
-
-	vi.mock("vue-router", () => {
-    return {
-      RouterView: {},
-      useRouter: () => {
-        return {
-          push: vi.fn(),
-        };
+// Mocking getBanks
+vi.mock("@/services/settlementservice", async (importOriginal) => {
+  const originalModule = await importOriginal();
+  return {
+    ...originalModule,
+    getBanks: vi.fn().mockResolvedValue({
+      status: 200,
+      data: {
+        data: {
+          responseBody: [
+            { name: "Bank A", code: "001" },
+            { name: "Bank B", code: "002" },
+          ],
+        },
       },
-      useRoute: vi.fn(),
-    };
-  });
-  vi.spyOn(vueRouter, "useRoute").mockImplementation(() => ({
-    fullPath: "",
-    hash: "",
-    matched: [],
-    name: "",
-    meta: {},
-    params: {},
-    path: "",
-    query: {
-      // @ts-ignore
-      onboarding_stage: 1,
-    },
-    redirectedFrom: undefined,
+    }),
+  };
+});
+
+describe("Form", () => {
+  // Mock authServices.logOut
+  vi.spyOn(authServices, "logOut").mockResolvedValue({});
+
+  // Mock vue-router functions
+  vi.mock("vue-router", () => ({
+    RouterView: {},
+    useRouter: () => ({
+      push: vi.fn(),
+    }),
+    useRoute: vi.fn().mockReturnValue({
+      fullPath: "",
+      hash: "",
+      matched: [],
+      name: "",
+      meta: {},
+      params: {},
+      path: "",
+      query: {
+        onboarding_stage: 1,
+      },
+      redirectedFrom: undefined,
+    }),
   }));
 
   it("renders", async () => {
     const component = render(Form, {
-      props: {},
       global: {
         stubs: {
           RouterLink: RouterLinkStub,
+        },
+        provide: {
+          isOpen: false,
+          handleSuccess: vi.fn(),
         },
         plugins: [
           createTestingPinia({
@@ -60,10 +71,14 @@ describe("Form", () => {
             },
           }),
         ],
-        mocks: {},
       },
     });
+
+    // Wait for specific content to appear asynchronously
+    await screen.findByText("Add Settlement Account");
+
     expect(screen).toMatchSnapshot();
+
     component.unmount();
   });
 });

@@ -23,7 +23,7 @@
             >
               <div class="border rounded-xl p-4 flex flex-1 justify-between">
                 <div class="flex gap-x-3 items-center">
-                  <img src="~/assets/images/filetype.png" class="w-8 h-auto" />
+                  <img alt=" prodcut" src="~/assets/images/filetype.png" class="w-8 h-auto" />
                   <div>
                     <p
                       class="text-sm text-matta-black capitalize truncate max-w-[250px]"
@@ -75,7 +75,7 @@
                               :value="p.value"
                               as="template"
                             >
-                              <li
+                              <span
                                 :class="[
                                   selected
                                     ? 'text-blue-800 bg-blue-50'
@@ -95,7 +95,7 @@
                                     v-if="selected"
                                   ></i>
                                 </div>
-                              </li>
+                              </span>
                             </ListboxOption>
                             <p
                               v-if="!form.documentproperties.length"
@@ -266,7 +266,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 </script>

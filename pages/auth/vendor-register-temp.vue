@@ -213,10 +213,10 @@ const onSubmit = handleSubmit((values) => {
 
     .catch((err) => {
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
+      if (err?.response?.data?.message || err?.response?.data?.Message) {
         toast.error(
-          err.response.data.message ||
-            err.response.data.Message ||
+          err?.response?.data?.message ||
+            err?.response?.data?.Message ||
             "Something went wrong"
         );
       }

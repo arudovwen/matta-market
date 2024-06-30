@@ -9,7 +9,7 @@ import Request from "~/components/SellChemical/Request.vue";
 describe("Request", () => {
 	it("Mounts without error", async () => {
 		const component = render(Request);
-		screen.debug();
+		
 		expect(screen).toMatchSnapshot();
 		component.unmount();
 	});

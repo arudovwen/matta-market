@@ -33,7 +33,7 @@
         </div>
 
         <div v-if="!docLoading && financeData?.length" class="border border-[#EAECF0] rounded-lg overflow-x-auto">
-          <table class="table-auto w-full">
+          <table aria-describedby="" class="table-auto w-full">
             <thead>
               <tr>
                 <th
@@ -355,8 +355,8 @@ const handleDelete = () => {
     })
     .catch((err) => {
       toast.error(
-        err.response.data.message ||
-          err.response.data.message ||
+        err?.response?.data?.message ||
+          err?.response?.data?.message ||
           "Withdraw request failed"
       );
     });

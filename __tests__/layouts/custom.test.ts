@@ -4,12 +4,12 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "@testing-library/vue";
-import register from "~/layouts/register.vue";
+import custom from "~/layouts/custom.vue";
 
-describe("register", () => {
+describe("custom", () => {
   it("Mounts without error", async () => {
-    const component = render(register);
-    screen.debug();
+    const component = render(custom);
+    
     expect(screen).toMatchSnapshot();
     component.unmount();
   });

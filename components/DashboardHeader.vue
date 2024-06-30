@@ -317,7 +317,6 @@
     window.addEventListener("scroll", handleScroll);
   });
   onMounted(() => {
-		console.log("store",authStore.isLoggedIn, authStore.userInfo);
     if (authStore.isLoggedIn) {
       getNotifications();
       setInterval(() => {

@@ -67,7 +67,7 @@
         </div>
         <div v-if="!isPageLoading">
           <div class="max-w-[80vw] lg:max-w-full" v-if="products.length">
-            <table class="w-full" v-if="products.length">
+            <table aria-describedby="" class="w-full" v-if="products.length">
               <thead>
                 <tr>
                   <th
@@ -396,7 +396,7 @@ function handleDelete() {
       }
     })
     .catch((err) => {
-      toast.success(err.response.data.message || err.response.data.Message);
+      toast.success(err?.response?.data?.message || err?.response?.data?.Message);
       isLoading.value = false;
     });
 }

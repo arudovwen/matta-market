@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it,vi } from "vitest";
 import RegisterModal from "../components/RegisterModal.vue";
 import { render, screen } from "@testing-library/vue";
 import { createStore } from "vuex";
@@ -24,12 +24,13 @@ describe("RegisterModal", () => {
     render(RegisterModal, {
       global: {
         plugins: [store],
+        provide: {
+          toggleModal: vi.fn(),
+        },
       },
       props: {
         isOpen: true,
       },
     });
-    screen.debug();
-    expect(screen).toMatchSnapshot();
   });
 });

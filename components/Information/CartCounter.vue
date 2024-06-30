@@ -48,7 +48,7 @@
                   :value="n"
                   as="template"
                 >
-                  <li
+                  <span
                     :class="[
                       active ? '' : '',
                       'relative text-matta-black flex items-center h-[60px] justify-start py-4 border-b px-3 lg:px-6',
@@ -75,7 +75,7 @@
                         {{ n.unit }}</span
                       >
                     </span>
-                  </li>
+                  </span>
                 </ListboxOption>
               </ListboxOptions>
             </transition>

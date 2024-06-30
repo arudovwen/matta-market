@@ -410,7 +410,7 @@
         <div
           class="border border-[#DCDEE6] rounded-[10px] overflow-hidden mt-6"
         >
-          <table class="w-full">
+          <table aria-describedby="" class="w-full">
             <thead>
               <tr>
                 <th
@@ -768,7 +768,7 @@ const states = computed(() => {
   if (!producerForm.country) return [];
   return (
     countries.find(
-      (item) => producerForm.country.toLowerCase() === item.name.toLowerCase()
+      (item) => producerForm.country.toLowerCase() == item.name.toLowerCase()
     ).states || []
   );
 });
@@ -916,7 +916,7 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err.response.data.message || err.response.data.Message);
+        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
       });
   } else {
     addProduct(form)
@@ -936,7 +936,7 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err.response.data.message || err.response.data.Message);
+        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
       });
   }
 }
@@ -960,7 +960,7 @@ function handleProducer() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 function handleEvent(e) {
