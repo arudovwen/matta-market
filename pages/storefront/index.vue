@@ -20,10 +20,6 @@
 </template>
 
 <script setup>
-import Customization from "./customization";
-import Requests from "./requests";
-import Orders from "./orders";
-
 definePageMeta({
   layout: "dashboard",
   middleware: "auth",
@@ -49,6 +45,6 @@ onMounted(() => {
   if (route.query.page) {
     active.value = route.query.page;
   }
-}),
-  provide("active", active);
+});
+provide("active", active);
 </script>

@@ -2,13 +2,10 @@
 <template>
   <form class="flex flex-col gap-y-3" @submit.prevent="handleSubmit">
     <div class="bg-white p-6 lg:p-8 rounded-lg">
-      <div class="w-[85%]">
-        <label title="" class="mb-4 font-normal block">
+      <label class="w-[85%]">
+        <span title="" class="mb-4 font-normal block">
           Questions
-          <!-- <span class="font-light text-xs text-[#ABABAB]"
-            >(Optional)</span
-          > -->
-        </label>
+				</span>
         <div
           class="flex flex-wrap gap-3 mb-6"
           v-if="form.productQuestions.length"
@@ -58,7 +55,7 @@
             <i class="uil uil-plus text-sm"></i> Add new question
           </button>
         </div>
-      </div>
+      </label>
     </div>
     <div class="grid grid-cols-2 gap-x-3">
       <div class="bg-white p-6 lg:p-8 rounded-lg">

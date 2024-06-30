@@ -1,9 +1,9 @@
 <template>
-  <div class="">
-    <div class="">
+  <div>
+    <div>
       <div>
         <div class="mb-8">
-          <div class="flex gap-x-4  flex-col lg:flex-row gap-y-4">
+          <div class="flex gap-x-4 flex-col lg:flex-row gap-y-4">
             <div class="relative flex items-center">
               <span class="absolute left-4 pointer-events-none text-[#667085]"
                 ><i class="uil uil-search"></i
@@ -17,22 +17,25 @@
                 type="search"
               />
             </div>
-          <div class="flex gap-x-4">
-            <FilterButton
-              v-model="queryParams.LoadRequestType"
-              :options="FinancesOptions"
-              title="Filter type"
-            />
-            <FilterButton
-              v-model="queryParams.financeRequestStatus_In"
-              :options="StatusOptions"
-              title="Filter status"
-            />
-          </div>
+            <div class="flex gap-x-4">
+              <FilterButton
+                v-model="queryParams.LoadRequestType"
+                :options="FinancesOptions"
+                title="Filter type"
+              />
+              <FilterButton
+                v-model="queryParams.financeRequestStatus_In"
+                :options="StatusOptions"
+                title="Filter status"
+              />
+            </div>
           </div>
         </div>
 
-        <div v-if="!docLoading && financeData?.length" class="border border-[#EAECF0] rounded-lg overflow-x-auto">
+        <div
+          v-if="!docLoading && financeData?.length"
+          class="border border-[#EAECF0] rounded-lg overflow-x-auto"
+        >
           <table aria-describedby="" class="table-auto w-full">
             <thead>
               <tr>
@@ -47,7 +50,11 @@
             </thead>
 
             <tbody>
-              <tr v-for="item in financeData" :key="item" class="rounded-b-lg  border-b border-[#EAECF0] last:border-none">
+              <tr
+                v-for="item in financeData"
+                :key="item"
+                class="rounded-b-lg border-b border-[#EAECF0] last:border-none"
+              >
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
@@ -91,50 +98,50 @@
                 >
                   <Menu class="" as="div">
                     <Float placement="bottom-end" :offset="4">
-                    <MenuButton
-                      :id="`${item.productName}+option`"
-                      class="outline-none"
-                    >
-                      <AppIcon icon="heroicons:ellipsis-vertical-solid" />
-                    </MenuButton>
-                    <MenuItems
-                      class=" z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2  min-w-[180px] rounded-xl overflow-hidden"
-                    >
-                      <div
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
-                        @click="openRequest(item)"
+                      <MenuButton
+                        :id="`${item.productName}+option`"
+                        class="outline-none"
                       >
-                        View request
-                      </div>
-                      <div
-                        v-if="item.financeRequestStatus === 1"
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
-                        @click="openLoan(item)"
-                      >
-                        View loan offer
-                      </div>
-
-                      <NuxtLink
-                        v-if="item.financeRequestStatus === 0"
-                        :to="`/financing/requests/${handleType(
-                          item.loanRequestType
-                        )}/${item.loanRequestType}/${item.id}`"
+                        <AppIcon icon="heroicons:ellipsis-vertical-solid" />
+                      </MenuButton>
+                      <MenuItems
+                        class="z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 min-w-[180px] rounded-xl overflow-hidden"
                       >
                         <div
+                          class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
+                          @click="openRequest(item)"
+                        >
+                          View request
+                        </div>
+                        <div
+                          v-if="item.financeRequestStatus === 1"
+                          class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
+                          @click="openLoan(item)"
+                        >
+                          View loan offer
+                        </div>
+
+                        <NuxtLink
+                          v-if="item.financeRequestStatus === 0"
+                          :to="`/financing/requests/${handleType(
+                            item.loanRequestType
+                          )}/${item.loanRequestType}/${item.id}`"
+                        >
+                          <div
+                            class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                          >
+                            Edit request
+                          </div>
+                        </NuxtLink>
+                        <div
+                          v-if="item.financeRequestStatus === 0"
+                          @click="withdrawRequest(item.id)"
                           class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
                         >
-                          Edit request
+                          Withdraw request
                         </div>
-                      </NuxtLink>
-                      <div
-                        v-if="item.financeRequestStatus === 0"
-                        @click="withdrawRequest(item.id)"
-                        class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
-                      >
-                        Withdraw request
-                      </div>
-                    </MenuItems>
-                  </Float>
+                      </MenuItems>
+                    </Float>
                   </Menu>
                 </td>
               </tr>
@@ -190,14 +197,13 @@
   </IndexModal>
 </template>
 <script setup>
-import { Float } from '@headlessui-float/vue'
+import { Float } from "@headlessui-float/vue";
 import AppIcon from "@/components/AppIcon";
 import moment from "moment";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
+import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import { getAllFinance, withdrawFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";
 import { toast } from "vue3-toastify";
-import CardDetail from "~/components/payments/CardDetail.vue";
 
 const type = ref(null);
 const id = ref(null);
@@ -281,7 +287,7 @@ const queryParams = reactive({
   PageNumber: 1,
   PageSize: 10,
   financeRequestStatus_In: [0, 1, 2, 3, 4, 5],
-  loanStatus_In: [0,1,2],
+  loanStatus_In: [0, 1, 2],
 });
 const docLoading = ref(true);
 
@@ -317,13 +323,6 @@ function handleType(key) {
       break;
   }
 }
-const handleRouting = (url) => {
-  // if (!authStore.userInfo.onboardingPageStatus) {
-  //   toast.info("Complete your KYB before you proceed");
-  //   return `/company/settings?redirected_from=${url}`;
-  // }
-  return url;
-};
 function withdrawRequest(value) {
   id.value = value;
   open.value = true;
