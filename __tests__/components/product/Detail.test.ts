@@ -72,6 +72,8 @@ describe("Detail", () => {
         ],
         stubs: {
           RouterLink: RouterLinkStub,
+          InformationSampleIndexSample: true,
+          InformationQuoteIndexQuote: true
         },
         provide: {
           isLoading: false,
@@ -87,6 +89,11 @@ describe("Detail", () => {
     fireEvent.click(screen.getByText("Request sample"));
   });
 });
+vi.mock("@/services/productservices", () => ({
+  likeproduct: vi.fn().mockResolvedValue({
+    data: {},
+  }),
+}));
 describe("Detail", () => {
   it("renders", async () => {
     const component = render(Detail, {
