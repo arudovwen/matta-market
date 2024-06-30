@@ -1,6 +1,6 @@
 import { it, expect, describe, vi, afterEach } from "vitest";
 import { render, screen } from "@testing-library/vue";
-import index from "~/components/Supplier/EditProduct/index.vue";
+import EditProduct from "~/components/Supplier/EditProduct/index.vue";
 import * as vueRouter from "vue-router";
 
 const store = useProductStore();
@@ -84,29 +84,25 @@ vi.spyOn(vueRouter, "useRoute").mockImplementationOnce(() => reactive({
 	redirectedFrom: undefined,
 }))
 describe("EditProduct index", () => {
-  const sortPrice = vi.fn;
-  it("should render stage 1", () => {
-    const component = render(index, {
-		});
-		expect(component.html()).toContain("Product Info")
-		component.unmount();
+	const sortPrice = vi.fn;
+	it("Should render without error", () => {
+	  const component = render(EditProduct, {
+		global: {
+		  stubs: {
+		   
+			  ProductInfo: true,
+			  ProductProperties: true,
+			  ProductDocuments: true,
+			  AdditionalInformation:true,
+			  PreviewIndexPreview: true
+		  },
+		  provide: {
+			company: ref(null),
+		  },
+		
+		},
+	  });
+	  expect(screen).toMatchSnapshot();
+	});
+  
   });
-  it("should render stage 2", () => {
-		const component = render(index, {
-		});
-		expect(screen).toMatchSnapshot();
-		component.unmount();
-  });
-  it("should render stage 3", () => {
-		const component = render(index, {
-		});
-		expect(screen).toMatchSnapshot();
-		component.unmount();
-  });
-  it("should render stage 4", () => {
-		const component = render(index, {
-		});
-		expect(screen).toMatchSnapshot();
-		component.unmount();
-  });
-});

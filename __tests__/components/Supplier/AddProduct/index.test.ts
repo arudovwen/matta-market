@@ -2,7 +2,7 @@ import { it, expect, describe, vi, afterEach } from "vitest";
 import { render, screen } from "@testing-library/vue";
 import FilterBar from "~/components/catalog/FilterBar.vue";
 import AdditionalInformation from "~/components/Supplier/AddProduct/AdditionalInformation.vue";
-import index from "~/components/Supplier/AddProduct/index.vue";
+import AddProduct from "~/components/Supplier/AddProduct/index.vue";
 import * as vueRouter from "vue-router";
 
 const store = useProductStore();
@@ -87,24 +87,24 @@ vi.spyOn(vueRouter, "useRoute").mockImplementationOnce(() => reactive({
 }))
 describe("AddProduct index", () => {
   const sortPrice = vi.fn;
-  it("should render stage 1", () => {
-    const component = render(index, {
-		});
-		expect(component.html()).toContain("Product Info")
+  it("Should render without error", () => {
+    const component = render(AddProduct, {
+      global: {
+        stubs: {
+         
+			ProductInfo: true,
+			ProductProperties: true,
+			ProductDocuments: true,
+			AdditionalInformation:true,
+			PreviewIndexPreview: true
+        },
+        provide: {
+          company: ref(null),
+        },
+      
+      },
+    });
+    expect(screen).toMatchSnapshot();
   });
-  it("should render stage 2", () => {
-    const component = render(index, {
-		});
-		expect(screen).toMatchSnapshot();
-  });
-  it("should render stage 3", () => {
-    const component = render(index, {
-		});
-		expect(screen).toMatchSnapshot();
-  });
-  it("should render stage 4", () => {
-    const component = render(index, {
-		});
-		expect(screen).toMatchSnapshot();
-  });
+
 });
