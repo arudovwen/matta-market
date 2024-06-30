@@ -21,8 +21,27 @@ const store = createStore({
 });
 
 describe("CreateKyc", () => {
-  vi.mock("../../../../../services/productservices", () => ({
+  vi.mock("../../../../../services/walletservice", () => ({
     getKycDetail: vi.fn().mockResolvedValue({
+      data: {
+        data: {
+          fullName: "Bruce Wayne",
+          phoneCode: "+234",
+          phone: "567891011",
+          bvn: "686768398",
+          cac: "I dunno",
+          nin: "6272937382",
+          utilityBilly: "",
+          address: "1007 Mountain Drive",
+          companyType: 2,
+          companyName: "Wayne Enterprises",
+          directorsInfos: {},
+        },
+      },
+    }),
+  }));
+  vi.mock("../../../../../services/settingservices", () => ({
+    getCompanyProfile: vi.fn().mockResolvedValue({
       data: {
         data: {
           fullName: "Bruce Wayne",
