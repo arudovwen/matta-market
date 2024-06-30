@@ -5,7 +5,9 @@
       Choose your shipping options for samples requested.
     </p>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >E-mail</label
+      >
       <input
         class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
         placeholder="E-mail"
@@ -24,9 +26,11 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Phone number</label
+      >
       <div class="flex relative rounded-lg h-11">
-        <FormsPhoneCodes  v-model="request2$.phone.$model" />
+        <FormsPhoneCodes v-model="request2$.phone.$model" />
       </div>
       <div
         class="text-red-500 mt-1"
@@ -40,7 +44,9 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Address</label
+      >
       <Listbox v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton
@@ -135,7 +141,9 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Description</label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Description</label
+      >
       <textarea
         v-model="request2$.addressDescription.$model"
         placeholder=""
@@ -167,8 +175,7 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
-import { ref } from "vue";
-import { inject, onMounted, watch, provide } from "vue";
+import { ref, inject, onMounted, watch, provide } from "vue";
 import { getalladdress } from "~/services/cartservice";
 
 const request2$ = inject("request2$");

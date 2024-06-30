@@ -23,7 +23,7 @@
             >
               <div class="flex items-center gap-x-6">
                 <span>
-                  <label for="upload">
+                  <label title="" for="upload">
                     <span
                       v-if="!image"
                       class="h-[64px] w-[64px] rounded-full flex items-center text-xs bg-[#F1F3F5] justify-center"
@@ -90,7 +90,7 @@
                     </div>
                   </div>
                   <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >Date Of Incorporation <RedDot
                     /></label>
 
@@ -119,7 +119,7 @@
                   </div>
 
                   <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >Country <RedDot
                     /></label>
                     <div class="relative">
@@ -144,7 +144,7 @@
                     </div>
                   </div>
                   <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >State <RedDot
                     /></label>
 
@@ -170,7 +170,7 @@
                   </div>
 
                   <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >E-mail <RedDot
                     /></label>
                     <input
@@ -192,7 +192,7 @@
                   </div>
 
                   <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >Phone number <RedDot
                     /></label>
                     <div class="flex relative rounded-lg h-11">
@@ -211,7 +211,7 @@
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >Business type <RedDot
                     /></label>
 
@@ -245,7 +245,7 @@
                     </div>
                   </div>
                   <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >Business sector <RedDot
                     /></label>
 
@@ -312,7 +312,7 @@
                     class="mb-6"
                     v-if="form.country?.toLowerCase() === 'nigeria'"
                   >
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >TIN number <RedDot
                     /></label>
 
@@ -338,7 +338,7 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6 lg:col-span-2">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >Company website</label
                     >
                     <input
@@ -364,7 +364,7 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >Company Address <RedDot
                     /></label>
                     <input
@@ -386,7 +386,7 @@
                     </div>
                   </div>
                   <div class="mb-6">
-                    <label class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                       >City <RedDot
                     /></label>
                     <input
@@ -409,7 +409,7 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label class="mb-2 font-medium text-sm text-[#344054] block"
+                  <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
                     >Description</label
                   >
                   <textarea

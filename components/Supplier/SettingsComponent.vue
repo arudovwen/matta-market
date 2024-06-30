@@ -30,7 +30,7 @@
               </span>
             </div>
             <div class="flex items-center gap-x-3">
-              <label for="upload">
+              <label title="" for="upload">
                 <span
                   class="text-[#344054] rounded-full px-1 py-3 text-sm cursor-pointer"
                 >
@@ -51,7 +51,7 @@
             <div>
               <div class="grid lg:grid-cols-2 gap-x-6">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block"
+                  <label title="" class="mb-2 font-normal text-sm block"
                     >First name   <RedDot /></label
                   >
                   <input
@@ -73,7 +73,7 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block"
+                  <label title="" class="mb-2 font-normal text-sm block"
                     >Last name   <RedDot /></label
                   >
                   <input
@@ -97,7 +97,7 @@
               </div>
               <div class="grid lg:grid-cols-2 gap-x-6">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">E-mail   <RedDot /></label>
+                  <label title="" class="mb-2 font-normal text-sm block">E-mail   <RedDot /></label>
                   <div class="flex relative items-center">
                     <input
 											data-testid="email"
@@ -121,7 +121,7 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block"
+                  <label title="" class="mb-2 font-normal text-sm block"
                     >Phone number   <RedDot /></label
                   >
                   <div class="flex relative rounded-lg h-11">
@@ -140,7 +140,7 @@
               </div>
               <div class="grid lg:grid-cols-2 gap-x-6">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">Country   <RedDot /></label>
+                  <label title="" class="mb-2 font-normal text-sm block">Country   <RedDot /></label>
                   <div class="flex relative">
                     <FormsCountriesSelect v-model="v$.country.$model" />
                     <div
@@ -156,7 +156,7 @@
                 </div>
 
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">State   <RedDot /></label>
+                  <label title="" class="mb-2 font-normal text-sm block">State   <RedDot /></label>
 
                   <FormsStatesSelect
                     v-model="v$.city.$model"
@@ -175,7 +175,7 @@
               </div>
               <div class="">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">Timezone   <RedDot /></label>
+                  <label title="" class="mb-2 font-normal text-sm block">Timezone   <RedDot /></label>
                   <div class="flex relative items-center w-full">
                     <select
                       v-model="form.timezone"
@@ -220,7 +220,7 @@
         <div class="flex-1">
           <form @submit.prevent="handlePassword">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block text-matta-black"
+              <label title="" class="mb-2 font-normal text-sm block text-matta-black"
                 >Current Password   <RedDot /></label
               >
               <div class="relative flex items-center">
@@ -254,7 +254,7 @@
               </div>
             </div>
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block text-matta-black"
+              <label title="" class="mb-2 font-normal text-sm block text-matta-black"
                 >New Password   <RedDot /></label
               >
               <div class="relative flex items-center">
@@ -288,7 +288,7 @@
               </div>
             </div>
             <div class="mb-12">
-              <label class="mb-2 font-normal text-sm block text-matta-black"
+              <label title="" class="mb-2 font-normal text-sm block text-matta-black"
                 >Confirm Password   <RedDot /></label
               >
               <div class="relative flex items-center">

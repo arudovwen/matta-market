@@ -131,13 +131,14 @@ const onSubmit = handleSubmit((values) => {
 
     .catch((err) => {
       isLoading.value = false;
-      if (err?.response?.data?.message || err?.response?.data?.Message) {
-        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+
+      if (!err.response.data) return;
+      const { data } = err.response;
+      if (data.message || data.Message) {
+        toast.error(data.message || data.Message);
       }
       if (
-        (err?.response?.data?.message || err?.response?.data?.Message).includes(
-          "Email has not verified yet"
-        )
+        (data.message || data.Message).includes("Email has not verified yet")
       ) {
         router.push(
           `/auth/resend-verification/${encodeURIComponent(values.email)}`
@@ -182,15 +183,17 @@ const handleLoginSuccess = (response) => {
     .catch((err) => {
       invalidCredentials.value = true;
       isLoading.value = false;
-      if (err?.response?.data?.message || err?.response?.data?.Message) {
-        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+      if (!err.response.data) return;
+      const { data } = err.response;
+      if (data.message || data.Message) {
+        toast.error(data.message || data.Message);
       }
       if (
-        (err?.response?.data?.message || err?.response?.data?.Message).includes(
-          "Email has not verified yet"
-        )
+        (data.message || data.Message).includes("Email has not verified yet")
       ) {
-        router.push(`/resend-verification/${form.email}`);
+        router.push(
+          `/auth/resend-verification/${encodeURIComponent(values.email)}`
+        );
       }
     });
 };

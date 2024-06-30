@@ -5,7 +5,7 @@
     </h2>
 
     <div class="px-[30px] pt-6 pb-[30px]">
-      <label class="flex gap-x-2 items-start" :class="`${active !== 'shipping'?'opacity-80':''}`">
+      <label title="" class="flex gap-x-2 items-start" :class="`${active !== 'shipping'?'opacity-80':''}`">
         <input
           v-model="active"
           value="shipping"

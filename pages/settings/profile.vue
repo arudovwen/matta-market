@@ -20,13 +20,12 @@
             <img
               v-else
               :src="image"
-              alt="profile"
               class="h-24 w-24 rounded-full flex items-center justify-center bg-[#F1F3F5]"
             />
           </span>
         </div>
         <div class="flex items-center gap-x-3">
-          <label for="upload">
+          <label title="" for="upload">
             <span
               class="text-[#344054] rounded-full px-1 py-3 text-sm cursor-pointer"
             >
@@ -46,9 +45,7 @@
         <div>
           <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block"
-                >First name <RedDot
-              /></label>
+              <label title="" class="mb-2 font-normal text-sm block">First name <RedDot /></label>
               <input
                 v-model="v$.firstName.$model"
                 :class="{ 'border-red-500': v$.firstName.$error }"
@@ -67,9 +64,7 @@
               </div>
             </div>
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block"
-                >Last name <RedDot
-              /></label>
+              <label title="" class="mb-2 font-normal text-sm block">Last name <RedDot /></label>
               <input
                 v-model="v$.lastName.$model"
                 :class="{ 'border-red-500': v$.lastName.$error }"
@@ -90,9 +85,7 @@
           </div>
           <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block"
-                >E-mail <RedDot
-              /></label>
+              <label title="" class="mb-2 font-normal text-sm block">E-mail <RedDot /></label>
               <div class="flex relative items-center">
                 <input
                   :value="form.email"
@@ -115,9 +108,7 @@
               </div>
             </div>
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block"
-                >Phone number <RedDot
-              /></label>
+              <label title="" class="mb-2 font-normal text-sm block">Phone number <RedDot /></label>
               <div class="flex relative rounded-lg h-11">
                 <FormsPhoneCodes v-model="v$.phone.$model" />
               </div>
@@ -134,7 +125,7 @@
           </div>
           <!-- <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block">Country <RedDot /></label>
+              <label title="" class="mb-2 font-normal text-sm block">Country <RedDot /></label>
               <div class="flex relative">
                 <FormsCountriesSelect v-model="v$.country.$model" />
               </div>
@@ -150,7 +141,7 @@
             </div>
 
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block">State <RedDot /></label>
+              <label title="" class="mb-2 font-normal text-sm block">State <RedDot /></label>
 
               <FormsStatesSelect v-model="v$.city.$model" :states="states" />
               <div
@@ -166,7 +157,7 @@
           </div>
           <div class="">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block">Timezone</label>
+              <label title="" class="mb-2 font-normal text-sm block">Timezone</label>
               <div class="flex relative items-center w-full">
                 <select
                   v-model="form.timezone"
@@ -475,7 +466,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 </script>

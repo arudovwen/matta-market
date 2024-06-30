@@ -2,7 +2,7 @@
   <h3 class="font-medium text-2xl mb-6">Add new payment method</h3>
   <form @submit.prevent="handleSubmit">
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >Card number</label
       >
       <input
@@ -26,7 +26,7 @@
     </div>
     <div class="grid grid-cols-2 gap-x-6">
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block text-matta-black"
+        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
           >Expiry date</label
         >
         <div class="relative flex items-center">
@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block text-matta-black"
+        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
           >CVV</label
         >
         <div class="relative flex items-center">
@@ -75,7 +75,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="text-xs flex gap-x-2 items-center">
+      <label title="" class="text-xs flex gap-x-2 items-center">
         <input
           data-testid="mark-default"
           type="checkbox"

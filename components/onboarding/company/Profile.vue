@@ -50,7 +50,7 @@
             </span>
           </div>
           <div class="flex items-center justify-between gap-x-3">
-            <label for="upload">
+            <label title="" for="upload">
               <span
                 class="text-primary border border-primary- rounded-lg px-4 lg:px-6 py-2 lg:py-3 text-xs lg:text-sm cursor-pointer"
               >
@@ -75,7 +75,7 @@
           <div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label title="" class="mb-2 font-normal text-xs block"
                   >First name   <RedDot />
                 </label>
                 <input
@@ -96,7 +96,7 @@
                 </div>
               </div>
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label title="" class="mb-2 font-normal text-xs block"
                   >Last name <RedDot />
                 </label>
                 <input
@@ -119,7 +119,7 @@
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label title="" class="mb-2 font-normal text-xs block"
                   >Country <RedDot />
                 </label>
                 <div class="relative">
@@ -163,7 +163,7 @@
               </div>
 
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label title="" class="mb-2 font-normal text-xs block"
                   >State <RedDot />
                 </label>
                 <FormsSelectComponent
@@ -206,7 +206,7 @@
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label title="" class="mb-2 font-normal text-xs block"
                   >Phone number
                 <RedDot /></label
                 >
@@ -224,7 +224,7 @@
                 </div>
               </div>
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label title="" class="mb-2 font-normal text-xs block"
                   >E-mail <RedDot />
                 </label>
                 <div class="flex relative items-center">

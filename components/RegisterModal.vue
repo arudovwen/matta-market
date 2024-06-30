@@ -85,9 +85,9 @@
                         </button>
                       </div>
                       <div class="mb-6">
-                        <label class="mb-2 font-normal text-xs block"
-                          >E-mail  <RedDot /></label
-                        >
+                        <label title="" class="mb-2 font-normal text-xs block"
+                          >E-mail <RedDot
+                        /></label>
                         <input
                           v-model="v$.email.$model"
                           :class="{ 'border-red-500': v$.email.$error }"
@@ -111,8 +111,8 @@
                         <div class="mb-6">
                           <label
                             class="mb-2 font-normal text-xs block text-matta-black"
-                            >Password  <RedDot /></label
-                          >
+                            >Password <RedDot
+                          /></label>
                           <div class="relative flex items-center">
                             <input
                               v-model="v$.password.$model"
@@ -148,8 +148,8 @@
                         <div class="mb-6">
                           <label
                             class="mb-2 font-normal text-xs block text-matta-black"
-                            >Confirm Password  <RedDot /></label
-                          >
+                            >Confirm Password <RedDot
+                          /></label>
                           <div class="relative flex items-center">
                             <input
                               v-model="v$.confirmPassword.$model"
@@ -219,7 +219,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, inject } from "vue";
+import { ref, reactive, inject, defineProps, defineEmits } from "vue";
 import {
   Dialog,
   DialogOverlay,
@@ -235,10 +235,9 @@ import {
   minLength,
   maxLength,
 } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { registerUser, loginUser } from "~/services/authservices";
 import { useStore } from "vuex";
-import { defineProps, defineEmits } from "vue";
 
 const store = useStore();
 
@@ -328,9 +327,12 @@ async function handleSubmit() {
           .catch((err) => {
             isLoading.value = false;
 
-            toast.error((err?.response?.data?.message || err?.response?.data?.Message), {
-              position: "bottom",
-            });
+            toast.error(
+              err.response.data.message || err.response.data.Message,
+              {
+                position: "bottom",
+              }
+            );
           });
       }
     })
@@ -338,7 +340,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 </script>

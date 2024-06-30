@@ -5,7 +5,7 @@
       This information will help us prepare your quote.
     </p>
     <div class="mb-6">
-      <label data-testid="usage" class="mb-2 font-medium text-sm text-[#344054] block text-left">Market<RedDot /></label>
+      <label title="" data-testid="usage" class="mb-2 font-medium text-sm text-[#344054] block text-left">Market<RedDot /></label>
       <FormsSelectComponent
         @onGetData="onGetMarket"
         :options="marketOptions"
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Application<RedDot /></label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Application<RedDot /></label>
       <FormsSelectComponent
         @onGetData="onGetApp"
         :options="appOptions"
@@ -46,7 +46,7 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Package type <RedDot /></label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Package type <RedDot /></label>
       <select
         v-if="product && product.packagesAvailable"
         v-model="request1$.package.$model"
@@ -69,7 +69,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block"
+      <label title="" class="mb-2 font-normal text-xs block"
         >How do you intend to use the product? <RedDot /></label
       >
       <textarea
@@ -89,7 +89,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block"
+      <label title="" class="mb-2 font-normal text-xs block"
         >Expected annual volume <RedDot /></label
       >
       <div

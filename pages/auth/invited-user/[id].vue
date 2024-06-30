@@ -9,7 +9,7 @@
       <form @submit.prevent="handleSubmit">
         <div class="grid grid-cols-2 gap-x-4">
           <div class="mb-6">
-            <label for="firstName" class="mb-2 font-normal text-xs block">First name</label>
+            <label title="" for="firstName" class="mb-2 font-normal text-xs block">First name</label>
             <input
             id="firstName"
             name="firstName"
@@ -28,7 +28,7 @@
             </div>
           </div>
           <div class="mb-6">
-            <label for="lastName" class="mb-2 font-normal text-xs block">Last name</label>
+            <label title="" for="lastName" class="mb-2 font-normal text-xs block">Last name</label>
             <input
             name="lastName"
             id="lastName"
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label for="password" class="mb-2 font-normal text-xs block text-matta-black"
+          <label title="" for="password" class="mb-2 font-normal text-xs block text-matta-black"
             >Password</label
           >
           <div class="relative flex items-center">
@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="mb-12">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label title="" class="mb-2 font-normal text-xs block text-matta-black"
             >Confirm Password</label
           >
           <div class="relative flex items-center">

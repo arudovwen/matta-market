@@ -2,7 +2,7 @@
   <h3 class="font-medium text-2xl mb-6">Add new payment method</h3>
   <form @submit.prevent="handleSubmit">
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Card number</label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Card number</label>
       <input
         v-model="v$.card_number.$model"
         :class="{ 'border-red-500': v$.card_number.$error }"
@@ -23,7 +23,7 @@
     </div>
     <div class="grid grid-cols-2 gap-x-6">
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block text-matta-black"
+        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
           >Expiry date</label
         >
         <div class="relative flex items-center">
@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block text-matta-black"
+        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
           >CVV</label
         >
         <div class="relative flex items-center">
@@ -70,7 +70,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="text-xs flex gap-x-2 items-center">
+      <label title="" class="text-xs flex gap-x-2 items-center">
         <input type="checkbox" class="accent-matta-black" />Mark as Default
         payment method
       </label>

@@ -46,6 +46,7 @@
           height="800"
           allow="autoplay"
           class="h-full w-full"
+					title=""
         ></iframe>
       </div>
     </template>
