@@ -62,6 +62,9 @@ describe("CompanySettings copy", () => {
             },
           }),
         ],
+        stubs:{
+          VerificationBox:true
+        }
       },
     });
     expect(screen.getByText("Credit")).toBeTruthy();
