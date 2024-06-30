@@ -469,6 +469,8 @@ import { useRouter } from "vue-router";
 import { toast } from 'vue3-toastify';
 import { updateAdditional } from "~/services/productservices";
 import { uploadfile } from "~/services/onboardingservices";
+import fileHandler from "~/utils/fileHandler";
+
 
 // const route = useRoute();
 const router = useRouter();
@@ -484,22 +486,6 @@ const filteredExperts = computed(() =>
       })
 );
 const form = inject("form");
-function handleFile(e) {
-  const file = e.target.files[0];
-  // Encode the file using the FileReader API
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onloadend = () => {
-    // Use a regex to remove data url part
-    const base64String = reader.result;
-
-    uploadfile({
-      base64: base64String.replace("data:", "").replace(/^.+,/, ""),
-    }).then((res) => {
-      expertAnswer.photo = res.data.message;
-    });
-  };
-}
 
 const experts = ref([
   {
@@ -565,8 +551,13 @@ const expertAnswer = reactive({
   phone: "",
   language: "",
   photo: "",
-  role: "",
+  role: ""
 });
+
+function handleFile(e) {
+	fileHandler(e, expertAnswer)
+}
+
 function addExpert() {
   experts.value.push(expertAnswer);
   isAdding.value = false;
@@ -593,4 +584,4 @@ function openmodal(val, id) {
   isAdding.value = true;
   index.value = id;
 }
-</script>
+</script>~/utils/fileHandler

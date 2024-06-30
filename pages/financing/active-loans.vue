@@ -74,17 +74,12 @@ function handleType(key) {
   switch (parseInt(key)) {
     case 0:
       return "trade";
-      break;
     case 1:
       return "supply";
-      break;
     case 2:
       return "import";
-      break;
     case 3:
       return "export";
-      break;
-
     default:
       break;
   }

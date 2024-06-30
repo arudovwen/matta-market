@@ -11,6 +11,7 @@
       @onClick="openmodal('method')"
       className="!border-[#EAECF0]"
       :count="queryParams.totalCount"
+			onkeypress="() => {}"
     />
 
     <div class="rounded-lg bg-white pt-4">

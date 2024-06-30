@@ -10,6 +10,7 @@
       btnText="New campaign"
       btnIcon="humbleicons:plus"
       @onClick="navigateTo('/campaign/new')"
+			onkeydown=""
     />
 
     <div class="pt-5">

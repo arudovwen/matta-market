@@ -37,13 +37,8 @@
               <div
                 class="w-28 h-28 rounded-full mx-auto border border-white mb-4 overflow-hidden flex items-center justify-center"
               >
-                 <img
-                  :src="
-                    item.photo
-                      ? item.photo
-                      : defaultImage
-
-                  "
+                <img
+                  :src="item.photo ? item.photo : defaultImage"
                   class="w-full h-full"
                   alt="default"
                 />
@@ -59,7 +54,10 @@
             </div>
             <table aria-describedby="" class="mb-6 w-full table-auto">
               <thead>
-                <tr><th></th><th></th></tr>
+                <tr>
+                  <th></th>
+                  <th></th>
+                </tr>
               </thead>
               <tbody>
                 <tr>
@@ -107,7 +105,7 @@
         <div
           class="w-20 h-20 rounded-xl bg-white flex items-center justify-center"
         >
-           <img
+          <img
             v-if="producer.logo"
             :src="producer.logo"
             alt="logo"
@@ -136,59 +134,6 @@
         <span>view more products</span>
       </button>
     </article>
-
-    <!-- <article
-      class="p-6 lg:p-8 rounded-xl bg-[#F1F3F5]"
-      v-if="product.productQuestions && product.productQuestions.length"
-    >
-      <h5 class="font-medium text-lg mb-6">Questions</h5>
-      <ul>
-        <li v-for="(n, i) in product.productQuestions" :key="i" class="mb-6">
-          <div class="grid grid-cols-3 justify-between items-start">
-            <span class="col-span-2 text-matta-black font-medium text-base">{{
-              n.question
-            }}</span>
-            <span
-              class="text-right text-lg"
-              @click="handleIndex(i)"
-              v-if="!openIndex.includes(i)"
-              ><i class="uil uil-plus"></i
-            ></span>
-            <span
-              class="text-right text-lg"
-              @click="dropIndex(i)"
-              v-if="openIndex.includes(i)"
-              ><i class="uil uil-minus"></i
-            ></span>
-          </div>
-          <hr class="border-[#DDDDDD] my-4" />
-        
-          <ul v-if="openIndex.includes(i)">
-            <li class="mb-1">
-              <span class="text-sm text-matta-black font-normal pr-1">{{
-                n.answer
-              }}</span>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </article>
-
-    <article
-      class="p-6 lg:p-8 rounded-xl bg-[#F1F3F5]"
-      v-if="product.tags && product.tags.length"
-    >
-      <h5 class="font-medium text-lg mb-6">Tags</h5>
-      <div class="flex flex-wrap gap-3">
-        <span
-          class="text-xs rounded-full border px-2 py-1 border-[#DDDDDD]"
-          v-for="tag in product.tags"
-          :key="tag"
-        >
-          {{ tag }}
-        </span>
-      </div>
-    </article> -->
   </aside>
 </template>
 <script setup>
@@ -214,7 +159,7 @@ function prev() {
 const producer = ref(null);
 const supplier = ref(null);
 const openIndex = ref([]);
-const defaultImage = '../../assets/img/avatar1.svg'
+const defaultImage = "../../assets/img/avatar1.svg";
 
 // eslint-disable-next-line no-unused-vars
 function handleIndex(val) {
@@ -225,7 +170,7 @@ function dropIndex(val) {
   openIndex.value = openIndex.value.filter((i) => i !== val);
 }
 onMounted(() => {
-	console.log(product);
+  console.log(product);
   getProducers({ Search: product.manufacturer }).then((res) => {
     producer.value = res.data.data.data[0];
   });

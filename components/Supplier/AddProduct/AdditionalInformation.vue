@@ -2,13 +2,10 @@
 <template>
   <form class="flex flex-col gap-y-3" @submit.prevent="handleSubmit">
     <div class="bg-white p-6 lg:p-8 rounded-lg">
-      <div class="w-[85%]">
-        <label title="" class="mb-4 font-normal block">
+      <label class="w-[85%]">
+        <span title="" class="mb-4 font-normal block">
           Questions
-          <!-- <span class="font-light text-xs text-[#ABABAB]"
-            >(Optional)</span
-          > -->
-        </label>
+				</span>
         <div
           class="flex flex-wrap gap-3 mb-6"
           v-if="form.productQuestions.length"
@@ -58,7 +55,7 @@
             <i class="uil uil-plus text-sm"></i> Add new question
           </button>
         </div>
-      </div>
+      </label>
     </div>
     <div class="grid grid-cols-2 gap-x-3">
       <div class="bg-white p-6 lg:p-8 rounded-lg">
@@ -477,6 +474,7 @@ import { toast } from "vue3-toastify";
 import { updateAdditional } from "~/services/productservices";
 import Modal from "~/components/IndexModal";
 import { uploadfile } from "~/services/onboardingservices";
+import fileHandler from "~/utils/fileHandler";
 
 const form = inject("form");
 const router = useRouter();
@@ -492,22 +490,7 @@ const filteredExperts = computed(() =>
       })
 );
 
-function handleFile(e) {
-  const file = e.target.files[0];
-  // Encode the file using the FileReader API
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onloadend = () => {
-    // Use a regex to remove data url part
-    const base64String = reader.result;
 
-    uploadfile({
-      base64: base64String.replace("data:", "").replace(/^.+,/, ""),
-    }).then((res) => {
-      expertAnswer.photo = res.data.message;
-    });
-  };
-}
 
 const experts = ref([
   {
@@ -575,6 +558,10 @@ const expertAnswer = reactive({
   photo: "",
   role: "",
 });
+
+function handleFile(e) {
+	fileHandler(e, expertAnswer)
+}
 function addExpert() {
   experts.value.push(expertAnswer);
   isAdding.value = false;
