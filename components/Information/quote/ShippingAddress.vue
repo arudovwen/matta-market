@@ -15,7 +15,7 @@
       </p>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
 
       <div class="flex relative rounded-lg h-11">
         <FormsPhoneCodes  v-model="request2$.phone.$model" />
@@ -33,7 +33,7 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
       <Listbox v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton
@@ -128,7 +128,7 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block"
+      <label title="" class="mb-2 font-normal text-xs block"
         >Additional information</label
       >
       <textarea
@@ -162,8 +162,7 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
-import { ref } from "vue";
-import { inject, onMounted, watch, provide } from "vue";
+import { inject, onMounted, watch, provide, ref } from "vue";
 import { getalladdress } from "~/services/cartservice";
 import { useStore } from "vuex";
 

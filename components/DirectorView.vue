@@ -3,7 +3,7 @@
     <h3 class="font-medium text-2xl mb-8">Director Detail</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >Full name</label
         >
         <p class="text-[#344054] text-base font-medium">
@@ -12,13 +12,13 @@
       </div>
 
       <div class="mb-6">
-        <label for="email" class="mb-2 font-normal text-xs block">E-mail</label>
+        <label title="" for="email" class="mb-2 font-normal text-xs block">E-mail</label>
         <p class="text-[#344054] text-base font-medium">
           {{ detail.email }}
         </p>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block" for="phone"
+        <label title="" class="mb-2 font-normal text-xs block" for="phone"
           >Phone number
         </label>
         <p class="text-[#344054] text-base font-medium">
@@ -27,7 +27,7 @@
       </div>
 
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >BVN</label
         >
         <p class="text-[#344054] text-base font-medium">
@@ -35,7 +35,7 @@
         </p>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >Date of birth</label
         >
         <p class="text-[#344054] text-base font-medium">
@@ -44,7 +44,7 @@
       </div>
 
       <div class="l mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >Linkedin</label
         >
         <p class="text-[#344054] text-base font-medium">

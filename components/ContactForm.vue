@@ -9,7 +9,7 @@
           Contact us form
         </legend>
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Full name <RedDot /></label>
+          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Full name <RedDot /></label>
           <input
             v-model="v$.fullName.$model"
             :class="{ 'border-red-500': v$.fullName.$error }"
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number  <RedDot /></label>
+          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number  <RedDot /></label>
           <input
             v-model="v$.phone.$model"
             :class="{ 'border-red-500': v$.phone.$error }"
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail  <RedDot /></label>
+          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail  <RedDot /></label>
           <input
             v-model="v$.email.$model"
             :class="{ 'border-red-500': v$.email.$error }"
@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Message  <RedDot /></label>
+          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Message  <RedDot /></label>
           <textarea
             v-model="v$.message.$model"
             :class="{ 'border-red-500': v$.message.$error }"

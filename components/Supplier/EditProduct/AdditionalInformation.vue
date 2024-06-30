@@ -3,7 +3,7 @@
   <form class="flex flex-col gap-y-3" @submit.prevent="handleSubmit">
     <div class="bg-white p-6 lg:p-8 rounded-lg">
       <div class="w-[85%]">
-        <label class="mb-4 font-normal block">
+        <label title="" class="mb-4 font-normal block">
           Questions
           <!-- <span class="font-light text-xs text-[#ABABAB]"
             >(Optional)</span
@@ -63,7 +63,7 @@
     <div class="grid grid-cols-2 gap-x-3">
       <div class="bg-white p-6 lg:p-8 rounded-lg">
         <div class="mb-5 text-left">
-          <label class="mb-2 font-normal block">
+          <label title="" class="mb-2 font-normal block">
             Experts
             <!-- <span class="font-light text-xs text-[#ABABAB]"
               >(Optional)</span
@@ -225,7 +225,7 @@
       </div>
       <div class="bg-white p-6 lg:p-8 rounded-lg">
         <div class="mb-5 text-left">
-          <label class="mb-2 font-normal block">
+          <label title="" class="mb-2 font-normal block">
             Tags
             <!-- <span class="font-light text-xs text-[#ABABAB]"
               >(Optional)</span

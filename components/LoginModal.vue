@@ -41,7 +41,7 @@
                   <div>
                     <form @submit.prevent="handleSubmit">
                       <div class="mb-6">
-                        <label class="mb-2 font-normal text-xs block"
+                        <label title="" class="mb-2 font-normal text-xs block"
                           >E-mail</label
                         >
                         <input
@@ -160,7 +160,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, ref, reactive, inject } from "vue";
 
 import {
   Dialog,
@@ -168,7 +168,6 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import { ref, reactive, inject } from "vue";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
 import useVuelidate from "@vuelidate/core";
 import {
@@ -178,7 +177,7 @@ import {
   minLength,
   maxLength,
 } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { loginUser } from "@/services/authservices";
 import { useStore } from "vuex";
 
@@ -253,7 +252,7 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 </script>

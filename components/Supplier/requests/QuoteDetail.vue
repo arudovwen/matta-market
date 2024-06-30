@@ -70,7 +70,7 @@
       <hr class="my-4" />
       <div class="bg-[#F1F3F5] rounded-lg p-6 text-matta-black">
         <div class="mb-6">
-          <label class="mb-2 text-xs block text-matta-black font-bold"
+          <label title="" class="mb-2 text-xs block text-matta-black font-bold"
             >Upload Quote</label
           >
           <div class="relative flex items-center">

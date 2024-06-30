@@ -7,7 +7,7 @@
     <div class="max-w-[400px]">
       <form @submit.prevent="handleSubmit">
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label title="" class="mb-2 font-normal text-xs block text-matta-black"
             >Current pin</label
           >
           <div class="relative flex items-center">
@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label title="" class="mb-2 font-normal text-xs block text-matta-black"
             >New pin</label
           >
           <div class="relative flex items-center">
@@ -77,7 +77,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label title="" class="mb-2 font-normal text-xs block text-matta-black"
             >Confirm pin</label
           >
           <div class="relative flex items-center">
@@ -166,7 +166,7 @@
             Enter OTP code
           </legend>
           <div class="mb-6">
-            <label class="mb-2 font-normal text-xs block text-matta-black"
+            <label title="" class="mb-2 font-normal text-xs block text-matta-black"
               >Otp code</label
             >
             <div class="relative flex items-center">

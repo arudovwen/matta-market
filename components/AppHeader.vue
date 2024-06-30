@@ -481,7 +481,6 @@ onMounted(() => {
       getNotifications();
     }, 2 * 60 * 1000);
   }
-	console.log(authStore.isLoggedIn);
   // geoFindMe();
 });
 const notifyParams = reactive({
@@ -505,10 +504,7 @@ function handleScroll() {
   if (window?.pageYOffset > 500) {
     // user is scrolled
     if (view.value.atTopOfPage) view.value.atTopOfPage = false;
-  } else {
-    // user is at top of page
-    if (!view.value.atTopOfPage) view.value.atTopOfPage = true;
-  }
+  } else if (!view.value.atTopOfPage) view.value.atTopOfPage = true;
 }
 function handleWidth() {
   windowWidth.value = window?.innerWidth;

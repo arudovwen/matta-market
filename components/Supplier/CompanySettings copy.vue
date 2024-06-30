@@ -20,7 +20,7 @@
             </span>
           </div>
           <div class="flex items-center gap-x-3">
-            <label for="upload">
+            <label title="" for="upload">
               <span
                 class="text-primary border border-primary- rounded-full px-6 py-3 text-sm cursor-pointer"
               >
@@ -45,7 +45,7 @@
         <form @submit.prevent="handleSubmit">
           <div class="grid lg:grid-cols-2 gap-x-4">
             <div class="mb-6">
-              <label class="mb-2 font-medium text-sm text-[#344054] block text-left">
+              <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">
                 Company name</label
               >
               <input
@@ -67,7 +67,7 @@
               </div>
             </div>
             <div class="mb-6">
-              <label class="mb-2 font-normal text-xs block"
+              <label title="" class="mb-2 font-normal text-xs block"
                 >Company sector</label
               >
 
@@ -104,7 +104,7 @@
 
           <div class="grid lg:grid-cols-2 gap-x-4">
             <div class="mb-6">
-              <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
+              <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
               <div class="flex relative rounded-lg h-11">
                 <FormsPhoneCodes  v-model="v$.phone.$model" />
 
@@ -121,7 +121,7 @@
             </div>
 
             <div class="mb-6">
-              <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
+              <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
               <input
                 v-model="v$.email.$model"
                 :class="{ 'border-red-500': v$.email.$error }"
@@ -142,7 +142,7 @@
           </div>
           <div class="grid lg:grid-cols-2 gap-x-4">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-xs block"
+              <label title="" class="mb-2 font-normal text-xs block"
                 >Company website</label
               >
               <input
@@ -165,7 +165,7 @@
               </div>
             </div>
             <div class="mb-6">
-              <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Fax</label>
+              <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Fax</label>
               <input
                 v-model="v$.fax.$model"
                 :class="{ 'border-red-500': v$.fax.$error }"
@@ -186,7 +186,7 @@
             </div>
           </div>
           <div class="mb-6">
-            <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Description</label>
+            <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Description</label>
             <textarea
               v-model="v$.description.$model"
               :class="{ 'border-red-500': v$.description.$error }"
@@ -253,7 +253,7 @@
           <div>
             <div class="grid lg:grid-cols-2 gap-x-4">
               <div class="mb-6">
-                <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Country</label>
+                <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Country</label>
                 <div class="flex relative">
                   <FormsCountriesSelect v-model="v$.country.$model" />
                   <div
@@ -268,7 +268,7 @@
                 </div>
               </div>
               <div class="mb-6">
-                <label class="mb-2 font-medium text-sm text-[#344054] block text-left">State</label>
+                <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">State</label>
                 <FormsStatesSelect v-model="v$.state.$model" :states="states" />
                 <div
                   class="text-red-500 mt-1"
@@ -283,7 +283,7 @@
             </div>
             <div class="grid lg:grid-cols-2 gap-x-4">
               <div class="mb-6">
-                <label class="mb-2 font-medium text-sm text-[#344054] block text-left">City</label>
+                <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">City</label>
                 <input
                   v-model="v$.city.$model"
                   :class="{ 'border-red-500': v$.city.$error }"
@@ -303,7 +303,7 @@
                 </div>
               </div>
               <div class="mb-6">
-                <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
+                <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
                 <input
                   v-model="v$.address.$model"
                   :class="{ 'border-red-500': v$.address.$error }"

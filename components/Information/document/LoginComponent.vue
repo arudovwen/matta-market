@@ -10,7 +10,7 @@
     <div>
       <form @submit.prevent="handleSubmit">
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
+          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
           <input
             v-model="v$.email.$model"
             :class="{ 'border-red-500': v$.email.$error }"
@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label title="" class="mb-2 font-normal text-xs block text-matta-black"
             >Password</label
           >
           <div class="relative flex items-center">
@@ -64,7 +64,7 @@
           </div>
         </div>
         <div class="mb-6 flex items-center justify-between">
-          <label class="flex text-xs items-center text-matta-black">
+          <label title="" class="flex text-xs items-center text-matta-black">
             <input type="checkbox" class="mr-1 accent-matta-black" /> Keep me
             logged in
           </label>

@@ -5,7 +5,7 @@
     <form @submit.prevent="handleSubmit">
       <div class="grid grid-cols-1 gap-6">
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Bank name</label>
+          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Bank name</label>
           <div class="relative flex items-center">
             <input
               v-model="v$.bank.$model"
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label title="" class="mb-2 font-normal text-xs block text-matta-black"
             >Account Number</label
           >
           <div class="relative flex items-center">
