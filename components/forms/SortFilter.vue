@@ -33,7 +33,7 @@
                       'relative cursor-default select-none py-2 text-loft-black hover:bg-gray-50',
                     ]"
                   >
-                    <label class="flex items-center gap-x-2">
+                    <label title="" class="flex items-center gap-x-2">
                       <input
                         type="radio"
                         v-model="selectedoption"

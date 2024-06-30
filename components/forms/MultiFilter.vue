@@ -62,7 +62,7 @@
                     'relative select-none py-2 rounded text-matta-black hover:bg-gray-100 px-2',
                   ]"
                 >
-                  <label class="flex items-center gap-x-2 cursor-pointer">
+                  <label title="" class="flex items-center gap-x-2 cursor-pointer">
                     <input
                       type="radio"
                       v-model="selectedoption"
@@ -79,7 +79,7 @@
                     'relative select-none py-2 rounded text-matta-black hover:bg-gray-100 px-2',
                   ]"
                 >
-                  <label class="flex items-center gap-x-2 cursor-pointer">
+                  <label title="" class="flex items-center gap-x-2 cursor-pointer">
                     <input
                       type="radio"
                       v-model="selectedoption"

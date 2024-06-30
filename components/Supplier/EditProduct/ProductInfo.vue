@@ -444,14 +444,14 @@
           </div>
         </div>
         <div class="bg-white rounded-lg py-6 mt-6 flex gap-x-10 items-center">
-          <label class="flex item-center leading-[normal]">
+          <label title="" class="flex item-center leading-[normal]">
             <input
               type="checkbox"
               v-model="form.sampleAvailable"
               class="mr-2 accent-primary-500"
             /><span class="text-[#344054]"> Sample is available</span>
           </label>
-          <label class="flex item-center leading-[normal]">
+          <label title="" class="flex item-center leading-[normal]">
             <input
               type="checkbox"
               v-model="form.hideProduct"
@@ -459,7 +459,7 @@
             />
             <span class="text-[#344054]">Hide product</span>
           </label>
-          <label class="flex item-center leading-[normal]">
+          <label title="" class="flex item-center leading-[normal]">
             <input
               type="checkbox"
               v-model="form.hidePrice"
@@ -523,7 +523,7 @@
             ></i>
           </div>
           <div class="mb-5">
-            <label class="mb-2 font-normal text-xs block"
+            <label title="" class="mb-2 font-normal text-xs block"
               >Name <span class="text-red-500 pl-[.5px]">*</span></label
             >
             <input
@@ -554,7 +554,7 @@
               class="mb-2 font-medium text-sm text-[#344054] block text-left"
               >Producer Logo</label
             >
-            <label for="upload" class="cursor-pointer">
+            <label title="" for="upload" class="cursor-pointer">
               <input
                 @change="handleEvent($event)"
                 type="file"

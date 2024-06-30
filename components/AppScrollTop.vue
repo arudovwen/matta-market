@@ -20,7 +20,6 @@ function handleScroll() {
     // user is scrolled
     if (view.value.atTopOfPage) view.value.atTopOfPage = false;
   } else {
-    // user is at top of page
     if (!view.value.atTopOfPage) view.value.atTopOfPage = true;
   }
 }

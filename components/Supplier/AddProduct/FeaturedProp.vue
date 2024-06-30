@@ -422,8 +422,6 @@ import {
   ComboboxButton,
   ComboboxOptions,
   ComboboxOption,
-} from "@headlessui/vue";
-import {
   Listbox,
   ListboxButton,
   ListboxOptions,

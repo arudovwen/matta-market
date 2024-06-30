@@ -6,7 +6,7 @@
       This information will help us get you the right product.
     </p>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Choose Market</label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Choose Market</label>
       <SelectComponent
         @onGetData="onGetMarket"
         :options="marketOptions"
@@ -28,7 +28,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Choose Product  <RedDot /></label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Choose Product  <RedDot /></label>
       <ProductSearch :id="sampleForm.market" v-model="sampleForm.product" />
       <div
         class="text-red-500 mt-1"
@@ -42,7 +42,7 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Number of Samples  <RedDot /></label>
+      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Number of Samples  <RedDot /></label>
       <div class="flex relative">
         <div class="flex relative items-center w-full">
           <select
@@ -70,7 +70,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block"
+      <label title="" class="mb-2 font-normal text-xs block"
         >Estimate purchase of product  <RedDot />
       </label>
       <div class="flex relative">

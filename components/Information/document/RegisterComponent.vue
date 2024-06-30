@@ -40,7 +40,7 @@
         </NuxtLink>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
+        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
         <input
           v-model="v$.email.$model"
           :class="{ 'border-red-500': v$.email.$error }"
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block text-matta-black"
+        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
           >Password</label
         >
         <div class="relative flex items-center">
@@ -94,7 +94,7 @@
         </div>
       </div>
       <div class="mb-12">
-        <label class="mb-2 font-normal text-xs block text-matta-black"
+        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
           >Confirm Password</label
         >
         <div class="relative flex items-center">

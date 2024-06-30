@@ -37,7 +37,7 @@
                 v-for="option in options"
                 :key="option.name"
                 :value="option.id"
-                as="template"
+                as="ul"
               >
                 <li
                   class="relative cursor-pointer select-none py-[5px] px-[13px] text-loft-black"
