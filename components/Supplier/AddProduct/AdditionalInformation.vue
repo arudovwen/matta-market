@@ -477,6 +477,7 @@ import { toast } from "vue3-toastify";
 import { updateAdditional } from "~/services/productservices";
 import Modal from "~/components/IndexModal";
 import { uploadfile } from "~/services/onboardingservices";
+import fileHandler from "~/utils/fileHandler";
 
 const form = inject("form");
 const router = useRouter();
@@ -492,22 +493,7 @@ const filteredExperts = computed(() =>
       })
 );
 
-function handleFile(e) {
-  const file = e.target.files[0];
-  // Encode the file using the FileReader API
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onloadend = () => {
-    // Use a regex to remove data url part
-    const base64String = reader.result;
 
-    uploadfile({
-      base64: base64String.replace("data:", "").replace(/^.+,/, ""),
-    }).then((res) => {
-      expertAnswer.photo = res.data.message;
-    });
-  };
-}
 
 const experts = ref([
   {
@@ -575,6 +561,10 @@ const expertAnswer = reactive({
   photo: "",
   role: "",
 });
+
+function handleFile(e) {
+	fileHandler(e, expertAnswer)
+}
 function addExpert() {
   experts.value.push(expertAnswer);
   isAdding.value = false;
