@@ -9,6 +9,7 @@
       } text-[13px] py-[13px] px-6 rounded-lg uppercase flex items-center cursor-pointer justify-between`"
       v-for="n in detail"
       :key="n.value"
+      :for="n.value"
     >
       <span class="w-full">
         <input
@@ -16,6 +17,7 @@
           v-model="sampleForm.documentCategories"
           :value="n.value"
           class="hidden"
+          :id="n.value"
         />
         <span class="capitalize"> {{ n.item }}</span></span
       >
@@ -26,8 +28,14 @@
     </label>
   </div>
   <div class="mb-6">
-    <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Description</label>
+    <label
+      for="sampleForm"
+      title=""
+      class="mb-2 font-medium text-sm text-[#344054] block text-left"
+      >Description</label
+    >
     <textarea
+      id="sampleForm"
       v-model="sampleForm.description"
       placeholder="Describe documents you'd like to request..."
       row="3"

@@ -52,7 +52,7 @@
                 </p>
               </div>
             </div>
-            <table aria-describedby="" class="mb-6 w-full table-auto">
+            <table aria-describedby="true" class="mb-6 w-full table-auto">
               <thead>
                 <tr>
                   <th></th>

@@ -143,9 +143,9 @@
 
       <!-- Sklenton starts here  -->
       <div class="lg:w-[550px]" v-if="isLoading">
-        <h1
+        <div
           class="font-bold text-lg sm:text-2xl lg:text-[32px] mb-3 lg:mb-6 bg-gray-200 w-[160px] p-[8px] rounded-full animate-pulse"
-        ></h1>
+        ></div>
         <p
           class="text-[#444] text-xs lg:text-sm mb-6 bg-gray-200 w-[260px] p-[8px] rounded-full animate-pulse"
         ></p>

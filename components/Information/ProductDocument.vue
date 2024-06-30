@@ -38,7 +38,7 @@
         </span>
       </div>
       <div class="overflow-x-auto">
-        <table aria-describedby="" class="w-full">
+        <table aria-describedby="true" class="w-full">
           <thead>
             <tr>
               <th></th>

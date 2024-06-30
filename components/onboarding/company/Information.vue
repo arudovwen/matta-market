@@ -31,7 +31,7 @@
                     </span>
                     <img
                       v-else
-                      alt="informationimage"
+                      alt="information"
                       :src="image"
                       class="h-[64px] w-[64px] rounded-full flex items-center bg-[#F1F3F5] justify-center"
                     />
@@ -66,12 +66,14 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
                     <label
+                      for="companyName"
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
                       Company name
                       <RedDot
                     /></label>
                     <input
+                      id="companyName"
                       v-model="v$.companyName.$model"
                       :class="{ 'border-red-500': v$.companyName.$error }"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -90,13 +92,16 @@
                     </div>
                   </div>
                   <div class="mb-6">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      for="dateofIncorporation"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >Date Of Incorporation <RedDot
                     /></label>
 
                     <ClientOnly>
                       <VueDatePicker
                         auto-apply
+                        id="dateofIncorporation"
                         v-model="v$.dateofIncorporation.$model"
                         placeholder="Select date"
                         :enable-time-picker="false"
@@ -119,12 +124,15 @@
                   </div>
 
                   <div class="mb-6">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      for="country"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >Country <RedDot
                     /></label>
                     <div class="relative">
                       <FormGroup label="" name="state">
                         <SelectVueSelect
+                          id="country"
                           v-model="form.country"
                           :options="allcountries"
                           :reduce="(country) => country.value"
@@ -144,12 +152,15 @@
                     </div>
                   </div>
                   <div class="mb-6">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      for="state"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >State <RedDot
                     /></label>
 
                     <FormGroup label="" name="state">
                       <SelectVueSelect
+                      id="state"
                         v-model="form.state"
                         :disabled="!form.country"
                         :options="mystates"
@@ -170,10 +181,13 @@
                   </div>
 
                   <div class="mb-6">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      title="email"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >E-mail <RedDot
                     /></label>
                     <input
+                    id="email"
                       v-model="v$.email.$model"
                       :class="{ 'border-red-500': v$.email.$error }"
                       class="px-[14px] py-[10px] h-11 text-sm rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -192,7 +206,10 @@
                   </div>
 
                   <div class="mb-6">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      title=""
+                      for="Phone"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >Phone number <RedDot
                     /></label>
                     <div class="flex relative rounded-lg h-11">
@@ -211,12 +228,15 @@
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      for="companyType"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >Business type <RedDot
                     /></label>
 
                     <div class="flex relative items-center">
                       <select
+                      id="companyType"
                         v-model="v$.companyType.$model"
                         :class="{ 'border-red-500': v$.companyType.$error }"
                         class="appearance-none rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -245,12 +265,15 @@
                     </div>
                   </div>
                   <div class="mb-6">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      for="sector"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >Business sector <RedDot
                     /></label>
 
                     <div class="flex relative items-center">
                       <select
+                      id="sector"
                         :disabled="!form.companyType"
                         v-model="v$.sector.$model"
                         :class="{ 'border-red-500': v$.sector.$error }"
@@ -285,12 +308,14 @@
                     v-if="form.country?.toLowerCase() === 'nigeria'"
                   >
                     <label
+                    for="registrationNo"
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
                       CAC Registration number
                       <RedDot
                     /></label>
                     <input
+                    id="registrationNo"
                       v-model="v$.registrationNo.$model"
                       :class="{ 'border-red-500': v$.registrationNo.$error }"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -312,11 +337,14 @@
                     class="mb-6"
                     v-if="form.country?.toLowerCase() === 'nigeria'"
                   >
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      for="tin"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >TIN number <RedDot
                     /></label>
 
                     <input
+                    id="tin"
                       v-model="v$.tin.$model"
                       :class="{ 'border-red-500': v$.tin.$error }"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -338,10 +366,13 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6 lg:col-span-2">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      for="website"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >Company website</label
                     >
                     <input
+                    id="website"
                       v-model="v$.website.$model"
                       :class="{ 'border-red-500': v$.website.$error }"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -364,10 +395,13 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   <div class="mb-6">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      for="address"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >Company Address <RedDot
                     /></label>
                     <input
+                    id="address"
                       v-model="v$.address.$model"
                       :class="{ 'border-red-500': v$.address.$error }"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -386,10 +420,13 @@
                     </div>
                   </div>
                   <div class="mb-6">
-                    <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                    <label
+                      for="City"
+                      class="mb-2 font-medium text-sm text-[#344054] block"
                       >City <RedDot
                     /></label>
                     <input
+                    id="City"
                       v-model="v$.city.$model"
                       :class="{ 'border-red-500': v$.city.$error }"
                       class="px-[14px] py-[10px] h-11 text-sm w-full border rounded-lg placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -409,10 +446,13 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label title="" class="mb-2 font-medium text-sm text-[#344054] block"
+                  <label
+                    for="description"
+                    class="mb-2 font-medium text-sm text-[#344054] block"
                     >Description</label
                   >
                   <textarea
+                  id="description"
                     v-model="v$.description.$model"
                     :class="{ 'border-red-500': v$.description.$error }"
                     rows="4"
@@ -458,7 +498,11 @@
         -->
 
         <button
-          :disabled="isLoading || (form.country?.toLowerCase() === 'nigeria' && (!form.registrationNo || !form.tin))"
+          :disabled="
+            isLoading ||
+            (form.country?.toLowerCase() === 'nigeria' &&
+              (!form.registrationNo || !form.tin))
+          "
           :class="{
             'opacity-60 cursor-not-allowed': v$.$silentErrors.length,
           }"

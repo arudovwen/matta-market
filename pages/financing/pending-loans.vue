@@ -36,7 +36,7 @@
           v-if="!docLoading && financeData?.length"
           class="border border-[#EAECF0] rounded-lg overflow-x-auto"
         >
-          <table aria-describedby="" class="table-auto w-full">
+          <table aria-describedby="true" class="table-auto w-full">
             <thead>
               <tr>
                 <th

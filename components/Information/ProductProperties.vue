@@ -8,7 +8,7 @@
 
     <div>
       <h3 class="mb-4 text-lg">Physical Properties</h3>
-      <table aria-describedby="" class="w-full">
+      <table aria-describedby="true" class="w-full">
         <thead>
           <tr>
             <th

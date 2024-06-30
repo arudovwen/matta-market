@@ -55,7 +55,7 @@
       class="overflow-x-auto max-w-[80vw] lg:max-w-full pb-20"
       v-if="requests.length"
     >
-      <table aria-describedby="" class="w-full">
+      <table aria-describedby="true" class="w-full">
         <thead>
           <tr>
             <th

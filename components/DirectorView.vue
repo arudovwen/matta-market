@@ -3,8 +3,8 @@
     <h3 class="font-medium text-2xl mb-8">Director Detail</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >Full name</label
+        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >Full name</p
         >
         <p class="text-[#344054] text-base font-medium">
           {{ detail.firstName }} {{ detail.lastName }}
@@ -12,31 +12,31 @@
       </div>
 
       <div class="mb-6">
-        <label title="" for="email" class="mb-2 font-normal text-xs block">E-mail</label>
+        <p title="" for="email" class="mb-2 font-normal text-xs block">E-mail</p>
         <p class="text-[#344054] text-base font-medium">
           {{ detail.email }}
         </p>
       </div>
       <div class="mb-6">
-        <label title="" class="mb-2 font-normal text-xs block" for="phone"
+        <p title="" class="mb-2 font-normal text-xs block" for="phone"
           >Phone number
-        </label>
+        </p>
         <p class="text-[#344054] text-base font-medium">
           {{ detail.phone }}
         </p>
       </div>
 
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >BVN</label
+        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >BVN</p
         >
         <p class="text-[#344054] text-base font-medium">
           {{ detail.bvn }}
         </p>
       </div>
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >Date of birth</label
+        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >Date of birth</p
         >
         <p class="text-[#344054] text-base font-medium">
           {{ moment(detail.dob).format("ll") }}
@@ -44,8 +44,8 @@
       </div>
 
       <div class="l mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >Linkedin</label
+        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >Linkedin</p
         >
         <p class="text-[#344054] text-base font-medium">
           {{ detail.linkedIn || "-" }}
@@ -54,7 +54,7 @@
       <div
         class="w-full rounded-[10px] border border-[#EAECF0] overflow-hidden md:min-w-[560px] md:col-span-2"
       >
-        <table aria-describedby="" class="w-full">
+        <table aria-describedby="true" class="w-full">
           <thead>
             <tr>
               <th

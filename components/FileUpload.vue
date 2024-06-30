@@ -1,12 +1,13 @@
 <template>
   <div>
-    <label title="" v-if="label" class="block text-sm mb-[10px] text-[#344054]"
+    <label for="upload" v-if="label" class="block text-sm mb-[10px] text-[#344054]"
       >{{ label }} <RedDot v-if="isCumpulsory"
     /></label>
     <div
       class="flex-1 rounded-lg py-1 pr-[14px] pl-2 h-11 text-sm w-full border border-[##EAECF0] placeholder:text-[#B6B7B9] bg-[#F9FAFB] focus:outline-matta-black/20 flex items-center"
     >
       <input
+      id="upload"
         ref="fileInputRef"
         type="file"
         class="hidden"

@@ -348,7 +348,7 @@
         <div
           class="border border-[#DCDEE6] rounded-[10px] overflow-hidden mt-6"
         >
-          <table aria-describedby="" class="w-full">
+          <table aria-describedby="true" class="w-full">
             <thead>
               <tr>
                 <th

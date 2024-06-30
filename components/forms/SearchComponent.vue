@@ -40,7 +40,7 @@
             :value="option"
             v-slot="{ selected, active }"
           >
-            <li
+            <span
               :class="[
                 active ? 'bg-gray-100' : '',
                 'relative cursor-default select-none py-2 pl-[15px] pr-4 text-loft-black hover:bg-gray-50',
@@ -53,7 +53,7 @@
                 ]"
                 >{{ option.name }}</span
               >
-            </li>
+            </span>
           </ComboboxOption>
         </ComboboxOptions>
       </TransitionRoot>

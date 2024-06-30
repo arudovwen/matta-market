@@ -10,8 +10,9 @@
     <div>
       <form @submit.prevent="handleSubmit">
         <div class="mb-6">
-          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
+          <label for="email" title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
           <input
+          id="email"
             v-model="v$.email.$model"
             :class="{ 'border-red-500': v$.email.$error }"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -30,11 +31,12 @@
           </div>
         </div>
         <div class="mb-6">
-          <label title="" class="mb-2 font-normal text-xs block text-matta-black"
+          <label for="Password" class="mb-2 font-normal text-xs block text-matta-black"
             >Password</label
           >
           <div class="relative flex items-center">
             <input
+            id="Password"
               v-model="v$.password.$model"
               :class="{ 'border-red-500 ': v$.password.$error }"
               class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -64,8 +66,8 @@
           </div>
         </div>
         <div class="mb-6 flex items-center justify-between">
-          <label title="" class="flex text-xs items-center text-matta-black">
-            <input type="checkbox" class="mr-1 accent-matta-black" /> Keep me
+          <label for="checkbox" class="flex text-xs items-center text-matta-black">
+            <input id="checkbox" type="checkbox" class="mr-1 accent-matta-black" /> Keep me
             logged in
           </label>
           <NuxtLink to="/forgot-password" class="text-xs hover:underline"

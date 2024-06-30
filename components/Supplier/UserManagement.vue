@@ -70,7 +70,7 @@
       </div>
       <div v-if="!isPageLoading">
         <div v-if="!isEmpty" class="max-w-[80vw]">
-          <table aria-describedby="" class="w-full">
+          <table aria-describedby="true" class="w-full">
             <thead>
               <tr>
                 <th

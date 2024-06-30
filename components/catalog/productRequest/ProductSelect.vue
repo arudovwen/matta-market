@@ -6,7 +6,11 @@
       This information will help us get you the right product.
     </p>
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Choose Market</label>
+      <label
+        for="market"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Choose Market</label
+      >
       <SelectComponent
         @onGetData="onGetMarket"
         :options="marketOptions"
@@ -28,7 +32,11 @@
       </div>
     </div>
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Choose Product  <RedDot /></label>
+      <label
+        for="product"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Choose Product <RedDot
+      /></label>
       <ProductSearch :id="sampleForm.market" v-model="sampleForm.product" />
       <div
         class="text-red-500 mt-1"
@@ -42,10 +50,15 @@
     </div>
 
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Number of Samples  <RedDot /></label>
+      <label
+        for="numberofSamples"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Number of Samples <RedDot
+      /></label>
       <div class="flex relative">
         <div class="flex relative items-center w-full">
           <select
+            id="numberofSamples"
             :value="request1$.numberofSamples.$model"
             disabled
             :class="{ 'border-red-500 ': request1$.numberofSamples.$error }"
@@ -70,8 +83,8 @@
       </div>
     </div>
     <div class="mb-6">
-      <label title="" class="mb-2 font-normal text-xs block"
-        >Estimate purchase of product  <RedDot />
+      <label for="expectedAnualUsage" class="mb-2 font-normal text-xs block"
+        >Estimate purchase of product <RedDot />
       </label>
       <div class="flex relative">
         <div
@@ -87,6 +100,7 @@
           </button>
           <input
             min="1"
+            id="expectedAnualUsage"
             class="min-w-[30px] md:min-w-[50px] text-center text-xs md:text-base border bg-transparent focus:outline-matta-black/10 flex-1 p-2"
             v-model="sampleForm.expectedAnualUsage"
           />
@@ -150,7 +164,6 @@ const markets = ref([]);
 const request1$ = inject("request1$");
 const sampleForm = inject("sampleForm");
 function onGetMarket(data) {
-
   sampleForm.market = data.id;
 }
 

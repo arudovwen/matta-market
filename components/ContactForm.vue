@@ -9,12 +9,13 @@
           Contact us form
         </legend>
         <div class="mb-6">
-          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Full name <RedDot /></label>
+          <label for="fullName" class="mb-2 font-medium text-sm text-[#344054] block text-left">Full name <RedDot /></label>
           <input
             v-model="v$.fullName.$model"
             :class="{ 'border-red-500': v$.fullName.$error }"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Provide your full name"
+            id="fullName"
           />
           <div
             class="text-red-500 mt-1"
@@ -27,12 +28,13 @@
           </div>
         </div>
         <div class="mb-6">
-          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number  <RedDot /></label>
+          <label for="phone" title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number  <RedDot /></label>
           <input
             v-model="v$.phone.$model"
             :class="{ 'border-red-500': v$.phone.$error }"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Phone number"
+            id="phone"
           />
           <div
             class="text-red-500 mt-1"
@@ -45,12 +47,13 @@
           </div>
         </div>
         <div class="mb-6">
-          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail  <RedDot /></label>
+          <label for="email" title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail  <RedDot /></label>
           <input
             v-model="v$.email.$model"
             :class="{ 'border-red-500': v$.email.$error }"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="E-mail"
+            id="email"
           />
           <div
             class="text-red-500 mt-1"
@@ -63,12 +66,13 @@
           </div>
         </div>
         <div class="mb-6">
-          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Message  <RedDot /></label>
+          <label for="message" class="mb-2 font-medium text-sm text-[#344054] block text-left">Message  <RedDot /></label>
           <textarea
             v-model="v$.message.$model"
             :class="{ 'border-red-500': v$.message.$error }"
             class="rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Type here"
+            id="message"
           ></textarea>
           <div
             class="text-red-500 mt-1"

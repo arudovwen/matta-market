@@ -19,7 +19,7 @@
     <div class="bg-white rounded-lg">
       <div v-if="!isPageLoading">
         <div v-if="!isEmpty" class="border rounded-lg border-[#E7EBEE]">
-          <table aria-describedby="" class="w-full">
+          <table aria-describedby="true" class="w-full">
             <thead>
               <tr>
                 <th

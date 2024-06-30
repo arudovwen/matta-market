@@ -26,7 +26,7 @@
     </div>
   </div>
   <div v-if="quotes.length">
-    <table aria-describedby="" class="w-full">
+    <table aria-describedby="true" class="w-full">
       <thead>
         <tr>
           <th

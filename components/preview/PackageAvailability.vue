@@ -1,7 +1,7 @@
 <template>
   <section class="p-8">
     <div>
-      <table aria-describedby="" class="w-full" v-if="product">
+      <table aria-describedby="true" class="w-full" v-if="product">
         <thead>
           <tr>
             <th
