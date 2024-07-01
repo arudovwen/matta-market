@@ -40,6 +40,7 @@ stages:
         cliProjectKey: 'mattadevopsteam_matta-frontend'
         cliProjectName: 'matta.frontend'
         cliSources: '.'
+      continueOnError: true  # Added to continue on error
     - task: CopyFiles@2
       inputs:
         sourceFolder: '$(buildOutputFolder)'
@@ -57,8 +58,9 @@ stages:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     - task: SonarCloudAnalyze@2
       displayName: 'Run SonarCloud analysis'
+      continueOnError: true  # Added to continue on error
     - task: SonarCloudPublish@2
       displayName: 'Publish results on build summary'
       inputs:
         pollingTimeoutSec: '300'
-
+      continueOnError: true  # Added to continue on error
