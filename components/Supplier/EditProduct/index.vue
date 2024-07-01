@@ -314,7 +314,7 @@ function getProducers() {
     PageNumber: 1,
     PageSize: 100000,
   }).then((res) => {
-    producers.value = [...res?.data?.data?.data];
+    producers.value = [...res.data.data.data];
   });
 }
 watch(route, () => {

@@ -215,7 +215,7 @@ function getProducers() {
     PageNumber: 1,
     PageSize: 1000000,
   }).then((res) => {
-    producers.value = [...res?.data?.data?.data];
+    producers.value = [...res.data.data.data];
   });
 }
 onMounted(() => {
