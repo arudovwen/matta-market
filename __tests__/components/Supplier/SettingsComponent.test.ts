@@ -8,51 +8,31 @@ import SettingsComponent from "~/components/Supplier/SettingsComponent.vue";
 describe("SettingsComponent", () => {
   vi.spyOn(authServices, "logOut").mockReturnValue({});
 
-  vi.mock("~/services/settingservices", async (importOriginal) => {
-		const actual = await importOriginal()
+  vi.mock("~/services/settingservices", async () => {
     return {
-			...actual,
-      getesfrontstats: vi.fn().mockResolvedValue({
-				data: {
-					data: {data: {}}
-				}
-			}),
-      getstorefronttrending: vi.fn().mockResolvedValue({
-				data: {
-					data: []
-				}
-			}),
+      getProfile: vi.fn().mockResolvedValue({
+        data: {
+          data: { data: {} },
+        },
+      }),
+      changepassword: vi.fn().mockResolvedValue({
+        data: {
+          data: [],
+        },
+      }),
+      updateProfile: vi.fn().mockResolvedValue({
+        data: {
+          data: [],
+        },
+      }),
+      settimezone: vi.fn().mockResolvedValue({
+        data: {
+          data: [],
+        },
+      }),
     };
   });
 
-  vi.mock("~/services/chartservice", async (importOriginal) => {
-		const actual = await importOriginal()
-    return {
-			...actual,
-      getorderchart: vi.fn().mockResolvedValue({
-        status: 200,
-        data: {
-          data: {
-            data: [
-              {
-                chartrecords: []
-              },
-              {
-                chartrecords: []
-              },
-            ],
-          },
-        },
-      }),
-			getchart: vi.fn().mockResolvedValue({
-				data: {
-					data: {
-						
-					}
-				}
-			})
-    };
-  });
   vi.mock("vue-router", () => {
     return {
       RouterView: {},
@@ -78,7 +58,7 @@ describe("SettingsComponent", () => {
     };
   });
 
-	const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
+  const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
 
   it("renders", async () => {
     const component = render(SettingsComponent, {
@@ -101,12 +81,11 @@ describe("SettingsComponent", () => {
         mocks: {},
       },
     });
-		expect(screen.getByText("Profile information"))
-		await waitFor(() =>
+    expect(screen.getByText("Profile information"));
+    await waitFor(() =>
       fireEvent.change(screen.getByTestId("imgup"), {
         target: { files: [file] },
       })
     );
-		
   });
 });

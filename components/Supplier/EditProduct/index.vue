@@ -192,8 +192,8 @@ function create_UUID() {
 }
 
 onBeforeMount(() => {
-  if (route.query.stage) {
-    active.value = route.query.stage;
+  if (route?.query?.stage) {
+    active.value = route?.query?.stage;
   }
   getTechLevels(queryParams).then((res) => {
     technologies.value = res.data.data;
@@ -252,7 +252,7 @@ function updateData() {
   form.productQuestions = product.value.productQuestions || [];
   form.tags = product.value.tags || [];
   form.supplierId = product.value.supplierId;
-  form.propertyItems = !Object.keys(product.value.propertyItems.propertyItems)
+  form.propertyItems = !Object.keys(product.value.propertyItems?.propertyItems)
     .length
     ? {
         features: {
@@ -299,8 +299,8 @@ function updateData() {
       value: "other",
     },
   ]),
-    (form.properties = product.value.propertyItems.properties || []);
-  form.propertyValueList = product.value.propertyItems.propertyValueList || [];
+    (form.properties = product.value?.propertyItems?.properties || []);
+  form.propertyValueList = product.value?.propertyItems?.propertyValueList || [];
   isLoading.value = false;
 }
 function getProducers() {
@@ -313,7 +313,7 @@ function getProducers() {
   });
 }
 watch(route, () => {
-  active.value = parseInt(route.query.stage || 1);
+  active.value = parseInt(route?.query?.stage || 1);
 
   if (route.query.id) {
     isLoading.value = true;
