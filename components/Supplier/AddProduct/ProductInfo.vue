@@ -634,13 +634,12 @@
           </div>
           <div>
             <label
-              for="logo"
+              for="upload"
               class="mb-2 font-medium text-sm text-[#344054] block text-left"
               >Producer Logo</label
             >
             <label for="upload" class="cursor-pointer">
               <input
-                id="logo"
                 @change="handleEvent($event)"
                 type="file"
                 accept="image/*"
