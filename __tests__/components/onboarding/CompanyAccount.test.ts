@@ -1,12 +1,26 @@
-import { render, screen } from '@testing-library/vue'
+import { render, screen } from "@testing-library/vue";
 import { it, expect, describe, vi, afterEach } from "vitest";
 import CompanyAccount from "~/components/onboarding/CompanyAccount.vue";
 import { RouterLinkStub } from "@vue/test-utils";
 import { not } from "@vuelidate/validators";
 import * as vueRouter from "vue-router";
+import Vuex, { createStore, mapActions } from "vuex";
 
 const mockRoutePush = vi.fn();
-
+const store = createStore({
+  state: {
+    loggedUser: {
+      fullName: "Oduro Tolulope",
+      phoneNumber: "07036845422",
+    },
+  },
+  getters: {
+    loggedUser: () => ({
+      fullName: "Oduro Tolulope",
+      phoneNumber: "07036845422",
+    }),
+  },
+});
 describe("CompanyAccount", () => {
   vi.mock("vue-router", () => {
     return {
@@ -33,21 +47,30 @@ describe("CompanyAccount", () => {
     },
     redirectedFrom: undefined,
   }));
+  vi.mock("~/services/productservices", async () => {
+    return {
+      getProfile: vi.fn().mockResolvedValue({
+        status: 200,
+        data: {data:{}},
+      }),
+    };
+  });
   it("Renders without error", () => {
     const component = render(CompanyAccount, {
-			global: {
-				stubs: {
-					RouterLink: RouterLinkStub,
-          OnboardingCompanyInformation:true,
-          OnboardingCompanyDirectors:true,
-          OnboardingCompanyProfile:true,
-          OnboardingCompanyDocuments:true,
+      global: {
+        plugins: [store],
+        stubs: {
+          RouterLink: RouterLinkStub,
+          OnboardingCompanyInformation: true,
+          OnboardingCompanyDirectors: true,
+          OnboardingCompanyProfile: true,
+          OnboardingCompanyDocuments: true,
           OnboardingCompanySideBar: true,
-          OnboardingLayoutTopBar:true
-				}
-			}
+          OnboardingLayoutTopBar: true,
+        },
+      },
     });
-    expect(screen.getByTestId('account')).toBeTruthy();
-		component.unmount()
+    expect(screen.getByTestId("account")).toBeTruthy();
+    component.unmount();
   });
 });

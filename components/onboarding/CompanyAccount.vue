@@ -25,17 +25,8 @@ onMounted(() => {
     active.value = route.query.onboarding_stage;
   }
 });
-watch(route, () => {
+watch(()=> [route?.query?.onboarding_stage], () => {
   active.value = route?.query?.onboarding_stage;
 });
 provide("active", active)
 </script>
-
-<style lang="scss" scoped>
-.bg-img {
-  background-image: url("@/assets/img/bee.svg");
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: bottom;
-}
-</style>
