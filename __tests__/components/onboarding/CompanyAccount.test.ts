@@ -43,6 +43,7 @@ describe("CompanyAccount", () => {
           OnboardingCompanyProfile:true,
           OnboardingCompanyDocuments:true,
           OnboardingCompanySideBar: true,
+          OnboardingLayoutTopBar:true
 				}
 			}
     });

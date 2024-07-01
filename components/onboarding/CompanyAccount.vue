@@ -21,7 +21,7 @@ import { useRoute } from "vue-router";
 const active = ref(1);
 const route = useRoute();
 onMounted(() => {
-  if (route.query.onboarding_stage) {
+  if (route?.query?.onboarding_stage) {
     active.value = route.query.onboarding_stage;
   }
 });
