@@ -306,12 +306,13 @@
             </div>
             <div class="mb-6">
               <label
-                id="description"
+                for="description"
                 class="mb-2 font-medium text-sm text-[#344054] block text-left"
               >
                 Description</label
               >
               <TextEditor
+               id="description"
                 v-model="prop.description"
                 placeholder="Enter description"
               />

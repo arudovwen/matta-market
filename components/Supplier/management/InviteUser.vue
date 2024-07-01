@@ -87,7 +87,7 @@
                         :value="option"
                         as="template"
                       >
-                        <li
+                        <span
                           :class="[
                             active ? 'bg-blue-50 text-primary' : '',
                             'relative cursor-default select-none py-2 pl-[15px] pr-4  mb-1 text-loft-black hover:bg-gray-50',
@@ -116,7 +116,7 @@
                               aria-hidden="true"
                             />
                           </span>
-                        </li>
+                        </span>
                       </ListboxOption>
                     </ListboxOptions>
                   </transition>

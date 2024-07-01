@@ -99,7 +99,7 @@
               </div>
               <div class="grid lg:grid-cols-2 gap-x-6">
                 <div class="mb-6">
-                  <label title="email" class="mb-2 font-normal text-sm block"
+                  <label fo="email" class="mb-2 font-normal text-sm block"
                     >E-mail <RedDot
                   /></label>
                   <div class="flex relative items-center">
@@ -163,7 +163,7 @@
                 </div>
 
                 <div class="mb-6">
-                  <label state="for" class="mb-2 font-normal text-sm block"
+                  <label for="state" class="mb-2 font-normal text-sm block"
                     >State <RedDot
                   /></label>
 
