@@ -41,9 +41,9 @@ import {
   getSupplierProduct,
   getmarketlevels,
   getTechLevels,
+  getFeaturedManufacturer
 } from "~/services/productservices";
 import Preview from "~/components/preview/IndexPreview";
-import { getFeaturedManufacturer } from "~/services/productservices";
 
 const route = useRoute();
 const router = useRouter();
@@ -57,17 +57,17 @@ const tabs = [
   {
     name: "Product Info",
     value: 1,
-    url: `/storefront/products/edit-product?id=${route.query.id}&stage=1`,
+    url: `/storefront/products/edit-product?id=${route?.query?.id}&stage=1`,
   },
   {
     name: "Properties",
     value: 2,
-    url: `/storefront/products/edit-product?id=${route.query.id}&stage=2`,
+    url: `/storefront/products/edit-product?id=${route?.query?.id}&stage=2`,
   },
   {
     name: "Documents",
     value: 3,
-    url: `/storefront/products/edit-product?id=${route.query.id}&stage=3`,
+    url: `/storefront/products/edit-product?id=${route?.query?.id}&stage=3`,
   },
 ];
 
@@ -121,7 +121,7 @@ const queryParams = reactive({
   Search: "",
   PageSize: 10,
   PageNumber: 1,
-  productId: route.query.id,
+  productId: route?.query?.id,
 });
 const form = reactive({
   id: "",
@@ -167,6 +167,28 @@ const form = reactive({
     },
   ],
 });
+const defaultPropertyItems = {
+  features: {
+    propertyItems: [],
+    subSection: [],
+  },
+  applications: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+  property: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+  compliance: {
+    propertyItems: [],
+    subSection: [],
+  },
+  technical: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+};
 
 function togglePreview() {
   isPreviewing.value = !isPreviewing.value;
@@ -175,7 +197,7 @@ function togglePreview() {
 function toggleNext(val) {
   // active.value = val;
   router.push(
-    `/storefront/products/edit-product?stage=${val}&id=${route.query.id}`
+    `/storefront/products/edit-product?stage=${val}&id=${route?.query?.id}`
   );
 }
 function create_UUID() {
@@ -252,31 +274,9 @@ function updateData() {
   form.productQuestions = product.value.productQuestions || [];
   form.tags = product.value.tags || [];
   form.supplierId = product.value.supplierId;
-  form.propertyItems = !Object.keys(product.value.propertyItems?.propertyItems)
-    .length
-    ? {
-        features: {
-          propertyItems: [],
-          subSection: [],
-        },
-        applications: {
-          propertyItems: [{ property: null, propertyValue: [] }],
-          subSection: [],
-        },
-        property: {
-          propertyItems: [{ property: null, propertyValue: [] }],
-          subSection: [],
-        },
-        compliance: {
-          propertyItems: [],
-          subSection: [],
-        },
-        technical: {
-          propertyItems: [{ property: null, propertyValue: [] }],
-          subSection: [],
-        },
-      }
-    : product.value.propertyItems.propertyItems;
+  form.propertyItems = product.value.propertyItems?.propertyItems && Object.keys(product.value.propertyItems.propertyItems).length
+  ? product.value.propertyItems.propertyItems
+  : defaultPropertyItems;
   (form.documentproperties = [
     {
       text: "Material safety data sheet (MSDS)",

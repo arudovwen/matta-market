@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <aside class="rounded-xl grid grid-cols-1 gap-y-3" v-if="product">
     <article
       class="p-6 lg:p-8 rounded-xl bg-[#F1F3F5]"
@@ -170,12 +170,11 @@ function dropIndex(val) {
   openIndex.value = openIndex.value.filter((i) => i !== val);
 }
 onMounted(() => {
-  console.log(product);
   getProducers({ Search: product.manufacturer }).then((res) => {
-    producer.value = res.data.data.data[0];
+    producer.value = res.data.data?.data?.[0];
   });
   getsupplier({ supplierId: product.supplierId }).then((res) => {
     supplier.value = res.data;
   });
 });
-</script> -->
+</script>

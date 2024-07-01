@@ -5,6 +5,18 @@ import AppHeader from "~/components/AppHeader.vue";
 import { createTestingPinia } from "@pinia/testing";
 
 describe("AppHeader", () => {
+  vi.mock("~/services/notificationservice", () => ({
+    getnotification: vi.fn().mockResolvedValue({
+      data: {
+        text: "/images/test-banner.png",
+      },
+    }),
+  }));
+  vi.mock("~/services/authservices", () => ({
+    logOut: vi.fn().mockResolvedValue({
+      data: {},
+    }),
+  }));
   it("renders with logged in user", async () => {
     const component = render(AppHeader, {
       global: {

@@ -122,10 +122,56 @@ describe("EditProduct index", () => {
           ProductProperties: true,
           ProductDocuments: true,
           AdditionalInformation: true,
-          PreviewIndexPreview: true,
+          Preview: true,
         },
         provide: {
           company: ref(null),
+          product: ref({
+            id: "",
+            ProductId: "",
+            name: "",
+            pickUpLocationId: "",
+            manufacturer: "",
+            markets: [],
+            marketApplications: [],
+            marketSubapplications: [],
+            technologies: [],
+            techApplications: [],
+            techSubApplications: [],
+            description: "",
+            gallery: [],
+            price: 0,
+            unit: "",
+            sampleAvailable: false,
+            packagesAvailable: [],
+            packages: [],
+            hideProduct: false,
+            hidePrice: false,
+            productBrandName: "",
+            supplierId: null,
+            propertyItems:{
+              features: {
+                propertyItems: [],
+                subSection: [],
+              },
+              applications: {
+                propertyItems: [{ property: null, propertyValue: [] }],
+                subSection: [],
+              },
+              property: {
+                propertyItems: [{ property: null, propertyValue: [] }],
+                subSection: [],
+              },
+              compliance: {
+                propertyItems: [],
+                subSection: [],
+              },
+              technical: {
+                propertyItems: [{ property: null, propertyValue: [] }],
+                subSection: [],
+              },
+            }
+          }),
         },
       },
     });
