@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <aside class="rounded-xl grid grid-cols-1 gap-y-3" v-if="product">
     <article
       class="p-6 lg:p-8 rounded-xl bg-[#F1F3F5]"
@@ -178,4 +178,4 @@ onMounted(() => {
     supplier.value = res.data;
   });
 });
-</script>
+</script> -->
