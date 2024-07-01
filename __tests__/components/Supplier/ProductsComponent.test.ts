@@ -12,10 +12,10 @@ describe("ProductsComponent", () => {
 
   const file = new File(["(⌐□_□)"], "chucknorris.png", { type: "image/png" });
 
-  vi.mock("~/services/productservices", async (importOriginal) => {
-    const actual = await importOriginal();
+  vi.mock("~/services/productservices", async () => {
+  
     return {
-      ...actual,
+ 
       getProducers: vi.fn().mockResolvedValue({
         data: {
           data: {
@@ -145,6 +145,20 @@ describe("ProductsComponent", () => {
                 pickUpLocationId: null,
               },
             ],
+          },
+        },
+      }),
+      getMarkets: vi.fn().mockResolvedValue({
+        data: {
+          data: {
+            data: [{ title: "One" }, { title: "Two" }, { title: "Three" }],
+          },
+        },
+      }),
+      getproductcount: vi.fn().mockResolvedValue({
+        data: {
+          data: {
+            data: [{ title: "One" }, { title: "Two" }, { title: "Three" }],
           },
         },
       }),
