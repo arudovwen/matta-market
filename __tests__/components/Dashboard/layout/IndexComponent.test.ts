@@ -1,7 +1,6 @@
 import { render } from "@testing-library/vue";
 import { describe, expect, it, vi } from "vitest";
 import IndexComponent from "~/components/Dashboard/layout/IndexComponent.vue";
-import MainContent from "~/components/favourites/MainContent.vue";
 
 describe("IndexComponent", () => {
   vi.mock("vue-router", () => {
