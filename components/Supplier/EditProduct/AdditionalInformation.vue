@@ -584,4 +584,4 @@ function openmodal(val, id) {
   isAdding.value = true;
   index.value = id;
 }
-</script>~/utils/fileHandler
+</script>
