@@ -148,10 +148,6 @@
 </template>
 
 <script setup>
-import GoogleTranslateSelect from "@google-translate-select/vue3";
-
-import { ref, provide } from "vue";
-
 const route = useRoute();
 const open = ref(false);
 const handleGoogleTranslateSelect = (language) => {

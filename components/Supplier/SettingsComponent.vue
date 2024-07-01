@@ -99,7 +99,7 @@
               </div>
               <div class="grid lg:grid-cols-2 gap-x-6">
                 <div class="mb-6">
-                  <label fo="email" class="mb-2 font-normal text-sm block"
+                  <label for="email" class="mb-2 font-normal text-sm block"
                     >E-mail <RedDot
                   /></label>
                   <div class="flex relative items-center">
@@ -400,7 +400,6 @@ import "vue-advanced-cropper/dist/style.css";
 
 import {
   getProfile,
-  deleteaccount,
   settimezone,
   updateProfile,
   changepassword,
@@ -539,19 +538,6 @@ const states = computed(() => {
     ).states || []
   );
 });
-// function handleDelete(val) {
-//   isShowing.value = val;
-//   open.value = true;
-// }
-// function deleteAccount() {
-//   deleteaccount.then((res) => {
-//     if (res.status == 200) {
-//       toast.info("Account deleted successfully");
-//       store.logOut();
-//       window.location.href = "/";
-//     }
-//   });
-// }
 async function handlePassword() {
   const validity = await newv$.value.$validate();
   if (!validity) return;

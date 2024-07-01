@@ -87,16 +87,12 @@
   </form>
 </template>
 <script setup>
-import { useStore } from "vuex";
 import { addrequest } from "~/services/procurementservice";
 import useVuelidate from "@vuelidate/core";
 import {
   required,
   email,
-  numeric,
-  // helpers,
-  // minLength,
-  // maxLength,
+  numeric
 } from "@vuelidate/validators";
 import { toast } from 'vue3-toastify';
 

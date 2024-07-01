@@ -473,7 +473,6 @@ import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 import { updateAdditional } from "~/services/productservices";
 import Modal from "~/components/IndexModal";
-import { uploadfile } from "~/services/onboardingservices";
 import fileHandler from "~/utils/fileHandler";
 
 const form = inject("form");

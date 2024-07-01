@@ -469,7 +469,6 @@ import { ChevronUpDownIcon } from "@heroicons/vue/24/solid";
 import { useRouter } from "vue-router";
 import { toast } from 'vue3-toastify';
 import { updateAdditional } from "~/services/productservices";
-import { uploadfile } from "~/services/onboardingservices";
 import fileHandler from "~/utils/fileHandler";
 
 
