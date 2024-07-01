@@ -105,7 +105,7 @@
                       :key="i"
                       :value="p"
                     >
-                      <li
+                      <span
                         :class="[
                           'relative cursor-pointer flex items-cente gap-x-2 capitalize text-matta-black  hover:text-primary select-none py-2 pl-6 pr-4 text-left',
                         ]"
@@ -120,7 +120,7 @@
                             <p class="text-[11px]">{{ p.role }}</p>
                           </div>
                         </div>
-                      </li>
+                      </span>
                     </ComboboxOption>
                   </ComboboxOptions>
                 </TransitionRoot>

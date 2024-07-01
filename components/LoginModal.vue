@@ -67,11 +67,13 @@
                       </div>
                       <div class="mb-6">
                         <label
+                        for="password"
                           class="mb-2 font-normal text-xs block text-matta-black"
                           >Password</label
                         >
                         <div class="relative flex items-center">
                           <input
+                          id="password"
                             v-model="v$.password.$model"
                             :class="{ 'border-red-500 ': v$.password.$error }"
                             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -103,10 +105,11 @@
                         </div>
                       </div>
                       <div class="mb-6 flex items-center justify-between">
-                        <label
+                        <label for="logged"
                           class="flex text-xs items-center text-matta-black"
                         >
                           <input
+                          id="logged"
                             type="checkbox"
                             class="mr-1 accent-matta-black"
                           />

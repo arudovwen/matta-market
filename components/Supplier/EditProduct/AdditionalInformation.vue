@@ -3,7 +3,7 @@
   <form class="flex flex-col gap-y-3" @submit.prevent="handleSubmit">
     <div class="bg-white p-6 lg:p-8 rounded-lg">
       <div class="w-[85%]">
-        <label for="" class="mb-4 font-normal block">
+        <label for="productQuestions" class="mb-4 font-normal block">
           Questions
           <!-- <span class="font-light text-xs text-[#ABABAB]"
             >(Optional)</span
@@ -30,6 +30,7 @@
           <div class="flex-1">
             <div class="mb-6">
               <input
+              id="n.question"
                 v-model="n.question"
                 class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                 autocomplete="off"
@@ -63,7 +64,7 @@
     <div class="grid grid-cols-2 gap-x-3">
       <div class="bg-white p-6 lg:p-8 rounded-lg">
         <div class="mb-5 text-left">
-          <label for="" class="mb-2 font-normal block">
+          <label for="experts" class="mb-2 font-normal block">
             Experts
             <!-- <span class="font-light text-xs text-[#ABABAB]"
               >(Optional)</span
@@ -105,7 +106,7 @@
                       :key="i"
                       :value="p"
                     >
-                      <li
+                      <span
                         :class="[
                           'relative cursor-pointer flex items-cente gap-x-2 capitalize text-matta-black  hover:text-primary select-none py-2 pl-6 pr-4 text-left',
                         ]"
@@ -120,7 +121,7 @@
                             <p class="text-[11px]">{{ p.role }}</p>
                           </div>
                         </div>
-                      </li>
+                      </span>
                     </ComboboxOption>
                   </ComboboxOptions>
                 </TransitionRoot>
@@ -225,7 +226,7 @@
       </div>
       <div class="bg-white p-6 lg:p-8 rounded-lg">
         <div class="mb-5 text-left">
-          <label for="" class="mb-2 font-normal block">
+          <label for="tags" class="mb-2 font-normal block">
             Tags
             <!-- <span class="font-light text-xs text-[#ABABAB]"
               >(Optional)</span

@@ -165,7 +165,7 @@
         />
       </div>
       <div class="md:col-span-2">
-        <label for="" class="mb-4 mt-3 font-medium text-sm block"
+        <label for="companyDocuments" class="mb-4 mt-3 font-medium text-sm block"
           >Company documents
         </label>
 

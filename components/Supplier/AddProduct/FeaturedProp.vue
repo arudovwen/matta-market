@@ -18,8 +18,7 @@
           :title="desc"
           class="cursor-pointer"
         >
-           <AppIcon icon="quill:info" iconClass="text-gray-600" />
-         
+          <AppIcon icon="quill:info" iconClass="text-gray-600" />
         </span>
       </h3>
       <p class="text-xs text-[#475467]">{{ subtext }}</p>
@@ -43,7 +42,7 @@
           v-for="(prop, id) in form.propertyItems[type].propertyItems"
           :key="id"
         >
-          <div class="flex-1  w-full">
+          <div class="flex-1 w-full">
             <Listbox v-model="prop.property">
               <div class="relative mt-1 w-full">
                 <ListboxButton
@@ -137,7 +136,7 @@
               </div>
             </div>
           </div>
-          <div class="flex-1  w-full">
+          <div class="flex-1 w-full">
             <Combobox v-model="prop.propertyValue" multiple>
               <div class="relative mt-1 w-full">
                 <div
@@ -291,11 +290,13 @@
           <div class="flex-1">
             <div class="mb-6">
               <label
+                for="subSectionName"
                 class="mb-2 font-medium text-sm text-[#344054] block text-left"
               >
                 Subsection name</label
               >
               <input
+                id="subSectionName"
                 class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                 autocomplete="off"
                 autofocus="on"
@@ -305,6 +306,7 @@
             </div>
             <div class="mb-6">
               <label
+                id="description"
                 class="mb-2 font-medium text-sm text-[#344054] block text-left"
               >
                 Description</label

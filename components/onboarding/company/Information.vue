@@ -160,7 +160,7 @@
 
                     <FormGroup label="" name="state">
                       <SelectVueSelect
-                      id="state"
+                        id="state"
                         v-model="form.state"
                         :disabled="!form.country"
                         :options="mystates"
@@ -182,12 +182,12 @@
 
                   <div class="mb-6">
                     <label
-                      title="email"
+                      for="email"
                       class="mb-2 font-medium text-sm text-[#344054] block"
                       >E-mail <RedDot
                     /></label>
                     <input
-                    id="email"
+                      id="email"
                       v-model="v$.email.$model"
                       :class="{ 'border-red-500': v$.email.$error }"
                       class="px-[14px] py-[10px] h-11 text-sm rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -207,7 +207,6 @@
 
                   <div class="mb-6">
                     <label
-                      title=""
                       for="Phone"
                       class="mb-2 font-medium text-sm text-[#344054] block"
                       >Phone number <RedDot
@@ -236,7 +235,7 @@
 
                     <div class="flex relative items-center">
                       <select
-                      id="companyType"
+                        id="companyType"
                         v-model="v$.companyType.$model"
                         :class="{ 'border-red-500': v$.companyType.$error }"
                         class="appearance-none rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -273,7 +272,7 @@
 
                     <div class="flex relative items-center">
                       <select
-                      id="sector"
+                        id="sector"
                         :disabled="!form.companyType"
                         v-model="v$.sector.$model"
                         :class="{ 'border-red-500': v$.sector.$error }"
@@ -308,14 +307,14 @@
                     v-if="form.country?.toLowerCase() === 'nigeria'"
                   >
                     <label
-                    for="registrationNo"
+                      for="registrationNo"
                       class="mb-2 font-medium text-sm text-[#344054] block"
                     >
                       CAC Registration number
                       <RedDot
                     /></label>
                     <input
-                    id="registrationNo"
+                      id="registrationNo"
                       v-model="v$.registrationNo.$model"
                       :class="{ 'border-red-500': v$.registrationNo.$error }"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -344,7 +343,7 @@
                     /></label>
 
                     <input
-                    id="tin"
+                      id="tin"
                       v-model="v$.tin.$model"
                       :class="{ 'border-red-500': v$.tin.$error }"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -372,7 +371,7 @@
                       >Company website</label
                     >
                     <input
-                    id="website"
+                      id="website"
                       v-model="v$.website.$model"
                       :class="{ 'border-red-500': v$.website.$error }"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -401,7 +400,7 @@
                       >Company Address <RedDot
                     /></label>
                     <input
-                    id="address"
+                      id="address"
                       v-model="v$.address.$model"
                       :class="{ 'border-red-500': v$.address.$error }"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -426,7 +425,7 @@
                       >City <RedDot
                     /></label>
                     <input
-                    id="City"
+                      id="City"
                       v-model="v$.city.$model"
                       :class="{ 'border-red-500': v$.city.$error }"
                       class="px-[14px] py-[10px] h-11 text-sm w-full border rounded-lg placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -452,7 +451,7 @@
                     >Description</label
                   >
                   <textarea
-                  id="description"
+                    id="description"
                     v-model="v$.description.$model"
                     :class="{ 'border-red-500': v$.description.$error }"
                     rows="4"

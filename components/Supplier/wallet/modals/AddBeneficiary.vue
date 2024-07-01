@@ -5,9 +5,10 @@
     <form @submit.prevent="handleSubmit">
       <div class="grid grid-cols-1 gap-6">
         <div class="mb-6">
-          <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Bank name</label>
+          <label for="bank" class="mb-2 font-medium text-sm text-[#344054] block text-left">Bank name</label>
           <div class="relative flex items-center">
             <input
+            id="bank"
               v-model="v$.bank.$model"
               :class="{ 'border-red-500 ': v$.bank.$error }"
               class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -25,11 +26,12 @@
           </div>
         </div>
         <div class="mb-6">
-          <label for="" class="mb-2 font-normal text-xs block text-matta-black"
+          <label for="accountNo" class="mb-2 font-normal text-xs block text-matta-black"
             >Account Number</label
           >
           <div class="relative flex items-center">
             <input
+            id="accountNo"
               v-model="v$.accountNo.$model"
               :class="{ 'border-red-500 ': v$.accountNo.$error }"
               class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"

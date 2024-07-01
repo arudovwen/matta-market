@@ -111,11 +111,13 @@
                       <div class="grid grid-cols-2 gap-x-6">
                         <div class="mb-6">
                           <label
+                          for="password"
                             class="mb-2 font-normal text-xs block text-matta-black"
                             >Password <RedDot
                           /></label>
                           <div class="relative flex items-center">
                             <input
+                            id="password"
                               v-model="v$.password.$model"
                               :class="{ 'border-red-500 ': v$.password.$error }"
                               class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -148,11 +150,13 @@
                         </div>
                         <div class="mb-6">
                           <label
+                          for="confirmPassword"
                             class="mb-2 font-normal text-xs block text-matta-black"
                             >Confirm Password <RedDot
                           /></label>
                           <div class="relative flex items-center">
                             <input
+                            id="confirmPassword"
                               v-model="v$.confirmPassword.$model"
                               :class="{
                                 'border-red-500 ': v$.confirmPassword.$error,

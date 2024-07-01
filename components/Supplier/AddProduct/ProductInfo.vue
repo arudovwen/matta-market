@@ -14,11 +14,13 @@
               <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
                 <div class="mb-6">
                   <label
+                    for="name"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
                   >
                     <RedDot /> Product generic name
                   </label>
                   <input
+                    id="name"
                     v-model="v$.name.$model"
                     class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                     autocomplete="off"
@@ -37,6 +39,7 @@
                 </div>
                 <div class="mb-6">
                   <label
+                    for="productBrandName"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
                   >
                     Product brand name
@@ -44,6 +47,7 @@
 
                   <div class="flex relative items-center">
                     <input
+                      id="productBrandName"
                       v-model="v$.productBrandName.$model"
                       class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                       placeholder=""
@@ -64,6 +68,7 @@
               <div class="">
                 <div class="mb-6">
                   <label
+                    for="manufacturer"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
                     <RedDot /> Producer
@@ -125,7 +130,7 @@
                             :value="i.title"
                             v-slot="{ selected, active }"
                           >
-                            <li
+                            <span
                               class="relative cursor-default select-none py-2"
                             >
                               <div class="flex items-center gap-x-4">
@@ -169,7 +174,7 @@
                               >
                                 <CheckIcon class="h-5 w-5" aria-hidden="true" />
                               </span>
-                            </li>
+                            </span>
                           </ComboboxOption>
                         </ComboboxOptions>
                       </TransitionRoot>
@@ -189,6 +194,7 @@
               <div class="">
                 <div class="mb-6">
                   <label
+                    for="allmarkets"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
                     <RedDot /> Markets
@@ -223,6 +229,7 @@
               <div class="">
                 <div class="mb-6">
                   <label
+                    for="techApplications"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
                     <RedDot /> Applications
@@ -256,6 +263,7 @@
               </div>
               <div class="mb-6">
                 <label
+                  for="Description"
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
                 >
                   <RedDot />
@@ -288,6 +296,7 @@
 
               <div class="mb-6">
                 <label
+                  for="location"
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
                 >
                   <span>Pickup location </span>
@@ -508,23 +517,29 @@
         <div
           class="bg-white rounded-lg py-6 mt-6 flex flex-col lg:flex-row gap-x-10 justify-start lg:items-center gap-y-2 lg:gap-y-0"
         >
-          <label for="" class="flex item-center leading-[normal]">
+          <label
+            for="sampleAvailable"
+            class="flex item-center leading-[normal]"
+          >
             <input
+              id="sampleAvailable"
               type="checkbox"
               v-model="form.sampleAvailable"
               class="mr-2 accent-primary-500"
             /><span class="text-[#344054]"> Sample is available</span>
           </label>
-          <label for="" class="flex item-center leading-[normal]">
+          <label for="hideProduct" class="flex item-center leading-[normal]">
             <input
+              id="hideProduct"
               type="checkbox"
               v-model="form.hideProduct"
               class="mr-2 accent-primary-500"
             />
             <span class="text-[#344054]">Hide product</span>
           </label>
-          <label for="" class="flex item-center leading-[normal]">
+          <label for="hidePrice" class="flex item-center leading-[normal]">
             <input
+              id="hidePrice"
               type="checkbox"
               v-model="form.hidePrice"
               class="mr-2 accent-primary-500"
@@ -588,10 +603,11 @@
             ></i>
           </div>
           <div class="mb-5">
-            <label for="" class="mb-2 font-normal text-xs block"
+            <label for="title" class="mb-2 font-normal text-xs block"
               >Name <span class="text-red-500 pl-[.5px]">*</span></label
             >
             <input
+              id="title"
               v-model="producerForm.title"
               class="rounded-lg px-[14px] py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               placeholder="Enter producer name"
@@ -601,6 +617,7 @@
           <div class="flex gap-x-6 mb-5">
             <div class="w-full">
               <label
+                for="country"
                 class="mb-2 font-medium text-sm text-[#344054] block text-left"
                 >Country</label
               >
@@ -608,6 +625,7 @@
             </div>
             <div class="w-full">
               <label
+                for="state"
                 class="mb-2 font-medium text-sm text-[#344054] block text-left"
                 >State</label
               >
@@ -616,11 +634,13 @@
           </div>
           <div>
             <label
+              for="logo"
               class="mb-2 font-medium text-sm text-[#344054] block text-left"
               >Producer Logo</label
             >
             <label for="upload" class="cursor-pointer">
               <input
+                id="logo"
                 @change="handleEvent($event)"
                 type="file"
                 accept="image/*"
@@ -916,7 +936,9 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       });
   } else {
     addProduct(form)
@@ -936,7 +958,9 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       });
   }
 }
