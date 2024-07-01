@@ -9,8 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
-    "sonar": "npm run coverage && npx sonar-scanner -Dsonar.token=sqp_89bc8b54bf89af00432ff9bd6ff610d5bd21352a"
+    "coverage": "vitest run --coverage"
+    // "sonar": "npm run coverage && npx sonar-scanner -Dsonar.token=sqp_89bc8b54bf89af00432ff9bd6ff610d5bd21352a"
   },
   "devDependencies": {
     "@iconify/vue": "^4.1.1",
