@@ -248,7 +248,7 @@ const isOpen = ref(false);
 function getFinanceData() {
   docLoading.value = true;
   sellerdoc(queryParams).then((res) => {
-    // financeData.value = res.data.data.data;
+    // financeData.value = res?.data?.data?.data;
     // queryParams.totalCount = res.data.data.totalCount;
     docLoading.value = false;
   });

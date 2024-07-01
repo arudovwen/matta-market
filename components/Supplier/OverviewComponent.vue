@@ -286,14 +286,14 @@ onMounted(() => {
 function getAllCharts() {
   getorderchart(query).then((res) => {
     if (res.status === 200) {
-      thisyear.value = res.data.data.data[0]?.chartrecords.map(
+      thisyear.value = res?.data?.data?.data[0]?.chartrecords.map(
         (item) => item.month
       );
-      thisyearseries.value = res.data.data.data[1]?.chartrecords.map(
+      thisyearseries.value = res?.data?.data?.data[1]?.chartrecords.map(
         (item) => item.total
       );
 
-      lastyearseries.value = res.data.data.data[0].chartrecords.map(
+      lastyearseries.value = res?.data?.data?.data[0].chartrecords.map(
         (item) => item.total
       );
 

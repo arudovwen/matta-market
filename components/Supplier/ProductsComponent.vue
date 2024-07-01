@@ -302,7 +302,7 @@ onMounted(() => {
     markets.value = res.data.data;
   });
   getProducers({ PageSize: 100000 }).then((res) => {
-    producers.value = res.data.data.data;
+    producers.value = res?.data?.data?.data;
   });
 });
 function refresh() {
@@ -336,10 +336,10 @@ function getData() {
 	getSupplierProducts(queryParams)
 	.then((res) => {
 		console.log("fire - getData");
-		console.log(res.data.data.data, "de");
-		products.value = res.data.data.data;
+		console.log(res?.data?.data?.data, "de");
+		products.value = res?.data?.data?.data;
 		queryParams.totalCount = res.data.data.totalCount;
-		queryParams.pagecount = res.data.data.data.length;
+		queryParams.pagecount = res?.data?.data?.data.length;
 		isPageLoading.value = false;
 		isPageLoading.value = true;
     })

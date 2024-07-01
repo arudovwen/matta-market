@@ -104,7 +104,7 @@ onMounted(() => {
 function getquotes() {
   buyerquotes(quoteParams).then((res) => {
     count.quotes = quoteParams.totalCount = res.data.data.totalCount;
-    quotes.value = res.data.data.data;
+    quotes.value = res?.data?.data?.data;
   });
 }
 watch(

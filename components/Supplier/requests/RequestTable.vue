@@ -210,7 +210,7 @@ function getRequests() {
   isLoading.value = true;
 	console.log("wo na");
   samplerequests(queryParams).then((res) => {
-    requests.value = res.data.data.data;
+    requests.value = res?.data?.data?.data;
     queryParams.totalCount = res.data.data.totalCount;
     isLoading.value = false;
   });

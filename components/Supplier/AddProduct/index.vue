@@ -189,7 +189,7 @@ function toggleNext(val) {
   );
 }
 onBeforeMount(() => {
-  if (route.query.stage) {
+  if (route?.query?.stage) {
     active.value = route.query.stage;
   }
   getTechLevels(queryParams).then((res) => {
@@ -215,12 +215,11 @@ function getProducers() {
     PageNumber: 1,
     PageSize: 1000000,
   }).then((res) => {
-    producers.value = [...res.data.data.data];
+    producers.value = [...res?.data?.data?.data];
   });
 }
 onMounted(() => {
-  if (route.query.stage) {
-		console.log("q = ", route.query.stage);
+  if (route?.query?.stage) {
     active.value = route.query.stage;
   }
 });
@@ -236,7 +235,28 @@ function create_UUID() {
   );
   return uuid;
 }
-
+const defaultPropertyItems = {
+  features: {
+    propertyItems: [],
+    subSection: [],
+  },
+  applications: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+  property: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+  compliance: {
+    propertyItems: [],
+    subSection: [],
+  },
+  technical: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+};
 const selectedMeasurement = ref(measurements[0]);
 const product = ref({
   id: "",
@@ -292,32 +312,12 @@ function updateData() {
   form.productQuestions = product.value.productQuestions || [];
   form.tags = product.value.tags || [];
   form.supplierId = product.value.supplierId;
-  form.propertyItems = !Object.keys(product.value.propertyItems.propertyItems)
-    .length
-    ? {
-        features: {
-          propertyItems: [],
-          subSection: [],
-        },
-        applications: {
-          propertyItems: [{ property: null, propertyValue: [] }],
-          subSection: [],
-        },
-        property: {
-          propertyItems: [{ property: null, propertyValue: [] }],
-          subSection: [],
-        },
-        compliance: {
-          propertyItems: [],
-          subSection: [],
-        },
-        technical: {
-          propertyItems: [{ property: null, propertyValue: [] }],
-          subSection: [],
-        },
-      }
-    : product.value.propertyItems.propertyItems;
-  (form.documentproperties = [
+  form.propertyItems =
+    product.value.propertyItems?.propertyItems &&
+    Object.keys(product.value.propertyItems.propertyItems).length
+      ? product.value.propertyItems.propertyItems
+      : defaultPropertyItems;
+  form.documentproperties = [
     {
       text: "Material safety data sheet (MSDS)",
       item: "Info such as the chemical properties.",
@@ -338,21 +338,28 @@ function updateData() {
       item: "Other types of product documents.",
       value: "other",
     },
-  ]),
-    (form.properties = product.value.propertyItems.properties || []);
-  form.propertyValueList = product.value.propertyItems.propertyValueList || [];
+  ];
+  form.properties = product.value?.propertyItems?.properties || [];
+  form.propertyValueList = product.value?.propertyItems?.propertyValueList || [];
 }
-watch(route, () => {
-  active.value = route.query.stage;
-  if (route.query.id) {
-    queryParams.productId = route.query.id;
-    getSupplierProduct(queryParams).then((res) => {
-      product.value = res.data.data;
-      updateData();
-    });
-  }
-});
 
+watch(
+  () => [route.query],
+  () => {
+    if (route?.query?.stage) {
+      active.value = route.query.stage;
+    }
+    if (route?.query?.id) {
+      queryParams.productId = route.query.id;
+      getSupplierProduct(queryParams).then((res) => {
+        if (res.status === 200) {
+          product.value = res.data.data;
+          updateData();
+        }
+      });
+    }
+  }
+);
 provide("technologies", technologies);
 provide("allmarkets", allmarkets);
 provide("form", form);

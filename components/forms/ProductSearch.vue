@@ -128,7 +128,7 @@ function getData() {
   getProducts(productParams)
     .then((res) => {
       if (res.status == 200) {
-        options.value = res.data.data.data;
+        options.value = res?.data?.data?.data;
         isLoading.value = false;
         if (props.modelValue) {
           selectedOption.value = filteredOptions.value.find(

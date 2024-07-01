@@ -89,7 +89,7 @@ function next() {
 }
 function getAllProducts() {
   getProducts(queryParams).then((res) => {
-    products.value = res.data.data.data.filter(
+    products.value = res?.data?.data?.data.filter(
       (item) => item.id != product.value.id
     );
   });

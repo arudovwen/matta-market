@@ -1,5 +1,7 @@
 <template>
- <div class="gap-y-8 flex flex-col bg-white rounded-[10px]  border border-[#F4F7FE]">
+  <div
+    class="gap-y-8 flex flex-col bg-white rounded-[10px] border border-[#F4F7FE]"
+  >
     <!-- Top bar   -->
     <HeaderComponent
       title="Edit a product"
@@ -41,7 +43,7 @@ import {
   getSupplierProduct,
   getmarketlevels,
   getTechLevels,
-  getFeaturedManufacturer
+  getFeaturedManufacturer,
 } from "~/services/productservices";
 import Preview from "~/components/preview/IndexPreview";
 
@@ -235,7 +237,7 @@ onBeforeMount(() => {
 function updateData() {
   form.id = route.query.id;
   form.ProductId = route.query.id;
-  form.pickUpLocationId = product.value.pickupLocationId
+  form.pickUpLocationId = product.value.pickupLocationId;
   form.name = product.value.name;
   form.unit = product.value.packagesAvailable
     ? product.value.packagesAvailable[0].unit
@@ -274,10 +276,12 @@ function updateData() {
   form.productQuestions = product.value.productQuestions || [];
   form.tags = product.value.tags || [];
   form.supplierId = product.value.supplierId;
-  form.propertyItems = product.value.propertyItems?.propertyItems && Object.keys(product.value.propertyItems.propertyItems).length
-  ? product.value.propertyItems.propertyItems
-  : defaultPropertyItems;
-  (form.documentproperties = [
+  form.propertyItems =
+    product.value.propertyItems?.propertyItems &&
+    Object.keys(product.value.propertyItems.propertyItems).length
+      ? product.value.propertyItems.propertyItems
+      : defaultPropertyItems;
+  form.documentproperties = [
     {
       text: "Material safety data sheet (MSDS)",
       item: "Info such as the chemical properties.",
@@ -298,9 +302,10 @@ function updateData() {
       item: "Other types of product documents.",
       value: "other",
     },
-  ]),
-    (form.properties = product.value?.propertyItems?.properties || []);
-  form.propertyValueList = product.value?.propertyItems?.propertyValueList || [];
+  ];
+  form.properties = product.value?.propertyItems?.properties || [];
+  form.propertyValueList =
+    product.value?.propertyItems?.propertyValueList || [];
   isLoading.value = false;
 }
 function getProducers() {
@@ -309,7 +314,7 @@ function getProducers() {
     PageNumber: 1,
     PageSize: 100000,
   }).then((res) => {
-    producers.value = [...res.data.data.data];
+    producers.value = [...res?.data?.data?.data];
   });
 }
 watch(route, () => {
@@ -332,7 +337,7 @@ provide("togglePreview", togglePreview);
 provide("toggleNext", toggleNext);
 provide("producers", producers);
 provide("getProducers", getProducers);
-provide("active", active)
+provide("active", active);
 </script>
 
 <style lang="scss" scoped>

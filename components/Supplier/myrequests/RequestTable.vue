@@ -196,7 +196,7 @@ const loading = ref(true);
 onMounted(() => {
   getRequests();
   procurementproducts().then((res) => {
-    products.value = res.data.data.data.map((i) => {
+    products.value = res?.data?.data?.data.map((i) => {
       loading.value = false;
       return {
         id: i.productId,
@@ -207,7 +207,7 @@ onMounted(() => {
 
   procurementsuppliers().then((res) => {
     loading.value = false;
-    suppliers.value = res.data.data.data.map((i) => {
+    suppliers.value = res?.data?.data?.data.map((i) => {
    
       return {
         id: i.supplierId,
@@ -243,7 +243,7 @@ const isLoading = ref(true);
 function getRequests() {
 	isLoading.value = true;
   procurementrequests(queryParams).then((res) => {
-		requests.value = res.data.data.data;
+		requests.value = res?.data?.data?.data;
     queryParams.totalCount = res.data.data.totalCount;
     isLoading.value = false;
   });

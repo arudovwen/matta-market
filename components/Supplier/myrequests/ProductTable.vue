@@ -173,7 +173,7 @@ function selectall() {
 function getRequestDoc() {
   isLoading.value = true;
   getproductrequests(queryParams).then((res) => {
-    requests.value = res.data.data.data;
+    requests.value = res?.data?.data?.data;
     queryParams.totalCount = res.data.data.totalCount;
     isLoading.value = false;
   });

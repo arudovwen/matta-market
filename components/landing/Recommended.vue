@@ -109,7 +109,7 @@ function getAllProducts() {
     .then((res) => {
       if (res.status === 200) {
        
-        content.value = res.data.data.data;
+        content.value = res?.data?.data?.data;
       }
     })
     .catch(() => {

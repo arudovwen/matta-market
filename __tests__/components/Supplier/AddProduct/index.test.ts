@@ -85,15 +85,61 @@ vi.spyOn(vueRouter, "useRoute").mockImplementationOnce(() => reactive({
 }))
 
 vi.mock("~/services/productservices", () => ({
+	getFeaturedManufacturer: vi.fn().mockResolvedValue({
+		data: {
+		  data: {
+			data: [],
+			logo: "/images/test-logo.png",
+			storeName: "Test Store",
+		  },
+		},
+	  }),
+	getSupplierProduct: vi.fn().mockResolvedValue({
+		data: {
+		  data: {
+			data: [],
+			storeSlug: "/images/test-banner.png",
+			logo: "/images/test-logo.png",
+			storeName: "Test Store",
+		  },
+		},
+	  }),
     getMarkets: vi.fn().mockResolvedValue({
       data: {
         data: {
+			data: [],
           storeSlug: "/images/test-banner.png",
           logo: "/images/test-logo.png",
           storeName: "Test Store",
         },
       },
     }),
+	getmarketlevels: vi.fn().mockResolvedValue({
+		data: {
+		  data: {
+			data: [],
+			storeSlug: "/images/test-banner.png",
+			logo: "/images/test-logo.png",
+			storeName: "Test Store",
+		  },
+		},
+	  }),
+	  getTechLevels: vi.fn().mockResolvedValue({
+		status: 200,
+		data: {
+		  data: [
+			{
+			  product: "Metal rod",
+			  soldBy: "Some Guy",
+			  amountWithTax: 100000,
+			  shippingName: "New Shipping",
+			  shippingAddress: "10007 Mountain Drive",
+			  orderNumber: "456789",
+			},
+		  ],
+		  totalCount: 1,
+		},
+	  }),
 	updateProperties: vi.fn().mockResolvedValue({
 		data: {
 		  data: {
