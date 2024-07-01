@@ -1,7 +1,5 @@
 import { it, expect, describe, vi, afterEach } from "vitest";
 import { render, screen } from "@testing-library/vue";
-import FilterBar from "~/components/catalog/FilterBar.vue";
-import AdditionalInformation from "~/components/Supplier/AddProduct/AdditionalInformation.vue";
 import AddProduct from "~/components/Supplier/AddProduct/index.vue";
 import * as vueRouter from "vue-router";
 
@@ -85,6 +83,45 @@ vi.spyOn(vueRouter, "useRoute").mockImplementationOnce(() => reactive({
 	},
 	redirectedFrom: undefined,
 }))
+
+vi.mock("~/services/productservices", () => ({
+    getMarkets: vi.fn().mockResolvedValue({
+      data: {
+        data: {
+          storeSlug: "/images/test-banner.png",
+          logo: "/images/test-logo.png",
+          storeName: "Test Store",
+        },
+      },
+    }),
+	updateProperties: vi.fn().mockResolvedValue({
+		data: {
+		  data: {
+			storeSlug: "/images/test-banner.png",
+			logo: "/images/test-logo.png",
+			storeName: "Test Store",
+		  },
+		},
+	  }),
+	  updateDocuments: vi.fn().mockResolvedValue({
+		data: {
+		  data: {
+			storeSlug: "/images/test-banner.png",
+			logo: "/images/test-logo.png",
+			storeName: "Test Store",
+		  },
+		},
+	  }),
+	  updateAdditional: vi.fn().mockResolvedValue({
+		data: {
+		  data: {
+			storeSlug: "/images/test-banner.png",
+			logo: "/images/test-logo.png",
+			storeName: "Test Store",
+		  },
+		},
+	  }),
+  }));
 describe("AddProduct index", () => {
   const sortPrice = vi.fn;
   it("Should render without error", () => {
