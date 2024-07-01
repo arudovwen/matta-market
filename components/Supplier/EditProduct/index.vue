@@ -313,7 +313,7 @@ function getProducers() {
   });
 }
 watch(route, () => {
-  active.value = parseInt(route?.query?.stage || 1);
+  active.value = parseInt(route?.query?.stage) || 1;
 
   if (route.query.id) {
     isLoading.value = true;
