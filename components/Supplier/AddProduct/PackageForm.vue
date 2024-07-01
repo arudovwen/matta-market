@@ -120,7 +120,7 @@
       />
 
       <div>
-        <label title="" for="isAvailable" class="flex item-center leading-[normal]">
+        <label for="isAvailable" class="flex item-center leading-[normal]">
           <input
             id="isAvailable"
             type="checkbox"

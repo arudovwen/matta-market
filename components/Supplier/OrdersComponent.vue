@@ -5,7 +5,7 @@
       subtext=" List of orders received by your storefront."
       btnText="Create order"
       btnIcon="humbleicons:plus"
-      @onClick="router.push('/markets')"
+      @click="router.push('/markets')"
     /> -->
 
     <div class="rounded-lg bg-white">

@@ -2,8 +2,9 @@
   <h3 class="font-medium text-2xl mb-6">Update payment method</h3>
   <form @submit.prevent="handleSubmit">
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Card number</label>
+      <label for="card_number" class="mb-2 font-medium text-sm text-[#344054] block text-left">Card number</label>
       <input
+      id="card_number"
 				data-testid="card-number-input"
         v-model="v$.card_number.$model"
         :class="{ 'border-red-500': v$.card_number.$error }"
@@ -24,11 +25,12 @@
     </div>
     <div class="grid grid-cols-2 gap-x-6">
       <div class="mb-6">
-        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="expiry_date" class="mb-2 font-normal text-xs block text-matta-black"
           >Expiry date</label
         >
         <div class="relative flex items-center">
           <input
+          id="expiry_date"
 						data-testid="exp"
             v-model="v$.expiry_date.$model"
             :class="{ 'border-red-500 ': v$.expiry_date.$error }"
@@ -48,11 +50,12 @@
         </div>
       </div>
       <div class="mb-6">
-        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="cvv" class="mb-2 font-normal text-xs block text-matta-black"
           >CVV</label
         >
         <div class="relative flex items-center">
           <input
+          id="cvv"
 						data-testid="cvv-input"
             v-model="v$.cvv.$model"
             :class="{ 'border-red-500 ': v$.cvv.$error }"
@@ -73,8 +76,8 @@
       </div>
     </div>
     <div class="mb-6">
-      <label title="" class="text-xs flex gap-x-2 items-center">
-        <input type="checkbox" class="accent-matta-black" />Mark as Default
+      <label for="method" class="text-xs flex gap-x-2 items-center">
+        <input id="method" type="checkbox" class="accent-matta-black" />Mark as Default
         payment method
       </label>
     </div>

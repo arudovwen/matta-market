@@ -5,10 +5,13 @@
       Choose your shipping options for samples requested.
     </p>
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+      <label
+        for="email"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >E-mail</label
       >
       <input
+        id="email"
         class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
         placeholder="E-mail"
         autocomplete="off"
@@ -26,7 +29,9 @@
       </div>
     </div>
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+      <label
+        for="phone"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >Phone number</label
       >
       <div class="flex relative rounded-lg h-11">
@@ -44,7 +49,9 @@
     </div>
 
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+      <label
+        for="Address"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >Address</label
       >
       <Listbox v-model="selectedoption">
@@ -141,10 +148,13 @@
     </div>
 
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+      <label
+        for="addressDescription"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >Description</label
       >
       <textarea
+        id="addressDescription"
         v-model="request2$.addressDescription.$model"
         placeholder=""
         row="4"

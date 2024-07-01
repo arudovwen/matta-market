@@ -43,7 +43,7 @@
             v-for="item in orders"
             :key="item"
             :order="item"
-            @onClick="openOrder(item)"
+            @click="openOrder(item)"
           />
         </div>
         <div v-if="!isLoading">

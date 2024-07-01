@@ -39,7 +39,7 @@
       </p>
       <form @submit.prevent="handleSubmit" v-if="!isSent">
         <div class="mb-10" v-if="!isSent">
-          <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
+          <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
           <input
             :value="route.params.email"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"

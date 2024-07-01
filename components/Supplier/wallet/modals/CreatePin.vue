@@ -6,7 +6,7 @@
 
     <form @submit.prevent="handleSubmit" v-if="step === 1">
       <div class="mb-6">
-        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="" class="mb-2 font-normal text-xs block text-matta-black"
           >New pin</label
         >
         <div class="relative flex items-center">
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="" class="mb-2 font-normal text-xs block text-matta-black"
           >Confirm pin</label
         >
         <div class="relative flex items-center">
@@ -94,7 +94,7 @@
     </form>
     <form @submit.prevent="verifyWalletPin" v-if="step === 2">
       <div class="mb-6">
-        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="" class="mb-2 font-normal text-xs block text-matta-black"
           >Otp code</label
         >
         <div class="relative flex items-center">

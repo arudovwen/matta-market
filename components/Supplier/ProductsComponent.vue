@@ -8,7 +8,7 @@
         btnText="Add product"
         btnMiniText="Add"
         btnIcon="humbleicons:plus"
-        @onClick="router.push('/storefront/products/add-product')"
+        @click="router.push('/storefront/products/add-product')"
         btnClass="!text-xs md:!text-sm"
       />
 

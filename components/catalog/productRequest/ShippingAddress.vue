@@ -5,12 +5,13 @@
       Choose your shipping options for samples requested.
     </p>
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail  <RedDot /></label>
+      <label for="email" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail  <RedDot /></label>
       <input
         class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
         placeholder="E-mail"
         autocomplete="off"
         autofocus="on"
+        id="email"
         v-model="request2$.email.$model"
       />
       <div
@@ -24,11 +25,12 @@
       </div>
     </div>
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number  <RedDot /></label>
+      <label for="phone" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number  <RedDot /></label>
       <div class="flex relative rounded-lg h-11">
         <PhoneCodes v-model="phoneCode" />
 
         <input
+        id="phone"
           v-model="request2$.phone.$model"
           class="flex-1 rounded-r-lg text-[13px] px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           autocomplete="off"
@@ -49,7 +51,7 @@
     </div>
 
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Address  <RedDot /></label>
+      <label for="selectedoption" class="mb-2 font-medium text-sm text-[#344054] block text-left">Address  <RedDot /></label>
       <Listbox v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton
@@ -142,25 +144,6 @@
         </div>
       </div>
     </div>
-    <!-- 
-    <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Description</label>
-      <textarea
-        v-model="request2$.addressDescription.$model"
-        placeholder=""
-        row="4"
-        class="placeholder:text-xs rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-      ></textarea>
-      <div
-        class="text-red-500 mt-1"
-        v-for="error of request2$.addressDescription.$errors"
-        :key="error.$uid"
-      >
-        <div class="error-msg text-error text-xs font-semibold">
-          {{ error.$message }}
-        </div>
-      </div>
-    </div> -->
   </form>
   <IndexModal :isOpen="isOpen" @togglePopup="isOpen = false">
     <template #content>

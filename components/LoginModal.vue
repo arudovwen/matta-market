@@ -41,10 +41,11 @@
                   <div>
                     <form @submit.prevent="handleSubmit">
                       <div class="mb-6">
-                        <label title="" class="mb-2 font-normal text-xs block"
+                        <label for="email" class="mb-2 font-normal text-xs block"
                           >E-mail</label
                         >
                         <input
+                        id="email"
                           v-model="v$.email.$model"
                           :class="{ 'border-red-500': v$.email.$error }"
                           class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"

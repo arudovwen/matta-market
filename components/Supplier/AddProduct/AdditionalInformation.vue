@@ -60,7 +60,7 @@
     <div class="grid grid-cols-2 gap-x-3">
       <div class="bg-white p-6 lg:p-8 rounded-lg">
         <div class="mb-5 text-left">
-          <label title="" class="mb-2 font-normal block">
+          <label for="productExperts" class="mb-2 font-normal block">
             Experts
             <!-- <span class="font-light text-xs text-[#ABABAB]"
               >(Optional)</span
@@ -225,7 +225,7 @@
       </div>
       <div class="bg-white p-6 lg:p-8 rounded-lg">
         <div class="mb-5 text-left">
-          <label title="" class="mb-2 font-normal block">
+          <label for="tags" class="mb-2 font-normal block">
             Tags
             <!-- <span class="font-light text-xs text-[#ABABAB]"
               >(Optional)</span

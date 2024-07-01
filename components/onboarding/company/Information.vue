@@ -23,7 +23,7 @@
             >
               <div class="flex items-center gap-x-6">
                 <span>
-                  <label title="" for="upload">
+                  <label for="upload">
                     <span
                       v-if="!image"
                       class="h-[64px] w-[64px] rounded-full flex items-center text-xs bg-[#F1F3F5] justify-center"

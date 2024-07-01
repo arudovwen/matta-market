@@ -44,7 +44,7 @@
         </div>
 
         <div class="mb-6">
-          <label title="" class="mb-2 font-medium text-sm block"
+          <label for="bannerUrl" class="mb-2 font-medium text-sm block"
             >Storefront Banner
             <span class="text-[#B9B9B9]">(Optional)</span></label
           >
@@ -59,7 +59,7 @@
         </div>
 
         <div class="mb-6">
-          <label title="" class="mb-1 font-medium text-sm block"
+          <label for="campaignBanner" class="mb-1 font-medium text-sm block"
             >Campaign Banner
             <span class="text-[#B9B9B9]">(Optional)</span></label
           >

@@ -3,7 +3,7 @@
   <form @submit.prevent="handleSubmit">
     <div class="grid grid-cols-2 gap-x-4">
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">First name</label>
+        <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">First name</label>
         <input
           v-model="v$.firstName.$model"
           :class="{ 'border-red-500': v$.firstName.$error }"
@@ -22,7 +22,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Last name</label>
+        <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Last name</label>
         <input
           v-model="v$.lastName.$model"
           :class="{ 'border-red-500': v$.lastName.$error }"
@@ -43,7 +43,7 @@
     </div>
     <div class="grid grid-cols-2 gap-x-4">
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Country</label>
+        <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Country</label>
         <div class="relative">
           <CountriesSelect v-model="v$.country.$model" />
           <div
@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">City</label>
+        <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">City</label>
         <input
           v-model="v$.city.$model"
           :class="{ 'border-red-500': v$.city.$error }"
@@ -80,7 +80,7 @@
     </div>
     <div class="grid grid-cols-2 gap-x-4">
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Street</label>
+        <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Street</label>
         <input
           v-model="v$.street.$model"
           :class="{ 'border-red-500': v$.street.$error }"
@@ -99,7 +99,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Postal code</label>
+        <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Postal code</label>
         <input
           v-model="v$.postalCode.$model"
           :class="{ 'border-red-500': v$.postalCode.$error }"
@@ -119,7 +119,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label title="" class="text-xs flex gap-x-2 items-center">
+      <label for="" class="text-xs flex gap-x-2 items-center">
         <input type="checkbox" class="accent-matta-black" />Mark as Default
         shipping address
       </label>

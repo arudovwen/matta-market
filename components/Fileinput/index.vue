@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="filegroup">
-      <label title="" :for="name">
+      <label :for="name">
         <input
           type="file"
           @change="onChange"

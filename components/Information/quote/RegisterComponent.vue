@@ -42,8 +42,9 @@
       </div>
 
       <div class="mb-6">
-        <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
+        <label for="email" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
         <input
+        id="email"
           v-model="v$.email.$model"
           :class="{ 'border-red-500': v$.email.$error }"
           class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -62,11 +63,12 @@
         </div>
       </div>
       <div class="mb-6">
-        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="password" class="mb-2 font-normal text-xs block text-matta-black"
           >Password</label
         >
         <div class="relative flex items-center">
           <input
+          id="password"
             v-model="v$.password.$model"
             :class="{ 'border-red-500 ': v$.password.$error }"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -96,11 +98,12 @@
         </div>
       </div>
       <div class="mb-12">
-        <label title="" class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="confirmPassword" class="mb-2 font-normal text-xs block text-matta-black"
           >Confirm Password</label
         >
         <div class="relative flex items-center">
           <input
+          id="confirmPassword"
             v-model="v$.confirmPassword.$model"
             :class="{ 'border-red-500 ': v$.confirmPassword.$error }"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"

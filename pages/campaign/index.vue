@@ -9,7 +9,7 @@
       subtext="Manage all marketing and sales campaign"
       btnText="New campaign"
       btnIcon="humbleicons:plus"
-      @onClick="navigateTo('/campaign/new')"
+      @click="navigateTo('/campaign/new')"
 			onkeydown=""
     />
 

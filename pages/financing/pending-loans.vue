@@ -308,16 +308,16 @@ function handleType(key) {
   switch (parseInt(key)) {
     case 0:
       return "trade";
-      break;
+     
     case 1:
       return "supply";
-      break;
+     
     case 2:
       return "import";
-      break;
+     
     case 3:
       return "export";
-      break;
+     
 
     default:
       break;
@@ -355,7 +355,7 @@ const handleDelete = () => {
     .catch((err) => {
       toast.error(
         err?.response?.data?.message ||
-          err?.response?.data?.message ||
+          err?.response?.data?.Message ||
           "Withdraw request failed"
       );
     });

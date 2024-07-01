@@ -53,7 +53,7 @@
               </span>
             </div>
             <div class="flex items-center gap-x-3">
-              <label title="" for="upload" class="w-full lg:w-auto block lg:inline">
+              <label for="upload" class="w-full lg:w-auto block lg:inline">
                 <span
                   class="text-primary border border-primary- rounded-lg w-full lg:w-auto px-4 lg:px-6 py-2 lg:py-3 text-xs lg:text-sm cursor-pointer"
                 >
@@ -73,11 +73,12 @@
             <div>
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="mb-6">
-                  <label title="" class="mb-2 font-normal text-xs block"
+                  <label for="firstName" class="mb-2 font-normal text-xs block"
                     >First name
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
                   <input
+                  id="firstName"
                     v-model="v$.firstName.$model"
                     :class="{ 'border-red-500': v$.firstName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -95,11 +96,12 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label title="" class="mb-2 font-normal text-xs block"
+                  <label for="lastName" class="mb-2 font-normal text-xs block"
                     >Last name
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
                   <input
+                  id="lastName"
                     v-model="v$.lastName.$model"
                     :class="{ 'border-red-500': v$.lastName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -119,7 +121,7 @@
               </div>
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="mb-6">
-                  <label title="" class="mb-2 font-normal text-xs block"
+                  <label for="country" class="mb-2 font-normal text-xs block"
                     >Country
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
@@ -138,7 +140,7 @@
                 </div>
 
                 <div class="mb-6">
-                  <label title="" class="mb-2 font-normal text-xs block"
+                  <label for="state" class="mb-2 font-normal text-xs block"
                     >State
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
@@ -156,7 +158,7 @@
               </div>
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="mb-6">
-                  <label title="" class="mb-2 font-normal text-xs block"
+                  <label for="phone" class="mb-2 font-normal text-xs block"
                     >Phone number
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
@@ -164,6 +166,7 @@
                     <PhoneCodes v-model="form.code" />
 
                     <input
+                    id="phone"
                       :class="{ 'border-red-500': v$.phone.$error }"
                       v-model="v$.phone.$model"
                       class="flex-1 rounded-r-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -184,12 +187,13 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label title="" class="mb-2 font-normal text-xs block"
+                  <label for="email" class="mb-2 font-normal text-xs block"
                     >E-mail
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
                   <div class="flex relative items-center">
                     <input
+                    id="email"
                       :class="{ 'border-red-500': v$.email.$error }"
                       :value="form.email"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"

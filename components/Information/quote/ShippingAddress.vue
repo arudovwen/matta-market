@@ -15,7 +15,7 @@
       </p>
     </div>
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
+      <label for="phone" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
 
       <div class="flex relative rounded-lg h-11">
         <FormsPhoneCodes  v-model="request2$.phone.$model" />
@@ -33,7 +33,7 @@
     </div>
 
     <div class="mb-6">
-      <label title="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
+      <label for="selectedoption" class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
       <Listbox v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton
@@ -128,10 +128,11 @@
     </div>
 
     <div class="mb-6">
-      <label title="" class="mb-2 font-normal text-xs block"
+      <label for="additionalInformation" class="mb-2 font-normal text-xs block"
         >Additional information</label
       >
       <textarea
+      id="additionalInformation"
         v-model="request2$.additionalInformation.$model"
         placeholder=""
         row="4"

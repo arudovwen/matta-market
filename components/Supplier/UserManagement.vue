@@ -8,7 +8,7 @@
       subtext="Invite and assign roles to your company users"
       btnText="Add users"
       btnIcon="humbleicons:plus"
-      @onClick="openmodal('method')"
+      @click="openmodal('method')"
       className="!border-[#EAECF0]"
       :count="queryParams.totalCount"
 			onkeypress="() => {}"
