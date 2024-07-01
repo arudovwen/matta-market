@@ -38,6 +38,17 @@ describe("IndexComponent", () => {
       },
     }),
   }));
+  vi.mock("~/services/userservices", () => ({
+    getVendorInfo: vi.fn().mockResolvedValue({
+      data: {
+        data: {
+          storeSlug: "/images/test-banner.png",
+          logo: "/images/test-logo.png",
+          storeName: "Test Store",
+        },
+      },
+    }),
+  }));
   it("Should render without error", () => {
     render(IndexComponent, {
       global: {
