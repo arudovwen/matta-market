@@ -39,17 +39,15 @@ describe("IndexComponent", () => {
     }),
   }));
   it("Should render without error", () => {
-    const component = render(IndexComponent, {
+    render(IndexComponent, {
       global: {
         stubs: {
-         
           DashboardLayoutSideComponent: true,
           DashboardLayoutMainComponent: true,
         },
         provide: {
           company: ref(null),
         },
-      
       },
     });
     expect(screen).toMatchSnapshot();

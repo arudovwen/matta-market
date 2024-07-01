@@ -12,7 +12,6 @@
 import { getCompanyProfile } from "~/services/settingservices";
 
 const company = ref(null);
-
 onMounted(() => {
   try {
     getCompanyProfile().then((res) => {
