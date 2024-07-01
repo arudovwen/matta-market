@@ -256,7 +256,7 @@ import {
   updateDocuments,
 } from "@/services/settingservices";
 import { toast } from "vue3-toastify";
-import SelectComponent from "@/components/forms/SelectComponent";
+import SelectComponent from "~/components/forms/SelectComponent";
 
 const company = inject("company");
 const formData = inject("formData");

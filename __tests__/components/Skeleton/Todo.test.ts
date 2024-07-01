@@ -10,39 +10,12 @@ import { it, expect, describe, vi } from "vitest";
 import { createTestingPinia } from "@pinia/testing";
 import * as authServices from "~/services/authservices";
 import * as vueRouter  from "vue-router";
-import Todo from "~/components/Skeleton/Project-grid.vue";
+import Table from "~/components/Skeleton/Todo.vue";
 
-describe("Todo", () => {
-  vi.spyOn(authServices, "logOut").mockReturnValue({});
-
-	vi.mock("vue-router", () => {
-    return {
-      RouterView: {},
-      useRouter: () => {
-        return {
-          push: vi.fn(),
-        };
-      },
-      useRoute: vi.fn(),
-    };
-  });
-  vi.spyOn(vueRouter, "useRoute").mockImplementation(() => ({
-    fullPath: "",
-    hash: "",
-    matched: [],
-    name: "",
-    meta: {},
-    params: {},
-    path: "",
-    query: {
-      // @ts-ignore
-      onboarding_stage: 1,
-    },
-    redirectedFrom: undefined,
-  }));
+describe("Table", () => {
 
   it("renders", async () => {
-    const component = render(Todo, {
+    const component = render(Table, {
       props: {},
       global: {
         stubs: {

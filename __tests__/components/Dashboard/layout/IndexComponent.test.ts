@@ -29,7 +29,7 @@ describe("IndexComponent", () => {
       })),
     };
   });
-  vi.mock("@/services/settingservices", () => ({
+  vi.mock("~/services/settingservices", () => ({
     getCompanyProfile: vi.fn().mockResolvedValue({
       data: {
         bannerUrl: "/images/test-banner.png",

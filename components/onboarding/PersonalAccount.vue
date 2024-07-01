@@ -356,9 +356,9 @@ import {
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 // eslint-disable-next-line no-unused-vars
-import PhoneCodes from "@/components/forms/PhoneCodes";
-import CountriesSelect from "@/components/forms/CountriesSelect";
-import StatesSelect from "@/components/forms/StatesSelect";
+import PhoneCodes from "~/components/forms/PhoneCodes";
+import CountriesSelect from "~/components/forms/CountriesSelect";
+import StatesSelect from "~/components/forms/StatesSelect";
 import { replaceCountryCode } from "@/utils/replaceCountryCode";
 import useVuelidate from "@vuelidate/core";
 import {

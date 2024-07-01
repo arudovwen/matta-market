@@ -186,7 +186,7 @@ definePageMeta({
   layout: "dashboard",
 });
 import { Switch, SwitchGroup, SwitchLabel } from "@headlessui/vue";
-import AppIcon from "@/components/AppIcon";
+import AppIcon from "~/components/AppIcon";
 import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import {
   viewSettlement,

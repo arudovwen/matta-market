@@ -141,10 +141,10 @@
   />
 </template>
 <script setup>
-import IndexModal from "@/components/IndexModal";
+import IndexModal from "~/components/IndexModal";
 import { defineProps, ref, defineEmits } from "vue";
 import DirectorView from "./DirectorView.vue";
-import MediaViewer from "@/components/MediaViewer";
+import MediaViewer from "~/components/MediaViewer";
 import moment from "moment";
 import EmptyData from "./EmptyData.vue";
 

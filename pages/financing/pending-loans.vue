@@ -198,7 +198,7 @@
 </template>
 <script setup>
 import { Float } from "@headlessui-float/vue";
-import AppIcon from "@/components/AppIcon";
+import AppIcon from "~/components/AppIcon";
 import moment from "moment";
 import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import { getAllFinance, withdrawFinance } from "~/services/financeservice";

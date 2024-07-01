@@ -9,7 +9,7 @@
 
 <script setup>
 import { defineProps } from "vue";
-import AppIcon from "@/components/AppIcon";
+import AppIcon from "~/components/AppIcon";
 
 const props = defineProps(["status", "type", "stattype"]);
 const StatusClass = {

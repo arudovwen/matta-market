@@ -13,33 +13,6 @@ import * as vueRouter  from "vue-router";
 import Table from "~/components/Skeleton/Project-grid.vue";
 
 describe("Table", () => {
-  vi.spyOn(authServices, "logOut").mockReturnValue({});
-
-	vi.mock("vue-router", () => {
-    return {
-      RouterView: {},
-      useRouter: () => {
-        return {
-          push: vi.fn(),
-        };
-      },
-      useRoute: vi.fn(),
-    };
-  });
-  vi.spyOn(vueRouter, "useRoute").mockImplementation(() => ({
-    fullPath: "",
-    hash: "",
-    matched: [],
-    name: "",
-    meta: {},
-    params: {},
-    path: "",
-    query: {
-      // @ts-ignore
-      onboarding_stage: 1,
-    },
-    redirectedFrom: undefined,
-  }));
 
   it("renders", async () => {
     const component = render(Table, {

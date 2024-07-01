@@ -151,7 +151,7 @@
 definePageMeta({
   layout: "dashboard",
 });
-import AppIcon from "@/components/AppIcon";
+import AppIcon from "~/components/AppIcon";
 import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import { getAllFinance, withdrawFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";

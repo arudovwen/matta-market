@@ -5,12 +5,12 @@ import settings from "~/pages/company/settings.vue";
 import { render, screen, fireEvent, waitFor } from "@testing-library/vue";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { createRouter, createWebHistory } from 'vue-router';
-import HeaderComponent from "@/components/HeaderComponent.vue";
-import Stepper from "@/components/Stepper.vue";
-import OnboardingCompanyInformation from "@/components/onboarding/company/Information.vue";
-import OnboardingCompanyDocuments from "@/components/onboarding/company/Documents.vue";
-import OnboardingCompanyDirectors from "@/components/onboarding/company/Directors.vue";
-import AppLoader from "@/components/AppLoader.vue";
+import HeaderComponent from "~/components/HeaderComponent.vue";
+import Stepper from "~/components/Stepper.vue";
+import OnboardingCompanyInformation from "~/components/onboarding/company/Information.vue";
+import OnboardingCompanyDocuments from "~/components/onboarding/company/Documents.vue";
+import OnboardingCompanyDirectors from "~/components/onboarding/company/Directors.vue";
+import AppLoader from "~/components/AppLoader.vue";
 import { getCompanyProfile } from "@/services/settingservices";
 import { useAuthStore } from "@/stores/auth";
 
