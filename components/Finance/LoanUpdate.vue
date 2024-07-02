@@ -65,7 +65,7 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { updateFinanceStatus } from "@/services/financeservice";
+import { updateFinanceStatus } from "~/services/financeservice";
 
 const props = defineProps(["detail"]);
 const emits = defineEmits(["refresh"]);

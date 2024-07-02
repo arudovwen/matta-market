@@ -6,7 +6,7 @@ import * as authServices from "~/services/authservices";
 import Form from "~/components/Settlements/Form.vue";
 
 // Mocking getBanks
-vi.mock("@/services/settlementservice", async (importOriginal) => {
+vi.mock("~/services/settlementservice", async (importOriginal) => {
   const originalModule = await importOriginal();
   return {
     ...originalModule,

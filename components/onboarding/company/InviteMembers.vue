@@ -162,7 +162,7 @@ import "vue-advanced-cropper/dist/style.css";
 import { ref, reactive, onMounted } from "vue";
 import { toast } from 'vue3-toastify';
 import { useStore } from "vuex";
-import { inviteUsers } from "@/services/onboardingservices";
+import { inviteUsers } from "~/services/onboardingservices";
 import {
   Listbox,
   // ListboxLabel,
@@ -171,7 +171,7 @@ import {
   ListboxOption,
 } from "@headlessui/vue";
 import { CheckIcon, ChevronDownIcon } from "@heroicons/vue/24/solid";
-import { getRoles } from "@/services/userservices";
+import { getRoles } from "~/services/userservices";
 
 
 const store = useStore();
@@ -223,7 +223,7 @@ async function handleSubmit() {
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

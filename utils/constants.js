@@ -62,11 +62,12 @@ export const languagesOptions = [
     cname: "法语",
     ename: "French",
   },
+  
   {
-    code: "es",
-    name: "Spanish",
-    cname: "西班牙语",
-    ename: "Spanish",
+    code: "ja",
+    name: "Japanese",
+    cname: "日语",
+    ename: "Japanese",
   },
   {
     code: "de",
@@ -79,13 +80,13 @@ export const languagesOptions = [
     name: "Chinese",
     cname: "简体中文",
     ename: "Simplified Chinese",
+  },{
+    code: "es",
+    name: "Spanish",
+    cname: "西班牙语",
+    ename: "Spanish",
   },
-  {
-    code: "ja",
-    name: "Japanese",
-    cname: "日语",
-    ename: "Japanese",
-  },
+ 
 ];
 
 export const languagesOptionsMini = [
@@ -102,10 +103,10 @@ export const languagesOptionsMini = [
     ename: "French",
   },
   {
-    code: "es",
-    name: "Es",
-    cname: "西班牙语",
-    ename: "Spanish",
+    code: "zh-CN",
+    name: "Cn",
+    cname: "简体中文",
+    ename: "Simplified Chinese",
   },
   {
     code: "de",
@@ -114,11 +115,12 @@ export const languagesOptionsMini = [
     ename: "German",
   },
   {
-    code: "zh-CN",
-    name: "Cn",
-    cname: "简体中文",
-    ename: "Simplified Chinese",
+    code: "es",
+    name: "Es",
+    cname: "西班牙语",
+    ename: "Spanish",
   },
+  
   {
     code: "ja",
     name: "Ja",

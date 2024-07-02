@@ -393,7 +393,7 @@ import {
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 // eslint-disable-next-line no-unused-vars
-import countries from "@/utils/countries.json";
+import countries from "~/utils/countries.json";
 import { ref, reactive, onMounted, computed } from "vue";
 import useVuelidate from "@vuelidate/core";
 import {
@@ -408,11 +408,11 @@ import {
   updatePersonalInfo,
   // getOnboarding,
   uploadfile,
-} from "@/services/onboardingservices";
-import { getProfile } from "@/services/settingservices";
+} from "~/services/onboardingservices";
+import { getProfile } from "~/services/settingservices";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { replaceCountryCode } from "@/utils/replaceCountryCode";
+import { replaceCountryCode } from "~/utils/replaceCountryCode";
 
 const authStore = useAuthStore();
 const store = useStore();
@@ -599,7 +599,7 @@ function removeImage() {
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

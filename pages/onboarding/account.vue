@@ -74,7 +74,7 @@ definePageMeta({
   layout: "onboarding",
 });
 
-import { setaccountype } from "@/services/onboardingservices";
+import { setaccountype } from "~/services/onboardingservices";
 import { useStore } from "vuex";
 import { toast } from 'vue3-toastify';
 import { useRouter } from "vue-router";

@@ -11,7 +11,7 @@ import { createTestingPinia } from "@pinia/testing";
 import { useRoute, RouterLinkStub } from "vue-router";
 
 it("Mounts without error", async () => {
-  vi.mock("@/services/productservices", () => ({
+  vi.mock("~/services/productservices", () => ({
     getStoreInfo: vi.fn().mockResolvedValue({
       data: {
         bannerUrl: "/images/test-banner.png",

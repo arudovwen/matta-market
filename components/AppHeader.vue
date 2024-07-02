@@ -430,7 +430,7 @@ import {
 } from "~/utils/data";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
-import { getnotification } from "@/services/notificationservice";
+import { getnotification } from "~/services/notificationservice";
 import GoogleTranslateSelect from "@google-translate-select/vue3";
 import { toast } from "vue3-toastify";
 

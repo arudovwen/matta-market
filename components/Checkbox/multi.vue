@@ -48,25 +48,26 @@ export default defineComponent({
     label: {
       type: String,
     },
+    activeClass: {
+      type: String,
+      default: "bg-primary-500 ring-primary-400 ",
+    },
     checked: {
       type: Boolean,
       default: false,
     },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+
     name: {
       type: String,
       default: "checkbox",
     },
-    activeClass: {
-      type: String,
-     
-      default:"ring-primary-400  bg-primary-500",
-    },
+
     labelClass: {
       type: String,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     value: {
       type: null,
@@ -75,33 +76,26 @@ export default defineComponent({
       type: null,
     },
   },
-  emits: {
-    "update:modelValue": (newValue) => ({
-      modelValue: newValue,
-    }),
-    // use newValue
-    // "update:checked": (newValue) => true,
-  },
 
   setup(props, context) {
     const ck = ref(props.checked);
-
-    // on change event
-    const onChange = () => {
-      ck.value = !ck.value;
-    };
 
     const localValue = computed({
       get: () => props.modelValue,
       set: (newValue) => context.emit("update:modelValue", newValue),
     });
-    // watch(localValue, () => {
-    //   if (typeof localValue.value === "object" && !localValue.value.length) {
-    //     ck.value = false;
-    //   }
-    // });
+    // on change event
+    const onChange = () => {
+      ck.value = !ck.value;
+    };
     return { localValue, ck, onChange };
   },
+  emits: {
+    "update:modelValue": (newValue) => ({
+      modelValue: newValue,
+    }),
+  },
+
 });
 </script>
 <style lang=""></style>

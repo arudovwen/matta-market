@@ -182,7 +182,7 @@ import {
   maxLength,
 } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
-import { loginUser } from "@/services/authservices";
+import { loginUser } from "~/services/authservices";
 import { useStore } from "vuex";
 
 defineProps({
@@ -263,7 +263,7 @@ async function handleSubmit() {
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

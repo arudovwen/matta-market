@@ -285,7 +285,7 @@
   } from "~/utils/data";
   import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
   import { logOut } from "~/services/authservices";
-  import { getnotification } from "@/services/notificationservice";
+  import { getnotification } from "~/services/notificationservice";
   
   const isOpen = ref(false);
   function openModal() {

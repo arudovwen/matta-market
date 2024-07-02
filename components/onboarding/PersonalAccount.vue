@@ -345,7 +345,7 @@
 </template>
 
 <script setup>
-import countries from "@/utils/countries.json";
+import countries from "~/utils/countries.json";
 import moment from "moment-timezone";
 import {
   Dialog,
@@ -359,7 +359,7 @@ import "vue-advanced-cropper/dist/style.css";
 import PhoneCodes from "~/components/forms/PhoneCodes";
 import CountriesSelect from "~/components/forms/CountriesSelect";
 import StatesSelect from "~/components/forms/StatesSelect";
-import { replaceCountryCode } from "@/utils/replaceCountryCode";
+import { replaceCountryCode } from "~/utils/replaceCountryCode";
 import useVuelidate from "@vuelidate/core";
 import {
   required,
@@ -372,8 +372,8 @@ import { toast } from 'vue3-toastify';
 import {
   updatePersonalInfo,
   setOnboardingcomplete,
-} from "@/services/onboardingservices";
-import { getProfile } from "@/services/settingservices";
+} from "~/services/onboardingservices";
+import { getProfile } from "~/services/settingservices";
 
 onMounted(() => {
   getProfile().then((res) => {
@@ -532,7 +532,7 @@ async function handleSubmit() {
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

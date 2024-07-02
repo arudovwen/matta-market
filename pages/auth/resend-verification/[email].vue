@@ -82,7 +82,7 @@ definePageMeta({
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers, maxLength } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
-import { resendVerification } from "@/services/authservices";
+import { resendVerification } from "~/services/authservices";
 
 const route = useRoute();
 const isSent = ref(false);

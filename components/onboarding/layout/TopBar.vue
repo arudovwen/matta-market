@@ -4,7 +4,7 @@
       <div class="flex items-center">
         <NuxtLink to="/">
            <img
-            src="@/assets/img/logo.svg"
+            src="~/assets/img/logo.svg"
             width="80"
             height="auto"
             alt="Matta"

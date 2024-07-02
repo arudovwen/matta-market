@@ -600,8 +600,8 @@
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import CountryList from "country-list-with-dial-code-and-flag";
-import countries from "@/utils/countries.json";
-import sectors from "@/utils/sectors.json";
+import countries from "~/utils/countries.json";
+import sectors from "~/utils/sectors.json";
 import {
   Dialog,
   DialogPanel,
@@ -626,12 +626,12 @@ import {
   additionalInfo,
   uploadfile,
   setOnboardingcomplete,
-} from "@/services/onboardingservices";
+} from "~/services/onboardingservices";
 import { useRouter } from "vue-router";
 import {
   getCompanyProfile,
   updateCompanyProfile,
-} from "@/services/settingservices";
+} from "~/services/settingservices";
 
 const getData = inject("getData");
 const active = inject("active");
@@ -898,7 +898,7 @@ function removeImage() {
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

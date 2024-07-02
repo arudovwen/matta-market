@@ -113,8 +113,8 @@ import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { editPickupLocation } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
-import countries from "@/utils/countries.json";
-import Lgas from "@/utils/lgastate.json";
+import countries from "~/utils/countries.json";
+import Lgas from "~/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
 const detail = inject("detail");

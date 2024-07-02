@@ -11,11 +11,11 @@ import OnboardingCompanyInformation from "~/components/onboarding/company/Inform
 import OnboardingCompanyDocuments from "~/components/onboarding/company/Documents.vue";
 import OnboardingCompanyDirectors from "~/components/onboarding/company/Directors.vue";
 import AppLoader from "~/components/AppLoader.vue";
-import { getCompanyProfile } from "@/services/settingservices";
-import { useAuthStore } from "@/stores/auth";
+import { getCompanyProfile } from "~/services/settingservices";
+import { useAuthStore } from "~/stores/auth";
 
-vi.mock("@/services/settingservices");
-vi.mock("@/stores/auth");
+vi.mock("~/services/settingservices");
+vi.mock("~/stores/auth");
 
 const routes = [
   { path: '/', component: CompanySettings }

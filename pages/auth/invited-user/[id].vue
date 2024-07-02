@@ -153,7 +153,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
 import useVuelidate from "@vuelidate/core";
 import { required, helpers, minLength, maxLength } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
-import { registerInvitedUser } from "@/services/authservices";
+import { registerInvitedUser } from "~/services/authservices";
 
 const route = useRoute();
 

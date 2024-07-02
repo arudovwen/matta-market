@@ -247,14 +247,14 @@
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import CountryList from "country-list-with-dial-code-and-flag";
-import countries from "@/utils/countries.json";
+import countries from "~/utils/countries.json";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { businessTypes } from "~/utils/constants.js";
 import {
   updateCompanyProfile,
   updateDocuments,
-} from "@/services/settingservices";
+} from "~/services/settingservices";
 import { toast } from "vue3-toastify";
 import SelectComponent from "~/components/forms/SelectComponent";
 

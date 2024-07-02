@@ -80,7 +80,7 @@
   >
     <div class="text-center max-w-sm mx-auto">
       <img alt="notification"
-        src="@/assets/img/nofound.svg"
+        src="~/assets/img/nofound.svg"
         class="w-[52px] h-auto mx-auto mb-2"
       />
 
@@ -93,7 +93,7 @@
 import {
   marknotification,
   markallnotification,
-} from "@/services/notificationservice";
+} from "~/services/notificationservice";
 // eslint-disable-next-line no-unused-vars
 import { ref, inject, computed, provide } from "vue";
 import NotificationBar from "~/components/NotificationTypes/AllNotifications.vue";

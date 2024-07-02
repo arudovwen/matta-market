@@ -20,7 +20,7 @@
   </div>
 </template>
 <script setup>
-import { shippingBreakdown } from "@/services/cartservice";
+import { shippingBreakdown } from "~/services/cartservice";
 // const currencyFormat = inject("currencyFormat");
 
 const cartStore = useCartStore();

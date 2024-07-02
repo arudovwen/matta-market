@@ -32,7 +32,7 @@ import Kyb from "./Kyb";
 import Documents from "./Documents";
 import Directors from "./Directors";
 import Final from "./Final";
-import { getCompanyProfile } from "@/services/settingservices";
+import { getCompanyProfile } from "~/services/settingservices";
 import { getFinance } from "~/services/financeservice";
 
 const loading = ref(true);

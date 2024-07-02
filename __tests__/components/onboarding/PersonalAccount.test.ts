@@ -5,10 +5,10 @@ import { RouterLinkStub } from "@vue/test-utils";
 import { not } from "@vuelidate/validators";
 import * as vueRouter from "vue-router";
 import PersonalAccount from '~/components/onboarding/PersonalAccount.vue';
-import { getProfile } from "@/services/settingservices";
+import { getProfile } from "~/services/settingservices";
 
 // Mocking settingservices/getProfile
-vi.mock("@/services/settingservices", async (importOriginal) => {
+vi.mock("~/services/settingservices", async (importOriginal) => {
   const originalModule = await importOriginal();
   return {
     ...originalModule,

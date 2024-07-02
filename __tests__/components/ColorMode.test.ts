@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import ColorModeToggle from '@/components/ColorMode.vue';
+import ColorModeToggle from '~/components/ColorMode.vue';
 
 describe('ColorModeToggle', () => {
   it('renders with correct initial label', () => {

@@ -32,7 +32,22 @@ vi.mock("vue-router", () => {
     })),
   };
 });
-
+vi.mock("~/services/productservices", () => ({
+  getsupplier: vi.fn().mockResolvedValue({
+    data: {
+      bannerUrl: "/images/test-banner.png",
+      logo: "/images/test-logo.png",
+      storeName: "Test Store",
+    },
+  }),
+  getProducers: vi.fn().mockResolvedValue({
+    data: {
+      bannerUrl: "/images/test-banner.png",
+      logo: "/images/test-logo.png",
+      storeName: "Test Store",
+    },
+  }),
+}));
 describe("Detail", () => {
   it("renders", async () => {
     const component = render(Detail, {
@@ -89,7 +104,7 @@ describe("Detail", () => {
     fireEvent.click(screen.getByText("Request sample"));
   });
 });
-vi.mock("@/services/productservices", () => ({
+vi.mock("~/services/productservices", () => ({
   likeproduct: vi.fn().mockResolvedValue({
     data: {},
   }),

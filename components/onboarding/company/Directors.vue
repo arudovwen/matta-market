@@ -137,9 +137,9 @@ import { toast } from "vue3-toastify";
 import {
   additionalInfo,
   setOnboardingcomplete,
-} from "@/services/onboardingservices";
+} from "~/services/onboardingservices";
 import { useRouter } from "vue-router";
-// import { getCompanyProfile } from "@/services/settingservices";
+// import { getCompanyProfile } from "~/services/settingservices";
 import { useStore } from "vuex";
 import { updateDirectors } from "~/services/settingservices";
 
@@ -210,7 +210,7 @@ provide("form", form);
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

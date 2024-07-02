@@ -17,7 +17,7 @@
         class="fixed bottom-10 transition duration-300 right-4 opacity-80 hover:opacity-100 hover:scale-[1.1]"
       >
         <img
-          src="@/assets/img/whatsapp.png"
+          src="~/assets/img/whatsapp.png"
           width="60"
           height="60"
           alt="whatsapp link"
