@@ -29,11 +29,8 @@ const store = createStore({
   },
 });
 
-vi.mock("~/services/userservices", async (importOriginal) => {
-  const actual = await importOriginal();
+vi.mock("~/services/userservices", async () => {
   return {
-    // @ts-ignore
-    ...actual,
     getVendorInfo: vi.fn().mockResolvedValue({
       status: 200,
       data: {
@@ -48,11 +45,10 @@ vi.mock("~/services/userservices", async (importOriginal) => {
         totalCount: 1,
       },
     }),
-	updateVendorInfo: vi.fn().mockResolvedValue({ status: 200 }),
+    updateVendorInfo: vi.fn().mockResolvedValue({ status: 200 }),
+    postStoreName: vi.fn().mockResolvedValue({ status: 200 }),
   };
 });
-
-
 
 describe("MyOrders", () => {
   it("renders", async () => {
