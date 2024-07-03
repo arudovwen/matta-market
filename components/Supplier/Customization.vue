@@ -181,8 +181,7 @@ onMounted(() => {
 });
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  updateVendorInfo(values)
-    .then((res) => {
+  updateVendorInfo(values).then((res) => {
       if (res.status === 200) {
         toast.success("Information saved");
         isLoading.value = false;
