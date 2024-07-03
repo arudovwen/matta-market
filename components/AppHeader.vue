@@ -47,7 +47,10 @@
       </div>
     </div>
   </ClientOnly>
-  <div data-testid="deal-container" class="bg-[#1849A9] text-xs sm:text-sm py-3">
+  <div
+    data-testid="deal-container"
+    class="bg-[#1849A9] text-xs sm:text-sm py-3"
+  >
     <div class="container flex gap-x-2 items-center text-white font-normal">
       <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" />
       <span data-testid="promo"
@@ -84,7 +87,7 @@
 
           <ul class="lg:flex items-center gap-x-6 hidden">
             <li
-              v-for="n in navigations.filter(i=>i.key !== 'sign-out')"
+              v-for="n in navigations.filter((i) => i.key !== 'sign-out')"
               :key="n.name"
               class="flex gap-x-[6px] items-center text-sm border-transparent group"
               :class="`${
@@ -421,12 +424,7 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import {
-  categories,
-  navigations,
-  mobileNavigation,
-  financeMenu,
-} from "~/utils/data";
+import { financeMenu } from "~/utils/data";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
 import { getnotification } from "~/services/notificationservice";
@@ -434,10 +432,10 @@ import GoogleTranslateSelect from "@google-translate-select/vue3";
 import { toast } from "vue3-toastify";
 
 defineProps({
-  showlang:{
-    default:false
-  }
-})
+  showlang: {
+    default: false,
+  },
+});
 const windowWidth = ref(
   window?.innerWidth ||
     document?.documentElement?.clientWidth ||
@@ -461,12 +459,12 @@ const notifications = ref([]);
 const router = useRouter();
 const { currentRoute } = router;
 const filteredMenu = computed(() =>
-navigations.filter(
+  navigation.filter(
     (i) =>
-      i.key === "account-settings" ||
-      i.key === "wallet-home" ||
+      i.key === "settings" ||
+      i.key === "procurement-my-orders" ||
       i.key === "sign-out" ||
-      i.key === "procurement-my-orders"
+      i.key === "wallet-home"
   )
 );
 const view = ref({
