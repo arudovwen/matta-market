@@ -143,52 +143,7 @@
                               />
                               {{ n.name }}
                             </NuxtLink>
-                            <!-- <span
-                              v-else
-                              @click="storeOpen = true"
-                              class="text-sm flex items-center border-r-[3px] border-transparent group font-medium hover:text-primary-500 hover:border-primary-500 cursor-pointer"
-                              :class="` ${
-                                storeOpen || route.path.includes('storefront')
-                                  ? ' text-primary-500'
-                                  : ''
-                              }`"
-                            >
-                              <span
-                                class="flex items-center gap-x-[10px] flex-1 py-[9px]"
-                              >
-                                <AppIcon
-                                  :icon="n.icon"
-                                  iconClass="text-xl text-[#667085]"
-                                />
-                                <span> {{ n.name }}</span>
-                              </span>
-                              <div
-                                v-if="storeOpen"
-                                class="border-r border-[#EAECF0] absolute top-0 -right-[245px] h-screen z-[9999] bg-white py-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] min-w-[245px]"
-                              >
-                                <ul>
-                                  <li
-                                    v-for="item in subnavigation"
-                                    :key="item.name"
-                                  >
-                                    <NuxtLink
-                                      :to="item.url"
-                                      class="text-sm flex items-center px-5 border-r-[3px] border-transparent text-matta-black hoverborder-primary-500 hover:bg-[#2270FA0F] hover:text-primary-500"
-                                    >
-                                      <span
-                                        class="flex items-center gap-x-[10px] flex-1 py-[9px]"
-                                      >
-                                        <AppIcon
-                                          :icon="item.icon"
-                                          iconClass="text-xl"
-                                        />
-                                        <span> {{ item.name }}</span>
-                                      </span>
-                                    </NuxtLink>
-                                  </li>
-                                </ul>
-                              </div>
-                            </span> -->
+                 
                           </li>
                         </ul>
                       </div>
@@ -204,13 +159,6 @@
   </TransitionRoot>
 </template>
 <script setup>
-import {
-  categories,
-  navigations,
-  mobileNavigation,
-  financeMenu,
-  mobileMenu,
-} from "~/utils/data";
 import { ref } from "vue";
 import {
   Dialog,

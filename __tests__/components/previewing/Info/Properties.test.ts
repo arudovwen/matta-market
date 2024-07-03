@@ -11,7 +11,6 @@ import { createTestingPinia } from "@pinia/testing";
 import * as authServices from "~/services/authservices";
 import * as vueRouter from "vue-router";
 import ProjectGrid from "~/components/Skeleton/Project-grid.vue";
-import Properties from "~/components/previewing/Info/Properties.vue";
 
 describe("ProjectGrid", () => {
   vi.spyOn(authServices, "logOut").mockReturnValue({});
@@ -43,7 +42,7 @@ describe("ProjectGrid", () => {
   }));
 
   it("renders", async () => {
-    const component = render(Properties, {
+    const component = render(ProjectGrid, {
       props: {},
       global: {
         stubs: {

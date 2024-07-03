@@ -6,7 +6,7 @@ import { createTestingPinia } from "@pinia/testing";
 import * as authServices from "~/services/authservices";
 
 describe("DashboardHeader", () => {
-  vi.mock("~/services/notificationservice", () => ({
+  vi.mock("@/services/notificationservice", () => ({
     getnotification: vi.fn().mockResolvedValue({
       data: {
         bannerUrl: "/images/test-banner.png",

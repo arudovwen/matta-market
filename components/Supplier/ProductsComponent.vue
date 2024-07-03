@@ -335,13 +335,10 @@ const producerOptions = computed(() => {
 function getData() {
 	getSupplierProducts(queryParams)
 	.then((res) => {
-		console.log("fire - getData");
-		console.log(res?.data?.data?.data, "de");
 		products.value = res?.data?.data?.data;
 		queryParams.totalCount = res.data.data.totalCount;
 		queryParams.pagecount = res?.data?.data?.data.length;
 		isPageLoading.value = false;
-		isPageLoading.value = true;
     })
     .catch(() => {
       isPageLoading.value = false;

@@ -84,7 +84,7 @@
 
           <ul class="lg:flex items-center gap-x-6 hidden">
             <li
-              v-for="n in navigations"
+              v-for="n in navigations.filter(i=>i.key !== 'sign-out')"
               :key="n.name"
               class="flex gap-x-[6px] items-center text-sm border-transparent group"
               :class="`${
@@ -426,7 +426,6 @@ import {
   navigations,
   mobileNavigation,
   financeMenu,
-  mobileMenu,
 } from "~/utils/data";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
@@ -462,7 +461,7 @@ const notifications = ref([]);
 const router = useRouter();
 const { currentRoute } = router;
 const filteredMenu = computed(() =>
-  mobileMenu.filter(
+navigations.filter(
     (i) =>
       i.key === "account-settings" ||
       i.key === "wallet-home" ||

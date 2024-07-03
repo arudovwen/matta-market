@@ -10,7 +10,6 @@ import {
     buyerRoutes,
     vendorRoutes,
     navigation,
-    subnavigation,
     LedgerAction,
     languages,
   } from '~/utils/constants'; // Adjust the import path based on your actual file structure
@@ -58,8 +57,6 @@ import {
       languagesOptions.forEach((language) => {
         expect(language).toHaveProperty('code');
         expect(language).toHaveProperty('name');
-        expect(language).toHaveProperty('cname');
-        expect(language).toHaveProperty('ename');
       });
     });
   

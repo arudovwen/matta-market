@@ -75,14 +75,14 @@ useHead({
   title: "Login | Matta",
   meta: [{ name: "description", content: "Login | Matta" }],
 });
-const type = inject("type");
-const isLoading = ref(false);
-const formValues = {
-  email: "",
-  password: "",
-};
+const authStore = useAuthStore();
+const router = useRouter();
+const route = useRoute();
 
-const schema = yup.object({
+const isLoading = ref(false);
+const type = inject("type");
+
+const loginSchema = yup.object({
   email: yup
     .string()
     .required("Email is required")
@@ -90,23 +90,27 @@ const schema = yup.object({
   password: yup.string().required("Password is required"),
 });
 
+const formValues = {
+  email: "",
+  password: "",
+};
+
 const { handleSubmit, defineField, errors } = useForm({
-  validationSchema: schema,
+  validationSchema: loginSchema,
   initialValues: formValues,
 });
-const authStore = useAuthStore();
-const [email, emailAtt] = defineField("email");
+
 const [password, passwordAtt] = defineField("password");
-const route = useRoute();
-const router = useRouter();
+
+const [email, emailAtt] = defineField("email");
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
   loginUser(values)
-    .then((res) => {
-      if (res.status === 200) {
-        authStore.setLoggedUser(res.data.data);
+    .then((response) => {
+      if (response.status === 200) {
         toast.success("Login successful");
+        authStore.setLoggedUser(response.data.data);
         window.location.reload();
       }
     })
@@ -145,20 +149,19 @@ const handleLoginSuccess = (response) => {
         if (res.data.message.includes("Email has not verified yet")) {
           return;
         }
-
         if (!res.data.data.onboardingPageStatus) {
           window.location.replace("/overview");
+          return;
+        }
+
+        if (route.query.redirect_to) {
+          window.location.replace(route.query.redirect_to);
           return;
         }
         if (route.query.redirected_from) {
           window.location.replace(route.query.redirected_from);
           return;
         }
-        if (route.query.redirect_to) {
-          window.location.replace(route.query.redirect_to);
-          return;
-        }
-
         window.location.replace("/");
       }
     })
@@ -178,14 +181,13 @@ const handleLoginSuccess = (response) => {
     });
 };
 
-// handle an error event
-const handleLoginError = () => {
-  console.error("Login failed");
-};
-
 const { isReady, login } = useTokenClient({
   onSuccess: handleLoginSuccess,
   onError: handleLoginError,
   // other options
 });
+// handle an error event
+const handleLoginError = () => {
+  console.error("Login failed");
+};
 </script>

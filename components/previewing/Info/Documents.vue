@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 gap-x-[75px] gap-y-6">
-    <div
+    <!-- <div
       class="flex jus items-center"
       v-for="(n, id) in documentList"
       :key="id"
@@ -27,38 +27,39 @@
 
     <div class="text-gray-500 text-xs py-4" v-if="!documentList.length">
       No data available
-    </div>
+    </div> -->
+    Documents
   </div>
 </template>
 <script setup>
-defineProps(["detail"]);
-const documentType = ref("");
-const documents = [
-  {
-    text: "Material safety data sheet (MSDS)",
-    item: "Info such as the chemical properties.",
-    value: "Material safety data sheet (MSDS)",
-  },
-  {
-    text: "Certificate of analysis (COA)",
-    item: "Certificate of analysis of product.",
-    value: "Certificate of analysis (COA)",
-  },
-  {
-    text: "Technical data sheet (TDS)",
-    item: "Document with technical data of product.",
-    value: "Technical data sheet (TDS)",
-  },
-  {
-    text: "Other",
-    item: "Other types of product documents.",
-    value: "other",
-  },
-];
+// defineProps(["detail"]);
+// const documentType = ref("");
+// const documents = [
+//   {
+//     text: "Material safety data sheet (MSDS)",
+//     item: "Info such as the chemical properties.",
+//     value: "Material safety data sheet (MSDS)",
+//   },
+//   {
+//     text: "Certificate of analysis (COA)",
+//     item: "Certificate of analysis of product.",
+//     value: "Certificate of analysis (COA)",
+//   },
+//   {
+//     text: "Technical data sheet (TDS)",
+//     item: "Document with technical data of product.",
+//     value: "Technical data sheet (TDS)",
+//   },
+//   {
+//     text: "Other",
+//     item: "Other types of product documents.",
+//     value: "other",
+//   },
+// ];
 
-const documentList = computed(() => {
-  return detail.filter((i) =>
-    i.category.toLowerCase().includes(udocumentType.value.toLowerCase())
-  );
-});
+// const documentList = computed(() => {
+//   return detail.filter((i) =>
+//     i.category.toLowerCase().includes(documentType.value.toLowerCase())
+//   );
+// });
 </script>

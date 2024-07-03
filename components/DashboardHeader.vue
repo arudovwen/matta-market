@@ -281,7 +281,6 @@
   import { ref } from "vue";
   import {
     financeMenu,
-    mobileMenu,
   } from "~/utils/data";
   import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
   import { logOut } from "~/services/authservices";
@@ -301,12 +300,12 @@
   const router = useRouter();
   const { currentRoute } = router;
   const filteredMenu = computed(() =>
-    mobileMenu.filter(
+    navigation.filter(
       (i) =>
         i.key === "settings" ||
-        i.key === "wallet" ||
+        i.key === "procurement-my-orders" ||
         i.key === "sign-out" ||
-        i.key === "my-orders"
+        i.key === "wallet-home"
     )
   );
   const view = ref({

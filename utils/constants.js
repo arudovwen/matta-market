@@ -53,38 +53,32 @@ export const languagesOptions = [
   {
     code: "en",
     name: "English",
-    cname: "英语",
-    ename: "English",
+  
   },
   {
     code: "fr",
     name: "French",
-    cname: "法语",
-    ename: "French",
+ 
   },
   
   {
     code: "ja",
     name: "Japanese",
-    cname: "日语",
-    ename: "Japanese",
+ 
   },
   {
     code: "de",
     name: "German",
-    cname: "德语",
-    ename: "German",
+ 
   },
   {
     code: "zh-CN",
     name: "Chinese",
-    cname: "简体中文",
-    ename: "Simplified Chinese",
+
   },{
     code: "es",
     name: "Spanish",
-    cname: "西班牙语",
-    ename: "Spanish",
+
   },
  
 ];
@@ -93,39 +87,28 @@ export const languagesOptionsMini = [
   {
     code: "en",
     name: "En",
-    cname: "英语",
-    ename: "En",
+
   },
   {
     code: "fr",
     name: "Fr",
-    cname: "法语",
-    ename: "French",
   },
   {
     code: "zh-CN",
     name: "Cn",
-    cname: "简体中文",
-    ename: "Simplified Chinese",
   },
   {
     code: "de",
     name: "De",
-    cname: "德语",
-    ename: "German",
   },
   {
     code: "es",
     name: "Es",
-    cname: "西班牙语",
-    ename: "Spanish",
   },
   
   {
     code: "ja",
     name: "Ja",
-    cname: "日语",
-    ename: "Japanese",
   },
 ];
 
@@ -272,6 +255,12 @@ export const navigation = [
     url: "/settings",
     icon: "lucide:user",
     key: "settings",
+  },
+  {
+    name: "Sign out",
+    key: "sign-out",
+    icon: "fa-solid:sign-out-alt",
+    url: "#",
   },
 ];
 
@@ -971,32 +960,6 @@ export const businessTypes = [
     ],
   },
 ];
-export const subnavigation = [
-  {
-    name: "Products",
-    url: "/storefront/products",
-    icon: "fluent-mdl2:product-variant",
-    key: "products",
-  },
-  {
-    name: "Store Orders",
-    url: "/storefront/orders",
-    icon: "lucide:shopping-bag",
-    key: "orders",
-  },
-  {
-    name: "Store Requests",
-    url: "/storefront/requests",
-    icon: "ri:hand-coin-line",
-    key: "requests",
-  },
-  {
-    name: "Store Settings",
-    url: "/storefront/customization",
-    icon: "bx:cog",
-    key: "storefront",
-  },
-];
 
 export const LedgerAction = {
   0: "Debit",
@@ -1019,3 +982,104 @@ export const languages = {
   "ar-AE": "/en/ar",
   "ru-RU": "/en/ru",
 };
+
+export const traditionalData = [
+  {
+    id: 1,
+    label: "Market access",
+    matta: "Broad access to multiple markets across Africa. ",
+    trad: "Often a narrower product offering.",
+    info: "Reach to diverse markets.",
+  },
+  {
+    id: 2,
+    label: "Product Range",
+    matta: " Wide selection of chemicals and raw materials.",
+    trad: " Limited to local or regional reach.",
+    info: "Variety of products offered.",
+  },
+  {
+    id: 3,
+    label: "Digital Efficiency",
+    matta: "Streamlined online procurement process.  ",
+    trad: " Manual, time-consuming processes.",
+    info: "Speed and ease of online processes.",
+  },
+  {
+    id: 4,
+    label: "Quality Assurance",
+    matta: "Standardized quality checks and verification.",
+    trad: "Quality may vary without standard checks.",
+    info: "Standards and checks for quality.",
+  },
+  {
+    id: 5,
+    label: "Logistics",
+    matta: "Integrated logistics solutions for delivery. ",
+    trad: "Separate logistics arrangements needed.",
+    info: " Integration and handling of deliveries.",
+  },
+  {
+    id: 6,
+    label: "Cost-Effectiveness",
+    matta: "Competitive pricing through direct manufacturer ties.",
+    trad: "Additional costs due to middlemen.",
+    info: "Pricing benefits and savings.",
+  },
+  {
+    id: 7,
+    label: "Transparency",
+    matta: "Clear pricing and transaction processes online.   ",
+    trad: " Pricing often opaque and negotiable.",
+    info: "Clarity in transactions.",
+  },
+  {
+    id: 8,
+    label: "Convenience",
+    matta: "24/7 availability for ordering and support. ",
+    trad: "Restricted by business hours and availability.",
+    info: "Ease and availability of services.",
+  },
+  {
+    id: 9,
+    label: "Payment Security",
+    matta: "Secure online payment systems. ",
+    trad: "Payment security not always guaranteed.",
+    info: "Safety of online payments.",
+  },
+  {
+    id: 10,
+    label: "Customization",
+    matta: "Tailored orders and quantities to meet specific needs.",
+    trad: "Standard order sizes, less flexibility.",
+    info: "Tailoring to specific needs.",
+  },
+  {
+    id: 11,
+    label: "Technical Support",
+    matta: "Expert advice and support available.    ",
+    trad: "Limited or no support.",
+    info: "Assistance and expertise available.",
+  },
+  {
+    id: 12,
+    label: "Market Intelligence",
+    matta: "Access to market trends and data analytics.",
+    trad: "Little to no market insights provided.",
+    info: "Insights into market trends.",
+  },
+  {
+    id: 13,
+    label: "Scalability",
+    matta: "Easy to scale operations with demand.",
+    trad: "Scaling up often requires significant effort and time.",
+    info: "Insights into market trends.",
+  },
+  {
+    id: 14,
+    label: "Compliance",
+    matta: "Adherence to international standards and regulations. ",
+    trad: "May not always comply with global standards.",
+    info: "Adherence to standards and regulations.",
+  },
+];

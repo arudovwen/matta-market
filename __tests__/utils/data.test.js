@@ -4,7 +4,6 @@ import {
     categories,
     navigations,
     mobileNavigation,
-    mobileMenu,
     financeMenu,
   } from '~/utils/data'; // Adjust the import path based on your actual file structure
   
@@ -46,18 +45,7 @@ import {
       });
     });
   
-    test('Mobile Menu should be defined and have correct structure', () => {
-      expect(mobileMenu).toBeDefined();
-      expect(mobileMenu).toBeInstanceOf(Array);
-      expect(mobileMenu.length).toBeGreaterThan(0);
-  
-      mobileMenu.forEach((item) => {
-        expect(item).toHaveProperty('name');
-        expect(item).toHaveProperty('url');
-        expect(item).toHaveProperty('icon');
-        expect(item).toHaveProperty('key');
-      });
-    });
+   
   
     test('Finance Menu should be defined and have correct structure', () => {
       expect(financeMenu).toBeDefined();
