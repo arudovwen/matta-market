@@ -5,9 +5,14 @@
       This information will help us prepare your quote.
     </p>
     <div class="mb-6">
-      <label for="usage" data-testid="usage" class="mb-2 font-medium text-sm text-[#344054] block text-left">Market<RedDot /></label>
+      <label
+        for="usage"
+        data-testid="usage"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Market<RedDot
+      /></label>
       <FormsSelectComponent
-      id="usage"
+        id="usage"
         @onGetData="onGetMarket"
         :options="marketOptions"
         :showSearch="true"
@@ -26,9 +31,13 @@
       </div>
     </div>
     <div class="mb-6">
-      <label for="applications" class="mb-2 font-medium text-sm text-[#344054] block text-left">Application<RedDot /></label>
+      <label
+        for="applications"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Application<RedDot
+      /></label>
       <FormsSelectComponent
-      id="applications"
+        id="applications"
         @onGetData="onGetApp"
         :options="appOptions"
         :showSearch="true"
@@ -48,9 +57,13 @@
     </div>
 
     <div class="mb-6">
-      <label for="packagesAvailable" class="mb-2 font-medium text-sm text-[#344054] block text-left">Package type <RedDot /></label>
+      <label
+        for="packagesAvailable"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Package type <RedDot
+      /></label>
       <select
-      id="packagesAvailable"
+        id="packagesAvailable"
         v-if="product && product.packagesAvailable"
         v-model="request1$.package.$model"
         :class="{ 'border-red-500 ': request1$.package.$error }"
@@ -73,10 +86,10 @@
     </div>
     <div class="mb-6">
       <label for="productUse" class="mb-2 font-normal text-xs block"
-        >How do you intend to use the product? <RedDot /></label
-      >
+        >How do you intend to use the product? <RedDot
+      /></label>
       <textarea
-      id="productUse"
+        id="productUse"
         placeholder="Tell us here"
         v-model="request1$.productUse.$model"
         :class="{ 'border-red-500 ': request1$.productUse.$error }"
@@ -94,13 +107,13 @@
     </div>
     <div class="mb-6">
       <label for="expectedVolume" class="mb-2 font-normal text-xs block"
-        >Expected annual volume <RedDot /></label
-      >
+        >Expected annual volume <RedDot
+      /></label>
       <div
         class="flex items-center gap-x-2 h-[46px] placeholder:text-sm w-full text-matta-black bg-transparent px-3 min-w-[150px] cursor-pointer md:px-3 border rounded-lg border-[#ddd] md:leading-5 text-[10px] sm:text-[13px] shadow-sm focus:outline-gray-200"
       >
         <CurrencyInput
-        id="expectedVolume"
+          id="expectedVolume"
           placeholder="Tell us here"
           :class="{ 'border-red-500 ': request1$.expectedVolume.$error }"
           v-model="request1$.expectedVolume.$model"
