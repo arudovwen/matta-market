@@ -254,7 +254,7 @@ watch(
       getSupplierProduct(queryParams).then((res) => {
         if (res.status === 200) {
           product.value = res.data.data;
-          updateData();
+					updateData(form, product, [], isPageLoading, route);
         }
       });
     }
