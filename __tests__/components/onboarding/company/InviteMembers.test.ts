@@ -1,6 +1,6 @@
-// Properties.test.js
+// InviteMembers.test.js
 import { mount } from "@vue/test-utils";
-import Properties from "~/components/previewing/Info/Properties.vue";
+import InviteMembers from "~/components/onboarding/company/InviteMembers.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { Plugin } from "vue";
@@ -21,7 +21,20 @@ const store = createStore({
     }),
   },
 });
-
+vi.mock("~/services/userservices", () => ({
+  getRoles: vi.fn().mockResolvedValue({
+    data: [],
+  }),
+}));
+vi.mock("~/services/onboardingservices", () => ({
+  inviteUsers: vi.fn().mockResolvedValue({
+    data: {
+      bannerUrl: "/images/test-banner.png",
+      logo: "/images/test-logo.png",
+      storeName: "Test Store",
+    },
+  }),
+}));
 vi.mock("vue-router", () => {
   return {
     RouterView: {},
@@ -48,15 +61,16 @@ vi.mock("vue-router", () => {
     })),
   };
 });
-describe("Properties", () => {
+describe("InviteMembers", () => {
     
   it("renders correctly", async () => {
-    const wrapper = mount(Properties, {
+    const wrapper = mount(InviteMembers, {
       global: {
         plugins: [store],
       },
     });
     expect(screen).toMatchSnapshot();
-    expect(wrapper.find("h1").text()).toBe("Properties");
+    expect(wrapper.find("h1").text()).toBe("Invite your team members");
+    expect(wrapper.find("button").text()).toBe("Add new member");
   });
 });

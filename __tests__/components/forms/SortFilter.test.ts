@@ -1,6 +1,6 @@
 // Properties.test.js
 import { mount } from "@vue/test-utils";
-import Properties from "~/components/previewing/Info/Properties.vue";
+import SortFilter from "~/components/forms/SortFilter.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import type { Plugin } from "vue";
@@ -48,15 +48,14 @@ vi.mock("vue-router", () => {
     })),
   };
 });
-describe("Properties", () => {
+describe("SortFilter", () => {
     
   it("renders correctly", async () => {
-    const wrapper = mount(Properties, {
+    const wrapper = mount(SortFilter, {
       global: {
         plugins: [store],
       },
     });
     expect(screen).toMatchSnapshot();
-    expect(wrapper.find("h1").text()).toBe("Properties");
   });
 });
