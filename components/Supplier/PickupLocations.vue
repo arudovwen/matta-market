@@ -51,7 +51,7 @@
                 openModal('form');
               }
             "
-            class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer flex flex-col gap-y-1 border-[#ECF1FD] h-[180px] items-center justify-center text-primary-500"
+            class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer flex flex-col gap-y-1 border-[#ECF1FD] items-center justify-center text-primary-500"
           >
             <AppIcon icon="fa6-solid:truck" iconClass="text-2xl" />
             <span class="text-sm">Add new pickup location</span>
