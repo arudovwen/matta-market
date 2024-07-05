@@ -146,7 +146,7 @@ const formValues = {
   isDefault: false,
 };
 onMounted(() => {
-  if (detail.value) {
+  if (detail?.value) {
     setValues(detail.value);
   }
 });
