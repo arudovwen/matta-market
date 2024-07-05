@@ -36,9 +36,9 @@
             'opacity-60 cursor-not-allowed': isLoading,
           }"
           type="submit"
-          class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
+          class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
         >
-          Next
+        {{isLoading?"Saving...":"Next"}}
         </button>
       </div>
     </div>
@@ -52,82 +52,14 @@ import { toast } from "vue3-toastify";
 import { updateProperties } from "~/services/productservices";
 import { useRoute, useRouter } from "vue-router";
 import useVuelidate from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators";
 const route = useRoute();
 const router = useRouter();
 
 const toggleNext = inject("toggleNext");
 const togglePreview = inject("togglePreview");
 const form = inject("form");
-const rules = {
-  propertyItems: {
-    property: {
-      propertyItems: {
-        required,
-        $each: helpers.forEach({
-          property: {
-            required,
-          },
-          propertyValue: {
-            required,
-          },
-        }),
-      },
-    },
 
-    technical: {
-      propertyItems: {
-        required,
-        $each: helpers.forEach({
-          property: {
-            required,
-          },
-          propertyValue: {
-            required,
-          },
-        }),
-      },
-    },
-    // applications: {
-    //   propertyItems: {
-    //     required,
-    //     $each: helpers.forEach({
-    //       property: {
-    //         required,
-    //       },
-    //       propertyValue: {
-    //         required,
-    //       },
-    //     }),
-    //   },
-    // },
-    // features: {
-    //   propertyItems: {
-    //     $each: helpers.forEach({
-    //       property: {
-    //         required,
-    //       },
-    //       propertyValue: {
-    //         required,
-    //       },
-    //     }),
-    //   },
-    // },
-    compliance: {
-      propertyItems: {
-        $each: helpers.forEach({
-          property: {
-            required,
-          },
-          propertyValue: {
-            required,
-          },
-        }),
-      },
-    },
-  },
-};
-const v$ = useVuelidate(rules, form);
+const v$ = useVuelidate(productrules, form);
 
 onMounted(() => {
   form.productId = route.query.id;
@@ -157,7 +89,7 @@ async function handleSubmit() {
         });
         isLoading.value = false;
         router.push(
-          `/storefront/products/add-product?id=${route.query.id}&stage=3`
+          `/storefront/products/${route.params.process}?id=${route.query.id}&stage=3`
         );
       }
     })

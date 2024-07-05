@@ -1,5 +1,6 @@
 <template>
   <form class="px-4 md:px-[30px] text-left" @submit.prevent="handleSubmit">
+
     <div
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
@@ -103,7 +104,7 @@
                         @after-leave="query = ''"
                       >
                         <ComboboxOptions
-                          class="absolute mt-1 max-h-80 md:min-w-[350px] px-3 overflow-y-auto rounded-lg z-40 bg-white py-4 text-base shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] border border-[#DCDEE6] sm:text-sm"
+                          class="absolute grid gap-y-1 mt-1 max-h-80 md:min-w-[350px] px-3 overflow-y-auto rounded-lg z-40 bg-white py-4 text-base shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] border border-[#DCDEE6] sm:text-sm"
                         >
                           <div
                             v-if="
@@ -342,64 +343,7 @@
         <p class="text-xs text-[#475467]">Provide package information here.</p>
       </div>
       <div class="max-w-[654px] w-full">
-        <!-- <div class="mb-6">
-          <Listbox v-model="form.unit">
-            <div class="relative mt-1">
-              <ListboxButton
-                class="text-sm relative w-[250px] text-left rounded-lg appearance-none px-[14px] py-[10px] flex items-center h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-              >
-                <span class="block truncate">{{
-                  measurements.find((i) => i.value == form.unit)?.name
-                }}</span>
-                <span class="right-0 pr-2 absolute"
-                  ><AppIcon
-                    icon="ph:caret-down-bold"
-                    iconClass="h-4 w-4 text-[#667085]"
-                    aria-hidden="true"
-                /></span>
-              </ListboxButton>
-
-              <transition
-                leave-active-class="transition duration-100 ease-in"
-                leave-from-class="opacity-100"
-                leave-to-class="opacity-0"
-              >
-                <ListboxOptions
-                  class="absolute mt-1 mx-h-60 w-[200px] z-40 overflow-auto rounded-[10px] bg-white py-1 text-base shadow-lg focus:outline-none sm:text-sm"
-                >
-                  <ListboxOption
-                    v-slot="{ selected }"
-                    v-for="i in measurements"
-                    :key="i.name"
-                    :value="i.value"
-                    as="template"
-                  >
-                    <li
-                      :class="[
-                        'relative cursor-pointer  text-matta-black  hover:text-primary select-none py-2 pl-10 pr-4 text-left',
-                      ]"
-                    >
-                      <span
-                        :class="[selected ? 'font-medium' : 'font-normal']"
-                        >{{ i.name }}</span
-                      >
-                    </li>
-                  </ListboxOption>
-                </ListboxOptions>
-              </transition>
-            </div>
-          </Listbox>
-
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of v$.unit.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
-        </div> -->
+   
         <button
           type="button"
           class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-[11px] text-left leading-[normal] block"
@@ -575,9 +519,9 @@
             'bg-primary/60 cursor-not-allowed': isLoading,
           }"
           type="submit"
-          class="appearance-none leading-none px-6 lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
+          class="appearance-none leading-none px-6 lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
         >
-          Next
+          {{isLoading?"Saving...":"Next"}}
         </button>
       </div>
     </div>
@@ -926,7 +870,7 @@ async function handleSubmit() {
             duration: 4000,
           });
           router.push(
-            `/storefront/products/add-product?id=${route.query.id}&stage=2`
+            `/storefront/products/${route.params.process}?id=${route.query.id}&stage=2`
           );
         }
       })
@@ -948,7 +892,7 @@ async function handleSubmit() {
             duration: 4000,
           });
           router.push(
-            `/storefront/products/add-product?id=${res.data.data.item_id}&stage=2`
+            `/storefront/products/${route.params.process}?id=${res.data.data.item_id}&stage=2`
           );
         }
       })

@@ -28,7 +28,7 @@
           <InformationSampleShippingAddress />
         </div>
         <InformationSampleRequestComplete v-if="active === 3" />
-        <InformationSampleRegisterComponent v-if="active === 2 && showAuth" />
+        <ModalAuth v-if="active === 2 && showAuth" />
       </div>
     </div>
     <div v-if="active !== 3">
@@ -96,6 +96,7 @@ import {
 } from "@vuelidate/validators";
 import { toast } from 'vue3-toastify';
 
+const type = ref("login")
 const supplierStore = useSupplierStore()
 const authStore = useAuthStore()
 const togglePopup = inject("togglePopup");
@@ -203,4 +204,6 @@ provide("toggleAuth", toggleAuth);
 provide("request1$", request1$);
 provide("request2$", request2$);
 provide("sampleForm", sampleForm);
+provide("type", type)
+provide("isOpen", showAuth)
 </script>

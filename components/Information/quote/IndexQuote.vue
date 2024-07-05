@@ -27,7 +27,7 @@
           <InformationQuoteShippingAddress />
         </div>
         <InformationQuoteRequestComplete v-if="active === 3" />
-        <InformationQuoteRegisterComponent v-if="active === 2 && showAuth" />
+        <ModalAuth v-if="active === 2 && showAuth" />
       </div>
     </div>
     <div v-if="active !== 3">
@@ -98,6 +98,7 @@ onMounted(() => {
     quoteForm.buyerBusinessName = res.data.data.companyName;
   });
 });
+const type = ref("login")
 const supplierStore = useSupplierStore()
 const togglePopup = inject("togglePopup");
 const authStore = useAuthStore()
@@ -220,4 +221,6 @@ provide("toggleAuth", toggleAuth);
 provide("request1$", request1$);
 provide("request2$", request2$);
 provide("quoteForm", quoteForm);
+provide("type", type)
+provide("isOpen", showAuth)
 </script>

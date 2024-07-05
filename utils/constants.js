@@ -1,3 +1,5 @@
+import { required, helpers } from "@vuelidate/validators";
+
 export const measurements = [
   { value: "g", name: "Gramme" },
   { value: "kg", name: "Kilogramme" },
@@ -1104,5 +1106,50 @@ export const defaultPropertyItems = {
   technical: {
     propertyItems: [{ property: null, propertyValue: [] }],
     subSection: [],
+  },
+};
+
+export const productrules = {
+  propertyItems: {
+    property: {
+      propertyItems: {
+        required,
+        $each: helpers.forEach({
+          property: {
+            required,
+          },
+          propertyValue: {
+            required,
+          },
+        }),
+      },
+    },
+
+    technical: {
+      propertyItems: {
+        required,
+        $each: helpers.forEach({
+          property: {
+            required,
+          },
+          propertyValue: {
+            required,
+          },
+        }),
+      },
+    },
+
+    compliance: {
+      propertyItems: {
+        $each: helpers.forEach({
+          property: {
+            required,
+          },
+          propertyValue: {
+            required,
+          },
+        }),
+      },
+    },
   },
 };

@@ -131,7 +131,7 @@
                         <i class="uil uil-ellipsis-v text-lg"></i>
                       </PopoverButton>
                       <PopoverPanel
-                        class="absolute z-[99] bg-white shadow right-0 min-w-[150px] rounded-md overflow-hidden pt-4"
+                        class="absolute z-[999] bg-white shadow right-0 min-w-[150px] rounded-md overflow-hidden pt-4"
                       >
                         <ul class="grid grid-cols-1">
                           <NuxtLink

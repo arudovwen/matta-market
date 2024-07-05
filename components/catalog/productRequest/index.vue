@@ -162,8 +162,7 @@
 
         <div class="mb-6 md:col-span-2">
           <label for="formFile" class="mb-2 font-normal text-xs block text-matta-black"
-            >Upload document  <RedDot /></label
-          >
+            >Upload document  <RedDot /></label>
           <div class="relative flex items-center">
             <input
               class="flex-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:cursor-pointer file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"

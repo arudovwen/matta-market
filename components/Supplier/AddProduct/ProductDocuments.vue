@@ -80,7 +80,7 @@
                                   selected
                                     ? 'text-blue-800 bg-blue-50'
                                     : 'font-normal text-matta-black',
-                                  'relative cursor-pointer capitalize text-matta-black  hover:text-primary select-none py-2 pl-6 pr-4 text-left',
+                                  'relative cursor-pointer capitalize text-matta-black  block hover:text-primary select-none py-2 pl-6 pr-4 text-left',
                                 ]"
                               >
                                 <div class="flex gap-x-4 items-start">
@@ -144,9 +144,9 @@
           :class="{
             'bg-primary/60 cursor-not-allowed': isLoading,
           }"
-          class="appearance-none leading-none  px-5  lg:px-10px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
+          class="appearance-none leading-none  px-5  lg:px-10px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
         >
-          Complete
+        {{isLoading?"Saving...":"Complete"}}
         </button>
       </div>
     </div>
