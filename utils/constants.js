@@ -1083,3 +1083,26 @@ export const traditionalData = [
     info: "Adherence to standards and regulations.",
   },
 ];
+
+export const defaultPropertyItems = {
+  features: {
+    propertyItems: [],
+    subSection: [],
+  },
+  applications: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+  property: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+  compliance: {
+    propertyItems: [],
+    subSection: [],
+  },
+  technical: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+};

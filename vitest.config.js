@@ -23,6 +23,7 @@ export default defineVitestConfig({
         '__mocks__/**',
         'node_modules/',
         'coverage/',
+				"utils/constants.js"
       ],
     },
     moduleNameMapper: {
