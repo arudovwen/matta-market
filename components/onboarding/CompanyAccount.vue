@@ -16,8 +16,6 @@
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
-
 const active = ref(1);
 const route = useRoute();
 onMounted(() => {

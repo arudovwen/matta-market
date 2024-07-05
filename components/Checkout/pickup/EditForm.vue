@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white w-full">
     <legend class="block text-[20px] font-bold mb-8 text-left">
-      Update Pickup location
+      {{ detail ? "Update" : "Add" }} Pickup location
     </legend>
     <form
       @submit.prevent="onSubmit"
@@ -90,7 +90,6 @@
       >
         <AppButton
           type="button"
-          :isLoading="isLoading"
           :isDisabled="isLoading"
           @click="isOpen = false"
           text="Cancel"
@@ -100,7 +99,7 @@
           type="submit"
           :isLoading="isLoading"
           :isDisabled="isLoading"
-          text="Update location"
+          text="Submit"
           btnClass="normal-case btn-primary !py-3"
         />
       </div>
@@ -111,7 +110,11 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { editPickupLocation } from "~/services/cartservice";
+import {
+  addPickupLocation,
+  editPickupLocation,
+  addressSearch,
+} from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "~/utils/countries.json";
 import Lgas from "~/utils/lgastate.json";
@@ -131,7 +134,9 @@ const formValues = {
   phoneNumber: "",
 };
 onMounted(() => {
-  setValues(detail.value);
+  if (detail?.value) {
+    setValues(detail.value);
+  }
 });
 const schema = yup.object({
   storeName: yup.string().required("First name is required"),
@@ -190,10 +195,20 @@ const lgasOption = computed(() => {
     return { label: i, value: i };
   });
 });
-
+const addressOptions = ref([]);
+watch(address, () => {
+  addressSearch({ text: address.value }).then((res) => {
+    if (res.status === 200) {
+      addressOptions.value = res.data.map((i, index) => ({
+        label: i.label,
+        value: `${i.label}-${index}`,
+      }));
+    }
+  });
+});
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  editPickupLocation(values)
+  (detail.value ? editPickupLocation : addPickupLocation)(values)
     .then((res) => {
       if (res.status === 200) {
         toast.info("Address updated");
@@ -205,7 +220,9 @@ const onSubmit = handleSubmit((values) => {
     .catch((err) => {
       isLoading.value = false;
       if (err?.response?.data?.message || err?.response?.data?.Message) {
-        toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       }
     });
 });

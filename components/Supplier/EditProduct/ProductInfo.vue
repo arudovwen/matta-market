@@ -623,7 +623,7 @@
   <ModalCenter>
     <template #default>
       <div class="w-full max-w-max p-6 md:py-9 md:px-10 z-[999] relative">
-        <CheckoutPickupAddForm @close="pickUpStore.getAlladdress()" />
+        <CheckoutPickupEditForm @close="pickUpStore.getAlladdress()" />
       </div>
     </template>
   </ModalCenter>
@@ -957,6 +957,7 @@ function handleAddingPackage() {
 }
 provide("images", form.gallery);
 provide("isOpen",isLocationOpen)
+provide("detail", null)
 </script>
 
 <style lang="scss" scoped>
