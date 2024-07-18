@@ -87,6 +87,9 @@ export default defineNuxtConfig({
       hashMode: false,
     },
   },
+  routeRules: {
+    '/finance': { redirect: '/' },
+},
   // plugins: ["~/plugins/pdf-viewer.client.js"],
 
   googleSignIn: {
