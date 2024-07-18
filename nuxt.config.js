@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     "@nuxt/devtools",
     "nuxt-ssr-cache",
     "@vite-pwa/nuxt",
-		"@nuxt/test-utils/module"
+    "@nuxt/test-utils/module",
   ],
 
   security: {
@@ -88,8 +88,8 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    '/finance': { redirect: '/' },
-},
+    "/finance": { redirect: "/" },
+  },
   // plugins: ["~/plugins/pdf-viewer.client.js"],
 
   googleSignIn: {
