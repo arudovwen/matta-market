@@ -22,7 +22,7 @@
           </button>
         </NuxtLink>
       </div>
-      <div class="flex overflow-x-hidden hover:overflow-x-auto gap-x-4 md:gP-X-6 pb-6" data-aos="fade-up" data-aos-once="true">
+      <div class="flex overflow-x-hidden hover:overflow-x-auto gap-x-4 md:gP-X-6 pb-6" >
      
           <div v-for="slide in content.slice(0, 8)" :key="slide"
             @click="

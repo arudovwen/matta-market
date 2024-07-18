@@ -21,7 +21,7 @@
           </p>
         </div>
       </div>
-      <div data-aos="fade-up" data-aos-once="true" class="w-full">
+      <div class="w-full">
         <AccordionComponent :items="content">
           <template v-slot="{ item }">
             {{ item.answer }}

@@ -1,227 +1,133 @@
 <template>
-  <div class="min-w-[400px] py-10 px-6">
-    <span class="block text-2xl font-medium text-center mb-2">{{
-      step === 1 ? "Create transaction pin" : "Enter OTP code"
-    }}</span>
-
-    <form @submit.prevent="handleSubmit" v-if="step === 1">
-      <div class="mb-6">
-        <label for="" class="mb-2 font-normal text-xs block text-matta-black"
-          >New pin</label
-        >
-        <div class="relative flex items-center">
-          <input
-            v-model="v$.pin.$model"
-            :class="{ 'border-red-500 ': v$.pin.$error }"
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            placeholder="Enter new pin"
-          />
-          <EyeIcon
-            v-if="!isShowingPasword"
-            @click="isShowingPasword = !isShowingPasword"
-            class="w-4 h-4 absolute cursor-pointer right-6"
-          />
-          <EyeSlashIcon
-            @click="isShowingPasword = !isShowingPasword"
-            v-else
-            class="w-4 h-4 absolute cursor-pointer right-6"
-          />
-        </div>
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.pin.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
+  <ModalCenterProp :is-modal-open="isCreatePin" @close="emit('close')">
+    <div class="min-w-[350px] max-w-[350px] py-6 px-6">
+      <div class="mb-2">
+        <img alt="check" src="/images/checkers.svg" />
       </div>
-      <div class="mb-6">
-        <label for="" class="mb-2 font-normal text-xs block text-matta-black"
-          >Confirm pin</label
-        >
-        <div class="relative flex items-center">
-          <input
-            v-model="v$.confirmPin.$model"
-            :class="{ 'border-red-500 ': v$.confirmPin.$error }"
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            placeholder="Confirm your pin"
-          />
-          <EyeIcon
-            v-if="!isShowingPasword"
-            @click="isShowingPasword = !isShowingPasword"
-            class="w-4 h-4 absolute cursor-pointer right-6"
-          />
-          <EyeSlashIcon
-            @click="isShowingPasword = !isShowingPasword"
-            v-else
-            class="w-4 h-4 absolute cursor-pointer right-6"
-          />
-        </div>
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.confirmPin.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
-      </div>
+      <h2 class="block text-lg font-semibold text-[#101828] text-left mb-1">
+        Transaction PIN
+      </h2>
+      <p class="text-sm text-[#475467] text-left mb-6">
+        You need to set a 4 digit PIN for verifying your transactions.
+      </p>
 
-      <div class="">
-        <button
-          type="submit"
-          :disabled="isLoading"
-          class="border text-[13px] mb-4 border-primary- uppercase text-white lg:min-w-[120px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
-        >
-          <span>
-            <span
-              class="flex gap-x-4 justify-center items-center"
-              v-if="isLoading"
-              ><span> Processing...</span>
-              <i
+      <form @submit.prevent="onSubmit">
+        <div class="mb-6">
+          <Textinput
+            hasicon
+            placeholder=""
+            label="New transaction pin"
+            type="password"
+            name="transactionPIN"
+            v-model="transactionPIN"
+            v-bind="transactionPINAtt"
+            :error="errors.transactionPIN"
+          />
+        </div>
+        <div class="mb-8">
+          <Textinput
+            hasicon
+            placeholder=""
+            label="Confirm transaction pin"
+            type="password"
+            name="confirmPin"
+            v-model="confirmPin"
+            v-bind="confirmPinAtt"
+            :error="errors.confirmPin"
+          />
+        </div>
+        <div class="flex gap-x-4">
+          <button
+            type="button"
+            @click="isCreatePin = false"
+            class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium justify-center flex items-center"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            :disabled="isLoading"
+            class="border text-[13px] mb-4 border-primary- uppercase text-white lg:min-w-[120px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
+          >
+            <span>
+              <span
+                class="flex gap-x-4 justify-center items-center"
                 v-if="isLoading"
-                class="fa fa-spinner fa-spin text-white"
-                aria-hidden="true"
-              ></i
-            ></span>
-            <span v-else>Submit</span>
-          </span>
-        </button>
-      </div>
-    </form>
-    <form @submit.prevent="verifyWalletPin" v-if="step === 2">
-      <div class="mb-6">
-        <label for="" class="mb-2 font-normal text-xs block text-matta-black"
-          >Otp code</label
-        >
-        <div class="relative flex items-center">
-          <input
-            v-model="v1$.otp.$model"
-            :class="{ 'border-red-500 ': v1$.otp.$error }"
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            placeholder="Enter otp code"
-          />
+                ><span> Processing...</span>
+                <i
+                  v-if="isLoading"
+                  class="fa fa-spinner fa-spin text-white"
+                  aria-hidden="true"
+                ></i
+              ></span>
+              <span v-else>Set PIN</span>
+            </span>
+          </button>
         </div>
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v1$.otp.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
-      </div>
-
-      <div class="">
-        <button
-          type="submit"
-          :disabled="isLoading"
-          class="border text-[13px] mb-4 border-primary- uppercase text-white lg:min-w-[120px] w-full bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
-        >
-          <span>
-            <span
-              class="flex gap-x-4 justify-center items-center"
-              v-if="isLoading"
-              ><span> Processing...</span>
-              <i
-                v-if="isLoading"
-                class="fa fa-spinner fa-spin text-white"
-                aria-hidden="true"
-              ></i
-            ></span>
-            <span v-else>Create pin</span>
-          </span>
-        </button>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
+  </ModalCenterProp>
 </template>
 <script setup>
-import { ref, reactive, defineEmits, defineProps } from "vue";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
-import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  helpers,
-  minLength,
-  maxLength,
-  numeric,
-} from "@vuelidate/validators";
-import { setWalletpin, verifyPin } from "~/services/walletservice";
-import { toast } from 'vue3-toastify';
+import { useForm } from "vee-validate";
+import * as yup from "yup";
+import { setWalletpin } from "~/services/walletservice";
+import { toast } from "vue3-toastify";
 
-const props = defineProps(["details"]);
-const emits = defineEmits(["close"]);
+defineProps({
+  isCreatePin: {
+    default: false,
+  },
+  buttonText: {
+    default: "Verify Pin",
+  },
+});
+const emit = defineEmits(["close"]);
+
 const form = reactive({
-  pin: "",
+  transactionPIN: "",
   confirmPin: "",
-  walletId: props?.details?.walletId,
 });
-const form1 = reactive({
-  otp: null,
+const schema = yup.object({
+  transactionPIN: yup
+    .string()
+    .length(4, "Pin must be 4 digits")
+    .required("Pin is required"),
+  confirmPin: yup
+    .string()
+    .length(4, "Confirm pin must be 4 digits")
+    .required("Confirm pin is required")
+    .oneOf([yup.ref("transactionPIN")], "Pins must match"),
 });
 
+const { handleSubmit, defineField, errors } = useForm({
+  validationSchema: schema,
+  initialValues: form,
+});
+
+const [transactionPIN, transactionPINAtt] = defineField("transactionPIN");
+const [confirmPin, confirmPinAtt] = defineField("confirmPin");
 
 const isLoading = ref(false);
-const step = ref(1);
-const samePin = (value) => value === form.pin;
-const rules = {
-  pin: {
-    required: helpers.withMessage("Pin field cannot be empty", required),
-    minLength: minLength(4),
-    maxLength: maxLength(4),
-    numeric,
-  },
-
-  confirmPin: {
-    samePin: helpers.withMessage("Pins must match", samePin),
-  },
-  walletId: {
-    required,
-  },
-};
-const rule = {
-  otp: {
-    required,
-    minLength: minLength(6),
-    maxLength: maxLength(6),
-    numeric,
-  },
-};
-const v$ = useVuelidate(rules, form);
-const v1$ = useVuelidate(rule, form1);
-const isShowingPasword = ref(false);
-
-async function handleSubmit() {
-	const validity = await v$.value.$validate();
-  if (!validity) return;
+const authStore = useAuthStore()
+const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  form.pin = form.pin.toString();
-  form.confirmPin = form.confirmPin.toString();
-  form.walletId = props.details.walletId;
-  setWalletpin(form).then((res) => {
-		if (res.status === 200) {
-			step.value = 2;
-      isLoading.value = false;
-      toast.info(res.data.data.message);
-    }
-  });
-}
 
-async function verifyWalletPin() {
-  const validity = await v1$.value.$validate();
-  if (!validity) return;
-  verifyPin(form1.otp).then((res) => {
-    if (res.status == 200) {
-      toast.info("Pin created successfully");
-      emits("close");
-    }
-  });
-}
+  setWalletpin(values)
+    .then((res) => {
+      if (res.status === 200) {
+        authStore.setHasPin(true)
+        emit("close");
+        isLoading.value = false;
+        toast.info("Transaction pin set!");
+      }
+    })
+    .catch((err) => {
+      toast.error(err.response.data.Message || err.res.data.message);
+
+      isLoading.value = false;
+    });
+});
 </script>
 
 <style lang="scss" scoped>

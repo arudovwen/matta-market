@@ -5,6 +5,9 @@ import { post, get } from "../helpers/api_helpers";
 export async function loginUser(user, config = {}) {
   return await post(urls.LOGIN_USER, user, config);
 }
+export async function loginUser2FA(user, config = {}) {
+  return await post(urls.LOGIN_USER_2FA, user, config);
+}
 export async function logOut() {
   const authStore = useAuthStore();
   // googleLogout();

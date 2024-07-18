@@ -108,11 +108,12 @@
     @close="() => (isErrorOpen = false)"
   />
   <RequestLoader :open="loader" />
+
 </template>
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import OTP from "./OTP.vue";
+
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
 import { confirmFunding, getDepositCharge } from "~/services/walletservice";

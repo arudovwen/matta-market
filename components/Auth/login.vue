@@ -1,7 +1,7 @@
 <template>
-  <div class="pt-10 lg:pt-0 w-full max-w-[500px] mx-auto">
-    <h1 class="text-[#333] darks:text-white mb-[10px] text-2xl font-bold">
-      Login
+  <div v-if="step === 1" class="pt-10 lg:pt-0 w-full max-w-[500px] mx-auto">
+    <h1 class="text-[#333] darks:text-white mb-[10px] text-3xl font-bold">
+      Welcome back
     </h1>
     <p class="mb-[31px] text-sm text-[#666] darks:text-white/80">
       Please enter your details to sign in
@@ -33,9 +33,7 @@
         />
       </div>
       <span class="block text-sm text-[#333] darks:text-white/80 mb-10">
-        <NuxtLink
-          to="/auth/forgot-password?redirected_from=/cart"
-          class="font-medium"
+        <NuxtLink to="/auth/forgot-password" class="font-medium"
           >Forgot password?</NuxtLink
         >
       </span>
@@ -47,42 +45,56 @@
           text="Login"
           btnClass="btn-primary !py-3"
         />
+        <AppButton
+          v-if="main"
+          :disabled="!isReady"
+          @click="() => login()"
+          text="Sign in with Google"
+          icon="flat-color-icons:google"
+          btnClass="btn-dark !py-3 disabled:opacity-50"
+          type="button"
+        />
       </div>
       <span
         class="flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
       >
         Don’t have an account?
-        <span
-          @click="type = 'register'"
-          class="cursor-pointer font-semibold text-[#2176FF]"
-          >Sign Up</span
+        <NuxtLink to="/auth/register" class="font-semibold text-[#2176FF]"
+          >Sign Up</NuxtLink
         >
       </span>
     </form>
   </div>
+  <AuthOtp
+    v-if="step === 2"
+    title="Enter OTP sent to your email"
+    :isVerifyPin="isVerifyPin"
+    @close="step = 1"
+    buttonText="Verify OTP"
+    @handleSubmit="handleFinalSubmit"
+    :isLoading="isLoading"
+  />
 </template>
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { loginUser, sociallogin } from "~/services/authservices";
+import { loginUser, sociallogin, loginUser2FA } from "~/services/authservices";
 
-definePageMeta({
-  layout: "auth",
-  middleware: "auth",
+const props = defineProps({
+  main: {
+    default: true,
+  },
 });
-useHead({
-  title: "Login | Matta",
-  meta: [{ name: "description", content: "Login | Matta" }],
-});
-const authStore = useAuthStore();
-const router = useRouter();
-const route = useRoute();
-
+const step = ref(1);
+const isVerifyPin = ref(false);
 const isLoading = ref(false);
-const type = inject("type");
+const formValues = {
+  email: "",
+  password: "",
+};
 
-const loginSchema = yup.object({
+const schema = yup.object({
   email: yup
     .string()
     .required("Email is required")
@@ -90,33 +102,31 @@ const loginSchema = yup.object({
   password: yup.string().required("Password is required"),
 });
 
-const formValues = {
-  email: "",
-  password: "",
-};
-
 const { handleSubmit, defineField, errors } = useForm({
-  validationSchema: loginSchema,
+  validationSchema: schema,
   initialValues: formValues,
 });
-
-const [password, passwordAtt] = defineField("password");
-
+const authStore = useAuthStore();
 const [email, emailAtt] = defineField("email");
-
+const [password, passwordAtt] = defineField("password");
+const route = useRoute();
+const router = useRouter();
 const onSubmit = handleSubmit((values) => {
+  formValues.email = values.email;
+  formValues.password = values.password;
   isLoading.value = true;
   loginUser(values)
-    .then((response) => {
-      if (response.status === 200) {
-        toast.success("Login successful");
-        authStore.setLoggedUser(response.data.data);
-        window.location.reload();
+    .then((res) => {
+      if (res.status === 200) {
+        isVerifyPin.value = true;
+        step.value = 2;
+        isLoading.value = false;
       }
     })
 
     .catch((err) => {
       isLoading.value = false;
+
       if (!err.response.data) return;
       const { data } = err.response;
       if (data.message || data.Message) {
@@ -131,6 +141,54 @@ const onSubmit = handleSubmit((values) => {
       }
     });
 });
+const handleFinalSubmit = (token) => {
+  isLoading.value = true;
+  loginUser2FA({ token, email: formValues.email })
+    .then((res) => {
+      if (res.status === 200) {
+        isLoading.value = false;
+        authStore.setLoggedUser(res.data.data);
+        authStore.setHasPin(res.data.data.hasPin);
+        localStorage.setItem("fetchCart", true);
+        if (props.main) {
+          windows.location.reload();
+          return;
+        }
+        if (
+          !res.data.data.onboardingPageStatus &&
+          res.data.data?.businessUserType.toLowerCase() === "supplier"
+        ) {
+          toast.info("Login successful");
+          window.location.replace("/products");
+          return;
+        }
+        toast.success("Login successful");
+        if (route.query.redirected_from) {
+          window.location.replace(route.query.redirected_from);
+          return;
+        }
+
+        window.location.replace("/");
+      }
+    })
+
+    .catch((err) => {
+      isLoading.value = false;
+
+      if (!err.response.data) return;
+      const { data } = err.response;
+      if (data.message || data.Message) {
+        toast.error(data.message || data.Message);
+      }
+      if (
+        (data.message || data.Message).includes("Email has not verified yet")
+      ) {
+        router.push(
+          `/auth/resend-verification/${encodeURIComponent(values.email)}`
+        );
+      }
+    });
+};
 
 const handleLoginSuccess = (response) => {
   const { access_token } = response;
@@ -143,25 +201,25 @@ const handleLoginSuccess = (response) => {
   sociallogin(data)
     .then((res) => {
       if (res.status === 200) {
-        localStorage.setItem("fetchCart", "true");
         store.commit("setUser", res.data.data);
         toast.success(res.data.message ? res.data.message : "Login successful");
         if (res.data.message.includes("Email has not verified yet")) {
           return;
         }
+
         if (!res.data.data.onboardingPageStatus) {
           window.location.replace("/overview");
-          return;
-        }
-
-        if (route.query.redirect_to) {
-          window.location.replace(route.query.redirect_to);
           return;
         }
         if (route.query.redirected_from) {
           window.location.replace(route.query.redirected_from);
           return;
         }
+        if (route.query.redirect_to) {
+          window.location.replace(route.query.redirect_to);
+          return;
+        }
+
         window.location.replace("/");
       }
     })
@@ -176,9 +234,16 @@ const handleLoginSuccess = (response) => {
       if (
         (data.message || data.Message).includes("Email has not verified yet")
       ) {
-        router.push(`/resend-verification/${form.email}`);
+        router.push(
+          `/auth/resend-verification/${encodeURIComponent(values.email)}`
+        );
       }
     });
+};
+
+// handle an error event
+const handleLoginError = () => {
+  console.error("Login failed");
 };
 
 const { isReady, login } = useTokenClient({
@@ -186,8 +251,4 @@ const { isReady, login } = useTokenClient({
   onError: handleLoginError,
   // other options
 });
-// handle an error event
-const handleLoginError = () => {
-  console.error("Login failed");
-};
 </script>

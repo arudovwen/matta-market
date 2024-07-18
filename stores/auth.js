@@ -4,21 +4,8 @@ export const useAuthStore = defineStore(
   "auth",
   () => {
     const loggedUser = ref("");
+    const hasPin = ref(false);
     const language = ref(window?.navigator?.language);
-    const languages = [
-      {
-        code: "en",
-        name: "En",
-        cname: "英语",
-        ename: "EnEnglish",
-      },
-      {
-        code: "fr",
-        name: "Fr",
-        cname: "法语",
-        ename: "Fr",
-      },
-    ];
     const isLoggedIn = computed(() => !!loggedUser.value);
     const refresh_token = computed(() => loggedUser?.value?.jwToken);
     const access_token = computed(() => loggedUser?.value?.jwToken);
@@ -30,6 +17,10 @@ export const useAuthStore = defineStore(
 
     function setLoggedUser(data) {
       loggedUser.value = data;
+    }
+
+    function setHasPin(data) {
+      hasPin.value = data;
     }
 
     function setAccessToken(value) {
@@ -55,7 +46,8 @@ export const useAuthStore = defineStore(
     }
 
     const logOut = () => {
-      setLoggedUser(null)
+      setLoggedUser(null);
+      setHasPin(false)
       window.location.href = "/";
     };
     return {
@@ -76,6 +68,8 @@ export const useAuthStore = defineStore(
       loggedUser,
       businessId,
       language,
+      setHasPin,
+      hasPin,
     };
   },
   {

@@ -102,7 +102,7 @@
             btnClass="text-xs sm:text-sm !py-0 !px-0 w-full sm:!w-auto sm:!max-w-max items-center"
           /> -->
         </div>
-        <div class="mb-6">
+        <div class="mb-6"  v-if="!productData.hidePrice">
           <h2 class="font-bold text-sm mb-2">Choose packaging</h2>
           <Select
             v-model="selectedPackage"

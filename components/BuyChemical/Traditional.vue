@@ -2,15 +2,13 @@
   <section>
     <div class="container py-[96px]">
       <h2
-        data-aos="fade-up"
-        data-aos-once="true"
+
         class="text-2xl md:text-5xl font-semibold text-center mb-5"
       >
         Matta vs Traditional Procurement
       </h2>
       <p
-        data-aos="fade-up"
-        data-aos-once="true"
+       
         class="text-base md:text-2xl text-[#475467] text-center mb-10"
       >
         The Advantage is Clear
@@ -18,8 +16,7 @@
 
       <div class="mx-auto max-w-4xl">
         <table
-          data-aos="fade-up"
-          data-aos-once="true"
+         
           class="w-full table-auto"
         >
           <thead>
@@ -40,7 +37,7 @@
           <tbody>
             <tr
               class="first:border-t last:border-b border-r border-l border-[#EAECF0] rounded-t-lg odd:bg-[#F9FAFB]"
-              v-for="i in data"
+              v-for="i in traditionalData"
               :key="i.label"
             >
               <td class="px-3 md:px-6 py-5 text-[11px] md:text-sm font-medium">
@@ -74,6 +71,3 @@
     </div>
   </section>
 </template>
-<script setup>
-
-</script>
