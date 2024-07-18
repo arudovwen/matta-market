@@ -87,6 +87,9 @@ export default defineNuxtConfig({
       hashMode: false,
     },
   },
+  routeRules: {
+    '/finance': { redirect: '/' },
+},
   // plugins: ["~/plugins/pdf-viewer.client.js"],
 
   googleSignIn: {
@@ -208,7 +211,7 @@ export default defineNuxtConfig({
         {
           hid: "twitter:image",
           name: "twitter:image",
-          content: "URL to your Twitter",
+          content: "URL to your Twitter image",
         }, // Add Twitter image URL
         {
           name: "keywords",
