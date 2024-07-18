@@ -45,8 +45,34 @@ vi.mock("~/services/userservices", async () => {
         totalCount: 1,
       },
     }),
-    updateVendorInfo: vi.fn().mockResolvedValue({ status: 200 }),
-    postStoreName: vi.fn().mockResolvedValue({ status: 200 }),
+    updateVendorInfo: vi.fn().mockResolvedValue({
+      status: 200,
+      data: {
+        data: [
+          {
+            storeName: "",
+            storeSlug: "",
+            bannerUrl: "",
+            campaignBanner: "",
+          },
+        ],
+        totalCount: 1,
+      },
+    }),
+    postStoreName: vi.fn().mockResolvedValue({
+      status: 200,
+      data: {
+        data: [
+          {
+            storeName: "",
+            storeSlug: "",
+            bannerUrl: "",
+            campaignBanner: "",
+          },
+        ],
+        totalCount: 1,
+      },
+    }),
   };
 });
 

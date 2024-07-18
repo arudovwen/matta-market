@@ -51,7 +51,47 @@ describe("CompanyAccount", () => {
     return {
       getProfile: vi.fn().mockResolvedValue({
         status: 200,
-        data: {data:{}},
+        data: { data: {} },
+      }),
+    };
+  });
+  vi.mock("~/services/onboardingservices", async () => {
+    return {
+      uploadfile: vi.fn().mockResolvedValue({
+        status: 200,
+        data: { data: {} },
+      }),
+      setOnboardingcomplete: vi.fn().mockResolvedValue({
+        status: 200,
+        data: { data: {} },
+      }),
+      updatePersonalInfo: vi.fn().mockResolvedValue({
+        status: 200,
+        data: { data: {} },
+      }),
+    };
+  });
+  vi.mock("~/services/settingservices", async () => {
+    return {
+      getCompanyProfile: vi.fn().mockResolvedValue({
+        status: 200,
+        data: { data: {} },
+      }),
+      getProfile: vi.fn().mockResolvedValue({
+        status: 200,
+        data: { data: {} },
+      }),
+      updateCompanyProfile: vi.fn().mockResolvedValue({
+        status: 200,
+        data: { data: {} },
+      }),
+      updateDocuments: vi.fn().mockResolvedValue({
+        status: 200,
+        data: { data: {} },
+      }),
+      updateDirectors: vi.fn().mockResolvedValue({
+        status: 200,
+        data: { data: {} },
       }),
     };
   });

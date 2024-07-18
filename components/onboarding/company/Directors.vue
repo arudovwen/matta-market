@@ -135,7 +135,7 @@ import "vue-advanced-cropper/dist/style.css";
 import { ref, reactive, provide } from "vue";
 import { toast } from "vue3-toastify";
 import {
-  additionalInfo,
+ 
   setOnboardingcomplete,
 } from "~/services/onboardingservices";
 import { useRouter } from "vue-router";

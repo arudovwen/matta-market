@@ -623,9 +623,9 @@ import {
 } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
 import {
-  additionalInfo,
+
   uploadfile,
-  setOnboardingcomplete,
+ 
 } from "~/services/onboardingservices";
 import { useRouter } from "vue-router";
 import {
