@@ -70,7 +70,7 @@
           ></div>
         </div>
       </div>
-      <div class="mb-[50px]" v-if="withdrawalAmount">
+      <div class="mb-[30px]" v-if="withdrawalAmount">
         <p class="flex gap-x-2 text-sm text-right justify-between mb-1">
           <span>You will be charged:</span>
           <span>{{ currencyFormat(charge) }}</span>
@@ -95,7 +95,7 @@
             isLoading || loading || withdrawalAmount + charge > balance
           "
           :isLoading="isLoading"
-          btnClass="bg-primary-500 text-white !px-[14px]  !text-sm !py-[10px] disabled:cursor-not-allowed w-full"
+          btnClass="bg-primary-500 text-white !px-[14px]  !text-sm !py-[10px] disabled:cursor-not-allowed w-full disabled:opacity-60"
           type="submit"
           text="Submit"
         />
@@ -116,11 +116,25 @@
     @close="() => (isErrorOpen = false)"
   />
   <RequestLoader :open="isLoading" />
+  <OTP
+    :isVerifyPin="isVerifyPin"
+    @close="isVerifyPin = false"
+    @handleSubmit="handleFinalSubmit"
+    :isLoading="isLoading"
+  />
+  <CreatePin
+    :isCreatePin="isCreatePin"
+    @close="
+      () => {
+        isVerifyPin = true;
+        isCreatePin = false;
+      }
+    "
+  />
 </template>
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import OTP from "./OTP.vue";
 import CurrencyInput from "~/components/CurrencyInput";
 import { ref, reactive, inject } from "vue";
 import {
@@ -128,12 +142,16 @@ import {
   validateAccount,
   getWithdrawalCharge,
 } from "~/services/walletservice";
+import OTP from "./OTP.vue";
+import CreatePin from "./CreatePin.vue";
 
+const isCreatePin = ref(false);
+const isVerifyPin = ref(false);
 const isErrorOpen = ref(false);
 const errorText = ref("Wallet creation request failed");
 const props = defineProps({
   balance: {
-    default: 800,
+    default: 0,
   },
   hasSettlement: {
     default: true,
@@ -142,6 +160,7 @@ const props = defineProps({
     default: () => [],
   },
 });
+const authStore = useAuthStore();
 const loading = ref(false);
 const stage = ref(1);
 const handleClose = inject("handleClose");
@@ -155,6 +174,7 @@ const form = reactive({
   totalAmount: null,
 });
 const isValidating = ref(false);
+const formData = ref(null);
 const formSchema = yup.object().shape({
   balance: yup.number(),
   bankCode: yup.string().required("Bank name is required"),
@@ -190,14 +210,7 @@ const formSchema = yup.object().shape({
   withdrawalAmount: yup
     .number()
     .required("Amount is required")
-    .test("balance-validation", "Exceeded available balance", function (value) {
-      const balance = this.parent.balance;
-
-      if (value && balance) {
-        return value <= balance;
-      }
-      return true; // Return true if no validation needed
-    })
+    .max(yup.ref("balance", "Exceeded available balance"))
     .positive("Amount must be a positive number"),
   totalAmount: yup
     .number()
@@ -222,9 +235,10 @@ const [bankCode] = defineField("bankCode");
 const [accountNumber, accountNumberAtt] = defineField("accountNumber");
 const [withdrawalAmount] = defineField("withdrawalAmount");
 const handleComplete = inject("handleComplete");
-const onSubmit = handleSubmit((values) => {
+
+const handleFinalSubmit = (pin) => {
   isLoading.value = true;
-  withdrawFunds(values)
+  withdrawFunds({ ...formData.value, transactionPIN: pin })
     .then((res) => {
       if (res.status === 200) {
         handleComplete("Your withdraw request is being processed");
@@ -233,11 +247,19 @@ const onSubmit = handleSubmit((values) => {
     .catch((err) => {
       errorText.value =
         err?.response?.data?.message ||
-        JSON.parse(err?.response?.data?.Message)?.responseMessage ||
-        "Wallet creation request failed";
+        err?.response?.data?.Message ||
+        "Withdrawal request failed";
       isErrorOpen.value = true;
       isLoading.value = false;
     });
+};
+const onSubmit = handleSubmit((values) => {
+  formData.value = values;
+  if (authStore.hasPin) {
+    isVerifyPin.value = true;
+  } else {
+    isCreatePin.value = true;
+  }
 });
 watch(props.banks, () => {
   if (props.banks.length) {

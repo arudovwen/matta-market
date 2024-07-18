@@ -38,8 +38,7 @@
           </div>
         </div>
         <div
-          data-aos="fade-in"
-          data-aos-once="true"
+   
           class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/images/trailer.png')] rounded-lg"
         ></div>
       </div>

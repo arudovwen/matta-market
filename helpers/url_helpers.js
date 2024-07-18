@@ -1,6 +1,7 @@
 const urls = {
   //Auth urls
   LOGIN_USER: "v1/account/login",
+  LOGIN_USER_2FA: "v1/account/login2fa",
   REGISTER: "/v1/register",
   RESEND_VERIFICATION: "/v1/register/resendverification",
   REGISTER_INVITED_USER: "/v1/account/registerbusinessuser",
@@ -180,7 +181,7 @@ const urls = {
   CREATE_WALLET: "v1/wallet/new",
   CHECK_BALANCE: "v1/wallet/get-balance",
   GET_WALLET_DETAILS: "v1/wallet/customer-wallet-details",
-  SET_PIN: "v1/wallet/setpin",
+  SET_PIN: "v1/wallet/set-transfer-pin",
   CHANGE_PIN: "v1/wallet/change-pin",
   VALIDATE_OTP: "v1/wallet/validate-otp",
   SET_WARNING_LIMIT: "v1/wallet/setwarninglimit",

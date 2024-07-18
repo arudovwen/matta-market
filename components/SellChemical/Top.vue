@@ -2,16 +2,14 @@
   <div class="container pt-[64px] md:pt-[96px] pb-10 grid grid-cols-1 md:grid-cols-2 gap-y-6 md:gap-y-0 md:gap-x-10">
     <div>
       <h1
-        data-aos="fade-in"
-        data-aos-once="true"
+    
         class="text-4xl md:text-6xl md:leading-[72px] font-bold mb-6 max-w-[731px] relative"
       >
         <span class="relative z-[2]">The Customers You Are Looking For Are on the Matta Platform</span>
         <span  class="z-[1] absolute top-[50px] right-0 bg-contain bg-no-repeat rounded-r-lg bg-[url('/images/underline.png')] block w-[334px] h-[28px]"></span>
       </h1>
       <p
-        data-aos="fade-in"
-        data-aos-once="true"
+    
         class="text-base sm:text-lg md:text-xl mb-12 text-[#475467] max-w-[731px]"
       >
         Customers across Africa are trying to find your chemicals online. Help
@@ -20,8 +18,7 @@
       </p>
 
       <div
-        data-aos="fade-in"
-        data-aos-once="true"
+    
         class="flex gap-x-4 mb-[64px] max-w-[731px]"
       >
         <AppButton
