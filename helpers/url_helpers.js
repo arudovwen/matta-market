@@ -11,6 +11,7 @@ const urls = {
   SET_ACCOUNT_TYPE: "v1/onboarding/setaccounttype",
   SOCIAL_REGISTER: "v1/register/social",
   SOCIAL_LOGIN: "v1/account/sociallogin",
+  RESEND_2FA_OTP: "v1/account/resend-2fa-code",
 
   //Onboarding
   COMPANY_UPDATE_PERSONAL_INFO: "/v1/Onboarding/company/update-PersonalInfo",

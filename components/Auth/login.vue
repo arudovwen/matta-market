@@ -73,6 +73,7 @@
     buttonText="Verify OTP"
     @handleSubmit="handleFinalSubmit"
     :isLoading="isLoading"
+    :email="formValues.email"
   />
 </template>
 <script setup>

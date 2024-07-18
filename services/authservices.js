@@ -29,7 +29,9 @@ export async function resendVerification(data, config = {}) {
 export async function resetPassword(user, config = {}) {
   return await post(urls.RESET_PASSWORD, user, config);
 }
-
+export async function resend2FA(data, config = {}) {
+  return await post(urls.RESEND_2FA_OTP, data, config);
+}
 export async function confirmemail({ userId, code }, config = {}) {
   return await get(
     `${urls.CONFIRM_EMAIL}?userId=${userId}&code=${code}`,

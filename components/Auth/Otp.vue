@@ -24,8 +24,7 @@
           :num-inputs="numInput"
           :should-auto-focus="true"
           input-type="letter-numeric"
-          :conditionalClass="['one', 'two', 'three', 'four']"
-          :placeholder="['', '', '', '']"
+          :placeholder="['', '', '', '', '', '']"
         />
       </div>
       <div class="flex gap-x-4 mb-1">
@@ -53,7 +52,7 @@
         <span>
           Didn't receive OTP,
           <button
-          v-if="!isResending"
+            v-if="!isResending"
             class="font-semibold pl-1 text-primary-500"
             @click.prevent="resendOTP"
             :disabled="isResending || countdown > 0"
@@ -78,17 +77,21 @@
 </template>
 <script setup>
 import VOtpInput from "vue3-otp-input";
+import { resend2FA } from "~/services/authservices";
 
-defineProps({
+const props = defineProps({
   title: {
     default: "Enter your transaction PIN",
   },
   numInput: {
-    default: 4,
+    default: 6,
   },
 
   isLoading: {
     default: false,
+  },
+  email: {
+    default: "",
   },
 });
 const emit = defineEmits(["handleSubmit", "close"]);
@@ -105,17 +108,21 @@ async function handleSubmit() {
 }
 function resendOTP() {
   if (countdown.value === 0) {
-    // Start the countdown
-    countdown.value = 60;
-    isResending.value = true;
+    resend2FA({ email: props.email }).then((res) => {
+      if (res.status === 200) {
+        // Start the countdown
+        countdown.value = 60;
+        isResending.value = true;
 
-    const interval = setInterval(() => {
-      countdown.value--;
-      if (countdown.value <= 0) {
-        clearInterval(interval);
-        isResending.value = false;
+        const interval = setInterval(() => {
+          countdown.value--;
+          if (countdown.value <= 0) {
+            clearInterval(interval);
+            isResending.value = false;
+          }
+        }, 1000);
       }
-    }, 1000);
+    });
 
     // Logic to actually resend the OTP can go here
   }
