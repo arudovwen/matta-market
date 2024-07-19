@@ -151,12 +151,12 @@ const handleFinalSubmit = (token) => {
         authStore.setLoggedUser(res.data.data);
         // authStore.setHasPin(res.data.data.hasPin);
         localStorage.setItem("fetchCart", true);
-        if (props.main) {
+        if (props?.main) {
           windows.location.reload();
           return;
         }
         if (
-          !res.data.data.onboardingPageStatus &&
+          !res.data.data?.onboardingPageStatus &&
           res.data.data?.businessUserType.toLowerCase() === "supplier"
         ) {
           toast.info("Login successful");
@@ -178,14 +178,14 @@ const handleFinalSubmit = (token) => {
 
       if (!err.response.data) return;
       const { data } = err.response;
-      if (data.message || data.Message) {
-        toast.error(data.message || data.Message);
+      if (data?.message || data?.Message) {
+        toast.error(data?.message || data?.Message);
       }
       if (
-        (data.message || data.Message).includes("Email has not verified yet")
+        (data?.message || data?.Message).includes("Email has not verified yet")
       ) {
         router.push(
-          `/auth/resend-verification/${encodeURIComponent(values.email)}`
+          `/auth/resend-verification/${encodeURIComponent(formValues.email)}`
         );
       }
     });
