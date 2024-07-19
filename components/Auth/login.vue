@@ -149,7 +149,7 @@ const handleFinalSubmit = (token) => {
       if (res.status === 200) {
         isLoading.value = false;
         authStore.setLoggedUser(res.data.data);
-        authStore.setHasPin(res.data.data.hasPin);
+        // authStore.setHasPin(res.data.data.hasPin);
         localStorage.setItem("fetchCart", true);
         if (props.main) {
           windows.location.reload();
