@@ -102,7 +102,7 @@
             btnClass="text-xs sm:text-sm !py-0 !px-0 w-full sm:!w-auto sm:!max-w-max items-center"
           /> -->
         </div>
-        <div class="mb-6">
+        <div class="mb-6"  v-if="!productData.hidePrice">
           <h2 class="font-bold text-sm mb-2">Choose packaging</h2>
           <Select
             v-model="selectedPackage"
@@ -143,9 +143,9 @@
 
       <!-- Sklenton starts here  -->
       <div class="lg:w-[550px]" v-if="isLoading">
-        <h1
+        <div
           class="font-bold text-lg sm:text-2xl lg:text-[32px] mb-3 lg:mb-6 bg-gray-200 w-[160px] p-[8px] rounded-full animate-pulse"
-        ></h1>
+        ></div>
         <p
           class="text-[#444] text-xs lg:text-sm mb-6 bg-gray-200 w-[260px] p-[8px] rounded-full animate-pulse"
         ></p>
@@ -222,6 +222,7 @@
       </div>
     </template>
   </SideModal>
+
   <AddedToCart
     v-if="isAdded"
     :selectedPackage="mypackage.package"
@@ -240,7 +241,7 @@
       <div class="bg-white px-6 py-6">
         <div class="flex justify-between mb-5 items-center">
           <div>
-            <img src="/images/box.svg" />
+            <img src="/images/box.svg" alt="Detail" />
           </div>
           <!-- <span @click="handleclose" class="absolute top-3 right-4">
               <i
@@ -462,6 +463,8 @@ function handleLike(value) {
 function togglePopup() {
   isOpen.value = false;
 }
+
+
 watch(
   () => [packageOptions.value],
   () => {
