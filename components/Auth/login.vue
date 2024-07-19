@@ -151,10 +151,10 @@ const handleFinalSubmit = (token) => {
         authStore.setLoggedUser(res.data.data);
         // authStore.setHasPin(res.data.data.hasPin);
         localStorage.setItem("fetchCart", true);
-        if (props?.main) {
-          windows.location.reload();
-          return;
-        }
+        // if (props?.main) {
+        //   windows.location.reload();
+        //   return;
+        // }
         if (
           !res.data.data?.onboardingPageStatus &&
           res.data.data?.businessUserType.toLowerCase() === "supplier"
@@ -176,7 +176,7 @@ const handleFinalSubmit = (token) => {
     .catch((err) => {
       isLoading.value = false;
 
-      if (!err.response.data) return;
+      if (!err?.response?.data) return;
       const { data } = err.response;
       if (data?.message || data?.Message) {
         toast.error(data?.message || data?.Message);
