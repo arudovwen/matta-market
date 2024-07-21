@@ -149,12 +149,12 @@ const handleFinalSubmit = (token) => {
       if (res.status === 200) {
         isLoading.value = false;
         authStore.setLoggedUser(res.data.data);
-        // authStore.setHasPin(res.data.data.hasPin);
+         authStore.setHasPin(res.data.data.hasTransactionPIN);
         localStorage.setItem("fetchCart", true);
-        // if (props?.main) {
-        //   windows.location.reload();
-        //   return;
-        // }
+        if (props?.main) {
+          windows.location.reload();
+          return;
+        }
         if (
           !res.data.data?.onboardingPageStatus &&
           res.data.data?.businessUserType.toLowerCase() === "supplier"
