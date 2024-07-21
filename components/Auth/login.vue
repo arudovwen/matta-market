@@ -151,7 +151,7 @@ const handleFinalSubmit = (token) => {
         authStore.setLoggedUser(res.data.data);
          authStore.setHasPin(res.data.data.hasTransactionPIN);
         localStorage.setItem("fetchCart", true);
-        if (props?.main) {
+        if (!props.main) {
           windows.location.reload();
           return;
         }
