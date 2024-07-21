@@ -23,7 +23,7 @@
       </div>
       <div
         
-        class="w-full bg-cover h-[200px] lg:h-[500px] bg-[url('/images/access-new.png')] rounded-lg"
+        class="w-full bg-cover h-[200px] lg:h-[500px] bg-[url('/images/one.png')] rounded-lg"
       ></div>
     </div>
   </section>

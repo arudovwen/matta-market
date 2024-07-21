@@ -30,7 +30,7 @@
 
     <div
       
-      class="top_image h-[200px] xl:h-[516px] w-full"
+      class="top_image h-[200px] md:h-[516px] w-full"
     ></div>
   </div>
 
@@ -65,8 +65,9 @@ provide("isOpen", isOpen);
 </script>
 <style scoped>
 .top_image {
-  background-image: url("/images/pr-re.png");
+  background-image: url("/images/three.png");
   background-size: cover;
   background-repeat: repeat;
+  border-radius:10px;
 }
 </style>

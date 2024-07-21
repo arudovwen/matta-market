@@ -34,7 +34,7 @@
       </div>
     </div>
     <div
-      class="bg-cover bg-no-repeat rounded-r-lg bg-[url('/images/looking.png')] rounded-lg overflow-hidden h-[200px] md:h-auto"
+      class="bg-cover bg-no-repeat rounded-r-lg bg-[url('/images/five.png')] rounded-lg overflow-hidden h-[200px] md:h-auto"
     ></div>
   </div>
   <ModalCenter>

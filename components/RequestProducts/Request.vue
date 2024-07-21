@@ -39,7 +39,7 @@
         </div>
         <div
    
-          class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/images/trailer.png')] rounded-lg"
+          class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/images/two.png')] rounded-lg"
         ></div>
       </div>
     </div>

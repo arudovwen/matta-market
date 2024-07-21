@@ -5,7 +5,7 @@
     >
       <div
       
-        class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/images/access.png')] rounded-lg"
+        class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/images/four.png')] rounded-lg"
       ></div>
       <div class="flex-1 flex items-center flex-col md:flex-row">
         <div  class="max-w-[630px]">

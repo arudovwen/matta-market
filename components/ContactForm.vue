@@ -152,8 +152,10 @@ async function handleSubmit() {
     .then((res) => {
       if (res.status === 200) {
         toast.success("Message sent");
+        v$.value.$reset()
         isLoading.value = false;
         open.value = false;
+       
       }
     })
     .catch(() => {
