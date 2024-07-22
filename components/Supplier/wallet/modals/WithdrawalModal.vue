@@ -126,7 +126,10 @@
     :isCreatePin="isCreatePin"
     @close="
       () => {
-        isVerifyPin = true;
+        if(authStore.hasPin){
+          isVerifyPin = true;
+        }
+       
         isCreatePin = false;
       }
     "

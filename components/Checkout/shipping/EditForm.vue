@@ -5,7 +5,7 @@
     </legend>
     <form
       @submit.prevent="onSubmit"
-      class="grid grid-cols-1 xl:grid-cols-2 gap-x-[18px] gap-y-4 w-full"
+      class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-4 w-full"
     >
       <div>
         <Textinput
@@ -66,7 +66,7 @@
         label="LGA"
         isCumpulsory
         :error="errors.lga"
-        class="xl:col-span-2"
+        class="lg:col-span-2"
       >
         <SelectVueSelect
           class="w-full"
@@ -80,7 +80,7 @@
       </FormGroup>
 
       <FormGroup
-        class="xl:col-span-2"
+        class="lg:col-span-2"
         isCumpulsory
         label="Street"
         :error="errors.street"
@@ -107,7 +107,7 @@
         Set as default
       </div>
 
-      <div class="xl:col-span-2 grid gap-y-[22px] mb-9 mt-4">
+      <div class="lg:col-span-2 grid gap-y-[22px] mb-9 mt-4">
         <AppButton
           type="submit"
           :isLoading="isLoading"

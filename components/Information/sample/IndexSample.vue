@@ -91,8 +91,7 @@ import { addrequest } from "~/services/procurementservice";
 import useVuelidate from "@vuelidate/core";
 import {
   required,
-  email,
-  numeric
+  email
 } from "@vuelidate/validators";
 import { toast } from 'vue3-toastify';
 
@@ -133,7 +132,7 @@ const myrules1 = {
 };
 const myrules2 = {
   email: { required, email },
-  phone: { required, numeric },
+  phone: { required },
   shippingAddressId: { required },
   addressDescription: { required },
 };
