@@ -1,6 +1,5 @@
 <template>
   <form class="px-4 md:px-[30px] text-left" @submit.prevent="handleSubmit">
-
     <div
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
@@ -326,6 +325,15 @@
                     + Add a new location
                   </button>
                 </div>
+                <div
+                  class="text-red-500 mt-1"
+                  v-for="error of v$.pickUpLocationId.$errors"
+                  :key="error.$uid"
+                >
+                  <div class="error-msg text-error text-xs font-semibold">
+                    {{ error.$message }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -343,7 +351,6 @@
         <p class="text-xs text-[#475467]">Provide package information here.</p>
       </div>
       <div class="max-w-[654px] w-full">
-   
         <button
           type="button"
           class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-[11px] text-left leading-[normal] block"
@@ -521,7 +528,7 @@
           type="submit"
           class="appearance-none leading-none px-6 lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
         >
-          {{isLoading?"Saving...":"Next"}}
+          {{ isLoading ? "Saving..." : "Next" }}
         </button>
       </div>
     </div>
@@ -1009,7 +1016,7 @@ function handleAddingPackage() {
 }
 provide("images", form.gallery);
 provide("isOpen", isLocationOpen);
-provide("detail", null)
+provide("detail", null);
 </script>
 
 <style lang="scss" scoped>

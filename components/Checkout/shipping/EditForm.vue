@@ -214,10 +214,10 @@ const lgasOption = computed(() => {
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  (!detail.value ? addshipping : editshipping)(values)
+  (!detail?.value ? addshipping : editshipping)(values)
     .then((res) => {
       if (res.status === 200) {
-        toast.info(detail.value ? "Address updated" : "Address added");
+        toast.info(detail?.value ? "Address updated" : "Address added");
         isOpen.value = false;
         shippingStore.getAlladdress();
       }

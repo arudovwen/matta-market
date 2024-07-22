@@ -16,7 +16,7 @@
       />
     </div>
   </div>
-  <div v-if="!loading">
+  <div v-if="!productStore?.loading">
     <div
       class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-[30px]"
       v-if="productStore?.productsData.length"
