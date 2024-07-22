@@ -292,7 +292,7 @@ const queryParams = reactive({
   Producer: "",
   pagecount: 0,
   totalCount: 0,
-  Status: "",
+  Status: "published",
 });
 const active = ref("published");
 const isLoading = ref(false);
