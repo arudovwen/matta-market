@@ -57,7 +57,7 @@
             @click.prevent="resendOTP"
             :disabled="isResending || countdown > 0"
           >
-            Click resend
+            Click here to resend
           </button>
           <span v-if="countdown > 0" class="ml-2"
             >Resend available in {{ countdown }}s</span
