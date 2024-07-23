@@ -29,7 +29,7 @@
       v-if="requests.length && !isLoading"
       class="overflow-x-auto max-w-[80vw] lg:max-w-full"
     >
-      <table class="w-full">
+      <table aria-describedby="true" class="w-full">
         <thead>
           <tr>
             <th
@@ -210,7 +210,7 @@ function getRequests() {
   isLoading.value = true;
 	console.log("wo na");
   samplerequests(queryParams).then((res) => {
-    requests.value = res.data.data.data;
+    requests.value = res?.data?.data?.data;
     queryParams.totalCount = res.data.data.totalCount;
     isLoading.value = false;
   });

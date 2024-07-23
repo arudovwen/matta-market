@@ -1,7 +1,7 @@
 <template>
   <section class="bg-[#F9FAFB] pt-20 lg:pt-[96px]">
     <div class="container">
-      <div data-aos="fade-up" data-aos-once="true" class="max-w-[768px] mb-16">
+      <div  class="max-w-[768px] mb-16">
         <h2
           class="font-semibold text-xl md:text-[36px] leading-[1.2] mb-4 md:mb-8"
         >

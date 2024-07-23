@@ -5,6 +5,9 @@ import { post, get } from "../helpers/api_helpers";
 export async function loginUser(user, config = {}) {
   return await post(urls.LOGIN_USER, user, config);
 }
+export async function loginUser2FA(user, config = {}) {
+  return await post(urls.LOGIN_USER_2FA, user, config);
+}
 export async function logOut() {
   const authStore = useAuthStore();
   // googleLogout();
@@ -26,7 +29,9 @@ export async function resendVerification(data, config = {}) {
 export async function resetPassword(user, config = {}) {
   return await post(urls.RESET_PASSWORD, user, config);
 }
-
+export async function resend2FA(data, config = {}) {
+  return await post(urls.RESEND_2FA_OTP, data, config);
+}
 export async function confirmemail({ userId, code }, config = {}) {
   return await get(
     `${urls.CONFIRM_EMAIL}?userId=${userId}&code=${code}`,

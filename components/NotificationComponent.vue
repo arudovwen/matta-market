@@ -37,7 +37,7 @@
                 v-for="option in options"
                 :key="option.name"
                 :value="option.id"
-                as="template"
+                as="ul"
               >
                 <li
                   class="relative cursor-pointer select-none py-[5px] px-[13px] text-loft-black"
@@ -79,8 +79,8 @@
     v-if="!notifications"
   >
     <div class="text-center max-w-sm mx-auto">
-      <img
-        src="@/assets/img/nofound.svg"
+      <img alt="notification"
+        src="~/assets/img/nofound.svg"
         class="w-[52px] h-auto mx-auto mb-2"
       />
 
@@ -93,7 +93,7 @@
 import {
   marknotification,
   markallnotification,
-} from "@/services/notificationservice";
+} from "~/services/notificationservice";
 // eslint-disable-next-line no-unused-vars
 import { ref, inject, computed, provide } from "vue";
 import NotificationBar from "~/components/NotificationTypes/AllNotifications.vue";

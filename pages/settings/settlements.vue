@@ -13,7 +13,7 @@
           />
         </div>
         <div class="rounded-[10px] border border-[#F4F7FE] bg-white">
-          <table class="w-full" v-if="financeData?.length">
+          <table aria-describedby="true" class="w-full" v-if="financeData?.length">
             <thead>
               <tr>
                 <th
@@ -186,7 +186,7 @@ definePageMeta({
   layout: "dashboard",
 });
 import { Switch, SwitchGroup, SwitchLabel } from "@headlessui/vue";
-import AppIcon from "@/components/AppIcon";
+import AppIcon from "~/components/AppIcon";
 import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import {
   viewSettlement,
@@ -303,8 +303,8 @@ const handleDelete = () => {
     })
     .catch((err) => {
       errorText.value =
-        err.response.data.message ||
-        err.response.data.Message ||
+        err?.response?.data?.message ||
+        err?.response?.data?.Message ||
         "Account deletion failed";
       isErrorOpen.value = true;
       isLoading.value = false;

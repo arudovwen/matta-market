@@ -5,7 +5,7 @@
       class="rounded-[10px]"
     >
       <!-- <NuxtLink to="/market/products" class="h-full block"> -->
-        <img crossorigin :src="url" alt="image" class="w-full  min-h-[100px] max-h-[211px]  h-full md:object-cover  rounded-[10px] bg-gray-300" />
+        <img crossorigin :src="url" alt="board" class="w-full  min-h-[100px] max-h-[211px]  h-full md:object-cover  rounded-[10px] bg-gray-300" />
       <!-- </NuxtLink> -->
     </div>
   </div>

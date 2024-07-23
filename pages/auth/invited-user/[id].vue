@@ -83,7 +83,7 @@
           </div>
         </div>
         <div class="mb-12">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label for="" class="mb-2 font-normal text-xs block text-matta-black"
             >Confirm Password</label
           >
           <div class="relative flex items-center">
@@ -153,7 +153,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/vue/24/outline";
 import useVuelidate from "@vuelidate/core";
 import { required, helpers, minLength, maxLength } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
-import { registerInvitedUser } from "@/services/authservices";
+import { registerInvitedUser } from "~/services/authservices";
 
 const route = useRoute();
 
@@ -234,7 +234,7 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error(err.response.data.Message);
+      toast.error(err?.response?.data?.Message);
     });
 }
 </script>

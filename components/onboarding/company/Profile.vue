@@ -75,10 +75,11 @@
           <div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
-                  >First name   <RedDot />
+                <label for="firstName" class="mb-2 font-normal text-xs block"
+                  >First name <RedDot />
                 </label>
                 <input
+                  id="firstName"
                   v-model="v$.firstName.$model"
                   :class="{ 'border-red-500': v$.firstName.$error }"
                   class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -96,10 +97,11 @@
                 </div>
               </div>
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label for="lastName" class="mb-2 font-normal text-xs block"
                   >Last name <RedDot />
                 </label>
                 <input
+                  id="lastName"
                   v-model="v$.lastName.$model"
                   :class="{ 'border-red-500': v$.lastName.$error }"
                   class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -119,12 +121,13 @@
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label for="allcountries" class="mb-2 font-normal text-xs block"
                   >Country <RedDot />
                 </label>
                 <div class="relative">
                   <div class="flex relative items-center w-full">
                     <FormsSelectComponent
+                      id="allcountries"
                       :options="allcountries"
                       :showSearch="true"
                       :value="form.country"
@@ -163,7 +166,7 @@
               </div>
 
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label for="mystates" class="mb-2 font-normal text-xs block"
                   >State <RedDot />
                 </label>
                 <FormsSelectComponent
@@ -206,10 +209,9 @@
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
-                  >Phone number
-                <RedDot /></label
-                >
+                <label for="phone" class="mb-2 font-normal text-xs block"
+                  >Phone number <RedDot
+                /></label>
                 <div class="flex relative rounded-lg h-11">
                   <FormsPhoneCodes v-model="v$.phone.$model" />
                 </div>
@@ -224,11 +226,12 @@
                 </div>
               </div>
               <div class="mb-6">
-                <label class="mb-2 font-normal text-xs block"
+                <label for="email" class="mb-2 font-normal text-xs block"
                   >E-mail <RedDot />
                 </label>
                 <div class="flex relative items-center">
                   <input
+                  id="email"
                     :class="{ 'border-red-500': v$.email.$error }"
                     :value="form.email"
                     class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] text-matta-black/60 focus:outline-matta-black/20"
@@ -252,9 +255,7 @@
           </div>
           <hr class="my-8" />
 
-          <legend class="font-medium mb-4">
-            Timezone <RedDot />
-          </legend>
+          <legend class="font-medium mb-4">Timezone <RedDot /></legend>
           <div class="mb-10">
             <div class="flex relative items-center w-full">
               <select
@@ -392,7 +393,7 @@ import {
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 // eslint-disable-next-line no-unused-vars
-import countries from "@/utils/countries.json";
+import countries from "~/utils/countries.json";
 import { ref, reactive, onMounted, computed } from "vue";
 import useVuelidate from "@vuelidate/core";
 import {
@@ -407,11 +408,11 @@ import {
   updatePersonalInfo,
   // getOnboarding,
   uploadfile,
-} from "@/services/onboardingservices";
-import { getProfile } from "@/services/settingservices";
+} from "~/services/onboardingservices";
+import { getProfile } from "~/services/settingservices";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { replaceCountryCode } from "@/utils/replaceCountryCode";
+import { replaceCountryCode } from "~/utils/replaceCountryCode";
 
 const authStore = useAuthStore();
 const store = useStore();
@@ -588,7 +589,7 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 function removeImage() {
@@ -598,7 +599,7 @@ function removeImage() {
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

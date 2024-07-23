@@ -37,9 +37,9 @@
             :class="className"
             class="inline-block relative align-bottom bg-white rounded-lg text-left invisible-scrollbar shadow-xl transform transition-all sm:my-8 sm:align-middle min-w-[500px] p-6 w-full max-w-max max-h-[95vh]"
           >
-            <AuthLogin v-if="type === 'login'" />
-            <AuthVendorRegister v-if="type === 'vendor-register'" />
-            <AuthRegister v-if="type === 'register'" />
+            <AuthLogin v-if="type === 'login'" :main="false" />
+            <!-- <AuthVendorRegister v-if="type === 'vendor-register'" />
+            <AuthRegister v-if="type === 'register'" /> -->
             <span
               v-if="canClose"
               class="cursor-pointer hover:border w-8 h-8 absolute top-[20px] right-[20px] rounded-full bg-[#F5F5F5] flex items-center justify-center z-[999]"

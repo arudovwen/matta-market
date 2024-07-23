@@ -24,6 +24,7 @@
                 <img
                   v-else
                   :src="image"
+                  alt="settings"
                   class="h-24 w-24 rounded-full flex items-center justify-center bg-[#F1F3F5]"
                 />
               </span>
@@ -36,6 +37,7 @@
                   Upload photo
                 </span>
                 <input
+                  data-testid="imgup"
                   @change="handleEvent($event)"
                   type="file"
                   accept="image/*"
@@ -49,10 +51,12 @@
             <div>
               <div class="grid lg:grid-cols-2 gap-x-6">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block"
-                    >First name   <RedDot /></label
-                  >
+                  <label for="firstName" class="mb-2 font-normal text-sm block"
+                    >First name <RedDot
+                  /></label>
                   <input
+                    id="firstName"
+                    data-testid="fName"
                     v-model="v$.firstName.$model"
                     :class="{ 'border-red-500': v$.firstName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -70,10 +74,12 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block"
-                    >Last name   <RedDot /></label
-                  >
+                  <label for="lastName" class="mb-2 font-normal text-sm block"
+                    >Last name <RedDot
+                  /></label>
                   <input
+                    id="lastName"
+                    data-testid="lName"
                     v-model="v$.lastName.$model"
                     :class="{ 'border-red-500': v$.lastName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -93,9 +99,13 @@
               </div>
               <div class="grid lg:grid-cols-2 gap-x-6">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">E-mail   <RedDot /></label>
+                  <label for="email" class="mb-2 font-normal text-sm block"
+                    >E-mail <RedDot
+                  /></label>
                   <div class="flex relative items-center">
                     <input
+                      id="email"
+                      data-testid="email"
                       :value="form.email"
                       class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                       autocomplete="off"
@@ -116,9 +126,9 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block"
-                    >Phone number   <RedDot /></label
-                  >
+                  <label for="phone" class="mb-2 font-normal text-sm block"
+                    >Phone number <RedDot
+                  /></label>
                   <div class="flex relative rounded-lg h-11">
                     <FormsPhoneCodes v-model="v$.phone.$model" />
                   </div>
@@ -135,7 +145,9 @@
               </div>
               <div class="grid lg:grid-cols-2 gap-x-6">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">Country   <RedDot /></label>
+                  <label for="country" class="mb-2 font-normal text-sm block"
+                    >Country <RedDot
+                  /></label>
                   <div class="flex relative">
                     <FormsCountriesSelect v-model="v$.country.$model" />
                     <div
@@ -151,7 +163,9 @@
                 </div>
 
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">State   <RedDot /></label>
+                  <label for="state" class="mb-2 font-normal text-sm block"
+                    >State <RedDot
+                  /></label>
 
                   <FormsStatesSelect
                     v-model="v$.city.$model"
@@ -170,7 +184,9 @@
               </div>
               <div class="">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-sm block">Timezone   <RedDot /></label>
+                  <label for="timezone" class="mb-2 font-normal text-sm block"
+                    >Timezone <RedDot
+                  /></label>
                   <div class="flex relative items-center w-full">
                     <select
                       v-model="form.timezone"
@@ -215,9 +231,11 @@
         <div class="flex-1">
           <form @submit.prevent="handlePassword">
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block text-matta-black"
-                >Current Password   <RedDot /></label
-              >
+              <label
+                for="oldPassword"
+                class="mb-2 font-normal text-sm block text-matta-black"
+                >Current Password <RedDot
+              /></label>
               <div class="relative flex items-center">
                 <input
                   :class="{ 'border-red-500': newv$.oldPassword.$error }"
@@ -249,11 +267,14 @@
               </div>
             </div>
             <div class="mb-6">
-              <label class="mb-2 font-normal text-sm block text-matta-black"
-                >New Password   <RedDot /></label
-              >
+              <label
+                for="newPassword"
+                class="mb-2 font-normal text-sm block text-matta-black"
+                >New Password <RedDot
+              /></label>
               <div class="relative flex items-center">
                 <input
+                  id="newPassword"
                   :class="{ 'border-red-500': newv$.newPassword.$error }"
                   v-model="newv$.newPassword.$model"
                   class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -283,11 +304,14 @@
               </div>
             </div>
             <div class="mb-12">
-              <label class="mb-2 font-normal text-sm block text-matta-black"
-                >Confirm Password   <RedDot /></label
-              >
+              <label
+                for="confirmPassword"
+                class="mb-2 font-normal text-sm block text-matta-black"
+                >Confirm Password <RedDot
+              /></label>
               <div class="relative flex items-center">
                 <input
+                  id="confirmPassword"
                   :class="{ 'border-red-500': newv$.confirmPassword.$error }"
                   v-model="newv$.confirmPassword.$model"
                   class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -376,7 +400,6 @@ import "vue-advanced-cropper/dist/style.css";
 
 import {
   getProfile,
-  deleteaccount,
   settimezone,
   updateProfile,
   changepassword,
@@ -515,19 +538,6 @@ const states = computed(() => {
     ).states || []
   );
 });
-function handleDelete(val) {
-  isShowing.value = val;
-  open.value = true;
-}
-function deleteAccount() {
-  deleteaccount.then((res) => {
-    if (res.status == 200) {
-      toast.info("Account deleted successfully");
-      store.logOut();
-      window.location.href = "/";
-    }
-  });
-}
 async function handlePassword() {
   const validity = await newv$.value.$validate();
   if (!validity) return;
@@ -547,7 +557,7 @@ async function handlePassword() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 function setTimezone() {
@@ -566,17 +576,18 @@ function handleEvent(e) {
   img.value = URL.createObjectURL(files[0]);
   isShowing.value = "crop";
   open.value = true;
+  console.log("fire event", files);
 }
 
-function crop() {
-  const { coordinates, canvas } = cropper.value.getResult();
-  coordinate.value = coordinates;
-  image.value = canvas.toDataURL();
-  open.value = false;
-  form.photo = canvas.toDataURL().replace("data:", "").replace(/^.+,/, "");
-}
-const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 15 : true;
+// function crop() {
+//   const { coordinates, canvas } = cropper.value.getResult();
+//   coordinate.value = coordinates;
+//   image.value = canvas.toDataURL();
+//   open.value = false;
+//   form.photo = canvas.toDataURL().replace("data:", "").replace(/^.+,/, "");
+// }
+// const validPhoneLength = (value) =>
+//   form.code === "+234" ? value.length > 9 && value.length < 15 : true;
 const rules = {
   email: {
     required,
@@ -631,7 +642,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 </script>

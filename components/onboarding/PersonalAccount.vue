@@ -31,6 +31,7 @@
                 >
                  <img
                   v-else
+                  alt="persoanl"
                   :src="image"
                   class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
                 />
@@ -72,11 +73,12 @@
             <div>
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block"
+                  <label for="firstName" class="mb-2 font-normal text-xs block"
                     >First name
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
                   <input
+                  id="firstName"
                     v-model="v$.firstName.$model"
                     :class="{ 'border-red-500': v$.firstName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -94,11 +96,12 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block"
+                  <label for="lastName" class="mb-2 font-normal text-xs block"
                     >Last name
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
                   <input
+                  id="lastName"
                     v-model="v$.lastName.$model"
                     :class="{ 'border-red-500': v$.lastName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -118,7 +121,7 @@
               </div>
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block"
+                  <label for="country" class="mb-2 font-normal text-xs block"
                     >Country
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
@@ -137,7 +140,7 @@
                 </div>
 
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block"
+                  <label for="state" class="mb-2 font-normal text-xs block"
                     >State
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
@@ -155,7 +158,7 @@
               </div>
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block"
+                  <label for="phone" class="mb-2 font-normal text-xs block"
                     >Phone number
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
@@ -163,6 +166,7 @@
                     <PhoneCodes v-model="form.code" />
 
                     <input
+                    id="phone"
                       :class="{ 'border-red-500': v$.phone.$error }"
                       v-model="v$.phone.$model"
                       class="flex-1 rounded-r-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -183,12 +187,13 @@
                   </div>
                 </div>
                 <div class="mb-6">
-                  <label class="mb-2 font-normal text-xs block"
+                  <label for="email" class="mb-2 font-normal text-xs block"
                     >E-mail
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
                   <div class="flex relative items-center">
                     <input
+                    id="email"
                       :class="{ 'border-red-500': v$.email.$error }"
                       :value="form.email"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -340,7 +345,7 @@
 </template>
 
 <script setup>
-import countries from "@/utils/countries.json";
+import countries from "~/utils/countries.json";
 import moment from "moment-timezone";
 import {
   Dialog,
@@ -351,10 +356,10 @@ import {
 import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 // eslint-disable-next-line no-unused-vars
-import PhoneCodes from "@/components/forms/PhoneCodes";
-import CountriesSelect from "@/components/forms/CountriesSelect";
-import StatesSelect from "@/components/forms/StatesSelect";
-import { replaceCountryCode } from "@/utils/replaceCountryCode";
+import PhoneCodes from "~/components/forms/PhoneCodes";
+import CountriesSelect from "~/components/forms/CountriesSelect";
+import StatesSelect from "~/components/forms/StatesSelect";
+import { replaceCountryCode } from "~/utils/replaceCountryCode";
 import useVuelidate from "@vuelidate/core";
 import {
   required,
@@ -367,11 +372,9 @@ import { toast } from 'vue3-toastify';
 import {
   updatePersonalInfo,
   setOnboardingcomplete,
-} from "@/services/onboardingservices";
-import { getProfile } from "@/services/settingservices";
-import { useStore } from "vuex";
+} from "~/services/onboardingservices";
+import { getProfile } from "~/services/settingservices";
 
-const store = useStore();
 onMounted(() => {
   getProfile().then((res) => {
     form.photo = image.value = res.data.data.photo;
@@ -522,14 +525,14 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
     });
 }
 </script>
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

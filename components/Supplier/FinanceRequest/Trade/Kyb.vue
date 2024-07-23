@@ -165,7 +165,7 @@
         />
       </div>
       <div class="md:col-span-2">
-        <label class="mb-4 mt-3 font-medium text-sm block"
+        <label for="companyDocuments" class="mb-4 mt-3 font-medium text-sm block"
           >Company documents
         </label>
 
@@ -247,16 +247,16 @@
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import CountryList from "country-list-with-dial-code-and-flag";
-import countries from "@/utils/countries.json";
+import countries from "~/utils/countries.json";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { businessTypes } from "~/utils/constants.js";
 import {
   updateCompanyProfile,
   updateDocuments,
-} from "@/services/settingservices";
+} from "~/services/settingservices";
 import { toast } from "vue3-toastify";
-import SelectComponent from "@/components/forms/SelectComponent";
+import SelectComponent from "~/components/forms/SelectComponent";
 
 const company = inject("company");
 const formData = inject("formData");
@@ -439,8 +439,8 @@ const onSubmit = handleSubmit((values) => {
           .catch((err) => {
             isLoading.value = false;
             toast.error(
-              err.response.data.message ||
-                err.response.data.Message ||
+              err?.response?.data?.message ||
+                err?.response?.data?.Message ||
                 "Something went wrong, try again later"
             );
           });
@@ -452,8 +452,8 @@ const onSubmit = handleSubmit((values) => {
     .catch((err) => {
       isLoading.value = false;
       toast.error(
-        err.response.data.message ||
-          err.response.data.Message ||
+        err?.response?.data?.message ||
+          err?.response?.data?.Message ||
           "Something went wrong, try again later"
       );
     });

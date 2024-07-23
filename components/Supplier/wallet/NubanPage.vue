@@ -14,7 +14,7 @@
     <div class="bg-white rounded-lg">
       <div v-if="!isPageLoading">
         <div v-if="!isEmpty" class="max-w-[80vw]">
-          <table class="w-full">
+          <table aria-describedby="true" class="w-full">
             <thead>
               <tr>
                 <th

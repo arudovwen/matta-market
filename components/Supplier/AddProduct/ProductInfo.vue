@@ -14,11 +14,13 @@
               <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
                 <div class="mb-6">
                   <label
+                    for="name"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
                   >
                     <RedDot /> Product generic name
                   </label>
                   <input
+                    id="name"
                     v-model="v$.name.$model"
                     class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                     autocomplete="off"
@@ -37,6 +39,7 @@
                 </div>
                 <div class="mb-6">
                   <label
+                    for="productBrandName"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left capitalize"
                   >
                     Product brand name
@@ -44,6 +47,7 @@
 
                   <div class="flex relative items-center">
                     <input
+                      id="productBrandName"
                       v-model="v$.productBrandName.$model"
                       class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
                       placeholder=""
@@ -64,6 +68,7 @@
               <div class="">
                 <div class="mb-6">
                   <label
+                    for="manufacturer"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
                     <RedDot /> Producer
@@ -98,7 +103,7 @@
                         @after-leave="query = ''"
                       >
                         <ComboboxOptions
-                          class="absolute mt-1 max-h-80 md:min-w-[350px] px-3 overflow-y-auto rounded-lg z-40 bg-white py-4 text-base shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] border border-[#DCDEE6] sm:text-sm"
+                          class="absolute grid gap-y-1 mt-1 max-h-80 md:min-w-[350px] px-3 overflow-y-auto rounded-lg z-40 bg-white py-4 text-base shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] border border-[#DCDEE6] sm:text-sm"
                         >
                           <div
                             v-if="
@@ -125,7 +130,7 @@
                             :value="i.title"
                             v-slot="{ selected, active }"
                           >
-                            <li
+                            <span
                               class="relative cursor-default select-none py-2"
                             >
                               <div class="flex items-center gap-x-4">
@@ -169,7 +174,7 @@
                               >
                                 <CheckIcon class="h-5 w-5" aria-hidden="true" />
                               </span>
-                            </li>
+                            </span>
                           </ComboboxOption>
                         </ComboboxOptions>
                       </TransitionRoot>
@@ -189,6 +194,7 @@
               <div class="">
                 <div class="mb-6">
                   <label
+                    for="allmarkets"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
                     <RedDot /> Markets
@@ -223,6 +229,7 @@
               <div class="">
                 <div class="mb-6">
                   <label
+                    for="techApplications"
                     class="mb-2 font-medium text-sm text-[#344054] block text-left"
                   >
                     <RedDot /> Applications
@@ -256,6 +263,7 @@
               </div>
               <div class="mb-6">
                 <label
+                  for="Description"
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
                 >
                   <RedDot />
@@ -288,6 +296,7 @@
 
               <div class="mb-6">
                 <label
+                  for="location"
                   class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
                 >
                   <span>Pickup location </span>
@@ -316,6 +325,15 @@
                     + Add a new location
                   </button>
                 </div>
+                <div
+                  class="text-red-500 mt-1"
+                  v-for="error of v$.pickUpLocationId.$errors"
+                  :key="error.$uid"
+                >
+                  <div class="error-msg text-error text-xs font-semibold">
+                    {{ error.$message }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -333,64 +351,6 @@
         <p class="text-xs text-[#475467]">Provide package information here.</p>
       </div>
       <div class="max-w-[654px] w-full">
-        <!-- <div class="mb-6">
-          <Listbox v-model="form.unit">
-            <div class="relative mt-1">
-              <ListboxButton
-                class="text-sm relative w-[250px] text-left rounded-lg appearance-none px-[14px] py-[10px] flex items-center h-11 border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-              >
-                <span class="block truncate">{{
-                  measurements.find((i) => i.value == form.unit)?.name
-                }}</span>
-                <span class="right-0 pr-2 absolute"
-                  ><AppIcon
-                    icon="ph:caret-down-bold"
-                    iconClass="h-4 w-4 text-[#667085]"
-                    aria-hidden="true"
-                /></span>
-              </ListboxButton>
-
-              <transition
-                leave-active-class="transition duration-100 ease-in"
-                leave-from-class="opacity-100"
-                leave-to-class="opacity-0"
-              >
-                <ListboxOptions
-                  class="absolute mt-1 mx-h-60 w-[200px] z-40 overflow-auto rounded-[10px] bg-white py-1 text-base shadow-lg focus:outline-none sm:text-sm"
-                >
-                  <ListboxOption
-                    v-slot="{ selected }"
-                    v-for="i in measurements"
-                    :key="i.name"
-                    :value="i.value"
-                    as="template"
-                  >
-                    <li
-                      :class="[
-                        'relative cursor-pointer  text-matta-black  hover:text-primary select-none py-2 pl-10 pr-4 text-left',
-                      ]"
-                    >
-                      <span
-                        :class="[selected ? 'font-medium' : 'font-normal']"
-                        >{{ i.name }}</span
-                      >
-                    </li>
-                  </ListboxOption>
-                </ListboxOptions>
-              </transition>
-            </div>
-          </Listbox>
-
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of v$.unit.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
-        </div> -->
         <button
           type="button"
           class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-[11px] text-left leading-[normal] block"
@@ -410,7 +370,7 @@
         <div
           class="border border-[#DCDEE6] rounded-[10px] overflow-hidden mt-6"
         >
-          <table class="w-full">
+          <table aria-describedby="true" class="w-full">
             <thead>
               <tr>
                 <th
@@ -508,23 +468,29 @@
         <div
           class="bg-white rounded-lg py-6 mt-6 flex flex-col lg:flex-row gap-x-10 justify-start lg:items-center gap-y-2 lg:gap-y-0"
         >
-          <label class="flex item-center leading-[normal]">
+          <label
+            for="sampleAvailable"
+            class="flex item-center leading-[normal]"
+          >
             <input
+              id="sampleAvailable"
               type="checkbox"
               v-model="form.sampleAvailable"
               class="mr-2 accent-primary-500"
             /><span class="text-[#344054]"> Sample is available</span>
           </label>
-          <label class="flex item-center leading-[normal]">
+          <label for="hideProduct" class="flex item-center leading-[normal]">
             <input
+              id="hideProduct"
               type="checkbox"
               v-model="form.hideProduct"
               class="mr-2 accent-primary-500"
             />
             <span class="text-[#344054]">Hide product</span>
           </label>
-          <label class="flex item-center leading-[normal]">
+          <label for="hidePrice" class="flex item-center leading-[normal]">
             <input
+              id="hidePrice"
               type="checkbox"
               v-model="form.hidePrice"
               class="mr-2 accent-primary-500"
@@ -560,9 +526,9 @@
             'bg-primary/60 cursor-not-allowed': isLoading,
           }"
           type="submit"
-          class="appearance-none leading-none px-6 lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px]"
+          class="appearance-none leading-none px-6 lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
         >
-          Next
+          {{ isLoading ? "Saving..." : "Next" }}
         </button>
       </div>
     </div>
@@ -588,10 +554,11 @@
             ></i>
           </div>
           <div class="mb-5">
-            <label class="mb-2 font-normal text-xs block"
+            <label for="title" class="mb-2 font-normal text-xs block"
               >Name <span class="text-red-500 pl-[.5px]">*</span></label
             >
             <input
+              id="title"
               v-model="producerForm.title"
               class="rounded-lg px-[14px] py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
               placeholder="Enter producer name"
@@ -601,6 +568,7 @@
           <div class="flex gap-x-6 mb-5">
             <div class="w-full">
               <label
+                for="country"
                 class="mb-2 font-medium text-sm text-[#344054] block text-left"
                 >Country</label
               >
@@ -608,6 +576,7 @@
             </div>
             <div class="w-full">
               <label
+                for="state"
                 class="mb-2 font-medium text-sm text-[#344054] block text-left"
                 >State</label
               >
@@ -616,6 +585,7 @@
           </div>
           <div>
             <label
+              for="upload"
               class="mb-2 font-medium text-sm text-[#344054] block text-left"
               >Producer Logo</label
             >
@@ -683,7 +653,7 @@
   <ModalCenter>
     <template #default>
       <div class="w-full max-w-max p-6 md:py-9 md:px-10 z-[999] relative">
-        <CheckoutPickupAddForm @close="pickUpStore.getAlladdress()" />
+        <CheckoutPickupEditForm @close="pickUpStore.getAlladdress()" />
       </div>
     </template>
   </ModalCenter>
@@ -768,7 +738,7 @@ const states = computed(() => {
   if (!producerForm.country) return [];
   return (
     countries.find(
-      (item) => producerForm.country.toLowerCase() === item.name.toLowerCase()
+      (item) => producerForm.country.toLowerCase() == item.name.toLowerCase()
     ).states || []
   );
 });
@@ -907,7 +877,7 @@ async function handleSubmit() {
             duration: 4000,
           });
           router.push(
-            `/storefront/products/add-product?id=${route.query.id}&stage=2`
+            `/storefront/products/${route.params.process}?id=${route.query.id}&stage=2`
           );
         }
       })
@@ -916,7 +886,9 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err.response.data.message || err.response.data.Message);
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       });
   } else {
     addProduct(form)
@@ -927,7 +899,7 @@ async function handleSubmit() {
             duration: 4000,
           });
           router.push(
-            `/storefront/products/add-product?id=${res.data.data.item_id}&stage=2`
+            `/storefront/products/${route.params.process}?id=${res.data.data.item_id}&stage=2`
           );
         }
       })
@@ -936,7 +908,9 @@ async function handleSubmit() {
         invalidCredentials.value = true;
         isLoading.value = false;
 
-        toast.error(err.response.data.message || err.response.data.Message);
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       });
   }
 }
@@ -960,7 +934,7 @@ function handleProducer() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 function handleEvent(e) {
@@ -1042,6 +1016,7 @@ function handleAddingPackage() {
 }
 provide("images", form.gallery);
 provide("isOpen", isLocationOpen);
+provide("detail", null);
 </script>
 
 <style lang="scss" scoped>

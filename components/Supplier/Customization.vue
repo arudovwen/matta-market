@@ -2,11 +2,6 @@
   <div
     class="gap-y-2 flex flex-col bg-white rounded-[10px] pb-10 border border-[#F4F7FE]"
   >
-    <!-- <HeaderComponent
-      title="Customization"
-      subtext="Setup the look and feel of your store"
-    /> -->
-    <!-- Top bar   -->
     <div class="p-[30px]">
       <form @submit.prevent="onSubmit">
         <div class="mb-6 grid grid-cols-1 xl:grid-cols-2 xl:gap-x-6 gap-y-5">
@@ -35,7 +30,7 @@
                 >{{ url }}</span
               >
               <Textinput
-              isCumpulsory
+                isCumpulsory
                 placeholder=""
                 label=""
                 name="storeSlug"
@@ -49,7 +44,7 @@
         </div>
 
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm block"
+          <label for="bannerUrl" class="mb-2 font-medium text-sm block"
             >Storefront Banner
             <span class="text-[#B9B9B9]">(Optional)</span></label
           >
@@ -64,7 +59,7 @@
         </div>
 
         <div class="mb-6">
-          <label class="mb-1 font-medium text-sm block"
+          <label for="campaignBanner" class="mb-1 font-medium text-sm block"
             >Campaign Banner
             <span class="text-[#B9B9B9]">(Optional)</span></label
           >
@@ -132,7 +127,6 @@ import {
 const url = ref("");
 if (process.client) {
   url.value = window.location.origin + "/";
-  
 }
 
 const config = useRuntimeConfig();
@@ -187,8 +181,7 @@ onMounted(() => {
 });
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  updateVendorInfo(values)
-    .then((res) => {
+  updateVendorInfo(values).then((res) => {
       if (res.status === 200) {
         toast.success("Information saved");
         isLoading.value = false;
@@ -196,8 +189,10 @@ const onSubmit = handleSubmit((values) => {
     })
     .catch((err) => {
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
-        toast.error(err.response.data.message || err.response.data.Message);
+      if (err?.response?.data?.message || err?.response?.data?.Message) {
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       }
     });
 });
@@ -208,14 +203,14 @@ const getProfileData = debounce(() => {
       setFieldValue("storeSlug", res.data.data);
     })
     .catch((err) => {
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
       if (vendorInfo.value?.storeSlug) {
         setFieldValue("storeSlug", vendorInfo.value?.storeSlug);
         formValues.storeSlug = vendorInfo.value?.storeSlug;
       }
     });
 }, 1000);
-``;
+
 // watch(
 //   () => [storeName.value],
 //   () => {

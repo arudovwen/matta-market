@@ -12,11 +12,14 @@
 import { getCompanyProfile } from "~/services/settingservices";
 
 const company = ref(null);
-
 onMounted(() => {
-  getCompanyProfile().then((res) => {
-    company.value = res.data.data;
-  });
+  try {
+    getCompanyProfile().then((res) => {
+      company.value = res.data.data;
+    });
+  } catch (error) {
+    console.log("🚀 ~ onMounted ~ error:", error);
+  }
 });
 
 provide("company", company);

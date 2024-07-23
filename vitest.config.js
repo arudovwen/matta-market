@@ -1,24 +1,33 @@
-import { defineVitestConfig } from '@nuxt/test-utils/config'
+import { defineVitestConfig } from '@nuxt/test-utils/config';
 
 export default defineVitestConfig({
   test: {
     globals: true,
-    environment: "nuxt",
-    setupFiles: 'test.setup.js',
+    environment: 'nuxt',
+    setupFiles: './test.setup.js',
     coverage: {
+      reporter: ['text', 'lcov'],
+      reportsDirectory: './coverage',
       include: [
-        'components/**/*.{js,ts,vue}', // Include all JavaScript, TypeScript, and Vue files in 'components' directory
-        'pages/**/*.vue',              // Include all Vue files in 'pages' directory
-        'utils/*.js',                  // Include all JavaScript files in 'utils' directory
-        'services/*.js',               // Include all JavaScript files in 'services' directory
-        'layouts/*.vue',               // Include all Vue files in 'layouts' directory
-        'middleware/*.js',             // Include all JavaScript files in 'middleware' directory
+        'components/**/*.{js,ts,vue}',
+        'pages/**/*.vue',
+        'utils/*.js',
+        'services/*.js',
+        'layouts/*.vue',
+        'middleware/*.js',
       ],
       exclude: [
-        'plugins/**',                // Exclude all JavaScript files in 'plugins' directory
-        '__tests__/**',                // Exclude all files in '__tests__' directory
-        '__mocks__/**',                // Exclude all files in '__mocks__' directory
+        'plugins/**',
+        '__tests__/**',
+        '__tests__/',
+        '__mocks__/**',
+        'node_modules/',
+        'coverage/',
+				"utils/constants.js"
       ],
     },
+    moduleNameMapper: {
+      '^@vue3-clipboard/vue3-clipboard$': '<rootDir>/__mocks__/vue3-clipboard.mock.js',
+    },
   },
-})
+});

@@ -23,7 +23,7 @@
                 <div
                   class="h-10 text-xl w-10 text-primary-500 rounded-full flex items-center justify-center bg-[#D1E9FF]"
                 >
-                  <img :src="n.icon" />
+                  <img alt="request" :src="n.icon" />
                 </div>
               </div>
             </div>
@@ -38,9 +38,8 @@
           </div>
         </div>
         <div
-          data-aos="fade-in"
-          data-aos-once="true"
-          class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/images/trailer.png')] rounded-lg"
+   
+          class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/images/two.png')] rounded-lg"
         ></div>
       </div>
     </div>

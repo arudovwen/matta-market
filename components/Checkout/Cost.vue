@@ -9,7 +9,7 @@
     </p>
 
     <div>
-      <Table
+      <CustomTable
         :columns="columns"
         :rows="rows"
         :isBalance="true"
@@ -20,7 +20,7 @@
   </div>
 </template>
 <script setup>
-import { shippingBreakdown } from "@/services/cartservice";
+import { shippingBreakdown } from "~/services/cartservice";
 // const currencyFormat = inject("currencyFormat");
 
 const cartStore = useCartStore();
@@ -80,7 +80,7 @@ function getData() {
     .catch((err) => {
       loading.value = false;
       cartStore.setLoadingCart(false);
-      error.value = err.response.data.Message || err.response.data.message;
+      error.value = err?.response?.data?.Message || err?.response?.data?.message;
     });
 }
 

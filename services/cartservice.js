@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { post, get, del } from "../helpers/api_helpers";
+import { post, get, del, put } from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
 
@@ -27,7 +27,7 @@ export async function deleteAddress(data) {
   return await post(`${urls.DELETE_SHIPPING}/${data}`, data, config);
 }
 export async function addshipping(data) {
-  return await post(urls.ADD_SHIPPING_ADDRESS, data, config);
+  return await post(urls.ADD_SHIPPING_ADDRESS, cleanObject(data), config);
 }
 
 export async function editshipping(data) {

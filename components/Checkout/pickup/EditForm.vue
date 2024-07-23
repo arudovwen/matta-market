@@ -1,13 +1,13 @@
 <template>
   <div class="bg-white w-full">
     <legend class="block text-[20px] font-bold mb-8 text-left">
-      Update Pickup location
+      {{ detail ? "Update" : "Add" }} Pickup location
     </legend>
     <form
       @submit.prevent="onSubmit"
-      class="grid grid-cols-1 xl:grid-cols-2 gap-x-[18px] gap-y-4 w-full"
+      class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-4 w-full"
     >
-      <div class="md:col-span-2">
+      <div class="lg:col-span-2">
         <Textinput
           placeholder=""
           label="Location name"
@@ -20,7 +20,7 @@
         />
       </div>
       <div>
-        <FormGroup label="Phone number" isCumpulsory>
+        <FormGroup label="Phone number" isCumpulsory  :error="errors.phoneNumber">
           <FormsPhoneCodes v-model="phoneNumber" />
         </FormGroup>
       </div>
@@ -71,7 +71,7 @@
       </FormGroup>
       <FormGroup
         isCumpulsory
-        class="xl:col-span-2"
+        class="lg:col-span-2"
         label="Address"
         :error="errors.address"
       >
@@ -86,11 +86,10 @@
       </FormGroup>
 
       <div
-        class="xl:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 mb-9 mt-8"
+        class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 mb-9 mt-8"
       >
         <AppButton
           type="button"
-          :isLoading="isLoading"
           :isDisabled="isLoading"
           @click="isOpen = false"
           text="Cancel"
@@ -100,7 +99,7 @@
           type="submit"
           :isLoading="isLoading"
           :isDisabled="isLoading"
-          text="Update location"
+          text="Submit"
           btnClass="normal-case btn-primary !py-3"
         />
       </div>
@@ -111,10 +110,14 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { editPickupLocation } from "~/services/cartservice";
+import {
+  addPickupLocation,
+  editPickupLocation,
+  addressSearch,
+} from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
-import countries from "@/utils/countries.json";
-import Lgas from "@/utils/lgastate.json";
+import countries from "~/utils/countries.json";
+import Lgas from "~/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
 const detail = inject("detail");
@@ -131,7 +134,9 @@ const formValues = {
   phoneNumber: "",
 };
 onMounted(() => {
-  setValues(detail.value);
+  if (detail?.value) {
+    setValues(detail.value);
+  }
 });
 const schema = yup.object({
   storeName: yup.string().required("First name is required"),
@@ -143,7 +148,7 @@ const schema = yup.object({
     then: (schema) => schema.required("Lga is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
-  phoneNumber: yup.string().required("Postal code is required"),
+  phoneNumber: yup.string().required("Phone number is required"),
 });
 
 const { handleSubmit, defineField, errors, setValues } = useForm({
@@ -190,10 +195,20 @@ const lgasOption = computed(() => {
     return { label: i, value: i };
   });
 });
-
+const addressOptions = ref([]);
+watch(address, () => {
+  addressSearch({ text: address.value }).then((res) => {
+    if (res.status === 200) {
+      addressOptions.value = res.data.map((i, index) => ({
+        label: i.label,
+        value: `${i.label}-${index}`,
+      }));
+    }
+  });
+});
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  editPickupLocation(values)
+  (detail.value ? editPickupLocation : addPickupLocation)(values)
     .then((res) => {
       if (res.status === 200) {
         toast.info("Address updated");
@@ -204,8 +219,10 @@ const onSubmit = handleSubmit((values) => {
 
     .catch((err) => {
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
-        toast.error(err.response.data.message || err.response.data.Message);
+      if (err?.response?.data?.message || err?.response?.data?.Message) {
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       }
     });
 });

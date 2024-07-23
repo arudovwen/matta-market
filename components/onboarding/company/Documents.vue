@@ -215,7 +215,7 @@ import { required } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
 // eslint-disable-next-line no-unused-vars
-import { updateDocuments } from "@/services/settingservices";
+import { updateDocuments } from "~/services/settingservices";
 import { useStore } from "vuex";
 
 const authStore = useAuthStore();
@@ -371,7 +371,7 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 provide("handleChange", handleChange);
@@ -379,7 +379,7 @@ provide("handleChange", handleChange);
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

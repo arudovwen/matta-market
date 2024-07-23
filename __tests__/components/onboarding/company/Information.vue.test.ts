@@ -38,9 +38,7 @@ describe("Information", () => {
     const component = render(Information, {
 			global: {
 				provide: {
-					active: 1,
-          getData: vi.fn(),
-          companyInfo: null
+					active: 1
 				}
 			}
 		});

@@ -2,8 +2,12 @@
   <h3 class="font-medium text-2xl mb-6">Add new payment method</h3>
   <form @submit.prevent="handleSubmit">
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Card number</label>
+      <label for="card_number" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Card number</label
+      >
       <input
+      id="card_number"
+        data-testid="card-number-input"
         v-model="v$.card_number.$model"
         :class="{ 'border-red-500': v$.card_number.$error }"
         class="rounded-full px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -23,11 +27,12 @@
     </div>
     <div class="grid grid-cols-2 gap-x-6">
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="expiry_date" class="mb-2 font-normal text-xs block text-matta-black"
           >Expiry date</label
         >
         <div class="relative flex items-center">
           <input
+            data-testid="exp"
             v-model="v$.expiry_date.$model"
             :class="{ 'border-red-500 ': v$.expiry_date.$error }"
             class="rounded-full px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -46,11 +51,13 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="cvv" class="mb-2 font-normal text-xs block text-matta-black"
           >CVV</label
         >
         <div class="relative flex items-center">
           <input
+          id="cvv"
+            data-testid="cvv-input"
             v-model="v$.cvv.$model"
             :class="{ 'border-red-500 ': v$.cvv.$error }"
             class="rounded-full px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -70,9 +77,13 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="text-xs flex gap-x-2 items-center">
-        <input type="checkbox" class="accent-matta-black" />Mark as Default
-        payment method
+      <label for="default" class="text-xs flex gap-x-2 items-center">
+        <input
+        id="default"
+          data-testid="mark-default"
+          type="checkbox"
+          class="accent-matta-black"
+        />Mark as Default payment method
       </label>
     </div>
     <div class="mb-5 flex justify-end gap-x-4 mt-8">
@@ -96,7 +107,7 @@
 import { ref, reactive, inject } from "vue";
 import useVuelidate from "@vuelidate/core";
 import { required, helpers, minLength, maxLength } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { useRoute } from "vue-router";
 import { loginUser } from "~/services/authservices";
 import { useStore } from "vuex";
@@ -140,7 +151,8 @@ async function handleSubmit() {
   isLoading.value = true;
   loginUser(form)
     .then((res) => {
-      if (res.status === 200) {
+			if (res.status === 200) {
+				console.log("faya", v$.value);
         store.commit("setUser", res.data.data);
         toast.info("Login successful");
         if (route.query.redirected_from) {
@@ -159,7 +171,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 </script>

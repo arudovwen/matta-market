@@ -128,6 +128,8 @@ import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { registerUser } from "~/services/authservices";
 
+const route = useRoute();
+const { type } = route.params;
 const agree = ref(false);
 const isLoading = ref(false);
 const formValues = {
@@ -137,10 +139,9 @@ const formValues = {
   phone: "",
   password: "",
   confirmPassword: "",
-  business_UserType: 1,
+  business_UserType: type === "register" ? 0 : 1,
   companyName: "",
 };
-
 const schema = yup.object({
   email: yup
     .string()
@@ -179,7 +180,6 @@ const [companyName, companyNameAtt] = defineField("companyName");
 const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
-	console.log("Submitting");
   isLoading.value = true;
   registerUser({ ...values, business_UserType: 1 })
     .then((res) => {
@@ -193,10 +193,10 @@ const onSubmit = handleSubmit((values) => {
 
     .catch((err) => {
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
+      if (err?.response?.data?.message || err?.response?.data?.Message) {
         toast.error(
-          err.response.data.message ||
-            err.response.data.Message ||
+          err?.response?.data?.message ||
+            err?.response?.data?.Message ||
             "Something went wrong"
         );
       }

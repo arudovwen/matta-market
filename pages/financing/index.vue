@@ -57,7 +57,7 @@
   import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import ActiveLoans from "./active-loans";
 import PendingLoans from "./pending-loans";
-import AppIcon from "@/components/AppIcon";
+import AppIcon from "~/components/AppIcon";
 
 const active = ref("requests");
 const tabs = [

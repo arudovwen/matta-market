@@ -1,0 +1,75 @@
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/vue";
+import { RouterLinkStub } from "@vue/test-utils";
+import { it, expect, describe, vi } from "vitest";
+import { createTestingPinia } from "@pinia/testing";
+import * as authServices from "~/services/authservices";
+import * as vueRouter from "vue-router";
+import ProductPage from "~/components/productSearch/ProductPage.vue";
+
+describe("SideBar", () => {
+
+  vi.mock("vue-router", () => {
+    return {
+      RouterView: {},
+      useRouter: () => {
+        return {
+          push: vi.fn(),
+        };
+      },
+      useRoute: vi.fn(),
+    };
+  });
+  vi.spyOn(vueRouter, "useRoute").mockImplementation(() => ({
+    fullPath: "",
+    hash: "",
+    matched: [],
+    name: "",
+    meta: {},
+    params: {},
+    path: "",
+    query: {
+      // @ts-ignore
+      onboarding_stage: 1,
+    },
+    redirectedFrom: undefined,
+  }));
+
+  it("renders", async () => {
+    const component = render(ProductPage, {
+      props: {},
+      global: {
+        stubs: {
+          RouterLink: RouterLinkStub,
+        },
+        plugins: [
+          createTestingPinia({
+            initialState: {
+              auth: {
+                loggedUser: {
+                  firstName: "Bruce",
+                  lastName: "Wayne",
+                },
+              },
+            },
+          }),
+        ],
+        mocks: {},
+				provide: {
+					queryParams: {
+						PageNumber: 2,
+						pageSize: 3,
+						pagecount: 23
+					}
+				}
+      },
+    });
+    expect(screen).toMatchSnapshot();
+    component.unmount();
+  });
+});

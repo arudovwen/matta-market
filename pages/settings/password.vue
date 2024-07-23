@@ -11,7 +11,7 @@
     <div class="flex-1 max-w-[576px]">
       <form @submit.prevent="handlePassword">
         <div class="mb-6">
-          <label class="mb-2 font-normal text-sm block text-matta-black"
+          <label for="" class="mb-2 font-normal text-sm block text-matta-black"
             >Current Password</label
           >
           <div class="relative flex items-center">
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-sm block text-matta-black"
+          <label for="" class="mb-2 font-normal text-sm block text-matta-black"
             >New Password</label
           >
           <div class="relative flex items-center">
@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="mb-12">
-          <label class="mb-2 font-normal text-sm block text-matta-black"
+          <label for="" class="mb-2 font-normal text-sm block text-matta-black"
             >Confirm Password</label
           >
           <div class="relative flex items-center">
@@ -216,7 +216,7 @@ async function handlePassword() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 </script>

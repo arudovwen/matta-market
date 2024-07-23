@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#E7EBEE] p-4 lg:p-6 flex flex-col gap-y-2 min-h-screen">
+  <div data-testid="account" class="bg-[#E7EBEE] p-4 lg:p-6 flex flex-col gap-y-2 min-h-screen">
     <OnboardingLayoutTopBar :active="active" />
     <div class="gap-x-2 flex flex-1 justify-center">
       <div class="w-[25%] rounded-lg hidden lg:block">
@@ -16,26 +16,15 @@
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
-
 const active = ref(1);
 const route = useRoute();
 onMounted(() => {
-  if (route.query.onboarding_stage) {
+  if (route?.query?.onboarding_stage) {
     active.value = route.query.onboarding_stage;
   }
 });
-watch(route, () => {
+watch(()=> [route?.query?.onboarding_stage], () => {
   active.value = route?.query?.onboarding_stage;
 });
 provide("active", active)
 </script>
-
-<style lang="scss" scoped>
-.bg-img {
-  background-image: url("@/assets/img/bee.svg");
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: bottom;
-}
-</style>

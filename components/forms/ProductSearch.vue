@@ -50,7 +50,7 @@
               :value="option"
               as="template"
             >
-              <li
+              <span 
                 :class="[
                   active ? 'bg-gray-100' : '',
                   'relative select-none py-2 px-3 rounded text-loft-black hover:bg-gray-100 cursor-pointer text-matta-black',
@@ -70,7 +70,7 @@
                     aria-hidden="true"
                   />
                 </span>
-              </li>
+              </span>
             </ListboxOption>
           </div>
           <div
@@ -128,7 +128,7 @@ function getData() {
   getProducts(productParams)
     .then((res) => {
       if (res.status == 200) {
-        options.value = res.data.data.data;
+        options.value = res?.data?.data?.data;
         isLoading.value = false;
         if (props.modelValue) {
           selectedOption.value = filteredOptions.value.find(

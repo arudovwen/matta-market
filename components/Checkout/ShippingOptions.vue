@@ -5,8 +5,13 @@
     </h2>
 
     <div class="px-[30px] pt-6 pb-[30px]">
-      <label class="flex gap-x-2 items-start" :class="`${active !== 'shipping'?'opacity-80':''}`">
+      <label
+        for="shipping"
+        class="flex gap-x-2 items-start"
+        :class="`${active !== 'shipping' ? 'opacity-80' : ''}`"
+      >
         <input
+          id="shipping"
           v-model="active"
           value="shipping"
           type="radio"

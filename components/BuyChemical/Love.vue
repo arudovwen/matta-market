@@ -2,8 +2,7 @@
   <section class="bg-[#101828]">
     <div class="container py-[96px] text-center">
       <div
-        data-aos="fade-in"
-        data-aos-once="true"
+    
         class="max-w-[1024px] mx-auto text-center pl-6 pr-6"
       >
         <carousel class="mx-auto text-center">

@@ -29,8 +29,7 @@
   <ModalCenter>
     <template #default>
       <div class="w-full max-w-[500px] p-6 md:py-9 md:px-10 z-[999] relative">
-        <CheckoutShippingAddForm v-if="type === 'form'" />
-        <CheckoutShippingEditForm v-if="type === 'edit'" />
+        <CheckoutShippingEditForm v-if="type === 'form'" />
         <CheckoutSelect v-if="type === 'select'" />
       </div>
     </template>
@@ -39,7 +38,7 @@
 <script setup>
 const shippingStore = useShippingStore();
 const type = ref("form");
-const detail = ref("detail");
+const detail = ref(null);
 const isOpen = ref(false);
 function openModal(val) {
   type.value = val;

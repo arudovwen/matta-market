@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-[#0C111D] pt-16 pb-8">
-    <div v-for="n in extraContent" :key="n.key">
+    <div v-for="n in extraContent" :key="n.key" data-testid="extraContent">
       <div class="container" v-if="route.name == n.key">
         <div
           class="flex justify-between md:gap-x-20 flex-col md:flex-row mb-6 md:mb-0"
@@ -19,6 +19,7 @@
           </div>
           <div>
             <AppButton
+              data-testid="get-started"
               @click="navigateTo(n.url)"
               text="Get started"
               icon="lets-icons:arrow-right"
@@ -39,6 +40,7 @@
           <div class="mb-[15px]">
             <NuxtLink to="/">
               <img
+                data-testid="logo"
                 src="/logo-matta-white.png"
                 class="w-[132px]"
                 alt="Matta"
@@ -146,14 +148,122 @@
 </template>
 
 <script setup>
-import { ref, provide } from "vue";
-
 const route = useRoute();
 const open = ref(false);
 const handleGoogleTranslateSelect = (language) => {
   console.log(language);
 };
+const navs = [
+  {
+    subject: "company",
+    links: [
+      {
+        title: "About Us",
+        url: "https://corporate.matta.trade/",
+      },
+      {
+        title: "Careers",
+        url: "https://corporate.matta.trade/",
+      },
+      {
+        title: "Newsletter",
+        url: "#",
+      },
+      {
+        title: "Contact",
+        url: "",
+      },
+    ],
+  },
+  {
+    subject: "services",
+    links: [
+      {
+        title: "Buy chemicals",
+        url: "/buy-chemicals",
+      },
+      {
+        title: "Sell chemicals",
+        url: "/sell-chemicals",
+      },
+      {
+        title: "Logistics solutions",
+        url: "#",
+      },
 
+      {
+        title: "Financing solutions",
+        url: "#",
+      },
+      {
+        title: "Local fulfillment partnerships",
+        url: "#",
+      },
+    ],
+  },
+
+  {
+    subject: "quick links",
+    links: [
+      {
+        title: "Request products",
+        url: "/request-products",
+      },
+      {
+        title: "Become a Verified Supplier",
+        url: "/auth/vendor-register",
+      },
+      {
+        title: "Join agent network program",
+        url: "#",
+      },
+    ],
+  },
+];
+
+const socials = [
+  {
+    title: "Facebook",
+    icon: "ant-design:facebook-filled",
+    link: "https://www.facebook.com/mattatrade",
+  },
+  {
+    title: "Linkedin",
+    icon: "akar-icons:linkedin-fill",
+    link: "https://www.linkedin.com/company/matta-trade/",
+  },
+
+  {
+    title: "X",
+    icon: "line-md:twitter-x-alt",
+    link: "https://twitter.com/matta_trade",
+  },
+  {
+    title: "Instagram",
+    icon: "fe:instagram",
+    link: "https://www.instagram.com/matta_trade/",
+  },
+];
+const extraContent = [
+  {
+    title: "Ready to Transform Your Procurement Process?",
+    text: "Get started with Matta today and experience a new level of sourcing efficiency. Upload your RFQ and let us connect you to the world’s best suppliers in no time.",
+    url: "/submit-request",
+    key: "request-products",
+  },
+  {
+    title: " Start selling with Matta",
+    text: "Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying  Seamless Procurement and Logistics With Matta.",
+    url: "/auth/vendor-register",
+    key: "buy-chemicals",
+  },
+  {
+    title: "Start selling with Matta",
+    text: "Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying  Seamless Procurement and Logistics With Matta.",
+    url: "/auth/vendor-register",
+    key: "sell-chemicals",
+  },
+];
 function togglePopup() {
   open.value = !open.value;
 }

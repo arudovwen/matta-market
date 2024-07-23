@@ -1,8 +1,7 @@
 <template>
   <div class="container pt-[64px] md:pt-[96px] pb-6">
     <h1
-      data-aos="fade-in"
-      data-aos-once="true"
+  
       class="text-4xl md:text-6xl md:leading-[72px] font-bold mb-6 relative max-w-[820px]"
     >
       <span class="relative z-[2]">
@@ -13,15 +12,14 @@
       ></span>
     </h1>
     <p
-      data-aos="fade-in"
-      data-aos-once="true"
+
       class="text-base sm:text-lg md:text-xl mb-12 max-w-[640px] text-[#475467]"
     >
       Join Matta’s all-in-one sourcing platform and streamline your chemical
       procurement process with same-day RFQ responses
     </p>
 
-    <div data-aos="fade-in" data-aos-once="true" class="flex gap-x-4 mb-[64px]">
+    <div  class="flex gap-x-4 mb-[64px]">
       <AppButton
       @click="navigateTo('/submit-request')"
         type="button"
@@ -31,9 +29,8 @@
     </div>
 
     <div
-      data-aos="fade-up"
-      data-aos-once="true"
-      class="top_image h-[200px] xl:h-[516px] w-full"
+      
+      class="top_image h-[200px] md:h-[516px] w-full"
     ></div>
   </div>
 
@@ -46,6 +43,7 @@
           height="800"
           allow="autoplay"
           class="h-full w-full"
+					 title="buy chemicals"
         ></iframe>
       </div>
     </template>
@@ -67,8 +65,9 @@ provide("isOpen", isOpen);
 </script>
 <style scoped>
 .top_image {
-  background-image: url("/images/pr-re.png");
+  background-image: url("/images/three.png");
   background-size: cover;
   background-repeat: repeat;
+  border-radius:10px;
 }
 </style>

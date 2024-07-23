@@ -41,7 +41,7 @@
         <div
           class="overflow-x-auto border border-[#EAECF0] rounded-lg w-full max-w-full bg-white"
         >
-          <table class="table-auto w-full hidden lg:inline-table">
+          <table aria-describedby="true" class="table-auto w-full hidden lg:inline-table">
             <thead>
               <tr>
                 <th

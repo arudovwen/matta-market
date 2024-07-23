@@ -285,7 +285,7 @@ const onSubmit = handleSubmit((values) => {
         }
       })
       .catch((err) => {
-        toast.error(err.response.data.Message || err.response.data.message);
+        toast.error(err?.response?.data?.Message || err?.response?.data?.message);
         isLoading.value = false;
       });
   } else {
@@ -303,7 +303,7 @@ const onSubmit = handleSubmit((values) => {
         }
       })
       .catch((err) => {
-        toast.error(err.response.data.Message || err.response.data.message);
+        toast.error(err?.response?.data?.Message || err?.response?.data?.message);
         isLoading.value = false;
       });
   }

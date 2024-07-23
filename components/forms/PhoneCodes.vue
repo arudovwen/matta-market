@@ -27,6 +27,7 @@
           >
             <div class="relative flex items-center mb-3 mt-3 px-4">
               <input
+								
                 v-model="query"
                 placeholder="Search"
                 class="text-xs rounded-lg px-3 py-1 h-10 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -40,7 +41,7 @@
                 :value="z.dial_code"
                 as="template"
               >
-                <li
+                <span
                   :class="[
                     active || selected ? 'bg-gray-50' : '',
                     'relative cursor-pointer select-none py-[11px] px-[20px] text-loft-black hover:bg-gray-100  flex items-center justify-between',
@@ -50,7 +51,7 @@
                     {{ z.dial_code }} - &nbsp; {{ z.name }}
                   </p>
                   <i class="uil uil-check text-[#101828]" v-show="selected"></i>
-                </li>
+                </span>
               </ListboxOption>
             </div>
           </ListboxOptions>

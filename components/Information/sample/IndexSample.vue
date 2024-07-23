@@ -28,7 +28,7 @@
           <InformationSampleShippingAddress />
         </div>
         <InformationSampleRequestComplete v-if="active === 3" />
-        <InformationSampleRegisterComponent v-if="active === 2 && showAuth" />
+        <ModalAuth v-if="active === 2 && showAuth" />
       </div>
     </div>
     <div v-if="active !== 3">
@@ -66,7 +66,7 @@
     </div>
     <div v-if="active === 3">
       <div class="flex justify-between gap-x-2 items-center mt-8">
-        <NuxtLink to="/procurement/my-requests">
+        <NuxtLink to="/procurement/my-requests" class=" w-full">
           <button
             type="button"
             class="appearance-none border w-full leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
@@ -87,19 +87,15 @@
   </form>
 </template>
 <script setup>
-import { useStore } from "vuex";
 import { addrequest } from "~/services/procurementservice";
 import useVuelidate from "@vuelidate/core";
 import {
   required,
-  email,
-  numeric,
-  // helpers,
-  // minLength,
-  // maxLength,
+  email
 } from "@vuelidate/validators";
 import { toast } from 'vue3-toastify';
 
+const type = ref("login")
 const supplierStore = useSupplierStore()
 const authStore = useAuthStore()
 const togglePopup = inject("togglePopup");
@@ -136,7 +132,7 @@ const myrules1 = {
 };
 const myrules2 = {
   email: { required, email },
-  phone: { required, numeric },
+  phone: { required },
   shippingAddressId: { required },
   addressDescription: { required },
 };
@@ -158,7 +154,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
     });
 }
 function toggleAuth() {
@@ -207,4 +203,6 @@ provide("toggleAuth", toggleAuth);
 provide("request1$", request1$);
 provide("request2$", request2$);
 provide("sampleForm", sampleForm);
+provide("type", type)
+provide("isOpen", showAuth)
 </script>

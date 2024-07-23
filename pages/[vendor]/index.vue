@@ -12,7 +12,7 @@
           <Pagination
             v-if="
               !loading &&
-              productsData.length &&
+              productStore?.productsData.length &&
               query.totalData > query.PageSize
             "
             :total="store.total"
@@ -28,14 +28,6 @@
   </div>
 </template>
 <script setup>
-import { getProducts, getProductsByTag } from "~/services/productservices";
-import { useProductStore } from "~/stores/products";
-
-const store = useProductStore();
-const { productsData, loading } = storeToRefs(store);
-const route = useRoute();
-
-const { vendor, id } = route.params;
 useHead({
   title: `${ucFirst(vendor)} | Matta`,
   meta: [
@@ -45,7 +37,13 @@ useHead({
     },
   ],
 });
+import { getProducts, getProductsByTag } from "~/services/productservices";
+
+const productStore = useProductStore();
+const route = useRoute();
+const { vendor, id } = route.params;
 const vendorInfo = ref(null);
+const pageRange = 5;
 const query = reactive({
   PageNumber: 1,
   PageSize: 20,
@@ -66,13 +64,11 @@ const query = reactive({
   sortBy: "",
   storelug: vendor,
 });
-const tagQuery = reactive({
-  PageNumber: 1,
-  PageSize: 20,
-  tag: route.query.tag,
-});
-const pageRange = 5;
 
+function perPage({ currentPerPage }) {
+  query.PageNumber = 1;
+  query.PageSize = currentPerPage;
+}
 function getAllProducts() {
   store.setLoader(true);
   if (route.query.tag) {
@@ -107,22 +103,15 @@ function getAllProducts() {
   }
 }
 
-function perPage({ currentPerPage }) {
-  query.PageNumber = 1;
-  query.PageSize = currentPerPage;
-}
-
 onMounted(() => {
   getAllProducts();
-  // store.getAllProducers()
 });
 
 watch(
   () => [
-    query.PageNumber,
-    ,
-    query.sortOrder,
     query.producers,
+    query.PageNumber,
+    query.sortOrder,
     query.sortBy,
     query.applications,
   ],

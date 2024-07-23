@@ -43,7 +43,7 @@
             v-for="item in orders"
             :key="item"
             :order="item"
-            @onClick="openOrder(item)"
+            @click="openOrder(item)"
           />
         </div>
         <div v-if="!isLoading">
@@ -192,7 +192,7 @@ import { toast } from "vue3-toastify";
 import { getcart, removecartitem } from "~/services/cartservice";
 
 onMounted(() => {
-	console.log("fire onmount");
+
   getData();
   fetchCart();
 });
@@ -263,11 +263,11 @@ function removeItem(id) {
   });
 }
 function getData() {
-	console.log("fire getData");
+
   isLoading.value = true;
   procurementorders(queryParams)
 	.then((res) => {
-		console.log("fire gettData", res);
+	
       if (res.status) {
         orders.value = res.data.data;
         queryParams.totalCount = res.data.totalCount;
@@ -276,7 +276,7 @@ function getData() {
     })
     .catch((err) => {
       isLoading.value = false;
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 
@@ -286,17 +286,17 @@ const order = ref(null);
 const isOpen = ref(false);
 
 function openOrder(val) {
-	console.log("fire openOrder")
+
   procurementorderdetails(val.orderId)
 	.then((res) => {
 		order.value = { ...val, ...res.data, orderId: val.orderNumber };
 		
 		isOpen.value = true;
-		console.log("fire procurementorder", res)
+	
     })
     .catch((err) => {
       isLoading.value = false;
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 

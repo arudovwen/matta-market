@@ -1,11 +1,11 @@
 <template>
   <div class="bg-white w-full">
     <legend class="block text-[20px] font-bold mb-8 text-left">
-      Update Shipping address
+      {{ detail ? "Update" : "Add" }} Shipping address
     </legend>
     <form
       @submit.prevent="onSubmit"
-      class="grid grid-cols-1 xl:grid-cols-2 gap-x-[18px] gap-y-4 w-full"
+      class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-4 w-full"
     >
       <div>
         <Textinput
@@ -66,7 +66,7 @@
         label="LGA"
         isCumpulsory
         :error="errors.lga"
-        class="xl:col-span-2"
+        class="lg:col-span-2"
       >
         <SelectVueSelect
           class="w-full"
@@ -80,7 +80,7 @@
       </FormGroup>
 
       <FormGroup
-        class="xl:col-span-2"
+        class="lg:col-span-2"
         isCumpulsory
         label="Street"
         :error="errors.street"
@@ -107,12 +107,12 @@
         Set as default
       </div>
 
-      <div class="xl:col-span-2 grid gap-y-[22px] mb-9 mt-4">
+      <div class="lg:col-span-2 grid gap-y-[22px] mb-9 mt-4">
         <AppButton
           type="submit"
           :isLoading="isLoading"
           :isDisabled="isLoading"
-          text="Update address"
+          text="Submit"
           btnClass="normal-case btn-primary !py-3"
         />
       </div>
@@ -123,10 +123,10 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { editshipping, addressSearch } from "~/services/cartservice";
+import { addshipping, editshipping, addressSearch } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
-import countries from "@/utils/countries.json";
-import Lgas from "@/utils/lgastate.json";
+import countries from "~/utils/countries.json";
+import Lgas from "~/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
 const detail = inject("detail");
@@ -146,7 +146,9 @@ const formValues = {
   isDefault: false,
 };
 onMounted(() => {
-  setValues(detail.value);
+  if (detail?.value) {
+    setValues(detail.value);
+  }
 });
 
 const schema = yup.object({
@@ -212,10 +214,10 @@ const lgasOption = computed(() => {
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  editshipping(values)
+  (!detail?.value ? addshipping : editshipping)(values)
     .then((res) => {
       if (res.status === 200) {
-        toast.info("Address updated");
+        toast.info(detail?.value ? "Address updated" : "Address added");
         isOpen.value = false;
         shippingStore.getAlladdress();
       }
@@ -223,8 +225,10 @@ const onSubmit = handleSubmit((values) => {
 
     .catch((err) => {
       isLoading.value = false;
-      if (err.response.data.message || err.response.data.Message) {
-        toast.error(err.response.data.message || err.response.data.Message);
+      if (err?.response?.data?.message || err?.response?.data?.Message) {
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
       }
     });
 });

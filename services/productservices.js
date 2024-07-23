@@ -167,9 +167,9 @@ export async function getmarketlevels() {
   return await get(`${urls.GET_MARKETS_LEVEL}`, config);
 }
 
-export async function gettechlevels() {
-  return await get(`${urls.GET_TECH_LEVEL}`, config);
-}
+// export async function gettechlevels() {
+//   return await get(`${urls.GET_TECH_LEVEL}`, config);
+// }
 export async function getStoreInfo(data) {
   return await get(`${urls.GET_STORE_INFO}?slug=${data}`, config);
 }
