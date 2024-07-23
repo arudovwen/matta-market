@@ -68,7 +68,8 @@
           v-if="!productData.hidePrice"
           class="text-xl lg:text-2xl font-[800] mb-6"
         >
-        <span class="font-normal text-base">Starting from</span>  {{ currencyFormat(mypackage?.amount || 0) }}
+          <span class="font-normal text-base">Starting from</span>
+          {{ currencyFormat(mypackage?.amount || 0) }}
           <span class="text-sm text-[#444] font-normal"
             >/{{ `${mypackage?.unit || ""}` }}</span
           >
@@ -102,7 +103,7 @@
             btnClass="text-xs sm:text-sm !py-0 !px-0 w-full sm:!w-auto sm:!max-w-max items-center"
           /> -->
         </div>
-        <div class="mb-6"  v-if="!productData.hidePrice">
+        <div class="mb-6" v-if="!productData.hidePrice">
           <h2 class="font-bold text-sm mb-2">Choose packaging</h2>
           <Select
             v-model="selectedPackage"
@@ -337,12 +338,12 @@ function handleclose(val) {
   isAuthOpen.value = isOpen.value = false;
 }
 function handleRequest(type) {
-  if (authStore.isLoggedIn) {
-    isOpen.value = true;
-    requestType.value = type;
-  } else {
-    isAuthOpen.value = true;
-  }
+  // if (authStore.isLoggedIn) {
+  isOpen.value = true;
+  requestType.value = type;
+  // } else {
+  //   isAuthOpen.value = true;
+  // }
 }
 function toggleModal(val) {
   active.value = val;
@@ -464,7 +465,6 @@ function togglePopup() {
   isOpen.value = false;
 }
 
-
 watch(
   () => [packageOptions.value],
   () => {
@@ -474,7 +474,7 @@ watch(
   }
 );
 watch(productData, () => {
-	console.log(productData);
+  console.log(productData);
   supplierStore.fetchSupplier(productData.value.supplierId);
   imageUrl.value = productData?.value?.featuredPhoto;
 });

@@ -107,6 +107,7 @@ const { handleSubmit, defineField, errors } = useForm({
   validationSchema: schema,
   initialValues: formValues,
 });
+const emits = defineEmits(["close"]);
 const authStore = useAuthStore();
 const [email, emailAtt] = defineField("email");
 const [password, passwordAtt] = defineField("password");
@@ -149,10 +150,12 @@ const handleFinalSubmit = (token) => {
       if (res.status === 200) {
         isLoading.value = false;
         authStore.setLoggedUser(res.data.data);
-         authStore.setHasPin(res.data.data.hasTransactionPIN);
+        authStore.setHasPin(res.data.data.hasTransactionPIN);
         localStorage.setItem("fetchCart", true);
         if (!props.main) {
-          windows.location.reload();
+          toast.info("Login successful");
+          emits("close");
+          // window.location.reload();
           return;
         }
         if (

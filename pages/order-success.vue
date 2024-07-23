@@ -18,7 +18,7 @@
         <span class="font-medium text-[#333]">{{ orderId }} </span>. You will
         receive an email shortly with the invoice for your order.
       </p>
-      <p class="font-medium mb-6" v-if="order_type">
+      <p class="font-medium mb-6 text-sm" v-if="order_type">
         You can also proceed to make payment for your order.
       </p>
       <div class="flex flex-col md:flex-row gap-y-4 md:gap-y-0 md:gap-x-[14px]">

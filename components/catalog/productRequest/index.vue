@@ -1,206 +1,91 @@
 <template>
-  <div class="bg-white py-8 sm:py-10 px-4 xs:px-6 lg:px-10 rounded-lg flex-1">
+  <div class="bg-white flex-1">
     <form
-      v-if="!isComplete"
-      @submit.prevent="handleSubmit"
-      class="h-full max-w-[600px] mx-auto my-10 border p-6 rounded-lg"
+      @submit.prevent="onSubmit"
+      class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF]"
     >
-      <h4 class="text-2xl font-medium text-center mb-7">Request a product</h4>
+      <h4 class="text-2xl font-semibold text-left mb-7">Request a product</h4>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        <div class="mb-6">
-          <label for="fullName" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Full name  <RedDot /></label
-          >
-          <input
-          id="fullName"
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            placeholder="Provide your full name"
-            autocomplete="off"
-            autofocus="on"
-            v-model="request$.fullName.$model"
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Textinput
+            placeholder=""
+            label="Full name"
+            name="email"
+            v-bind="fullNameAtt"
+            v-model="fullName"
+            :error="errors.fullName"
           />
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of request$.fullName.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
         </div>
-        <div class="mb-6">
-          <label for="businessName" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Business name  <RedDot /></label
-          >
-          <input
-          id="businessName"
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            placeholder="Provide your business name"
-            autocomplete="off"
-            autofocus="on"
-            v-model="request$.businessName.$model"
+        <div>
+          <Textinput
+            placeholder=""
+            label="Business name"
+            name="businessName"
+            v-bind="businessNameAtt"
+            v-model="businessName"
+            :error="errors.businessName"
           />
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of request$.businessName.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
         </div>
-        <div class="mb-6 md:col-span-2">
-          <label for="email" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >E-mail  <RedDot /></label
-          >
-          <input
-          id="email"
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            placeholder="Provide your email address"
-            autocomplete="off"
+        <div>
+          <Textinput
+            placeholder=""
+            label="Email"
             type="email"
-            v-model="request$.email.$model"
+            name="email"
+            v-bind="emailAtt"
+            v-model="email"
+            :error="errors.email"
           />
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of request$.email.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
         </div>
-
-        <div class="mb-6">
-          <label for="phone" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Phone number  <RedDot /></label
-          >
-          <div class="flex relative rounded-lg h-11">
-            <FormsPhoneCodes v-model="request$.phone.$model" />
-          </div>
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of request$.phone.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
+        <div>
+          <FormGroup name="phone" label="Phone number" :error="errors.phone">
+            <FormsPhoneCodes v-model="phone" />
+          </FormGroup>
         </div>
-
-        <div class="mb-6">
-          <label for="chemicalName" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Chemical name  <RedDot /></label
-          >
-          <input
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            placeholder="Provide chemical name"
-            autocomplete="off"
-            autofocus="on"
-            v-model="request$.chemicalName.$model"
+        <div>
+          <Textinput
+            placeholder=""
+            label="Chemical name"
+            name="chemicalName"
+            v-bind="chemicalNameAtt"
+            v-model="chemicalName"
+            :error="errors.chemicalName"
           />
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of request$.chemicalName.$errors"
-            :key="error.$uid"
+        </div>
+        <div>
+          <Textinput
+            placeholder=""
+            label="Unit price"
+            name="unit"
+            v-bind="unitAtt"
+            v-model="unit"
+            :error="errors.unit"
+            ><template #suffix>
+              <span>tonne</span>
+            </template></Textinput
           >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
         </div>
 
-        <div class="mb-6">
-          <label for="quantity" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Quantity  <RedDot /></label
-          >
-          <input
-          id="quantity"
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            placeholder="Enter quantity needed"
-            type=""
-            v-model="request$.quantity.$model"
+        <div class="md:col-span-2">
+          <Textinput
+            placeholder=""
+            label="What do you want to use it for?"
+            name="usage"
+            v-bind="usageAtt"
+            v-model="usage"
+            :error="errors.usage"
           />
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of request$.quantity.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
         </div>
-        <div class="mb-6">
-          <label for="unit" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-            >Unit  <RedDot /></label
-          >
-          <select
-          id="unit"
-            v-model="request$.unit.$model"
-            class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-          >
-            <option v-for="n in measurements" :key="n" :value="n.value">
-              {{ n.name }}
-            </option>
-          </select>
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of request$.unit.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
-        </div>
-
         <div class="mb-6 md:col-span-2">
-          <label for="formFile" class="mb-2 font-normal text-xs block text-matta-black"
-            >Upload document  <RedDot /></label>
-          <div class="relative flex items-center">
-            <input
-              class="flex-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:cursor-pointer file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
-              type="file"
-              id="formFile"
-              accept=".xls, .xlsx, .png, .jpg, .jpeg, .docx, .pdf"
-              @change="handleFile"
-            />
-            <div class="ml-2" v-if="isUploading">
-              <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
-            </div>
-          </div>
-          <div
-            class="text-red-500 mt-1"
-            v-for="error of request$.uploadedDocumentUrl.$errors"
-            :key="error.$uid"
-          >
-            <div class="error-msg text-error text-xs font-semibold">
-              {{ error.$message }}
-            </div>
-          </div>
-        </div>
-
-        <div class="mb-6 md:col-span-2">
-          <label
-            class="flex items-center gap-x-2"
-            :class="request$.confirm.$errors.length ? 'text-red-600' : ''"
-          >
-            <input
-              type="checkbox"
-              v-model="request$.confirm.$model"
-              :class="request$.confirm.$errors.length ? 'outline-red-600' : ''"
-            />
-            <span>I confirm that I want to submit this request</span>
-          </label>
+          <FileUpload
+            label="Select file to upload"
+            id="uploadedDocumentUrl"
+            v-model="uploadedDocumentUrl"
+          />
         </div>
       </div>
-      <div class="flex justify-center mt-8">
+      <div class="flex justify-center">
         <button
           type="submit"
           :disabled="isLoading"
@@ -217,27 +102,19 @@
                 aria-hidden="true"
               ></i
             ></span>
-            <span v-else>Submit</span>
+            <span v-else>Submit request</span>
           </span>
         </button>
       </div>
     </form>
-    <CatalogProductRequestComplete v-else />
   </div>
 </template>
 <script setup>
+import { useForm } from "vee-validate";
+import * as yup from "yup";
 import { useStore } from "vuex";
-// eslint-disable-next-line no-unused-vars
 import { createproductrequest } from "~/services/productservices";
 import { uploaddocument } from "~/services/onboardingservices";
-import useVuelidate from "@vuelidate/core";
-import {
-  required,
-  email,
-  numeric,
-  sameAs,
-  helpers,
-} from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
 
 const isComplete = ref(false);
@@ -255,27 +132,46 @@ const form = reactive({
   quantity: "",
   confirm: false,
   unit: "",
-  uploadedDocumentExtension: "",
+  usage: "",
   phoneCode: "+234",
 });
+const validationSchema = yup.object({
+  fullName: yup.string().required("Full name is required"),
+  businessName: yup.string().required("Business name is required"),
+  email: yup
+    .string()
+    .email("Please enter a valid email")
+    .required("Email is required"),
+  phone: yup.string().required("Phone number is required"),
+  uploadedDocumentUrl: yup.string(),
+  chemicalName: yup.string().required("Chemical name is required"),
+  quantity: yup
+    .number()
+    .required("Quantity is required")
+    .positive("Quantity must be positive"),
+  confirm: yup.boolean().oneOf([true], "Please confirm before submitting"),
+  unit: yup.string().required("Unit is required"),
+});
+
+const { handleSubmit, defineField, errors } = useForm({
+  validationSchema: validationSchema,
+  initialValues: form,
+});
+
+const [fullName, fullNameAtt] = defineField("fullName");
+const [businessName, businessNameAtt] = defineField("businessName");
+const [email, emailAtt] = defineField("email");
+const [phone] = defineField("phone");
+const [usage, usageAtt] = defineField("usage");
+const [uploadedDocumentUrl, uploadedDocumentUrlAtt] = defineField(
+  "uploadedDocumentUrl"
+);
+const [chemicalName, chemicalNameAtt] = defineField("chemicalName");
+const [unit, unitAtt] = defineField("unit");
 
 const isLoading = ref(false);
 const isUploading = ref(false);
-const myrules = {
-  phone: {
-    required,
-  },
-  businessName: { required },
-  fullName: { required },
-  uploadedDocumentUrl: {},
-  email: { required, email },
-  chemicalName: { required },
-  quantity: { required, numeric },
-  confirm: { sameAs: sameAs(true) },
-  unit: { required },
-};
 
-const request$ = useVuelidate(myrules, form);
 const toBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -285,38 +181,10 @@ const toBase64 = (file) =>
     reader.onerror = reject;
   });
 
-async function handleFile(e) {
-  const file = e.target.files[0];
-  const ext = file.name.substring(file.name.lastIndexOf(".") + 1);
-  isUploading.value = true;
-  uploaddocument({
-    base64: await toBase64(file),
-    ext: `.${ext}`,
-  }).then((res) => {
-    form.uploadedDocumentUrl = res.data.message;
-    isUploading.value = false;
-  });
-  form.uploadedDocumentExtension = `.${ext}`;
-}
-async function handleSubmit() {
-  const validity = await request$.value.$validate();
-
-  if (!validity) return;
-  isLoading.value = true;
+const onSubmit = handleSubmit((values) => {
   createproductrequest(form)
     .then((res) => {
       if (res.status === 200) {
-        form.fullName = "";
-        form.email = store.getters.loggedUser?.email || "";
-        form.phone = store.getters.loggedUser?.phoneNumber || "";
-        form.uploadedDocumentUrl =
-          form.chemicalName =
-          form.quantity =
-          form.businessName =
-          form.unit =
-          form.address =
-            "";
-        request$.value.$reset();
         isComplete.value = true;
         isLoading.value = false;
       }
@@ -327,6 +195,7 @@ async function handleSubmit() {
 
       toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
-}
+});
 provide("isComplete", isComplete);
+provide("handleChange", null);
 </script>

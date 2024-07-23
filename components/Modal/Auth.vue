@@ -37,7 +37,7 @@
             :class="className"
             class="inline-block relative align-bottom bg-white rounded-lg text-left invisible-scrollbar shadow-xl transform transition-all sm:my-8 sm:align-middle min-w-[500px] p-6 w-full max-w-max max-h-[95vh]"
           >
-            <AuthLogin v-if="type === 'login'" :main="false" />
+            <AuthLogin @close="isOpen = false" :main="false" />
             <!-- <AuthVendorRegister v-if="type === 'vendor-register'" />
             <AuthRegister v-if="type === 'register'" /> -->
             <span
@@ -46,7 +46,7 @@
               @click="
                 () => {
                   isOpen = false;
-                  type = 'login';
+                  // type = 'login';
                 }
               "
             >
@@ -72,7 +72,7 @@ import {
 } from "@headlessui/vue";
 
 const isOpen = inject("isOpen");
-const type = inject("type");
+// const type = inject("type");
 defineProps({
   canClose: {
     default: true,

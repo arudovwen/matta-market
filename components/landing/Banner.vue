@@ -1,7 +1,7 @@
 <template>
   <div class="relative w-full bg-black-400">
     <div
-      class="bg-cover  bg-center min-h-[480px] md:min-h-[600px]"
+      class="bg-cover bg-center min-h-[480px] md:min-h-[600px]"
       :style="backgroundStyles"
     >
       <!-- Overlay -->
@@ -23,23 +23,24 @@
               trustworthy suppliers
             </p>
           </div>
-          <div class="max-w-[786px]">
+          <form @submit.prevent="handleSearch" class="max-w-[786px]">
             <div
               class="relative flex p-1 w-full bg-white rounded-[5px] items-center mb-[6px] sm:mb-8"
             >
               <input
+                required
                 placeholder="Search by product name or supplier"
                 class="px-4 flex-1 h-9 placeholder:text-[rgba(156, 163, 175, 1)] text-xs sm:text-sm outline-none text-[#333]"
                 v-model="search"
               />
               <AppButton
-                @click="handleSearch"
+                type="submit"
                 text="Search"
                 btnClass="!px-10 btn-primary hidden sm:flex"
               />
             </div>
             <AppButton
-              @click="handleSearch"
+              type="submit"
               text="Search"
               btnClass="!px-4 !py-[10px] btn-primary sm:hidden w-full"
             />
@@ -61,7 +62,7 @@
                 </NuxtLink>
               </span>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -69,12 +70,20 @@
 </template>
 
 <script setup>
-
 const img = useImage();
 const backgroundStyles = computed(() => {
-  const imgUrl = img(`https://res.cloudinary.com/arudovwen-me/image/upload/f_webp/c_scale,h_600/xddierf8sf3w2gn1csau.jpg`, {
-    sizes: { xl: "100vw", lg: "100vw", md: "100vw", sm: "100vw", xs: "100vw" },
-  });
+  const imgUrl = img(
+    `https://res.cloudinary.com/arudovwen-me/image/upload/f_webp/c_scale,h_600/xddierf8sf3w2gn1csau.jpg`,
+    {
+      sizes: {
+        xl: "100vw",
+        lg: "100vw",
+        md: "100vw",
+        sm: "100vw",
+        xs: "100vw",
+      },
+    }
+  );
   return { backgroundImage: `url('${imgUrl}')` };
 });
 // http://localhost:3000/images/banner.png
