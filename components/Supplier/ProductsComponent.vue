@@ -8,7 +8,7 @@
         btnText="Add product"
         btnMiniText="Add"
         btnIcon="humbleicons:plus"
-        @onClick="router.push('/storefront/products/add-product')"
+        @click="router.push('/storefront/products/add-product')"
         btnClass="!text-xs md:!text-sm"
       />
 
@@ -67,7 +67,11 @@
         </div>
         <div v-if="!isPageLoading">
           <div class="max-w-[80vw] lg:max-w-full" v-if="products.length">
-            <table class="w-full" v-if="products.length">
+            <table
+              aria-describedby="true"
+              class="w-full"
+              v-if="products.length"
+            >
               <thead>
                 <tr>
                   <th
@@ -89,7 +93,11 @@
                         v-if="item.logo"
                         class="mr-3 h-10 w-10 rounded-full flex items-center justify-center border border-[#E7EBEE]"
                       >
-                        <img class="w-full h-full object-cover rounded-full" alt="alt" :src="item.logo" />
+                        <img
+                          class="w-full h-full object-cover rounded-full"
+                          alt="alt"
+                          :src="item.logo"
+                        />
                       </span>
                       <i
                         v-else
@@ -126,35 +134,37 @@
                   <td
                     class="capitalize text-matta-black text-sm font-normal border-b py-6 px-3 border-[#E7EBEE] relative"
                   >
-                    <Popover class="relative z-[99]">
-                      <PopoverButton class="outline-none">
-                        <i class="uil uil-ellipsis-v text-lg"></i>
-                      </PopoverButton>
-                      <PopoverPanel
-                        class="absolute z-[99] bg-white shadow right-0 min-w-[150px] rounded-md overflow-hidden pt-4"
-                      >
-                        <ul class="grid grid-cols-1">
-                          <NuxtLink
-                            :to="`/storefront/products/edit-product?id=${item.id}`"
-                          >
+                    <Popover class="relative">
+                      <Float placement="bottom-end" :offset="4">
+                        <PopoverButton class="outline-none">
+                          <i class="uil uil-ellipsis-v text-lg"></i>
+                        </PopoverButton>
+                        <PopoverPanel
+                          class="bg-white shadow min-w-[150px] rounded-md overflow-hidden pt-4"
+                        >
+                          <ul class="grid grid-cols-1 bg-white">
+                            <NuxtLink
+                              :to="`/storefront/products/edit-product?id=${item.id}`"
+                            >
+                              <li
+                                class="px-6 text-sm text-[#333333] cursor-pointer group hover:text-primary py-2 whitespace-nowrap hover:bg-[#F9FAFB]"
+                              >
+                                <i
+                                  class="uil uil-pen text-[#666666] group-hover:text-primary"
+                                ></i>
+                                Edit
+                              </li>
+                            </NuxtLink>
                             <li
+                              @click="isOpenModal(item)"
                               class="px-6 text-sm text-[#333333] cursor-pointer group hover:text-primary py-2 whitespace-nowrap hover:bg-[#F9FAFB]"
                             >
-                              <i
-                                class="uil uil-pen text-[#666666] group-hover:text-primary"
-                              ></i>
-                              Edit
+                              <i class="uil uil-trash text-matta-black"></i>
+                              Remove
                             </li>
-                          </NuxtLink>
-                          <li
-                            @click="isOpenModal(item)"
-                            class="px-6 text-sm text-[#333333] cursor-pointer group hover:text-primary py-2 whitespace-nowrap hover:bg-[#F9FAFB]"
-                          >
-                            <i class="uil uil-trash text-matta-black"></i>
-                            Remove
-                          </li>
-                        </ul>
-                      </PopoverPanel>
+                          </ul>
+                        </PopoverPanel>
+                      </Float>
                     </Popover>
                   </td>
                 </tr>
@@ -229,6 +239,7 @@
 </template>
 
 <script setup>
+import { Float } from "@headlessui-float/vue";
 import { useRoute, useRouter } from "vue-router";
 import {
   getSupplierProducts,
@@ -281,7 +292,7 @@ const queryParams = reactive({
   Producer: "",
   pagecount: 0,
   totalCount: 0,
-  Status: "",
+  Status: "published",
 });
 const active = ref("published");
 const isLoading = ref(false);
@@ -302,7 +313,7 @@ onMounted(() => {
     markets.value = res.data.data;
   });
   getProducers({ PageSize: 100000 }).then((res) => {
-    producers.value = res.data.data.data;
+    producers.value = res?.data?.data?.data;
   });
 });
 function refresh() {
@@ -333,12 +344,11 @@ const producerOptions = computed(() => {
   });
 });
 function getData() {
-  isPageLoading.value = true;
   getSupplierProducts(queryParams)
     .then((res) => {
-      products.value = res.data.data.data;
+      products.value = res?.data?.data?.data;
       queryParams.totalCount = res.data.data.totalCount;
-      queryParams.pagecount = res.data.data.data.length;
+      queryParams.pagecount = res?.data?.data?.data.length;
       isPageLoading.value = false;
     })
     .catch(() => {
@@ -394,7 +404,9 @@ function handleDelete() {
       }
     })
     .catch((err) => {
-      toast.success(err.response.data.message || err.response.data.Message);
+      toast.success(
+        err?.response?.data?.message || err?.response?.data?.Message
+      );
       isLoading.value = false;
     });
 }

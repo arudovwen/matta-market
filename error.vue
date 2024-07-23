@@ -5,7 +5,7 @@
         <div class="flex items-center justify-center gap-y-3 bg-white rounded-lg min-h-[70vh]">
           <div class="p-10 text-center flex items-center justify-center">
             <div>
-               <img
+               <img alt="error"
                 src="~/assets/img/nofound.svg"
                 class="w-[180px] h-auto mx-auto mb-7"
               />

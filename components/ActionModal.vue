@@ -35,10 +35,10 @@
                 <div class="bg-white px-6 py-6">
                   <div class="flex justify-between mb-5 items-center">
                     <div>
-                      <img v-if="type === 'delete'" src="/images/delete.svg" />
-                      <img v-if="type === 'approve'" src="/images/check.svg" />
-                      <img v-if="type === 'reject'" src="/images/reject.svg" />
-                      <img
+                      <img alt="delte" v-if="type === 'delete'" src="/images/delete.svg" />
+                      <img alt="check" v-if="type === 'approve'" src="/images/check.svg" />
+                      <img alt="reject" v-if="type === 'reject'" src="/images/reject.svg" />
+                      <img alt="success"
                         v-if="type === 'success'"
                         src="/images/success.svg"
                       />

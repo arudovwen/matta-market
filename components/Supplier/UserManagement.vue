@@ -8,9 +8,10 @@
       subtext="Invite and assign roles to your company users"
       btnText="Add users"
       btnIcon="humbleicons:plus"
-      @onClick="openmodal('method')"
+      @click="openmodal('method')"
       className="!border-[#EAECF0]"
       :count="queryParams.totalCount"
+			onkeypress="() => {}"
     />
 
     <div class="rounded-lg bg-white pt-4">
@@ -69,7 +70,7 @@
       </div>
       <div v-if="!isPageLoading">
         <div v-if="!isEmpty" class="max-w-[80vw]">
-          <table class="w-full">
+          <table aria-describedby="true" class="w-full">
             <thead>
               <tr>
                 <th

@@ -22,10 +22,10 @@ export const useCartStore = defineStore(
     const cartId = ref(null);
     const discountValue = ref(0);
     const removeLoading = ref(false);
-    const cart = computed(() => cartItems?.value);
-    const cartTotal = computed(() => cartItems?.value.length);
+    const cart = computed(() => cartItems.value);
+    const cartTotal = computed(() => cartItems.value.length);
     const cartTotalAmount = computed(() =>
-      cartItems?.value
+      cartItems.value
         .map((item) => item.packagePrice * item.quantity)
         .reduce((a, b) => Number(a) + Number(b), 0)
     );
@@ -45,11 +45,16 @@ export const useCartStore = defineStore(
             setDiscount(res.data.data.discountValue);
             setCartData(res.data.data);
 
-            const mergedCart = [...res.data.data.items, ...cartItems?.value];
-            const uniqueCart = mergedCart.filter(
-              (item, index, self) =>
+            const mergedCart = [...res.data.data.items, ...cartItems.value];
+            function isUniqueItem(item, index, self) {
+              return (
                 index === self.findIndex((i) => i.productId === item.productId)
-            );
+              );
+            }
+
+            const uniqueCart = mergedCart.filter((item, index, self) => {
+              return isUniqueItem(item, index, self);
+            });
             if (!res.data.data.items.length) {
               createcart({ items: uniqueCart }).then((createRes) => {
                 if (createRes.status === 200) {
@@ -100,14 +105,14 @@ export const useCartStore = defineStore(
 
     async function addToCart(item, type) {
       if (
-        cartItems?.value.some((ct) => ct.productId === item.productId) &&
-        cartItems?.value.some((ct) => ct.packageId === item.packageId)
+        cartItems.value.some((ct) => ct.productId === item.productId) &&
+        cartItems.value.some((ct) => ct.packageId === item.packageId)
       ) {
         return { status: false, message: "incart" };
       }
 
       if (!authStore.isLoggedIn) {
-        setCart([...cartItems?.value, item]);
+        setCart([...cartItems.value, item]);
 
         return { status: true, message: type };
       }
@@ -118,7 +123,7 @@ export const useCartStore = defineStore(
         const res = await cartOperation(item);
         if (res.status == 200) {
           getMyCart();
-          setCart([...cartItems?.value, item]);
+          setCart([...cartItems.value, item]);
           return { status: true, message: type };
         }
       } catch (error) {
@@ -135,18 +140,18 @@ export const useCartStore = defineStore(
       if (authStore.isLoggedIn) {
         updatecart(item).then((res) => {
           if (res.status === 200) {
-            const tempCart = cartItems?.value.map((dt) => {
+            const tempCart = cartItems.value.map((dt) => {
               if (item.id === dt.id) {
                 dt.quantity = item.quantity;
               }
               return dt;
             });
             setCart(tempCart);
-            getMyCart()
+            getMyCart();
           }
         });
       } else {
-        const tempCart = cartItems?.value.map((dt) => {
+        const tempCart = cartItems.value.map((dt) => {
           if (item.id === dt.id) {
             dt.quantity = item.quantity;
           }
@@ -167,7 +172,7 @@ export const useCartStore = defineStore(
         removecartitem(id)
           .then((res) => {
             if (res.status === 200) {
-              const tempCart = cartItems?.value.filter(
+              const tempCart = cartItems.value.filter(
                 (item) => item.id !== id
               );
               setCart(tempCart);
@@ -178,13 +183,13 @@ export const useCartStore = defineStore(
           .catch(() => {
             removeLoading.value = false;
             toast.error(
-              err.response.data.message ||
-                err.response.data.Message ||
+              err?.response?.data?.message ||
+                err?.response?.data?.Message ||
                 "Invalid code"
             );
           });
       } else {
-        const tempCart = cartItems?.value.filter((item) => item.id !== id);
+        const tempCart = cartItems.value.filter((item) => item.id !== id);
         setCart(tempCart);
       }
     }

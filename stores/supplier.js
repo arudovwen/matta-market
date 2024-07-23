@@ -16,7 +16,7 @@ export const useSupplierStore = defineStore("supplier", () => {
   }
   function fetchProducers(query) {
     getProducers(query).then((res) => {
-      producers.value = res.data.data.data;
+      producers.value = res?.data?.data?.data;
     });
   }
 

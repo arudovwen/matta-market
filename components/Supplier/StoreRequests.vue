@@ -110,7 +110,7 @@ function getquotes() {
   quoteLoading.value = true;
   sellerquotes(quoteParams).then((res) => {
     count.quotes = quoteParams.totalCount = res.data.data.totalCount;
-    quotes.value = res.data.data.data;
+    quotes.value = res?.data?.data?.data;
     quoteLoading.value = false;
   });
 }
@@ -128,7 +128,7 @@ const queryParams = reactive({
 function getRequests() {
   isLoading.value = true;
   samplerequests(queryParams).then((res) => {
-    requests.value = res.data.data.data;
+    requests.value = res?.data?.data?.data;
     queryParams.totalCount = res.data.data.totalCount;
     isLoading.value = false;
   });
@@ -136,7 +136,7 @@ function getRequests() {
 function getRequestDoc() {
   docLoading.value = true;
   sellerdoc(queryParams).then((res) => {
-    documents.value = res.data.data.data;
+    documents.value = res?.data?.data?.data;
     queryParams.totalCount = res.data.data.totalCount;
     docLoading.value = false;
   });

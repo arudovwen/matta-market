@@ -11,9 +11,6 @@
     >
       <div
         class="tab relative group cursor-pointer overflow-hidden rounded-lg border-2 border-matta-black/10 hover:border-matta-black/30"
-        data-aos="fade-up"
-        data-aos-once="true"
-        data-aos-duration="1500"
         v-for="(n, i) in markets"
         :key="i"
         @mouseover="

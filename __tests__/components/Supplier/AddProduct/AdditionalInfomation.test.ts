@@ -6,24 +6,22 @@ import AdditionalInformation from "~/components/Supplier/AddProduct/AdditionalIn
 const store = useProductStore();
 
 const form = {
-  productQuestions: [],
-  tags: [],
-  productExperts: [],
-};
+	productQuestions: [],
+	tags: [],
+	productExperts: [],
+}
 
 describe("Content", () => {
   const sortPrice = vi.fn;
   it("should render", () => {
     const component = render(AdditionalInformation, {
-      global: {
-        provide: {
-          form: form,
-          toggleNext: vi.fn(),
-          togglePreview: vi.fn(),
-        },
-      },
-    });
-
-    component.unmount();
+			global: {
+				provide: {
+					form : form
+				}
+			}
+		});
+		;
+		component.unmount();
   });
 });

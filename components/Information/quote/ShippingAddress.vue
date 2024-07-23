@@ -15,7 +15,7 @@
       </p>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
+      <label for="phone" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
 
       <div class="flex relative rounded-lg h-11">
         <FormsPhoneCodes  v-model="request2$.phone.$model" />
@@ -33,7 +33,7 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
+      <label for="selectedoption" class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
       <Listbox v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton
@@ -82,7 +82,7 @@
                     :value="option"
                     as="template"
                   >
-                    <li
+                    <span
                       :class="[
                         active ? 'bg-gray-100' : '',
                         'relative cursor-default select-none pt-6 pb-6 text-loft-black border-b hover:bg-gray-50',
@@ -100,7 +100,7 @@
                         ></span>
                         <span class="line-clamp-1">{{ option.street }}</span>
                       </p>
-                    </li>
+                    </span>
                   </ListboxOption>
                 </div>
                 <button
@@ -128,10 +128,11 @@
     </div>
 
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block"
+      <label for="additionalInformation" class="mb-2 font-normal text-xs block"
         >Additional information</label
       >
       <textarea
+      id="additionalInformation"
         v-model="request2$.additionalInformation.$model"
         placeholder=""
         row="4"
@@ -162,8 +163,7 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
-import { ref } from "vue";
-import { inject, onMounted, watch, provide } from "vue";
+import { inject, onMounted, watch, provide, ref } from "vue";
 import { getalladdress } from "~/services/cartservice";
 import { useStore } from "vuex";
 

@@ -5,10 +5,11 @@
       This information will help us get you the right materials.
     </p>
     <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Number of Samples</label>
+      <label for="numberofSamples" class="mb-2 font-medium text-sm text-[#344054] block text-left">Number of Samples</label>
       <div class="flex relative">
         <div class="flex relative items-center w-full">
           <select
+          id="numberofSamples"
             :value="request1$.numberofSamples.$model"
             disabled
             :class="{ 'border-red-500 ': request1$.numberofSamples.$error }"
@@ -34,7 +35,7 @@
       </div>
     </div>
     <div class="mb-6">
-      <label class="mb-2 font-normal text-xs block"
+      <label for="quantity" class="mb-2 font-normal text-xs block"
         >What quantity would you purchase?
       </label>
       <div class="flex relative">
@@ -64,6 +65,7 @@
           </button>
           <input
             min="1"
+            id="quantity"
             class="min-w-[30px] md:min-w-[50px] text-center text-xs md:text-base bg-transparent focus:outline-matta-black/10 flex-1 p-2"
             v-model="sampleForm.expectedAnualUsage"
           />
@@ -86,25 +88,7 @@
         </div>
       </div>
     </div>
-    <!-- <div class="mb-6">
-      <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Description</label>
-      <textarea
-        v-model="request1$.description.$model"
-        :class="{ 'border-red-500 ': request1$.description.$error }"
-        placeholder="Describe intended use to help us route  your request..."
-        row="4"
-        class="rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] placeholder:text-xs focus:outline-matta-black/20"
-      ></textarea>
-      <div
-        class="text-red-500 mt-1"
-        v-for="error of request1$.description.$errors"
-        :key="error.$uid"
-      >
-        <div class="error-msg text-error text-xs font-semibold">
-          {{ error.$message }}
-        </div>
-      </div>
-    </div> -->
+  
   </form>
 </template>
 <script setup>

@@ -2,13 +2,10 @@
 <template>
   <form class="flex flex-col gap-y-3" @submit.prevent="handleSubmit">
     <div class="bg-white p-6 lg:p-8 rounded-lg">
-      <div class="w-[85%]">
-        <label class="mb-4 font-normal block">
+      <label class="w-[85%]">
+        <span title="" class="mb-4 font-normal block">
           Questions
-          <!-- <span class="font-light text-xs text-[#ABABAB]"
-            >(Optional)</span
-          > -->
-        </label>
+				</span>
         <div
           class="flex flex-wrap gap-3 mb-6"
           v-if="form.productQuestions.length"
@@ -58,12 +55,12 @@
             <i class="uil uil-plus text-sm"></i> Add new question
           </button>
         </div>
-      </div>
+      </label>
     </div>
     <div class="grid grid-cols-2 gap-x-3">
       <div class="bg-white p-6 lg:p-8 rounded-lg">
         <div class="mb-5 text-left">
-          <label class="mb-2 font-normal block">
+          <label for="productExperts" class="mb-2 font-normal block">
             Experts
             <!-- <span class="font-light text-xs text-[#ABABAB]"
               >(Optional)</span
@@ -108,7 +105,7 @@
                       :key="i"
                       :value="p"
                     >
-                      <li
+                      <span
                         :class="[
                           'relative cursor-pointer flex items-cente gap-x-2 capitalize text-matta-black  hover:text-primary select-none py-2 pl-6 pr-4 text-left',
                         ]"
@@ -123,7 +120,7 @@
                             <p class="text-[11px]">{{ p.role }}</p>
                           </div>
                         </div>
-                      </li>
+                      </span>
                     </ComboboxOption>
                   </ComboboxOptions>
                 </TransitionRoot>
@@ -228,7 +225,7 @@
       </div>
       <div class="bg-white p-6 lg:p-8 rounded-lg">
         <div class="mb-5 text-left">
-          <label class="mb-2 font-normal block">
+          <label for="tags" class="mb-2 font-normal block">
             Tags
             <!-- <span class="font-light text-xs text-[#ABABAB]"
               >(Optional)</span
@@ -465,8 +462,6 @@ import {
   // ComboboxButton,
   ComboboxOptions,
   ComboboxOption,
-} from "@headlessui/vue";
-import {
   Listbox,
   ListboxButton,
   ListboxOptions,
@@ -475,10 +470,10 @@ import {
 import { reactive, ref, computed, inject } from "vue";
 import { ChevronUpDownIcon } from "@heroicons/vue/24/solid";
 import { useRouter } from "vue-router";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { updateAdditional } from "~/services/productservices";
 import Modal from "~/components/IndexModal";
-import { uploadfile } from "~/services/onboardingservices";
+import fileHandler from "~/utils/fileHandler";
 
 const form = inject("form");
 const router = useRouter();
@@ -494,22 +489,7 @@ const filteredExperts = computed(() =>
       })
 );
 
-function handleFile(e) {
-  const file = e.target.files[0];
-  // Encode the file using the FileReader API
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onloadend = () => {
-    // Use a regex to remove data url part
-    const base64String = reader.result;
 
-    uploadfile({
-      base64: base64String.replace("data:", "").replace(/^.+,/, ""),
-    }).then((res) => {
-      expertAnswer.photo = res.data.message;
-    });
-  };
-}
 
 const experts = ref([
   {
@@ -540,7 +520,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error(err.response.data.message || err.response.data.Message);
     });
 }
 function addQuestion() {
@@ -577,6 +557,10 @@ const expertAnswer = reactive({
   photo: "",
   role: "",
 });
+
+function handleFile(e) {
+	fileHandler(e, expertAnswer)
+}
 function addExpert() {
   experts.value.push(expertAnswer);
   isAdding.value = false;

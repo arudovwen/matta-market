@@ -23,7 +23,7 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { applyDiscount } from "@/services/cartservice";
+import { applyDiscount } from "~/services/cartservice";
 const code = ref(null);
 const loading = ref(false);
 const cartStore = useCartStore();
@@ -50,7 +50,7 @@ function handleSubmit() {
     })
     .catch((err) => {
       toast.error(
-        err.response.data.message || err.response.data.Message || "Invalid code"
+        err?.response?.data?.message || err?.response?.data?.Message || "Invalid code"
       );
       loading.value = false;
     });

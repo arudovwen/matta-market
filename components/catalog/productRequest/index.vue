@@ -9,10 +9,11 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          <label for="fullName" class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >Full name  <RedDot /></label
           >
           <input
+          id="fullName"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Provide your full name"
             autocomplete="off"
@@ -30,10 +31,11 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          <label for="businessName" class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >Business name  <RedDot /></label
           >
           <input
+          id="businessName"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Provide your business name"
             autocomplete="off"
@@ -51,10 +53,11 @@
           </div>
         </div>
         <div class="mb-6 md:col-span-2">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          <label for="email" class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >E-mail  <RedDot /></label
           >
           <input
+          id="email"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Provide your email address"
             autocomplete="off"
@@ -73,7 +76,7 @@
         </div>
 
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          <label for="phone" class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >Phone number  <RedDot /></label
           >
           <div class="flex relative rounded-lg h-11">
@@ -91,7 +94,7 @@
         </div>
 
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          <label for="chemicalName" class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >Chemical name  <RedDot /></label
           >
           <input
@@ -113,10 +116,11 @@
         </div>
 
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          <label for="quantity" class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >Quantity  <RedDot /></label
           >
           <input
+          id="quantity"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             placeholder="Enter quantity needed"
             type=""
@@ -133,10 +137,11 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          <label for="unit" class="mb-2 font-medium text-sm text-[#344054] block text-left"
             >Unit  <RedDot /></label
           >
           <select
+          id="unit"
             v-model="request$.unit.$model"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           >
@@ -156,9 +161,8 @@
         </div>
 
         <div class="mb-6 md:col-span-2">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
-            >Upload document  <RedDot /></label
-          >
+          <label for="formFile" class="mb-2 font-normal text-xs block text-matta-black"
+            >Upload document  <RedDot /></label>
           <div class="relative flex items-center">
             <input
               class="flex-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:cursor-pointer file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
@@ -321,7 +325,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 provide("isComplete", isComplete);

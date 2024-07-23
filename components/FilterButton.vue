@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import AppIcon from "@/components/AppIcon";
+import AppIcon from "~/components/AppIcon";
 import {
   Listbox,
   ListboxButton,

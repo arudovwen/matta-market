@@ -16,19 +16,19 @@
       />
     </div>
   </div>
-  <div v-if="!loading">
+  <div v-if="!productStore?.loading">
     <div
       class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-[30px]"
-      v-if="productsData.length"
+      v-if="productStore?.productsData.length"
     >
       <ProductCard
-        v-for="(n, idx) in productsData"
+        v-for="(n, idx) in productStore?.productsData"
         :key="idx"
         :index="idx"
         :detail="n"
       />
     </div>
-    <EmptyData v-if="!productsData.length" />
+    <EmptyData v-if="!productStore?.productsData.length" />
   </div>
   <IndexModal :isOpen="open" @togglePopup="togglePopup">
     <template #content>
@@ -70,15 +70,13 @@
       </div>
     </template>
   </IndexModal>
-  <AppLoader v-if="loading" />
+  <AppLoader v-if="productStore?.loading" />
 </template>
 <script setup>
-import { useProductStore } from "~/stores/products";
-
-const store = useProductStore();
+const productStore = useProductStore();
 const supplierStore = useSupplierStore();
 const marketStore = useMarketStore();
-const { productsData, loading } = storeToRefs(store);
+
 const query = inject("query");
 const open = ref(false);
 const applications = ref([]);
@@ -94,13 +92,14 @@ const options = [
     value: 1,
   },
 ];
-function togglePopup() {
-  open.value = false;
-}
+
 function applyFilter() {
   query.producers = producers.value;
-  query.applications = applications.value;
   query.sortOrder = sortOrder;
+  query.applications = applications.value;
+  open.value = false;
+}
+function togglePopup() {
   open.value = false;
 }
 </script>

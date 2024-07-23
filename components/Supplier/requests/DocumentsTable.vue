@@ -27,7 +27,7 @@
       </div>
     </div>
     <div v-if="documents.length">
-      <table class="w-full">
+      <table aria-describedby="true" class="w-full">
         <thead>
           <tr>
             <th
@@ -198,7 +198,7 @@ const isOpen = ref(false);
 function getRequestDoc() {
 	docLoading.value = true;
   sellerdoc(queryParams).then((res) => {
-    documents.value = res.data.data.data;
+    documents.value = res?.data?.data?.data;
     queryParams.totalCount = res.data.data.totalCount;
     docLoading.value = false;
   });

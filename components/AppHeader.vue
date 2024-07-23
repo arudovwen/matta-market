@@ -47,10 +47,13 @@
       </div>
     </div>
   </ClientOnly>
-  <div data-testid="deal-container" class="bg-[#1849A9] text-xs sm:text-sm py-3">
+  <div
+    data-testid="deal-container"
+    class="bg-[#1849A9] text-xs sm:text-sm py-3"
+  >
     <div class="container flex gap-x-2 items-center text-white font-normal">
       <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" />
-      <span
+      <span data-testid="promo"
         >Get N50,000 off when you sign up and make your first purchase. &nbsp;
         Use the code
         <span
@@ -84,7 +87,7 @@
 
           <ul class="lg:flex items-center gap-x-6 hidden">
             <li
-              v-for="n in navigations"
+              v-for="n in navigations.filter((i) => i.key !== 'sign-out')"
               :key="n.name"
               class="flex gap-x-[6px] items-center text-sm border-transparent group"
               :class="`${
@@ -248,11 +251,11 @@
               >
             </span> -->
           <!-- </span> -->
-          <span class="text-sm">
+          <span class="text-sm" v-if="showlang">
             <GoogleTranslateSelect
               :fetch-browser-language="false"
               trigger="click"
-             
+              @select="handleGoogleTranslateSelect"
               :languages="
                 windowWidth > 768 ? languagesOptions : languagesOptionsMini
               "
@@ -421,19 +424,18 @@
 </template>
 <script setup>
 import { ref } from "vue";
-import {
-  categories,
-  navigations,
-  mobileNavigation,
-  financeMenu,
-  mobileMenu,
-} from "~/utils/data";
+import { financeMenu } from "~/utils/data";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
-import { getnotification } from "@/services/notificationservice";
+import { getnotification } from "~/services/notificationservice";
 import GoogleTranslateSelect from "@google-translate-select/vue3";
 import { toast } from "vue3-toastify";
 
+defineProps({
+  showlang: {
+    default: false,
+  },
+});
 const windowWidth = ref(
   window?.innerWidth ||
     document?.documentElement?.clientWidth ||
@@ -457,12 +459,12 @@ const notifications = ref([]);
 const router = useRouter();
 const { currentRoute } = router;
 const filteredMenu = computed(() =>
-  mobileMenu.filter(
+  navigation.filter(
     (i) =>
-      i.key === "account-settings" ||
-      i.key === "wallet-home" ||
+      i.key === "settings" ||
+      i.key === "procurement-my-orders" ||
       i.key === "sign-out" ||
-      i.key === "procurement-my-orders"
+      i.key === "wallet-home"
   )
 );
 const view = ref({
@@ -481,7 +483,6 @@ onMounted(() => {
       getNotifications();
     }, 2 * 60 * 1000);
   }
-
   // geoFindMe();
 });
 const notifyParams = reactive({
@@ -505,10 +506,7 @@ function handleScroll() {
   if (window?.pageYOffset > 500) {
     // user is scrolled
     if (view.value.atTopOfPage) view.value.atTopOfPage = false;
-  } else {
-    // user is at top of page
-    if (!view.value.atTopOfPage) view.value.atTopOfPage = true;
-  }
+  } else if (!view.value.atTopOfPage) view.value.atTopOfPage = true;
 }
 function handleWidth() {
   windowWidth.value = window?.innerWidth;

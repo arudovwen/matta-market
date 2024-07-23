@@ -10,7 +10,7 @@
 
       <div class="flex justify-between items-center mb-2 text-[13px] uppercase">
         <h4 class="text-[13px] uppercase">{{ product.name }}</h4>
-        <span>Step {{ active }}/3</span>
+        <span data-testid="step-header">Step {{ active }}/3</span>
       </div>
       <div class="grid grid-cols-3 border-b border-[#E7EBEE]">
         <span
@@ -27,7 +27,7 @@
           <InformationQuoteShippingAddress />
         </div>
         <InformationQuoteRequestComplete v-if="active === 3" />
-        <InformationQuoteRegisterComponent v-if="active === 2 && showAuth" />
+        <ModalAuth v-if="active === 2 && showAuth" />
       </div>
     </div>
     <div v-if="active !== 3">
@@ -98,6 +98,7 @@ onMounted(() => {
     quoteForm.buyerBusinessName = res.data.data.companyName;
   });
 });
+const type = ref("login")
 const supplierStore = useSupplierStore()
 const togglePopup = inject("togglePopup");
 const authStore = useAuthStore()
@@ -171,7 +172,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err.response.data.message || err.response.data.Message));
+      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
     });
 }
 function toggleAuth() {
@@ -220,4 +221,6 @@ provide("toggleAuth", toggleAuth);
 provide("request1$", request1$);
 provide("request2$", request2$);
 provide("quoteForm", quoteForm);
+provide("type", type)
+provide("isOpen", showAuth)
 </script>

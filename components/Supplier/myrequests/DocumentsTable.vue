@@ -30,7 +30,7 @@
 
   <div v-if="!isLoading">
     <div v-if="documents.length">
-      <table class="w-full">
+      <table aria-describedby="true" class="w-full">
         <thead>
           <tr>
             <th
@@ -220,7 +220,7 @@ function selectall() {
 function getRequestDoc() {
   isLoading.value = true;
   buyerdoc(queryParams).then((res) => {
-    documents.value = res.data.data.data;
+    documents.value = res?.data?.data?.data;
     queryParams.totalCount = res.data.data.totalCount;
     isLoading.value = false;
   });

@@ -42,8 +42,13 @@
             </div>
           </div>
           <div
-            @click="openModal('form')"
-            class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer flex flex-col gap-y-1 border-[#ECF1FD] h-[180px] items-center justify-center text-primary-500"
+            @click="
+              () => {
+                detail = null;
+                openModal('form');
+              }
+            "
+            class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer flex flex-col gap-y-1 min-h-[180px] border-[#ECF1FD] items-center justify-center text-primary-500"
           >
             <AppIcon icon="fa6-solid:truck" iconClass="text-2xl" />
             <span class="text-sm">Add new shipping address</span>
@@ -64,8 +69,8 @@
     <ModalCenter>
       <template #default>
         <div class="w-full max-w-[500px] p-6 md:py-9 md:px-10 z-[999] relative">
-          <CheckoutShippingAddForm v-if="type === 'form'" />
-          <CheckoutShippingEditForm v-if="type === 'edit'" />
+          <!-- <CheckoutShippingAddForm v-if="type === 'form' || type === 'edit'" /> -->
+          <CheckoutShippingEditForm v-if="type === 'form' || type === 'edit'" />
         </div>
       </template>
     </ModalCenter>
@@ -82,13 +87,13 @@
 
 <script setup>
 import { setdefaultaddress, deleteAddress } from "~/services/cartservice";
-import {toast} from "vue3-toastify"
+import { toast } from "vue3-toastify";
 
 defineProps(["title"]);
 
 const shippingStore = useShippingStore();
 const type = ref("form");
-const detail = ref("detail");
+const detail = ref(null);
 const isOpen = ref(false);
 const isDeleteOpen = ref(false);
 const deleteLoading = ref(false);
@@ -103,15 +108,17 @@ onMounted(() => {
   shippingStore.getAlladdress();
 });
 function handleDefault(id) {
-  setdefaultaddress(id).then((res) => {
-    if (res.status === 200) {
-      isOpen.value = false;
-      shippingStore.getAlladdress();
-      toast.success("Default address updated")
-    }
-  }).catch(err=>{
-    toast.error(err.response.data.message || err.response.data.Message)
-  });
+  setdefaultaddress(id)
+    .then((res) => {
+      if (res.status === 200) {
+        isOpen.value = false;
+        shippingStore.getAlladdress();
+        toast.success("Default address updated");
+      }
+    })
+    .catch((err) => {
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+    });
 }
 
 function handleEdit(val) {
@@ -134,7 +141,7 @@ function deleteItem() {
     })
     .catch((err) => {
       deleteLoading.value = false;
-      toast.error(err.response.data.Message || err.response.data.message);
+      toast.error(err?.response?.data?.Message || err?.response?.data?.message);
     });
 }
 

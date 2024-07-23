@@ -19,7 +19,7 @@
     <div class="bg-white rounded-lg">
       <div v-if="!isPageLoading">
         <div v-if="!isEmpty" class="border rounded-lg border-[#E7EBEE]">
-          <table class="w-full">
+          <table aria-describedby="true" class="w-full">
             <thead>
               <tr>
                 <th
@@ -123,9 +123,9 @@ function getData() {
   getBeneficiaries(queryParams).then((res) => {
     if (res.status === 200) {
    
-      if (res.data.data.data.length) {
+      if (res?.data?.data?.data.length) {
         isEmpty.value = false;
-        tdata.value = res.data.data.data;
+        tdata.value = res?.data?.data?.data;
       }
     }
   });

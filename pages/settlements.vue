@@ -17,7 +17,7 @@
           />
         </div>
         <div v-if="financeData?.length">
-          <table class="w-full">
+          <table aria-describedby="true" class="w-full">
             <thead>
               <tr>
                 <th
@@ -151,7 +151,7 @@
 definePageMeta({
   layout: "dashboard",
 });
-import AppIcon from "@/components/AppIcon";
+import AppIcon from "~/components/AppIcon";
 import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import { getAllFinance, withdrawFinance } from "~/services/financeservice";
 import debounce from "lodash/debounce";

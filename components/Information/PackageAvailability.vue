@@ -1,7 +1,7 @@
 <template>
   <section class="py-10">
     <div class="overflow-x-auto">
-      <table class="w-full" v-if="product">
+      <table aria-describedby="true" class="w-full" v-if="product">
         <thead>
           <tr>
             <th

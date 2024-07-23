@@ -22,31 +22,60 @@ const store = createStore({
 });
 
 const form = {
-	productQuestions: [],
-	tags: [],
-	productExperts: [],
-}
+  productQuestions: [],
+  tags: [],
+  productExperts: [],
+};
 
 vi.mock("vue-router", () => {
-	return {
-		RouterView: {},
-		useRouter: () => {
-			return {
-				push: vi.fn,
-			};
-		},
-		useRoute: vi.fn,
-	};
+  return {
+    RouterView: {},
+    useRouter: () => {
+      return {
+        push: vi.fn,
+      };
+    },
+    useRoute: vi.fn().mockImplementation(() => ({
+      fullPath: "",
+      hash: "",
+      matched: [],
+      name: "",
+      meta: {},
+      params: {
+				vendor: ""
+			},
+      path: "",
+      query: {
+        // @ts-ignore
+        onboarding_stage: 2,
+      },
+      redirectedFrom: undefined,
+    })),
+  };
+});
+
+vi.mock("vue-router", () => {
+  return {
+    RouterView: {},
+    useRouter: () => {
+      return {
+        push: vi.fn,
+      };
+    },
+    useRoute: vi.fn,
+  };
 });
 
 describe("AddProduct index", () => {
   it("renders", () => {
-		const component = render(index, {
-			global: {
-				plugins: [store]
-			}
-		})
-		expect(component.html()).toContain("I confirm that I want to submit this request")
-		component.unmount();
-	})
+    const component = render(index, {
+      global: {
+        plugins: [store],
+      },
+    });
+    expect(component.html()).toContain(
+      "I confirm that I want to submit this request"
+    );
+    component.unmount();
+  });
 });

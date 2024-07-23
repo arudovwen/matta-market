@@ -15,20 +15,24 @@
             @click="navigateTo(n.url)"
             v-for="n in options"
             :key="n.title"
-            class="flex flex-col justify-center gap-y-[6px] items-center rounded-xl p-6 flex-1"
+            class="flex flex-col justify-center gap-y-[6px] items-center rounded-xl p-6 flex-1 border"
             :class="
               n.type === type
-                ? 'border-2 border-[#53B1FD] text-primary-500 shadow-[0px_4px_6px_-2px_#10182808_0px_12px_16px_-4px_#10182814]'
-                : 'border border-[#D0D5DD]'
+                ? ' border-[#1570EF] text-white bg-[#1570EF] shadow-[0px_4px_6px_-2px_#10182808_0px_12px_16px_-4px_#10182814]'
+                : 'border-[#D0D5DD]'
             "
           >
             <span class="block text-[28px]"><AppIcon :icon="n.icon" /></span>
             <span class="block font-medium text-sm">{{ n.title }}</span>
+            <span
+              class="block font-medium text-[10px]"
+              :class="n.type === type ? 'text-white' : 'text-[#667085]'"
+              >{{ n.sub }}</span
+            >
           </button>
         </div>
         <div>
-          <AuthVendorSignUp v-if="type === 'vendor-register'" />
-          <AuthBuyerSignUp v-if="type === 'register'" />
+          <AuthVendorSignUp />
         </div>
       </div>
     </div>
@@ -47,12 +51,14 @@ const options = [
     icon: "ri:user-3-line",
     type: "register",
     url: "/auth/register",
+    sub: "Search, buy and place orders for products",
   },
   {
     title: "Vendor account",
     icon: "solar:shop-linear",
     type: "vendor-register",
     url: "/auth/vendor-register",
+    sub: "For merchants who wants to sell their products",
   },
 ];
 </script>

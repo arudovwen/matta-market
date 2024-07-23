@@ -234,7 +234,7 @@ const onSubmit = handleSubmit((values) => {
     })
     .catch((err) => {
       errorText.value =
-        err.response.data.message || "Wallet creation request failed";
+        err?.response?.data?.message || "Wallet creation request failed";
       isErrorOpen.value = true;
       isLoading.value = false;
     });

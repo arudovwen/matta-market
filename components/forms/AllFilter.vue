@@ -156,8 +156,9 @@
                 'relative cursor-default select-none py-2 text-loft-black hover:bg-gray-50',
               ]"
             >
-              <label class="flex items-center gap-x-2">
+              <label for="checkbox" class="flex items-center gap-x-2">
                 <input
+                id="checkbox"
                   type="checkbox"
                   v-model="selectedoption"
                   :value="option.name"

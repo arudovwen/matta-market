@@ -13,6 +13,7 @@
                 : '/images/storebanner.png'
             "
             class="w-full h-full rounded-t-[5px] object-cover"
+            alt="banner"
           />
         </div>
         <div
@@ -25,12 +26,12 @@
               :src="
                 vendorInfo?.logo ? vendorInfo?.logo : '/images/matta-icon.png'
               "
-              class=""
+              class="" alt="banner"
             />
           </div>
           <div>
             <h1 class="text-[#202939] text-xl font-bold capitalize mb-1">
-              {{ vendorInfo?.storeName || vendor.replace("-", " ") }}
+              {{ vendorInfo?.storeName || vendor?.replace("-", " ") }}
             </h1>
             <p class="text-sm text-[#364152] font-medium">
               {{ total }} Products
@@ -58,7 +59,7 @@ const store = useProductStore();
 const { total } = storeToRefs(store);
 const detail = ref(null);
 const router = useRoute();
-const { vendor, id } = router.params;
+const { vendor } = router.params;
 
 const links = [
   {

@@ -26,17 +26,6 @@ describe("Content", () => {
             },
           ],
         },
-        queryParams:{
-          MarketId: "",
-          Search: "",
-          PageSize: 10,
-          PageNumber: 1,
-          ShowSubMenu: true,
-          Producer: "",
-          pagecount: 0,
-          totalCount: 0,
-          Status: "",
-        },
 				allmarkets: {
 					value: [
 					]

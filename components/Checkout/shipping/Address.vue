@@ -10,7 +10,7 @@
         class="text-[#2176FF] text-lg"
       />
     </div>
-    <p class="text-sm mb-[7px] max-w-[280px]">
+    <p class="text-sm mb-[7px]">
       {{ detail.street }} ,{{ detail.lga?` ,${detail.lga}`:'' }}
     </p>
     <p class="text-sm mb-[7px] max-w-[280px]">

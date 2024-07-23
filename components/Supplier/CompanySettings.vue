@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { getCompanyProfile } from "@/services/settingservices";
+import { getCompanyProfile } from "~/services/settingservices";
 
 const authStore = useAuthStore();
 const companyInfo = ref(null);

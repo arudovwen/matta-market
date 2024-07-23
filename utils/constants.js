@@ -1,114 +1,4 @@
-export const navs = [
-  {
-    subject: "company",
-    links: [
-      {
-        title: "About Us",
-        url: "https://corporate.matta.trade/",
-      },
-      {
-        title: "Careers",
-        url: "https://corporate.matta.trade/",
-      },
-      {
-        title: "Newsletter",
-        url: "#",
-      },
-      {
-        title: "Contact",
-        url: "",
-      },
-    ],
-  },
-  {
-    subject: "services",
-    links: [
-      {
-        title: "Buy chemicals",
-        url: "/buy-chemicals",
-      },
-      {
-        title: "Sell chemicals",
-        url: "/sell-chemicals",
-      },
-      {
-        title: "Logistics solutions",
-        url: "#",
-      },
-
-      {
-        title: "Financing solutions",
-        url: "#",
-      },
-      {
-        title: "Local fulfillment partnerships",
-        url: "#",
-      },
-    ],
-  },
-
-  {
-    subject: "quick links",
-    links: [
-      {
-        title: "Request products",
-        url: "/request-products",
-      },
-      {
-        title: "Become a Verified Supplier",
-        url: "/auth/vendor-register",
-      },
-      {
-        title: "Join agent network program",
-        url: "#",
-      },
-    ],
-  },
-];
-
-export const socials = [
-  {
-    title: "Facebook",
-    icon: "ant-design:facebook-filled",
-    link: "https://www.facebook.com/mattatrade",
-  },
-  {
-    title: "Linkedin",
-    icon: "akar-icons:linkedin-fill",
-    link: "https://www.linkedin.com/company/matta-trade/",
-  },
-
-  {
-    title: "X",
-    icon: "line-md:twitter-x-alt",
-    link: "https://twitter.com/matta_trade",
-  },
-  {
-    title: "Instagram",
-    icon: "fe:instagram",
-    link: "https://www.instagram.com/matta_trade/",
-  },
-];
-export const extraContent = [
-  {
-    title: "Ready to Transform Your Procurement Process?",
-    text: "Get started with Matta today and experience a new level of sourcing efficiency. Upload your RFQ and let us connect you to the world’s best suppliers in no time.",
-    url: "/submit-request",
-    key: "request-products",
-  },
-  {
-    title: " Start selling with Matta",
-    text: "Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying  Seamless Procurement and Logistics With Matta.",
-    url: "/auth/vendor-register",
-    key: "buy-chemicals",
-  },
-  {
-    title: "Start selling with Matta",
-    text: "Unlock Manufacturing Growth: Join 250+ Brands in Africa Enjoying  Seamless Procurement and Logistics With Matta.",
-    url: "/auth/vendor-register",
-    key: "sell-chemicals",
-  },
-];
+import { required, helpers } from "@vuelidate/validators";
 
 export const measurements = [
   { value: "g", name: "Gramme" },
@@ -165,77 +55,62 @@ export const languagesOptions = [
   {
     code: "en",
     name: "English",
-    cname: "英语",
-    ename: "English",
+  
   },
   {
     code: "fr",
     name: "French",
-    cname: "法语",
-    ename: "French",
+ 
   },
+  
   {
-    code: "es",
-    name: "Spanish",
-    cname: "西班牙语",
-    ename: "Spanish",
+    code: "ja",
+    name: "Japanese",
+ 
   },
   {
     code: "de",
     name: "German",
-    cname: "德语",
-    ename: "German",
+ 
   },
   {
     code: "zh-CN",
     name: "Chinese",
-    cname: "简体中文",
-    ename: "Simplified Chinese",
+
+  },{
+    code: "es",
+    name: "Spanish",
+
   },
-  {
-    code: "ja",
-    name: "Japanese",
-    cname: "日语",
-    ename: "Japanese",
-  },
+ 
 ];
 
 export const languagesOptionsMini = [
   {
     code: "en",
     name: "En",
-    cname: "英语",
-    ename: "En",
+
   },
   {
     code: "fr",
     name: "Fr",
-    cname: "法语",
-    ename: "French",
-  },
-  {
-    code: "es",
-    name: "Es",
-    cname: "西班牙语",
-    ename: "Spanish",
-  },
-  {
-    code: "de",
-    name: "De",
-    cname: "德语",
-    ename: "German",
   },
   {
     code: "zh-CN",
     name: "Cn",
-    cname: "简体中文",
-    ename: "Simplified Chinese",
   },
+  {
+    code: "de",
+    name: "De",
+  },
+  {
+    code: "es",
+    name: "Es",
+  },
+  
   {
     code: "ja",
     name: "Ja",
-    cname: "日语",
-    ename: "Japanese",
   },
 ];
 
@@ -382,6 +257,12 @@ export const navigation = [
     url: "/settings",
     icon: "lucide:user",
     key: "settings",
+  },
+  {
+    name: "Sign out",
+    key: "sign-out",
+    icon: "fa-solid:sign-out-alt",
+    url: "#",
   },
 ];
 
@@ -1081,32 +962,6 @@ export const businessTypes = [
     ],
   },
 ];
-export const subnavigation = [
-  {
-    name: "Products",
-    url: "/storefront/products",
-    icon: "fluent-mdl2:product-variant",
-    key: "products",
-  },
-  {
-    name: "Store Orders",
-    url: "/storefront/orders",
-    icon: "lucide:shopping-bag",
-    key: "orders",
-  },
-  {
-    name: "Store Requests",
-    url: "/storefront/requests",
-    icon: "ri:hand-coin-line",
-    key: "requests",
-  },
-  {
-    name: "Store Settings",
-    url: "/storefront/customization",
-    icon: "bx:cog",
-    key: "storefront",
-  },
-];
 
 export const LedgerAction = {
   0: "Debit",
@@ -1128,4 +983,173 @@ export const languages = {
   "ja-JP": "/en/ja",
   "ar-AE": "/en/ar",
   "ru-RU": "/en/ru",
+};
+
+export const traditionalData = [
+  {
+    id: 1,
+    label: "Market access",
+    matta: "Broad access to multiple markets across Africa. ",
+    trad: "Often a narrower product offering.",
+    info: "Reach to diverse markets.",
+  },
+  {
+    id: 2,
+    label: "Product Range",
+    matta: " Wide selection of chemicals and raw materials.",
+    trad: " Limited to local or regional reach.",
+    info: "Variety of products offered.",
+  },
+  {
+    id: 3,
+    label: "Digital Efficiency",
+    matta: "Streamlined online procurement process.  ",
+    trad: " Manual, time-consuming processes.",
+    info: "Speed and ease of online processes.",
+  },
+  {
+    id: 4,
+    label: "Quality Assurance",
+    matta: "Standardized quality checks and verification.",
+    trad: "Quality may vary without standard checks.",
+    info: "Standards and checks for quality.",
+  },
+  {
+    id: 5,
+    label: "Logistics",
+    matta: "Integrated logistics solutions for delivery. ",
+    trad: "Separate logistics arrangements needed.",
+    info: " Integration and handling of deliveries.",
+  },
+  {
+    id: 6,
+    label: "Cost-Effectiveness",
+    matta: "Competitive pricing through direct manufacturer ties.",
+    trad: "Additional costs due to middlemen.",
+    info: "Pricing benefits and savings.",
+  },
+  {
+    id: 7,
+    label: "Transparency",
+    matta: "Clear pricing and transaction processes online.   ",
+    trad: " Pricing often opaque and negotiable.",
+    info: "Clarity in transactions.",
+  },
+  {
+    id: 8,
+    label: "Convenience",
+    matta: "24/7 availability for ordering and support. ",
+    trad: "Restricted by business hours and availability.",
+    info: "Ease and availability of services.",
+  },
+  {
+    id: 9,
+    label: "Payment Security",
+    matta: "Secure online payment systems. ",
+    trad: "Payment security not always guaranteed.",
+    info: "Safety of online payments.",
+  },
+  {
+    id: 10,
+    label: "Customization",
+    matta: "Tailored orders and quantities to meet specific needs.",
+    trad: "Standard order sizes, less flexibility.",
+    info: "Tailoring to specific needs.",
+  },
+  {
+    id: 11,
+    label: "Technical Support",
+    matta: "Expert advice and support available.    ",
+    trad: "Limited or no support.",
+    info: "Assistance and expertise available.",
+  },
+  {
+    id: 12,
+    label: "Market Intelligence",
+    matta: "Access to market trends and data analytics.",
+    trad: "Little to no market insights provided.",
+    info: "Insights into market trends.",
+  },
+  {
+    id: 13,
+    label: "Scalability",
+    matta: "Easy to scale operations with demand.",
+    trad: "Scaling up often requires significant effort and time.",
+    info: "Insights into market trends.",
+  },
+  {
+    id: 14,
+    label: "Compliance",
+    matta: "Adherence to international standards and regulations. ",
+    trad: "May not always comply with global standards.",
+    info: "Adherence to standards and regulations.",
+  },
+];
+
+export const defaultPropertyItems = {
+  features: {
+    propertyItems: [],
+    subSection: [],
+  },
+  applications: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+  property: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+  compliance: {
+    propertyItems: [],
+    subSection: [],
+  },
+  technical: {
+    propertyItems: [{ property: null, propertyValue: [] }],
+    subSection: [],
+  },
+};
+
+export const productrules = {
+  propertyItems: {
+    property: {
+      propertyItems: {
+        required,
+        $each: helpers.forEach({
+          property: {
+            required,
+          },
+          propertyValue: {
+            required,
+          },
+        }),
+      },
+    },
+
+    technical: {
+      propertyItems: {
+        required,
+        $each: helpers.forEach({
+          property: {
+            required,
+          },
+          propertyValue: {
+            required,
+          },
+        }),
+      },
+    },
+
+    compliance: {
+      propertyItems: {
+        $each: helpers.forEach({
+          property: {
+            required,
+          },
+          propertyValue: {
+            required,
+          },
+        }),
+      },
+    },
+  },
 };

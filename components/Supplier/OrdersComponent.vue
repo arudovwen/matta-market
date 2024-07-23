@@ -5,7 +5,7 @@
       subtext=" List of orders received by your storefront."
       btnText="Create order"
       btnIcon="humbleicons:plus"
-      @onClick="router.push('/markets')"
+      @click="router.push('/markets')"
     /> -->
 
     <div class="rounded-lg bg-white">
@@ -45,7 +45,7 @@
           class="overflow-x-auto max-w-[80vw] lg:max-w-full"
           v-if="orders.length"
         >
-          <table class="w-full" v-if="orders.length">
+          <table aria-describedby="true" class="w-full" v-if="orders.length">
             <thead>
               <tr>
                 <th
@@ -222,9 +222,10 @@ const subOptions = [
 const isLoading = ref(true);
 const isOrderLoading = ref(false);
 function getData() {
-  isLoading.value = true;
+	isLoading.value = true;
+	console.log("omo");
   storefrontorders(queryParams)
-    .then((res) => {
+	.then((res) => {
       if (res.status) {
         orders.value = res.data.data;
         queryParams.totalCount = res.data.totalCount;
@@ -233,7 +234,7 @@ function getData() {
     })
     .catch((err) => {
       isLoading.value = false;
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 const route = useRoute();
@@ -251,7 +252,7 @@ function openOrder(val) {
     })
     .catch((err) => {
       isOrderLoading.value = false;
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 

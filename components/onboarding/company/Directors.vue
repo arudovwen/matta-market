@@ -135,11 +135,11 @@ import "vue-advanced-cropper/dist/style.css";
 import { ref, reactive, provide } from "vue";
 import { toast } from "vue3-toastify";
 import {
-  additionalInfo,
+ 
   setOnboardingcomplete,
-} from "@/services/onboardingservices";
+} from "~/services/onboardingservices";
 import { useRouter } from "vue-router";
-// import { getCompanyProfile } from "@/services/settingservices";
+// import { getCompanyProfile } from "~/services/settingservices";
 import { useStore } from "vuex";
 import { updateDirectors } from "~/services/settingservices";
 
@@ -201,7 +201,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 provide("open", open);
@@ -210,7 +210,7 @@ provide("form", form);
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

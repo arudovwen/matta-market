@@ -6,7 +6,7 @@
     <form @submit.prevent="handleSubmit">
       <div class="grid lg:grid-cols-2 lg:gap-6">
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label for="" class="mb-2 font-normal text-xs block text-matta-black"
             >BVN</label
           >
           <div class="relative flex items-center">
@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label for="" class="mb-2 font-normal text-xs block text-matta-black"
             >NIN</label
           >
           <div class="relative flex items-center">
@@ -63,7 +63,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Company name</label>
+        <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Company name</label>
         <div class="flex relative items-center">
           <input
             :value="v$.companyName.$model"
@@ -85,7 +85,7 @@
 
       <div class="grid lg:grid-cols-2 lg:gap-6">
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label for="" class="mb-2 font-normal text-xs block text-matta-black"
             >Company type
           </label>
           <div class="flex relative items-center">
@@ -114,7 +114,7 @@
           </div>
         </div>
         <div class="mb-6">
-          <label class="mb-2 font-normal text-xs block text-matta-black"
+          <label for="" class="mb-2 font-normal text-xs block text-matta-black"
             >CAC</label
           >
           <div class="relative flex items-center">
@@ -143,7 +143,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-normal text-xs block text-matta-black"
+        <label for="" class="mb-2 font-normal text-xs block text-matta-black"
           >Company Utility Bill</label
         >
         <div class="relative flex items-center">
@@ -171,7 +171,7 @@
         </div>
       </div>
       <div class="mb-6">
-        <label class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
+        <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
         <div class="flex relative items-center">
           <input
             :value="form.address"
@@ -193,7 +193,7 @@
         >
           <div class="grid lg:grid-cols-2 gap-6 flex-1">
             <div class="">
-              <label class="mb-2 font-normal text-xs block text-matta-black"
+              <label for="" class="mb-2 font-normal text-xs block text-matta-black"
                 >Full Name</label
               >
               <div class="relative flex items-center">
@@ -216,7 +216,7 @@
               </div>
             </div>
             <div>
-              <label class="mb-2 font-normal text-xs block text-matta-black"
+              <label for="" class="mb-2 font-normal text-xs block text-matta-black"
                 >Title</label
               >
               <div class="relative flex items-center">
@@ -239,7 +239,7 @@
               </div>
             </div>
             <div class="col-span-2">
-              <label class="mb-2 font-normal text-xs block text-matta-black"
+              <label for="" class="mb-2 font-normal text-xs block text-matta-black"
                 >Address</label
               >
               <div class="relative flex items-center">
@@ -429,7 +429,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err.response.data.message || err.response.data.Message);
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 async function downloadUsingFetch() {

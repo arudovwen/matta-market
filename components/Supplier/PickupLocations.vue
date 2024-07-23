@@ -45,8 +45,13 @@
             </div>
           </div>
           <div
-            @click="openModal('form')"
-            class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer flex flex-col gap-y-1 border-[#ECF1FD] h-[180px] items-center justify-center text-primary-500"
+            @click="
+              () => {
+                detail.value = null;
+                openModal('form');
+              }
+            "
+            class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer flex flex-col gap-y-1 border-[#ECF1FD] min-h-[180px] items-center justify-center text-primary-500"
           >
             <AppIcon icon="fa6-solid:truck" iconClass="text-2xl" />
             <span class="text-sm">Add new pickup location</span>
@@ -67,8 +72,7 @@
     <ModalCenter className="max-w-[600px]">
       <template #default>
         <div class="w-full max-w-[600px] p-6 md:py-9 md:px-10 z-[999] relative">
-          <CheckoutPickupAddForm v-if="type === 'form'" />
-          <CheckoutPickupEditForm v-if="type === 'edit'" />
+          <CheckoutPickupEditForm v-if="type === 'edit' || type === 'form'" />
         </div>
       </template>
     </ModalCenter>
@@ -84,14 +88,14 @@
 </template>
 
 <script setup>
-import {  deletePickupLocation } from "~/services/cartservice";
+import { deletePickupLocation } from "~/services/cartservice";
 import { toast } from "vue3-toastify";
 
 defineProps(["title"]);
 
 const pickupStore = usePickupStore();
 const type = ref("form");
-const detail = ref("detail");
+const detail = ref(null);
 const isOpen = ref(false);
 const isDeleteOpen = ref(false);
 const deleteLoading = ref(false);
@@ -126,7 +130,7 @@ function deleteItem() {
     })
     .catch((err) => {
       deleteLoading.value = false;
-      toast.error(err.response.data.Message || err.response.data.message);
+      toast.error(err?.response?.data?.Message || err?.response?.data?.message);
     });
 }
 

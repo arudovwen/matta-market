@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:grid lg:grid-cols-4 gap-x-4 h-full">
+  <div class="lg:grid lg:grid-cols-4 gap-x-4 h-full" data-testid="index-component">
     <div class="col-span-1 h-full hidden lg:inline">
       <SideComponent />
     </div>

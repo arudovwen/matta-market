@@ -36,6 +36,9 @@ describe("DirectorsTable", () => {
     const component = render(DirectorsTable, {
       global: {
         plugins: [store],
+        stubs: {
+          MediaViewer: true,
+        },
       },
       props: {
         directors: [
@@ -65,7 +68,7 @@ describe("DirectorsTable", () => {
 
     expect(component.html()).toContain("Bruce");
     expect(component.html()).toContain("Tony");
-		component.unmount()
+    component.unmount();
   });
 });
 
@@ -79,10 +82,13 @@ describe("AppMobileMenu", () => {
         provide: {
           open: true,
         },
+        stubs: {
+          MediaViewer: true,
+        },
       },
     });
     expect(screen).toMatchSnapshot();
-		component.unmount()
+    component.unmount();
   });
 });
 
@@ -94,11 +100,14 @@ describe("EmailVerification", () => {
         provide: {
           open: true,
         },
+        stubs: {
+          MediaViewer: true,
+        },
       },
     });
     await waitForElementToBeRemoved(screen.getByText("Verifying email.."));
     expect(screen.getByText("Email verified")).toBeTruthy();
-		component.unmount()
+    component.unmount();
   });
 });
 
@@ -109,14 +118,17 @@ describe("AddedToCart", () => {
         provide: {
           open: true,
         },
+        stubs: {
+          MediaViewer: true,
+        },
       },
-			props: {
-				name: "ItemOne",
-				selectedPackage: "package One",
-				totalAmount: 60,
-				quantity: 25,
-				hidePrice: true
-			}
+      props: {
+        name: "ItemOne",
+        selectedPackage: "package One",
+        totalAmount: 60,
+        quantity: 25,
+        hidePrice: true,
+      },
     });
     expect(screen.getByText("ItemOne")).toBeTruthy();
   });
@@ -129,14 +141,20 @@ describe("UploadComponent", () => {
         provide: {
           open: true,
         },
+        stubs: {
+          MediaViewer: true,
+        },
       },
-			props: {
-				isMultiple: false,
-
-			}
+      props: {
+        isMultiple: false,
+      },
     });
-    expect(component.html()).toContain("Click to upload")
-		await fireEvent.drop(screen.getByTestId("upload"), { dataTransfer: { files: [new File(['hello'], 'hello.png', { type: 'image/png' })] } });
+    expect(component.html()).toContain("Click to upload");
+    await fireEvent.drop(screen.getByTestId("upload"), {
+      dataTransfer: {
+        files: [new File(["hello"], "hello.png", { type: "image/png" })],
+      },
+    });
   });
   it("renders multi", async () => {
     const component = render(UploadComponent, {
@@ -144,14 +162,21 @@ describe("UploadComponent", () => {
         provide: {
           open: true,
         },
+        stubs: {
+          MediaViewer: true,
+        },
       },
-			props: {
-				isMultiple: true,
-			}
+      props: {
+        isMultiple: true,
+      },
     });
-		
-    expect(component.html()).toContain("Click to upload")
-		await fireEvent.drop(screen.getByTestId("upload"), { dataTransfer: { files: [new File(['hello'], 'hello.png', { type: 'image/png' })] } });
-		component.unmount()
+
+    expect(component.html()).toContain("Click to upload");
+    await fireEvent.drop(screen.getByTestId("upload"), {
+      dataTransfer: {
+        files: [new File(["hello"], "hello.png", { type: "image/png" })],
+      },
+    });
+    component.unmount();
   });
 });

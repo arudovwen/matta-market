@@ -42,7 +42,7 @@
 
 <script setup>
 import { CheckCircleIcon, XMarkIcon } from "@heroicons/vue/24/outline";
-import { confirmemail } from "@/services/authservices";
+import { confirmemail } from "~/services/authservices";
 
 const current = ref("pending");
 const route = useRoute();
@@ -61,7 +61,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .bg-img {
-  background-image: url("@/assets/img/bee.svg");
+  background-image: url("~/assets/img/bee.svg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-position-y: bottom;

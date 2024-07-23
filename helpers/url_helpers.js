@@ -1,6 +1,7 @@
 const urls = {
   //Auth urls
   LOGIN_USER: "v1/account/login",
+  LOGIN_USER_2FA: "v1/account/login2fa",
   REGISTER: "/v1/register",
   RESEND_VERIFICATION: "/v1/register/resendverification",
   REGISTER_INVITED_USER: "/v1/account/registerbusinessuser",
@@ -10,6 +11,7 @@ const urls = {
   SET_ACCOUNT_TYPE: "v1/onboarding/setaccounttype",
   SOCIAL_REGISTER: "v1/register/social",
   SOCIAL_LOGIN: "v1/account/sociallogin",
+  RESEND_2FA_OTP: "v1/account/resend-2fa-code",
 
   //Onboarding
   COMPANY_UPDATE_PERSONAL_INFO: "/v1/Onboarding/company/update-PersonalInfo",
@@ -180,7 +182,7 @@ const urls = {
   CREATE_WALLET: "v1/wallet/new",
   CHECK_BALANCE: "v1/wallet/get-balance",
   GET_WALLET_DETAILS: "v1/wallet/customer-wallet-details",
-  SET_PIN: "v1/wallet/setpin",
+  SET_PIN: "v1/wallet/set-transfer-pin",
   CHANGE_PIN: "v1/wallet/change-pin",
   VALIDATE_OTP: "v1/wallet/validate-otp",
   SET_WARNING_LIMIT: "v1/wallet/setwarninglimit",
@@ -220,7 +222,6 @@ const urls = {
   UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
   GET_FINANCE: "v1/financing/get",
   WITHDRAW_FINANCE: "v1/financing/withdraw",
-  UPDATE_APPROVE_FINANCE: "v1/financing/financing/update-approval",
 
   //Settlements
 

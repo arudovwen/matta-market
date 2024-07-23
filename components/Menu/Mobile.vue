@@ -1,7 +1,7 @@
 <template>
   <ul class="grid gap-y-[10px]" v-if="!activeKey">
     <li
-      v-for="n in navigations.filter(i=>i.name.toLowerCase() !== 'finance')"
+      v-for="n in navigations.filter(i=>i.name.toLowerCase() !== 'finance' && i.key !== 'sign-out')"
       :key="n.name"
       @click="activeKey = n.name"
       class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
@@ -64,7 +64,6 @@ import {
   navigations,
   mobileNavigation,
   financeMenu,
-  mobileMenu,
 } from "~/utils/data";
 
 const activeKey = inject("activeKey");

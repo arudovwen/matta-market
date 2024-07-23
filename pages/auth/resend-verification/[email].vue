@@ -39,7 +39,7 @@
       </p>
       <form @submit.prevent="handleSubmit" v-if="!isSent">
         <div class="mb-10" v-if="!isSent">
-          <label class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
+          <label for="" class="mb-2 font-medium text-sm text-[#344054] block text-left">E-mail</label>
           <input
             :value="route.params.email"
             class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -82,7 +82,7 @@ definePageMeta({
 import useVuelidate from "@vuelidate/core";
 import { required, email, helpers, maxLength } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
-import { resendVerification } from "@/services/authservices";
+import { resendVerification } from "~/services/authservices";
 
 const route = useRoute();
 const isSent = ref(false);
@@ -118,7 +118,7 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error(err.response.data.Message, {
+      toast.error(err?.response?.data?.Message, {
         position: "bottom",
       });
     });

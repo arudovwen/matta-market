@@ -11,6 +11,7 @@
     <VerificationBox />
 
     <div class="pb-10" v-if="stats">
+	
       <div
         class="p-4 lg:p-6 rounded-[10px] bg-white mb-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
       >
@@ -118,7 +119,7 @@
         <HeaderComponent title="Trending Products" className="!px-5" />
         <div>
           <div class="overflow-x-auto max-w-[80vw] lg:max-w-full">
-            <table class="w-full" v-if="trending.length">
+            <table aria-describedby="true" class="w-full" v-if="trending.length">
               <thead>
                 <tr>
                   <th
@@ -273,6 +274,7 @@ const confirmseries = ref([]);
 
 onMounted(() => {
   getesfrontstats(query).then((res) => {
+		console.log(res.data.data);
     stats.value = res.data.data;
   });
   getstorefronttrending(query).then((res) => {
@@ -284,14 +286,14 @@ onMounted(() => {
 function getAllCharts() {
   getorderchart(query).then((res) => {
     if (res.status === 200) {
-      thisyear.value = res.data.data.data[0]?.chartrecords.map(
+      thisyear.value = res?.data?.data?.data[0]?.chartrecords.map(
         (item) => item.month
       );
-      thisyearseries.value = res.data.data.data[1]?.chartrecords.map(
+      thisyearseries.value = res?.data?.data?.data[1]?.chartrecords.map(
         (item) => item.total
       );
 
-      lastyearseries.value = res.data.data.data[0].chartrecords.map(
+      lastyearseries.value = res?.data?.data?.data[0].chartrecords.map(
         (item) => item.total
       );
 

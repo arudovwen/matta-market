@@ -2,7 +2,7 @@
   <div
     class="w-full rounded-[10px] border border-[#EAECF0] overflow-x-auto md:min-w-[560px] mx-auto"
   >
-    <table v-if="directors.length" class="w-full">
+    <table aria-describedby="true" v-if="directors.length" class="w-full">
       <thead>
         <tr>
           <th
@@ -141,10 +141,10 @@
   />
 </template>
 <script setup>
-import IndexModal from "@/components/IndexModal";
+import IndexModal from "~/components/IndexModal";
 import { defineProps, ref, defineEmits } from "vue";
 import DirectorView from "./DirectorView.vue";
-import MediaViewer from "@/components/MediaViewer";
+import MediaViewer from "~/components/MediaViewer";
 import moment from "moment";
 import EmptyData from "./EmptyData.vue";
 

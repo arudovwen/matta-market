@@ -1,4 +1,4 @@
-[
+export default  [
   { code: "AD", label: "Andorra", phone: "376", phoneLength: 6 },
   { code: "AE", label: "United Arab Emirates", phone: "971", phoneLength: 9 },
   { code: "AF", label: "Afghanistan", phone: "93", phoneLength: 9 },

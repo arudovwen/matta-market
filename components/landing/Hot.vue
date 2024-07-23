@@ -79,7 +79,7 @@ function getAllProducts() {
   getProductsByTag({ PageNumber: 1, PageSize: 8, tag: props.tag })
     .then((res) => {
       if (res.status === 200) {
-        content.value = res.data.data.data;
+        content.value = res?.data?.data?.data;
         isLoading.value = false;
       }
     })
