@@ -90,7 +90,7 @@ import { useStore } from "vuex";
 import { newquote } from "~/services/quoteservice";
 import useVuelidate from "@vuelidate/core";
 import { required, numeric, helpers } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { getCompanyProfile } from "~/services/settingservices";
 
 onMounted(() => {
@@ -98,10 +98,13 @@ onMounted(() => {
     quoteForm.buyerBusinessName = res.data.data.companyName;
   });
 });
-const type = ref("login")
-const supplierStore = useSupplierStore()
+onMounted(() => {
+  console.log("injected values = ", product.value);
+});
+const type = ref("login");
+const supplierStore = useSupplierStore();
 const togglePopup = inject("togglePopup");
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 const store = useStore();
 const product = inject("product");
 const quoteForm = reactive({
@@ -110,8 +113,8 @@ const quoteForm = reactive({
   productId: product.value?.id,
   productImg: product.value?.gallery?.[0],
   productName: product.value?.name,
-  producerId: product.value?.producer.id,
-  producer: product.value?.producer.title,
+  producerId: product.value?.producer?.id,
+  producer: product.value?.producer?.title,
   buyerBusinessName: "",
   requestedBy: authStore?.userInfo?.fullName,
   sellerName: supplierStore.supplierData?.companyName,
@@ -127,7 +130,6 @@ const quoteForm = reactive({
   package: null,
   applications: "",
 });
-
 
 const showAuth = ref(false);
 const isOpen = ref(false);
@@ -172,7 +174,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 function toggleAuth() {
@@ -221,6 +223,6 @@ provide("toggleAuth", toggleAuth);
 provide("request1$", request1$);
 provide("request2$", request2$);
 provide("quoteForm", quoteForm);
-provide("type", type)
-provide("isOpen", showAuth)
+provide("type", type);
+provide("isOpen", showAuth);
 </script>
