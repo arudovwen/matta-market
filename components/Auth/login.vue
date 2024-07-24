@@ -154,8 +154,12 @@ const handleFinalSubmit = (token) => {
         localStorage.setItem("fetchCart", true);
         if (!props.main) {
           toast.info("Login successful");
-          // emits("close");
-          window.location.reload();
+          emits("close");
+          // window.location.reload();
+          return;
+        }
+        if (route.query.redirected_from) {
+          window.location.replace(route.query.redirected_from);
           return;
         }
         if (
@@ -167,10 +171,7 @@ const handleFinalSubmit = (token) => {
           return;
         }
         toast.success("Login successful");
-        if (route.query.redirected_from) {
-          window.location.replace(route.query.redirected_from);
-          return;
-        }
+     
 
         window.location.replace("/");
       }

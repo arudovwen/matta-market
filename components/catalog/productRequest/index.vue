@@ -53,33 +53,40 @@
             :error="errors.chemicalName"
           />
         </div>
-        <div>
+        <div class="z-[90] relative">
           <Textinput
             placeholder=""
             label="Unit price"
             name="unit"
-            v-bind="unitAtt"
-            v-model="unit"
-            :error="errors.unit"
+            v-bind="quantityAtt"
+            v-model="quantity"
+            :error="errors.quantity"
             ><template #suffix>
-              <span>tonne</span>
-            </template></Textinput
-          >
+              <span class="request"
+                ><SelectVueSelect
+                  v-model="unit"
+                  :options="minimeasurements"
+                  :reduce="(option) => option.value"
+                  placeholder="unit"
+                  classInput="!border-none"
+                  :clearable="false"
+              /></span> </template
+          ></Textinput>
         </div>
 
         <div class="md:col-span-2">
           <Textinput
             placeholder=""
             label="What do you want to use it for?"
-            name="usage"
-            v-bind="usageAtt"
-            v-model="usage"
-            :error="errors.usage"
+            name="productUse"
+            v-bind="productUseAtt"
+            v-model="productUse"
+            :error="errors.productUse"
           />
         </div>
         <div class="mb-6 md:col-span-2">
           <FileUpload
-            label="Select file to upload"
+            placeholder="Select file to upload"
             id="uploadedDocumentUrl"
             v-model="uploadedDocumentUrl"
           />
@@ -131,8 +138,8 @@ const form = reactive({
   chemicalName: "",
   quantity: "",
   confirm: false,
-  unit: "",
-  usage: "",
+  unit: "g",
+  productUse: "",
   phoneCode: "+234",
 });
 const validationSchema = yup.object({
@@ -149,11 +156,10 @@ const validationSchema = yup.object({
     .number()
     .required("Quantity is required")
     .positive("Quantity must be positive"),
-  confirm: yup.boolean().oneOf([true], "Please confirm before submitting"),
   unit: yup.string().required("Unit is required"),
 });
 
-const { handleSubmit, defineField, errors } = useForm({
+const { handleSubmit, defineField, errors, resetForm } = useForm({
   validationSchema: validationSchema,
   initialValues: form,
 });
@@ -162,31 +168,23 @@ const [fullName, fullNameAtt] = defineField("fullName");
 const [businessName, businessNameAtt] = defineField("businessName");
 const [email, emailAtt] = defineField("email");
 const [phone] = defineField("phone");
-const [usage, usageAtt] = defineField("usage");
-const [uploadedDocumentUrl, uploadedDocumentUrlAtt] = defineField(
-  "uploadedDocumentUrl"
-);
+const [productUse, productUseAtt] = defineField("productUse");
+const [uploadedDocumentUrl] = defineField("uploadedDocumentUrl");
 const [chemicalName, chemicalNameAtt] = defineField("chemicalName");
 const [unit, unitAtt] = defineField("unit");
+const [quantity, quantityAtt] = defineField("quantity");
 
 const isLoading = ref(false);
 const isUploading = ref(false);
 
-const toBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () =>
-      resolve(reader.result.replace("data:", "").replace(/^.+,/, ""));
-    reader.onerror = reject;
-  });
-
 const onSubmit = handleSubmit((values) => {
-  createproductrequest(form)
+  createproductrequest(values)
     .then((res) => {
       if (res.status === 200) {
         isComplete.value = true;
         isLoading.value = false;
+        resetForm();
+        toast.success("Product request submitted");
       }
     })
 
@@ -199,3 +197,8 @@ const onSubmit = handleSubmit((values) => {
 provide("isComplete", isComplete);
 provide("handleChange", null);
 </script>
+<style>
+.request .formGroup .vs__dropdown-toggle {
+  border: none;
+}
+</style>

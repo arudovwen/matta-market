@@ -36,7 +36,7 @@
                   <div class="flex justify-between mb-5 items-center">
                     <div>
                       <img alt="delte" v-if="type === 'delete'" src="/images/delete.svg" />
-                      <img alt="check" v-if="type === 'approve'" src="/images/check.svg" />
+                      <img alt="check" v-if="type === 'approve'" src="/images/success.svg" />
                       <img alt="reject" v-if="type === 'reject'" src="/images/reject.svg" />
                       <img alt="success"
                         v-if="type === 'success'"
@@ -50,7 +50,7 @@
                     </span>
                   </div>
 
-                  <h4 class="font-semibold text-[#101828] text-lg" v-if="title">
+                  <h4 class="font-semibold text-[#101828] text-lg mb-[6px]" v-if="title">
                     {{ title }}
                   </h4>
 

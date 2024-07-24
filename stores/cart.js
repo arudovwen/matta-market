@@ -32,49 +32,79 @@ export const useCartStore = defineStore(
 
     function getMyCart() {
       if (!authStore.isLoggedIn) return;
+
       loadingCart.value = true;
+
       getcart()
         .then((res) => {
+          loadingCart.value = false;
+
           if (res.status === 200) {
-            loadingCart.value = false;
-            setCart(res.data.data.items);
-            setTax(res.data.data.tax);
-            SetShippingTotal(res.data.data.shippingTotal);
-            setCartTotalwithTax(res.data.data.cartTotalwithTax);
-            setCartId(res.data.data.cartId);
-            setDiscount(res.data.data.discountValue);
-            setCartData(res.data.data);
+            const cartData = res.data.data;
+            const items = cartData?.items || [];
+            const cartId = cartData?.cartId || 0;
 
-            const mergedCart = [...res.data.data.items, ...cartItems.value];
-            function isUniqueItem(item, index, self) {
-              return (
-                index === self.findIndex((i) => i.productId === item.productId)
-              );
-            }
-
-            const uniqueCart = mergedCart.filter((item, index, self) => {
-              return isUniqueItem(item, index, self);
-            });
-            if (!res.data.data.items.length) {
+            // Merge new items with existing cart items to ensure uniqueness
+            const mergedCart = [...items, ...cartItems.value];
+            const uniqueCart = mergedCart.filter(
+              (item, index, self) =>
+                self.findIndex((i) => i.productId === item.productId) === index
+            );
+          
+              // Create new cart with unique items
               createcart({ items: uniqueCart }).then((createRes) => {
                 if (createRes.status === 200) {
                   // Refresh the minicart after updating with unique items
-                  cartStore?.getMyCart();
+                  // getMyCart();
                 }
               });
-            }
+             
+            // Update local state with cart data
+            setCart(uniqueCart);
+            setTax(cartData.tax || 0);
+            SetShippingTotal(cartData.shippingTotal || 0);
+            setCartTotalwithTax(cartData.cartTotalwithTax || 0);
+            setCartId(cartId);
+            setDiscount(cartData.discountValue || 0);
+            setCartData(cartData);
+          } else {
+            // Handle cases where API response status is not 200
+            resetCartState();
           }
         })
         .catch((err) => {
-          setCart([]);
-          setTax(0);
-          SetShippingTotal(0);
-          setCartTotalwithTax(0);
-          setCartId(0);
-          setDiscount(0);
-          loadingCart.value = false;
-          setCartData(null);
+          if (cartItems.value.length > 0) {
+            createcart({ items: cartItems.value }).then((createRes) => {
+              if (createRes.status === 200) {
+                getMyCart();
+              }
+            });
+          }
+          // Handle API request errors
+          resetCartState();
         });
+
+      function resetCartState() {
+        setCart([]);
+        setTax(0);
+        SetShippingTotal(0);
+        setCartTotalwithTax(0);
+        setCartId(0);
+        setDiscount(0);
+        loadingCart.value = false;
+        setCartData(null);
+      }
+    }
+
+    function resetCartState() {
+      setCart([]);
+      setTax(0);
+      SetShippingTotal(0);
+      setCartTotalwithTax(0);
+      setCartId(0);
+      setDiscount(0);
+      loadingCart.value = false;
+      setCartData(null);
     }
 
     function setCartData(data) {
@@ -172,9 +202,7 @@ export const useCartStore = defineStore(
         removecartitem(id)
           .then((res) => {
             if (res.status === 200) {
-              const tempCart = cartItems.value.filter(
-                (item) => item.id !== id
-              );
+              const tempCart = cartItems.value.filter((item) => item.id !== id);
               setCart(tempCart);
               getMyCart();
               removeLoading.value = false;

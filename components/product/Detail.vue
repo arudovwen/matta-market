@@ -209,20 +209,14 @@
       </div>
     </div>
   </div>
-  <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
-    <template #content>
+  <ModalCenter :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
+    <template #default>
       <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10">
-        <InformationSampleIndexSample
-          @togglePopup="isOpen = false"
-          v-if="requestType == 'sample'"
-        />
-        <InformationQuoteIndexQuote
-          @togglePopup="isOpen = false"
-          v-if="requestType == 'quote'"
-        />
+        <RequestsSample v-if="requestType == 'sample'" />
+        <RequestsQuote v-if="requestType == 'quote'" />
       </div>
     </template>
-  </SideModal>
+  </ModalCenter>
 
   <AddedToCart
     v-if="isAdded"
@@ -233,6 +227,7 @@
     :name="productData.name"
     :hidePrice="productData.hidePrice"
   />
+  <ModalAuth />
   <ModalCenter
     :isOpen="isRequestAdded"
     @togglePopup="isRequestAdded = false"
@@ -327,6 +322,7 @@ const links = [
     url: "#",
   },
 ];
+const authOpen = ref(false);
 const isOpen = ref(false);
 const active = ref("signin");
 const isAuthOpen = ref(false);
@@ -338,12 +334,13 @@ function handleclose(val) {
   isAuthOpen.value = isOpen.value = false;
 }
 function handleRequest(type) {
-  // if (authStore.isLoggedIn) {
+  if (!authStore.isLoggedIn && type == "sample") {
+    toast.info("Login to continue");
+    authOpen.value = true;
+    return;
+  }
   isOpen.value = true;
   requestType.value = type;
-  // } else {
-  //   isAuthOpen.value = true;
-  // }
 }
 function toggleModal(val) {
   active.value = val;
@@ -394,9 +391,11 @@ function handleCart(type) {
     cartLoading.value = false;
   });
 }
+
 function handleSave() {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
+
     return;
   }
   isSaved.value = true;
@@ -482,5 +481,6 @@ provide("counter", counter);
 provide("toggleModal", toggleModal);
 provide("togglePopup", togglePopup);
 provide("product", productData);
-provide("isOpen", isRequestAdded);
+provide("isOpen", isOpen);
+provide("authOpen", authOpen);
 </script>

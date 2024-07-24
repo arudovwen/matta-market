@@ -39,14 +39,14 @@
         >Log In to speed up your request
         <i class="uil uil-arrow-up-right text-x"></i
       ></span> -->
-      <div class="flex justify-between gap-x-2 items-center mt-8">
-        <button
+      <div class="flex justify-end gap-x-4 items-center mt-8">
+        <!-- <button
           @click="emit('togglePopup')"
           type="button"
           class="appearance-none border w-1/2 leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
         >
           Cancel
-        </button>
+        </button> -->
         <button
           v-if="active > 1"
           @click="active--"
@@ -65,7 +65,7 @@
       </div>
     </div>
     <div v-if="active === 3">
-      <div class="flex justify-between gap-x-2 items-center mt-8">
+      <div class="flex justify-between gap-x-4 items-center mt-8">
         <NuxtLink to="/procurement/my-requests" class=" w-full">
           <button
             type="button"

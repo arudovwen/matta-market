@@ -4,7 +4,10 @@
     <p class="text-sm text-[#ABABAB] mb-8">
       Choose your shipping options for samples requested.
     </p>
-    <div class="mb-6 grid gap-y-3 border-gray-200 rounded-lg text-sm">
+    <div
+      v-if="authStore.isLoggedIn"
+      class="mb-6 grid gap-y-3 border-gray-200 rounded-lg text-sm"
+    >
       <p>
         <span class="text-gray-500">Name:</span>
         {{ authStore.userInfo?.fullName }}
@@ -14,16 +17,40 @@
         {{ authStore.userInfo?.email }}
       </p>
     </div>
+    <div class="mb-6" v-else>
+      <label
+        for="requestedBy"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Full name</label>
+      <input  
+        id="requestedBy"
+        v-model="request2$.requestedBy.$model"
+        placeholder=""
+        class="placeholder:text-xs rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+      />
+      <div
+        class="text-red-500 mt-1"
+        v-for="error of request2$.requestedBy.$errors"
+        :key="error.$uid"
+      >
+        <div class="error-msg text-error text-xs font-semibold">
+          {{ error.$message }}
+        </div>
+      </div>
+    </div>
     <div class="mb-6">
-      <label for="phone" class="mb-2 font-medium text-sm text-[#344054] block text-left">Phone number</label>
+      <label
+        for="phone"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Phone number</label
+      >
 
       <div class="flex relative rounded-lg h-11">
-        <FormsPhoneCodes  v-model="request2$.phone.$model" />
-
+        <FormsPhoneCodes v-model="request2$.contactPhone.$model" />
       </div>
       <div
         class="text-red-500 mt-1"
-        v-for="error of request2$.phone.$errors"
+        v-for="error of request2$.contactPhone.$errors"
         :key="error.$uid"
       >
         <div class="error-msg text-error text-xs font-semibold">
@@ -33,8 +60,12 @@
     </div>
 
     <div class="mb-6">
-      <label for="selectedoption" class="mb-2 font-medium text-sm text-[#344054] block text-left">Address</label>
-      <Listbox v-model="selectedoption">
+      <label
+        for="selectedoption"
+        class="mb-2 font-medium text-sm text-[#344054] block text-left"
+        >Address</label
+      >
+      <Listbox v-if="authStore.isLoggedIn" v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton
             class="relative w-full cursor-default rounded-lg min-h-[40px] border-[#D0D5DD] bg-[#F1F3F5] py-2 px-[15px] text-left shadow-[0px_1px_2px_rgba(16,24,40,0.05)] sm:text-[13px] flex items-center"
@@ -116,6 +147,13 @@
           </transition>
         </div>
       </Listbox>
+      <input
+        v-else
+        id="additionalInformation"
+        v-model="request2$.deliverAddress.$model"
+        placeholder=""
+        class="placeholder:text-xs rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+      />
       <div
         class="text-red-500 mt-1"
         v-for="error of request2$.deliverAddress.$errors"
@@ -132,7 +170,7 @@
         >Additional information</label
       >
       <textarea
-      id="additionalInformation"
+        id="additionalInformation"
         v-model="request2$.additionalInformation.$model"
         placeholder=""
         row="4"
@@ -167,7 +205,7 @@ import { inject, onMounted, watch, provide, ref } from "vue";
 import { getalladdress } from "~/services/cartservice";
 import { useStore } from "vuex";
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 const store = useStore();
 const request2$ = inject("request2$");
 const quoteForm = inject("quoteForm");
@@ -176,9 +214,9 @@ const selectedoption = ref();
 const addresses = ref([]);
 
 onMounted(() => {
-  getalladdress().then((res) => {
-    addresses.value = res.data.data;
-  });
+  if (authStore.isLoggedIn) {
+    getData();
+  }
 });
 watch(selectedoption, () => {
   quoteForm.deliverAddress = `${selectedoption.value.street}, ${selectedoption.value.city}, ${selectedoption.value.country}. ${selectedoption.value.postalCode}`;
@@ -186,11 +224,13 @@ watch(selectedoption, () => {
 function togglePopup() {
   isOpen.value = false;
 }
-
-function handleReload() {
+function getData() {
   getalladdress().then((res) => {
     addresses.value = res.data.data;
   });
+}
+function handleReload() {
+  getData();
   togglePopup();
 }
 provide("handleReload", handleReload);
