@@ -154,8 +154,8 @@ const handleFinalSubmit = (token) => {
         localStorage.setItem("fetchCart", true);
         if (!props.main) {
           toast.info("Login successful");
-          emits("close");
-          // window.location.reload();
+          // emits("close");
+          window.location.reload();
           return;
         }
         if (

@@ -74,7 +74,7 @@ describe("AddProduct index", () => {
       },
     });
     expect(component.html()).toContain(
-      "I confirm that I want to submit this request"
+      "Request a product"
     );
     component.unmount();
   });

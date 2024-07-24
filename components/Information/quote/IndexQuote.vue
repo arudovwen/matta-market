@@ -31,13 +31,13 @@
       </div>
     </div>
     <div v-if="active !== 3">
-      <span
+      <!-- <span
         @click="isOpen = true"
         class="mb-2 text-primary text-xs"
         v-if="!authStore.isLoggedIn"
         >Log In to speed up your request
         <i class="uil uil-arrow-up-right text-x"></i
-      ></span>
+      ></span> -->
       <div class="flex justify-between gap-x-2 items-center mt-8">
         <button
           @click="emit('togglePopup')"
@@ -108,7 +108,7 @@ const quoteForm = reactive({
   sellerId: product.value?.supplierId,
   seller: supplierStore.supplierData?.companyName,
   productId: product.value?.id,
-  productImg: product.value?.gallery[0],
+  productImg: product.value?.gallery?.[0],
   productName: product.value?.name,
   producerId: product.value?.producer.id,
   producer: product.value?.producer.title,
