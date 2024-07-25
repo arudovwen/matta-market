@@ -59,7 +59,7 @@ describe("Detail", () => {
                 loggedUser: {
                   fullName: "Oduro Tolulope",
                   phoneNumber: "07036845422",
-									businessId: "678987"
+                  businessId: "678987",
                 },
               },
               products: {
@@ -79,7 +79,7 @@ describe("Detail", () => {
                   ],
                   producer: { title: "Person" },
                   sampleAvailable: [],
-									supplierId: "321234"
+                  supplierId: "321234",
                 },
               },
             },
@@ -88,7 +88,7 @@ describe("Detail", () => {
         stubs: {
           RouterLink: RouterLinkStub,
           InformationSampleIndexSample: true,
-          InformationQuoteIndexQuote: true
+          InformationQuoteIndexQuote: true,
         },
         provide: {
           isLoading: false,
@@ -120,7 +120,7 @@ describe("Detail", () => {
                 loggedUser: {
                   fullName: "Oduro Tolulope",
                   phoneNumber: "07036845422",
-									businessId: "098765"
+                  businessId: "098765",
                 },
               },
               products: {
@@ -130,6 +130,14 @@ describe("Detail", () => {
                   manufacturer: "Stark Industries",
                   id: "678908",
                   name: "Mark 47",
+                  packages: [
+                    {
+                      title: "Package One",
+                      size: 23,
+                      unit: 200,
+                      amount: 20,
+                    },
+                  ],
                   packagesAvailable: [
                     {
                       package: { title: "Package One" },
@@ -140,7 +148,7 @@ describe("Detail", () => {
                   ],
                   producer: { title: "Person" },
                   sampleAvailable: [],
-									supplierId: "5678"
+                  supplierId: "5678",
                 },
               },
             },
@@ -170,8 +178,7 @@ describe("Detail2", () => {
         plugins: [
           createTestingPinia({
             initialState: {
-              products: {
-              },
+              products: {},
             },
           }),
         ],
@@ -184,6 +191,6 @@ describe("Detail2", () => {
       },
     });
     fireEvent.click(screen.getByText("Request quote"));
-		expect(screen.queryByTestId("step-header")).toBeNull()
+    expect(screen.queryByTestId("step-header")).toBeNull();
   });
 });
