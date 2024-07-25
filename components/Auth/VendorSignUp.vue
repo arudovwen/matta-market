@@ -60,7 +60,7 @@
         v-bind="companyNameAtt"
         v-model="companyName"
         :error="errors.companyName"
-        isCumpulsory
+        :isCumpulsory="type !== 'register'"
       />
     </div>
     <div>
@@ -143,12 +143,17 @@ const formValues = {
   companyName: "",
 };
 const schema = yup.object({
+  business_UserType: yup.string(),
   email: yup
     .string()
     .required("Email is required")
     .email("Please enter a valid email address"),
   firstName: yup.string().required("First name is required"),
-  companyName: yup.string().required("Company name is required"),
+  companyName: yup.string().when("business_UserType", {
+    is: (val) => val == 0,
+    then: (schema) => schema.notRequired(),
+    otherwise: (schema) => schema.required("Company name is required"),
+  }),
   lastName: yup.string().required("Last name is required"),
   phone: yup.string().required("Phone number is required"),
   password: yup
