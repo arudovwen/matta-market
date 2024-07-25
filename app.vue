@@ -4,7 +4,13 @@
     <NuxtPage />
   </NuxtLayout>
 </template>
+<script setup>
+const cartStore = useCartStore();
+onMounted(()=>{
 
+  cartStore.getMyCart()
+})
+</script>
 <style>
 html {
   scroll-behavior: smooth;

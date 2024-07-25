@@ -25,8 +25,6 @@ import { createcart, getcart } from "~/services/cartservice";
 
 const cookie = useCookie("cart");
 const authStore = useAuthStore();
-const cartStore = useCartStore();
-const localCart = cookie?.value?.cartItems;
 const company = ref(null);
 const router = useRouter();
 onBeforeMount(() => {

@@ -32,9 +32,7 @@ export const useCartStore = defineStore(
 
     function getMyCart() {
       if (!authStore.isLoggedIn) return;
-
       loadingCart.value = true;
-
       getcart()
         .then((res) => {
           loadingCart.value = false;
@@ -50,15 +48,18 @@ export const useCartStore = defineStore(
               (item, index, self) =>
                 self.findIndex((i) => i.productId === item.productId) === index
             );
-          
+
+            if (localStorage.getItem("fetchCart")) {
               // Create new cart with unique items
               createcart({ items: uniqueCart }).then((createRes) => {
                 if (createRes.status === 200) {
                   // Refresh the minicart after updating with unique items
-                  // getMyCart();
+                  getMyCart();
+                  localStorage.removeItem("fetchCart");
                 }
               });
-             
+            }
+
             // Update local state with cart data
             setCart(uniqueCart);
             setTax(cartData.tax || 0);
