@@ -4,13 +4,6 @@
     <NuxtPage />
   </NuxtLayout>
 </template>
-<script setup>
-const cartStore = useCartStore();
-onMounted(()=>{
-
-  cartStore.getMyCart()
-})
-</script>
 <style>
 html {
   scroll-behavior: smooth;
@@ -211,6 +204,7 @@ import { getMarkets, getTechLevels } from "~/services/productservices";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+const cartStore = useCartStore();
 const store = useMarketStore();
 const appStore = useApplicationStore();
 const query = reactive({
@@ -239,5 +233,7 @@ onMounted(() => {
   if (window?.navigator) {
     cookie.value = languages[navigator.language];
   }
+
+  cartStore.getMyCart()
 });
 </script>
