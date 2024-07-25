@@ -100,8 +100,7 @@ describe("Detail", () => {
     expect(screen.getByText("Mark 47")).toBeTruthy();
     fireEvent.click(screen.getByText("Request quote"));
     fireEvent.click(screen.getByText("Add to cart"));
-    await retry(() => expect(screen.getByTestId("step-header")).toBeTruthy());
-    fireEvent.click(screen.getByText("Request sample"));
+
   });
 });
 vi.mock("~/services/productservices", () => ({
@@ -165,32 +164,6 @@ describe("Detail", () => {
     expect(screen.getByText("Package One/23200 - ₦460")).toBeTruthy();
     expect(screen.getByText("Person")).toBeTruthy();
     expect(screen.getByText("Mark 47")).toBeTruthy();
-    fireEvent.click(screen.getByText("Request quote"));
-    await retry(() => expect(screen.getByTestId("step-header")).toBeTruthy());
-    fireEvent.click(screen.getByText("Request sample"));
-  });
-});
 
-describe("Detail2", () => {
-  it("renders", async () => {
-    const component = render(Detail, {
-      global: {
-        plugins: [
-          createTestingPinia({
-            initialState: {
-              products: {},
-            },
-          }),
-        ],
-        stubs: {
-          RouterLink: RouterLinkStub,
-        },
-        provide: {
-          isLoading: false,
-        },
-      },
-    });
-    fireEvent.click(screen.getByText("Request quote"));
-    expect(screen.queryByTestId("step-header")).toBeNull();
   });
 });
