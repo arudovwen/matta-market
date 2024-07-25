@@ -14,7 +14,7 @@
           leave-to="opacity-0"
         >
           <DialogOverlay
-            class="fixed inset-0 bg-[#222222]/50 transition-opacity"
+            class="fixed inset-0 bg-[#222222]/90 transition-opacity"
           />
         </TransitionChild>
 
@@ -42,21 +42,26 @@
                 () => {
                   authOpen = false;
                   cartStore.getMyCart();
-                  // type = 'login';
+                 
                 }
               "
+              @toggleAuth="(val) => (type = val)"
               :main="false"
+               v-if="type === 'login'"
             />
-            <!-- <AuthVendorRegister v-if="type === 'vendor-register'" />
-            <AuthRegister v-if="type === 'register'" /> -->
+            <AuthVendorSignUp
+              :main="false"
+              @toggleAuth="(val) => (type = val)"
+              v-if="type === 'register'"
+            />
+
             <span
               v-if="canClose"
               class="cursor-pointer hover:border w-8 h-8 absolute top-[20px] right-[20px] rounded-full bg-[#F5F5F5] flex items-center justify-center z-[999]"
               @click="
                 () => {
                   authOpen = false;
-               
-                  // type = 'login';
+                  type = 'login';
                 }
               "
             >
@@ -83,7 +88,7 @@ import {
 
 const authOpen = inject("authOpen");
 const cartStore = useCartStore();
-// const type = inject("type");
+const type = ref("login");
 defineProps({
   canClose: {
     default: true,
@@ -93,4 +98,5 @@ defineProps({
     default: "",
   },
 });
+provide("type", type);
 </script>

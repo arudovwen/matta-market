@@ -59,8 +59,17 @@
         class="flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
       >
         Don’t have an account?
-        <NuxtLink to="/auth/register" class="font-semibold text-[#2176FF]"
+        <NuxtLink
+          to="/auth/register"
+          v-if="main"
+          class="font-semibold text-[#2176FF]"
           >Sign Up</NuxtLink
+        >
+        <span
+          v-else
+          @click="emits('toggleAuth', 'register')"
+          class="font-semibold text-[#2176FF]"
+          >Sign Up</span
         >
       </span>
     </form>
@@ -107,7 +116,7 @@ const { handleSubmit, defineField, errors } = useForm({
   validationSchema: schema,
   initialValues: formValues,
 });
-const emits = defineEmits(["close"]);
+const emits = defineEmits(["close", "toggleAuth"]);
 const authStore = useAuthStore();
 const [email, emailAtt] = defineField("email");
 const [password, passwordAtt] = defineField("password");
@@ -171,7 +180,6 @@ const handleFinalSubmit = (token) => {
           return;
         }
         toast.success("Login successful");
-     
 
         window.location.replace("/");
       }

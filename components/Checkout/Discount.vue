@@ -28,11 +28,11 @@ const code = ref(null);
 const loading = ref(false);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const isOpen = inject("isOpen");
+const authOpen = inject("authOpen");
 
 function handleSubmit() {
   if (!authStore.isLoggedIn) {
-    isOpen.value = true;
+    authOpen.value = true;
     return;
   }
 

@@ -71,7 +71,7 @@
             label="Address"
             :error="errors.shippingAddressId"
           >
-            <SelectSearchSelect
+            <SelectVueSelect
               class="w-full"
               v-model.value="shippingAddressId"
               :options="addressOptions"
@@ -104,7 +104,7 @@
           <span>
             <span
               class="flex gap-x-4 justify-center items-center"
-              v-if="isLoading || isUploading"
+              v-if="isLoading"
               ><span> Processing...</span>
               <i
                 v-if="isLoading"
@@ -208,6 +208,7 @@ const isUploading = ref(false);
 const addressOptions = computed(() => shippingStore.addressesData);
 
 const onSubmit = handleSubmit((values) => {
+  isLoading.value = true
   addrequest({
     ...values,
     package: values.packageType,
@@ -217,6 +218,7 @@ const onSubmit = handleSubmit((values) => {
         isLoading.value = false;
         resetForm();
         isSuccessOpen.value = true;
+   
       }
     })
 

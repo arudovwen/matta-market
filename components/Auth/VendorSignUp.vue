@@ -1,4 +1,8 @@
 <template>
+  <h1 v-if="!main" class="text-[#333] darks:text-white text-xl font-bold mb-6">
+    Create an Account
+    </h1>
+  
   <form
     @submit.prevent="onSubmit"
     class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-5"
@@ -116,8 +120,17 @@
       class="lg:col-span-2 flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
     >
       Already have an account?
-      <NuxtLink to="/auth/login" class="font-semibold text-[#2176FF]"
+      <NuxtLink
+        v-if="main"
+        to="/auth/login"
+        class="font-semibold text-[#2176FF]"
         >Login</NuxtLink
+      >
+      <span
+        v-else
+        @click="emits('toggleAuth', 'login')"
+        class="font-semibold text-[#2176FF]"
+        >Login</span
       >
     </span>
   </form>
@@ -128,6 +141,12 @@ import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { registerUser } from "~/services/authservices";
 
+const props = defineProps({
+  main: {
+    default: true,
+  },
+});
+const emits = defineEmits(["toggleAuth"]);
 const route = useRoute();
 const { type } = route.params;
 const agree = ref(false);
@@ -192,7 +211,11 @@ const onSubmit = handleSubmit((values) => {
         toast.info(
           "Sign up successful, Complete registration via link sent to your email"
         );
-        router.push("/registration-success");
+        if (props.main) {
+          router.push("/registration-success");
+        } else {
+          emits("toggleAuth", "login");
+        }
       }
     })
 

@@ -284,6 +284,7 @@ const packageOptions = computed(() =>
 );
 
 const onSubmit = handleSubmit((values) => {
+  isLoading.value = true
   const tempData = {
     ...values,
     package: product.value.packagesAvailable?.find(
