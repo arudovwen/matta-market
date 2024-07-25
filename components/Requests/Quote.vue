@@ -74,12 +74,7 @@
           >
             <SelectVueSelect
               v-model="packageType"
-              :options="
-                product.packagesAvailable.map((n) => ({
-                  label: `${n.package.title} ${n.size}  ${n.unit}`,
-                  value: n,
-                }))
-              "
+              :options="packageOptions"
               :reduce="(option) => option.value"
               placeholder="Select package"
               classInput="!border-none w-full"
@@ -90,8 +85,8 @@
         <div class="z-[90] relative">
           <Textinput
             placeholder=""
-            label="Unit price"
-            name="unit"
+            label="Quanitity"
+            name="quantity"
             v-bind="expectedVolumeAtt"
             v-model="expectedVolume"
             :error="errors.expectedVolume"
@@ -99,16 +94,6 @@
               <span class="request">{{ unit }}</span>
             </template></Textinput
           >
-        </div>
-        <div class="md:col-span-2">
-          <Textinput
-            placeholder=""
-            label="How do you intend to use the product?"
-            name="productUse"
-            v-bind="productUseAtt"
-            v-model="productUse"
-            :error="errors.productUse"
-          />
         </div>
 
         <div class="md:col-span-2">
@@ -219,7 +204,7 @@ const quoteForm = reactive({
   contactPhone: "",
   additionalInformation: "",
   contactPhone: null,
-  packageType: null,
+  packageType: product.value?.packagesAvailable?.[0]?.package.id,
   applications: "",
 });
 const validationSchema = yup.object({
@@ -241,7 +226,7 @@ const validationSchema = yup.object({
   deliverAddress: yup.string().required(),
   contactPhone: yup.string().required(),
   additionalInformation: yup.string().nullable(),
-  packageType: yup.object().nullable(),
+  packageType: yup.string(),
   applications: yup.string().required(),
   email: yup
     .string()
@@ -257,18 +242,17 @@ const { handleSubmit, defineField, errors, resetForm } = useForm({
 // Define the fields and their attributes using defineField function
 
 const [requestedBy, requestedByAtt] = defineField("requestedBy");
-const [market, marketAtt] = defineField("market");
-const [productUse, productUseAtt] = defineField("productUse");
+const [market] = defineField("market");
 const [expectedVolume, expectedVolumeAtt] = defineField("expectedVolume");
-const [unit, unitAtt] = defineField("unit");
+const [unit] = defineField("unit");
 const [email, emailAtt] = defineField("email");
 const [deliverAddress, deliverAddressAtt] = defineField("deliverAddress");
-const [contactPhone, contactPhoneAtt] = defineField("contactPhone");
+const [contactPhone] = defineField("contactPhone");
 const [additionalInformation, additionalInformationAtt] = defineField(
   "additionalInformation"
 );
-const [packageType, packageTypeAtt] = defineField("packageType");
-const [applications, applicationsAtt] = defineField("applications");
+const [packageType] = defineField("packageType");
+const [applications] = defineField("applications");
 
 const isLoading = ref(false);
 const isUploading = ref(false);
@@ -292,11 +276,22 @@ const applicationOptions = computed(() => {
     return i;
   });
 });
+const packageOptions = computed(() =>
+  product.value.packagesAvailable.map((n) => ({
+    label: `${n.package.title} ${n.size}  ${n.unit}`,
+    value: n.package.id,
+  }))
+);
+
 const onSubmit = handleSubmit((values) => {
-  newquote({
+  const tempData = {
     ...values,
-    package: values.packageType,
-  })
+    package: product.value.packagesAvailable?.find(
+      (i) => i.package.id === values.packageType
+    ),
+  };
+
+  newquote(tempData)
     .then((res) => {
       if (res.status === 200) {
         isLoading.value = false;

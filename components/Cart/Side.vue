@@ -101,7 +101,7 @@ const shippingStore = useShippingStore();
 const authStore = useAuthStore();
 const cartStore = useCartStore();
 const loading = ref(false);
-const isOpen = inject("isOpen");
+const authOpen = inject("authOpen");
 onMounted(() => {
   shippingStore.getAlladdress();
 });
@@ -116,7 +116,7 @@ function handleProceed() {
 }
 function handleOrderRequest() {
   if (!authStore.isLoggedIn) {
-    isOpen.value = true;
+    authOpen.value = true;
     return;
   }
   loading.value = true;
