@@ -47,7 +47,7 @@
           <div
             @click="
               () => {
-                detail.value = null;
+                detail = null;
                 openModal('form');
               }
             "

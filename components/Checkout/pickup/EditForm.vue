@@ -208,7 +208,7 @@ watch(address, () => {
 });
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  (detail.value ? editPickupLocation : addPickupLocation)(values)
+  (detail?.value ? editPickupLocation : addPickupLocation)(values)
     .then((res) => {
       if (res.status === 200) {
         toast.info("Address updated");
