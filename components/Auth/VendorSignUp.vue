@@ -1,4 +1,8 @@
 <template>
+  <h1 v-if="!main" class="text-[#333] darks:text-white text-xl font-bold mb-6">
+    Create an Account
+    </h1>
+  
   <form
     @submit.prevent="onSubmit"
     class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-5"
@@ -60,7 +64,7 @@
         v-bind="companyNameAtt"
         v-model="companyName"
         :error="errors.companyName"
-        isCumpulsory
+        :isCumpulsory="type !== 'register'"
       />
     </div>
     <div>
@@ -116,8 +120,17 @@
       class="lg:col-span-2 flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
     >
       Already have an account?
-      <NuxtLink to="/auth/login" class="font-semibold text-[#2176FF]"
+      <NuxtLink
+        v-if="main"
+        to="/auth/login"
+        class="font-semibold text-[#2176FF]"
         >Login</NuxtLink
+      >
+      <span
+        v-else
+        @click="emits('toggleAuth', 'login')"
+        class="font-semibold text-[#2176FF]"
+        >Login</span
       >
     </span>
   </form>
@@ -128,6 +141,12 @@ import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { registerUser } from "~/services/authservices";
 
+const props = defineProps({
+  main: {
+    default: true,
+  },
+});
+const emits = defineEmits(["toggleAuth"]);
 const route = useRoute();
 const { type } = route.params;
 const agree = ref(false);
@@ -143,12 +162,17 @@ const formValues = {
   companyName: "",
 };
 const schema = yup.object({
+  business_UserType: yup.string(),
   email: yup
     .string()
     .required("Email is required")
     .email("Please enter a valid email address"),
   firstName: yup.string().required("First name is required"),
-  companyName: yup.string().required("Company name is required"),
+  companyName: yup.string().when("business_UserType", {
+    is: (val) => val == 0,
+    then: (schema) => schema.notRequired(),
+    otherwise: (schema) => schema.required("Company name is required"),
+  }),
   lastName: yup.string().required("Last name is required"),
   phone: yup.string().required("Phone number is required"),
   password: yup
@@ -181,13 +205,17 @@ const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  registerUser({ ...values})
+  registerUser({ ...values })
     .then((res) => {
       if (res.status === 200) {
         toast.info(
           "Sign up successful, Complete registration via link sent to your email"
         );
-        router.push("/registration-success");
+        if (props.main) {
+          router.push("/registration-success");
+        } else {
+          emits("toggleAuth", "login");
+        }
       }
     })
 
