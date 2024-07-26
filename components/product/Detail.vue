@@ -473,7 +473,6 @@ watch(
   }
 );
 watch(productData, () => {
-  console.log(productData);
   supplierStore.fetchSupplier(productData.value.supplierId);
   imageUrl.value = productData?.value?.featuredPhoto;
 });
