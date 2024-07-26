@@ -181,7 +181,7 @@ const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
-  registerUser({ ...values, business_UserType: 1 })
+  registerUser({ ...values})
     .then((res) => {
       if (res.status === 200) {
         toast.info(
