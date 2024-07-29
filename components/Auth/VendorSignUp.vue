@@ -143,7 +143,7 @@
     buttonText="Verify OTP"
     @handleSubmit="handleFinalSubmit"
     :isLoading="isLoading"
-    :email="formValues.email"
+    :email="email"
   />
 </template>
 <script setup>
@@ -240,7 +240,7 @@ const onSubmit = handleSubmit((values) => {
 });
 const handleFinalSubmit = (code) => {
   isLoading.value = true;
-  confirm2FA({ code, email: formValues.email })
+  confirm2FA({ code, email: email.value })
     .then((res) => {
       if (res.status === 200) {
         isLoading.value = false;
