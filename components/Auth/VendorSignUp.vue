@@ -247,7 +247,7 @@ const handleFinalSubmit = (code) => {
         isLoading.value = false;
         toast.success("Sign up successful");
         if (props.main) {
-          router.push("/registration-success");
+          router.push("/auth/login");
         } else {
           emits("toggleAuth", "login");
         }
