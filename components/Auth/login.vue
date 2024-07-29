@@ -76,7 +76,7 @@
   </div>
   <AuthOtp
     v-if="step === 2"
-    title="Enter OTP sent to your email"
+    title="OTP Verification"
     :isVerifyPin="isVerifyPin"
     @close="step = 1"
     buttonText="Verify OTP"
@@ -96,7 +96,7 @@ const props = defineProps({
     default: true,
   },
 });
-const step = ref(1);
+const step = ref(2);
 const isVerifyPin = ref(false);
 const isLoading = ref(false);
 const formValues = {

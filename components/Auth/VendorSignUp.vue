@@ -137,13 +137,14 @@
   </form>
   <AuthOtp
     v-if="step === 2"
-    title="Confirm your registration, Enter OTP sent to your email"
+    title="Account Activation"
     :isVerifyPin="isVerifyPin"
     @close="step = 1"
     buttonText="Verify OTP"
     @handleSubmit="handleFinalSubmit"
     :isLoading="isLoading"
     :email="email"
+    subtext="We have sent a one time passcode to your email address, Get the OTP from your email and enter it here to activate your account."
   />
 </template>
 <script setup>

@@ -47,7 +47,7 @@
       </div>
     </div>
     <div
-      class="flex items-center justify-center py-8 px-10 bg-white lg:col-span-5 h-full overflow-y-auto"
+      class="flex items-center justify-center py-8 px-8 bg-white lg:col-span-5 h-full overflow-y-auto"
     >
       <div class="w-full h-full bg-white flex flex-col">
         <div class="z-10 lg:hidden mb-14 max-h-max">
