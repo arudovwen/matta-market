@@ -2,6 +2,7 @@ const urls = {
   //Auth urls
   LOGIN_USER: "v1/account/login",
   LOGIN_USER_2FA: "v1/account/login2fa",
+  CONFIRM_2FA: "v1/account/confir-2fa",
   REGISTER: "/v1/register",
   RESEND_VERIFICATION: "/v1/register/resendverification",
   REGISTER_INVITED_USER: "/v1/account/registerbusinessuser",

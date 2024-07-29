@@ -8,6 +8,9 @@ export async function loginUser(user, config = {}) {
 export async function loginUser2FA(user, config = {}) {
   return await post(urls.LOGIN_USER_2FA, user, config);
 }
+export async function confirm2FA(user, config = {}) {
+  return await post(urls.CONFIRM_2FA, user, config);
+}
 export async function logOut() {
   const authStore = useAuthStore();
   // googleLogout();

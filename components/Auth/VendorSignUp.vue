@@ -1,9 +1,10 @@
 <template>
   <h1 v-if="!main" class="text-[#333] darks:text-white text-xl font-bold mb-6">
     Create an Account
-    </h1>
-  
+  </h1>
+
   <form
+    v-if="step === 1"
     @submit.prevent="onSubmit"
     class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-5"
   >
@@ -134,12 +135,22 @@
       >
     </span>
   </form>
+  <AuthOtp
+    v-if="step === 2"
+    title="Confirm your registration, Enter OTP sent to your email"
+    :isVerifyPin="isVerifyPin"
+    @close="step = 1"
+    buttonText="Verify OTP"
+    @handleSubmit="handleFinalSubmit"
+    :isLoading="isLoading"
+    :email="formValues.email"
+  />
 </template>
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { registerUser } from "~/services/authservices";
+import { registerUser, confirm2FA } from "~/services/authservices";
 
 const props = defineProps({
   main: {
@@ -150,6 +161,8 @@ const emits = defineEmits(["toggleAuth"]);
 const route = useRoute();
 const { type } = route.params;
 const agree = ref(false);
+const step = inject("step");
+const isVerifyPin = ref(false);
 const isLoading = ref(false);
 const formValues = {
   email: "",
@@ -208,14 +221,9 @@ const onSubmit = handleSubmit((values) => {
   registerUser({ ...values })
     .then((res) => {
       if (res.status === 200) {
-        toast.info(
-          "Sign up successful, Complete registration via link sent to your email"
-        );
-        if (props.main) {
-          router.push("/registration-success");
-        } else {
-          emits("toggleAuth", "login");
-        }
+        isVerifyPin.value = true;
+        step.value = 2;
+        isLoading.value = false;
       }
     })
 
@@ -230,4 +238,29 @@ const onSubmit = handleSubmit((values) => {
       }
     });
 });
+const handleFinalSubmit = (code) => {
+  isLoading.value = true;
+  confirm2FA({ code, email: formValues.email })
+    .then((res) => {
+      if (res.status === 200) {
+        isLoading.value = false;
+        toast.success("Sign up successful");
+        if (props.main) {
+          router.push("/registration-success");
+        } else {
+          emits("toggleAuth", "login");
+        }
+      }
+    })
+
+    .catch((err) => {
+      isLoading.value = false;
+
+      if (!err?.response?.data) return;
+      const { data } = err.response;
+      if (data?.message || data?.Message) {
+        toast.error(data?.message || data?.Message);
+      }
+    });
+};
 </script>

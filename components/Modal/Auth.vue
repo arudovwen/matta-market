@@ -87,6 +87,7 @@ import {
 } from "@headlessui/vue";
 
 const authOpen = inject("authOpen");
+const step = ref(1)
 const cartStore = useCartStore();
 const type = ref("login");
 defineProps({
@@ -99,4 +100,5 @@ defineProps({
   },
 });
 provide("type", type);
+provide("step", step)
 </script>

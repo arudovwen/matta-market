@@ -4,13 +4,15 @@
   >
     <div class="flex flex-col justify-center flex-1">
       <div class="w-full max-w-[650px] mx-auto py-2">
-        <h1 class="text-[#333] darks:text-white mb-[10px] text-3xl font-bold">
-          Create an account
-        </h1>
-        <p class="mb-10 text-sm text-[#666] darks:text-white/80">
-          Enter your details to create an account.
-        </p>
-        <div class="mb-8 flex gap-x-6 items-center w-full">
+        <div v-if="step == 1">
+          <h1 class="text-[#333] darks:text-white mb-[10px] text-3xl font-bold">
+            Create an account
+          </h1>
+          <p class="mb-10 text-sm text-[#666] darks:text-white/80">
+            Enter your details to create an account.
+          </p>
+        </div>
+        <div class="mb-8 flex gap-x-6 items-center w-full" v-if="step == 1">
           <button
             @click="navigateTo(n.url)"
             v-for="n in options"
@@ -43,6 +45,7 @@ definePageMeta({
   layout: "register",
   middleware: "auth",
 });
+const step = ref(1);
 const route = useRoute();
 const { type } = route.params;
 const options = [
@@ -61,4 +64,6 @@ const options = [
     sub: "For merchants who wants to sell their products",
   },
 ];
+
+provide("step", step);
 </script>
