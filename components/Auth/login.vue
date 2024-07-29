@@ -96,7 +96,7 @@ const props = defineProps({
     default: true,
   },
 });
-const step = ref(2);
+const step = ref(1);
 const isVerifyPin = ref(false);
 const isLoading = ref(false);
 const formValues = {
@@ -147,7 +147,7 @@ const onSubmit = handleSubmit((values) => {
         (data.message || data.Message).includes("Email has not verified yet")
       ) {
         router.push(
-          `/auth/resend-verification/${encodeURIComponent(values.email)}`
+          `/auth/register?email=${encodeURIComponent(values.email)}&step=2`
         );
       }
     });
@@ -248,7 +248,7 @@ const handleLoginSuccess = (response) => {
         (data.message || data.Message).includes("Email has not verified yet")
       ) {
         router.push(
-          `/auth/resend-verification/${encodeURIComponent(values.email)}`
+          `/auth/register?email=${encodeURIComponent(values.email)}&step=2`
         );
       }
     });

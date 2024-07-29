@@ -143,7 +143,7 @@
     buttonText="Verify OTP"
     @handleSubmit="handleFinalSubmit"
     :isLoading="isLoading"
-    :email="email"
+    :email="email || route.query.email"
     subtext="We have sent a one time passcode to your email address, Get the OTP from your email and enter it here to activate your account."
   />
 </template>

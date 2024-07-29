@@ -45,8 +45,9 @@ definePageMeta({
   layout: "register",
   middleware: "auth",
 });
-const step = ref(1);
+
 const route = useRoute();
+const step = ref(1);
 const { type } = route.params;
 const options = [
   {
@@ -64,6 +65,10 @@ const options = [
     sub: "For merchants who wants to sell their products",
   },
 ];
-
+onMounted(() => {
+  if (route.query.step) {
+    step.value = Number(route.query.step);
+  }
+});
 provide("step", step);
 </script>
