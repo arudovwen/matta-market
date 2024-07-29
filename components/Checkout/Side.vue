@@ -70,7 +70,8 @@
         !cartStore?.cartTotalAmount ||
         loading ||
         !shippingStore?.defaultAddress?.id ||
-        cartStore?.loadingCart
+        cartStore?.loadingCart ||
+        requestLoading
       "
       :text="status"
       btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
@@ -78,14 +79,16 @@
     <AppButton
       @click="handleOrderRequest()"
       text="Request a call"
-      :isLoading="loading"
+      :isLoading="requestLoading"
       :isDisabled="
         !cartStore?.cart ||
         !cartStore?.cartTotalAmount ||
-        cartStore?.loadingCart
+        cartStore?.loadingCart ||
+        requestLoading ||
+        loading
       "
       icon="ph:phone-outgoing"
-      btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4"
+      btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4 w-full"
     />
 
     <p class="text-xs text-[#E1E1E1]">
@@ -108,6 +111,7 @@ const router = useRouter();
 
 const data = ref(null);
 const status = ref("Confirm order");
+const requestLoading = ref(false);
 function onModalClose() {
   loading.value = false;
   toast.error("Payment cancelled");
@@ -171,11 +175,11 @@ function handleOrderRequest() {
     authOpen.value = true;
     return;
   }
-  loading.value = true;
+  requestLoading.value = true;
   confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
     .then((res) => {
       if (res.status === 200) {
-        loading.value = false;
+        requestLoading.value = false;
         cartStore?.clearCart();
         window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
       }
@@ -185,7 +189,7 @@ function handleOrderRequest() {
         err?.response?.data?.Message || err?.response?.data?.message
       }, Contact us for assistance on your order`;
       toast.error(error);
-      loading.value = false;
+      requestLoading.value = false;
     });
 }
 </script>
