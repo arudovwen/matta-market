@@ -75,6 +75,18 @@
       :text="status"
       btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
     />
+    <AppButton
+      @click="handleOrderRequest()"
+      text="Request a call"
+      :isLoading="loading"
+      :isDisabled="
+        !cartStore?.cart ||
+        !cartStore?.cartTotalAmount ||
+        cartStore?.loadingCart
+      "
+      icon="ph:phone-outgoing"
+      btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4"
+    />
 
     <p class="text-xs text-[#E1E1E1]">
       When your order and payment is confirmed, someone on our end will reach
@@ -87,7 +99,7 @@ import { toast } from "vue3-toastify";
 import { confirmpurchase, confirmpayment } from "~/services/cartservice";
 import { nanoid } from "nanoid";
 
-
+const authOpen = inject("authOpen");
 const shippingStore = useShippingStore();
 const authStore = useAuthStore();
 const cartStore = useCartStore();
@@ -156,7 +168,7 @@ function onSuccess(response) {
 }
 function handleOrderRequest() {
   if (!authStore.isLoggedIn) {
-    isOpen.value = true;
+    authOpen.value = true;
     return;
   }
   loading.value = true;
@@ -165,7 +177,7 @@ function handleOrderRequest() {
       if (res.status === 200) {
         loading.value = false;
         cartStore?.clearCart();
-        window.location.replace(`/order-success?orderId=${res.data.data}&order_type=requests`);
+        window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
       }
     })
     .catch((err) => {
