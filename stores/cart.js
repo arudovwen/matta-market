@@ -30,7 +30,7 @@ export const useCartStore = defineStore(
         .reduce((a, b) => Number(a) + Number(b), 0)
     );
 
-    function getMyCart() {
+    function getMyCart(action = null, loadData = null) {
       if (!authStore.isLoggedIn) return;
       loadingCart.value = true;
       getcart()
@@ -68,6 +68,9 @@ export const useCartStore = defineStore(
             setCartId(cartId);
             setDiscount(cartData.discountValue || 0);
             setCartData(cartData);
+            if (action) {
+              loadData();
+            }
           } else {
             // Handle cases where API response status is not 200
             resetCartState();

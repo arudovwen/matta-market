@@ -68,7 +68,7 @@
         <span
           v-else
           @click="emits('toggleAuth', 'register')"
-          class="font-semibold text-[#2176FF]"
+          class="font-semibold text-[#2176FF] cursor-pointer"
           >Sign Up</span
         >
       </span>

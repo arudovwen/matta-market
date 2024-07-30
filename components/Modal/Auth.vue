@@ -41,13 +41,12 @@
               @close="
                 () => {
                   authOpen = false;
-                  cartStore.getMyCart();
-                 
+                  cartStore.getMyCart(action,loadData);
                 }
               "
               @toggleAuth="(val) => (type = val)"
               :main="false"
-               v-if="type === 'login'"
+              v-if="type === 'login'"
             />
             <AuthVendorSignUp
               :main="false"
@@ -87,18 +86,24 @@ import {
 } from "@headlessui/vue";
 
 const authOpen = inject("authOpen");
-const step = ref(1)
+const step = ref(1);
 const cartStore = useCartStore();
+const action = inject("action");
+const handleProceed = inject("handleProceed");
+const handleOrderRequest = inject("handleOrderRequest");
 const type = ref("login");
 defineProps({
   canClose: {
     default: true,
   },
-
   className: {
     default: "",
   },
 });
+
+function loadData() {
+  action.value === "call" ? handleOrderRequest() : handleProceed();
+}
 provide("type", type);
-provide("step", step)
+provide("step", step);
 </script>

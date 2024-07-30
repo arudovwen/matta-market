@@ -65,7 +65,7 @@
         v-bind="companyNameAtt"
         v-model="companyName"
         :error="errors.companyName"
-        :isCumpulsory="type !== 'register'"
+        :isCumpulsory="type !== 'register' && main"
       />
     </div>
     <div>
@@ -130,7 +130,7 @@
       <span
         v-else
         @click="emits('toggleAuth', 'login')"
-        class="font-semibold text-[#2176FF]"
+        class="font-semibold text-[#2176FF] cursor-pointer"
         >Login</span
       >
     </span>
@@ -172,7 +172,7 @@ const formValues = {
   phone: "",
   password: "",
   confirmPassword: "",
-  business_UserType: type === "register" ? 0 : 1,
+  business_UserType: type === "register" || !props.main ? 0 : 1,
   companyName: "",
 };
 const schema = yup.object({

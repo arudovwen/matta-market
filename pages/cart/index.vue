@@ -26,9 +26,56 @@ useHead({
   title: "Cart | Matta",
   meta: [{ name: "description", content: "Cart" }],
 });
-const authOpen = ref(false);
-const cartStore = useCartStore();
+import { confirmpurchase } from "~/services/cartservice";
+import { toast } from "vue3-toastify";
 
-cartStore.getMyCart()
+const shippingStore = useShippingStore();
+const authStore = useAuthStore();
+const cartStore = useCartStore();
+const loading = ref(false);
+const authOpen = ref(false);
+const action = ref("");
+
+function handleProceed() {
+  if (!authStore.isLoggedIn) {
+    action.value = "order";
+    isOpen.value = true;
+    return;
+  }
+
+  navigateTo("/checkout");
+}
+
+function handleOrderRequest() {
+  if (!authStore.isLoggedIn) {
+    action.value = "call";
+    authOpen.value = true;
+    return;
+  }
+  loading.value = true;
+  confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
+    .then((res) => {
+      if (res.status === 200) {
+        loading.value = false;
+        cartStore?.clearCart();
+        window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
+      }
+    })
+    .catch((err) => {
+      const error = `${
+        err?.response?.data?.Message || err?.response?.data?.message
+      }, Contact us for assistance on your order`;
+      toast.error(error);
+      loading.value = false;
+    });
+}
+
+onMounted(() => {
+  cartStore.getMyCart();
+});
+
+provide("action", action);
 provide("authOpen", authOpen);
+provide("handleOrderRequest", handleOrderRequest);
+provide("handleProceed", handleProceed);
 </script>

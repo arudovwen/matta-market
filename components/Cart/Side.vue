@@ -94,46 +94,15 @@
   </div>
 </template>
 <script setup>
-import { confirmpurchase } from "~/services/cartservice";
-import { toast } from "vue3-toastify";
-
 const shippingStore = useShippingStore();
-const authStore = useAuthStore();
 const cartStore = useCartStore();
 const loading = ref(false);
-const authOpen = inject("authOpen");
+
+const handleProceed = inject("handleProceed")
+const handleOrderRequest = inject("handleOrderRequest")
 onMounted(() => {
   shippingStore.getAlladdress();
 });
 
-function handleProceed() {
-  if (!authStore.isLoggedIn) {
-    isOpen.value = true;
-    return;
-  }
 
-  navigateTo("/checkout");
-}
-function handleOrderRequest() {
-  if (!authStore.isLoggedIn) {
-    authOpen.value = true;
-    return;
-  }
-  loading.value = true;
-  confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
-    .then((res) => {
-      if (res.status === 200) {
-        loading.value = false;
-        cartStore?.clearCart();
-        window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
-      }
-    })
-    .catch((err) => {
-      const error = `${
-        err?.response?.data?.Message || err?.response?.data?.message
-      }, Contact us for assistance on your order`;
-      toast.error(error);
-      loading.value = false;
-    });
-}
 </script>
