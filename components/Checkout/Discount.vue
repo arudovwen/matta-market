@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white rounded-[10px]">
     <h2 class="px-[30px] py-5 font-bold text-xl border-b border-[#f3f3f3]">
-      Discount voucher
+     Promotiion
     </h2>
 
     <form
@@ -9,13 +9,13 @@
       class="px-[30px] pt-6 pb-[30px] flex items-center gap-x-3"
     >
       <div class="flex-1 max-w-[313px]">
-        <Textinput placeholder="Discount code" required v-model="code" />
+        <Textinput placeholder="Enter a discount code here if you have one" required v-model="code" />
       </div>
       <AppButton
         :isLoading="loading"
         :isDisabled="(!cartStore.cartId && authStore.isLoggedIn) || !code"
         type="submit"
-        text="Apply Voucher"
+        text="Apply discount"
         btnClass="!px-[14px] !py-[10px] h-11 bg-primary-500 text-sm text-white leading-normal"
       />
     </form>
