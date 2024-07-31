@@ -91,8 +91,15 @@
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB]"
             />
             <AppButton
+              v-if="productData.hidePrice"
               @click="handleRequest('quote')"
               text="Request quote"
+              btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
+            />
+            <AppButton
+              v-if="!productData.hidePrice"
+              @click="handleOrderRequest()"
+              text="Request a call"
               btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
             />
           </div>
@@ -286,6 +293,7 @@ const isRequestAdded = ref(false);
 const isLoading = inject("isLoading");
 const store = useProductStore();
 const cartStore = useCartStore();
+const shippingStore = useShippingStore();
 const authStore = useAuthStore();
 const supplierStore = useSupplierStore();
 const { productData } = storeToRefs(store);
@@ -402,6 +410,11 @@ function handleSave() {
   toast.success("Saved");
 }
 function handleOrderRequest() {
+  if (!authStore.isLoggedIn) {
+    toast.info("Login to continue");
+    authOpen.value = true;
+    return;
+  }
   let data = {
     id: 0,
     packageId: mypackage?.value.package.id,
@@ -417,11 +430,30 @@ function handleOrderRequest() {
     supplierId: productData?.value.supplierId,
     producer: productData.value?.manufacturer,
     quantity: counter.value,
-    packagePrice: mypackage?.value.amount,
+    packagePrice: mypackage?.value.amount * mypackage?.value.size,
   };
-  orderRequestStore.addToRequest(data);
-  isRequestAdded.value = true;
+
+  cartStore?.addToCart(data, "add").then((res) => {
+    if (res.status) {
+      confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
+        .then((res) => {
+          if (res.status === 200) {
+            loading.value = false;
+            cartStore?.clearCart();
+            window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
+          }
+        })
+        .catch((err) => {
+          const error = `${
+            err?.response?.data?.Message || err?.response?.data?.message
+          }, Contact us for assistance on your order`;
+          toast.error(error);
+          loading.value = false;
+        });
+    }
+  });
 }
+
 function handleLike(value) {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");

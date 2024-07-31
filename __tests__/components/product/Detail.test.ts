@@ -98,7 +98,6 @@ describe("Detail", () => {
     expect(screen.getByText("Package One/23200 - ₦460")).toBeTruthy();
     expect(screen.getByText("Person")).toBeTruthy();
     expect(screen.getByText("Mark 47")).toBeTruthy();
-    fireEvent.click(screen.getByText("Request quote"));
     fireEvent.click(screen.getByText("Add to cart"));
 
   });
