@@ -205,4 +205,7 @@ provide("request2$", request2$);
 provide("sampleForm", sampleForm);
 provide("type", type)
 provide("isOpen", showAuth)
+provide("action", null);
+provide("handleOrderRequest", null);
+provide("handleProceed", null);
 </script>

@@ -61,7 +61,7 @@ const query = reactive({
   totalData: 0,
   sortOrder: "",
   sortBy: "",
-  productStorelug: vendor.toLowerCase(),
+  storelug: vendor.toLowerCase(),
 });
 
 function perPage({ currentPerPage }) {

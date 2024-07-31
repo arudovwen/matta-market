@@ -41,7 +41,7 @@
               @close="
                 () => {
                   authOpen = false;
-                  cartStore.getMyCart(action,loadData);
+                  cartStore.getMyCart(action, loadData);
                 }
               "
               @toggleAuth="(val) => (type = val)"
@@ -52,6 +52,12 @@
               :main="false"
               @toggleAuth="(val) => (type = val)"
               v-if="type === 'register'"
+              @close="
+                () => {
+                  authOpen = false;
+                  cartStore.getMyCart(action, loadData);
+                }
+              "
             />
 
             <span

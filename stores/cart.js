@@ -81,23 +81,13 @@ export const useCartStore = defineStore(
             createcart({ items: cartItems.value }).then((createRes) => {
               if (createRes.status === 200) {
                 getMyCart();
+                localStorage.removeItem("fetchCart");
               }
             });
           }
           // Handle API request errors
           resetCartState();
         });
-
-      function resetCartState() {
-        setCart([]);
-        setTax(0);
-        SetShippingTotal(0);
-        setCartTotalwithTax(0);
-        setCartId(0);
-        setDiscount(0);
-        loadingCart.value = false;
-        setCartData(null);
-      }
     }
 
     function resetCartState() {

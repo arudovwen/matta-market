@@ -158,10 +158,11 @@ const props = defineProps({
     default: true,
   },
 });
-const emits = defineEmits(["toggleAuth"]);
+const emits = defineEmits(["close", "toggleAuth"]);
 const route = useRoute();
 const { type } = route.params;
 const agree = ref(false);
+const authStore = useAuthStore();
 const step = inject("step");
 const isVerifyPin = ref(false);
 const isLoading = ref(false);
@@ -246,10 +247,21 @@ const handleFinalSubmit = (code) => {
       if (res.status === 200) {
         isLoading.value = false;
         toast.success("Sign up successful");
+        authStore.setLoggedUser(res.data.data);
+        authStore.setHasPin(res.data.data.hasTransactionPIN);
+        localStorage.setItem("fetchCart", true);
         if (props.main) {
-          router.push("/auth/login");
+          if (
+            !res.data.data?.onboardingPageStatus &&
+            res.data.data?.businessUserType.toLowerCase() === "supplier"
+          ) {
+            // toast.info("Login successful");
+            window.location.replace("/products");
+            return;
+          }
+          window.location.replace("/");
         } else {
-          emits("toggleAuth", "login");
+          emits("close");
         }
       }
     })

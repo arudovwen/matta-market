@@ -157,6 +157,7 @@ const handleFinalSubmit = (token) => {
   loginUser2FA({ token, email: formValues.email })
     .then((res) => {
       if (res.status === 200) {
+      
         isLoading.value = false;
         authStore.setLoggedUser(res.data.data);
         authStore.setHasPin(res.data.data.hasTransactionPIN);
@@ -164,7 +165,6 @@ const handleFinalSubmit = (token) => {
         if (!props.main) {
           toast.info("Login successful");
           emits("close");
-          // window.location.reload();
           return;
         }
         if (route.query.redirected_from) {

@@ -514,4 +514,7 @@ provide("togglePopup", togglePopup);
 provide("product", productData);
 provide("isOpen", isOpen);
 provide("authOpen", authOpen);
+provide("action", null);
+provide("handleOrderRequest", null);
+provide("handleProceed", null);
 </script>
