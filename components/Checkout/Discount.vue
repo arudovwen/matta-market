@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white rounded-[10px]">
     <h2 class="px-[30px] py-5 font-bold text-xl border-b border-[#f3f3f3]">
-     Promotiion
+      Promotion
     </h2>
 
     <form
@@ -9,14 +9,18 @@
       class="px-[30px] pt-6 pb-[30px] flex items-center gap-x-3"
     >
       <div class="flex-1 max-w-[313px]">
-        <Textinput placeholder="Enter a discount code here if you have one" required v-model="code" />
+        <Textinput
+          placeholder="Enter a discount code here if you have one"
+          required
+          v-model="code"
+        />
       </div>
       <AppButton
         :isLoading="loading"
         :isDisabled="(!cartStore.cartId && authStore.isLoggedIn) || !code"
         type="submit"
         text="Apply discount"
-        btnClass="!px-[14px] !py-[10px] h-11 bg-primary-500 text-sm text-white leading-normal"
+        btnClass="!px-[14px] !py-[10px] h-11 bg-primary-500 text-sm text-white leading-normal disabled:!opacity-90"
       />
     </form>
   </div>
@@ -50,9 +54,20 @@ function handleSubmit() {
     })
     .catch((err) => {
       toast.error(
-        err?.response?.data?.message || err?.response?.data?.Message || "Invalid code"
+        err?.response?.data?.message ||
+          err?.response?.data?.Message ||
+          "Invalid code"
       );
       loading.value = false;
     });
 }
+function handleFirst() {
+  if (cartStore.found && cartStore.cartId) {
+    code.value = "1ST50KOFF";
+    handleSubmit();
+  }
+}
+onMounted(() => {
+  handleFirst();
+});
 </script>

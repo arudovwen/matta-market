@@ -37,6 +37,7 @@ onMounted(() => {
   getCompanyProfile().then((res) => {
     company.value = res.data.data;
   });
+  cartStore.getMyCart();
 });
 provide("company", company);
 </script>
