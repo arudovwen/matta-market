@@ -242,7 +242,7 @@ const onSubmit = handleSubmit((values) => {
 });
 const handleFinalSubmit = (code) => {
   isLoading.value = true;
-  confirm2FA({ code, email: email.value })
+  confirm2FA({ code, email: email.value || route.query.email })
     .then((res) => {
       if (res.status === 200) {
         isLoading.value = false;

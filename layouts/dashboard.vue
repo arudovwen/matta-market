@@ -23,7 +23,7 @@
 import { getCompanyProfile } from "~/services/settingservices";
 import { createcart, getcart } from "~/services/cartservice";
 
-const cookie = useCookie("cart");
+const cartStore = useCartStore()
 const authStore = useAuthStore();
 const company = ref(null);
 const router = useRouter();
@@ -37,7 +37,7 @@ onMounted(() => {
   getCompanyProfile().then((res) => {
     company.value = res.data.data;
   });
-  cartStore.getMyCart();
+  // cartStore.getMyCart();
 });
 provide("company", company);
 </script>
