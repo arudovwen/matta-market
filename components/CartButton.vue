@@ -1,6 +1,6 @@
 <template>
   <div
-    class="overflow-hidden rounded h-full border border-[#E7E7E7] bg-white flex items-center"
+    class="overflow-hidden rounded-[6px] h-full border border-[#E7E7E7] bg-white flex items-center"
   >
     <button
       type="button"

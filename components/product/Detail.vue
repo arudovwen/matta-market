@@ -88,14 +88,14 @@
             @click="handleRequest('quote')"
             text="Request quote"
             icon="akar-icons:receipt"
-            btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] !font-normal "
+            btnClass="!rounded-[6px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] !font-normal "
           />
           <AppButton
             v-if="productData?.sampleAvailable"
             @click="handleRequest('sample')"
             text="Request sample"
             icon="mdi:phone-message-outline"
-            btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] !font-normal"
+            btnClass="!rounded-[6px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] !font-normal"
           />
        
         </div>
@@ -109,7 +109,7 @@
               v-model="selectedPackage"
               :options="packageOptions"
               placeholder="Select a package"
-              classInput="min-w-[180px] w-full !bg-white !border-[#E7E7E7] !rounded-[4px] !text-[#333] !h-[50px] cursor-pointer bg-[#FCFCFC]"
+              classInput="min-w-[180px] w-full !bg-white !border-[#E7E7E7] !rounded-[6px] !text-[#333] !h-[50px] cursor-pointer bg-[#FCFCFC]"
             />
           </div>
           <div class="h-[50px] lg:flex-1 lg:max-w-[180px] w-full">
