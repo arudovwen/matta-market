@@ -45,7 +45,6 @@ function handleProceed() {
 
   navigateTo("/checkout");
 }
-
 function handleOrderRequest() {
   if (!authStore.isLoggedIn) {
     action.value = "call";
