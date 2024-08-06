@@ -38,7 +38,7 @@
           type="submit"
           class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
         >
-        {{isLoading?"Saving...":"Next"}}
+        {{isLoading?"Saving...":"Save and continue"}}
         </button>
       </div>
     </div>
