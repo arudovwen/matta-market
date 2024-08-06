@@ -12,6 +12,7 @@ export const measurements = [
   { value: "mm", name: "Millimetre", label: "Millimetre" },
   { value: "bag", name: "Bag", label: "Bag" },
   { value: "drum", name: "Drum", label: "Drum" },
+  { value: "others", name: "Others", label: "Others" },
 ];
 export const minimeasurements = [
   { value: "g", label: "g" },

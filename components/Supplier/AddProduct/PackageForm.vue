@@ -1,76 +1,36 @@
 <template>
-  <form
-    @submit.prevent="onSubmit"
-    class="bg-white p-6 rounded-[10px] min-w-[400px]"
-  >
+  <form @submit.prevent="onSubmit" class="bg-white p-6 rounded-[10px] min-w-[400px]">
     <div class="flex gap-x-5 justify-between items-center mb-4">
       <legend class="text-[#18273AF0] text-lg font-bold">
         {{ detail ? "Edit" : "Add" }} Package
       </legend>
-      <button
-        @click="emits('close')"
-        type="button"
-        class="h-6 w-6 text-[#8C8C8C] bg-[#F5F5F5] rounded-full flex items-center justify-center text-[13px]"
-      >
+      <button @click="emits('close')" type="button"
+        class="h-6 w-6 text-[#8C8C8C] bg-[#F5F5F5] rounded-full flex items-center justify-center text-[13px]">
         <AppIcon icon="ph:x-bold" />
       </button>
     </div>
 
     <div class="grid grid-cols-1 gap-y-5 mb-7">
-      <FormGroup
-        name="title"
-        :error="errors.title"
-        label="Package type"
-        isCumpulsory
-        info
-        infoTitle="Kindly select from the list the appropriate type of product package"
-      >
-        <SelectVueSelect
-          v-model="title"
-          :options="packageForms"
-          :reduce="(title) => title.value"
-          placeholder="Select package"
-          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] ! cursor-pointer ${
-            errors.title ? 'border-red-500' : 'border-[#D0D5DD]'
-          }`"
-        />
+      <FormGroup name="title" :error="errors.title" label="Package type" isCumpulsory info
+        infoTitle="Kindly select from the list the appropriate type of product package">
+        <SelectVueSelect v-model="title" :options="packageForms" :reduce="(title) => title.value"
+          placeholder="Select package" :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] ! cursor-pointer ${errors.title ? 'border-red-500' : 'border-[#D0D5DD]'
+            }`" />
       </FormGroup>
-      <FormGroup
-        name="purchaseAmount"
-        label="Unit price"
-        :error="errors.purchaseAmount"
-        isCumpulsory
-        info
-        infoTitle="Please indicate the selling price for the selected unit of measurement"
-      >
-        <CurrencyInput
-          min="1"
-          :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-            errors.purchaseAmount ? 'border-red-500' : 'border-[#D0D5DD]'
-          }`"
-          v-model="purchaseAmount"
-          :options="{
+      <FormGroup name="purchaseAmount" label="Unit price" :error="errors.purchaseAmount" isCumpulsory info
+        infoTitle="Please indicate the selling price for the selected unit of measurement">
+        <CurrencyInput min="1" :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${errors.purchaseAmount ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`" v-model="purchaseAmount" :options="{
             currency: 'ngn',
             currencyDisplay: 'hidden',
-          }"
-        />
+          }" />
       </FormGroup>
       <div>
-        <Textinput
-          v-model="size"
-          v-bind="sizeAtt"
-          name="size"
-          placeholder=""
-          type="text"
-          :error="errors.size"
-          class="flex-1"
-          isCumpulsory
-          label="Package Size"
-          info
-          infoTitle="Indicate what quantity of unit of measurement makes up the selected package type"
-        >
+        <Textinput v-model="size" v-bind="sizeAtt" name="size" placeholder="" type="text" :error="errors.size"
+          isCumpulsory label="Package Size" info
+          infoTitle="Indicate what quantity of unit of measurement makes up the selected package type">
           <template #content>
-            <select
+            <!-- <select
               v-model="unit"
               v-bind="unitAtt"
               name="unit"
@@ -79,7 +39,9 @@
               <option v-for="i in measurements" :key="i.value" :value="i.value">
                 {{ i.name }}
               </option>
-            </select>
+            </select> -->
+            <SelectVueSelect :id="`size-dropdown`" class-input="size-dropdown" v-model="unit" :vbind="unitAtt"
+              :options="measurements" :reduce="(title) => title.value" placeholder="Select package size" />
           </template>
         </Textinput>
 
@@ -91,58 +53,44 @@
         </div>
       </div>
 
-      <Textinput
-        label="Color"
-        v-model="color"
-        v-bind="colorAtt"
-        name="color"
-        placeholder=""
-        type="text"
-        :error="errors.color"
-        class="!"
-        info
-        infoTitle="What is the colour of the product?"
-      />
+      <Textinput label="appearance" v-model="color" v-bind="colorAtt" name="color" placeholder="" type="text"
+        :error="errors.color" class="!" info infoTitle="What is the colour of the product?" />
 
-      <Textinput
-        label="Purity"
-        v-model="purity"
-        v-bind="purityAtt"
-        name="purity"
-        placeholder=""
-        min="0"
-        max="100"
-        :error="errors.purity"
-        icon="ic:baseline-percent"
-        hasIcon
-        info
-        infoTitle=" Kindly state the purity of the product if known"
-      />
+      <Textinput label="Purity and Grade" v-model="purity" v-bind="purityAtt" name="purity" placeholder="" min="0"
+        max="100" :error="errors.purity" icon="ic:baseline-percent" hasIcon info
+        infoTitle=" Kindly state the purity of the product if known" />
 
       <div>
         <label for="isAvailable" class="flex item-center leading-[normal]">
-          <input
-            id="isAvailable"
-            type="checkbox"
-            class="mr-2 accent-primary-500"
-            v-model="isAvailable"
-            v-bind="isAvailableAtt"
-            name="isAvailable"
-          />
+          <input id="isAvailable" type="checkbox" class="mr-2 accent-primary-500" v-model="isAvailable"
+            v-bind="isAvailableAtt" name="isAvailable" />
           <span>Package is available</span>
         </label>
       </div>
     </div>
     <div class="flex gap-x-4 items-center justify-end">
-      <button
-        type="submit"
-        class="appearance-none leading-none px-10 py-4 w-full rounded-lg text-white bg-primary-500 hover:opacity-70 text-sm"
-      >
+      <button type="submit"
+        class="appearance-none leading-none px-10 py-4 w-full rounded-lg text-white bg-primary-500 hover:opacity-70 text-sm">
         {{ detail ? "Update" : "Add" }} package
       </button>
     </div>
   </form>
 </template>
+<style lang="scss">
+#size-dropdown>div>div>div>.vs__dropdown-toggle {
+  height: 20px;
+  min-width: 160px;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#size {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+</style>
 <script setup>
 import * as yup from "yup";
 import {
@@ -210,17 +158,21 @@ const packageForms = [
     label: "Tank",
     value: "Tank",
   },
+  {
+    label: "Others",
+    value: "Others",
+  },
 ];
 
 const packFormSchema = yup.object({
   title: yup.string().required("Select a package"),
   purchaseAmount: yup.string().required("Amount is required"),
-  color: yup.string().nullable(),
+  color: yup.string().nullable().required(),
   purity: yup
     .number()
     .typeError("Invalid value")
     .max(100, "Maximum is 100")
-    .nullable(),
+    .nullable().notRequired(),
   size: yup.number().typeError("Invalid value").required("Amount is required"),
   isAvailable: yup.boolean(),
   unit: yup.string(),
