@@ -167,12 +167,12 @@ const packageForms = [
 const packFormSchema = yup.object({
   title: yup.string().required("Select a package"),
   purchaseAmount: yup.string().required("Amount is required"),
-  color: yup.string().nullable(),
+  color: yup.string().nullable().required(),
   purity: yup
     .number()
     .typeError("Invalid value")
     .max(100, "Maximum is 100")
-    .nullable(),
+    .nullable().notRequired(),
   size: yup.number().typeError("Invalid value").required("Amount is required"),
   isAvailable: yup.boolean(),
   unit: yup.string(),
