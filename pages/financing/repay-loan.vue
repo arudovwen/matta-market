@@ -60,7 +60,8 @@
             <span class="text-sm font-medium">
               <span class="block font-medium">{{ n.label }}</span>
               <span v-if="n.value === 'wallet'" class="text-xs font-normal"
-                >Balance: {{ currencyFormat(balance?.availableBalance || 0) }}</span
+                >Balance:
+                {{ currencyFormat(balance?.availableBalance || 0) }}</span
               >
             </span>
           </span>
@@ -94,6 +95,16 @@
       </div>
     </form>
   </div>
+  <ActionModal
+    :open="isSuccessOpen"
+    type="success"
+    title="Request Successful"
+    text="Your payment is being processed, you will be notified as soon as it is completed"
+    btn-text="Done"
+    :isOkay="true"
+    :isCancel="false"
+    @actionItem="isSuccessOpen = false"
+  />
 </template>
 <script setup>
 import { nanoid } from "nanoid";
@@ -108,6 +119,7 @@ const isOpen = inject("isOpen");
 const isLoading = ref(false);
 const data = ref(null);
 const props = defineProps(["detail"]);
+const isSuccessOpen = ref(false);
 const formValues = {
   id: "",
   amount: null,
@@ -160,26 +172,15 @@ function makePayment(values) {
     reference: `RPM-${props.detail?.financeRequestNo}-${nanoid(6)}`,
     values,
   };
-  console.log("🚀 ~ makePayment ~ data.value:", data.value);
+
   if (active.value === "monnify") {
     payWithMonnify(data.value, onModalClose, onSuccess);
   }
 }
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
-    // confirmpayment({ orderId: data.value.orderId })
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //     toast.success("Request successful")
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     const error = `${
-    //       err?.response?.data?.Message || err?.response?.data?.message
-    //     }, Contact us for assistance on your order`;
-    //     toast.error(error);
-    //     loading.value = false;
-    //   });
+    isOpen.value = false;
+    isSuccessOpen.value = true;
   }
 }
 function onModalClose() {
