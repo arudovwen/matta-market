@@ -1082,7 +1082,7 @@ export const traditionalData = [
     label: "Scalability",
     matta: "Easy to scale operations with demand.",
     trad: "Scaling up often requires significant effort and time.",
-    info: "Insights into market trends.",
+    info: "Ability to grow with demand.",
   },
   {
     id: 14,

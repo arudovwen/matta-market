@@ -4,7 +4,8 @@
       class="rounded-lg border border-[#F2F4F7] py-5 px-4 shadow-[0px_4px_8px_-2px_#1018281A] cursor-pointer"
       v-for="(n, id) in financeData"
       :key="id"
-      @click="isOpen=true"
+      @click="
+      ()=> {isOpen=true; detail =n}"
     >
       <div class="flex justify-between items-center mb-5">
         <span class="text-sm font-semibold capitalize text-[#344054]"
@@ -48,7 +49,7 @@
   <ModalCenter :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #default>
       <div class="h-full w-full bg-white rounded-lg p-6">
-        <RepayLoan />
+        <RepayLoan :detail="detail" />
       </div>
     </template>
   </ModalCenter>
@@ -57,6 +58,7 @@
 import { getAllFinance } from "~/services/financeservice";
 import RepayLoan from "./repay-loan";
 
+const detail = ref(null)
 const isOpen = ref(false)
 const queryParams = reactive({
   SupplierId: null,

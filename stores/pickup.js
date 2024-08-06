@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { getallpickuplocations } from "~/services/cartservice";
+
 export const usePickupStore = defineStore("pickup", () => {
   const addresses = ref([]);
   const loading = ref(true);
@@ -28,11 +29,7 @@ export const usePickupStore = defineStore("pickup", () => {
         loading.value = false;
       });
   }
-  // function deleteAddress(id) {
-  //   getallpickuplocations(id).then((res) => {
-  //     getallpickuplocations();
-  //   });
-  // }
+
   return {
     addressesData,
     addresses,

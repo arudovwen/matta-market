@@ -33,7 +33,7 @@ const loading = ref(false);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 const authOpen = inject("authOpen");
-
+const isApplied = ref(false);
 function handleSubmit() {
   if (!authStore.isLoggedIn) {
     authOpen.value = true;
@@ -62,8 +62,13 @@ function handleSubmit() {
     });
 }
 function handleFirst() {
-  if (cartStore?.cartData?.firstOrder && cartStore.cartId) {
+  if (
+    cartStore?.cartData?.firstOrder &&
+    cartStore.cartId &&
+    isApplied.value == false
+  ) {
     code.value = "1ST50KOFF";
+    isApplied.value = true;
     handleSubmit();
   }
 }

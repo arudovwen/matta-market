@@ -30,7 +30,7 @@
       >
         <CurrencyInput
           min="1"
-          :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+          :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer placeholder:text-[14px] ${
             errors.amount ? 'border-red-500' : 'border-[#D0D5DD]'
           }`"
           v-model="amount"
@@ -38,6 +38,9 @@
             currency: 'ngn',
             currencyDisplay: 'hidden',
           }"
+          :placeholder="`Amount left: ${currencyFormat(
+            detail?.repaymentAmount
+          )}`"
         />
       </FormGroup>
 
@@ -48,7 +51,6 @@
           @click="
             () => {
               active = n.value;
-              setValues('method', n.value);
             }
           "
           class="border border-[#D0D5DD] rounded-xl p-5 flex justify-between items-center"
@@ -58,7 +60,7 @@
             <span class="text-sm font-medium">
               <span class="block font-medium">{{ n.label }}</span>
               <span v-if="n.value === 'wallet'" class="text-xs font-normal"
-                >Balance: N123,765.89</span
+                >Balance: {{ currencyFormat(balance?.availableBalance || 0) }}</span
               >
             </span>
           </span>
@@ -80,7 +82,7 @@
           :isDisabled="isLoading"
           @click="isOpen = false"
           text="Cancel"
-          btnClass="normal-case bg-trnasparent border border-[#D0D5DD] rounded-lg !py-3"
+          btnClass="normal-case bg-transparent border border-[#D0D5DD] rounded-lg !py-3"
         />
         <AppButton
           type="submit"
@@ -94,19 +96,22 @@
   </div>
 </template>
 <script setup>
+import { nanoid } from "nanoid";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
+import { getWalletBalance } from "~/services/walletservice";
 
+const authStore = useAuthStore();
 const active = ref("monnify");
 const isOpen = inject("isOpen");
 const isLoading = ref(false);
 const data = ref(null);
+const props = defineProps(["detail"]);
 const formValues = {
   id: "",
   amount: null,
   repaymentType: "partial",
-  method: "",
 };
 const options = [
   {
@@ -120,7 +125,6 @@ const options = [
 ];
 const schema = yup.object({
   amount: yup.string().required("Amount is required"),
-  method: yup.string().required("Address is required"),
   repaymentType: yup.string().required("Country is required"),
 });
 
@@ -129,7 +133,7 @@ const { handleSubmit, defineField, errors, setValues } = useForm({
   initialValues: formValues,
 });
 
-const [amount, amountAtt] = defineField("amount");
+const [amount] = defineField("amount");
 const [repaymentType] = defineField("repaymentType");
 
 const content = [
@@ -153,11 +157,13 @@ function makePayment(values) {
     name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
     amount: values?.amount,
     phoneNumber: authStore.userInfo?.phoneNumber,
-    reference: `RPM-${nanoid(10)}`,
+    reference: `RPM-${props.detail?.financeRequestNo}-${nanoid(6)}`,
     values,
   };
-
-  payWithMonnify(data.value, onModalClose, onSuccess);
+  console.log("🚀 ~ makePayment ~ data.value:", data.value);
+  if (active.value === "monnify") {
+    payWithMonnify(data.value, onModalClose, onSuccess);
+  }
 }
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
@@ -183,5 +189,13 @@ function onModalClose() {
 const onSubmit = handleSubmit((values) => {
   makePayment(values);
   isLoading.value = true;
+});
+const balance = ref(null);
+onMounted(() => {
+  getWalletBalance().then((res) => {
+    if (res.status === 200) {
+      balance.value = res.data.data;
+    }
+  });
 });
 </script>
