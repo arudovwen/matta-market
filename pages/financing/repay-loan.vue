@@ -136,7 +136,6 @@ const formValues = {
   repaymentType: "partial",
   max: props.detail?.repaymentAmount - props.detail?.totalPayed,
 };
-
 const options = [
   {
     label: "Partial payment",
