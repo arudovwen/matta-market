@@ -45,6 +45,12 @@
             detail?.repaymentAmount - detail?.totalPayed
           )}`"
         />
+        <div
+          v-if="amount > balance?.availableBalance && active === 'wallet'"
+          class="mt-2 text-sm text-red-500"
+        >
+          amount is more than your wallet balance
+        </div>
       </FormGroup>
 
       <div class="grid gap-y-4">
@@ -79,22 +85,28 @@
           /></span>
         </div>
       </div>
+      <div class="mt-8">
+      
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
-        <AppButton
-          type="button"
-          :isDisabled="isLoading"
-          @click="isOpen = false"
-          text="Cancel"
-          btnClass="normal-case bg-transparent border border-[#D0D5DD] rounded-lg !py-3"
-        />
-        <AppButton
-          type="submit"
-          :isLoading="isLoading"
-          :isDisabled="isLoading"
-          text="Make payment"
-          btnClass="normal-case btn-primary !py-3"
-        />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <AppButton
+            type="button"
+            :isDisabled="isLoading"
+            @click="isOpen = false"
+            text="Cancel"
+            btnClass="normal-case bg-transparent border border-[#D0D5DD] rounded-lg !py-3"
+          />
+          <AppButton
+            type="submit"
+            :isLoading="isLoading"
+            :isDisabled="
+              isLoading ||
+              (amount > balance?.availableBalance && active === 'wallet')
+            "
+            text="Make payment"
+            btnClass="normal-case btn-primary !py-3"
+          />
+        </div>
       </div>
     </form>
   </div>
