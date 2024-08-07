@@ -1,37 +1,30 @@
 <template>
-  <div class="container pt-[64px] md:pt-[96px] pb-6">
-    <h1
-  
-      class="text-4xl md:text-6xl md:leading-[72px] font-bold mb-6 relative max-w-[820px]"
-    >
-      <span class="relative z-[2]">
-        Procurement Made Easy: Get Competitive Quotes Fast!</span
-      >
-      <span
-        class="z-[1] absolute top-[50px] right-0 bg-contain bg-no-repeat rounded-r-lg bg-[url('/images/underline.png')] block w-[334px] h-[28px]"
-      ></span>
-    </h1>
-    <p
+  <div class="container pt-[60px] pb-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-10 mb-16">
+      <div class="flex flex-col justify-center">
+        <h1
+          class="text-4xl md:text-6xl md:leading-[72px] font-bold mb-6 relative max-w-[820px]"
+        >
+          <span class="relative z-[2]">
+            Procurement Made Easy: Get Competitive Quotes Fast!</span
+          >
+          <span
+            class="z-[1] absolute top-[50px] right-0 bg-contain bg-no-repeat rounded-r-lg bg-[url('/images/underline.png')] block w-[334px] h-[28px]"
+          ></span>
+        </h1>
+        <p
+          class="text-base sm:text-lg md:text-xl mb-12 max-w-[640px] text-[#475467]"
+        >
+          Join Matta’s all-in-one sourcing platform and streamline your chemical
+          procurement process with same-day RFQ responses
+        </p>
+      </div>
 
-      class="text-base sm:text-lg md:text-xl mb-12 max-w-[640px] text-[#475467]"
-    >
-      Join Matta’s all-in-one sourcing platform and streamline your chemical
-      procurement process with same-day RFQ responses
-    </p>
-
-    <div  class="flex gap-x-4 mb-[64px]">
-      <AppButton
-      @click="navigateTo('/submit-request')"
-        type="button"
-        text="Submit a request"
-        btnClass="bg-primary-500 text-white  border-primary-500  border !px-[18px] !py-3 min-w-[230px]"
-      />
+      <div class=""><CatalogProductRequest /></div>
     </div>
+ 
 
-    <div
-      
-      class="top_image h-[200px] md:h-[516px] w-full"
-    ></div>
+    <div class="top_image h-[200px] md:h-[516px] w-full"></div>
   </div>
 
   <ModalCenter>
@@ -43,7 +36,7 @@
           height="800"
           allow="autoplay"
           class="h-full w-full"
-					 title="buy chemicals"
+          title="buy chemicals"
         ></iframe>
       </div>
     </template>
@@ -68,6 +61,6 @@ provide("isOpen", isOpen);
   background-image: url("/images/three.png");
   background-size: cover;
   background-repeat: repeat;
-  border-radius:10px;
+  border-radius: 10px;
 }
 </style>

@@ -8,11 +8,10 @@
         <img alt="check" src="/images/otp.png" class="block mx-auto" />
       </div>
       <h2 class="text-center font-semibold text-[#101828] mb-[6px] text-2xl">
-        OTP Verification
+        {{ title }}
       </h2>
       <p class="block text-base text-center mb-8 text-[#475467]">
-        We have sent an OTP to your email address and your registered mobile
-        number
+        {{ subtext }}
       </p>
 
       <div class="flex gap-x-2 justify-center mb-8">
@@ -92,6 +91,9 @@ const props = defineProps({
   },
   email: {
     default: "",
+  },
+  subtext: {
+    default: "We have sent an OTP to your email address and your registered mobile number",
   },
 });
 const emit = defineEmits(["handleSubmit", "close"]);

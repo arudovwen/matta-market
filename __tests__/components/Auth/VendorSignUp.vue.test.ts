@@ -7,7 +7,13 @@ import VendorSignUp from "~/components/Auth/VendorSignUp.vue";
 
 describe("VendorSignup", () => {
   it("renders", () => {
-    const { getByPlaceholderText } = render(VendorSignUp);
+    const { getByPlaceholderText } = render(VendorSignUp, {
+      global: {
+        provide: {
+          step: ref(1),
+        },
+      },
+    });
 
     const firstNameInput = screen.getByTestId("First name") as HTMLInputElement;
     const lastNameInput = screen.getByTestId("Last name") as HTMLInputElement;

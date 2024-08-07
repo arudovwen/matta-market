@@ -1,5 +1,5 @@
 <template>
-  <TransitionRoot as="template" :show="isOpen">
+  <TransitionRoot as="template" :show="authOpen">
     <Dialog as="div" class="fixed z-[999] inset-0 overflow-y-auto">
       <div
         class="flex items-center md:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
@@ -14,7 +14,7 @@
           leave-to="opacity-0"
         >
           <DialogOverlay
-            class="fixed inset-0 bg-[#222222] transition-opacity"
+            class="fixed inset-0 bg-[#222222]/90 transition-opacity"
           />
         </TransitionChild>
 
@@ -37,15 +37,35 @@
             :class="className"
             class="inline-block relative align-bottom bg-white rounded-lg text-left invisible-scrollbar shadow-xl transform transition-all sm:my-8 sm:align-middle min-w-[500px] p-6 w-full max-w-max max-h-[95vh]"
           >
-            <AuthLogin v-if="type === 'login'" :main="false" />
-            <!-- <AuthVendorRegister v-if="type === 'vendor-register'" />
-            <AuthRegister v-if="type === 'register'" /> -->
+            <AuthLogin
+              @close="
+                () => {
+                  authOpen = false;
+                  cartStore.getMyCart(action, loadData);
+                }
+              "
+              @toggleAuth="(val) => (type = val)"
+              :main="false"
+              v-if="type === 'login'"
+            />
+            <AuthVendorSignUp
+              :main="false"
+              @toggleAuth="(val) => (type = val)"
+              v-if="type === 'register'"
+              @close="
+                () => {
+                  authOpen = false;
+                  cartStore.getMyCart(action, loadData);
+                }
+              "
+            />
+
             <span
               v-if="canClose"
               class="cursor-pointer hover:border w-8 h-8 absolute top-[20px] right-[20px] rounded-full bg-[#F5F5F5] flex items-center justify-center z-[999]"
               @click="
                 () => {
-                  isOpen = false;
+                  authOpen = false;
                   type = 'login';
                 }
               "
@@ -71,15 +91,25 @@ import {
   DialogOverlay,
 } from "@headlessui/vue";
 
-const isOpen = inject("isOpen");
-const type = inject("type");
+const authOpen = inject("authOpen");
+const step = ref(1);
+const cartStore = useCartStore();
+const action = inject("action");
+const handleProceed = inject("handleProceed");
+const handleOrderRequest = inject("handleOrderRequest");
+const type = ref("login");
 defineProps({
   canClose: {
     default: true,
   },
-
   className: {
     default: "",
   },
 });
+
+function loadData() {
+  action.value === "call" ? handleOrderRequest() : handleProceed();
+}
+provide("type", type);
+provide("step", step);
 </script>

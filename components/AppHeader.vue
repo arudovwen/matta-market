@@ -178,7 +178,7 @@
               class="flex gap-x-[6px] items-center text-sm border-transparent group"
             >
               <NuxtLink
-                to="/request-products"
+                to="/request-product"
                 activeClass="text-[#165EF0] font-medium"
                 class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
               >

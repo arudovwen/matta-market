@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white rounded-[10px]">
     <h2 class="px-[30px] py-5 font-bold text-xl border-b border-[#f3f3f3]">
-      Discount voucher
+      Promotion
     </h2>
 
     <form
@@ -9,14 +9,18 @@
       class="px-[30px] pt-6 pb-[30px] flex items-center gap-x-3"
     >
       <div class="flex-1 max-w-[313px]">
-        <Textinput placeholder="Discount code" required v-model="code" />
+        <Textinput
+          placeholder="Enter a discount code here if you have one"
+          required
+          v-model="code"
+        />
       </div>
       <AppButton
         :isLoading="loading"
         :isDisabled="(!cartStore.cartId && authStore.isLoggedIn) || !code"
         type="submit"
-        text="Apply Voucher"
-        btnClass="!px-[14px] !py-[10px] h-11 bg-primary-500 text-sm text-white leading-normal"
+        text="Apply discount"
+        btnClass="!px-[14px] !py-[10px] h-11 bg-primary-500 text-sm text-white leading-normal disabled:!opacity-90"
       />
     </form>
   </div>
@@ -28,11 +32,11 @@ const code = ref(null);
 const loading = ref(false);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const isOpen = inject("isOpen");
-
+const authOpen = inject("authOpen");
+const isApplied = ref(false);
 function handleSubmit() {
   if (!authStore.isLoggedIn) {
-    isOpen.value = true;
+    authOpen.value = true;
     return;
   }
 
@@ -50,9 +54,28 @@ function handleSubmit() {
     })
     .catch((err) => {
       toast.error(
-        err?.response?.data?.message || err?.response?.data?.Message || "Invalid code"
+        err?.response?.data?.message ||
+          err?.response?.data?.Message ||
+          "Invalid code"
       );
       loading.value = false;
     });
 }
+function handleFirst() {
+  if (
+    cartStore?.cartData?.firstOrder &&
+    cartStore.cartId &&
+    isApplied.value == false
+  ) {
+    code.value = "1ST50KOFF";
+    isApplied.value = true;
+    handleSubmit();
+  }
+}
+watch(
+  () => [cartStore?.cartData],
+  () => {
+    handleFirst();
+  }
+);
 </script>

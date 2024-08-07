@@ -28,6 +28,7 @@
           v-model="selectedValue"
           :reduce="reduce"
           :clearable="clearable"
+          :class="classInput"
         >
         </vSelect>
       </div>

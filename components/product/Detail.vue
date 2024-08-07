@@ -58,86 +58,88 @@
         </div>
       </div>
       <div class="lg:w-[550px]" v-if="!isLoading">
-        <h1 class="font-bold text-lg sm:text-2xl lg:text-[32px] mb-3 lg:mb-6">
+        <h1 class="font-bold text-lg sm:text-2xl lg:text-[32px] mb-3 lg:mb-5">
           {{ productData.name }}
         </h1>
-        <p class="text-[#444] text-xs lg:text-sm mb-6">
+        <p class="text-[#444] text-xs lg:text-sm mb-[15px]">
           {{ productData.description }}
         </p>
+        <p class="text-xs :text-sm mb-[22px]">
+          <span class="font-normal">Producer:</span>
+          <span class="font-bold"> {{ productData?.producer?.title }}</span>
+        </p>
+
         <p
           v-if="!productData.hidePrice"
-          class="text-xl lg:text-2xl font-[800] mb-6"
+          class="text-xl lg:text-2xl font-[800] mb-[29px]"
         >
-        <span class="font-normal text-base">Starting from</span>  {{ currencyFormat(mypackage?.amount || 0) }}
+          <span class="font-normal text-base">Starting from</span>
+          {{ currencyFormat(mypackage?.amount || 0) }}
           <span class="text-sm text-[#444] font-normal"
             >/{{ `${mypackage?.unit || ""}` }}</span
           >
         </p>
-        <p class="text-xs :text-sm mb-6">
-          <span class="font-normal">Producer:</span>
-          <span class="font-bold"> {{ productData?.producer?.title }}</span>
-        </p>
+
         <div
-          class="flex flex-col md:flex-row gap-x-[28px] gap-y-4 lg:gap-y-0 mb-6 justify-start"
+          v-if="productData?.sampleAvailable || productData.hidePrice"
+          class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-4 mb-[17px] items-center"
         >
-          <div
-            class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-2 items-center"
-          >
-            <AppButton
-              v-if="productData?.sampleAvailable"
-              @click="handleRequest('sample')"
-              text="Request sample"
-              btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB]"
-            />
-            <AppButton
-              @click="handleRequest('quote')"
-              text="Request quote"
-              btnClass="!rounded-[5px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
-            />
-          </div>
-          <!-- <AppButton
-            @click="handleSave"
-            :icon="isSaved ? 'tdesign:heart-filled' : 'tdesign:heart'"
-            text="Save for later"
-            btnClass="text-xs sm:text-sm !py-0 !px-0 w-full sm:!w-auto sm:!max-w-max items-center"
-          /> -->
-        </div>
-        <div class="mb-6"  v-if="!productData.hidePrice">
-          <h2 class="font-bold text-sm mb-2">Choose packaging</h2>
-          <Select
-            v-model="selectedPackage"
-            :options="packageOptions"
-            placeholder="Select a package"
-            classInput="min-w-[180px] w-full !bg-white !border-[#E7E7E7] !rounded-[4px] !text-[#333] !h-[50px] cursor-pointer bg-[#FCFCFC]"
+          <AppButton
+            v-if="productData.hidePrice"
+            @click="handleRequest('quote')"
+            text="Request quote"
+            icon="akar-icons:receipt"
+            btnClass="!rounded-[6px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] !font-normal "
+          />
+          <AppButton
+            v-if="productData?.sampleAvailable"
+            @click="handleRequest('sample')"
+            text="Request sample"
+            icon="mdi:phone-message-outline"
+            btnClass="!rounded-[6px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] !font-normal"
           />
         </div>
+
+        <div class="mb-[30px]" v-if="!productData.hidePrice">
+          <h2 class="font-medium text-sm mb-2">Choose packaging</h2>
+          <div class="flex gap-4 items-center flex-col lg:flex-row">
+            <div class="flex-1 w-full">
+              <Select
+                v-model="selectedPackage"
+                :options="packageOptions"
+                placeholder="Select a package"
+                classInput="min-w-[180px] w-full !bg-white !border-[#E7E7E7] !rounded-[6px] !text-[#333] !h-[50px] cursor-pointer bg-[#FCFCFC]"
+              />
+            </div>
+            <div class="h-[50px] lg:flex-1 lg:max-w-[180px] w-full">
+              <CartButton />
+            </div>
+          </div>
+        </div>
         <div
-          v-if="
-            !productData.hidePrice &&
-            productData?.supplierId !== authStore.businessId
-          "
-          class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4"
+          class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4 w-full"
         >
-          <div class="h-[50px] lg:flex-1">
-            <CartButton />
-          </div>
-          <div class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-4">
-            <AppButton
-              @click="handleCart('add')"
-              text="Add to cart"
-              icon="bytesize:cart"
-              :isLoading="cartLoading"
-              :isDisabled="cartLoading"
-              btnClass="bg-primary-500  text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full lg:!w-[140px]"
-            />
-            <AppButton
-              @click="handleCart('buy')"
-              icon="icon-park-outline:mall-bag"
-              text="Buy now"
-              :isDisabled="cartLoading"
-              btnClass="text-white  !px-[15px] !py-[13px] !normal-case bg-[#f90] flex w-full lg:!w-[140px]"
-            />
-          </div>
+          <AppButton
+            v-if="
+              !productData.hidePrice &&
+              productData?.supplierId !== authStore.businessId
+            "
+            @click="handleCart('add')"
+            text="Add to cart"
+            icon="bytesize:cart"
+            :isLoading="cartLoading"
+            :isDisabled="cartLoading || requestloading"
+            btnClass="bg-primary-500  text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full"
+          />
+          <AppButton
+            v-if="!productData.hidePrice"
+            @click="handleOrderRequest('add')"
+            icon="simple-line-icons:call-out"
+            text="Request a call"
+            :isLoading="requestloading"
+            :isDisabled="cartLoading || requestloading"
+            btnClass="text-white  !px-[15px] !py-[13px] !normal-case bg-[#f90] flex w-full"
+          />
         </div>
       </div>
 
@@ -208,20 +210,14 @@
       </div>
     </div>
   </div>
-  <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
-    <template #content>
+  <ModalCenter :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
+    <template #default>
       <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10">
-        <InformationSampleIndexSample
-          @togglePopup="isOpen = false"
-          v-if="requestType == 'sample'"
-        />
-        <InformationQuoteIndexQuote
-          @togglePopup="isOpen = false"
-          v-if="requestType == 'quote'"
-        />
+        <RequestsSample v-if="requestType == 'sample'" />
+        <RequestsQuote v-if="requestType == 'quote'" />
       </div>
     </template>
-  </SideModal>
+  </ModalCenter>
 
   <AddedToCart
     v-if="isAdded"
@@ -232,6 +228,7 @@
     :name="productData.name"
     :hidePrice="productData.hidePrice"
   />
+  <ModalAuth />
   <ModalCenter
     :isOpen="isRequestAdded"
     @togglePopup="isRequestAdded = false"
@@ -282,6 +279,7 @@
 import { useProductStore } from "~/stores/products";
 import { toast } from "vue3-toastify";
 import { likeproduct } from "~/services/productservices";
+import { confirmpurchase } from "~/services/cartservice";
 import { Tooltip } from "@programic/vue3-tooltip";
 import "tippy.js/dist/tippy.css";
 
@@ -290,6 +288,7 @@ const isRequestAdded = ref(false);
 const isLoading = inject("isLoading");
 const store = useProductStore();
 const cartStore = useCartStore();
+const shippingStore = useShippingStore();
 const authStore = useAuthStore();
 const supplierStore = useSupplierStore();
 const { productData } = storeToRefs(store);
@@ -326,6 +325,7 @@ const links = [
     url: "#",
   },
 ];
+const authOpen = ref(false);
 const isOpen = ref(false);
 const active = ref("signin");
 const isAuthOpen = ref(false);
@@ -337,12 +337,13 @@ function handleclose(val) {
   isAuthOpen.value = isOpen.value = false;
 }
 function handleRequest(type) {
-  if (authStore.isLoggedIn) {
-    isOpen.value = true;
-    requestType.value = type;
-  } else {
-    isAuthOpen.value = true;
+  if (!authStore.isLoggedIn && type == "sample") {
+    toast.info("Login to continue");
+    authOpen.value = true;
+    return;
   }
+  isOpen.value = true;
+  requestType.value = type;
 }
 function toggleModal(val) {
   active.value = val;
@@ -353,12 +354,16 @@ const mypackage = computed(() =>
 const counter = ref(1);
 const cartLoading = ref(false);
 function handleCart(type) {
-  cartLoading.value = true;
   if (!selectedPackage.value) {
     toast.info("Please choose a package");
     return;
   }
 
+  if (counter.value < 1) {
+    toast.info("Please enter a quantity");
+    return;
+  }
+  cartLoading.value = true;
   let data = {
     id: 0,
     packageId: mypackage?.value.package.id,
@@ -393,15 +398,28 @@ function handleCart(type) {
     cartLoading.value = false;
   });
 }
+
 function handleSave() {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
+
     return;
   }
   isSaved.value = true;
   toast.success("Saved");
 }
-function handleOrderRequest() {
+const requestloading = ref(false);
+function handleOrderRequest(type) {
+  if (!authStore.isLoggedIn) {
+    toast.info("Login to continue");
+    authOpen.value = true;
+    return;
+  }
+
+  if (counter.value < 1) {
+    toast.info("Please enter a quantity");
+    return;
+  }
   let data = {
     id: 0,
     packageId: mypackage?.value.package.id,
@@ -417,11 +435,29 @@ function handleOrderRequest() {
     supplierId: productData?.value.supplierId,
     producer: productData.value?.manufacturer,
     quantity: counter.value,
-    packagePrice: mypackage?.value.amount,
+    packagePrice: mypackage?.value.amount * mypackage?.value.size,
   };
-  orderRequestStore.addToRequest(data);
-  isRequestAdded.value = true;
+  requestloading.value = true;
+  cartStore?.addToCart(data, type).then((res) => {
+   
+    confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
+      .then((res) => {
+        if (res.status === 200) {
+          requestloading.value = false;
+          cartStore?.clearCart();
+          window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
+        }
+      })
+      .catch((err) => {
+        const error = `${
+          err?.response?.data?.Message || err?.response?.data?.message
+        }, Contact us for assistance on your order`;
+        toast.error(error);
+        requestloading.value = false;
+      });
+  });
 }
+
 function handleLike(value) {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
@@ -464,7 +500,6 @@ function togglePopup() {
   isOpen.value = false;
 }
 
-
 watch(
   () => [packageOptions.value],
   () => {
@@ -474,7 +509,6 @@ watch(
   }
 );
 watch(productData, () => {
-	console.log(productData);
   supplierStore.fetchSupplier(productData.value.supplierId);
   imageUrl.value = productData?.value?.featuredPhoto;
 });
@@ -482,5 +516,9 @@ provide("counter", counter);
 provide("toggleModal", toggleModal);
 provide("togglePopup", togglePopup);
 provide("product", productData);
-provide("isOpen", isRequestAdded);
+provide("isOpen", isOpen);
+provide("authOpen", authOpen);
+provide("action", null);
+provide("handleOrderRequest", null);
+provide("handleProceed", null);
 </script>

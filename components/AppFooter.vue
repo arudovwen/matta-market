@@ -207,7 +207,7 @@ const navs = [
     links: [
       {
         title: "Request products",
-        url: "/request-products",
+        url: "/request-product",
       },
       {
         title: "Become a Verified Supplier",

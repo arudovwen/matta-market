@@ -1,5 +1,5 @@
 <template>
-  <AuthLogin />
+  <AuthLogin @close="() => {}" />
 </template>
 
 <script setup>
@@ -11,5 +11,4 @@ useHead({
   title: "Login | Matta",
   meta: [{ name: "description", content: "Login | Matta" }],
 });
-
 </script>

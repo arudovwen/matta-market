@@ -11,11 +11,11 @@
           <StorefrontContent />
           <Pagination
             v-if="
-              !loading &&
+              !productStore.loading &&
               productStore?.productsData.length &&
               query.totalData > query.PageSize
             "
-            :total="store.total"
+            :total="productStore.total"
             :current="query.PageNumber"
             :per-page="query.PageSize"
             :pageRange="pageRange"
@@ -28,6 +28,10 @@
   </div>
 </template>
 <script setup>
+import { getProducts, getProductsByTag } from "~/services/productservices";
+const productStore = useProductStore();
+const route = useRoute();
+const { vendor, id } = route.params;
 useHead({
   title: `${ucFirst(vendor)} | Matta`,
   meta: [
@@ -37,11 +41,6 @@ useHead({
     },
   ],
 });
-import { getProducts, getProductsByTag } from "~/services/productservices";
-
-const productStore = useProductStore();
-const route = useRoute();
-const { vendor, id } = route.params;
 const vendorInfo = ref(null);
 const pageRange = 5;
 const query = reactive({
@@ -62,7 +61,7 @@ const query = reactive({
   totalData: 0,
   sortOrder: "",
   sortBy: "",
-  storelug: vendor,
+  storelug: vendor.toLowerCase(),
 });
 
 function perPage({ currentPerPage }) {
@@ -70,7 +69,7 @@ function perPage({ currentPerPage }) {
   query.PageSize = currentPerPage;
 }
 function getAllProducts() {
-  store.setLoader(true);
+  productStore.setLoader(true);
   if (route.query.tag) {
     getProductsByTag({
       PageNumber: 1,
@@ -80,25 +79,27 @@ function getAllProducts() {
     })
       .then((res) => {
         if (res.status === 200) {
-          store.setProducts(res.data.data);
-          store.setLoader(false);
+          productStore.setProducts(res.data.data);
+          productStore.setLoader(false);
           query.totalData = res.data.data.totalCount;
         }
       })
       .catch(() => {
-        store.setLoader(false);
+        productStore.setProducts([]);
+        productStore.setLoader(false);
       });
   } else {
     getProducts(query)
       .then((res) => {
         if (res.status === 200) {
-          store.setProducts(res.data);
-          store.setLoader(false);
+          productStore.setProducts(res.data);
+          productStore.setLoader(false);
           query.totalData = res.data.totalCount;
         }
       })
       .catch(() => {
-        store.setLoader(false);
+        productStore.setLoader(false);
+        productStore.setProducts([]);
       });
   }
 }

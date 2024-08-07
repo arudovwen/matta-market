@@ -1,7 +1,9 @@
 <template>
   <ul class="grid gap-y-[10px]" v-if="!activeKey">
     <li
-      v-for="n in navigations.filter(i=>i.name.toLowerCase() !== 'finance' && i.key !== 'sign-out')"
+      v-for="n in navigations.filter(
+        (i) => i.name.toLowerCase() !== 'finance' && i.key !== 'sign-out'
+      )"
       :key="n.name"
       @click="activeKey = n.name"
       class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
@@ -47,14 +49,24 @@
           {{ cat.title }}
         </button>
       </NuxtLink>
-      <button v-else
-          :class="[
-            'group flex w-full items-center  text-sm  whitespace-nowrap gap-x-2 text-[#333]',
-          ]"
-        >
-          <AppIcon :icon="`fa6-solid:${cat.imagePath}`" v-if="cat.imagePath" />
-          {{ cat.title }}
-        </button>
+      <button
+        v-else
+        :class="[
+          'group flex w-full items-center  text-sm  whitespace-nowrap gap-x-2 text-[#333]',
+        ]"
+      >
+        <AppIcon :icon="`fa6-solid:${cat.imagePath}`" v-if="cat.imagePath" />
+        {{ cat.title }}
+      </button>
+    </li>
+    <li   class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333] mt-2">
+      <NuxtLink
+        to="/request-product"
+        activeClass="text-[#165EF0] font-medium"
+        class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
+      >
+        Request a product</NuxtLink
+      >
     </li>
   </ul>
 </template>

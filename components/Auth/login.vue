@@ -59,15 +59,24 @@
         class="flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
       >
         Don’t have an account?
-        <NuxtLink to="/auth/register" class="font-semibold text-[#2176FF]"
+        <NuxtLink
+          to="/auth/register"
+          v-if="main"
+          class="font-semibold text-[#2176FF]"
           >Sign Up</NuxtLink
+        >
+        <span
+          v-else
+          @click="emits('toggleAuth', 'register')"
+          class="font-semibold text-[#2176FF] cursor-pointer"
+          >Sign Up</span
         >
       </span>
     </form>
   </div>
   <AuthOtp
     v-if="step === 2"
-    title="Enter OTP sent to your email"
+    title="OTP Verification"
     :isVerifyPin="isVerifyPin"
     @close="step = 1"
     buttonText="Verify OTP"
@@ -107,6 +116,7 @@ const { handleSubmit, defineField, errors } = useForm({
   validationSchema: schema,
   initialValues: formValues,
 });
+const emits = defineEmits(["close", "toggleAuth"]);
 const authStore = useAuthStore();
 const [email, emailAtt] = defineField("email");
 const [password, passwordAtt] = defineField("password");
@@ -137,7 +147,7 @@ const onSubmit = handleSubmit((values) => {
         (data.message || data.Message).includes("Email has not verified yet")
       ) {
         router.push(
-          `/auth/resend-verification/${encodeURIComponent(values.email)}`
+          `/auth/register?email=${encodeURIComponent(values.email)}&step=2`
         );
       }
     });
@@ -147,12 +157,18 @@ const handleFinalSubmit = (token) => {
   loginUser2FA({ token, email: formValues.email })
     .then((res) => {
       if (res.status === 200) {
+      
         isLoading.value = false;
         authStore.setLoggedUser(res.data.data);
-         authStore.setHasPin(res.data.data.hasTransactionPIN);
+        authStore.setHasPin(res.data.data.hasTransactionPIN);
         localStorage.setItem("fetchCart", true);
         if (!props.main) {
-          windows.location.reload();
+          toast.info("Login successful");
+          emits("close");
+          return;
+        }
+        if (route.query.redirected_from) {
+          window.location.replace(route.query.redirected_from);
           return;
         }
         if (
@@ -164,10 +180,6 @@ const handleFinalSubmit = (token) => {
           return;
         }
         toast.success("Login successful");
-        if (route.query.redirected_from) {
-          window.location.replace(route.query.redirected_from);
-          return;
-        }
 
         window.location.replace("/");
       }
@@ -236,7 +248,7 @@ const handleLoginSuccess = (response) => {
         (data.message || data.Message).includes("Email has not verified yet")
       ) {
         router.push(
-          `/auth/resend-verification/${encodeURIComponent(values.email)}`
+          `/auth/register?email=${encodeURIComponent(values.email)}&step=2`
         );
       }
     });

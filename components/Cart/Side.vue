@@ -67,19 +67,6 @@
       </p>
     </div>
     <div class="flex flex-col gap-y-4 mt-3">
-      <!-- <AppButton
-        @click="handleOrderRequest()"
-        text="Submit order request"
-        :isLoading="loading"
-        :isDisabled="
-          !shippingStore?.defaultAddress?.id ||
-          !cartStore?.cart ||
-          !cartStore?.cartTotalAmount ||
-          cartStore?.loadingCart
-        "
-        btnClass="!rounded-[5px] !text-[#DBDBDB] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] "
-      /> -->
-
       <AppButton
         :isDisabled="
           !cartStore?.cart ||
@@ -89,52 +76,33 @@
         @click="handleProceed"
         :isLoading="cartStore?.loadingCart"
         text="Proceed to Checkout"
-        btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm"
+        btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm !normal-case"
+      />
+      <AppButton
+        @click="handleOrderRequest()"
+        text="Request a call"
+        :isLoading="loading"
+        :isDisabled="
+          !cartStore?.cart ||
+          !cartStore?.cartTotalAmount ||
+          cartStore?.loadingCart
+        "
+        icon="ph:phone-outgoing"
+        btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case"
       />
     </div>
   </div>
 </template>
 <script setup>
-import { confirmpurchase } from "~/services/cartservice";
-import { toast } from "vue3-toastify";
-
 const shippingStore = useShippingStore();
-const authStore = useAuthStore();
 const cartStore = useCartStore();
 const loading = ref(false);
-const isOpen = inject("isOpen");
+
+const handleProceed = inject("handleProceed")
+const handleOrderRequest = inject("handleOrderRequest")
 onMounted(() => {
   shippingStore.getAlladdress();
 });
 
-function handleProceed() {
-  if (!authStore.isLoggedIn) {
-    isOpen.value = true;
-    return;
-  }
 
-  navigateTo("/checkout");
-}
-function handleOrderRequest() {
-  if (!authStore.isLoggedIn) {
-    isOpen.value = true;
-    return;
-  }
-  loading.value = true;
-  confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
-    .then((res) => {
-      if (res.status === 200) {
-        loading.value = false;
-        cartStore?.clearCart();
-        window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
-      }
-    })
-    .catch((err) => {
-      const error = `${
-        err?.response?.data?.Message || err?.response?.data?.message
-      }, Contact us for assistance on your order`;
-      toast.error(error);
-      loading.value = false;
-    });
-}
 </script>
