@@ -22,6 +22,9 @@ export const createWallet = (data) => {
 export const setWalletpin = (data) => {
   return post(`${urls.SET_PIN}`, data, config);
 };
+export const walletRepayment = (data) => {
+  return post(`${urls.WALLET_REPAYMENT}`, data, config);
+};
 export const changeWalletpin = (data) => {
   return post(`${urls.CHANGE_PIN}`, data, config);
 };

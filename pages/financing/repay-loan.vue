@@ -86,8 +86,6 @@
         </div>
       </div>
       <div class="mt-8">
-      
-
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
           <AppButton
             type="button"
@@ -132,7 +130,7 @@ import { nanoid } from "nanoid";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { getWalletBalance } from "~/services/walletservice";
+import { getWalletBalance, c } from "~/services/walletservice";
 import { payWithMonnify } from "~/utils/monnify";
 
 const authStore = useAuthStore();
@@ -202,11 +200,22 @@ function makePayment(values) {
     amount: values?.amount,
     phoneNumber: authStore.userInfo?.phoneNumber,
     reference: `RPM-${props.detail?.financeRequestNo}-${nanoid(6)}`,
-    values,
+    ...values,
   };
 
   if (active.value === "monnify") {
     payWithMonnify(data.value, onModalClose, onSuccess);
+  } else {
+    walletRepayment(values)
+      .then((res) => {
+        if (res.status === 200) {
+          isSuccessOpen.value = true;
+          loading.value = false;
+        }
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message || err.response.data.Message);
+      });
   }
 }
 
