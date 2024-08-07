@@ -11,12 +11,14 @@
     </div>
 
     <div class="grid grid-cols-1 gap-y-5 mb-7">
+     <div class="relative z-[999] ">
       <FormGroup name="title" :error="errors.title" label="Package type" isCumpulsory info
         infoTitle="Kindly select from the list the appropriate type of product package">
         <SelectVueSelect v-model="title" :options="packageForms" :reduce="(title) => title.value"
-          placeholder="Select package" :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] ! cursor-pointer ${errors.title ? 'border-red-500' : 'border-[#D0D5DD]'
+          placeholder="Select package" :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] cursor-pointer ${errors.title ? 'border-red-500' : 'border-[#D0D5DD]'
             }`" />
       </FormGroup>
+     </div>
       <FormGroup name="purchaseAmount" label="Unit price" :error="errors.purchaseAmount" isCumpulsory info
         infoTitle="Please indicate the selling price for the selected unit of measurement">
         <CurrencyInput min="1" :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${errors.purchaseAmount ? 'border-red-500' : 'border-[#D0D5DD]'
@@ -25,7 +27,7 @@
             currencyDisplay: 'hidden',
           }" />
       </FormGroup>
-      <div class="relative z-[9999]">
+      <div class="relative z-[99]">
         <Textinput v-model="size" v-bind="sizeAtt" name="size" placeholder="" type="text" :error="errors.size"
           isCumpulsory label="Package Size" info
           infoTitle="Indicate what quantity of unit of measurement makes up the selected package type">
@@ -44,11 +46,11 @@
       </div>
 
       <Textinput isCumpulsory label="appearance" v-model="color" v-bind="colorAtt" name="color" placeholder="" type="text"
-        :error="errors.color" class="!" info infoTitle="What is the colour of the product?" />
+        :error="errors.color" class="!" info infoTitle="What is the appearance of the product?" />
 
       <Textinput label="Purity and Grade" v-model="purity" v-bind="purityAtt" name="purity" placeholder="" min="0"
         max="100" :error="errors.purity" icon="ic:baseline-percent" hasIcon info
-        infoTitle=" Kindly state the purity of the product if known" />
+        infoTitle=" Kindly state the purity and grade of the product if known" />
 
       <div>
         <label for="isAvailable" class="flex item-center leading-[normal]">
@@ -155,13 +157,13 @@ const packageForms = [
 const packFormSchema = yup.object({
   title: yup.string().required("Select a package"),
   purchaseAmount: yup.string().required("Amount is required"),
-  color: yup.string().nullable().required(),
+  color: yup.string().nullable().required("Value is required"),
   purity: yup
     .number()
     .typeError("Invalid value")
     .max(100, "Maximum is 100")
     .nullable().notRequired(),
-  size: yup.number().typeError("Invalid value").required("Amount is required"),
+  size: yup.number().typeError("Invalid value").required("Value is required"),
   isAvailable: yup.boolean(),
   unit: yup.string(),
   id: yup.string(),
