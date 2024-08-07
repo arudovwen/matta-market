@@ -25,23 +25,13 @@
             currencyDisplay: 'hidden',
           }" />
       </FormGroup>
-      <div>
+      <div class="relative z-[9999]">
         <Textinput v-model="size" v-bind="sizeAtt" name="size" placeholder="" type="text" :error="errors.size"
           isCumpulsory label="Package Size" info
           infoTitle="Indicate what quantity of unit of measurement makes up the selected package type">
-          <template #content>
-            <!-- <select
-              v-model="unit"
-              v-bind="unitAtt"
-              name="unit"
-              class="outline-none absolute right-2 w-max"
-            >
-              <option v-for="i in measurements" :key="i.value" :value="i.value">
-                {{ i.name }}
-              </option>
-            </select> -->
-            <SelectVueSelect :id="`size-dropdown`" class-input="size-dropdown" v-model="unit" :vbind="unitAtt"
-              :options="measurements" :reduce="(title) => title.value" placeholder="Select package size" />
+          <template #suffix>
+            <SelectVueSelect :id="`size-dropdown`" class-input="!border-none" :clearable="false" v-model="unit" :vbind="unitAtt"
+              :options="minimeasurements" :reduce="(title) => title.value" placeholder="Select package size" />
           </template>
         </Textinput>
 
@@ -53,7 +43,7 @@
         </div>
       </div>
 
-      <Textinput label="appearance" v-model="color" v-bind="colorAtt" name="color" placeholder="" type="text"
+      <Textinput isCumpulsory label="appearance" v-model="color" v-bind="colorAtt" name="color" placeholder="" type="text"
         :error="errors.color" class="!" info infoTitle="What is the colour of the product?" />
 
       <Textinput label="Purity and Grade" v-model="purity" v-bind="purityAtt" name="purity" placeholder="" min="0"
@@ -78,17 +68,15 @@
 </template>
 <style lang="scss">
 #size-dropdown>div>div>div>.vs__dropdown-toggle {
-  height: 20px;
-  min-width: 160px;
-  border-left: none;
+  height: 16px;
+  border: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-
-#size {
-  border-right: none;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+#size-dropdown{
+  input.vs__search{
+    display:none
+  }
 }
 </style>
 <script setup>
@@ -184,8 +172,8 @@ const { handleSubmit, defineField, errors, setValues } = useForm({
   initialValues: packForm,
 });
 
-const [title, titleAtt] = defineField("title");
-const [purchaseAmount, purchaseAmountAtt] = defineField("purchaseAmount");
+const [title] = defineField("title");
+const [purchaseAmount] = defineField("purchaseAmount");
 const [color, colorAtt] = defineField("color");
 const [size, sizeAtt] = defineField("size");
 const [isAvailable, isAvailableAtt] = defineField("isAvailable");
