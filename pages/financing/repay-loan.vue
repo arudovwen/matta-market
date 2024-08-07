@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-white w-full md:min-w-[400px] text-[#344054]">
+  <div
+    v-if="!isSuccessOpen"
+    class="bg-white w-full md:min-w-[400px] text-[#344054]"
+  >
     <legend class="block text-[20px] font-bold mb-8 text-left">
       Loan Repayment
     </legend>
@@ -39,7 +42,7 @@
             currencyDisplay: 'hidden',
           }"
           :placeholder="`Amount left: ${currencyFormat(
-            detail?.repaymentAmount
+            detail?.repaymentAmount - detail?.totalPayed
           )}`"
         />
       </FormGroup>
@@ -103,7 +106,13 @@
     btn-text="Done"
     :isOkay="true"
     :isCancel="false"
-    @actionItem="isSuccessOpen = false"
+    :canClose="false"
+    @actionItem="
+      () => {
+        isOpen = false;
+        isSuccessOpen = false;
+      }
+    "
   />
 </template>
 <script setup>
@@ -112,6 +121,7 @@ import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { getWalletBalance } from "~/services/walletservice";
+import { payWithMonnify } from "~/utils/monnify";
 
 const authStore = useAuthStore();
 const active = ref("monnify");
@@ -124,7 +134,9 @@ const formValues = {
   id: "",
   amount: null,
   repaymentType: "partial",
+  max: props.detail?.repaymentAmount - props.detail?.totalPayed,
 };
+console.log("🚀 ~ formValues:", formValues)
 const options = [
   {
     label: "Partial payment",
@@ -136,11 +148,11 @@ const options = [
   },
 ];
 const schema = yup.object({
-  amount: yup.string().required("Amount is required"),
+  amount: yup.number().required("Amount is required").max(yup.ref("max")),
   repaymentType: yup.string().required("Country is required"),
 });
 
-const { handleSubmit, defineField, errors, setValues } = useForm({
+const { handleSubmit, defineField, errors } = useForm({
   validationSchema: schema,
   initialValues: formValues,
 });
@@ -161,7 +173,16 @@ const content = [
   },
 ];
 const loading = ref(false);
-
+function onSuccess(response) {
+  if (response.status.toLowerCase() === "success") {
+    isSuccessOpen.value = true;
+    loading.value = false;
+  }
+}
+function onModalClose() {
+  loading.value = false;
+  toast.error("Payment cancelled");
+}
 function makePayment(values) {
   loading.value = true;
   data.value = {
@@ -177,19 +198,9 @@ function makePayment(values) {
     payWithMonnify(data.value, onModalClose, onSuccess);
   }
 }
-function onSuccess(response) {
-  if (response.status.toLowerCase() === "success") {
-    isOpen.value = false;
-    isSuccessOpen.value = true;
-  }
-}
-function onModalClose() {
-  loading.value = false;
-  toast.error("Payment cancelled");
-}
+
 const onSubmit = handleSubmit((values) => {
   makePayment(values);
-  isLoading.value = true;
 });
 const balance = ref(null);
 onMounted(() => {

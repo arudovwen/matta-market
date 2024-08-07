@@ -5,7 +5,11 @@
       v-for="(n, id) in financeData"
       :key="id"
       @click="
-      ()=> {isOpen=true; detail =n}"
+        () => {
+          isOpen = true;
+          detail = n;
+        }
+      "
     >
       <div class="flex justify-between items-center mb-5">
         <span class="text-sm font-semibold capitalize text-[#344054]"
@@ -49,7 +53,7 @@
   <ModalCenter :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #default>
       <div class="h-full w-full bg-white rounded-lg p-6">
-        <RepayLoan :detail="detail" />
+        <RepayLoan :detail="detail" v-if="detail" />
       </div>
     </template>
   </ModalCenter>
@@ -58,8 +62,8 @@
 import { getAllFinance } from "~/services/financeservice";
 import RepayLoan from "./repay-loan";
 
-const detail = ref(null)
-const isOpen = ref(false)
+const detail = ref(null);
+const isOpen = ref(false);
 const queryParams = reactive({
   SupplierId: null,
   RequestStatus: null,
@@ -104,7 +108,7 @@ onMounted(() => {
 function getPercentage(part, total) {
   return (part / total) * 100;
 }
-provide("isOpen",isOpen)
+provide("isOpen", isOpen);
 </script>
 
 <style lang="scss" scoped>

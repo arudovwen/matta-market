@@ -43,7 +43,7 @@
                         src="/images/success.svg"
                       />
                     </div>
-                    <span @click="handleclose" class="absolute top-3 right-4">
+                    <span v-if="canClose" @click="handleclose" class="absolute top-3 right-4">
                       <i
                         class="uil uil-times cursor-pointer text-xl text-[#98A2B3]"
                       ></i>
@@ -140,6 +140,7 @@ defineProps({
   detail: { default: null },
   isCancel: { default: true },
   isOkay: { default: false },
+  canClose:{default:true}
 });
 const emits = defineEmits(["actionItem", "close"]);
 
