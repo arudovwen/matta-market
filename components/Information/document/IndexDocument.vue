@@ -42,13 +42,13 @@
       </div>
     </div>
     <div v-if="active !== 2">
-      <span
+      <!-- <span
         v-if="!isLoggedIn"
         @click="isOpen = true"
         class="mb-2 text-primary text-xs cursor-pointer"
         >Log In to speed up your request
         <i class="uil uil-arrow-up-right text-x"></i
-      ></span>
+      ></span> -->
       <div class="flex justify-between gap-x-2 items-center mt-8">
         <button
           @click="emit('togglePopup')"

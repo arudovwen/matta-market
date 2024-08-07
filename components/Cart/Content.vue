@@ -21,7 +21,6 @@
 </template>
 <script setup>
 const cartStore = useCartStore();
-const isOpen = inject("isOpen");
 const type = ref("login")
 
 provide("type", type)

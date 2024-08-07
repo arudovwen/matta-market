@@ -1,17 +1,32 @@
 import { required, helpers } from "@vuelidate/validators";
 
 export const measurements = [
-  { value: "g", name: "Gramme" },
-  { value: "kg", name: "Kilogramme" },
-  { value: "l", name: "Litre" },
-  { value: "m3", name: "Cubicmetre" },
-  { value: "sqm", name: "Squaremetre" },
-  { value: "truck", name: "Truck" },
-  { value: "ton", name: "Ton" },
-  { value: "ml", name: "Millilitre" },
-  { value: "mm", name: "Millimetre" },
-  { value: "bag", name: "Bag" },
-  { value: "drum", name: "Drum" },
+  { value: "g", name: "Gramme", label: "Gramme" },
+  { value: "kg", name: "Kilogramme", label: "Kilogram" },
+  { value: "l", name: "Litre", label: "Litre" },
+  { value: "m3", name: "Cubicmetre", label: "Cubic Metre" },
+  { value: "sqm", name: "Squaremetre", label: "Square Metre" },
+  { value: "truck", name: "Truck", label: "Truck" },
+  { value: "ton", name: "Ton", label: "Ton" },
+  { value: "ml", name: "Millilitre", label: "Millilitre" },
+  { value: "mm", name: "Millimetre", label: "Millimetre" },
+  { value: "bag", name: "Bag", label: "Bag" },
+  { value: "drum", name: "Drum", label: "Drum" },
+  { value: "others", name: "Others", label: "Others" },
+];
+export const minimeasurements = [
+  { value: "g", label: "g" },
+  { value: "kg", label: "kg" },
+  { value: "l", label: "l" },
+  { value: "m3", label: "m³" },
+  { value: "sqm", label: "sqm" },
+  { value: "truck", label: "Truck" },
+  { value: "ton", label: "Ton" },
+  { value: "ml", label: "ml" },
+  { value: "mm", label: "mm" },
+  { value: "bag", label: "Bag" },
+  { value: "drum", label: "Drum" },
+  { value: "others", label: "Others" },
 ];
 
 export const testimonialData = [
@@ -55,41 +70,34 @@ export const languagesOptions = [
   {
     code: "en",
     name: "English",
-  
   },
   {
     code: "fr",
     name: "French",
- 
   },
-  
+
   {
     code: "ja",
     name: "Japanese",
- 
   },
   {
     code: "de",
     name: "German",
- 
   },
   {
     code: "zh-CN",
     name: "Chinese",
-
-  },{
+  },
+  {
     code: "es",
     name: "Spanish",
-
   },
- 
 ];
 
 export const languagesOptionsMini = [
   {
     code: "en",
     name: "En",
-
   },
   {
     code: "fr",
@@ -107,7 +115,7 @@ export const languagesOptionsMini = [
     code: "es",
     name: "Es",
   },
-  
+
   {
     code: "ja",
     name: "Ja",
@@ -1075,7 +1083,7 @@ export const traditionalData = [
     label: "Scalability",
     matta: "Easy to scale operations with demand.",
     trad: "Scaling up often requires significant effort and time.",
-    info: "Insights into market trends.",
+    info: "Ability to grow with demand.",
   },
   {
     id: 14,

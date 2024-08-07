@@ -11,14 +11,14 @@
         class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >Market<RedDot
       /></label>
-      <FormsSelectComponent
-        id="usage"
-        @onGetData="onGetMarket"
+
+      <SelectVueSelect
+        v-model="request1$.market.$model"
         :options="marketOptions"
-        :showSearch="true"
-        placeholder="Select market"
-        :class="{ 'border-red-500 ': request1$.market.$error }"
-        classStyles="appearance-none h-[46px] text-matta-black bg-transparent py-2 px-3 min-w-[150px] cursor-pointer md:py-3 md:px-3 border !rounded-lg border-[#ddd] md:leading-5 text-[10px] !sm:text-[13px] shadow-sm focus:outline-gray-200"
+        :reduce="(option) => option.value"
+         placeholder="Select market"
+        classInput="!border-none"
+        :clearable="false"
       />
       <div
         class="text-red-500 mt-1"
@@ -36,14 +36,14 @@
         class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >Application<RedDot
       /></label>
-      <FormsSelectComponent
-        id="applications"
-        @onGetData="onGetApp"
+
+      <SelectVueSelect
+        v-model="request1$.applications.$model"
         :options="appOptions"
-        :showSearch="true"
+        :reduce="(option) => option.value"
         placeholder="Select application"
-        :class="{ 'border-red-500 ': request1$.applications.$error }"
-        classStyles="appearance-none h-[46px] text-matta-black bg-transparent py-2 px-3 min-w-[150px] cursor-pointer md:py-3 md:px-3 border !rounded-lg border-[#ddd] md:leading-5 text-[10px] !sm:text-[13px] shadow-sm focus:outline-gray-200"
+        classInput="!border-none"
+        :clearable="false"
       />
       <div
         class="text-red-500 mt-1"
@@ -156,6 +156,7 @@ const product = inject("product");
 const applications = ref([]);
 const marketStore = useMarketStore();
 const appStore = useApplicationStore();
+
 function onGetMarket(data) {
   applications.value = data.categorySubMenu;
   quoteForm.market = data.title;
@@ -168,6 +169,8 @@ const marketOptions = computed(() => {
   if (!marketStore.marketsData.length) return [];
   return marketStore.marketsData.map((i) => {
     i.name = i.title;
+    i.label = i.title;
+    i.value = i.title;
     return i;
   });
 });
@@ -175,6 +178,8 @@ const appOptions = computed(() => {
   if (!appStore.applicationsData.length) return [];
   return appStore.applicationsData.map((i) => {
     i.name = i.title;
+    i.label = i.title;
+    i.value = i.title;
     return i;
   });
 });

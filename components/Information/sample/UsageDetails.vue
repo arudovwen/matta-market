@@ -13,7 +13,7 @@
             :value="request1$.numberofSamples.$model"
             disabled
             :class="{ 'border-red-500 ': request1$.numberofSamples.$error }"
-            class="rounded-lg appearance-none px-[14px] py-[10px] h-11 border w-full bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+            class="rounded-lg appearance-none px-[14px] py-[10px] h-11 border w-full bg-gray-100 border-gray-200 placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
           >
             <option v-for="z in 10" :key="z" :value="z">
               <span class="flex gap-x-6">
@@ -53,10 +53,10 @@
           <i class="uil uil-sort absolute right-3 pointer-events-none"></i>
         </div> -->
         <div
-          class="flex h-[60px] w-full items-center gap-x-3 lg:gap-x-4 rounded-lg bg-[#F1F3F5] relative py-4 md:py-5 text-xs lg:text-[13px] px-4 lg:px-4 uppercase text-matta-black"
+          class="flex w-full items-center gap-x-3 lg:gap-x-4 rounded-lg bg-gray-100 border-gray-200 relative text-xs lg:text-[13px] px-4 lg:px-4 uppercase text-matta-black"
         >
           <button
-            class="disabled:opacity-20 disabled:cursor-not-allowed p-2"
+            class="disabled:opacity-20 disabled:cursor-not-allowed p-2 h-auto"
             type="button"
             @click="sampleForm.expectedAnualUsage -= 1"
             :disabled="sampleForm.expectedAnualUsage <= 1"
@@ -72,7 +72,7 @@
           <button
             type="button"
             @click="sampleForm.expectedAnualUsage += 1"
-            class="p-2"
+            class="p-2 h-auto"
           >
             <i class="uil uil-plus"></i>
           </button>

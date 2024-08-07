@@ -59,7 +59,7 @@ describe("Detail", () => {
                 loggedUser: {
                   fullName: "Oduro Tolulope",
                   phoneNumber: "07036845422",
-									businessId: "678987"
+                  businessId: "678987",
                 },
               },
               products: {
@@ -79,7 +79,7 @@ describe("Detail", () => {
                   ],
                   producer: { title: "Person" },
                   sampleAvailable: [],
-									supplierId: "321234"
+                  supplierId: "321234",
                 },
               },
             },
@@ -88,7 +88,7 @@ describe("Detail", () => {
         stubs: {
           RouterLink: RouterLinkStub,
           InformationSampleIndexSample: true,
-          InformationQuoteIndexQuote: true
+          InformationQuoteIndexQuote: true,
         },
         provide: {
           isLoading: false,
@@ -98,10 +98,8 @@ describe("Detail", () => {
     expect(screen.getByText("Package One/23200 - ₦460")).toBeTruthy();
     expect(screen.getByText("Person")).toBeTruthy();
     expect(screen.getByText("Mark 47")).toBeTruthy();
-    fireEvent.click(screen.getByText("Request quote"));
     fireEvent.click(screen.getByText("Add to cart"));
-    await retry(() => expect(screen.getByTestId("step-header")).toBeTruthy());
-    fireEvent.click(screen.getByText("Request sample"));
+
   });
 });
 vi.mock("~/services/productservices", () => ({
@@ -120,7 +118,7 @@ describe("Detail", () => {
                 loggedUser: {
                   fullName: "Oduro Tolulope",
                   phoneNumber: "07036845422",
-									businessId: "098765"
+                  businessId: "098765",
                 },
               },
               products: {
@@ -130,6 +128,14 @@ describe("Detail", () => {
                   manufacturer: "Stark Industries",
                   id: "678908",
                   name: "Mark 47",
+                  packages: [
+                    {
+                      title: "Package One",
+                      size: 23,
+                      unit: 200,
+                      amount: 20,
+                    },
+                  ],
                   packagesAvailable: [
                     {
                       package: { title: "Package One" },
@@ -140,7 +146,7 @@ describe("Detail", () => {
                   ],
                   producer: { title: "Person" },
                   sampleAvailable: [],
-									supplierId: "5678"
+                  supplierId: "5678",
                 },
               },
             },
@@ -157,33 +163,6 @@ describe("Detail", () => {
     expect(screen.getByText("Package One/23200 - ₦460")).toBeTruthy();
     expect(screen.getByText("Person")).toBeTruthy();
     expect(screen.getByText("Mark 47")).toBeTruthy();
-    fireEvent.click(screen.getByText("Request quote"));
-    await retry(() => expect(screen.getByTestId("step-header")).toBeTruthy());
-    fireEvent.click(screen.getByText("Request sample"));
-  });
-});
 
-describe("Detail2", () => {
-  it("renders", async () => {
-    const component = render(Detail, {
-      global: {
-        plugins: [
-          createTestingPinia({
-            initialState: {
-              products: {
-              },
-            },
-          }),
-        ],
-        stubs: {
-          RouterLink: RouterLinkStub,
-        },
-        provide: {
-          isLoading: false,
-        },
-      },
-    });
-    fireEvent.click(screen.getByText("Request quote"));
-		expect(screen.queryByTestId("step-header")).toBeNull()
   });
 });

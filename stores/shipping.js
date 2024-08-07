@@ -13,20 +13,21 @@ export const useShippingStore = defineStore("shipping", () => {
   );
 
   function setAddresses(data) {
-    addresses.value = data;
+    addresses.value = data.map((i) => ({ ...i, label: i.street, value: i.id }));
   }
   function getAlladdress() {
-    if(!authStore.isLoggedIn) return;
+    if (!authStore.isLoggedIn) return;
     loading.value = true;
     getalladdress()
       .then((res) => {
         if (res.data.data.length) {
-          addresses.value = res.data.data.some((i) => i.isDefault)
+          const tempAddress = res.data.data.some((i) => i.isDefault)
             ? [
                 res.data.data.find((i) => i.isDefault),
                 ...res.data.data.filter((i) => !i.isDefault),
               ]
             : res.data.data;
+          setAddresses(tempAddress);
         }
 
         loading.value = false;

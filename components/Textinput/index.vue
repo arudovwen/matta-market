@@ -13,16 +13,16 @@
       :for="name"
       :data-testid="label"
     >
-      {{ label }} <RedDot v-if="isCumpulsory"
-    /> <span
+      {{ label }} <RedDot v-if="isCumpulsory" />
+      <span
         v-if="info"
         data-toggle="tooltip"
         data-placement="top"
         :title="infoTitle"
         class="cursor-pointer h-4 w-4 flex items-center justify-center"
       >
-        <AppIcon icon="quill:info" iconClass="text-gray-600" />
-      </span></label>
+        <AppIcon icon="quill:info" iconClass="text-gray-600" /> </span
+    ></label>
     <div class="relative flex items-center" :class="horizontal ? 'flex-1' : ''">
       <input
         :type="types"
@@ -57,7 +57,11 @@
         modelValue="modelValue"
       />
 
-      <div :class="`flex text-xl absolute  ${iconPosition === 'left' ? 'left-[14px]' : 'right-[14px]'} top-1/2 -translate-y-1/2`">
+      <div
+        :class="`flex text-xl absolute  ${
+          iconPosition === 'left' ? 'left-[14px]' : 'right-[14px]'
+        } top-1/2 -translate-y-1/2`"
+      >
         <span
           v-if="hasicon"
           @click="toggleType"
@@ -79,8 +83,9 @@
           <AppIcon icon="bi:check-lg" />
         </span>
         <span v-if="icon" class="text-[#667085]">
-          <AppIcon :icon="icon"  iconClass="text-[#667085]" />
+          <AppIcon :icon="icon" iconClass="text-[#667085]" />
         </span>
+        <span class="text-sm"> <slot name="suffix"></slot></span>
       </div>
       <slot name="content"></slot>
     </div>
@@ -199,6 +204,9 @@ export default {
     },
     info: {
       type: Boolean,
+    },
+    suffix: {
+      default: "",
     },
   },
   data() {

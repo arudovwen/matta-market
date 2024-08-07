@@ -1,13 +1,16 @@
 <template>
   <div>
-    <label for="upload" v-if="label" class="block text-sm mb-[10px] text-[#344054]"
+    <label
+      for="upload"
+      v-if="label"
+      class="block text-sm mb-[10px] text-[#344054]"
       >{{ label }} <RedDot v-if="isCumpulsory"
     /></label>
     <div
       class="flex-1 rounded-lg py-1 pr-[14px] pl-2 h-11 text-sm w-full border border-[##EAECF0] placeholder:text-[#B6B7B9] bg-[#F9FAFB] focus:outline-matta-black/20 flex items-center"
     >
       <input
-      id="upload"
+        id="upload"
         ref="fileInputRef"
         type="file"
         class="hidden"
@@ -34,7 +37,7 @@
 
       <span
         class="flex-1 px-4 truncate text-[#999999] inline-block max-w-[300px] xl:max-w-[380px]"
-        >{{ multiple ? multiUrls.join() : title }}</span
+        >{{ multiple ? multiUrls.join() : title || placeholder }}</span
       >
     </div>
   </div>
@@ -66,8 +69,10 @@ const props = defineProps({
   },
   isCumpulsory: {
     default: false,
-  
   },
+  placeholder:{
+    default:""
+  }
 });
 const emits = defineEmits(["update:modelValue"]);
 const handleChange = inject("handleChange");
@@ -96,11 +101,11 @@ function handleEvent(e) {
     loading.value = true;
     const data = { base64: base64String, ext: `.${fileExtension}` };
     // Assuming canvas and uploaddocument are available
-   
+
     uploaddocument(data)
       .then((res) => {
         loading.value = false;
-        handleChange &&  handleChange(props.id, res.data.message);
+        handleChange && handleChange(props.id, res.data.message);
         emits("update:modelValue", res.data.message);
       })
       .catch((error) => {

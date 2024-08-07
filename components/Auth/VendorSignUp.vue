@@ -1,9 +1,10 @@
 <template>
   <h1 v-if="!main" class="text-[#333] darks:text-white text-xl font-bold mb-6">
     Create an Account
-    </h1>
-  
+  </h1>
+
   <form
+    v-if="step === 1"
     @submit.prevent="onSubmit"
     class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-5"
   >
@@ -64,7 +65,7 @@
         v-bind="companyNameAtt"
         v-model="companyName"
         :error="errors.companyName"
-        :isCumpulsory="type !== 'register'"
+        :isCumpulsory="type !== 'register' && main"
       />
     </div>
     <div>
@@ -129,27 +130,41 @@
       <span
         v-else
         @click="emits('toggleAuth', 'login')"
-        class="font-semibold text-[#2176FF]"
+        class="font-semibold text-[#2176FF] cursor-pointer"
         >Login</span
       >
     </span>
   </form>
+  <AuthOtp
+    v-if="step === 2"
+    title="Account Activation"
+    :isVerifyPin="isVerifyPin"
+    @close="step = 1"
+    buttonText="Verify OTP"
+    @handleSubmit="handleFinalSubmit"
+    :isLoading="isLoading"
+    :email="email || route.query.email"
+    subtext="We have sent a one time passcode to your email address, Get the OTP from your email and enter it here to activate your account."
+  />
 </template>
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { registerUser } from "~/services/authservices";
+import { registerUser, confirm2FA } from "~/services/authservices";
 
 const props = defineProps({
   main: {
     default: true,
   },
 });
-const emits = defineEmits(["toggleAuth"]);
+const emits = defineEmits(["close", "toggleAuth"]);
 const route = useRoute();
 const { type } = route.params;
 const agree = ref(false);
+const authStore = useAuthStore();
+const step = inject("step");
+const isVerifyPin = ref(false);
 const isLoading = ref(false);
 const formValues = {
   email: "",
@@ -158,7 +173,7 @@ const formValues = {
   phone: "",
   password: "",
   confirmPassword: "",
-  business_UserType: type === "register" ? 0 : 1,
+  business_UserType: type === "register" || !props.main ? 0 : 1,
   companyName: "",
 };
 const schema = yup.object({
@@ -208,14 +223,9 @@ const onSubmit = handleSubmit((values) => {
   registerUser({ ...values })
     .then((res) => {
       if (res.status === 200) {
-        toast.info(
-          "Sign up successful, Complete registration via link sent to your email"
-        );
-        if (props.main) {
-          router.push("/registration-success");
-        } else {
-          emits("toggleAuth", "login");
-        }
+        isVerifyPin.value = true;
+        step.value = 2;
+        isLoading.value = false;
       }
     })
 
@@ -230,4 +240,40 @@ const onSubmit = handleSubmit((values) => {
       }
     });
 });
+const handleFinalSubmit = (code) => {
+  isLoading.value = true;
+  confirm2FA({ code, email: email.value || route.query.email })
+    .then((res) => {
+      if (res.status === 200) {
+        isLoading.value = false;
+        toast.success("Sign up successful");
+        authStore.setLoggedUser(res.data.data);
+        authStore.setHasPin(res.data.data.hasTransactionPIN);
+        localStorage.setItem("fetchCart", true);
+        if (props.main) {
+          if (
+            !res.data.data?.onboardingPageStatus &&
+            res.data.data?.businessUserType.toLowerCase() === "supplier"
+          ) {
+            // toast.info("Login successful");
+            window.location.replace("/products");
+            return;
+          }
+          window.location.replace("/");
+        } else {
+          emits("close");
+        }
+      }
+    })
+
+    .catch((err) => {
+      isLoading.value = false;
+
+      if (!err?.response?.data) return;
+      const { data } = err.response;
+      if (data?.message || data?.Message) {
+        toast.error(data?.message || data?.Message);
+      }
+    });
+};
 </script>

@@ -31,21 +31,21 @@
       </div>
     </div>
     <div v-if="active !== 3">
-      <span
+      <!-- <span
         @click="isOpen = true"
         class="mb-2 text-primary text-xs"
         v-if="!authStore.isLoggedIn"
         >Log In to speed up your request
         <i class="uil uil-arrow-up-right text-x"></i
-      ></span>
-      <div class="flex justify-between gap-x-2 items-center mt-8">
-        <button
+      ></span> -->
+      <div class="flex justify-end gap-x-4 items-center mt-8">
+        <!-- <button
           @click="emit('togglePopup')"
           type="button"
           class="appearance-none border w-1/2 leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
         >
           Cancel
-        </button>
+        </button> -->
         <button
           v-if="active > 1"
           @click="active--"
@@ -64,7 +64,7 @@
       </div>
     </div>
     <div v-if="active === 3">
-      <div class="grid grid-cols-2 justify-between gap-x-2 items-center mt-8">
+      <div class="grid grid-cols-2 justify-between gap-x-4 items-center mt-8">
         <NuxtLink to="/procurement/my-requests">
           <button
             type="button"
@@ -90,30 +90,33 @@ import { useStore } from "vuex";
 import { newquote } from "~/services/quoteservice";
 import useVuelidate from "@vuelidate/core";
 import { required, numeric, helpers } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import { getCompanyProfile } from "~/services/settingservices";
 
-onMounted(() => {
-  getCompanyProfile().then((res) => {
-    quoteForm.buyerBusinessName = res.data.data.companyName;
-  });
-});
-const type = ref("login")
-const supplierStore = useSupplierStore()
+const type = ref("login");
+const supplierStore = useSupplierStore();
 const togglePopup = inject("togglePopup");
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 const store = useStore();
 const product = inject("product");
+onMounted(() => {
+  if (authStore?.isLoggedIn) {
+    getCompanyProfile().then((res) => {
+      quoteForm.buyerBusinessName = res.data.data.companyName;
+    });
+  }
+});
 const quoteForm = reactive({
   sellerId: product.value?.supplierId,
   seller: supplierStore.supplierData?.companyName,
   productId: product.value?.id,
-  productImg: product.value?.gallery[0],
+  productImg: product.value?.gallery?.[0],
   productName: product.value?.name,
+  brand: product.value?.productBrandName,
   producerId: product.value?.producer.id,
   producer: product.value?.producer.title,
   buyerBusinessName: "",
-  requestedBy: authStore?.userInfo?.fullName,
+  requestedBy: authStore?.isLoggedIn ? authStore?.userInfo?.fullName : "",
   sellerName: supplierStore.supplierData?.companyName,
   market: "",
   productUse: "",
@@ -123,11 +126,10 @@ const quoteForm = reactive({
   contactPhone: "",
   additionalInformation: "",
   phoneCode: "+234",
-  phone: null,
+  contactPhone: null,
   package: null,
   applications: "",
 });
-
 
 const showAuth = ref(false);
 const isOpen = ref(false);
@@ -142,13 +144,16 @@ const myrules1 = {
   expectedVolume: { required },
   package: { required },
   unit: { required },
+  brand: { required },
 };
-const validPhoneLength = (value) =>
-  quoteForm.phoneCode === "+234" ? value.length > 9 && value.length < 15 : true;
+
 const myrules2 = {
   deliverAddress: { required },
-  phone: {
+  contactPhone: {
     required,
+  },
+  requestedBy:{
+    required
   },
   additionalInformation: {},
 };
@@ -161,7 +166,7 @@ async function handleSubmit() {
   const validity2 = await request2$.value.$validate();
   if (!validity1 || !validity2) return;
   isLoading.value = true;
-  quoteForm.contactPhone = `${quoteForm.phoneCode} - ${quoteForm.phone}`;
+
   newquote(quoteForm)
     .then((res) => {
       if (res.status === 200) {
@@ -172,7 +177,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 function toggleAuth() {
@@ -197,11 +202,11 @@ async function toggleNext() {
       return;
     }
   }
-  if (active.value == 2 && !isLoggedIn.value) {
-    showAuth.value = true;
-    return;
-  }
-  if (active.value == 2 && isLoggedIn.value) {
+  // if (active.value == 2 && !isLoggedIn.value) {
+  //   showAuth.value = true;
+  //   return;
+  // }
+  if (active.value == 2) {
     handleSubmit();
     return;
   }
@@ -221,6 +226,9 @@ provide("toggleAuth", toggleAuth);
 provide("request1$", request1$);
 provide("request2$", request2$);
 provide("quoteForm", quoteForm);
-provide("type", type)
-provide("isOpen", showAuth)
+provide("type", type);
+provide("isOpen", showAuth);
+provide("action", null);
+provide("handleOrderRequest", null);
+provide("handleProceed", null);
 </script>

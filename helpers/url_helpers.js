@@ -2,6 +2,7 @@ const urls = {
   //Auth urls
   LOGIN_USER: "v1/account/login",
   LOGIN_USER_2FA: "v1/account/login2fa",
+  CONFIRM_2FA: "v1/account/confirm-2fa",
   REGISTER: "/v1/register",
   RESEND_VERIFICATION: "/v1/register/resendverification",
   REGISTER_INVITED_USER: "/v1/account/registerbusinessuser",
@@ -193,6 +194,7 @@ const urls = {
   WITHDRAW_FUNDS: "v1/wallet/withdraw",
   GET_WITHDRAW_CHARGE: "v1/wallet/get-withdrawalfee",
   GET_DEPOSIT_CHARGE: "v1/wallet/get-depositfee",
+  WALLET_REPAYMENT: "v1/wallet/repayment",
 
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",

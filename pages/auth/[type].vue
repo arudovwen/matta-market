@@ -1,31 +1,33 @@
 <template>
   <div
-    class="py-8 w-full h-full flex flex-col gap-y-8 max-h-max overflow-y-auto"
+    class="pb-6 w-full h-full flex flex-col gap-y-8 max-h-max overflow-y-auto"
   >
     <div class="flex flex-col justify-center flex-1">
       <div class="w-full max-w-[650px] mx-auto py-2">
-        <h1 class="text-[#333] darks:text-white mb-[10px] text-3xl font-bold">
-          Create an account
-        </h1>
-        <p class="mb-10 text-sm text-[#666] darks:text-white/80">
-          Enter your details to create an account.
-        </p>
-        <div class="mb-8 flex gap-x-6 items-center w-full">
+        <div v-if="step == 1">
+          <h1 class="text-[#333] darks:text-white mb-[4px] text-2xl font-bold">
+            Create an account
+          </h1>
+          <p class="mb-10 text-sm text-[#666] darks:text-white/80">
+            Enter your details to create an account.
+          </p>
+        </div>
+        <div class="mb-8 flex gap-x-6 items-center w-full" v-if="step == 1">
           <button
             @click="navigateTo(n.url)"
             v-for="n in options"
             :key="n.title"
-            class="flex flex-col justify-center gap-y-[6px] items-center rounded-xl p-6 flex-1 border"
+            class="flex flex-col justify-center gap-y-[6px] items-center rounded-xl py-4 px-8 flex-1 border"
             :class="
               n.type === type
                 ? ' border-[#1570EF] text-white bg-[#1570EF] shadow-[0px_4px_6px_-2px_#10182808_0px_12px_16px_-4px_#10182814]'
                 : 'border-[#D0D5DD]'
             "
           >
-            <span class="block text-[28px]"><AppIcon :icon="n.icon" /></span>
+            <span class="block text-[24px]"><AppIcon :icon="n.icon" /></span>
             <span class="block font-medium text-sm">{{ n.title }}</span>
             <span
-              class="block font-medium text-[10px]"
+              class="block font-medium text-[11px]"
               :class="n.type === type ? 'text-white' : 'text-[#667085]'"
               >{{ n.sub }}</span
             >
@@ -43,7 +45,9 @@ definePageMeta({
   layout: "register",
   middleware: "auth",
 });
+
 const route = useRoute();
+const step = ref(1);
 const { type } = route.params;
 const options = [
   {
@@ -61,4 +65,10 @@ const options = [
     sub: "For merchants who wants to sell their products",
   },
 ];
+onMounted(() => {
+  if (route.query.step) {
+    step.value = Number(route.query.step);
+  }
+});
+provide("step", step);
 </script>

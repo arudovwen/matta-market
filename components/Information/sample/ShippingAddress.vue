@@ -54,7 +54,7 @@
         class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >Address</label
       >
-      <Listbox v-model="selectedoption">
+      <Listbox v-if="authStore.isLoggedIn" v-model="selectedoption">
         <div class="relative w-full">
           <ListboxButton
             class="relative w-full cursor-default rounded-lg min-h-[40px] border border-[#DCDEE6] py-2 px-[15px] text-left shadow-[0px_1px_2px_rgba(16,24,40,0.05)] sm:text-[13px] flex items-center"
@@ -130,6 +130,13 @@
           </transition>
         </div>
       </Listbox>
+      <input
+        v-else
+        id="additionalInformation"
+        v-model="request2$.shippingAddressId.$model"
+        placeholder=""
+        class="placeholder:text-xs rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+      />
       <div
         class="text-red-500 mt-1"
         v-for="error of request2$.shippingAddressId.$errors"
@@ -183,6 +190,7 @@ import {
   ListboxOption,
 } from "@headlessui/vue";
 
+const authStore = useAuthStore();
 const request2$ = inject("request2$");
 const sampleForm = inject("sampleForm");
 const isOpen = ref(false);
