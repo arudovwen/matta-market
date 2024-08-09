@@ -160,7 +160,6 @@ const schema = yup.object({
   amount: yup.number().required("Amount is required").max(yup.ref("max")),
   repaymentType: yup.string().required("Country is required"),
 });
-
 const { handleSubmit, defineField, errors } = useForm({
   validationSchema: schema,
   initialValues: formValues,
