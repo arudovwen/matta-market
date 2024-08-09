@@ -19,7 +19,7 @@
         />
       </div>
      </div>
-      <div  class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/images/search.png')] rounded-lg"></div>
+      <div  class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/buyright.png')] rounded-lg"></div>
     </div>
   </section>
 </template>

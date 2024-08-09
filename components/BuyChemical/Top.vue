@@ -34,7 +34,7 @@
 
     <div
     
-      class="top_image h-[200px] xl:h-[516px] w-full"
+      class="top_image h-[200px] xl:h-[516px] w-full rounded-lg"
     ></div>
   </div>
 
@@ -69,8 +69,9 @@ provide("isOpen", isOpen);
 </script>
 <style scoped>
 .top_image {
-  background-image: url("/top.png");
+  background-image: url("/buytop.png");
   background-size: cover;
   background-repeat: repeat;
+  background-position: center;
 }
 </style>
