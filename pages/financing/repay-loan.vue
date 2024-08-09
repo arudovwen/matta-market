@@ -130,7 +130,7 @@ import { nanoid } from "nanoid";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { getWalletBalance, c } from "~/services/walletservice";
+import { getWalletBalance, walletRepayment } from "~/services/walletservice";
 import { payWithMonnify } from "~/utils/monnify";
 
 const authStore = useAuthStore();
@@ -160,7 +160,6 @@ const schema = yup.object({
   amount: yup.number().required("Amount is required").max(yup.ref("max")),
   repaymentType: yup.string().required("Country is required"),
 });
-
 const { handleSubmit, defineField, errors } = useForm({
   validationSchema: schema,
   initialValues: formValues,
@@ -199,14 +198,17 @@ function makePayment(values) {
     name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
     amount: values?.amount,
     phoneNumber: authStore.userInfo?.phoneNumber,
-    reference: `RPM-${props.detail?.financeRequestNo}-${nanoid(6)}`,
+    reference: `RPM-${props?.detail?.financeRequestNo}-${nanoid(6)}`,
     ...values,
   };
 
   if (active.value === "monnify") {
     payWithMonnify(data.value, onModalClose, onSuccess);
   } else {
-    walletRepayment(values)
+    walletRepayment({
+      ...values,
+      financeRequestNo: props?.detail?.financeRequestNo,
+    })
       .then((res) => {
         if (res.status === 200) {
           isSuccessOpen.value = true;
