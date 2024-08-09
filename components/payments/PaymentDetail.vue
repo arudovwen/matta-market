@@ -28,8 +28,8 @@
 import { ref, provide } from "vue";
 import CardDetail from "./CardDetail";
 import Modal from "~/components/IndexModal";
-import PaymentMethod from "./PaymentMethod";
-import RemovePayment from "./RemovePayment";
+import PaymentMethod from "./PaymentMethod.vue";
+import RemovePayment from "./RemovePayment.vue";
 
 const showing = ref("");
 const isOpen = ref(false);
