@@ -11,12 +11,14 @@
     </div>
 
     <div class="grid grid-cols-1 gap-y-5 mb-7">
+     <div class="relative z-[999] ">
       <FormGroup name="title" :error="errors.title" label="Package type" isCumpulsory info
         infoTitle="Kindly select from the list the appropriate type of product package">
         <SelectVueSelect v-model="title" :options="packageForms" :reduce="(title) => title.value"
-          placeholder="Select package" :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] ! cursor-pointer ${errors.title ? 'border-red-500' : 'border-[#D0D5DD]'
+          placeholder="Select package" :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] cursor-pointer ${errors.title ? 'border-red-500' : 'border-[#D0D5DD]'
             }`" />
       </FormGroup>
+     </div>
       <FormGroup name="purchaseAmount" label="Unit price" :error="errors.purchaseAmount" isCumpulsory info
         infoTitle="Please indicate the selling price for the selected unit of measurement">
         <CurrencyInput min="1" :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${errors.purchaseAmount ? 'border-red-500' : 'border-[#D0D5DD]'
@@ -25,23 +27,13 @@
             currencyDisplay: 'hidden',
           }" />
       </FormGroup>
-      <div>
+      <div class="relative z-[99]">
         <Textinput v-model="size" v-bind="sizeAtt" name="size" placeholder="" type="text" :error="errors.size"
           isCumpulsory label="Package Size" info
           infoTitle="Indicate what quantity of unit of measurement makes up the selected package type">
-          <template #content>
-            <!-- <select
-              v-model="unit"
-              v-bind="unitAtt"
-              name="unit"
-              class="outline-none absolute right-2 w-max"
-            >
-              <option v-for="i in measurements" :key="i.value" :value="i.value">
-                {{ i.name }}
-              </option>
-            </select> -->
-            <SelectVueSelect :id="`size-dropdown`" class-input="size-dropdown" v-model="unit" :vbind="unitAtt"
-              :options="measurements" :reduce="(title) => title.value" placeholder="Select package size" />
+          <template #suffix>
+            <SelectVueSelect :id="`size-dropdown`" class-input="!border-none" :clearable="false" v-model="unit" :vbind="unitAtt"
+              :options="minimeasurements" :reduce="(title) => title.value" placeholder="Select package size" />
           </template>
         </Textinput>
 
@@ -53,12 +45,12 @@
         </div>
       </div>
 
-      <Textinput label="appearance" v-model="color" v-bind="colorAtt" name="color" placeholder="" type="text"
-        :error="errors.color" class="!" info infoTitle="What is the colour of the product?" />
+      <Textinput isCumpulsory label="appearance" v-model="color" v-bind="colorAtt" name="color" placeholder="" type="text"
+        :error="errors.color" class="!" info infoTitle="What is the appearance of the product?" />
 
       <Textinput label="Purity and Grade" v-model="purity" v-bind="purityAtt" name="purity" placeholder="" min="0"
         max="100" :error="errors.purity" icon="ic:baseline-percent" hasIcon info
-        infoTitle=" Kindly state the purity of the product if known" />
+        infoTitle=" Kindly state the purity and grade of the product if known" />
 
       <div>
         <label for="isAvailable" class="flex item-center leading-[normal]">
@@ -78,17 +70,15 @@
 </template>
 <style lang="scss">
 #size-dropdown>div>div>div>.vs__dropdown-toggle {
-  height: 20px;
-  min-width: 160px;
-  border-left: none;
+  height: 16px;
+  border: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-
-#size {
-  border-right: none;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+#size-dropdown{
+  input.vs__search{
+    display:none
+  }
 }
 </style>
 <script setup>
@@ -167,13 +157,13 @@ const packageForms = [
 const packFormSchema = yup.object({
   title: yup.string().required("Select a package"),
   purchaseAmount: yup.string().required("Amount is required"),
-  color: yup.string().nullable().required(),
+  color: yup.string().nullable().required("Value is required"),
   purity: yup
     .number()
     .typeError("Invalid value")
     .max(100, "Maximum is 100")
     .nullable().notRequired(),
-  size: yup.number().typeError("Invalid value").required("Amount is required"),
+  size: yup.number().typeError("Invalid value").required("Value is required"),
   isAvailable: yup.boolean(),
   unit: yup.string(),
   id: yup.string(),
@@ -184,8 +174,8 @@ const { handleSubmit, defineField, errors, setValues } = useForm({
   initialValues: packForm,
 });
 
-const [title, titleAtt] = defineField("title");
-const [purchaseAmount, purchaseAmountAtt] = defineField("purchaseAmount");
+const [title] = defineField("title");
+const [purchaseAmount] = defineField("purchaseAmount");
 const [color, colorAtt] = defineField("color");
 const [size, sizeAtt] = defineField("size");
 const [isAvailable, isAvailableAtt] = defineField("isAvailable");

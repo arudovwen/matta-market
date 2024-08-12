@@ -194,6 +194,7 @@ const urls = {
   WITHDRAW_FUNDS: "v1/wallet/withdraw",
   GET_WITHDRAW_CHARGE: "v1/wallet/get-withdrawalfee",
   GET_DEPOSIT_CHARGE: "v1/wallet/get-depositfee",
+  WALLET_REPAYMENT: "v1/Financing/finanncing/wallet-repay",
 
   //beneficiaries
   ADD_BENEFICIARY: "v1/beneficiaryaccount/add",
