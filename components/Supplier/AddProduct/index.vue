@@ -12,9 +12,9 @@
 
     <div class="mt-[50px]" v-if="!isPageLoading">
       <ProductInfo v-if="active == 1" />
-      <ProductProperties v-if="active == 2" />
-      <ProductDocuments v-if="active == 3" />
-      <AdditionalInformation v-if="active == 4" />
+      <ProductProperties v-if="active == 3" />
+      <ProductDocuments v-if="active == 2" />
+      <!-- <AdditionalInformation v-if="active == 4" /> -->
     </div>
     <div class="text-center p-6 lg:p-8 my-28" v-else>
       <AppLoader />
@@ -101,7 +101,7 @@ const producers = ref([]);
 const form = reactive({
   id: "",
   name: "",
-  pickUpLocationId: "",
+  pickUpLocationId: null,
   manufacturer: "",
   markets: [],
   marketApplications: [],

@@ -11,14 +11,14 @@
     </div>
 
     <div class="grid grid-cols-1 gap-y-5 mb-7">
-     <div class="relative z-[999] ">
-      <FormGroup name="title" :error="errors.title" label="Package type" isCumpulsory info
-        infoTitle="Kindly select from the list the appropriate type of product package">
-        <SelectVueSelect v-model="title" :options="packageForms" :reduce="(title) => title.value"
-          placeholder="Select package" :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] cursor-pointer ${errors.title ? 'border-red-500' : 'border-[#D0D5DD]'
-            }`" />
-      </FormGroup>
-     </div>
+      <div class="relative z-[999] ">
+        <FormGroup name="title" :error="errors.title" label="Package type" isCumpulsory info
+          infoTitle="Kindly select from the list the appropriate type of product package">
+          <SelectVueSelect v-model="title" :options="packageForms" :reduce="(title) => title.value"
+            placeholder="Select package" :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] cursor-pointer ${errors.title ? 'border-red-500' : 'border-[#D0D5DD]'
+              }`" />
+        </FormGroup>
+      </div>
       <FormGroup name="purchaseAmount" label="Unit price" :error="errors.purchaseAmount" isCumpulsory info
         infoTitle="Please indicate the selling price for the selected unit of measurement">
         <CurrencyInput min="1" :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer ${errors.purchaseAmount ? 'border-red-500' : 'border-[#D0D5DD]'
@@ -32,8 +32,9 @@
           isCumpulsory label="Package Size" info
           infoTitle="Indicate what quantity of unit of measurement makes up the selected package type">
           <template #suffix>
-            <SelectVueSelect :id="`size-dropdown`" class-input="!border-none" :clearable="false" v-model="unit" :vbind="unitAtt"
-              :options="minimeasurements" :reduce="(title) => title.value" placeholder="Select package size" />
+            <SelectVueSelect :id="`size-dropdown`" class-input="!border-none" :clearable="false" v-model="unit"
+              :vbind="unitAtt" :options="measurements" :reduce="(title) => title.value"
+              placeholder="Select package size" />
           </template>
         </Textinput>
 
@@ -41,12 +42,12 @@
           <span class="text-[#344054]">Package price:</span>
           <span class="font-medium">{{
             currencyFormat(size * purchaseAmount)
-          }}</span>
+            }}</span>
         </div>
       </div>
 
-      <Textinput isCumpulsory label="appearance" v-model="color" v-bind="colorAtt" name="color" placeholder="" type="text"
-        :error="errors.color" class="!" info infoTitle="What is the appearance of the product?" />
+      <Textinput isCumpulsory label="appearance" v-model="color" v-bind="colorAtt" name="color" placeholder=""
+        type="text" :error="errors.color" class="!" info infoTitle="What is the appearance of the product?" />
 
       <Textinput label="Purity and Grade" v-model="purity" v-bind="purityAtt" name="purity" placeholder="" min="0"
         max="100" :error="errors.purity" icon="ic:baseline-percent" hasIcon info
@@ -75,9 +76,10 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-#size-dropdown{
-  input.vs__search{
-    display:none
+
+#size-dropdown {
+  input.vs__search {
+    display: none
   }
 }
 </style>
@@ -181,6 +183,18 @@ const [size, sizeAtt] = defineField("size");
 const [isAvailable, isAvailableAtt] = defineField("isAvailable");
 const [purity, purityAtt] = defineField("purity");
 const [unit, unitAtt] = defineField("unit");
+
+function currencyFormat(price) {
+  let naira = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "NGN",
+    currencyDisplay: "narrowSymbol",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+  return naira.format(price || 0);
+}
+
 
 const onSubmit = handleSubmit((values) => {
   if (!props.detail) {

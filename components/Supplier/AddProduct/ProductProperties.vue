@@ -4,62 +4,127 @@
     <hr class="border-[#F4F7FE] my-10" />
     <FeaturedProp title="Technical Details & Test Data" type="technical" />
     <hr class="border-[#F4F7FE] my-10" />
-    <FeaturedProp
-      title="Regulatory & Compliance"
-      type="compliance"
-      :optional="true"
-    />
+    <FeaturedProp title="Regulatory & Compliance" type="compliance" :optional="true" />
 
     <hr class="border-[#F4F7FE] my-10" />
 
-    <div
-      class="bg-white rounded-lg  py-6 flex justify-between gap-x-4 items-center"
-    >
-      <button
+    <div class="bg-white rounded-lg py-6 flex justify-between gap-x-10 items-center">
+      <!-- <button
         type="button"
         @click="togglePreview"
-        class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
+        class="appearance-none leading-none px-10 py-[10px] rounded-lg text-primary border-primary  border hover:bg-gray-300 text-[13px]"
       >
         Preview
       </button>
-      <div class="flex justify-center gap-x-3 lg:gap-x-4 items-center">
-        <button
-          type="button"
-          @click="toggleNext(1)"
-          class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
-        >
-          Back
-        </button>
-        <button
-          :disabled="isLoading || v$.$silentErrors.length"
-          :class="{
-            'opacity-60 cursor-not-allowed': isLoading,
-          }"
-          type="submit"
-          class="appearance-none leading-none px-6  lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
-        >
-        {{isLoading?"Saving...":"Save and continue"}}
-        </button>
-      </div>
+      <div class="flex justify-center gap-x-4 items-center"> -->
+      <button type="button" @click="toggleNext(2)"
+        class="appearance-none leading-none px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]">
+        Back
+      </button>
+      <button :disabled="isLoading || v$.$silentErrors.length" :class="{
+        'opacity-60 cursor-not-allowed': isLoading,
+      }" type="submit"
+        class="appearance-none leading-none  px-5  lg:px-10px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]">
+        Complete
+      </button>
+      <!-- </div> -->
     </div>
   </form>
 </template>
 
 <script setup>
 import { ref, provide, onMounted, inject } from "vue";
-import FeaturedProp from "./FeaturedProp";
-import { toast } from "vue3-toastify";
+import FeaturedProp from "./FeaturedProp.vue";
 import { updateProperties } from "~/services/productservices";
 import { useRoute, useRouter } from "vue-router";
 import useVuelidate from "@vuelidate/core";
+import { helpers, required } from "@vuelidate/validators";
+import { toast } from "vue3-toastify";
+
+const propertiesRules = {
+  // pickUpLocationId: {
+  //   required,
+  // },
+  // packagesAvailable: {
+  //   required: helpers.withMessage("At least 1 package is required", required),
+  // },
+  propertyItems: {
+    property: {
+      propertyItems: {
+        required,
+        $each: helpers.forEach({
+          property: {
+            required,
+          },
+          propertyValue: {
+            required,
+          },
+        }),
+      },
+    },
+
+    technical: {
+      propertyItems: {
+        required,
+        $each: helpers.forEach({
+          property: {
+            required,
+          },
+          propertyValue: {
+            required,
+          },
+        }),
+      },
+    },
+    // applications: {
+    //   propertyItems: {
+    //     required,
+    //     $each: helpers.forEach({
+    //       property: {
+    //         required,
+    //       },
+    //       propertyValue: {
+    //         required,
+    //       },
+    //     }),
+    //   },
+    // },
+    // features: {
+    //   propertyItems: {
+    //     $each: helpers.forEach({
+    //       property: {
+    //         required,
+    //       },
+    //       propertyValue: {
+    //         required,
+    //       },
+    //     }),
+    //   },
+    // },
+    compliance: {
+      propertyItems: {
+        $each: helpers.forEach({
+          property: {
+            required,
+          },
+          propertyValue: {
+            required,
+          },
+        }),
+      },
+    },
+  },
+};
+
 const route = useRoute();
 const router = useRouter();
-
 const toggleNext = inject("toggleNext");
-const togglePreview = inject("togglePreview");
-const form = inject("form");
 
-const v$ = useVuelidate(productrules, form);
+const form = inject("form");
+const rules = {
+  ...propertiesRules,
+};
+const v$ = useVuelidate(rules, form);
 
 onMounted(() => {
   form.productId = route.query.id;
@@ -75,6 +140,7 @@ function addPropertyValue(val) {
 }
 provide("addPropertyValue", addPropertyValue);
 provide("addProperty", addProperty);
+
 async function handleSubmit() {
   const validity = await v$.value.$validate();
   if (!validity) return;
@@ -87,17 +153,16 @@ async function handleSubmit() {
           position: "bottom",
           duration: 4000,
         });
-        isLoading.value = false;
-        router.push(
-          `/storefront/products/${route.params.process}?id=${route.query.id}&stage=3`
-        );
+        router.push(`/storefront/products`);
       }
     })
 
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+      toast.error(err.response?.data?.Message, {
+        position: "bottom",
+      });
     });
 }
 provide("form", form);
