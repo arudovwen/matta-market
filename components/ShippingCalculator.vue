@@ -130,7 +130,7 @@ watch(
       requestError.value = null;
       cost.value = null;
       axios
-        .post("https://52.90.2.45:8091/api/Anonymous/shipping-cost", {
+        .post("https://dev.gateway.deltalog.co/api/Anonymous/shipping-cost", {
           ...values,
           size: parseInt(values.size),
         })

@@ -462,7 +462,7 @@ const loading = ref(false);
 
 const sendEnquiry = (values) => {
   loading.value = true;
-  fetch("http://52.90.2.45:8091/api/Anonymous/enquiry", {
+  fetch("https://dev.gateway.deltalog.co/api/Anonymous/enquiry", {
     method: "POST",
     body: JSON.stringify({
       ...values,
