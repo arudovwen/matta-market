@@ -80,6 +80,7 @@
       :url="emptyUrl"
       :btnText="emptyBtnText"
       :type="emptyType"
+      :titleClass="emptyTitleClass"
     />
     <TableLoader v-if="isLoading" />
   </div>
@@ -170,6 +171,9 @@ const props = defineProps({
   },
   isBalance: {
     default: false,
+  },
+  emptyTitleClass: {
+    default: "©=",
   },
 });
 const emits = defineEmits(["onSearch", "onFilter", "onDateChange"]);

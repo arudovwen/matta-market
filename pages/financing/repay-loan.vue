@@ -121,6 +121,7 @@
       () => {
         isOpen = false;
         isSuccessOpen = false;
+        $router.go(0);
       }
     "
   />

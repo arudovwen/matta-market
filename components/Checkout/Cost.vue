@@ -13,8 +13,10 @@
         :columns="columns"
         :rows="rows"
         :isBalance="true"
-        :emptyTitle="error"
+        emptyTitle="Provide a valid shipping address above to get an estimate of your shipping and handling cost"
         :isLoading="loading"
+        emptyType="shipping"
+        emptyTitleClass="font-bold text-[#F24A26]"
       />
     </div>
   </div>
@@ -59,14 +61,14 @@ function getData() {
   loading.value = true;
   cartStore.setLoadingCart(true);
   shippingBreakdown()
-	.then((res) => {
-			console.log("yooo");
+    .then((res) => {
+      console.log("yooo");
       cartStore.setLoadingCart(false);
       if (res.status === 200) {
-				rows.value = [
-					...res.data.data.items,
+        rows.value = [
+          ...res.data.data.items,
           {
-						item: "Total Cost",
+            item: "Total Cost",
             size: "",
             quantity: "",
             shippingCost: res.data.data.totalShippingCost,
@@ -74,13 +76,14 @@ function getData() {
         ].map((i) => ({ ...i, shippingCost: currencyFormat(i.shippingCost) }));
         error.value = null;
         cartStore.getMyCart();
-				loading.value = false;
+        loading.value = false;
       }
     })
     .catch((err) => {
       loading.value = false;
       cartStore.setLoadingCart(false);
-      error.value = err?.response?.data?.Message || err?.response?.data?.message;
+      error.value =
+        err?.response?.data?.Message || err?.response?.data?.message;
     });
 }
 
