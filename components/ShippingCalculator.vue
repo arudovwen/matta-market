@@ -35,8 +35,8 @@
           </FormGroup>
         </div>
         <div class="w-[48%]">
-          <Textinput v-model="size" v-bind="sizeAtt" name="size" placeholder="" type="number" :error="errors.size"
-            isCumpulsory label="Package Size" info
+          <Textinput v-model="size" v-bind="sizeAtt" name="size" placeholder="" type="number" isCumpulsory
+            label="Package Size" info
             infoTitle="Indicate what quantity of unit of measurement makes up the selected package type">
             <template #suffix>
               <SelectVueSelect :id="`size-dropdown`" class-input="!border-none" :clearable="false" v-model="unit"
