@@ -1,5 +1,6 @@
 <template>
-  <div class="w-[520px] h-auto max-h-[400px] rounded-lg border-gray border-2 bg-white px-8 border-box">
+  <div
+    class="w-full mb-8 h-fit rounded-lg justify-self-center border-gray border-2 bg-white pb-4 border-box py-auto mr-auto sm:py-4 sm:w-[520px] sm:mr-2 px-2 sm:px-8">
     <div class="w-full py-4">
       <span class="text-[#344054] font-bold text-xl">Shipping Calculator</span>
     </div>
