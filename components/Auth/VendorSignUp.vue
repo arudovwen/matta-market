@@ -33,8 +33,8 @@
         v-bind="confirmPasswordAtt" v-model="confirmPassword" :error="errors.confirmPassword" isCumpulsory />
     </div>
     <div class="lg:col-span-2">
-      <Textinput placeholder="" label="Referral Code" type="text" name="referralCode" v-bind="referralCodeAtt"
-        v-model="referralCode" :error="errors.referralCode" :isCumpulsory="false" />
+      <Textinput placeholder="" label="Referral Code" type="text" name="AgentReferralCode" v-bind="AgentReferralCodeAtt"
+        v-model="AgentReferralCode" :error="errors.AgentReferralCode" :isCumpulsory="false" />
     </div>
     <div class="lg:col-span-2 flex items-center text-[#333] darks:text-slate-400 text-xs lg:text-sm gap-x-[2px]">
       <Checkbox v-model.value="agree" label="I agree to the " labelClass="text-xs lg:text-sm" />
@@ -90,7 +90,7 @@ const formValues = {
   confirmPassword: "",
   business_UserType: type === "register" || !props.main ? 0 : 1,
   companyName: "",
-  referralCode: ""
+  AgentReferralCode: ""
 };
 const schema = yup.object({
   business_UserType: yup.string(),
@@ -118,7 +118,7 @@ const schema = yup.object({
     .string()
     .required("Confirm Password is required")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
-  referralCode: yup.string().notRequired()
+  AgentReferralCode: yup.string().notRequired()
 });
 
 const { handleSubmit, defineField, errors } = useForm({
@@ -133,7 +133,7 @@ const [lastName, lastNameAtt] = defineField("lastName");
 const [phone, phoneAtt] = defineField("phone");
 const [confirmPassword, confirmPasswordAtt] = defineField("confirmPassword");
 const [companyName, companyNameAtt] = defineField("companyName");
-const [referralCode, referralCodeAtt] = defineField("referralCode")
+const [AgentReferralCode, AgentReferralCodeAtt] = defineField("AgentReferralCode")
 const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
