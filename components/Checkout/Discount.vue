@@ -62,6 +62,7 @@ function handleSubmit() {
     });
 }
 function handleFirst() {
+  console.log("🚀 ~ handleFirst ~ handleFirst:");
   if (
     cartStore?.cartData?.firstOrder &&
     cartStore.cartId &&
@@ -69,6 +70,9 @@ function handleFirst() {
   ) {
     code.value = "1ST50KOFF";
     isApplied.value = true;
+    handleSubmit();
+  }
+  if (!cartStore?.cartData?.firstOrder && cartStore.cartId && code.value) {
     handleSubmit();
   }
 }

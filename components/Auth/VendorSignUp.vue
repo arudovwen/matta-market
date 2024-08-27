@@ -78,6 +78,7 @@
         v-model="password"
         :error="errors.password"
         isCumpulsory
+        hasicon
       />
     </div>
     <div>
@@ -90,6 +91,7 @@
         v-model="confirmPassword"
         :error="errors.confirmPassword"
         isCumpulsory
+        hasicon
       />
     </div>
     <div class="lg:col-span-2">
@@ -113,9 +115,9 @@
         labelClass="text-xs lg:text-sm"
       />
       <span>
-        <NuxtLink to="/terms" class="text-[#2176FF]">Terms </NuxtLink>
+        <NuxtLink to="/terms-and-conditions" class="text-[#2176FF]">Terms </NuxtLink>
         and
-        <NuxtLink to="/policy" class="text-[#2176FF]">Policy</NuxtLink>
+        <NuxtLink to="/privacy-policies" class="text-[#2176FF]">Policy</NuxtLink>
         of Matta Trade
       </span>
     </div>
