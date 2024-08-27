@@ -3,41 +3,115 @@
     Create an Account
   </h1>
 
-  <form v-if="step === 1" @submit.prevent="onSubmit" class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-5">
+  <form
+    v-if="step === 1"
+    @submit.prevent="onSubmit"
+    class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-5"
+  >
     <div>
-      <Textinput placeholder="" label="First name" type="text" name="firstName" v-bind="firstNameAtt"
-        v-model="firstName" :error="errors.firstName" isCumpulsory />
+      <Textinput
+        placeholder=""
+        label="First name"
+        type="text"
+        name="firstName"
+        v-bind="firstNameAtt"
+        v-model="firstName"
+        :error="errors.firstName"
+        isCumpulsory
+      />
     </div>
     <div>
-      <Textinput placeholder="" label="Last name" type="text" name="lasttName" v-bind="lastNameAtt" v-model="lastName"
-        :error="errors.lastName" isCumpulsory />
+      <Textinput
+        placeholder=""
+        label="Last name"
+        type="text"
+        name="lasttName"
+        v-bind="lastNameAtt"
+        v-model="lastName"
+        :error="errors.lastName"
+        isCumpulsory
+      />
     </div>
     <div>
-      <Textinput placeholder="Email address" label="Email" type="email" name="email" v-bind="emailAtt" v-model="email"
-        :error="errors.email" isCumpulsory />
+      <Textinput
+        placeholder="Email address"
+        label="Email"
+        type="email"
+        name="email"
+        v-bind="emailAtt"
+        v-model="email"
+        :error="errors.email"
+        isCumpulsory
+      />
     </div>
     <div>
-      <Textinput placeholder="" label="Phone number" type="tel" name="phone" v-bind="phoneAtt" v-model="phone"
-        :error="errors.phone" isCumpulsory />
+      <Textinput
+        placeholder=""
+        label="Phone number"
+        type="tel"
+        name="phone"
+        v-bind="phoneAtt"
+        v-model="phone"
+        :error="errors.phone"
+        isCumpulsory
+      />
     </div>
     <div class="lg:col-span-2">
-      <Textinput placeholder="" label="Company name" type="text" name="companyName" v-bind="companyNameAtt"
-        v-model="companyName" :error="errors.companyName" :isCumpulsory="type !== 'register' && main" />
+      <Textinput
+        placeholder=""
+        label="Company name"
+        type="text"
+        name="companyName"
+        v-bind="companyNameAtt"
+        v-model="companyName"
+        :error="errors.companyName"
+        :isCumpulsory="type !== 'register' && main"
+      />
     </div>
     <div>
-      <Textinput placeholder="" label="Password" type="password" name="password" v-bind="passwordAtt" v-model="password"
-        :error="errors.password" isCumpulsory />
+      <Textinput
+        placeholder=""
+        label="Password"
+        type="password"
+        name="password"
+        v-bind="passwordAtt"
+        v-model="password"
+        :error="errors.password"
+        isCumpulsory
+      />
     </div>
     <div>
-      <Textinput placeholder="" label="Confirm Password" type="password" name="confirmPassword"
-        v-bind="confirmPasswordAtt" v-model="confirmPassword" :error="errors.confirmPassword" isCumpulsory />
+      <Textinput
+        placeholder=""
+        label="Confirm Password"
+        type="password"
+        name="confirmPassword"
+        v-bind="confirmPasswordAtt"
+        v-model="confirmPassword"
+        :error="errors.confirmPassword"
+        isCumpulsory
+      />
     </div>
     <div class="lg:col-span-2">
-      <Textinput placeholder="" label="Referral Code" type="text" name="AgentReferralCode" v-bind="AgentReferralCodeAtt"
-        v-model="AgentReferralCode" :error="errors.AgentReferralCode" :isCumpulsory="false" />
+      <Textinput
+        placeholder=""
+        label="Referral Code (Optional)"
+        type="text"
+        name="AgentReferralCode"
+        v-bind="AgentReferralCodeAtt"
+        v-model="AgentReferralCode"
+        :error="errors.AgentReferralCode"
+        :isCumpulsory="false"
+      />
     </div>
-    <div class="lg:col-span-2 flex items-center text-[#333] darks:text-slate-400 text-xs lg:text-sm gap-x-[2px]">
-      <Checkbox v-model.value="agree" label="I agree to the " labelClass="text-xs lg:text-sm" />
+    <div
+      class="lg:col-span-2 flex items-center text-[#333] darks:text-slate-400 text-xs lg:text-sm gap-x-[2px]"
+    >
+      <Checkbox
+        v-model.value="agree"
+        label="I agree to the "
+        labelClass="text-xs lg:text-sm"
+      />
       <span>
         <NuxtLink to="/terms" class="text-[#2176FF]">Terms </NuxtLink>
         and
@@ -47,20 +121,43 @@
     </div>
 
     <div class="lg:col-span-2 grid gap-y-[22px] mb-9 mt-4">
-      <AppButton type="submit" :isLoading="isLoading" text="Create your account"
-        btnClass="normal-case btn-primary !py-3" :isDisabled="!agree || isLoading" />
+      <AppButton
+        type="submit"
+        :isLoading="isLoading"
+        text="Create your account"
+        btnClass="normal-case btn-primary !py-3"
+        :isDisabled="!agree || isLoading"
+      />
     </div>
     <span
-      class="lg:col-span-2 flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center">
+      class="lg:col-span-2 flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
+    >
       Already have an account?
-      <NuxtLink v-if="main" to="/auth/login" class="font-semibold text-[#2176FF]">Login</NuxtLink>
-      <span v-else @click="emits('toggleAuth', 'login')"
-        class="font-semibold text-[#2176FF] cursor-pointer">Login</span>
+      <NuxtLink
+        v-if="main"
+        to="/auth/login"
+        class="font-semibold text-[#2176FF]"
+        >Login</NuxtLink
+      >
+      <span
+        v-else
+        @click="emits('toggleAuth', 'login')"
+        class="font-semibold text-[#2176FF] cursor-pointer"
+        >Login</span
+      >
     </span>
   </form>
-  <AuthOtp v-if="step === 2" title="Account Activation" :isVerifyPin="isVerifyPin" @close="step = 1"
-    buttonText="Verify OTP" @handleSubmit="handleFinalSubmit" :isLoading="isLoading" :email="email || route.query.email"
-    subtext="We have sent a one time passcode to your email address, Get the OTP from your email and enter it here to activate your account." />
+  <AuthOtp
+    v-if="step === 2"
+    title="Account Activation"
+    :isVerifyPin="isVerifyPin"
+    @close="step = 1"
+    buttonText="Verify OTP"
+    @handleSubmit="handleFinalSubmit"
+    :isLoading="isLoading"
+    :email="email || route.query.email"
+    subtext="We have sent a one time passcode to your email address, Get the OTP from your email and enter it here to activate your account."
+  />
 </template>
 <script setup>
 import { useForm } from "vee-validate";
@@ -90,7 +187,7 @@ const formValues = {
   confirmPassword: "",
   business_UserType: type === "register" || !props.main ? 0 : 1,
   companyName: "",
-  AgentReferralCode: ""
+  AgentReferralCode: "",
 };
 const schema = yup.object({
   business_UserType: yup.string(),
@@ -118,7 +215,7 @@ const schema = yup.object({
     .string()
     .required("Confirm Password is required")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
-  AgentReferralCode: yup.string().notRequired()
+  AgentReferralCode: yup.string().notRequired(),
 });
 
 const { handleSubmit, defineField, errors } = useForm({
@@ -133,7 +230,8 @@ const [lastName, lastNameAtt] = defineField("lastName");
 const [phone, phoneAtt] = defineField("phone");
 const [confirmPassword, confirmPasswordAtt] = defineField("confirmPassword");
 const [companyName, companyNameAtt] = defineField("companyName");
-const [AgentReferralCode, AgentReferralCodeAtt] = defineField("AgentReferralCode")
+const [AgentReferralCode, AgentReferralCodeAtt] =
+  defineField("AgentReferralCode");
 const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {
@@ -152,8 +250,8 @@ const onSubmit = handleSubmit((values) => {
       if (err?.response?.data?.message || err?.response?.data?.Message) {
         toast.error(
           err?.response?.data?.message ||
-          err?.response?.data?.Message ||
-          "Something went wrong"
+            err?.response?.data?.Message ||
+            "Something went wrong"
         );
       }
     });
