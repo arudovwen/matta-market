@@ -62,7 +62,6 @@ function handleSubmit() {
     });
 }
 function handleFirst() {
-  console.log("🚀 ~ handleFirst ~ handleFirst:");
   if (
     cartStore?.cartData?.firstOrder &&
     cartStore.cartId &&
