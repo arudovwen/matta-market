@@ -49,6 +49,7 @@ function handleSubmit() {
       if (res.status === 200) {
         cartStore.getMyCart();
         loading.value = false;
+        isApplied.value = true;
         toast.success("Discount applied");
       }
     })
@@ -68,7 +69,6 @@ function handleFirst() {
     isApplied.value == false
   ) {
     code.value = "1ST50KOFF";
-    isApplied.value = true;
     handleSubmit();
   }
   if (!cartStore?.cartData?.firstOrder && cartStore.cartId && code.value) {
