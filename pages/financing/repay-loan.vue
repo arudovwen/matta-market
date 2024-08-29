@@ -33,7 +33,7 @@
       >
         <CurrencyInput
           min="1"
-          :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer placeholder:text-[14px] ${
+          :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white disabled:bg-gray-50 border !rounded-lg !text-[#475467] !h-11 cursor-pointer placeholder:text-[14px] ${
             errors.amount ? 'border-red-500' : 'border-[#D0D5DD]'
           }`"
           v-model="amount"
@@ -44,6 +44,7 @@
           :placeholder="`Amount left: ${currencyFormat(
             detail?.repaymentAmount - detail?.totalPayed
           )}`"
+          :disabled="repaymentType === 'full'"
         />
         <div
           v-if="amount > balance?.availableBalance && active === 'wallet'"
@@ -161,7 +162,7 @@ const schema = yup.object({
   amount: yup.number().required("Amount is required").max(yup.ref("max")),
   repaymentType: yup.string().required("Country is required"),
 });
-const { handleSubmit, defineField, errors } = useForm({
+const { handleSubmit, defineField, errors, setFieldValue } = useForm({
   validationSchema: schema,
   initialValues: formValues,
 });
@@ -232,5 +233,15 @@ onMounted(() => {
       balance.value = res.data.data;
     }
   });
+});
+
+watch(repaymentType, () => {
+  console.log("🚀 ~ watch ~ amount:", amount.value);
+  console.log("🚀 ~ watch ~ repaymentType:", repaymentType.value);
+  if (repaymentType.value === "full") {
+    amount.value =  props.detail?.repaymentAmount - props.detail?.totalPayed;
+  } else {
+    amonut.value = null;
+  }
 });
 </script>
