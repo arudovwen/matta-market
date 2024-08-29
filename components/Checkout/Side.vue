@@ -34,6 +34,14 @@
           -{{ currencyFormat(cartStore?.discountValue) }}
         </p>
       </div>
+      <div class="flex justify-between" v-if="cartStore?.referralDiscountValue">
+        <p class="text-sm text-[#E1E1E1]">Referral Discount</p>
+
+        <p class="text-white font-medium text-sm">
+          -{{ currencyFormat(cartStore?.referralDiscountValue) }}
+        </p>
+      </div>
+
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
 
