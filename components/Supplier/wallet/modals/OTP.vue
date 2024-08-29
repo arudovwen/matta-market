@@ -5,7 +5,7 @@
       class="min-w-[300px] mx-auto px-6 py-6"
     >
       <div class="mb-4">
-        <img alt="check" src="/images/mail.svg" class="block mx-auto" />
+        <img alt="check" src="/images/pin.svg" class="block mx-auto" />
       </div>
       <p class="block text-base font-semibold text-center mb-4">
         {{ title }}

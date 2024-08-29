@@ -30,7 +30,7 @@
           </div>
           <div class="overflow-x-auto max-w-[656px]">
             <DirectorsView
-              :directors="companyInfo.directors"
+              :directors="form.directors"
               :companyInfo="companyInfo"
               @handleDelete="handleDelete"
               @handleEdit="handleEdit"

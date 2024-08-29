@@ -2,6 +2,7 @@
   <div
     class="w-full rounded-[10px] border border-[#EAECF0] overflow-x-auto md:min-w-[560px] mx-auto"
   >
+  
     <table aria-describedby="true" v-if="directors.length" class="w-full">
       <thead>
         <tr>
