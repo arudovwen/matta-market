@@ -236,12 +236,8 @@ onMounted(() => {
 });
 
 watch(repaymentType, () => {
-  console.log("🚀 ~ watch ~ amount:", amount.value);
-  console.log("🚀 ~ watch ~ repaymentType:", repaymentType.value);
   if (repaymentType.value === "full") {
     amount.value =  props.detail?.repaymentAmount - props.detail?.totalPayed;
-  } else {
-    amonut.value = null;
   }
 });
 </script>
