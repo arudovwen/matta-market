@@ -25,7 +25,7 @@
         'opacity-60 cursor-not-allowed': isLoading,
       }" type="submit"
         class="appearance-none leading-none  px-5  lg:px-10px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]">
-        Complete
+        {{ isLoading ? "Saving..." : "Complete" }}
       </button>
       <!-- </div> -->
     </div>

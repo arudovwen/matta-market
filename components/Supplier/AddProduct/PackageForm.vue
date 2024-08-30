@@ -28,13 +28,13 @@
           }" />
       </FormGroup>
       <div class="relative z-[99]">
-        <Textinput v-model="size" v-bind="sizeAtt" name="size" placeholder="" type="text" :error="errors.size"
+        <Textinput v-model="size" v-bind="sizeAtt" name="size" placeholder="" type="text" :error="errors.size || errors.unit"
           isCumpulsory label="Package Size" info
           infoTitle="Indicate what quantity of unit of measurement makes up the selected package type">
           <template #suffix>
-            <SelectVueSelect :id="`size-dropdown`" class-input="!border-none" :clearable="false" v-model="unit"
+            <SelectVueSelect :id="`size-dropdown`" class-input="!border-none min-w-[90px] placeholder:text-xs" :clearable="false" v-model="unit"
               :vbind="unitAtt" :options="measurements" :reduce="(title) => title.value"
-              placeholder="Select package size" />
+              placeholder="Unit" />
           </template>
         </Textinput>
 
@@ -76,12 +76,14 @@
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-
 #size-dropdown {
   input.vs__search {
-    display: none
+::placeholder{
+  font-size: 12px
+}
   }
 }
+
 </style>
 <script setup>
 import * as yup from "yup";
@@ -95,6 +97,7 @@ import { useForm } from "vee-validate";
 import { v4 as uuidv4 } from "uuid";
 
 const form = inject("form");
+console.log("🚀 ~ form:", form)
 const props = defineProps({
   detail: {
     default: null,
@@ -167,7 +170,7 @@ const packFormSchema = yup.object({
     .nullable().notRequired(),
   size: yup.number().typeError("Invalid value").required("Value is required"),
   isAvailable: yup.boolean(),
-  unit: yup.string(),
+  unit: yup.string().required(),
   id: yup.string(),
 });
 
