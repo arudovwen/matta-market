@@ -422,7 +422,7 @@
   <ModalCenter>
     <template #default>
       <div class="w-full max-w-max p-6 md:py-9 md:px-10 z-[999] relative">
-        <EditForm @close="getData()" />
+        <EditForm @close="pickUpStore.getAlladdress()" />
       </div>
     </template>
   </ModalCenter>
@@ -464,9 +464,9 @@ import { helpers, required } from "@vuelidate/validators";
 import EditForm from "~/components/Checkout/pickup/EditForm.vue";
 
 const route = useRoute();
+const pickUpStore = usePickupStore()
 const router = useRouter();
 const toggleNext = inject("toggleNext");
-const locations = ref([]);
 const isLocationOpen = ref(false);
 const headers = computed(() => [
   "Name",
@@ -488,7 +488,7 @@ const rules = {
 const v$ = useVuelidate(rules, form);
 
 onMounted(() => {
-  getData();
+  pickUpStore.getAlladdress()
   form.productId = route.query.id;
 });
 
@@ -612,17 +612,9 @@ function editPackage(val) {
   isAddingPackage.value = true;
 }
 
-function getData() {
-  getallpickuplocations(route.params.SellerId).then((res) => {
-    if (res.status === 200) {
-      locations.value = res.data.data.map((i) => ({
-        label: i.address,
-        value: i.id,
-      }));
-    }
-  });
-}
-
+const locations = computed(() =>
+  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
+);
 const producerForm = reactive({
   title: "",
   location: "",
