@@ -1,14 +1,16 @@
 <template>
   <form class="px-4 lg:px-[30px]" @submit.prevent="handleSubmit">
-
-    <div class="mb-10 max-w-[654px] ">
-      <label
-        for=""
-        class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
-      >
-        <span>Pickup location </span>
-      </label>
-
+    <div
+      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10 mb-10"
+    >
+      <div class="w-full lg:w-[250px]">
+        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">
+          Pickup location<span class="text-red-500 mr-[.5px]">*</span>
+        </h2>
+        <!-- <p class="text-xs text-[#475467]">Provide package information here.</p> -->
+      </div>
+    <div class="max-w-[654px] w-full">
+     
       <VueSelect
         v-model="v$.pickUpLocationId.$model"
         :options="locations"
@@ -35,7 +37,7 @@
         </div>
       </div>
     </div>
-
+  </div>
     <div
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10 mb-10"
     >
@@ -137,141 +139,138 @@
       </div>
     </div>
 
-    
-      <div
-        class="flex gap-x-[56px] justify-start text-left flex-col lg:flex-row gap-y-7 lg:gap-y-10"
-      >
-        <div class="lg:w-[250px] text-left">
-          <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">
-            Product documents
-          </h2>
-          <p class="mb-5 flex items-center text-xs">
-            Please attach the manufacturer's MSDS, COA, and TDS here and
-            indicate the document type.
-          </p>
-        </div>
+    <div
+      class="flex gap-x-[56px] justify-start text-left flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    >
+      <div class="lg:w-[250px] text-left">
+        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">
+          Product documents
+        </h2>
+        <p class="mb-5 flex items-center text-xs">
+          Please attach the manufacturer's MSDS, COA, and TDS here and indicate
+          the document type.
+        </p>
+      </div>
 
-        <div class="max-w-[654px] w-full">
-          <Uploader @onGetFiles="onGetFiles" :isMultiple="true" type="doc" />
-          <div
-            class="bg-white py-6 lg:py-8 rounded-lg"
-            v-if="form.documents.length"
-          >
-            <div class="">
-              <div
-                class="flex items-center gap-x-4 mb-3"
-                v-for="(n, id) in form.documents"
-                :key="id"
-              >
-                <div class="border rounded-xl p-4 flex flex-1 justify-between">
-                  <div class="flex gap-x-3 items-center">
-                    <img
-                      src="~/assets/images/filetype.png"
-                      alt="prduct"
-                      class="w-8 h-auto"
-                    />
-                    <div>
-                      <p
-                        class="text-sm text-matta-black capitalize truncate max-w-[250px]"
-                      >
-                        {{ n.fileName }}
-                      </p>
-                      <p class="text-xs text-[#ABABAB]">{{ n.size }}</p>
-                    </div>
-                  </div>
-                  <div class="flex items-center gap-x-5 text-xs relative">
-                    <div class="absolute -bottom-2 -right-2">
-                      <Listbox v-model="n.category">
-                        <div class="relative mt-1">
-                          <ListboxButton
-                            class="relative text-left flex gap-x-6 items-center rounded-lg pl-[14px] pr-4 placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                          >
-                            <span
-                              class="mr-2 capitalize max-w-[130px] truncate"
-                              v-if="n.category"
-                              >{{ n.category }}</span
-                            >
-                            <span
-                              class="text-matta-black mr-2 whitespace-nowrap"
-                              v-else
-                              >Select category</span
-                            >
-                            <span
-                              class="pointer-events-none absolute inset-y-0 -right-1 flex items-center"
-                            >
-                              <ChevronUpDownIcon
-                                class="h-5 w-5 text-gray-400"
-                                aria-hidden="true"
-                              />
-                            </span>
-                          </ListboxButton>
-
-                          <transition
-                            leave-active-class="transition duration-100 ease-in"
-                            leave-from-class="opacity-100"
-                            leave-to-class="opacity-0"
-                          >
-                            <ListboxOptions
-                              class="absolute mt-1 mx-h-60 w-[250px] z-40 overflow-auto rounded-md bg-white py-4 text-base shadow-lg focus:outline-none sm:text-sm"
-                            >
-                              <ListboxOption
-                                v-slot="{ selected }"
-                                v-for="(p, i) in form.documentproperties"
-                                :key="i"
-                                :value="p.value"
-                                as="template"
-                              >
-                                <li
-                                  :class="[
-                                    selected
-                                      ? 'text-blue-800 bg-blue-50'
-                                      : 'font-normal text-matta-black',
-                                    'relative cursor-pointer capitalize text-matta-black  hover:text-primary select-none py-2 pl-6 pr-4 text-left',
-                                  ]"
-                                >
-                                  <div class="flex gap-x-4 items-start">
-                                    <div>
-                                      <p class="text-sm font-medium">
-                                        {{ p.text }}
-                                      </p>
-                                      <p class="text-xs">{{ p.item }}</p>
-                                    </div>
-                                    <i
-                                      class="uil uil-check text-blue-800"
-                                      v-if="selected"
-                                    ></i>
-                                  </div>
-                                </li>
-                              </ListboxOption>
-                              <p
-                                v-if="!form.documentproperties.length"
-                                class="text-[#B6B7B9] py-2 pl-6 pr-4 text-sm"
-                              >
-                                Nothing found
-                              </p>
-                            </ListboxOptions>
-                          </transition>
-                        </div>
-                      </Listbox>
-                    </div>
-                    <span
-                      @click="removeFile(id)"
-                      class="text-sm absolute -top-3 -right-2 z-10 text-[#475467] cursor-pointer"
+      <div class="max-w-[654px] w-full">
+        <Uploader @onGetFiles="onGetFiles" :isMultiple="true" type="doc" />
+        <div
+          class="bg-white py-6 lg:py-8 rounded-lg"
+          v-if="form.documents.length"
+        >
+          <div class="">
+            <div
+              class="flex items-center gap-x-4 mb-3"
+              v-for="(n, id) in form.documents"
+              :key="id"
+            >
+              <div class="border rounded-xl p-4 flex flex-1 justify-between">
+                <div class="flex gap-x-3 items-center">
+                  <img
+                    src="~/assets/images/filetype.png"
+                    alt="prduct"
+                    class="w-8 h-auto"
+                  />
+                  <div>
+                    <p
+                      class="text-sm text-matta-black capitalize truncate max-w-[250px]"
                     >
-                      <AppIcon icon="fa:trash-o" />
-                    </span>
+                      {{ n.fileName }}
+                    </p>
+                    <p class="text-xs text-[#ABABAB]">{{ n.size }}</p>
                   </div>
+                </div>
+                <div class="flex items-center gap-x-5 text-xs relative">
+                  <div class="absolute -bottom-2 -right-2">
+                    <Listbox v-model="n.category">
+                      <div class="relative mt-1">
+                        <ListboxButton
+                          class="relative text-left flex gap-x-6 items-center rounded-lg pl-[14px] pr-4 placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+                        >
+                          <span
+                            class="mr-2 capitalize max-w-[130px] truncate"
+                            v-if="n.category"
+                            >{{ n.category }}</span
+                          >
+                          <span
+                            class="text-matta-black mr-2 whitespace-nowrap"
+                            v-else
+                            >Select category</span
+                          >
+                          <span
+                            class="pointer-events-none absolute inset-y-0 -right-1 flex items-center"
+                          >
+                            <ChevronUpDownIcon
+                              class="h-5 w-5 text-gray-400"
+                              aria-hidden="true"
+                            />
+                          </span>
+                        </ListboxButton>
+
+                        <transition
+                          leave-active-class="transition duration-100 ease-in"
+                          leave-from-class="opacity-100"
+                          leave-to-class="opacity-0"
+                        >
+                          <ListboxOptions
+                            class="absolute mt-1 mx-h-60 w-[250px] z-40 overflow-auto rounded-md bg-white py-4 text-base shadow-lg focus:outline-none sm:text-sm"
+                          >
+                            <ListboxOption
+                              v-slot="{ selected }"
+                              v-for="(p, i) in form.documentproperties"
+                              :key="i"
+                              :value="p.value"
+                              as="template"
+                            >
+                              <li
+                                :class="[
+                                  selected
+                                    ? 'text-blue-800 bg-blue-50'
+                                    : 'font-normal text-matta-black',
+                                  'relative cursor-pointer capitalize text-matta-black  hover:text-primary select-none py-2 pl-6 pr-4 text-left',
+                                ]"
+                              >
+                                <div class="flex gap-x-4 items-start">
+                                  <div>
+                                    <p class="text-sm font-medium">
+                                      {{ p.text }}
+                                    </p>
+                                    <p class="text-xs">{{ p.item }}</p>
+                                  </div>
+                                  <i
+                                    class="uil uil-check text-blue-800"
+                                    v-if="selected"
+                                  ></i>
+                                </div>
+                              </li>
+                            </ListboxOption>
+                            <p
+                              v-if="!form.documentproperties.length"
+                              class="text-[#B6B7B9] py-2 pl-6 pr-4 text-sm"
+                            >
+                              Nothing found
+                            </p>
+                          </ListboxOptions>
+                        </transition>
+                      </div>
+                    </Listbox>
+                  </div>
+                  <span
+                    @click="removeFile(id)"
+                    class="text-sm absolute -top-3 -right-2 z-10 text-[#475467] cursor-pointer"
+                  >
+                    <AppIcon icon="fa:trash-o" />
+                  </span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <hr class="border-[#F4F7FE] my-10" />
-      <div
-        class="bg-white rounded-lg flex justify-between gap-x-4 items-center"
-      >
-        <!-- <button
+    </div>
+    <hr class="border-[#F4F7FE] my-10" />
+    <div class="bg-white rounded-lg flex justify-between gap-x-4 items-center">
+      <!-- <button
         type="button"
         @click="togglePreview"
         class="appearance-none leading-none px-5 lg:px-10px-10 py-[10px] rounded-lg text-primary border-primary text-primary border hover:bg-gray-300 text-[13px]"
@@ -279,23 +278,14 @@
         Preview
       </button>
       <div class="flex justify-center gap-x-3 lg:gap-x-4 items-center"> -->
-        <!-- </div> -->
-      </div>
-    
+      <!-- </div> -->
+    </div>
 
     <hr class="border-[#F4F7FE] my-10" />
 
     <div
       class="bg-white rounded-lg py-6 flex justify-between gap-x-10 items-center"
     >
-      <!-- <button
-        type="button"
-        @click="togglePreview"
-        class="appearance-none leading-none px-10 py-[10px] rounded-lg text-primary border-primary  border hover:bg-gray-300 text-[13px]"
-      >
-        Preview
-      </button>
-      <div class="flex justify-center gap-x-4 items-center"> -->
       <button
         type="button"
         @click="toggleNext(1)"
@@ -311,9 +301,8 @@
         type="submit"
         class="appearance-none leading-none px-5 lg:px-10px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
       >
-      {{ isLoading ? "Saving..." : "Save and continue" }}
+        {{ isLoading ? "Saving..." : "Save and continue" }}
       </button>
-      <!-- </div> -->
     </div>
   </form>
   <div>
@@ -706,6 +695,7 @@ provide("form", form);
 provide("v$", v$);
 provide("images", form.gallery);
 provide("isOpen", isLocationOpen);
+provide("detail", null);
 </script>
 
 <style lang="scss" scoped>

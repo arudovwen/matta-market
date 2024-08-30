@@ -4,7 +4,9 @@
   >
     <!-- Top bar   -->
     <HeaderComponent
-      title="Add a product"
+      :title="`${
+        route.params.process === 'edit-product' ? 'Edit' : 'Add'
+      } a product`"
       className="!px-5"
       :canGoback="true"
     />
@@ -90,6 +92,7 @@ const links = [
   },
 ];
 const route = useRoute();
+console.log("🚀 ~ route:", route);
 const router = useRouter();
 const isPreviewing = ref(false);
 const isPageLoading = ref(true);
@@ -165,7 +168,7 @@ function togglePreview() {
 function toggleNext(val) {
   // active.value = val;
   router.push(
-    `/storefront/products/add-product?stage=${val}&id=${route.query.id}`
+    `/storefront/products/${route.params.process}?stage=${val}&id=${route.query.id}`
   );
 }
 onBeforeMount(() => {
@@ -181,7 +184,7 @@ onBeforeMount(() => {
   if (route.query.id) {
     getSupplierProduct(queryParams).then((res) => {
       product.value = res.data.data;
-			updateData(form, product, [], isPageLoading, route);
+      updateData(form, product, [], isPageLoading, route);
       isPageLoading.value = false;
     });
   } else {
@@ -242,7 +245,6 @@ const product = ref({
   unit: "g",
 });
 
-
 watch(
   () => [route.query],
   () => {
@@ -254,7 +256,7 @@ watch(
       getSupplierProduct(queryParams).then((res) => {
         if (res.status === 200) {
           product.value = res.data.data;
-					updateData(form, product, [], isPageLoading, route);
+          updateData(form, product, [], isPageLoading, route);
         }
       });
     }
