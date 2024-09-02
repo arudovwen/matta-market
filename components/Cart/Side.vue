@@ -68,7 +68,7 @@
           currencyFormat(
             (cartStore?.cartTotalAmount - cartStore?.discountValue) *
               cartStore?.tax +
-              (cartStore?.cartTotalAmount - cartStore?.discountValue)
+              (cartStore?.cartTotalAmount - cartStore?.discountValue - cartStore?.referralDiscountValue)
           )
         }}
       </p>

@@ -134,8 +134,6 @@ export const useCartStore = defineStore(
     };
 
     async function addToCart(item, type) {
-      console.log("🚀 ~ addToCart ~ type:", type)
-      console.log("🚀 ~ addToCart ~ item:", item)
       if (
         cartItems.value.some((ct) => ct.productId === item.productId) &&
         cartItems.value.some((ct) => ct.packageId === item.packageId)
