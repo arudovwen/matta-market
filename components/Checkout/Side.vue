@@ -27,18 +27,25 @@
           {{ currencyFormat(cartStore?.cartTotalAmount) }}
         </p>
       </div>
+      <div class="flex justify-between">
+        <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
+
+        <p class="text-white text-sm font-medium">
+          {{ currencyFormat(cartStore?.cartTotalAmount * cartStore?.tax) }}
+        </p>
+      </div>
       <div class="flex justify-between" v-if="cartStore?.discountValue">
         <p class="text-sm text-[#E1E1E1]">Discount</p>
 
         <p class="text-white font-medium text-sm">
-          -{{ currencyFormat(cartStore?.discountValue) }}
+          - {{ currencyFormat(cartStore?.discountValue) }}
         </p>
       </div>
       <div class="flex justify-between" v-if="cartStore?.referralDiscountValue">
         <p class="text-sm text-[#E1E1E1]">Referral Discount</p>
 
         <p class="text-white font-medium text-sm">
-          -{{ currencyFormat(cartStore?.referralDiscountValue) }}
+          - {{ currencyFormat(cartStore?.referralDiscountValue) }}
         </p>
       </div>
 
@@ -47,18 +54,6 @@
 
         <p class="text-white font-medium text-sm">
           {{ currencyFormat(cartStore?.shippingTotal) }}
-        </p>
-      </div>
-      <div class="flex justify-between">
-        <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
-
-        <p class="text-white text-sm font-medium">
-          {{
-            currencyFormat(
-              (cartStore?.cartTotalAmount - cartStore?.discountValue) *
-                cartStore?.tax
-            )
-          }}
         </p>
       </div>
     </div>
