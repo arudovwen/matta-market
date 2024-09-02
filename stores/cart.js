@@ -21,6 +21,7 @@ export const useCartStore = defineStore(
     const loadingCart = ref(false);
     const cartId = ref(null);
     const discountValue = ref(0);
+    const referralDiscountValue = ref(0)
     const removeLoading = ref(false);
     const cart = computed(() => cartItems.value);
     const cartTotal = computed(() => cartItems.value.length);
@@ -67,6 +68,7 @@ export const useCartStore = defineStore(
             setCartTotalwithTax(cartData.cartTotalwithTax || 0);
             setCartId(cartId);
             setDiscount(cartData.discountValue || 0);
+            setRefDiscount(cartData.referralDiscountValue || 0)
             setCartData(cartData);
             if (action) {
               loadData();
@@ -99,6 +101,7 @@ export const useCartStore = defineStore(
       setDiscount(0);
       loadingCart.value = false;
       setCartData(null);
+      setRefDiscount(0)
     }
 
     function setCartData(data) {
@@ -109,6 +112,9 @@ export const useCartStore = defineStore(
     }
     function setDiscount(data) {
       discountValue.value = data;
+    }
+    function setRefDiscount(data){
+      referralDiscountValue.value = data
     }
     function setCartId(value) {
       cartId.value = value;
@@ -249,6 +255,7 @@ export const useCartStore = defineStore(
       removeId,
       setCartData,
       cartData,
+      referralDiscountValue
     };
   },
 
