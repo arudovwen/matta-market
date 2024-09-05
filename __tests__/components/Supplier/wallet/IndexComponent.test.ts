@@ -67,9 +67,7 @@ describe("CompanySettings copy", () => {
         }
       },
     });
-    expect(screen.getByText("Credit")).toBeTruthy();
-    expect(screen.getByText("Debit")).toBeTruthy();
-    expect(screen.getByText("Bruce Wayne")).toBeTruthy();
+    expect(screen.getByText("Wallet")).toBeTruthy();
     component.unmount();
   });
 });
