@@ -35,7 +35,7 @@
           </div>
       </div>
       <div
-        class="lg:col-span-2 flex items-center  text-xs lg:text-sm gap-x-[2px]"
+        class="lg:col-span-2 flex items-start  text-xs lg:text-sm gap-x-[2px]"
       >
         <Checkbox
           v-model.value="agree"
