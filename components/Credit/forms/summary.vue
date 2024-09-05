@@ -1,10 +1,10 @@
 <template>
   <div class="mt-9 max-w-[490px] mx-auto">
     <h1 class="mb-3 font-semibold text-[20px] text-[#333]">Summary</h1>
-    <div
-      class="w-full  mt-4 mb-10"
-    >
-      <div class="grid grid-cols-1 gap-y-3 mb-8 rounded-lg p-6 border border-[#E2E2E2] bg-[#F5FAFF]">
+    <div class="w-full mt-4 mb-10">
+      <div
+        class="grid grid-cols-1 gap-y-3 mb-8 rounded-lg p-6 border border-[#E2E2E2] bg-[#F5FAFF]"
+      >
         <div
           class="grid grid-cols-2 gap-y-6 border-b border-[#3440541A pb-2"
           v-for="(item, index) in bankOptions"
@@ -19,23 +19,17 @@
             <span class="text-[#344054] font-medium">Value</span>
           </div>
         </div>
-        <div
-            class="flex flex-col text-xs"
-          
-          >
-            <span class="text-[#667085] capitalize">Directors </span>
-            <span class="text-[#344054] font-medium">Value</span>
-          </div>
-          <div
-            class="flex flex-col text-xs"
-           
-          >
-            <span class="text-[#667085] capitalize">Documents </span>
-            <span class="text-[#344054] font-medium">Value</span>
-          </div>
+        <div class="flex flex-col text-xs">
+          <span class="text-[#667085] capitalize">Directors </span>
+          <span class="text-[#344054] font-medium">Value</span>
+        </div>
+        <div class="flex flex-col text-xs">
+          <span class="text-[#667085] capitalize">Documents </span>
+          <span class="text-[#344054] font-medium">Value</span>
+        </div>
       </div>
       <div
-        class="lg:col-span-2 flex items-start  text-xs lg:text-sm gap-x-[2px]"
+        class="lg:col-span-2 flex items-center text-xs lg:text-sm gap-x-[2px]"
       >
         <Checkbox
           v-model.value="agree"
@@ -52,10 +46,11 @@
         @click="active--"
       />
       <AppButton
-        :disabled="isLoading"
+        :disabled="isLoading || !agree"
         :isLoading="isLoading"
+        @click="onSubmit"
         btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
-        type="submit"
+        type="button"
         text="Submit"
       />
     </div>
@@ -64,15 +59,15 @@
     :open="isSuccessOpen"
     type="approve"
     title="Request has be sent"
-    text="Your request has been sent. You will be contacted by within the next 24hrs."
+    text="Your request has been sent. You will be contacted within the next 24hrs."
     btnText="Okay"
     :isCancel="false"
     @actionItem="
       () => {
-        navigateTo('/wallet/home')
+        navigateTo('/wallet/home');
       }
     "
-    @close="isSuccessOpen = false;"
+    @close="isSuccessOpen = false"
   />
   <ActionModal
     :open="isErrorOpen"
@@ -85,13 +80,17 @@
   />
 </template>
 <script setup>
+import { postCreditRequest } from "~/services/creditservice";
+
 const isSuccessOpen = ref(false);
 const isErrorOpen = ref(false);
+const errorText = ref(null)
 const route = useRoute();
 const { financeId } = route.params;
+const formData = inject("formData");
 const isLoading = ref(false);
-const active = inject("active")
-const agree = ref(false)
+const active = inject("active");
+const agree = ref(false);
 const bankOptions = [
   {
     data: [
@@ -134,4 +133,23 @@ const bankOptions = [
     ],
   },
 ];
+const onSubmit = () => {
+  console.log("🚀 ~ onSubmit ~ formData:", formData)
+  isSuccessOpen.value = true;
+  // isLoading.value = true;
+
+  // postCreditRequest(formData)
+  //   .then((res) => {
+  //     if (res.status === 200) {
+  //       isSuccessOpen.value = true;
+  //       isLoading.value = false;
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     errorText.value =
+  //       err?.response?.data?.Message || err?.response?.data?.message;
+  //     isLoading.value = false;
+  //     isErrorOpen.value = true;
+  //   });
+};
 </script>

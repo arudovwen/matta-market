@@ -111,8 +111,6 @@ const formData = reactive({
       documentType: 3,
     },
   ],
-  haveyoudonebusiness: "",
-  haveyouexportedtotheothercourty: "",
 
   kyb: {
     companyName: "",

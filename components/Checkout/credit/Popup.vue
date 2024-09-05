@@ -111,7 +111,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-defineProps({
+const props = defineProps({
   title: {
     default: "",
   },
@@ -134,7 +134,9 @@ const text2 =
 const text3 =
   "You do not have sufficient credit to complete this purchase. Would you like to pay the balance";
 function actionItem() {
-  emits("actionItem");
+  if(!props.available){
+    navigateTo("/credit/request")
+  }
 }
 function handleclose() {
   emits("close");

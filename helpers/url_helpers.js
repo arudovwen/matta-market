@@ -240,5 +240,9 @@ const urls = {
   PLACE_SUGGESTION: "Location/place-suggestion",
 
   APPLY_DISCOUNT: "v1/discount/apply-discount",
+
+  // Credit 
+  REQUEST_CREDIT: "CreditRequest/new",
+  GET_ALL_CREDIT_REQUEST: "CreditRequest/get-all",
 };
 export default urls;

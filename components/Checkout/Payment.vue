@@ -30,8 +30,8 @@
   <CheckoutCreditPopup
     @close="isPopOpen = false"
     :open="isPopOpen"
-    :available="true"
-    :insufficient="true"
+    :available="false"
+    :insufficient="false"
   />
 </template>
 <script setup>

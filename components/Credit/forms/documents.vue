@@ -87,9 +87,7 @@
         @click="active--"
       />
       <AppButton
-        :disabled="
-          isLoading || errors?.BankStatement
-        "
+        :disabled="isLoading || errors?.BankStatement"
         :isLoading="isLoading"
         btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
         type="submit"
@@ -113,7 +111,6 @@ const active = inject("active");
 const formData = inject("formData");
 
 const formSchema = yup.object().shape({
-
   BankStatement: yup.string().required("Bank statement is required").nullable(),
   OtherDocuments: yup.string().nullable(),
 });
@@ -143,53 +140,13 @@ function removeField(id, idx) {
   formData?.supportingDocuments[id].urls.splice(idx, 1);
 }
 
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit(() => {
   isLoading.value = true;
-  formData.haveyoudonebusiness = values.haveyoudonebusiness;
-  formData.haveyouexportedtotheothercourty =
-    values.haveyouexportedtotheothercourty;
-  if (financeId) {
-    editFinance({
-      ...formData,
-      supportingDocuments: formData?.supportingDocuments.map((i) => ({
-        ...i,
-        urls: i.urls.map((j) => j.url),
-      })),
-      id: financeId,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          active.value = 5;
-          isLoading.value = false;
-        }
-      })
-      .catch((err) => {
-        toast.error(
-          err?.response?.data?.Message || err?.response?.data?.message
-        );
-        isLoading.value = false;
-      });
-  } else {
-    addFinance({
-      ...formData,
-      supportingDocuments: formData?.supportingDocuments.map((i) => ({
-        ...i,
-        urls: i.urls.map((j) => j.url),
-      })),
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          active.value = 5;
-          isLoading.value = false;
-        }
-      })
-      .catch((err) => {
-        toast.error(
-          err?.response?.data?.Message || err?.response?.data?.message
-        );
-        isLoading.value = false;
-      });
-  }
+  formData.supportingDocuments = formData?.supportingDocuments.map((i) => ({
+    ...i,
+    urls: i.urls.map((j) => j.url),
+  }));
+  active.value = 5;
 });
 
 function handleChange(id, value) {}
