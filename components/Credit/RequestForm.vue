@@ -111,8 +111,6 @@ const formData = reactive({
       documentType: 3,
     },
   ],
-  haveyoudonebusiness: "",
-  haveyouexportedtotheothercourty: "",
 
   kyb: {
     companyName: "",
@@ -211,7 +209,7 @@ const formData = reactive({
   },
 });
 
-const active = ref(5);
+const active = ref(1);
 const tabs = [
   {
     name: "Credit request",
