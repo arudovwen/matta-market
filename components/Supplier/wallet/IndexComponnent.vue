@@ -12,16 +12,15 @@
       />
     </div>
     <div
-      class="py-[30px] flex lg:gap-x-4 gap-y-8 lg:gap-y-0 flex-col lg:flex-row w-full"
+      class="py-[16px] flex lg:gap-x-4 gap-y-6  flex-col w-full"
     >
-      <div class="lg:max-w-[365px]">
+      <div class="max-w-max">
         <SideBox />
       </div>
       <div class="flex-1 overflow-x-auto"><SupplierWalletTransactionPage /></div>
     </div>
   </div>
 </template>
-
 <script setup>
 import {
   getLedgerTransactions,

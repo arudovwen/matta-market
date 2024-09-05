@@ -1,50 +1,18 @@
 <template>
   <div
-    class="w-full rounded-[10px] border border-[#EAECF0] overflow-x-auto md:min-w-[560px] mx-auto"
+    class="w-full rounded-[10px] border border-[#EAECF0] overflow-x-auto md:min-w-[360px] mx-auto"
   >
-  
     <table aria-describedby="true" v-if="directors.length" class="w-full">
       <thead>
         <tr>
           <th
             class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
           >
-            Name
-          </th>
-          <th
-            class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-          >
-            Phone
-          </th>
-          <th
-            class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-          >
-            DOB
-          </th>
-          <th
-            v-if="companyInfo?.country?.toLowerCase() === 'nigeria'"
-            class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-          >
-            BVN
+            Directors
           </th>
 
           <th
-            class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-          >
-            ID
-          </th>
-          <th
-            class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-          >
-            Signature
-          </th>
-          <th
-            class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-          >
-            Linkedin
-          </th>
-          <th
-            v-if="!companyInfo?.approvalStatus"
+            
             class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
           ></th>
         </tr>
@@ -64,7 +32,7 @@
             <span class="text-[#475467]"> {{ director.email }}</span>
           </td>
 
-          <td
+          <!-- <td
             class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
           >
             {{ director.phone }}
@@ -97,16 +65,20 @@
               @click="openMedia(director.signatureUrl)"
               >View</span
             >
-          </td>
-          <td
+          </td>-->
+          <td v-if="companyInfo?.approvalStatus"
             class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
           >
-            <a
-              class="text-primary-500"
-              :href="director.linkedIn"
-              target="_blank"
-              >View profile</a
+            <button
+              class="text-primary-500 block ml-auto"
+              type="button"
+              @click="
+                detail = director;
+                open = true;
+              "
             >
+              View profile
+            </button>
           </td>
           <td
             v-if="!companyInfo?.approvalStatus"

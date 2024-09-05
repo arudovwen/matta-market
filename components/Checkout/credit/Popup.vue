@@ -32,46 +32,43 @@
               <div
                 class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full"
               >
-                <div class="bgc px-6 py-6">
+                <div class="bg-white px-6 py-6">
                   <div class="flex justify-between mb-5 items-center">
                     <div>
-                      <img alt="delte" v-if="type === 'delete'" src="/images/delete.svg" />
-                      <img alt="check" v-if="type === 'approve'" src="/images/success.svg" />
-                      <img alt="reject" v-if="type === 'reject'" src="/images/reject.svg" />
-                      <img alt="success"
-                        v-if="type === 'success'"
-                        src="/images/success.svg"
-                      />
+                      <img alt="delte" src="/images/handes.svg" />
                     </div>
-                    <span v-if="canClose" @click="handleclose" class="absolute top-3 right-4">
+                    <span
+                      v-if="canClose"
+                      @click="handleclose"
+                      class="absolute top-3 right-4"
+                    >
                       <i
                         class="uil uil-times cursor-pointer text-xl text-[#98A2B3]"
                       ></i>
                     </span>
                   </div>
 
-                  <h4 class="font-semibold text-[#101828] text-lg mb-[6px]" v-if="title">
-                    {{ title }}
+                  <h4 class="font-semibold text-[#101828] text-lg mb-[4px]">
+                    Credit Advance
                   </h4>
 
-                  <p class="text-sm text-[#475467]" v-if="text">
-                    {{ text }}
+                  <p class="text-sm text-[#475467]">
+                    {{ insufficient ? text3 : available ? text1 : text2 }}
                   </p>
                   <div
-                    v-if="detail"
-                    class="rounded-lg p-6 border border-[#EAECF0] bg-[#F2F4F7] mt-4"
+                    v-if="available"
+                    class="rounded-lg p-6 border border-[#E2E2E2] bg-[#F2F4F7] mt-4"
                   >
-                    <h3 class="text-sm font-semibold mb-3 text-[#344054]">
-                      Payment Summary
-                    </h3>
                     <div class="grid gap-y-2">
                       <div
-                        class="flex gap-x-2 items-center text-xs"
-                        v-for="item in bankOptions"
+                        class="flex gap-x-2 items-center justify-between text-xs"
+                        v-for="item in insufficient
+                          ? advanceOptions
+                          : bankOptions"
                         :key="item.key"
                       >
-                        <span class="text-[#667085]">{{ item.title }}: </span>
-                        <span class="text-[#101828]">Name</span>
+                        <span class="text-[#344054] capitalize">{{ item.title }}: </span>
+                        <span class="text-[#344054] font-semibold">Value</span>
                       </div>
                     </div>
                   </div>
@@ -91,23 +88,9 @@
                       :disabled="loading"
                       type="button"
                       @click="actionItem"
-                      class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
-                      :class="
-                        type === 'approve'
-                          ? 'bg-green-600 border-green-600'
-                          : 'bg-[#D92D20] border-[#D92D20]'
-                      "
+                      class="h-11 bg-primary-500 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
                     >
-                      {{ btnText }}
-                    </button>
-                    <button
-                      v-if="isOkay"
-                      :disabled="loading"
-                      type="button"
-                      @click="actionItem"
-                      class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border border-primary-500 font-medium disabled:opacity-50 flex items-center justify-center bg-primary-500"
-                    >
-                      {{ btnText }}
+                      {{ !available ? "Apply for credit" : "Proceed" }}
                     </button>
                   </div>
                 </div>
@@ -136,14 +119,20 @@ defineProps({
   open: { default: false },
   btnText: { default: "" },
   loading: { default: false },
-  type: { default: "" },
+  available: { default: true },
+  insufficient: { default: false },
   detail: { default: null },
   isCancel: { default: true },
   isOkay: { default: false },
-  canClose:{default:true}
+  canClose: { default: true },
 });
 const emits = defineEmits(["actionItem", "close"]);
 
+const text1 = "You are about to make payment for this purchase using credit?";
+const text2 =
+  "You are not yet pre-qualified for this option of payment. Would you like to apply for a credit?";
+const text3 =
+  "You do not have sufficient credit to complete this purchase. Would you like to pay the balance";
 function actionItem() {
   emits("actionItem");
 }
@@ -153,26 +142,43 @@ function handleclose() {
 
 const bankOptions = [
   {
-    title: "Bank Name",
+    title: "Available Balance",
     key: "bankName",
   },
   {
-    title: "Account Name",
+    title: "Amount to pay",
     key: "accountName",
   },
   {
-    title: "Account Number",
+    title: "Due date",
     key: "accountNumber",
   },
   {
-    title: "Amount",
+    title: "Repayment Amount",
+    key: "amount",
+  },
+];
+
+const advanceOptions = [
+  {
+    title: "Available credit",
+    key: "bankName",
+  },
+  {
+    title: "total purchase",
+    key: "accountName",
+  },
+  {
+    title: "balance to pay",
+    key: "accountNumber",
+  },
+  {
+    title: "Repayment Amount",
+    key: "amount",
+  },
+  {
+    title: "Due date",
     key: "amount",
   },
 ];
 </script>
-<style>
-.bgc {
-  background-image: url("./pattern.png");
-  background-repeat: no-repeat;
-}
-</style>

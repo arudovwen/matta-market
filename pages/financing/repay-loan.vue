@@ -3,8 +3,8 @@
     v-if="!isSuccessOpen"
     class="bg-white w-full md:min-w-[400px] text-[#344054]"
   >
-    <legend class="block text-[20px] font-bold mb-8 text-left">
-      Loan Repayment
+    <legend class="block text-[20px] font-bold mb-8 text-left capitalize">
+      {{ type }} Repayment
     </legend>
     <form @submit.prevent="onSubmit" class="grid gap-y-4 w-full">
       <FormGroup
@@ -26,7 +26,7 @@
       </FormGroup>
 
       <FormGroup
-        label="Amount"
+        label="Enter Amount you want to Pay"
         :error="errors.amount"
         name="amount"
         :isCumpulsory="true"
@@ -63,7 +63,7 @@
               active = n.value;
             }
           "
-          class="border border-[#D0D5DD] rounded-xl p-5 flex justify-between items-center"
+          class="border border-[#D0D5DD] rounded-lg px-5 py-4 flex justify-between items-center"
         >
           <span class="flex gap-x-3 items-center">
             <span class="text-xl"><AppIcon :icon="n.icon" /></span>
@@ -140,7 +140,14 @@ const active = ref("monnify");
 const isOpen = inject("isOpen");
 const isLoading = ref(false);
 const data = ref(null);
-const props = defineProps(["detail"]);
+const props = defineProps({
+  detail: {
+    default: null,
+  },
+  type: {
+    default: "loan",
+  },
+});
 const isSuccessOpen = ref(false);
 const formValues = {
   id: "",
@@ -171,6 +178,11 @@ const [amount] = defineField("amount");
 const [repaymentType] = defineField("repaymentType");
 
 const content = [
+{
+    label: "Pay with Bank card",
+    value: "bank",
+    icon: "uil:credit-card",
+  },
   {
     label: "Pay with Monnify",
     value: "monnify",
@@ -237,7 +249,7 @@ onMounted(() => {
 
 watch(repaymentType, () => {
   if (repaymentType.value === "full") {
-    amount.value =  props.detail?.repaymentAmount - props.detail?.totalPayed;
+    amount.value = props.detail?.repaymentAmount - props.detail?.totalPayed;
   }
 });
 </script>

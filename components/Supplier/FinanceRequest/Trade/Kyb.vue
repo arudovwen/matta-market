@@ -164,9 +164,11 @@
           :error="errors.description"
         />
       </div>
-      <div class="md:col-span-2">
-        <label for="companyDocuments" class="mb-4 mt-3 font-medium text-sm block"
-          >Company documents
+      <div class="md:col-span-2 mt-6">
+        <label
+          for="companyDocuments"
+          class="mb-4 mt-3 font-medium text-sm block"
+          >Upload the documents listed in the dropdown below
         </label>
 
         <div class="grid gap-y-[25px]" v-if="companyDocuments">
@@ -218,14 +220,34 @@
             </FormGroup>
           </div>
         </div>
+
+        <!-- <div class="w-full">
+          <div class="flex items-center gap-x-3 w-full">
+            <SelectVueSelect
+              v-model="selectedDocument"
+              :options="options"
+              :reduce="(option) => option.value"
+              placeholder="Select document type"
+              classInput="flex-1 w-full"
+              :clearable="false"
+            />
+            <AppButton
+              :disabled="!selectedDocument"
+              :isLoading="isLoading"
+              btnClass="bg-primary-500  text-white !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed border !rounded-lg border-primary-500"
+              type="button"
+              text="Upload"
+            />
+          </div>
+        </div> -->
       </div>
     </div>
-    <div class="flex gap-x-4 items-center justify-between">
+    <div class="flex gap-x-4 items-center justify-end">
       <AppButton
         @click="active--"
         btnClass="bg-white text-white !px-11  !text-sm !py-[10px] disabled:cursor-not-allowed border border-[#BDC0C5] !rounded-lg !text-[#333]"
         type="button"
-        text="Previous"
+        text="Back"
       />
       <AppButton
         :disabled="
@@ -234,7 +256,7 @@
         "
         :isLoading="isLoading"
         btnClass="bg-primary-500
-      text-white !px-16 !text-sm !py-[10px] disabled:cursor-not-allowed border
+      text-white !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed border
       !rounded-lg border-primary-500"
         type="submit"
         text="Next"
@@ -256,12 +278,11 @@ import {
   updateDocuments,
 } from "~/services/settingservices";
 import { toast } from "vue3-toastify";
-import SelectComponent from "~/components/forms/SelectComponent";
 
 const company = inject("company");
 const formData = inject("formData");
-console.log("🚀 ~ formData:", formData)
 const isLoading = ref(false);
+const selectedDocument = ref(null);
 const active = inject("active");
 const authStore = useAuthStore();
 const formSchema = yup.object().shape({
@@ -309,7 +330,28 @@ const formSchema = yup.object().shape({
     otherwise: (schema) => schema.notRequired(),
   }),
 });
-
+const options = [
+  {
+    label: "Company profile",
+    value: 4,
+  },
+  {
+    label: "Certificate of Incorporations",
+    value: 0,
+  },
+  {
+    label: "Memorandum and Articles of Association",
+    value: 1,
+  },
+  {
+    label: "CAC Status Report",
+    value: 2,
+  },
+  {
+    label: "Utility Bill",
+    value: 3,
+  },
+];
 const {
   handleSubmit,
   defineField,

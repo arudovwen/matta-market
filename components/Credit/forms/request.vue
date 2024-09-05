@@ -20,7 +20,12 @@
         />
       </FormGroup>
 
-      <FormGroup label="Tenor" :error="errors.tenor" name="tenor"  :isCumpulsory="true">
+      <FormGroup
+        label="Tenor"
+        :error="errors.tenor"
+        name="tenor"
+        :isCumpulsory="true"
+      >
         <Select
           v-model="tenor"
           :options="options"
@@ -91,11 +96,10 @@ const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField(
 );
 
 const onSubmit = handleSubmit((values) => {
-	formData.amountRequired = values.amountRequired;
+  formData.amountRequired = values.amountRequired;
   formData.tenor = values.tenor;
   formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs;
   active.value = 2;
-	console.log("Yppp",values, active.value)
 });
 
 const options = [

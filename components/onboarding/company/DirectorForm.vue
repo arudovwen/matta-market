@@ -1,6 +1,6 @@
 <template>
-  <h3 class="font-medium text-2xl mb-8">Add director</h3>
-  <form @submit.prevent="onSubmit">
+  <h3 class="font-semibold text-2xl mb-10">Add director</h3>
+  <form @submit.prevent="onSubmit" class="">
     <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
         <Textinput
@@ -79,6 +79,17 @@
     <div class="lg:col-span-2 mb-6">
       <Textinput
         placeholder=""
+        label="Home address"
+        type="text"
+        name="linkedIn"
+        v-bind="linkedInAtt"
+        v-model="linkedIn"
+        :error="errors.linkedIn"
+      />
+    </div>
+    <div class="lg:col-span-2 mb-6">
+      <Textinput
+        placeholder=""
         label="Linkedin url"
         type="text"
         name="linkedIn"
@@ -94,6 +105,27 @@
       >
         <FileUpload
           label="Upload ID (Passport, Driver’s License, or NIN)"
+          id="identityUrl"
+          :modelValue="form.identityUrl"
+          :isCumpulsory="true"
+        />
+        <span
+          @click="downloadFile(form.identityUrl, 'Identity card')"
+          download
+          v-if="form.identityUrl"
+        >
+          <span class="block text-xs text-blue-500 mt-1"
+            >Download Identity card</span
+          ></span
+        >
+      </FormGroup>
+    </div>
+    <div class="lg:col-span-2 mb-6">
+      <FormGroup  
+        :error="isFieldTouched('identityUrl') ? errors.identityUrl : ''"
+      >
+        <FileUpload
+          label="Upload Utility Bill"
           id="identityUrl"
           :modelValue="form.identityUrl"
           :isCumpulsory="true"
@@ -143,7 +175,7 @@
         :disabled="isLoading || !form.signatureUrl || !form.identityUrl"
         class="text-xs uppercase bg-primary-500 text-white px-5 py-4 rounded-lg hover:bg-primary/70 disabled:opacity-60 w-full"
       >
-        Submit
+        Add director
       </button>
     </div>
   </form>
@@ -168,8 +200,10 @@ const form = reactive({
   bvn: "",
   dob: "",
   linkedIn: "",
+  homeAddress:"",
   signatureUrl: "",
   identityUrl: "",
+  utilityBillUrl: "",
   country:companyInfo?.value?.country
 });
 const schema = yup.object().shape({
@@ -180,10 +214,12 @@ const schema = yup.object().shape({
     .email("Invalid email format")
     .required("Email is required"),
   phone: yup.string().required("Phone number is required"),
+  homeAddress: yup.string().required("Home address is required"),
   dob: yup.date().typeError("Invalid date").required("Date of birth is required").nullable(),
   linkedIn: yup.string(), // No validation for LinkedIn URL
   signatureUrl: yup.string().required("Signature URL is required"),
   identityUrl: yup.string().required("Identity URL is required"),
+  utilityBillUrl: yup.string().required("Utility Bill is required"),
   bvn: yup.string().when("country", {
     is: "Nigeria",
     then: (schema) => schema.required("BVN is required"),

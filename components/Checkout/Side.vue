@@ -99,12 +99,15 @@
       out to you to discuss the fulfilment of your order
     </p>
   </div>
+
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
 import { confirmpurchase, confirmpayment } from "~/services/cartservice";
 import { nanoid } from "nanoid";
 
+const isPopOpen = inject("isPopOpen");
+const activeMethod = inject("activeMethod");
 const authOpen = inject("authOpen");
 const shippingStore = useShippingStore();
 const authStore = useAuthStore();
@@ -137,22 +140,29 @@ function makePayment(reference) {
   payWithMonnify(data.value, onModalClose, onSuccess);
 }
 function confirmOrder() {
-  status.value = "Processing order...";
-  loading.value = true;
-  confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress.id })
-    .then((res) => {
-      if (res.status === 200) {
-        makePayment(res.data.data);
-      }
-    })
-    .catch((err) => {
-      const error = `${
-        err?.response?.data?.Message || err?.response?.data?.message
-      }, Contact us for assistance on your order`;
-      toast.error(error);
-      status.value = "Retry order";
-      loading.value = false;
-    });
+  // status.value = "Processing order...";
+  if (activeMethod.value === "card") {
+    loading.value = true;
+    confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress.id })
+      .then((res) => {
+        if (res.status === 200) {
+          makePayment(res.data.data);
+        }
+      })
+      .catch((err) => {
+        const error = `${
+          err?.response?.data?.Message || err?.response?.data?.message
+        }, Contact us for assistance on your order`;
+        toast.error(error);
+        status.value = "Retry order";
+        loading.value = false;
+      });
+      return;
+  }
+  if (activeMethod.value === "credit") {
+    isPopOpen.value = true;
+    return
+  }
 }
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {

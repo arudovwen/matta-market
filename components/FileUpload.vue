@@ -7,7 +7,7 @@
       >{{ label }} <RedDot v-if="isCumpulsory"
     /></label>
     <div
-      class="flex-1 rounded-lg py-1 pr-[14px] pl-2 h-11 text-sm w-full border border-[##EAECF0] placeholder:text-[#B6B7B9] bg-[#F9FAFB] focus:outline-matta-black/20 flex items-center"
+      class="flex-1 rounded-lg py-1 pr-[4px] pl-2 h-11 text-sm w-full border border-[##EAECF0] placeholder:text-[#B6B7B9] bg-[#F9FAFB] focus:outline-matta-black/20 flex items-center justify-between"
     >
       <input
         id="upload"
@@ -22,11 +22,14 @@
         :accept="accept"
         :multiple="multiple"
       />
-
+      <span
+        class="flex-1 px-2 truncate text-[#999999] inline-block max-w-[300px] xl:max-w-[380px]"
+        >{{ multiple ? multiUrls.join() : title || placeholder }}</span
+      >
       <button
         type="button"
         @click="triggerFileInput"
-        class="text-xs text-white border border-[#98A2B3] bg-[#98A2B3] rounded px-5 py-[6px] active:scale-[.95] leading-normal flex justify-center"
+        class="text-xs text-white border border-[#667085] bg-[#667085] rounded px-5 py-[6px] h-full active:scale-[.95] leading-normal flex justify-center"
       >
         <div
           v-if="loading"
@@ -35,10 +38,7 @@
         <span v-else>{{ btnText || "Select file" }}</span>
       </button>
 
-      <span
-        class="flex-1 px-4 truncate text-[#999999] inline-block max-w-[300px] xl:max-w-[380px]"
-        >{{ multiple ? multiUrls.join() : title || placeholder }}</span
-      >
+     
     </div>
   </div>
 </template>
@@ -71,7 +71,7 @@ const props = defineProps({
     default: false,
   },
   placeholder:{
-    default:""
+    default:"Select file to upload"
   }
 });
 const emits = defineEmits(["update:modelValue"]);

@@ -33,7 +33,7 @@ export default {
     },
     extend: {
       colors: {
-        "matta-black": "#475467",
+        "matta-black": "#344054",
         primary: {
           50: "#EAF2FF", // Lightest shade
           100: "#D3E2FF",
@@ -140,7 +140,7 @@ export default {
       },
 
       fontFamily: {
-        Manrope: ["Manrope", "sans-serif"],
+        Onest: ["Onest", "sans-serif"],
       },
       boxShadow: {
         base: "0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16)",

@@ -150,7 +150,7 @@ export default {
       type: String,
     },
     modelValue: {
-      type: String,
+      type: [String, Number],
       default: "",
     },
     error: {

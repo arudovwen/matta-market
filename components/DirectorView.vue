@@ -1,6 +1,6 @@
 <template>
   <div v-if="detail" class="w-full bg-white p-6 rounded-lg">
-    <h3 class="font-medium text-2xl mb-8">Director Detail</h3>
+    <h3 class="font-semibold text-2xl mb-8">Director Detail</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
       <div class="mb-6">
         <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
@@ -43,12 +43,20 @@
         </p>
       </div>
 
-      <div class="l mb-6">
+      <div class="md:col-span-2 mb-6">
         <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
           >Linkedin</p
         >
         <p class="text-[#344054] text-base font-medium">
           {{ detail.linkedIn || "-" }}
+        </p>
+      </div>
+      <div class="md:col-span-2 mb-6">
+        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
+          >Home address</p
+        >
+        <p class="text-[#344054] text-base font-medium">
+          {{ detail.homeAddress || "-" }}
         </p>
       </div>
       <div
@@ -79,12 +87,12 @@
               <td
                 class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
               >
-                <spanw
+                <span
                   @click="openMedia(detail.signatureUrl)"
                   class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
                 >
                   View
-                </spanw>
+                </span>
               </td>
             </tr>
             <tr class="border-b last:border-none">
@@ -99,6 +107,24 @@
               >
                 <span
                   @click="openMedia(detail.identityUrl)"
+                  class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
+                >
+                  View
+                </span>
+              </td>
+            </tr>
+            <tr class="border-b last:border-none">
+              <td
+                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+              >
+              Utility Bill
+              </td>
+
+              <td
+                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+              >
+                <span
+                  @click="openMedia(detail?.iutilityBillUrl)"
                   class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
                 >
                   View

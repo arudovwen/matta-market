@@ -1,66 +1,171 @@
 <template>
-  <div
-    class="bg-white w-full border border-[#EAECF0] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-3 mb-8"
-  >
-    <div class="px-4 pb-4 border-b border-[#EAECF0]">
-      <div
-        class="lg:w-[311px] h-[160px] bg-gray-100 px-5 py-4 rounded-2xl flex flex-col justify-between bg-cover shadow-[7.873417377471924px_9.841772079467773px_15.746834754943848px_0px_rgba(0,0,0,0.05)]"
-        :style="{ backgroundImage: `url('/images/card.png')` }"
-      >
-        <span class="flex items-center justify-between text-white">
-          <div>
-            <span class="text-lg font-semibold block">{{
-              currencyFormat(balance.availableBalance)
-            }}</span>
-            <span class="text-[11px] font-normal flex items-center gap-x-[2px]"
-              >Ledger balance
-              <span
-                data-toggle="tooltip"
-                data-placement="top"
-                title="Ledger balance"
-                class="cursor-pointer h-3 w-3 flex items-center justify-center"
-              >
-                <AppIcon icon="quill:info"  /> </span
-              >: {{ currencyFormat(balance.ledgerBalance) }}</span
-            >
-          </div>
-          <span></span> <img src="/images/pass.svg" alt="side"
-        /></span>
-
-        <span class="font-medium text-sm text-white capitalize">
-          {{ authStore.userInfo?.firstName }}
-          {{ authStore.userInfo?.lastName }}</span
+  <div class="flex gap-x-8">
+    <div
+      class="bg-white w-full border border-[#EAECF0] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-3 mb-8"
+    >
+      <div class="px-6 pb-4 border-b border-[#EAECF0]">
+        <div
+          class="lg:w-[311px] h-[180px] bg-[#42307D] bg-no-repeat bg-bottom px-5 py-4 rounded-2xl flex flex-col justify-between bg-contain shadow-[0px_6px_2px_#344054]"
+          :style="{ backgroundImage: `url('/lines.png')` }"
         >
+          <div class="flex flex-col gap-y-4">
+            <div class="flex items-center justify-between text-white">
+              <div>
+                <span class="text-[17px] font-semibold block">{{
+                  currencyFormat(balance.availableBalance)
+                }}</span>
+                <span
+                  class="text-[10px] font-normal flex items-center gap-x-[2px]"
+                  >Wallet balance
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Wallet balance"
+                    class="cursor-pointer h-3 w-3 flex items-center justify-center"
+                  >
+                    <AppIcon icon="quill:info" /> </span
+                ></span>
+              </div>
+
+              <!-- <span></span> <img src="/images/pass.svg" alt="side"
+        /> -->
+            </div>
+            <div class="flex items-center justify-between text-white">
+              <div>
+                <span class="text-[17px] font-semibold block">{{
+                  currencyFormat(balance.ledgerBalance)
+                }}</span>
+                <span
+                  class="text-[10px] font-normal flex items-center gap-x-[2px]"
+                  >Ledger balance
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Ledger balance"
+                    class="cursor-pointer h-3 w-3 flex items-center justify-center"
+                  >
+                    <AppIcon icon="quill:info" /> </span
+                ></span>
+              </div>
+
+              <!-- <span></span> <img src="/images/pass.svg" alt="side"
+        /> -->
+            </div>
+          </div>
+          <span
+            class="font-normal text-xs text-white capitalize flex justify-between items-center"
+          >
+            <span>{{ details?.accountNumber }}</span>
+
+            <span class="font-semibold">{{ details.bankName }}</span></span
+          >
+        </div>
+      </div>
+      <div class="px-4 pt-4 flex justify-end gap-x-4" v-if="!isLoading">
+        <AppButton
+          @click="
+            () => {
+              handleClose();
+              type = 'withdraw';
+              !hasWallet
+                ? (isCreatingWallet = isOpen = true)
+                : (isWithdraw = isOpen = true);
+            }
+          "
+          text="Withdraw"
+          btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
+        />
+        <AppButton
+          @click="
+            () => {
+              handleClose();
+              type = 'fund';
+              isTopup = isOpen = true;
+            }
+          "
+          text="Fund wallet"
+          btnClass="!px-[14px]  !py-[10px] text-sm text-white bg-primary-500 border border-primary-500 !rounded-lg"
+        />
       </div>
     </div>
-    <div class="px-4 pt-4 flex justify-end gap-x-4" v-if="!isLoading">
-      <AppButton
-        @click="
-          () => {
-            handleClose();
-            type = 'withdraw';
-            !hasWallet
-              ? (isCreatingWallet = isOpen = true)
-              : (isWithdraw = isOpen = true);
-          }
-        "
-        text="Withdraw"
-        btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
-      />
-      <AppButton
-        @click="
-          () => {
-            handleClose();
-            type = 'fund';
-            isTopup = isOpen = true;
-          }
-        "
-        text="Fund wallet"
-        btnClass="!px-[14px]  !py-[10px] text-sm text-white bg-primary-500 border border-primary-500 !rounded-lg"
-      />
+
+    <div
+      class="bg-white w-full border border-[#EAECF0] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-3 mb-8"
+    >
+      <div class="px-6 pb-4 border-b border-[#EAECF0]">
+        <div
+          class="lg:w-[311px] h-[180px] bg-[#16B364] bg-no-repeat bg-bottom bg-contain relative px-5 py-4 rounded-2xl flex flex-col justify-between shadow-[0px_6px_2px_#344054]"
+          :style="{ backgroundImage: `url('/lines.png')` }"
+        >
+          <div class="flex flex-col gap-y-4">
+            <div class="flex items-center justify-between text-white">
+              <div>
+                <span class="text-[17px] font-semibold block">{{
+                  currencyFormat(balance.availableBalance)
+                }}</span>
+                <span
+                  class="text-[10px] font-normal flex items-center gap-x-[2px]"
+                  >Available credit
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Available credit"
+                    class="cursor-pointer h-3 w-3 flex items-center justify-center"
+                  >
+                    <AppIcon icon="quill:info" /> </span
+                ></span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between text-white">
+              <div>
+                <span class="text-[17px] font-semibold block">{{
+                  currencyFormat(balance.ledgerBalance)
+                }}</span>
+                <span
+                  class="text-[10px] font-normal flex items-center gap-x-[2px]"
+                  >Credit used
+                  <span
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Ledger balance"
+                    class="cursor-pointer h-3 w-3 flex items-center justify-center"
+                  >
+                    <AppIcon icon="quill:info" /> </span
+                ></span>
+              </div>
+
+              <span class="absolute top-4 right-4">
+                <img src="/images/pass.svg" class="w-4" alt="side"
+              /></span>
+            </div>
+          </div>
+          <span
+            class="font-normal text-xs text-white capitalize flex justify-between items-center"
+          >
+            <span
+              >{{ authStore?.userInfo?.firstName }}
+              {{ authStore?.userInfo?.lastName }}</span
+            >
+          </span>
+        </div>
+      </div>
+      <div class="px-4 pt-4 flex justify-end gap-x-4" v-if="!isLoading">
+        <AppButton
+          @click="
+            () => {
+              handleClose();
+              type = 'repay';
+              isRepay = isOpen = true;
+            }
+          "
+          type="button"
+          text="Repay credit"
+          btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
+        />
+      </div>
     </div>
   </div>
-  <div
+  <!-- <div
     v-if="hasWallet"
     class="border border-[#EAECF0] bg-[#F2F4F7] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-4 px-4"
   >
@@ -89,7 +194,7 @@
         ></span>
       </div>
     </div>
-  </div>
+  </div> -->
   <IndexModal :isOpen="isOpen" @togglePopup="handleClose">
     <template #content>
       <div class="max-w-[800px]">
@@ -111,6 +216,9 @@
           :type="type"
           :banks="banks"
         />
+      <div class="bg-white p-6 rounded-lg">
+        <RepayLoan v-if="isRepay" :detail="detail" type="credit" />
+      </div>
       </div>
     </template>
   </IndexModal>
@@ -129,7 +237,10 @@
 import { toast } from "vue3-toastify";
 import { getWalletDetails } from "~/services/walletservice";
 import { getBanks, viewSettlement } from "~/services/settlementservice";
+import RepayLoan from "~/pages/financing/repay-loan.vue";
 
+const detail = ref(null);
+const isRepay = ref(false);
 const balance = inject("balance");
 const authStore = useAuthStore();
 const getLedgersTrans = inject("getLedgersTrans");
@@ -174,6 +285,7 @@ function handleClose() {
     isCreatingWallet.value =
     isAddingKyc.value =
     isOpen.value =
+    isRepay.value =
     isSuccessOpen.value =
       false;
 }
@@ -238,4 +350,11 @@ provide("handleComplete", handleComplete);
 provide("handleClose", handleClose);
 provide("details", details);
 provide("settlements", settlements);
+provide("isOpen", isOpen)
 </script>
+
+<style scoped>
+.bg1 {
+  background-color: linear-gradient(45deg, #42307d 0%, #7f56d9 100%);
+}
+</style>
