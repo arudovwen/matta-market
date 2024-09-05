@@ -57,7 +57,7 @@
                   </p>
                   <div
                     v-if="available"
-                    class="rounded-lg p-6 border border-[#E2E2E2] bg-[#F2F4F7] mt-4"
+                    class="rounded-lg py-6 px-4 border border-[#E2E2E2] bg-[#F2F4F7] mt-4"
                   >
                     <div class="grid gap-y-2">
                       <div
@@ -67,7 +67,7 @@
                           : bankOptions"
                         :key="item.key"
                       >
-                        <span class="text-[#344054] capitalize">{{ item.title }}: </span>
+                        <span class="text-[#344054] capitalize">{{ item.title }} </span>
                         <span class="text-[#344054] font-semibold">Value</span>
                       </div>
                     </div>

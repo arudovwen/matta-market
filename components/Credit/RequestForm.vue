@@ -3,7 +3,7 @@
     <Breadcrumbs :links="links" />
     <HeaderComponent :title="`Request Credit`" className="!border-none !px-0" />
     <div class="bg-white rounded-lg border border-[#EAECF0]">
-      <div class="px-6 py-3 border-b border-[#EAECF0]">
+      <div class="px-6 py-4 border-b border-[#EAECF0]">
         <span
           ><button class="text-sm font-medium flex gap-x-2 items-center">
             <AppIcon icon="ph:arrow-left-bold" /> <span>Back</span>
