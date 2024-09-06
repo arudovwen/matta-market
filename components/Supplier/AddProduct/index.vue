@@ -64,12 +64,13 @@ const tabs = [
     name: "Product Info",
     value: 1,
   },
+
   {
-    name: "Properties",
+    name: "Documents",
     value: 2,
   },
   {
-    name: "Documents",
+    name: "Properties",
     value: 3,
   },
 ];

@@ -5,38 +5,17 @@
     >
       <div class="px-6 pb-4 border-b border-[#EAECF0]">
         <div
-          class="lg:w-[311px] h-[180px] bg-[#42307D] bg-no-repeat bg-bottom px-5 py-4 rounded-2xl flex flex-col justify-between bg-contain shadow-[0px_6px_2px_#344054]"
+          class="lg:w-[311px] h-[180px] bg-[#42307D] bg-no-repeat bg-bottom relative px-5 py-5 rounded-2xl flex flex-col justify-between bg-contain shadow-[0px_6px_2px_#344054]"
           :style="{ backgroundImage: `url('/lines.png')` }"
         >
           <div class="flex flex-col gap-y-4">
             <div class="flex items-center justify-between text-white">
               <div>
-                <span class="text-[17px] font-semibold block">{{
+                <span class="text-xl font-semibold block">{{
                   currencyFormat(balance.availableBalance)
                 }}</span>
                 <span
-                  class="text-[10px] font-normal flex items-center gap-x-[2px]"
-                  >Wallet balance
-                  <span
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Wallet balance"
-                    class="cursor-pointer h-3 w-3 flex items-center justify-center"
-                  >
-                    <AppIcon icon="quill:info" /> </span
-                ></span>
-              </div>
-
-              <!-- <span></span> <img src="/images/pass.svg" alt="side"
-        /> -->
-            </div>
-            <div class="flex items-center justify-between text-white">
-              <div>
-                <span class="text-[17px] font-semibold block">{{
-                  currencyFormat(balance.ledgerBalance)
-                }}</span>
-                <span
-                  class="text-[10px] font-normal flex items-center gap-x-[2px]"
+                  class="text-[11px] font-normal flex items-center gap-x-[2px]"
                   >Ledger balance
                   <span
                     data-toggle="tooltip"
@@ -45,11 +24,13 @@
                     class="cursor-pointer h-3 w-3 flex items-center justify-center"
                   >
                     <AppIcon icon="quill:info" /> </span
-                ></span>
+                  >: {{ currencyFormat(balance.ledgerBalance) }}</span
+                >
               </div>
 
-              <!-- <span></span> <img src="/images/pass.svg" alt="side"
-        /> -->
+              <span class="absolute top-4 right-4">
+                <img src="/images/pass.svg" class="w-4" alt="side"
+              /></span>
             </div>
           </div>
           <span
@@ -94,10 +75,10 @@
     >
       <div class="px-6 pb-4 border-b border-[#EAECF0]">
         <div
-          class="lg:w-[311px] h-[180px] bg-[#16B364] bg-no-repeat bg-bottom bg-contain relative px-5 py-4 rounded-2xl flex flex-col justify-between shadow-[0px_6px_2px_#344054]"
+          class="lg:w-[311px] h-[180px] bg-[#16B364] bg-no-repeat bg-bottom bg-contain relative px-5 py-5 rounded-2xl flex flex-col justify-between shadow-[0px_6px_2px_#344054]"
           :style="{ backgroundImage: `url('/lines.png')` }"
         >
-          <div class="flex flex-col gap-y-4">
+          <div class="flex flex-col gap-y-3">
             <div class="flex items-center justify-between text-white">
               <div>
                 <span class="text-[17px] font-semibold block">{{
@@ -216,9 +197,9 @@
           :type="type"
           :banks="banks"
         />
-      <div class="bg-white p-6 rounded-lg">
-        <RepayLoan v-if="isRepay" :detail="detail" type="credit" />
-      </div>
+        <div class="bg-white p-6 rounded-lg">
+          <RepayLoan v-if="isRepay" :detail="detail" type="credit" />
+        </div>
       </div>
     </template>
   </IndexModal>
@@ -350,7 +331,7 @@ provide("handleComplete", handleComplete);
 provide("handleClose", handleClose);
 provide("details", details);
 provide("settlements", settlements);
-provide("isOpen", isOpen)
+provide("isOpen", isOpen);
 </script>
 
 <style scoped>
