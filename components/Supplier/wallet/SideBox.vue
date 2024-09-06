@@ -131,7 +131,7 @@
         </div>
       </div>
       <div class="px-4 pt-4 flex justify-end gap-x-4" v-if="!isLoading">
-        <AppButton
+        <!-- <AppButton
           @click="
             () => {
               handleClose();
@@ -141,6 +141,12 @@
           "
           type="button"
           text="Repay credit"
+          btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
+        /> -->
+        <AppButton
+          @click="navigateTo('/credit/request')"
+          type="button"
+          text="Request credit"
           btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
         />
       </div>

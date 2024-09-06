@@ -134,22 +134,20 @@ const bankOptions = [
   },
 ];
 const onSubmit = () => {
+  isLoading.value = true;
 
-  isSuccessOpen.value = true;
-  // isLoading.value = true;
-
-  // postCreditRequest(formData)
-  //   .then((res) => {
-  //     if (res.status === 200) {
-  //       isSuccessOpen.value = true;
-  //       isLoading.value = false;
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     errorText.value =
-  //       err?.response?.data?.Message || err?.response?.data?.message;
-  //     isLoading.value = false;
-  //     isErrorOpen.value = true;
-  //   });
+  postCreditRequest(formData)
+    .then((res) => {
+      if (res.status === 200) {
+        isSuccessOpen.value = true;
+        isLoading.value = false;
+      }
+    })
+    .catch((err) => {
+      errorText.value =
+        err?.response?.data?.Message || err?.response?.data?.message;
+      isLoading.value = false;
+      isErrorOpen.value = true;
+    });
 };
 </script>

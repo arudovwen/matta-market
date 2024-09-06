@@ -242,7 +242,7 @@ const urls = {
   APPLY_DISCOUNT: "v1/discount/apply-discount",
 
   // Credit 
-  REQUEST_CREDIT: "CreditRequest/new",
-  GET_ALL_CREDIT_REQUEST: "CreditRequest/get-all",
+  REQUEST_CREDIT: "v1/CreditRequest/new",
+  GET_ALL_CREDIT_REQUEST: "v1/CreditRequest/get-all",
 };
 export default urls;

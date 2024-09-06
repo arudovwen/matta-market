@@ -209,7 +209,7 @@ const formData = reactive({
   },
 });
 
-const active = ref(2);
+const active = ref(1);
 const tabs = [
   {
     name: "Credit request",
