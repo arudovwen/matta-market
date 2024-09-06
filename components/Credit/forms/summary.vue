@@ -134,7 +134,7 @@ const bankOptions = [
   },
 ];
 const onSubmit = () => {
-  console.log("🚀 ~ onSubmit ~ formData:", formData)
+
   isSuccessOpen.value = true;
   // isLoading.value = true;
 

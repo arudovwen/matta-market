@@ -576,7 +576,7 @@ function handleEvent(e) {
   img.value = URL.createObjectURL(files[0]);
   isShowing.value = "crop";
   open.value = true;
-  console.log("fire event", files);
+ 
 }
 
 // function crop() {

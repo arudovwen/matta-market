@@ -152,7 +152,7 @@ async function handleSubmit() {
   loginUser(form)
     .then((res) => {
 			if (res.status === 200) {
-				console.log("faya", v$.value);
+		
         store.commit("setUser", res.data.data);
         toast.info("Login successful");
         if (route.query.redirected_from) {

@@ -29,7 +29,7 @@
       <button
         type="button"
         @click="triggerFileInput"
-        class="text-xs text-white border border-[#667085] bg-[#667085] rounded px-5 py-[6px] h-full active:scale-[.95] leading-normal flex justify-center"
+        class="text-xs text-white border border-[#667085] bg-[#667085] rounded px-5 py-[6px] h-full active:scale-[.95] leading-normal flex justify-center items-center"
       >
         <div
           v-if="loading"
@@ -177,7 +177,7 @@ function handleMultiple(e) {
       // All files have been successfully uploaded
       handleChange && handleChange(props.id, multiUrls.value);
       emits("update:modelValue", multiUrls.value);
-      console.log("All files uploaded successfully.");
+    
     })
     .catch((error) => {
       // An error occurred during file upload

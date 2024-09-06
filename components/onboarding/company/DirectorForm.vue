@@ -1,5 +1,5 @@
 <template>
-  <h3 class="font-semibold text-2xl mb-10">Add director</h3>
+  <h3 class="font-semibold text-2xl mb-10 lg:min-w-[580px]">Add director</h3>
   <form @submit.prevent="onSubmit" class="">
     <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
@@ -81,10 +81,10 @@
         placeholder=""
         label="Home address"
         type="text"
-        name="linkedIn"
-        v-bind="linkedInAtt"
-        v-model="linkedIn"
-        :error="errors.linkedIn"
+        name="homeAddress"
+        v-bind="homeAddressAtt"
+        v-model="homeAddress"
+        :error="errors.homeAddress"
       />
     </div>
     <div class="lg:col-span-2 mb-6">
@@ -122,21 +122,21 @@
     </div>
     <div class="lg:col-span-2 mb-6">
       <FormGroup  
-        :error="isFieldTouched('identityUrl') ? errors.identityUrl : ''"
+        :error="isFieldTouched('utilityBillUrl') ? errors.utilityBillUrl : ''"
       >
         <FileUpload
           label="Upload Utility Bill"
-          id="identityUrl"
-          :modelValue="form.identityUrl"
+          id="utilityBillUrl"
+          :modelValue="form.utilityBillUrl"
           :isCumpulsory="true"
         />
         <span
-          @click="downloadFile(form.identityUrl, 'Identity card')"
+          @click="downloadFile(form.utilityBillUrl, 'Identity card')"
           download
-          v-if="form.identityUrl"
+          v-if="form.utilityBillUrl"
         >
           <span class="block text-xs text-blue-500 mt-1"
-            >Download Identity card</span
+            >Download Utility Bill</span
           ></span
         >
       </FormGroup>
@@ -166,7 +166,7 @@
       <button
         type="button"
         @click="open = false"
-        class="text-xs uppercase border border-gray-100 w-full px-5 py-4 rounded-lg"
+        class="text-xs uppercase border border-gray-200 w-full px-5 py-4 rounded-lg"
       >
         Cancel
       </button>
@@ -244,6 +244,8 @@ const [phone] = defineField("phone");
 const [bvn, bvnAtt] = defineField("bvn");
 const [dob] = defineField("dob");
 const [linkedIn, linkedInAtt] = defineField("linkedIn");
+const [homeAddress, homeAddressAtt] = defineField("homeAddress");
+
 
 onMounted(() => {
   if (props.director) {
@@ -254,8 +256,10 @@ onMounted(() => {
     form.bvn = props.director.bvn;
     form.dob = new Date(props.director.dob);
     form.linkedIn = props.director.linkedIn;
+    form.homeAddress = props.director.homeAddress
     form.signatureUrl = props.director.signatureUrl;
     form.identityUrl = props.director.identityUrl;
+    form.utilityBillUrl = props.director.utilityBillUrl
     Object.keys(props.director).forEach(item=>{
        setFieldValue(item, props.director[item])
     })
@@ -272,6 +276,9 @@ function handleChange(id, value) {
   if (id === "identityUrl") {
     form.identityUrl = value;
   }
+  if (id === "utilityBillUrl") {
+    form.utilityBillUrl = value;
+  }
 }
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
@@ -286,9 +293,11 @@ const onSubmit = handleSubmit((values) => {
         i.phone = values.phone;
         i.bvn = values.bvn;
         i.dob = values.dob;
+        i.homeAddress = values.homeAddress;
         i.linkedIn = values.linkedIn;
         i.signatureUrl = values.signatureUrl;
         i.identityUrl = values.identityUrl;
+        i.utilityBillUrl = values.utilityBillUrl;
       }
       return i;
     });

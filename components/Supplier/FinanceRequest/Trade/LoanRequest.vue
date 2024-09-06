@@ -95,7 +95,7 @@ const onSubmit = handleSubmit((values) => {
   formData.tenor = values.tenor;
   formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs;
   active.value = 2;
-	console.log("Yppp",values, active.value)
+
 });
 
 const options = [

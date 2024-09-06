@@ -97,7 +97,7 @@ import { useForm } from "vee-validate";
 import { v4 as uuidv4 } from "uuid";
 
 const form = inject("form");
-console.log("🚀 ~ form:", form)
+
 const props = defineProps({
   detail: {
     default: null,

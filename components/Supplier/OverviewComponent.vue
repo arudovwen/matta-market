@@ -274,7 +274,7 @@ const confirmseries = ref([]);
 
 onMounted(() => {
   getesfrontstats(query).then((res) => {
-		console.log(res.data.data);
+	
     stats.value = res.data.data;
   });
   getstorefronttrending(query).then((res) => {

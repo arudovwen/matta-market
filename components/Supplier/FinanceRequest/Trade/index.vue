@@ -316,7 +316,7 @@ function getCompanyData() {
                 },
               ],
       };
-      console.log("🚀 ~ .then ~ tempData:", tempData);
+
       company.value = tempData;
       formData.kyb = { ...tempData };
 

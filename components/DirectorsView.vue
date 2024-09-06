@@ -6,13 +6,12 @@
       <thead>
         <tr>
           <th
-            class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+            class="capitalize text-[#475467] text-sm text-left font-semibold border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
           >
             Directors
           </th>
 
           <th
-            
             class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
           ></th>
         </tr>
@@ -26,58 +25,33 @@
           <td
             class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
           >
-            <span class="text-[#101828] mb-1 block">
-              {{ director.firstName }} {{ director.lastName }}</span
-            >
-            <span class="text-[#475467]"> {{ director.email }}</span>
+            <span class="flex gap-x-3 items-center">
+              <span class="bg-gray-50 uppercase h-9 w-9 flex items-center justify-center rounded-lg border">
+                {{ director.firstName.slice(0,1) }}{{ director.lastName.slice(0,1) }}
+              </span>
+              <span>
+                <span class="text-[#101828] block">
+                  {{ director.firstName }} {{ director.lastName }}</span
+                >
+                <span class="text-[#475467]"> {{ director.email }}</span>
+              </span>
+            </span>
           </td>
 
-          <!-- <td
-            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-          >
-            {{ director.phone }}
-          </td>
+      
           <td
-            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-          >
-            {{ moment(director.dob).format("ll") }}
-          </td>
-          <td
-            v-if="companyInfo?.country?.toLowerCase() === 'nigeria'"
-            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-          >
-            {{ director.bvn }}
-          </td>
-          <td
-            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-          >
-            <span
-              class="text-primary-500 cursor-pointer"
-              @click="openMedia(director.identityUrl)"
-              >View</span
-            >
-          </td>
-          <td
-            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
-          >
-            <span
-              class="text-primary-500 cursor-pointer"
-              @click="openMedia(director.signatureUrl)"
-              >View</span
-            >
-          </td>-->
-          <td v-if="companyInfo?.approvalStatus"
-            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+            v-if="companyInfo?.approvalStatus"
+            class="flex justify-end text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
           >
             <button
-              class="text-primary-500 block ml-auto"
               type="button"
               @click="
                 detail = director;
                 open = true;
               "
+              class="outline-none text-2xl"
             >
-              View profile
+              <AppIcon icon="lets-icons:view-duotone" />
             </button>
           </td>
           <td
@@ -118,7 +92,6 @@ import IndexModal from "~/components/IndexModal";
 import { defineProps, ref, defineEmits } from "vue";
 import DirectorView from "./DirectorView.vue";
 import MediaViewer from "~/components/MediaViewer";
-import moment from "moment";
 import EmptyData from "./EmptyData.vue";
 
 const isOpen = ref(false);
@@ -127,8 +100,4 @@ defineProps(["directors", "companyInfo"]);
 const emits = defineEmits(["handleDelete", "handleEdit"]);
 const detail = ref(null);
 const open = ref(false);
-function openMedia(val) {
-  media.value = val;
-  isOpen.value = true;
-}
 </script>

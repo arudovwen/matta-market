@@ -80,7 +80,7 @@
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <DialogPanel
-                class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-2xl sm:w-full"
+                class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-2xl"
                 :class="action == 'add' ? 'sm:max-w-xl' : 'sm:max-w-xl'"
               >
                 <div class="p-6">
@@ -90,11 +90,13 @@
                     :director="director"
                     :id="id"
                   />
+                 <div class="max-w-sm">
                   <OnboardingCompanyDeleteModal
                     v-if="action === 'delete'"
-                    @delete="ondirectorsviDelete"
+                    @delete="onDelete"
                     @close="open = false"
                   />
+                 </div>
                 </div>
               </DialogPanel>
             </TransitionChild>

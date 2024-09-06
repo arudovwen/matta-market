@@ -62,7 +62,7 @@ function getData() {
   cartStore.setLoadingCart(true);
   shippingBreakdown()
     .then((res) => {
-      console.log("yooo");
+
       cartStore.setLoadingCart(false);
       if (res.status === 200) {
         rows.value = [

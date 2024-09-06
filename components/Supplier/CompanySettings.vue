@@ -55,11 +55,11 @@ function getData() {
         };
 
         companyInfo.value = tempData;
-        console.log("🚀 ~ .then ~ tempData:", tempData);
+    
       }
     })
     .catch((err) => {
-      console.log("🚀 ~ getData ~ err:", err);
+    
       isLoading.value = false;
     });
 }

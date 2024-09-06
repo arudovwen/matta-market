@@ -92,7 +92,7 @@ const links = [
   },
 ];
 const route = useRoute();
-console.log("🚀 ~ route:", route);
+
 const router = useRouter();
 const isPreviewing = ref(false);
 const isPageLoading = ref(true);

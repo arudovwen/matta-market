@@ -7,9 +7,9 @@
       <thead>
         <tr>
           <th
-            class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+            class="capitalize text-[#475467] text-sm text-left font-semibold border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
           >
-            Uploaded Documents
+            Documents
           </th>
 
           <th
@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr
+        <!-- <tr
           v-for="(document, id) in documents.filter((i) => i.urls)"
           :key="id"
           class="border-b last:border-none"
@@ -42,6 +42,71 @@
             </span>
           </td>
         </tr>
+      </tbody> -->
+        <tr
+          v-for="(document, id) in flattenedObjects"
+          :key="id"
+          class="border-b last:border-none"
+        >
+          <td
+            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap max-w-[260px] truncate"
+          >
+            <span class="flex gap-x-3 items-center">
+              <span>
+                <img
+                  :src="
+                    allowedImages.includes(docType(document.url))
+                      ? '/images/imgimg.svg'
+                      : allowedPdf.includes(docType(document.url))
+                      ? '/images/pdfimg.svg'
+                      : '/images/docimg.svg'
+                  "
+                  class="w-8 h-8"
+                  alt="img"
+                />
+              </span>
+              <span>
+                <span class="block text-[#101828] font-medium">
+                  {{ docName(document.documentType, type) }}</span
+                >
+                <span class="text-xs text-[#475467]">
+                  {{
+                    `${docName(document.documentType, type).replaceAll(
+                      " ",
+                      "_"
+                    )}.${docType(document.url)}`
+                  }}</span
+                >
+              </span>
+            </span>
+          </td>
+
+          <td
+            class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap flex gap-x-2 items-center justify-end"
+          >
+            <button
+              type="button"
+              @click="openMedia(document.url)"
+              class="outline-none text-2xl"
+            >
+              <AppIcon icon="lets-icons:view-duotone" />
+            </button>
+
+            <button
+              v-if="!hideUpdate"
+              type="button"
+              class="outline-none text-red-500 p-2"
+              @click="
+                emits('deleteDoc', {
+                  url: document.url,
+                  type: document.documentType,
+                })
+              "
+            >
+              <AppIcon icon="fa:trash-o" />
+            </button>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -53,7 +118,11 @@
   />
 </template>
 <script setup>
-const props = defineProps(["documents", "type"]);
+const props = defineProps(["documents", "type", "hideUpdate"]);
+const emits = defineEmits(["deleteDoc"]);
+const allowedImages = ["jpg", "jpeg", "png"];
+const allowedPdf = ["pdf"];
+const allowedDoc = ["docx"];
 
 const media = ref(null);
 const isMediaOpen = ref(false);
@@ -62,4 +131,10 @@ function openMedia(val) {
   media.value = val;
   isMediaOpen.value = true;
 }
+
+const flattenedObjects = computed(() =>
+  props.documents.flatMap((item) =>
+    item.urls.map((url) => ({ url: url.url, documentType: item.documentType }))
+  )
+);
 </script>

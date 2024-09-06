@@ -255,12 +255,7 @@ function setAsDefault(data) {
       (i) => i.label.toLowerCase() === data.bankName.toLowerCase()
     )?.value,
   };
-  console.log("🚀 ~ setAsDefault ~ values:", values);
-  // updateSettlement().then((res) => {
-  //   if (res.status === 200) {
-  //     getSettlements();
-  //   }
-  // });
+
 }
 function getSettlements() {
   docLoading.value = true;

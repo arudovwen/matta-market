@@ -33,7 +33,7 @@ const authOpen = ref(false);
 const action = ref("");
 
 function handleProceed() {
-  console.log("heyy");
+ 
   if (!authStore.isLoggedIn) {
     action.value = "order";
     authOpen.value = true;

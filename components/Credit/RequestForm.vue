@@ -209,7 +209,7 @@ const formData = reactive({
   },
 });
 
-const active = ref(1);
+const active = ref(2);
 const tabs = [
   {
     name: "Credit request",
@@ -289,7 +289,7 @@ function getCompanyData() {
                 },
               ],
       };
-      console.log("🚀 ~ .then ~ tempData:", tempData);
+    
       company.value = tempData;
       formData.kyb = { ...tempData };
 

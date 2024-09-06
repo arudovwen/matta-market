@@ -3,23 +3,28 @@
     <h3 class="font-semibold text-2xl mb-8">Director Detail</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
       <div class="mb-6">
-        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >Full name</p
+        <p
+          title=""
+          class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >
+          Full name
+        </p>
         <p class="text-[#344054] text-base font-medium">
           {{ detail.firstName }} {{ detail.lastName }}
         </p>
       </div>
 
       <div class="mb-6">
-        <p title="" for="email" class="mb-2 font-normal text-xs block">E-mail</p>
+        <p title="" for="email" class="mb-2 font-normal text-xs block">
+          E-mail
+        </p>
         <p class="text-[#344054] text-base font-medium">
           {{ detail.email }}
         </p>
       </div>
       <div class="mb-6">
-        <p title="" class="mb-2 font-normal text-xs block" for="phone"
-          >Phone number
+        <p title="" class="mb-2 font-normal text-xs block" for="phone">
+          Phone number
         </p>
         <p class="text-[#344054] text-base font-medium">
           {{ detail.phone }}
@@ -27,34 +32,55 @@
       </div>
 
       <div class="mb-6">
-        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >BVN</p
+        <p
+          title=""
+          class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >
+          BVN
+        </p>
         <p class="text-[#344054] text-base font-medium">
           {{ detail.bvn }}
         </p>
       </div>
       <div class="mb-6">
-        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >Date of birth</p
+        <p
+          title=""
+          class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >
+          Date of birth
+        </p>
         <p class="text-[#344054] text-base font-medium">
           {{ moment(detail.dob).format("ll") }}
         </p>
       </div>
 
       <div class="md:col-span-2 mb-6">
-        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >Linkedin</p
+        <p
+          title=""
+          class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >
-        <p class="text-[#344054] text-base font-medium">
-          {{ detail.linkedIn || "-" }}
+          Linkedin
+        </p>
+        <p
+          class="text-primary-500 gap-x-1 text-base font-medium flex items-center group"
+        >
+          <a v-if="detail.linkedIn" :href="detail.linkedIn" target="_blank">{{
+            detail.linkedIn
+          }}</a>
+          <AppIcon v-if="detail.linkedIn"
+            icon="iconamoon:link-light"
+            iconClass="text-2xl hidden group-hover:inline"
+          />
+          <span v-if="!detail.linkedIn">-</span>
         </p>
       </div>
       <div class="md:col-span-2 mb-6">
-        <p title="" class="mb-2 font-medium text-sm text-[#344054] block text-left"
-          >Home address</p
+        <p
+          title=""
+          class="mb-2 font-medium text-sm text-[#344054] block text-left"
         >
+          Home address
+        </p>
         <p class="text-[#344054] text-base font-medium">
           {{ detail.homeAddress || "-" }}
         </p>
@@ -66,9 +92,9 @@
           <thead>
             <tr>
               <th
-                class="capitalize text-[#475467] text-sm text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
+                class="capitalize text-[#475467] text-sm text-left font-semibold border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
               >
-                Uploaded Documents
+              Documents
               </th>
 
               <th
@@ -85,14 +111,15 @@
               </td>
 
               <td
-                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap flex justify-end"
               >
-                <span
+                <button
+                  type="button"
                   @click="openMedia(detail.signatureUrl)"
-                  class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
+                  class="outline-none text-2xl"
                 >
-                  View
-                </span>
+                  <AppIcon icon="lets-icons:view-duotone" />
+                </button>
               </td>
             </tr>
             <tr class="border-b last:border-none">
@@ -103,32 +130,34 @@
               </td>
 
               <td
-                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap flex justify-end"
               >
-                <span
+                <button
+                  type="button"
                   @click="openMedia(detail.identityUrl)"
-                  class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
+                  class="outline-none text-2xl"
                 >
-                  View
-                </span>
+                  <AppIcon icon="lets-icons:view-duotone" />
+                </button>
               </td>
             </tr>
             <tr class="border-b last:border-none">
               <td
                 class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
               >
-              Utility Bill
+                Utility Bill
               </td>
 
               <td
-                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap"
+                class="text-matta-black text-sm font-normal py-4 px-6 border-[#EAECF0] whitespace-nowrap flex justify-end"
               >
-                <span
+                <button
+                  type="button"
                   @click="openMedia(detail?.iutilityBillUrl)"
-                  class="flex gap-x-3 items-center justify-end text-primary-500 cursor-pointer"
+                  class="outline-none text-2xl"
                 >
-                  View
-                </span>
+                  <AppIcon icon="lets-icons:view-duotone" />
+                </button>
               </td>
             </tr>
           </tbody>

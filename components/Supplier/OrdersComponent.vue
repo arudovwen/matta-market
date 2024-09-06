@@ -223,7 +223,7 @@ const isLoading = ref(true);
 const isOrderLoading = ref(false);
 function getData() {
 	isLoading.value = true;
-	console.log("omo");
+	
   storefrontorders(queryParams)
 	.then((res) => {
       if (res.status) {
