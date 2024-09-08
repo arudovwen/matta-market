@@ -82,7 +82,7 @@
             <div class="flex items-center justify-between text-white">
               <div>
                 <span class="text-[17px] font-semibold block">{{
-                  currencyFormat(balance.availableBalance)
+                  currencyFormat(creditDetail?.availableCredit)
                 }}</span>
                 <span
                   class="text-[10px] font-normal flex items-center gap-x-[2px]"
@@ -100,7 +100,7 @@
             <div class="flex items-center justify-between text-white">
               <div>
                 <span class="text-[17px] font-semibold block">{{
-                  currencyFormat(balance.ledgerBalance)
+                  currencyFormat(creditDetail?.creditUsed)
                 }}</span>
                 <span
                   class="text-[10px] font-normal flex items-center gap-x-[2px]"
@@ -131,7 +131,8 @@
         </div>
       </div>
       <div class="px-4 pt-4 flex justify-end gap-x-4" v-if="!isLoading">
-        <!-- <AppButton
+        <AppButton
+          v-if="hasCredit"
           @click="
             () => {
               handleClose();
@@ -142,8 +143,9 @@
           type="button"
           text="Repay credit"
           btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
-        /> -->
+        />
         <AppButton
+          v-if="!hasCredit"
           @click="navigateTo('/credit/request')"
           type="button"
           text="Request credit"
@@ -204,7 +206,12 @@
           :banks="banks"
         />
         <div class="bg-white p-6 rounded-lg">
-          <RepayLoan v-if="isRepay" :detail="detail" type="credit" />
+          <RepayLoan
+            v-if="isRepay"
+            :detail="detail"
+            :creditDetail="creditDetail"
+            type="credit"
+          />
         </div>
       </div>
     </template>
@@ -225,8 +232,10 @@ import { toast } from "vue3-toastify";
 import { getWalletDetails } from "~/services/walletservice";
 import { getBanks, viewSettlement } from "~/services/settlementservice";
 import RepayLoan from "~/pages/financing/repay-loan.vue";
+import { getCreditDetail } from "~/services/creditservice";
 
 const detail = ref(null);
+const creditDetail = ref(null);
 const isRepay = ref(false);
 const balance = inject("balance");
 const authStore = useAuthStore();
@@ -238,6 +247,7 @@ const isSuccessOpen = ref(false);
 const isLoading = ref(true);
 const details = ref([]);
 const hasWallet = ref(false);
+const hasCredit = ref(false);
 const isOpen = ref(false);
 const route = useRoute();
 const isTopup = ref(false);
@@ -307,6 +317,16 @@ function handleWalletDetails() {
     })
     .catch(() => {
       hasWallet.value = false;
+      isLoading.value = false;
+    });
+  getCreditDetail()
+    .then((res) => {
+      creditDetail.value = res.data.data;
+      hasCredit.value = true;
+      isLoading.value = false;
+    })
+    .catch(() => {
+      hasCredit.value = false;
       isLoading.value = false;
     });
 }

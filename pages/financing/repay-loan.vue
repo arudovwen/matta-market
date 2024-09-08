@@ -147,13 +147,19 @@ const props = defineProps({
   type: {
     default: "loan",
   },
+  creditDetail: {
+    default: null,
+  },
 });
 const isSuccessOpen = ref(false);
 const formValues = {
   id: "",
   amount: null,
   repaymentType: "partial",
-  max: props.detail?.repaymentAmount - props.detail?.totalPayed,
+  max:
+    props.type === "loan"
+      ? props.detail?.repaymentAmount - props.detail?.totalPayed
+      : props.creditDetail?.creditLimit,
 };
 const options = [
   {
@@ -178,7 +184,7 @@ const [amount] = defineField("amount");
 const [repaymentType] = defineField("repaymentType");
 
 const content = [
-{
+  {
     label: "Pay with Bank card",
     value: "bank",
     icon: "uil:credit-card",

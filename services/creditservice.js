@@ -18,3 +18,7 @@ export const getCreditRequest = withRetryHandling((payload) => {
 export async function postCreditRequest(data) {
   return await post(`${urls.REQUEST_CREDIT}`, data, config);
 }
+
+export async function getCreditDetail() {
+  return await get(urls.GET_CREDIT_DETAIL, config);
+}
