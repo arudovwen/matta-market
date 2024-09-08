@@ -67,8 +67,15 @@
                           : bankOptions"
                         :key="item.key"
                       >
-                        <span class="text-[#344054] capitalize">{{ item.title }} </span>
-                        <span class="text-[#344054] font-semibold">Value</span>
+                        <span class="text-[#344054] capitalize"
+                          >{{ item.title }}
+                        </span>
+
+                        <span class="text-[#344054] font-semibold">{{
+                          item.key === "dueDate"
+                            ? moment(creditDetail?.[item.key]).format("ll")
+                            : currencyFormat(creditDetail?.[item.key])
+                        }}</span>
                       </div>
                     </div>
                   </div>
@@ -110,6 +117,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
+import moment from "moment";
 
 const props = defineProps({
   title: {
@@ -125,6 +133,7 @@ const props = defineProps({
   isCancel: { default: true },
   isOkay: { default: false },
   canClose: { default: true },
+  creditDetail: { default: null },
 });
 const emits = defineEmits(["actionItem", "close"]);
 
@@ -134,8 +143,8 @@ const text2 =
 const text3 =
   "You do not have sufficient credit to complete this purchase. Would you like to pay the balance";
 function actionItem() {
-  if(!props.available){
-    navigateTo("/credit/request")
+  if (!props.available) {
+    navigateTo("/credit/request");
   }
 }
 function handleclose() {
@@ -145,42 +154,42 @@ function handleclose() {
 const bankOptions = [
   {
     title: "Available Balance",
-    key: "bankName",
+    key: "availableCredit",
   },
   {
     title: "Amount to pay",
-    key: "accountName",
+    key: "creditLimit",
   },
   {
     title: "Due date",
-    key: "accountNumber",
+    key: "dueDate",
   },
   {
     title: "Repayment Amount",
-    key: "amount",
+    key: "balance",
   },
 ];
 
 const advanceOptions = [
   {
     title: "Available credit",
-    key: "bankName",
+    key: "availableCredit",
   },
   {
     title: "total purchase",
-    key: "accountName",
+    key: "creditUsed",
   },
   {
     title: "balance to pay",
-    key: "accountNumber",
+    key: "balance",
   },
   {
     title: "Repayment Amount",
-    key: "amount",
+    key: "creditLimit",
   },
   {
     title: "Due date",
-    key: "amount",
+    key: "dueDate",
   },
 ];
 </script>

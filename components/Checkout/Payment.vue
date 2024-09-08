@@ -27,16 +27,27 @@
       </div>
     </div>
   </div>
+
   <CheckoutCreditPopup
     @close="isPopOpen = false"
     :open="isPopOpen"
-    :available="false"
-    :insufficient="false"
+    :available="hasCredit"
+    :insufficient="cartStore?.cartTotalwithTax > creditDetail?.availableCredit"
+    :creditDetail="{
+      ...creditDetail,
+      balance: creditDetail?.creditLimit - creditDetail?.creditUsed,
+    }"
   />
 </template>
 <script setup>
+import { getCreditDetail } from "~/services/creditservice";
+
+const cartStore = useCartStore()
 const activeMethod = inject("activeMethod");
 const isPopOpen = inject("isPopOpen");
+const creditDetail = ref(null);
+const hasCredit = ref(true);
+const isLoading = ref(false);
 const data = [
   {
     title: "Pay Online",
@@ -70,5 +81,23 @@ watch(activeMethod, () => {
   activeMethod.value === "credit"
     ? (isPopOpen.value = true)
     : (isPopOpen.value = false);
+});
+function handleWalletDetails() {
+  isLoading.value = true;
+  getCreditDetail()
+    .then((res) => {
+      if (res.status === 200) {
+        creditDetail.value = res.data.data;
+        hasCredit.value = true;
+        isLoading.value = false;
+      }
+    })
+    .catch(() => {
+      hasCredit.value = false;
+      isLoading.value = false;
+    });
+}
+onMounted(() => {
+  handleWalletDetails();
 });
 </script>
