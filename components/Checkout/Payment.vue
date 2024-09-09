@@ -29,6 +29,7 @@
   </div>
 
   <CheckoutCreditPopup
+    v-if="isPopOpen"
     @close="isPopOpen = false"
     :open="isPopOpen"
     :available="hasCredit"
@@ -36,14 +37,14 @@
     :creditDetail="{
       ...creditDetail,
       balance: creditDetail?.creditLimit - creditDetail?.creditUsed,
-      amountToPay:cartStore?.cartTotalwithTax
+      amountToPay: cartStore?.cartTotalwithTax,
     }"
   />
 </template>
 <script setup>
 import { getCreditDetail } from "~/services/creditservice";
 
-const cartStore = useCartStore()
+const cartStore = useCartStore();
 const activeMethod = inject("activeMethod");
 const isPopOpen = inject("isPopOpen");
 const creditDetail = ref(null);
@@ -56,7 +57,7 @@ const data = [
     key: "card",
     url: "",
     text: "Pay instantly and securely with your credit/debit card",
-    value:0
+    value: 0,
   },
   {
     title: "Matta Wallet",
@@ -64,7 +65,7 @@ const data = [
     url: "",
     key: "wallet",
     text: "Make payment with funds from your Matta wallet",
-    value:1
+    value: 1,
   },
   {
     title: "Pay with Trade Finance",
@@ -72,14 +73,14 @@ const data = [
     url: "",
     key: "trade",
     text: "Make payment with trade finance",
-    value:2
+    value: 2,
   },
   {
     title: "Credit Available",
     icon: "teenyicons:credit-card-outline",
     text: "Pay with your available credit",
     key: "credit",
-    value:3
+    value: 3,
   },
 ];
 watch(activeMethod, () => {
@@ -105,5 +106,4 @@ function handleWalletDetails() {
 onMounted(() => {
   handleWalletDetails();
 });
-
 </script>

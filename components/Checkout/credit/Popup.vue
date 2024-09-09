@@ -72,9 +72,13 @@
                         </span>
 
                         <span class="text-[#344054] font-semibold">{{
-                          item.key === "dueDate"
-                            ? moment(creditDetail?.[item.key]).format("ll")
-                            : currencyFormat(creditDetail?.[item.key])
+                          item.key === "dueDate" ||  item.key === "repaymentDate"
+                            ? moment(
+                                handleData(creditDetail)?.[item.key]
+                              ).format("ll")
+                            : currencyFormat(
+                                handleData(creditDetail)?.[item.key]
+                              )
                         }}</span>
                       </div>
                     </div>
@@ -119,10 +123,11 @@ import {
 import moment from "moment";
 import { toast } from "vue3-toastify";
 import { confirmpurchase } from "~/services/cartservice";
+import { getPrepaidInfo } from "~/services/creditservice";
 
 const isLoading = ref(false);
 const shippingStore = useShippingStore();
-const cartStore = useCartStore()
+const cartStore = useCartStore();
 const props = defineProps({
   title: {
     default: "",
@@ -139,6 +144,7 @@ const props = defineProps({
   canClose: { default: true },
   creditDetail: { default: null },
 });
+const prepaidInfo = ref(null);
 const emits = defineEmits(["close"]);
 
 const text1 = "You are about to make payment for this purchase using credit?";
@@ -162,11 +168,11 @@ const bankOptions = [
   },
   {
     title: "Due date",
-    key: "dueDate",
+    key: "repaymentDate",
   },
   {
     title: "Repayment Amount",
-    key: "balance",
+    key: "repaymentAmount",
   },
 ];
 
@@ -181,7 +187,7 @@ const advanceOptions = [
   },
   {
     title: "balance to pay",
-    key: "r",
+    key: "amountToPay",
   },
   {
     title: "Repayment Amount",
@@ -189,7 +195,7 @@ const advanceOptions = [
   },
   {
     title: "Due date",
-    key: "dueDate",
+    key: "repaymentDate",
   },
 ];
 
@@ -220,4 +226,15 @@ function handlePurchase() {
       });
   }
 }
+function handleData(data) {
+  return { ...data, ...prepaidInfo.value };
+}
+onMounted(() => {
+  getPrepaidInfo(props.creditDetail.amountToPay).then((res) => {
+    if (res.status === 200) {
+    
+      prepaidInfo.value = res.data.data;
+    }
+  });
+});
 </script>

@@ -22,3 +22,6 @@ export async function postCreditRequest(data) {
 export async function getCreditDetail() {
   return await get(urls.GET_CREDIT_DETAIL, config);
 }
+export async function getPrepaidInfo(amount) {
+  return await get(`${urls.PREPAID_CREDIT_INFO}?amount=${amount}`, config);
+}
