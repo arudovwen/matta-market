@@ -59,13 +59,27 @@
         {{ cat.title }}
       </button>
     </li>
-    <li   class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333] mt-2">
+    <li
+      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333] mt-2"
+    >
       <NuxtLink
         to="/request-product"
         activeClass="text-[#165EF0] font-medium"
         class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
       >
         Request a product</NuxtLink
+      >
+    </li>
+    <li
+      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333] mt-2"
+    >
+      <a
+        target="_blank"
+        href="https://corporate.matta.trade"
+       
+        class="flex gap-x-1 items-center group-hover:text-[#165EF0] cursor-pointer"
+      >
+        About Us</a
       >
     </li>
   </ul>
