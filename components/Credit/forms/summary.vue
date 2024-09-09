@@ -15,17 +15,11 @@
             v-for="n in item.data"
             :key="n.key"
           >
-            <span class="text-[#667085] capitalize">{{ n.title }} </span>
-            <span class="text-[#344054] font-medium">Value</span>
+            <span class="text-[#667085] capitalize mb-1">{{ n.title }} </span>
+            <span class="text-[#344054] font-medium">{{
+              companyInfo?.[n.key]
+            }}</span>
           </div>
-        </div>
-        <div class="flex flex-col text-xs">
-          <span class="text-[#667085] capitalize">Directors </span>
-          <span class="text-[#344054] font-medium">Value</span>
-        </div>
-        <div class="flex flex-col text-xs">
-          <span class="text-[#667085] capitalize">Documents </span>
-          <span class="text-[#344054] font-medium">Value</span>
         </div>
       </div>
       <div
@@ -80,13 +74,14 @@
   />
 </template>
 <script setup>
+import moment from "moment";
 import { postCreditRequest } from "~/services/creditservice";
 
 const isSuccessOpen = ref(false);
 const isErrorOpen = ref(false);
-const errorText = ref(null)
+const errorText = ref(null);
 const route = useRoute();
-const { financeId } = route.params;
+const company = inject("company");
 const formData = inject("formData");
 const isLoading = ref(false);
 const active = inject("active");
@@ -96,11 +91,11 @@ const bankOptions = [
     data: [
       {
         title: "Company name",
-        key: "bankName",
+        key: "companyName",
       },
       {
         title: "Business type",
-        key: "accountName",
+        key: "companyType",
       },
     ],
   },
@@ -108,11 +103,11 @@ const bankOptions = [
     data: [
       {
         title: "Date of incorporation",
-        key: "bankName",
+        key: "dateofIncorporation",
       },
       {
         title: "Sector",
-        key: "accountName",
+        key: "sector",
       },
     ],
   },
@@ -120,19 +115,15 @@ const bankOptions = [
     data: [
       {
         title: "Business address",
-        key: "bankName",
-      },
-    ],
-  },
-  {
-    data: [
-      {
-        title: "Brief description of Product",
-        key: "bankName",
+        key: "address",
       },
     ],
   },
 ];
+const companyInfo = computed(() => ({
+  ...company.value,
+  dateofIncorporation: moment(company.value.dateofIncorporation).format("ll"),
+}));
 const onSubmit = () => {
   isLoading.value = true;
 

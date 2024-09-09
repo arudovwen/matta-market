@@ -90,15 +90,14 @@
                       Cancel
                     </button>
 
-                    <button
-                      v-if="!isOkay"
-                      :disabled="loading"
+                    <AppButton
+                      :isDisabled="isLoading"
+                      :isLoading="isLoading"
                       type="button"
+                      :text="!available ? 'Apply for credit' : 'Proceed'"
                       @click="handlePurchase"
                       class="h-11 bg-primary-500 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
-                    >
-                      {{ !available ? "Apply for credit" : "Proceed" }}
-                    </button>
+                    />
                   </div>
                 </div>
               </div>
@@ -118,9 +117,12 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import moment from "moment";
+import { toast } from "vue3-toastify";
 import { confirmpurchase } from "~/services/cartservice";
 
+const isLoading = ref(false);
 const shippingStore = useShippingStore();
+const cartStore = useCartStore()
 const props = defineProps({
   title: {
     default: "",
@@ -192,19 +194,30 @@ const advanceOptions = [
 ];
 
 function handlePurchase() {
+  isLoading.value = true;
   if (!props.available) {
     navigateTo("/credit/request");
+    isLoading.value = false;
     return;
   }
   if (!props.insufficient) {
     confirmpurchase({
       paymentOption: 3,
-      shippingAddressId: shippingStore?.defaultAddress.id
-    }).then((res) => {
-      if (res.status === 200) {
-        window.location.href = `/order-success?orderId=${res?.data?.data}`;
-      }
-    });
+      shippingAddressId: shippingStore?.defaultAddress.id,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          cartStore?.clearCart();
+          window.location.href = `/order-success?orderId=${res?.data?.data}`;
+          isLoading.value = false;
+        }
+      })
+      .catch((err) => {
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
+        isLoading.value = false;
+      });
   }
 }
 </script>
