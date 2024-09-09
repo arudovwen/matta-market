@@ -11,15 +11,28 @@
       {{ n.name }}
       <AppIcon icon="pepicons-pencil:angle-right" />
     </li>
-    <!-- <li
-     
-      
+    <li
+      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
     >
-     <NuxtLink to="/finance">
-     <span class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"> Finance
-      <AppIcon icon="pepicons-pencil:angle-right" /></span>
-     </NuxtLink>
-    </li> -->
+      <NuxtLink
+        to="/request-product"
+        activeClass="text-[#165EF0] font-medium"
+        class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
+      >
+        Request a product</NuxtLink
+      >
+    </li>
+    <li
+      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
+    >
+      <a
+        target="_blank"
+        href="https://corporate.matta.trade"
+        class="flex gap-x-1 items-center group-hover:text-[#165EF0] cursor-pointer"
+      >
+        About Us</a
+      >
+    </li>
   </ul>
   <button
     class="flex gap-x-1 items-center text-xs mb-5"
@@ -58,29 +71,6 @@
         <AppIcon :icon="`fa6-solid:${cat.imagePath}`" v-if="cat.imagePath" />
         {{ cat.title }}
       </button>
-    </li>
-    <li
-      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333] mt-2"
-    >
-      <NuxtLink
-        to="/request-product"
-        activeClass="text-[#165EF0] font-medium"
-        class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
-      >
-        Request a product</NuxtLink
-      >
-    </li>
-    <li
-      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333] mt-2"
-    >
-      <a
-        target="_blank"
-        href="https://corporate.matta.trade"
-       
-        class="flex gap-x-1 items-center group-hover:text-[#165EF0] cursor-pointer"
-      >
-        About Us</a
-      >
     </li>
   </ul>
 </template>
