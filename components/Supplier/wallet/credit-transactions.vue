@@ -173,7 +173,7 @@ const queryParams = reactive({
   totalCount: 0,
   Search: "",
   Type: "",
-  LoanRequestType: 4,
+  loanRequestType: 4,
 });
 
 function getLedgersTrans() {

@@ -94,7 +94,7 @@
                       v-if="!isOkay"
                       :disabled="loading"
                       type="button"
-                      @click="actionItem"
+                      @click="handlePurchase"
                       class="h-11 bg-primary-500 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
                     >
                       {{ !available ? "Apply for credit" : "Proceed" }}
@@ -118,6 +118,7 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import moment from "moment";
+import { confirmpurchase } from "~/services/cartservice";
 
 const props = defineProps({
   title: {
@@ -135,18 +136,14 @@ const props = defineProps({
   canClose: { default: true },
   creditDetail: { default: null },
 });
-const emits = defineEmits(["actionItem", "close"]);
+const emits = defineEmits(["close"]);
 
 const text1 = "You are about to make payment for this purchase using credit?";
 const text2 =
   "You are not yet pre-qualified for this option of payment. Would you like to apply for a credit?";
 const text3 =
   "You do not have sufficient credit to complete this purchase. Would you like to pay the balance";
-function actionItem() {
-  if (!props.available) {
-    navigateTo("/credit/request");
-  }
-}
+function actionItem() {}
 function handleclose() {
   emits("close");
 }
@@ -158,7 +155,7 @@ const bankOptions = [
   },
   {
     title: "Amount to pay",
-    key: "creditLimit",
+    key: "amountToPay",
   },
   {
     title: "Due date",
@@ -181,7 +178,7 @@ const advanceOptions = [
   },
   {
     title: "balance to pay",
-    key: "balance",
+    key: "r",
   },
   {
     title: "Repayment Amount",
@@ -192,4 +189,20 @@ const advanceOptions = [
     key: "dueDate",
   },
 ];
+
+function handlePurchase() {
+  if (!props.available) {
+    navigateTo("/credit/request");
+    return;
+  }
+  if (!props.insufficient) {
+    confirmpurchase({
+      paymentOption: 3,
+    }).then((res) => {
+      if (res.status === 200) {
+        // window.location.href = `/order-success?orderId=${data.value.orderId}`;
+      }
+    });
+  }
+}
 </script>
