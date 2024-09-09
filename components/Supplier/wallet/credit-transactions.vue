@@ -72,8 +72,8 @@
                 >
                   <div class="flex gap-x-2">
                     <AppStatusButton
-                      :status="item.financeRequestStatus"
-                      stattype="finance"
+                      :status="item.loanStatus"
+                      stattype="loan"
                     />
                   </div>
                 </td>
@@ -82,6 +82,7 @@
                   class="capitalize text-matta-black text-sm font-normal whitespace-nowrap py-4 px-6 flex items-center justify-end gap-x-6"
                 >
                   <button
+                    v-if="item.loanStatus !== 2"
                     type="button"
                     @click="
                       () => {
@@ -136,6 +137,7 @@
     </template>
   </IndexModal>
   <ActionModal
+    v-if="isRepay"
     :open="isSuccessOpen"
     type="success"
     title="Request Successful"
@@ -143,7 +145,10 @@
     btn-text="Okay"
     :isOkay="true"
     :isCancel="false"
-    @actionItem="isRepay = false"
+    @actionItem="
+      isRepay = false;
+      getLedgersTrans();
+    "
   />
 </template>
 
