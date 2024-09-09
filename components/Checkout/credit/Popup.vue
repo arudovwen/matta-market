@@ -120,6 +120,7 @@ import {
 import moment from "moment";
 import { confirmpurchase } from "~/services/cartservice";
 
+const shippingStore = useShippingStore();
 const props = defineProps({
   title: {
     default: "",
@@ -198,9 +199,10 @@ function handlePurchase() {
   if (!props.insufficient) {
     confirmpurchase({
       paymentOption: 3,
+      shippingAddressId: shippingStore?.defaultAddress.id
     }).then((res) => {
       if (res.status === 200) {
-        // window.location.href = `/order-success?orderId=${data.value.orderId}`;
+        window.location.href = `/order-success?orderId=${res?.data?.data}`;
       }
     });
   }
