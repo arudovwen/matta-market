@@ -156,10 +156,7 @@ const formValues = {
   id: "",
   amount: null,
   repaymentType: "partial",
-  max:
-    props.type === "loan"
-      ? props.detail?.repaymentAmount - props.detail?.totalPayed
-      : props.creditDetail?.creditLimit,
+  max: props.detail?.remainingAmount,
 };
 const options = [
   {
@@ -255,7 +252,7 @@ onMounted(() => {
 
 watch(repaymentType, () => {
   if (repaymentType.value === "full") {
-    amount.value = props.detail?.repaymentAmount - props.detail?.totalPayed;
+    amount.value = props.detail?.remainingAmount;
   }
 });
 </script>

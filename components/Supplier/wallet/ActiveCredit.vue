@@ -85,49 +85,6 @@
       <SupplierWalletCreditTransactions />
     </div>
   </div>
-
-  <IndexModal :isOpen="isOpen" @togglePopup="isRepay = false">
-    <template #content>
-      <div class="max-w-[800px]">
-        <SupplierWalletModalsTopUp
-          v-if="isTopup"
-          :details="details"
-          :hasWallet="hasWallet"
-          @activate="activateWallet"
-        />
-        <SupplierWalletModalsWithdrawalModal
-          v-if="isWithdraw"
-          :hasSettlement="hasSettlement"
-          :balance="balance"
-          :banks="banks"
-        />
-        <SupplierWalletModalsCreateWallet
-          :hasSettlement="hasSettlement"
-          v-if="isCreatingWallet"
-          :type="type"
-          :banks="banks"
-        />
-        <div class="bg-white p-6 rounded-lg">
-          <RepayLoan
-            v-if="isRepay"
-            :detail="detail"
-            :creditDetail="creditDetail"
-            type="credit"
-          />
-        </div>
-      </div>
-    </template>
-  </IndexModal>
-  <ActionModal
-    :open="isSuccessOpen"
-    type="success"
-    title="Request Successful"
-    :text="completeText"
-    btn-text="Okay"
-    :isOkay="true"
-    :isCancel="false"
-    @actionItem="isRepay = false"
-  />
 </template>
 <script setup>
 import { toast } from "vue3-toastify";

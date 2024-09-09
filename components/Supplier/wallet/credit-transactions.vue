@@ -87,6 +87,7 @@
                       () => {
                         type = 'repay';
                         isRepay = true;
+                        detail = item;
                       }
                     "
                     class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer text-primary-500 font-medium"
@@ -128,7 +129,7 @@
           <RepayLoan
             :detail="detail"
             :creditDetail="creditDetail"
-            type="credit"
+            type="loan"
           />
         </div>
       </div>
@@ -153,7 +154,7 @@ import debounce from "lodash/debounce";
 import { getAllFinance } from "~/services/financeservice";
 import RepayLoan from "~/pages/financing/repay-loan.vue";
 
-const theads = ["request ID", "amount", "date", "status",""];
+const theads = ["request ID", "amount", "date", "status", ""];
 const detail = ref(null);
 const creditDetail = ref(null);
 const isRepay = ref(false);
