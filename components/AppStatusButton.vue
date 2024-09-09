@@ -187,7 +187,35 @@ const WalletStatus = {
     className: StatusClass[1],
   },
 };
+const LoanStatus = {
+  0: {
+    text: "pending",
+    className: StatusClass[0],
+  },
+  1: {
+    text: "active",
+    className: StatusClass[2],
+  },
+  2: {
+    text: "paid",
+    className: StatusClass[1],
+  },
+};
 
+const CreditStatus = {
+  0: {
+    text: "pending",
+    className: StatusClass[0],
+  },
+  1: {
+    text: "active",
+    className: StatusClass[1],
+  },
+  2: {
+    text: "paid",
+    className: StatusClass[1],
+  },
+};
 const Stats = computed(() => {
   if (props.stattype === "order") {
     return OrderStatusText;
@@ -206,6 +234,12 @@ const Stats = computed(() => {
   }
   if (props.stattype === "active-finance") {
     return ActiveFinance;
+  }
+  if (props.stattype === "loan") {
+    return LoanStatus;
+  }
+  if (props.stattype === "credit") {
+    return CreditStatus;
   }
   return StatusText;
 });
