@@ -13,13 +13,9 @@ import { getCompanyProfile } from "~/services/settingservices";
 
 const company = ref(null);
 onMounted(() => {
-  try {
-    getCompanyProfile().then((res) => {
-      company.value = res.data.data;
-    });
-  } catch (error) {
-    console.log("🚀 ~ onMounted ~ error:", error);
-  }
+  getCompanyProfile().then((res) => {
+    company.value = res.data.data;
+  });
 });
 
 provide("company", company);

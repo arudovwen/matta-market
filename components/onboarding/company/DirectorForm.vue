@@ -1,6 +1,6 @@
 <template>
-  <h3 class="font-medium text-2xl mb-8">Add director</h3>
-  <form @submit.prevent="onSubmit">
+  <h3 class="font-semibold text-2xl mb-10 lg:min-w-[580px]">Add director</h3>
+  <form @submit.prevent="onSubmit" class="">
     <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-4">
       <div class="mb-6">
         <Textinput
@@ -79,6 +79,17 @@
     <div class="lg:col-span-2 mb-6">
       <Textinput
         placeholder=""
+        label="Home address"
+        type="text"
+        name="homeAddress"
+        v-bind="homeAddressAtt"
+        v-model="homeAddress"
+        :error="errors.homeAddress"
+      />
+    </div>
+    <div class="lg:col-span-2 mb-6">
+      <Textinput
+        placeholder=""
         label="Linkedin url"
         type="text"
         name="linkedIn"
@@ -110,6 +121,27 @@
       </FormGroup>
     </div>
     <div class="lg:col-span-2 mb-6">
+      <FormGroup  
+        :error="isFieldTouched('utilityBillUrl') ? errors.utilityBillUrl : ''"
+      >
+        <FileUpload
+          label="Upload Utility Bill"
+          id="utilityBillUrl"
+          :modelValue="form.utilityBillUrl"
+          :isCumpulsory="true"
+        />
+        <span
+          @click="downloadFile(form.utilityBillUrl, 'Identity card')"
+          download
+          v-if="form.utilityBillUrl"
+        >
+          <span class="block text-xs text-blue-500 mt-1"
+            >Download Utility Bill</span
+          ></span
+        >
+      </FormGroup>
+    </div>
+    <div class="lg:col-span-2 mb-6">
       <FormGroup
         :error="isFieldTouched('signatureUrl') ? errors.signatureUrl : ''"
       >
@@ -134,7 +166,7 @@
       <button
         type="button"
         @click="open = false"
-        class="text-xs uppercase border border-gray-100 w-full px-5 py-4 rounded-lg"
+        class="text-xs uppercase border border-gray-200 w-full px-5 py-4 rounded-lg"
       >
         Cancel
       </button>
@@ -143,7 +175,7 @@
         :disabled="isLoading || !form.signatureUrl || !form.identityUrl"
         class="text-xs uppercase bg-primary-500 text-white px-5 py-4 rounded-lg hover:bg-primary/70 disabled:opacity-60 w-full"
       >
-        Submit
+        Add director
       </button>
     </div>
   </form>
@@ -168,8 +200,10 @@ const form = reactive({
   bvn: "",
   dob: "",
   linkedIn: "",
+  homeAddress:"",
   signatureUrl: "",
   identityUrl: "",
+  utilityBillUrl: "",
   country:companyInfo?.value?.country
 });
 const schema = yup.object().shape({
@@ -180,10 +214,12 @@ const schema = yup.object().shape({
     .email("Invalid email format")
     .required("Email is required"),
   phone: yup.string().required("Phone number is required"),
+  homeAddress: yup.string().required("Home address is required"),
   dob: yup.date().typeError("Invalid date").required("Date of birth is required").nullable(),
   linkedIn: yup.string(), // No validation for LinkedIn URL
   signatureUrl: yup.string().required("Signature URL is required"),
   identityUrl: yup.string().required("Identity URL is required"),
+  utilityBillUrl: yup.string().required("Utility Bill is required"),
   bvn: yup.string().when("country", {
     is: "Nigeria",
     then: (schema) => schema.required("BVN is required"),
@@ -208,6 +244,8 @@ const [phone] = defineField("phone");
 const [bvn, bvnAtt] = defineField("bvn");
 const [dob] = defineField("dob");
 const [linkedIn, linkedInAtt] = defineField("linkedIn");
+const [homeAddress, homeAddressAtt] = defineField("homeAddress");
+
 
 onMounted(() => {
   if (props.director) {
@@ -218,8 +256,10 @@ onMounted(() => {
     form.bvn = props.director.bvn;
     form.dob = new Date(props.director.dob);
     form.linkedIn = props.director.linkedIn;
+    form.homeAddress = props.director.homeAddress
     form.signatureUrl = props.director.signatureUrl;
     form.identityUrl = props.director.identityUrl;
+    form.utilityBillUrl = props.director.utilityBillUrl
     Object.keys(props.director).forEach(item=>{
        setFieldValue(item, props.director[item])
     })
@@ -236,6 +276,9 @@ function handleChange(id, value) {
   if (id === "identityUrl") {
     form.identityUrl = value;
   }
+  if (id === "utilityBillUrl") {
+    form.utilityBillUrl = value;
+  }
 }
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
@@ -250,9 +293,11 @@ const onSubmit = handleSubmit((values) => {
         i.phone = values.phone;
         i.bvn = values.bvn;
         i.dob = values.dob;
+        i.homeAddress = values.homeAddress;
         i.linkedIn = values.linkedIn;
         i.signatureUrl = values.signatureUrl;
         i.identityUrl = values.identityUrl;
+        i.utilityBillUrl = values.utilityBillUrl;
       }
       return i;
     });

@@ -1,5 +1,5 @@
 <template>
-  <div class="px-10">
+  <div class="mx-auto w-full max-w-[676px]">
     <div
       class="flex gap-x-[76px] pt-[30px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-"
     >
@@ -32,18 +32,18 @@
       </div>
     </div>
 
-    <div class="flex gap-x-4 items-center justify-between mt-8">
+    <div class="flex gap-x-4 items-center justify-end mt-8">
       <AppButton
         @click="active--"
         btnClass="bg-white text-white !px-11  !text-sm !py-[10px] disabled:cursor-not-allowed border border-[#BDC0C5] !rounded-lg !text-[#333]"
         type="button"
-        text="Previous"
+        text="Back"
       />
       <AppButton
         @click="handleSubmit"
         :disabled="!form.directors.length || isLoading"
         :isLoading="isLoading"
-        btnClass="bg-primary-500 text-white !px-16  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
+        btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
         type="button"
         text="Next"
       />
@@ -80,8 +80,8 @@
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <DialogPanel
-                class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
-                :class="action == 'add' ? 'sm:max-w-lg' : 'sm:max-w-[343px]'"
+                class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-2xl"
+                :class="action == 'add' ? 'sm:max-w-xl' : 'sm:max-w-xl'"
               >
                 <div class="p-6">
                   <OnboardingCompanyDirectorForm
@@ -90,11 +90,13 @@
                     :director="director"
                     :id="id"
                   />
+                 <div class="max-w-sm">
                   <OnboardingCompanyDeleteModal
                     v-if="action === 'delete'"
                     @delete="onDelete"
                     @close="open = false"
                   />
+                 </div>
                 </div>
               </DialogPanel>
             </TransitionChild>

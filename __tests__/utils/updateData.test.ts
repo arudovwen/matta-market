@@ -12,7 +12,7 @@ describe("updateData", () => {
 
 		
     updateData(form, product, defaultPackagesAvailable, isLoading, route);
-		console.log(form);
+		
 		// @ts-ignore
     expect(form.ProductId).toBe("123");
   });

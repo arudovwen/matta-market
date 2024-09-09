@@ -9,7 +9,7 @@
           {{order.product || "-"}}
         </h6>
         <p class="text-xs mb-2 text-[#666666]" v-if="order.soldBy">
-          Sold by: <span class="font-medium">{{order.soldBy || "-"}}</span>
+          Manufactured by: <span class="font-medium">{{order.soldBy || "-"}}</span>
         </p>
         <p class="text-xs mb-4 text-[#666666]">
           Amount paid:

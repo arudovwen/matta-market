@@ -184,11 +184,11 @@
         />
       </div>
     </div>
-    <div class="flex gap-x-4 items-center justify-between">
+    <div class="flex gap-x-4 items-center justify-start">
       <AppButton
         btnClass="bg-white text-white !px-11  !text-sm !py-[10px] disabled:cursor-not-allowed border border-[#BDC0C5] !rounded-lg !text-[#333]"
         type="button"
-        text="Previous"
+        text="Back"
         @click="active--"
       />
       <AppButton
@@ -196,7 +196,7 @@
           isLoading || errors?.BankStatement || errors?.ProformaInvoice
         "
         :isLoading="isLoading"
-        btnClass="bg-primary-500 text-white !px-16  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
+        btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
         type="submit"
         text="Submit"
       />

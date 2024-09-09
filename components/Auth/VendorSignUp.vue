@@ -78,6 +78,7 @@
         v-model="password"
         :error="errors.password"
         isCumpulsory
+        hasicon
       />
     </div>
     <div>
@@ -90,6 +91,19 @@
         v-model="confirmPassword"
         :error="errors.confirmPassword"
         isCumpulsory
+        hasicon
+      />
+    </div>
+    <div class="lg:col-span-2">
+      <Textinput
+        placeholder=""
+        label="Referral Code (Optional)"
+        type="text"
+        name="AgentReferralCode"
+        v-bind="AgentReferralCodeAtt"
+        v-model="AgentReferralCode"
+        :error="errors.AgentReferralCode"
+        :isCumpulsory="false"
       />
     </div>
     <div
@@ -100,12 +114,12 @@
         label="I agree to the "
         labelClass="text-xs lg:text-sm"
       />
-      <span
-        ><NuxtLink to="/terms" class="text-[#2176FF]">Terms </NuxtLink>
+      <span>
+        <NuxtLink to="/terms-and-conditions" class="text-[#2176FF]">Terms </NuxtLink>
         and
-        <NuxtLink to="/policy" class="text-[#2176FF]">Policy</NuxtLink>
-        of Matta Trade</span
-      >
+        <NuxtLink to="/privacy-policies" class="text-[#2176FF]">Policy</NuxtLink>
+        of Matta Trade
+      </span>
     </div>
 
     <div class="lg:col-span-2 grid gap-y-[22px] mb-9 mt-4">
@@ -175,6 +189,7 @@ const formValues = {
   confirmPassword: "",
   business_UserType: type === "register" || !props.main ? 0 : 1,
   companyName: "",
+  AgentReferralCode: "",
 };
 const schema = yup.object({
   business_UserType: yup.string(),
@@ -202,6 +217,7 @@ const schema = yup.object({
     .string()
     .required("Confirm Password is required")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
+  AgentReferralCode: yup.string().notRequired(),
 });
 
 const { handleSubmit, defineField, errors } = useForm({
@@ -216,6 +232,8 @@ const [lastName, lastNameAtt] = defineField("lastName");
 const [phone, phoneAtt] = defineField("phone");
 const [confirmPassword, confirmPasswordAtt] = defineField("confirmPassword");
 const [companyName, companyNameAtt] = defineField("companyName");
+const [AgentReferralCode, AgentReferralCodeAtt] =
+  defineField("AgentReferralCode");
 const router = useRouter();
 
 const onSubmit = handleSubmit((values) => {

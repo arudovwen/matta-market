@@ -8,7 +8,7 @@
         btnText="Add product"
         btnMiniText="Add"
         btnIcon="humbleicons:plus"
-        @click="router.push('/storefront/products/add-product')"
+        @onButtonClick="router.push('/storefront/products/add-product')"
         btnClass="!text-xs md:!text-sm"
       />
 
@@ -65,13 +65,9 @@
             ></FormsSortFilter>
           </div>
         </div>
-        <div v-if="!isPageLoading">
-          <div class="max-w-[80vw] lg:max-w-full" v-if="products.length">
-            <table
-              aria-describedby="true"
-              class="w-full"
-              v-if="products.length"
-            >
+        <div>
+          <div class="max-w-[80vw] lg:max-w-full">
+            <table aria-describedby="true" class="w-full">
               <thead>
                 <tr>
                   <th
@@ -83,7 +79,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody v-if="!isPageLoading && products.length">
                 <tr v-for="item in products" :key="item.id">
                   <td
                     class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
@@ -170,15 +166,15 @@
                 </tr>
               </tbody>
             </table>
+            <div v-if="isPageLoading">
+              <TableLoader />
+            </div>
           </div>
           <EmptyData
-            v-else
+            v-if="!isPageLoading && !products.length"
             title=" No product available"
             subtext="We did not find the query you requested"
           />
-        </div>
-        <div class="text-center p-6 lg:p-8 my-24" v-else>
-          <AppLoader />
         </div>
       </div>
     </div>
@@ -264,10 +260,10 @@ const tabs = [
     key: "hidden",
   },
 
-  // {
-  //   title: "archived",
-  //   key: "archive",
-  // },
+  {
+    title: "pending",
+    key: "pending",
+  },
 ];
 const links = [
   {
@@ -307,7 +303,7 @@ onMounted(() => {
   getproductcount().then((res) => {
     counts.value = { ...res.data.data, archive: res.data.data.archived }
       ? res.data.data
-      : { published: 0, archived: 0, hidden: 0 };
+      : { published: 0, pending: 0, hidden: 0 };
   });
   getMarkets({ PageSize: 300000 }).then((res) => {
     markets.value = res.data.data;
@@ -344,6 +340,7 @@ const producerOptions = computed(() => {
   });
 });
 function getData() {
+  isPageLoading.value = true;
   getSupplierProducts(queryParams)
     .then((res) => {
       products.value = res?.data?.data?.data;

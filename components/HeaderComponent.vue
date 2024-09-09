@@ -3,7 +3,7 @@
     class="w-full py-5 px-4 lg:px-[30px] border-[#EAECF0] border-b flex items-center justify-between"
     :class="className"
   >
-    <div>
+    <div class="flex-1">
       <h1
         v-if="title"
         class="text-lg text-[#101828] col-span-1 font-semibold flex gap-x-3 items-center capitalize"
@@ -41,7 +41,7 @@
         <div class="hidden md:flex">
           <AppButton
             v-if="btnText"
-            @click="emits('onClick')"
+            @click="emits('onButtonClick')"
             :text="btnText"
             :icon="btnIcon"
             :btnClass="`!px-[10px] md:!px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm ${btnClass}`"
@@ -51,7 +51,7 @@
         <div class="md:hidden">
           <AppButton
             v-if="btnMiniText || btnText"
-            @click="emits('onClick')"
+            @click="emits('onButtonClick')"
             :text="btnMiniText || btnText"
             :icon="btnIcon"
             :btnClass="`!px-[10px] md:!px-[14px] !py-[10px] bg-primary-500 !text-white !text-sm ${btnClass}`"
@@ -76,6 +76,6 @@ defineProps([
   "count",
   "backRoute",
 ]);
-const emits = defineEmits(["onClick"]);
+const emits = defineEmits(["onButtonClick"]);
 const router = useRouter();
 </script>

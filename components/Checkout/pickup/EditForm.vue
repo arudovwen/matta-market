@@ -121,7 +121,7 @@ import Lgas from "~/utils/lgastate.json";
 
 const isOpen = inject("isOpen");
 const detail = inject("detail");
-const type = inject("type");
+// const type = inject("type");
 const isLoading = ref(false);
 const pickupStore = usePickupStore();
 const formValues = {

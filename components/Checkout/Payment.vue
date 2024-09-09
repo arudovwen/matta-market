@@ -9,28 +9,45 @@
           v-for="n in data"
           :key="n.title"
           class="flex gap-x-2 items-start"
-          :class="`${n.key === 'card' ? '' : 'opacity-50'}`"
         >
           <input
             type="radio"
-            v-model="active"
+            v-model="activeMethod"
             :value="n.key"
             class="mt-[5px] accent-primary-500"
-            :disabled="n.key === 'matta'"
+            :disabled="n.key === 'trade' && n.key === 'wallet'"
           />
           <div>
             <span class="block cursor-pointer">
               <span class="block font-medium mb-1">{{ n.title }}</span>
-              <span class="block text-sm text-[#475467]">{{n.text}} </span>
+              <span class="block text-sm text-[#475467]">{{ n.text }} </span>
             </span>
           </div>
         </label>
       </div>
     </div>
   </div>
+
+  <CheckoutCreditPopup
+    @close="isPopOpen = false"
+    :open="isPopOpen"
+    :available="hasCredit"
+    :insufficient="cartStore?.cartTotalwithTax > creditDetail?.availableCredit"
+    :creditDetail="{
+      ...creditDetail,
+      balance: creditDetail?.creditLimit - creditDetail?.creditUsed,
+    }"
+  />
 </template>
 <script setup>
-const active = ref("card");
+import { getCreditDetail } from "~/services/creditservice";
+
+const cartStore = useCartStore()
+const activeMethod = inject("activeMethod");
+const isPopOpen = inject("isPopOpen");
+const creditDetail = ref(null);
+const hasCredit = ref(true);
+const isLoading = ref(false);
 const data = [
   {
     title: "Pay Online",
@@ -43,14 +60,44 @@ const data = [
     title: "Matta Wallet",
     icon: "ion:wallet-outline",
     url: "",
-    key: "matta",
+    key: "wallet",
     text: "Make payment with funds from your Matta wallet",
   },
-  // {
-  //   title: "Pay with Trade Finance",
-  //   icon: "teenyicons:credit-card-outline",
-  //   url: "",
-  //   key: "finance",
-  // },
+  {
+    title: "Pay with Trade Finance",
+    icon: "teenyicons:credit-card-outline",
+    url: "",
+    key: "trade",
+    text: "Make payment with trade finance",
+  },
+  {
+    title: "Credit Available",
+    icon: "teenyicons:credit-card-outline",
+    text: "Pay with your available credit",
+    key: "credit",
+  },
 ];
+watch(activeMethod, () => {
+  activeMethod.value === "credit"
+    ? (isPopOpen.value = true)
+    : (isPopOpen.value = false);
+});
+function handleWalletDetails() {
+  isLoading.value = true;
+  getCreditDetail()
+    .then((res) => {
+      if (res.status === 200) {
+        creditDetail.value = res.data.data;
+        hasCredit.value = true;
+        isLoading.value = false;
+      }
+    })
+    .catch(() => {
+      hasCredit.value = false;
+      isLoading.value = false;
+    });
+}
+onMounted(() => {
+  handleWalletDetails();
+});
 </script>

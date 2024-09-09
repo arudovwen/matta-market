@@ -178,6 +178,14 @@ const WalletStatus = {
     text: "Order Debit",
     className: StatusClass[4],
   },
+  7: {
+    text: "Repayment",
+    className: StatusClass[1],
+  },
+  8: {
+    text: "Reversal",
+    className: StatusClass[1],
+  },
 };
 
 const Stats = computed(() => {

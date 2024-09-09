@@ -406,7 +406,7 @@ async function handleSubmit() {
       if (res.status == 200) {
         isLoading.value = false;
         if (res.data.data.processStatus.some((item) => !item.status)) {
-          console.log("error");
+
           res.data.data.processStatus.forEach((item) => {
             if (item.processName === "bvn" && !item.status) {
               isBvnError.value = true;

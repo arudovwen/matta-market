@@ -4,7 +4,7 @@
       <li
         v-for="(link, idx) in links"
         :key="idx"
-        :class="`text-[#475467] ${className} ${link.title && `after:content-['>']`}  font-light last:font-semibold text-[10px] sm:text-xs lg:text-sm capitalize  last:after:content-[''] flex gap-x-2 items-center`"
+        :class="`text-[#475467] ${className} ${link.title && `after:content-['>']`}  font-normal last:font-semibold text-[10px] sm:text-xs lg:text-sm capitalize  last:after:content-[''] flex gap-x-2 items-center`"
       >
         <NuxtLink :to="link.url" class="">
           {{ link.title }}
@@ -17,7 +17,7 @@
 defineProps({
   className: {
     type: String,
-    default:"text-matta-black/80 last:text-matta-black"
+    default:"text-matta-black/80 last:text-primary-500"
   },
   links: {
     type: Array,

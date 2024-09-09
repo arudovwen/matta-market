@@ -256,9 +256,6 @@
               :fetch-browser-language="false"
               trigger="click"
               @select="handleGoogleTranslateSelect"
-              :languages="
-                windowWidth > 768 ? languagesOptions : languagesOptionsMini
-              "
             />
           </span>
 

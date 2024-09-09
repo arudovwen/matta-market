@@ -123,7 +123,6 @@ const quoteForm = reactive({
   expectedVolume: 0,
   unit: product.value?.unit,
   deliverAddress: "",
-  contactPhone: "",
   additionalInformation: "",
   phoneCode: "+234",
   contactPhone: null,

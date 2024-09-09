@@ -164,68 +164,29 @@
           :error="errors.description"
         />
       </div>
-      <div class="md:col-span-2">
-        <label for="companyDocuments" class="mb-4 mt-3 font-medium text-sm block"
-          >Company documents
+      <div class="md:col-span-2 mt-6">
+        <label
+          for="companyDocuments"
+          class="mb-4 mt-3 font-medium text-sm block"
+          >Upload the documents listed in the dropdown below
         </label>
 
-        <div class="grid gap-y-[25px]" v-if="companyDocuments">
-          <div v-for="(doc, index) in companyDocuments" :key="index">
-            <FormGroup
-              :isCumpulsory="true"
-              formClass="col-span-2 grid grid-cols-1 gap-y-4"
-              :errors="doc?.urls.some((i) => !i.url) && errors.companyDocuments"
-            >
-              <div
-                v-for="(file, idx) in doc?.urls"
-                :key="idx"
-                class="mb-4 last:mb-0"
-              >
-                <div class="relative">
-                  <FileUpload
-                    :label="documentsOptions[index].title"
-                    :id="documentsOptions[index].short"
-                    :isCumpulsory="true"
-                    v-model="file.url"
-                  />
-                  <button
-                    v-if="doc?.urls.length > 1"
-                    type="button"
-                    class="text-red-500 text-xs font-medium right-0 top-2 absolute"
-                    @click="removeField(index, idx)"
-                  >
-                    Remove
-                  </button>
-                </div>
-                <div class="flex flex-wrap gap-x-4 gap-y-3" v-if="file.url">
-                  <span @click="downloadFile(file.url, 'Mermat')">
-                    <span class="block text-xs text-blue-500 mt-1"
-                      >Download {{ documentsOptions[index].short }}
-                      {{ idx + 1 }}</span
-                    ></span
-                  >
-                </div>
-              </div>
-              <div>
-                <button
-                  @click="addField(index)"
-                  type="button"
-                  class="block text-primary-500 text-xs font-medium ml-auto"
-                >
-                  + Add document
-                </button>
-              </div>
-            </FormGroup>
-          </div>
+        <div class="w-full">
+          <OnboardingCompanyDocumentsUpload
+            :documents="companyDocuments"
+            :hideUpdate="company?.approvalStatus"
+            @get-docs="handleDocUpdate"
+            :isNonNigerian="country?.toLowerCase() !== 'nigeria'"
+          />
         </div>
       </div>
     </div>
-    <div class="flex gap-x-4 items-center justify-between">
+    <div class="flex gap-x-4 items-center justify-end">
       <AppButton
         @click="active--"
         btnClass="bg-white text-white !px-11  !text-sm !py-[10px] disabled:cursor-not-allowed border border-[#BDC0C5] !rounded-lg !text-[#333]"
         type="button"
-        text="Previous"
+        text="Back"
       />
       <AppButton
         :disabled="
@@ -234,7 +195,7 @@
         "
         :isLoading="isLoading"
         btnClass="bg-primary-500
-      text-white !px-16 !text-sm !py-[10px] disabled:cursor-not-allowed border
+      text-white !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed border
       !rounded-lg border-primary-500"
         type="submit"
         text="Next"
@@ -256,11 +217,9 @@ import {
   updateDocuments,
 } from "~/services/settingservices";
 import { toast } from "vue3-toastify";
-import SelectComponent from "~/components/forms/SelectComponent";
 
 const company = inject("company");
 const formData = inject("formData");
-console.log("🚀 ~ formData:", formData)
 const isLoading = ref(false);
 const active = inject("active");
 const authStore = useAuthStore();
@@ -276,19 +235,7 @@ const formSchema = yup.object().shape({
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   description: yup.string().nullable(),
-  companyDocuments: yup.array().of(
-    yup.object().shape({
-      urls: yup
-        .array()
-        .of(
-          yup.object().shape({
-            url: yup.string().required("At least 1 document is required"),
-          })
-        )
-        .min(1, "At least 1 document is required")
-        .required("At least 1 document is required"),
-    })
-  ),
+  companyDocuments: yup.array(),
 
   country: yup.string().required(),
   state: yup.string().required(),
@@ -309,7 +256,28 @@ const formSchema = yup.object().shape({
     otherwise: (schema) => schema.notRequired(),
   }),
 });
-
+const options = [
+  {
+    label: "Company profile",
+    value: 4,
+  },
+  {
+    label: "Certificate of Incorporations",
+    value: 0,
+  },
+  {
+    label: "Memorandum and Articles of Association",
+    value: 1,
+  },
+  {
+    label: "CAC Status Report",
+    value: 2,
+  },
+  {
+    label: "Utility Bill",
+    value: 3,
+  },
+];
 const {
   handleSubmit,
   defineField,
@@ -367,16 +335,9 @@ const mystates = computed(() => {
 onMounted(() => {
   setValues({ ...company?.value, ...formData.kyb } || {});
 });
-function handleChange(id, value) {}
 
-function addField(id) {
-  companyDocuments?.value[id].urls.push({
-    url: "",
-  });
-}
-
-function removeField(id, idx) {
-  companyDocuments?.value[id].urls.splice(idx, 1);
+function handleDocUpdate(data) {
+  setFieldValue("companyDocuments", data);
 }
 
 watch(country, () => {
@@ -417,6 +378,27 @@ watch(country, () => {
 });
 
 const onSubmit = handleSubmit((values) => {
+  if (
+    country.value?.toLowerCase() === "nigeria" &&
+    (values.companyDocuments.some(
+      (i) => i.urls.filter((i) => i.url).length === 0
+    ) ||
+      values.companyDocuments.length !== 5)
+  ) {
+    toast.error("Please upload all available document types");
+    return;
+  }
+
+  const nonNigerian = values.companyDocuments
+    .filter((i) => i.documentType === 0)
+    .some((i) => i.urls.filter((i) => i.url).length == 0);
+
+  if (
+    country.value?.toLowerCase() !== "nigeria" &&
+    nonNigerian &&
+    values.companyDocuments.length < 1
+  )
+    return;
   isLoading.value = true;
   updateCompanyProfile({
     ...values,
@@ -483,7 +465,7 @@ const sectorOptions = computed(() => {
   ); // Use optional chaining and nullish coalescing operators for safer property access
 });
 
-provide("handleChange", handleChange);
+provide("handleChange", null);
 </script>
 
 <style lang="scss" scoped>

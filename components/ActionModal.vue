@@ -32,7 +32,7 @@
               <div
                 class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full"
               >
-                <div class="bg-white px-6 py-6">
+                <div class="bgc px-6 py-6">
                   <div class="flex justify-between mb-5 items-center">
                     <div>
                       <img alt="delte" v-if="type === 'delete'" src="/images/delete.svg" />
@@ -170,3 +170,9 @@ const bankOptions = [
   },
 ];
 </script>
+<style>
+.bgc {
+  background-image: url("./pattern.png");
+  background-repeat: no-repeat;
+}
+</style>

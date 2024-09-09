@@ -112,17 +112,20 @@ function getFinanceData() {
     .then((res) => {
       if (res.status === 200) {
         requestDetail.value = res.data.data;
-        documents.value = res.data.data?.supportingDocuments
-          .map((item) =>
-            item.urls.map((url) => ({
-              url,
-              documentType: item.documentType,
-            }))
-          )
-          .reduce(
-            (accumulator, currentValue) => accumulator.concat(currentValue),
-            []
-          );
+        documents.value = res.data.data?.supportingDocuments.map(
+          (doc) => ({
+            ...doc,
+            urls: doc.urls.length
+              ? doc.urls.map((urlObj) => ({
+                  url: urlObj?.url ?? urlObj ?? doc.url ?? null,
+                }))
+              : [
+                  {
+                    url: "",
+                  },
+                ],
+          })
+        )
 
         isFetching.value = false;
       }

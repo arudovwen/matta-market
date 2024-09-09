@@ -1,12 +1,8 @@
 <template>
   <div class="container py-10 w-full">
     <div class="mb-6">
-      <AppButton
-        link="/category/market/all products"
-        icon="ion:arrow-back-sharp"
-        text="Back to shopping"
-        btnClass="text-xs sm:text-sm !py-0 !px-0 !font-semibold"
-      />
+      <AppButton link="/category/market/all products" icon="ion:arrow-back-sharp" text="Back to shopping"
+        btnClass="text-xs sm:text-sm !py-0 !px-0 !font-semibold" />
     </div>
     <div class="flex gap-x-5 w-full flex-col lg:flex-row gap-y-8 lg:gap-y-0">
       <div class="flex-1">
@@ -37,9 +33,10 @@ const authOpen = ref(false);
 const action = ref("");
 
 function handleProceed() {
+ 
   if (!authStore.isLoggedIn) {
     action.value = "order";
-    isOpen.value = true;
+    authOpen.value = true;
     return;
   }
 
@@ -61,9 +58,8 @@ function handleOrderRequest() {
       }
     })
     .catch((err) => {
-      const error = `${
-        err?.response?.data?.Message || err?.response?.data?.message
-      }, Contact us for assistance on your order`;
+      const error = `${err?.response?.data?.Message || err?.response?.data?.message
+        }, Contact us for assistance on your order`;
       toast.error(error);
       loading.value = false;
     });

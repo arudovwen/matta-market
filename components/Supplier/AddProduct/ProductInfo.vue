@@ -4,7 +4,7 @@
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
       <div class="text-left w-[250px]">
-        <h2 class="text-sm text-[#101828] font-semibold">Product info</h2>
+        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">Product info</h2>
         <p class="text-xs text-[#475467]">Add your product details here.</p>
       </div>
       <div class="max-w-[654px] w-full">
@@ -293,157 +293,18 @@
                   </div>
                 </div>
               </div>
-
-              <div class="mb-6">
-                <label
-                  for="location"
-                  class="mb-2 font-medium text-sm text-[#344054] text-left flex items-center gap-x-1"
-                >
-                  <span>Pickup location </span>
-                  <span
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Please, specify the location where this product can be picked up"
-                    class="cursor-pointer h-4 w-4 flex items-center justify-center"
-                  >
-                    <AppIcon icon="quill:info" iconClass="text-gray-600" />
-                  </span>
-                </label>
-                <SelectVueSelect
-                  v-model="v$.pickUpLocationId.$model"
-                  :options="locations"
-                  :reduce="(location) => location.value"
-                  placeholder="Select location"
-                  :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
-                />
-                <div class="flex justify-start mt-1">
-                  <button
-                    @click="isLocationOpen = true"
-                    class="text-xs text-primary-500 font-medium"
-                    type="button"
-                  >
-                    + Add a new location
-                  </button>
-                </div>
-                <div
-                  class="text-red-500 mt-1"
-                  v-for="error of v$.pickUpLocationId.$errors"
-                  :key="error.$uid"
-                >
-                  <div class="error-msg text-error text-xs font-semibold">
-                    {{ error.$message }}
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <hr class="border-[#F4F7FE] my-10" />
+
     <div
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
       <div class="w-[250px]">
-        <h2 class="text-sm text-[#101828] font-semibold">
-          Packages & Availability<RedDot />
-        </h2>
-        <p class="text-xs text-[#475467]">Provide package information here.</p>
-      </div>
-      <div class="max-w-[654px] w-full">
-        <button
-          type="button"
-          class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-[11px] text-left leading-[normal] block"
-          @click="handleAddingPackage"
-        >
-          <i class="uil uil-plus"></i> Add a package
-        </button>
-        <div
-          class="text-red-500 mt-1"
-          v-for="error of v$.packagesAvailable.$errors"
-          :key="error.$uid"
-        >
-          <div class="error-msg text-error text-xs font-semibold">
-            {{ error.$message }}
-          </div>
-        </div>
-        <div
-          class="border border-[#DCDEE6] rounded-[10px] overflow-hidden mt-6"
-        >
-          <table aria-describedby="true" class="w-full">
-            <thead>
-              <tr>
-                <th
-                  v-for="(item, i) in headers"
-                  :key="item"
-                  class="text-[#475467] text-xs text-left font-medium border-b py-3 px-6 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB]"
-                >
-                  {{ item }}
-                </th>
-              </tr>
-            </thead>
-            <tbody v-if="form.packagesAvailable?.length">
-              <tr
-                v-for="item in form.packagesAvailable"
-                :key="item.id"
-                class="border-b border-[#EAECF0] last:border-none"
-              >
-                <td
-                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
-                >
-                  {{ item?.package?.title }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
-                >
-                  {{ item?.size }}{{ item.unit }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
-                >
-                  {{ currencyFormat(item?.purchaseAmount) }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
-                >
-                  {{ item?.color || "-" }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
-                >
-                  {{ item?.purity || "-" }}{{ item?.purity && "%" }}
-                </td>
-                <td
-                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 ] whitespace-nowrap"
-                >
-                  <span class="flex gap-x-6">
-                    <span @click="removepackage(i)" class="cursor-pointer p-1"
-                      ><AppIcon icon="fa-trash-o" iconClass="text-[#E53F3F]"
-                    /></span>
-                    <span class="p-1" @click="editPackage(item)"
-                      ><AppIcon icon="prime:pencil" iconClass="text-[#475467]"
-                    /></span>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <EmptyData
-            v-if="!form.packagesAvailable?.length"
-            title="No package added yet"
-            titleClass="text-xs !font-normal text-[#475467]"
-            className="!h-auto py-6"
-            classIcon="!text-3xl w-[120px]"
-          />
-        </div>
-      </div>
-    </div>
-    <hr class="border-[#F4F7FE] my-10" />
-    <div
-      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
-    >
-      <div class="w-[250px]">
-        <h2 class="text-sm text-[#101828] font-semibold">Gallery<RedDot /></h2>
+        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">Gallery<RedDot /></h2>
         <p class="text-xs text-[#475467]">
           Upload pictures of your products here.
         </p>
@@ -504,33 +365,25 @@
     <div
       class="bg-white flex justify-between gap-x-10 items-center sticky bottom-0 py-6 mt-10 border-t border-[#F4F7FE] z-[99]"
     >
-      <button
-        type="button"
-        @click="togglePreview"
-        class="appearance-none leading-none px-5 lg:px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
+      <NuxtLink to="/storefront/products"
+        ><button
+          type="button"
+          class="appearance-none leading-none px-5 lg:px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
+        >
+          Cancel
+        </button></NuxtLink
       >
-        Preview
+
+      <button
+        :disabled="isLoading"
+        :class="{
+          'bg-primary/60 cursor-not-allowed': isLoading,
+        }"
+        type="submit"
+        class="appearance-none leading-none px-6 lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
+      >
+        {{ isLoading ? "Saving..." : "Save and continue" }}
       </button>
-      <div class="flex gap-x-4 items-center">
-        <NuxtLink to="/storefront/products"
-          ><button
-            type="button"
-            class="appearance-none leading-none px-5 lg:px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
-          >
-            Cancel
-          </button></NuxtLink
-        >
-        <button
-          :disabled="isLoading"
-          :class="{
-            'bg-primary/60 cursor-not-allowed': isLoading,
-          }"
-          type="submit"
-          class="appearance-none leading-none px-6 lg:px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
-        >
-          {{ isLoading ? "Saving..." : "Save and Continue" }}
-        </button>
-      </div>
     </div>
   </form>
 
@@ -792,9 +645,7 @@ const rules = {
     required,
     maxLength: maxLength(100),
   },
-  pickUpLocationId: {
-    required: helpers.withMessage("Select a location", required),
-  },
+
   manufacturer: {
     required: helpers.withMessage("Select a producer", required),
   },
@@ -813,10 +664,8 @@ const rules = {
   description: {
     maxLength: maxLength(400),
   },
-  unit: { required },
-  packagesAvailable: {
-    required: helpers.withMessage("At least 1 package is required", required),
-  },
+  // unit: { required },
+
   productBrandName: { maxLength: maxLength(100) },
   gallery: {
     required: helpers.withMessage("At least 1 image is required", required),

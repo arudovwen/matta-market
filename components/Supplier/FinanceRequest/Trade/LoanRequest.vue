@@ -45,7 +45,7 @@
       <AppButton
         :disabled="isLoading"
         :isLoading="isLoading"
-        btnClass="bg-primary-500 text-white !px-16  !text-sm !py-[10px] disabled:cursor-not-allowed"
+        btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed"
         type="submit"
         text="Next"
       />
@@ -95,7 +95,7 @@ const onSubmit = handleSubmit((values) => {
   formData.tenor = values.tenor;
   formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs;
   active.value = 2;
-	console.log("Yppp",values, active.value)
+
 });
 
 const options = [

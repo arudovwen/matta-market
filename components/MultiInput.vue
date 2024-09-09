@@ -47,9 +47,8 @@
         </div>
         <ul class="overflow-auto flex-1">
           <li v-for="(market, idx) in filteredMarkets" :key="idx" class="mb-4">
-            <label for="market" class="flex items-center text-sm gap-x-2">
+            <label class="flex items-center text-sm gap-x-2">
               <input
-              id="market"
                 type="checkbox"
                 class="accent-matta-black"
                 :value="market.id"
@@ -67,9 +66,8 @@
                 :key="id"
                 class="mb-3"
               >
-                <label for="applications" class="flex items-center text-sm gap-x-2">
+                <label class="flex items-center text-sm gap-x-2">
                   <input
-                  id="applications"
                     :value="app.id"
                     type="checkbox"
                     class="accent-matta-black"
@@ -87,9 +85,8 @@
                     :key="id"
                     class="mb-2"
                   >
-                    <label for="subapp" class="flex items-center text-sm gap-x-2">
+                    <label class="flex items-center text-sm gap-x-2">
                       <input
-                      id="subapp"
                         :value="subapp.id"
                         class="accent-matta-black"
                         type="checkbox"

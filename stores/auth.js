@@ -46,8 +46,9 @@ export const useAuthStore = defineStore(
     }
 
     const logOut = () => {
+      localStorage.clear();
       setLoggedUser(null);
-      setHasPin(false)
+      setHasPin(false);
       window.location.href = "/";
     };
     return {
