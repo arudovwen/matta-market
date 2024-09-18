@@ -13,15 +13,7 @@
       >
     </div>
     <hr class="border-[#EFEFEF] my-2" />
-    <SideTab
-      title="Producers"
-      :lists="
-        supplierStore?.producersData?.map((i) => ({ ...i, value: i.title }))
-      "
-      v-model="query.producers"
-    />
 
-    <hr class="border-[#EFEFEF] my-[1px]" v-if="route.params.id" />
     <SideTab
       v-if="route.params.id && route.params.category === 'market'"
       title="Area of applications"
@@ -34,12 +26,21 @@
       :lists="menuData?.map((i) => ({ ...i, value: i.id }))"
       v-model="query.technologyApplications"
     />
+
+    <hr class="border-[#EFEFEF] my-[1px]" v-if="route.params.id" />
+    <SideTab
+      title="Producers"
+      :lists="
+        supplierStore?.producersData?.map((i) => ({ ...i, value: i.title }))
+      "
+      v-model="query.producers"
+    />
   </div>
 </template>
 <script setup>
 const supplierStore = useSupplierStore();
 const marketStore = useMarketStore();
-const applicationStore = useApplicationStore()
+const applicationStore = useApplicationStore();
 const route = useRoute();
 const query = inject("query");
 onMounted(() => {

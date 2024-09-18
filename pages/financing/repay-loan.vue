@@ -156,7 +156,9 @@ const formValues = {
   id: "",
   amount: null,
   repaymentType: "partial",
-  max: props.detail?.remainingAmount,
+  max:
+    parseFloat(props.detail?.repaymentAmount) -
+    parseFloat(props.detail?.totalPayed),
 };
 const options = [
   {

@@ -12,7 +12,11 @@
             :key="idx"
           >
             <div class="relative">
-              <FileUpload id="BankStatement" v-model="file.url" />
+              <FileUpload
+                id="BankStatement"
+                v-model="file.url"
+                :error="isFieldTouched('BankStatement') && errors.BankStatement"
+              />
               <button
                 v-if="formData?.supportingDocuments[0]?.urls.length > 1"
                 type="button"
@@ -49,7 +53,13 @@
             :key="idx"
           >
             <div class="relative">
-              <FileUpload id="OtherDocuments" v-model="file.url" />
+              <FileUpload
+                id="OtherDocuments"
+                v-model="file.url"
+                :error="
+                  isFieldTouched('OtherDocuments') && errors.OtherDocuments
+                "
+              />
               <button
                 v-if="formData?.supportingDocuments[1]?.urls.length > 1"
                 type="button"
@@ -100,8 +110,6 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import { toast } from "vue3-toastify";
-import { addFinance, editFinance } from "~/services/financeservice";
 
 const isLoading = ref(false);
 const route = useRoute();
@@ -109,12 +117,21 @@ const { id, financeId } = route.params;
 
 const active = inject("active");
 const formData = inject("formData");
-
 const formSchema = yup.object().shape({
   BankStatement: yup.string().required("Bank statement is required").nullable(),
   OtherDocuments: yup.string().nullable(),
 });
 
+onMounted(() => {
+  setFieldValue(
+    "OtherDocuments",
+    formData?.supportingDocuments[1].urls.some((i) => !i.url) ? "" : "Valid"
+  );
+  setFieldValue(
+    "BankStatement",
+    formData?.supportingDocuments[0].urls.some((i) => !i.url) ? "" : "Valid"
+  );
+});
 const {
   handleSubmit,
   defineField,
@@ -142,11 +159,8 @@ function removeField(id, idx) {
 
 const onSubmit = handleSubmit(() => {
   isLoading.value = true;
-  formData.supportingDocuments = formData?.supportingDocuments.map((i) => ({
-    ...i,
-    urls: i.urls.map((j) => j.url),
-  }));
   active.value = 5;
+  isLoading.value = false;
 });
 
 function handleChange(id, value) {}

@@ -11,7 +11,7 @@
       <div>
         <p class="font-nomrmal text-sm text-gray-500">Date requested</p>
         <p class="font-medium text-sm">
-          {{ moment(requestDetail?.created).format("ll") }}
+          {{ moment(requestDetail?.created).format("lll") }}
         </p>
       </div>
       <div>
@@ -29,7 +29,7 @@
       <div v-if="requestDetail?.approvedOn">
         <p class="font-nomrmal text-sm text-gray-500">Approval date</p>
         <p class="font-medium text-base">
-          {{ moment(requestDetail?.approvedOn).format("ll") }}
+          {{ moment(requestDetail?.approvedOn).format("lll") }}
         </p>
       </div>
       <div>

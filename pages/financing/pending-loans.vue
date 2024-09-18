@@ -308,16 +308,18 @@ function handleType(key) {
   switch (parseInt(key)) {
     case 0:
       return "trade";
-     
+
     case 1:
       return "supply";
-     
+
     case 2:
       return "import";
-     
+
     case 3:
       return "export";
-     
+
+    case 4:
+      return "credit";
 
     default:
       break;

@@ -1,12 +1,12 @@
 <template>
-  <div class="mt-9 max-w-[490px] mx-auto">
+  <div class="mt-9 w-full max-w-[490px] mx-auto">
     <h1 class="mb-3 font-semibold text-[20px] text-[#333]">Summary</h1>
     <div class="w-full mt-4 mb-10">
       <div
         class="grid grid-cols-1 gap-y-3 mb-8 rounded-lg p-6 border border-[#E2E2E2] bg-[#F5FAFF]"
       >
         <div
-          class="grid grid-cols-2 gap-y-6 border-b border-[#3440541A pb-2"
+          class="grid grid-cols-2 gap-y-6 border-b border-[#3440541A pb-2 last:border-none"
           v-for="(item, index) in bankOptions"
           :key="index"
         >
@@ -127,7 +127,13 @@ const companyInfo = computed(() => ({
 const onSubmit = () => {
   isLoading.value = true;
 
-  postCreditRequest(formData)
+  postCreditRequest({
+    ...formData,
+    supportingDocuments: formData?.supportingDocuments.map((i) => ({
+      ...i,
+      urls: i.urls.map((j) => j.url),
+    })),
+  })
     .then((res) => {
       if (res.status === 200) {
         isSuccessOpen.value = true;

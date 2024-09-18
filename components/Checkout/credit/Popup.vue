@@ -64,7 +64,7 @@
                     v-if="available"
                     class="rounded-lg py-6 px-4 border border-[#E2E2E2] bg-[#F2F4F7] mt-4"
                   >
-                    <div class="grid gap-y-2">
+                    <pdiv class="grid gap-y-2">
                       <div
                         class="flex gap-x-2 items-center justify-between text-xs"
                         v-for="item in insufficient
@@ -86,13 +86,10 @@
                               )
                         }}</span>
                       </div>
-                    </div>
+                    </pdiv>
                   </div>
 
-                  <div
-                    class="flex gap-x-4 items-center mt-6"
-                    v-if="!insufficient"
-                  >
+                  <div class="flex gap-x-4 items-center mt-6">
                     <button
                       v-if="isCancel"
                       type="button"
@@ -104,7 +101,7 @@
                     </button>
 
                     <AppButton
-                      :isDisabled="isLoading"
+                      :isDisabled="isLoading || insufficient"
                       :isLoading="isLoading"
                       type="button"
                       :text="!available ? 'Apply for credit' : 'Proceed'"
@@ -210,7 +207,7 @@ const advanceOptions = [
 
 function handlePurchase() {
   isLoading.value = true;
-  if (!props.available) {
+  if (!props.available || props.insufficient) {
     navigateTo("/credit/request");
     isLoading.value = false;
     return;

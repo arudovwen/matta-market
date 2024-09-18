@@ -24,7 +24,7 @@
       </span>
       <div class="flex-1">
         <p class="text-xs text-[#666] mb-1">
-          {{ moment(new Date(time)).format("ll") }}
+          {{ moment(new Date(time)).format("lll") }}
         </p>
         <p
           class="text-sm text-[#333] flex-1 mb-2"
