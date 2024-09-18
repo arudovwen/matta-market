@@ -252,7 +252,9 @@ onMounted(() => {
 
 watch(repaymentType, () => {
   if (repaymentType.value === "full") {
-    amount.value = props.detail?.remainingAmount;
+    amount.value =
+      parseFloat(props.detail?.repaymentAmount) -
+      parseFloat(props.detail?.totalPayed);
   }
 });
 </script>
