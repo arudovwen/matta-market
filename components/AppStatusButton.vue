@@ -208,12 +208,20 @@ const CreditStatus = {
     className: StatusClass[0],
   },
   1: {
-    text: "active",
+    text: "approved",
     className: StatusClass[1],
   },
   2: {
-    text: "paid",
+    text: "disbursed",
     className: StatusClass[1],
+  },
+  3: {
+    text: "declined",
+    className: StatusClass[4],
+  },
+  4: {
+    text: "reviewed",
+    className: StatusClass[3],
   },
 };
 const Stats = computed(() => {

@@ -181,11 +181,11 @@ const [amount] = defineField("amount");
 const [repaymentType] = defineField("repaymentType");
 
 const content = [
-  {
-    label: "Pay with Bank card",
-    value: "bank",
-    icon: "uil:credit-card",
-  },
+  // {
+  //   label: "Pay with Bank card",
+  //   value: "bank",
+  //   icon: "uil:credit-card",
+  // },
   {
     label: "Pay with Monnify",
     value: "monnify",

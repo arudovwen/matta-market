@@ -23,7 +23,7 @@
           /> -->
       </div>
     </div>
-    <div class="w-full">
+    <div class="w-full px-6">
       <div class="w-full">
         <div
           class="overflow-x-auto border border-[#EAECF0] rounded-lg w-full max-w-full bg-white"
