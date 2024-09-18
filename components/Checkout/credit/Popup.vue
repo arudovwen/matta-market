@@ -35,7 +35,12 @@
                 <div class="bg-white px-6 py-6">
                   <div class="flex justify-between mb-5 items-center">
                     <div>
-                      <img alt="delte" src="/images/handes.svg" />
+                      <img
+                        alt="delte"
+                        v-if="!insufficient"
+                        src="/images/handes.svg"
+                      />
+                      <img alt="delte" v-else src="/images/reject.svg" />
                     </div>
                     <span
                       v-if="canClose"
@@ -72,7 +77,7 @@
                         </span>
 
                         <span class="text-[#344054] font-semibold">{{
-                          item.key === "dueDate" ||  item.key === "repaymentDate"
+                          item.key === "dueDate" || item.key === "repaymentDate"
                             ? moment(
                                 handleData(creditDetail)?.[item.key]
                               ).format("ll")
@@ -84,11 +89,15 @@
                     </div>
                   </div>
 
-                  <div class="flex gap-x-4 items-center mt-6">
+                  <div
+                    class="flex gap-x-4 items-center mt-6"
+                    v-if="!insufficient"
+                  >
                     <button
                       v-if="isCancel"
                       type="button"
                       @click="handleclose"
+                      paci
                       class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium justify-center flex items-center"
                     >
                       Cancel
@@ -150,8 +159,8 @@ const emits = defineEmits(["close"]);
 const text1 = "You are about to make payment for this purchase using credit?";
 const text2 =
   "You are not yet pre-qualified for this option of payment. Would you like to apply for a credit?";
-const text3 =
-  "You do not have sufficient credit to complete this purchase. Would you like to pay the balance";
+const text3 = "You do not have sufficient credit to complete this purchase. ";
+// Would you like to pay the balance";
 function actionItem() {}
 function handleclose() {
   emits("close");
@@ -232,7 +241,6 @@ function handleData(data) {
 onMounted(() => {
   getPrepaidInfo(props.creditDetail.amountToPay).then((res) => {
     if (res.status === 200) {
-    
       prepaidInfo.value = res.data.data;
     }
   });
