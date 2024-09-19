@@ -64,6 +64,11 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
+                  {{ currencyFormat(item.totalPayed) }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
+                >
                   {{ item.created ? moment(item.created).format("lll") : "-" }}
                 </td>
 
@@ -159,7 +164,7 @@ import debounce from "lodash/debounce";
 import { getAllFinance } from "~/services/financeservice";
 import RepayLoan from "~/pages/financing/repay-loan.vue";
 
-const theads = ["request ID", "amount", "date", "status", ""];
+const theads = ["request ID", "amount", "amount repaid", "date", "status", ""];
 const detail = ref(null);
 const creditDetail = ref(null);
 const isRepay = ref(false);
