@@ -64,7 +64,7 @@
                     v-if="available"
                     class="rounded-lg py-6 px-4 border border-[#E2E2E2] bg-[#F2F4F7] mt-4"
                   >
-                    <pdiv class="grid gap-y-2">
+                    <div class="grid gap-y-2">
                       <div
                         class="flex gap-x-2 items-center justify-between text-xs"
                         v-for="item in insufficient
@@ -86,7 +86,7 @@
                               )
                         }}</span>
                       </div>
-                    </pdiv>
+                    </div>
                   </div>
 
                   <div class="flex gap-x-4 items-center mt-6">

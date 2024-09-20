@@ -37,8 +37,9 @@
         ></div>
         <span v-else>{{ btnText || "Select file" }}</span>
       </button>
+
+     
     </div>
-    <span v-if="error" class="text-danger-500 block text-sm">{{ error }}</span>
   </div>
 </template>
 
@@ -69,12 +70,9 @@ const props = defineProps({
   isCumpulsory: {
     default: false,
   },
-  placeholder: {
-    default: "Select file to upload",
-  },
-  error: {
-    default: "",
-  },
+  placeholder:{
+    default:"Select file to upload"
+  }
 });
 const emits = defineEmits(["update:modelValue"]);
 const handleChange = inject("handleChange");
@@ -179,6 +177,7 @@ function handleMultiple(e) {
       // All files have been successfully uploaded
       handleChange && handleChange(props.id, multiUrls.value);
       emits("update:modelValue", multiUrls.value);
+    
     })
     .catch((error) => {
       // An error occurred during file upload

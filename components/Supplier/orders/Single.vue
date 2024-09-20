@@ -32,7 +32,7 @@
         <div class="mb-2 flex justify-end">
           <AppStatusButton
             :status="order?.status"
-            stattype="parent-order"
+            stattype="order"
             :type="order.orderNumber"
           />
         </div>
