@@ -56,7 +56,7 @@ const OrderStatusText = {
   },
   2: {
     text: "Payment confirmed",
-    className: StatusClass[3],
+    className: StatusClass[2],
   },
   3: {
     text: "Order received",
@@ -107,6 +107,10 @@ const FinanceStatusText = {
   5: {
     text: "Loan disbursed",
     className: StatusClass[5],
+  },
+  7: {
+    text: "Request approved",
+    className: StatusClass[1],
   },
 };
 const ActiveFinance = {

@@ -212,6 +212,11 @@ function handlePurchase() {
     isLoading.value = false;
     return;
   }
+  if(!shippingStore?.defaultAddress?.id){
+    toast.info("Please provide a shipping address")
+    isLoading.value = false;
+    return
+  }
   if (!props.insufficient) {
     confirmpurchase({
       paymentOption: 3,
