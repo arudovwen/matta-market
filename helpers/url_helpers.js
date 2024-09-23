@@ -248,6 +248,7 @@ const urls = {
   GET_CREDIT_DETAIL: "v1/CreditRequest/wallet",
 
   //DELTALOG
-  CALCULATOR_COST: "/Anonymous/shipping-cost"
+  CALCULATOR_COST: "/Anonymous/shipping-cost",
+  GET_ENQUIRY: "/Anonymous/enquiry"
 };
 export default urls;

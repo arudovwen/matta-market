@@ -13,3 +13,7 @@ const config = {
 export const calculateCost = (data) => {
   return post(`${urls.CALCULATOR_COST}`, data, config);
 };
+
+export const getEnquiry = (data) => {
+  return post(`${urls.GET_ENQUIRY}`, data, config);
+};
