@@ -219,6 +219,7 @@ import {
 import { toast } from "vue3-toastify";
 
 const company = inject("company");
+console.log("🚀 ~ company:", company.value)
 const formData = inject("formData");
 const isLoading = ref(false);
 const active = inject("active");

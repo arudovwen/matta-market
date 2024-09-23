@@ -80,44 +80,7 @@ const formData = reactive({
       documentType: 3,
     },
   ],
-  companyDocuments: [
-    {
-      url: "",
-      urls: [
-        {
-          url: "",
-        },
-      ],
-      documentType: 0,
-    },
-    {
-      url: "",
-      urls: [
-        {
-          url: "",
-        },
-      ],
-      documentType: 1,
-    },
-    {
-      url: "",
-      urls: [
-        {
-          url: "",
-        },
-      ],
-      documentType: 2,
-    },
-    {
-      url: "",
-      urls: [
-        {
-          url: "",
-        },
-      ],
-      documentType: 3,
-    },
-  ],
+  companyDocuments: [],
   haveyoudonebusiness: "",
   haveyouexportedtotheothercourty: "",
 
@@ -129,44 +92,7 @@ const formData = reactive({
     address: "",
     description: "",
     dateofIncorporation: null,
-    companyDocuments: [
-      {
-        url: "",
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 0,
-      },
-      {
-        url: "",
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 1,
-      },
-      {
-        url: "",
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 2,
-      },
-      {
-        url: "",
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 3,
-      },
-    ],
+    companyDocuments: [],
     statusReport: "",
     incorporation: "", // Assuming incorporation is a dateofIncorporation type
     mermat: "",
@@ -277,44 +203,7 @@ function getCompanyData() {
                       url: i?.url || i || "",
                     })),
               }))
-            : [
-                {
-                  url: "",
-                  urls: [
-                    {
-                      url: "",
-                    },
-                  ],
-                  documentType: 0,
-                },
-                {
-                  url: "",
-                  urls: [
-                    {
-                      url: "",
-                    },
-                  ],
-                  documentType: 1,
-                },
-                {
-                  url: "",
-                  urls: [
-                    {
-                      url: "",
-                    },
-                  ],
-                  documentType: 2,
-                },
-                {
-                  url: "",
-                  urls: [
-                    {
-                      url: "",
-                    },
-                  ],
-                  documentType: 3,
-                },
-              ],
+            : [],
       };
 
       company.value = tempData;

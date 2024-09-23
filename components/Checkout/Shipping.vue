@@ -8,7 +8,7 @@
         class="flex flex-col md:flex-row md:items-center gap-y-4 md:gap-y-0 md:gap-x-4"
       >
         <AppButton
-          @click="openModal('form')"
+          @click="openModal('edit')"
           text="New shipping address"
           icon="icon-park-outline:plus"
           btnClass="bg-primary-500  text-white !px-4
