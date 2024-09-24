@@ -73,7 +73,11 @@
         </p>
       </div>
     </div>
-    <DocumentsViewer :documents="documents || []" />
+
+    <DocumentsViewer
+      :documents="documents.filter((i) => i.urls.some((j) => j.url)) || []"
+      :hideUpdate="true"
+    />
   </div>
 </template>
 <script setup>
@@ -112,20 +116,18 @@ function getFinanceData() {
     .then((res) => {
       if (res.status === 200) {
         requestDetail.value = res.data.data;
-        documents.value = res.data.data?.supportingDocuments.map(
-          (doc) => ({
-            ...doc,
-            urls: doc.urls.length
-              ? doc.urls.map((urlObj) => ({
-                  url: urlObj?.url ?? urlObj ?? doc.url ?? null,
-                }))
-              : [
-                  {
-                    url: "",
-                  },
-                ],
-          })
-        )
+        documents.value = res.data.data?.supportingDocuments.map((doc) => ({
+          ...doc,
+          urls: doc.urls.length
+            ? doc.urls.map((urlObj) => ({
+                url: urlObj?.url ?? urlObj ?? doc.url ?? null,
+              }))
+            : [
+                {
+                  url: "",
+                },
+              ],
+        }));
 
         isFetching.value = false;
       }

@@ -174,7 +174,10 @@
         <div class="w-full">
           <OnboardingCompanyDocumentsUpload
             :documents="companyDocuments"
-            :hideUpdate="company?.approvalStatus"
+            :hideUpdate="
+              company?.approvalStatus &&
+              companyDocuments?.some((i) => i.documentType === 4)
+            "
             @get-docs="handleDocUpdate"
             :isNonNigerian="country?.toLowerCase() !== 'nigeria'"
           />
@@ -191,7 +194,7 @@
       <AppButton
         :disabled="
           isLoading ||
-          (country.toLowerCase() === 'nigeria' && (!registrationNo || !tin))
+          (country?.toLowerCase() === 'nigeria' && (!registrationNo || !tin))
         "
         :isLoading="isLoading"
         btnClass="bg-primary-500
@@ -219,7 +222,6 @@ import {
 import { toast } from "vue3-toastify";
 
 const company = inject("company");
-console.log("🚀 ~ company:", company.value)
 const formData = inject("formData");
 const isLoading = ref(false);
 const active = inject("active");
@@ -389,17 +391,17 @@ const onSubmit = handleSubmit((values) => {
     toast.error("Please upload all available document types");
     return;
   }
-
   const nonNigerian = values.companyDocuments
-    .filter((i) => i.documentType === 0)
+    .filter((i) => [0, 4].includes(i.documentType))
     .some((i) => i.urls.filter((i) => i.url).length == 0);
 
   if (
     country.value?.toLowerCase() !== "nigeria" &&
-    nonNigerian &&
-    values.companyDocuments.length < 1
-  )
+    (nonNigerian || values.companyDocuments.length !== 2)
+  ) {
+    toast.error("Please upload all available document types");
     return;
+  }
   isLoading.value = true;
   updateCompanyProfile({
     ...values,

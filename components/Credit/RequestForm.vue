@@ -198,10 +198,11 @@ function getCompanyData() {
                 url: i?.url || i || "",
               })),
         }));
+
         formData.kyb.companyDocuments =
           res.data.data.country.toLowerCase() === "nigeria"
             ? tempDocData
-            : tempDocData.filter((i) => i.documentType === 0);
+            : tempDocData.filter((i) => [0, 4].includes(i.documentType));
       }
     })
     .catch(() => {

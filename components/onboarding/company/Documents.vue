@@ -14,7 +14,10 @@
       <div class="w-full max-w-[560px]">
         <OnboardingCompanyDocumentsUpload
           :documents="companyDoc"
-          :hideUpdate="companyInfo?.approvalStatus"
+          :hideUpdate="
+            companyInfo?.approvalStatus &&
+            companyDoc?.some((i) => i.documentType === 4)
+          "
           @get-docs="handleDocUpdate"
           :isNonNigerian="companyInfo?.country?.toLowerCase() !== 'nigeria'"
         />
@@ -22,7 +25,10 @@
     </div>
     <div
       class="flex justify-end pt-6 border-t border-[#EAECF0] gap-x-4 items-center mt-16 w-full"
-      v-if="!companyInfo?.approvalStatus"
+      v-if="
+        !companyInfo?.approvalStatus ||
+        !companyDoc?.some((i) => i.documentType === 4)
+      "
     >
       <button
         @click="active--"
@@ -81,7 +87,6 @@ const isLoading = ref(false);
 const invalidCredentials = ref(false);
 
 function handleDocUpdate(data) {
-
   form.companyDocuments = data;
 }
 async function handleSubmit() {
@@ -95,17 +100,17 @@ async function handleSubmit() {
     toast.error("Please upload all available document types");
     return;
   }
-
   const nonNigerian = form.companyDocuments
-    .filter((i) => i.documentType === 0)
+    .filter((i) => [0, 4].includes(i.documentType))
     .some((i) => i.urls.filter((i) => i.url).length == 0);
 
   if (
     companyInfo?.value.country?.toLowerCase() !== "nigeria" &&
-    nonNigerian &&
-    form.companyDocuments.length < 1
-  )
+    (nonNigerian || form.companyDocuments.length < 2)
+  ) {
+    toast.error("Please upload all available document types");
     return;
+  }
   isLoading.value = true;
 
   updateDocuments({

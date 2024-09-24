@@ -225,7 +225,7 @@ function getCompanyData() {
         formData.kyb.companyDocuments =
           res.data.data.country.toLowerCase() === "nigeria"
             ? tempDocData
-            : tempDocData.filter((i) => i.documentType === 0);
+            : tempDocData.filter((i) => [0, 4].includes(i.documentType));
       }
     })
     .catch(() => {
@@ -245,7 +245,12 @@ function getFinanceData() {
         formData.amountRequired = res.data.data.amountRequired;
         formData.tenor = res.data.data.tenor;
         formData.whereDidYouHearAboutUs = res.data.data.whereDidYouHearAboutUs;
-        formData.supportingDocuments = res.data.data.supportingDocuments;
+        formData.supportingDocuments = res.data.data.supportingDocuments.map(
+          (i) => ({
+            ...i,
+            urls: i.urls.map((j) => ({ url: j })),
+          })
+        );
         formData.haveyoudonebusiness = res.data.data.haveyoudonebusiness;
         formData.haveyouexportedtotheothercourty =
           res.data.data.haveyouexportedtotheothercourty;
