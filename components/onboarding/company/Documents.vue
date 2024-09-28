@@ -66,8 +66,7 @@
 <script setup>
 import "vue-advanced-cropper/dist/style.css";
 import { ref, reactive, onMounted, provide } from "vue";
-import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
+import { nigeriaTypes, nonNigeriaTypes } from "~/utils/constants.js";
 import { toast } from "vue3-toastify";
 import { useRouter } from "vue-router";
 // eslint-disable-next-line no-unused-vars

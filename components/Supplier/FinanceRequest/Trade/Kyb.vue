@@ -222,7 +222,11 @@ import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "~/utils/countries.json";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import { businessTypes } from "~/utils/constants.js";
+import {
+  businessTypes,
+  nigeriaTypes,
+  nonNigeriaTypes,
+} from "~/utils/constants.js";
 import {
   updateCompanyProfile,
   updateDocuments,

@@ -25,7 +25,6 @@
         <p class="text-xs text-[#666666]">
           {{ order.shippingAddress || "-" }}
         </p>
-       
       </div>
 
       <div class="w-[130px] text-right">
@@ -47,13 +46,14 @@
           <span class="text-xs text-[#333] font-semibold">Order No:</span><br />
           <span class="text-xs text-[#666666]">{{ order.orderNumber }}</span>
         </div>
-       
 
-        <AppButton
-          @click="emits('onClick', order)"
-          text="View Details"
-          btnClass="text-primary-500 !px-0 font-semibold !text-xs"
-        />
+        <span>
+          <AppButton
+            @click="emits('onClick', order)"
+            text="View Details"
+            btnClass="text-primary-500 !px-0 font-semibold !text-xs"
+            type="button"
+        /></span>
       </div>
     </div>
   </div>
