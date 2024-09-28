@@ -2,7 +2,7 @@
   <div v-if="isFetching" class="flex items-center justify-center p-10">
     <AppLoader />
   </div>
-  <div v-else>
+  <div v-else class="pb-20">
     <h1 class="font-bold text-xl mb-10">
       {{ requestDetail?.financeRequestNo }}
     </h1>

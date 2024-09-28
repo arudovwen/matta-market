@@ -175,8 +175,16 @@
           <OnboardingCompanyDocumentsUpload
             :documents="companyDocuments"
             :hideUpdate="
-              company?.approvalStatus &&
-              companyDocuments?.some((i) => i.documentType === 4)
+              (country?.toLowerCase() === 'nigeria' &&
+                company?.approvalStatus &&
+                nigeriaTypes.every((type) =>
+                  companyDocuments?.some((doc) => doc.documentType === type)
+                )) ||
+              (country?.toLowerCase() !== 'nigeria' &&
+                company?.approvalStatus &&
+                nonNigeriaTypes.every((type) =>
+                  companyDocuments?.some((doc) => doc.documentType === type)
+                ))
             "
             @get-docs="handleDocUpdate"
             :isNonNigerian="country?.toLowerCase() !== 'nigeria'"

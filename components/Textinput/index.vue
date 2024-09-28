@@ -18,6 +18,7 @@
         v-if="info"
         data-toggle="tooltip"
         data-placement="top"
+        data-animation="false"
         :title="infoTitle"
         class="cursor-pointer h-4 w-4 flex items-center justify-center"
       >

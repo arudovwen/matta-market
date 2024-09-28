@@ -179,7 +179,7 @@
   />
   <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #content>
-      <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10">
+      <div class="h-full w-full bg-white rounded-lg !pb-20 p-6 lg:p-10">
         <FinanceRequestDetail :detail="detail" />
       </div>
     </template>
