@@ -34,7 +34,12 @@
         text="Upload"
       />
     </div>
-    <div v-if="privateDocuments">
+    <div
+      v-if="
+        privateDocuments &&
+        privateDocuments.some((i) => i.urls.filter((i) => i.url).length !== 0)
+      "
+    >
       <DocumentsViewer
         type="kyb"
         :documents="privateDocuments"

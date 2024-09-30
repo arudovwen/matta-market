@@ -37,7 +37,7 @@
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-2 uppercase">created</p>
         <span class="text-xs">{{
-          moment(document.createdOn).format("ll")
+          moment(document.createdOn).format("lll")
         }}</span>
       </div>
       <div>

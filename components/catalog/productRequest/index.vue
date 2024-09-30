@@ -56,7 +56,7 @@
         <div class="z-[90] relative">
           <Textinput
             placeholder=""
-            label="Unit price"
+            label="Quantity"
             name="unit"
             v-bind="quantityAtt"
             v-model="quantity"

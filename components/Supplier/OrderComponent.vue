@@ -15,7 +15,7 @@
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">Order date</p>
-        <span class="text-sm">{{ moment(order?.orderDate).format("ll") }}</span>
+        <span class="text-sm">{{ moment(order?.orderDate).format("lll") }}</span>
       </div>
       <!-- <div v-if="order?.schedulePickupDate">
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">

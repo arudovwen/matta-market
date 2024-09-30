@@ -1161,3 +1161,6 @@ export const productrules = {
     },
   },
 };
+
+export const nigeriaTypes = [0, 1, 2, 3, 4];
+export const nonNigeriaTypes = [0, 4];

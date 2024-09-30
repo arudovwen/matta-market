@@ -1,12 +1,12 @@
 <template>
-  <div class="mt-9 max-w-[490px] mx-auto">
+  <div class="mt-9 w-full max-w-[490px] mx-auto">
     <h1 class="mb-3 font-semibold text-[20px] text-[#333]">Summary</h1>
     <div class="w-full mt-4 mb-10">
       <div
         class="grid grid-cols-1 gap-y-3 mb-8 rounded-lg p-6 border border-[#E2E2E2] bg-[#F5FAFF]"
       >
         <div
-          class="grid grid-cols-2 gap-y-6 border-b border-[#3440541A pb-2"
+          class="grid grid-cols-2 gap-y-6 border-b border-[#3440541A pb-2 last:border-none"
           v-for="(item, index) in bankOptions"
           :key="index"
         >
@@ -15,17 +15,11 @@
             v-for="n in item.data"
             :key="n.key"
           >
-            <span class="text-[#667085] capitalize">{{ n.title }} </span>
-            <span class="text-[#344054] font-medium">Value</span>
+            <span class="text-[#667085] capitalize mb-1">{{ n.title }} </span>
+            <span class="text-[#344054] font-medium">{{
+              companyInfo?.[n.key]
+            }}</span>
           </div>
-        </div>
-        <div class="flex flex-col text-xs">
-          <span class="text-[#667085] capitalize">Directors </span>
-          <span class="text-[#344054] font-medium">Value</span>
-        </div>
-        <div class="flex flex-col text-xs">
-          <span class="text-[#667085] capitalize">Documents </span>
-          <span class="text-[#344054] font-medium">Value</span>
         </div>
       </div>
       <div
@@ -80,13 +74,14 @@
   />
 </template>
 <script setup>
+import moment from "moment";
 import { postCreditRequest } from "~/services/creditservice";
 
 const isSuccessOpen = ref(false);
 const isErrorOpen = ref(false);
-const errorText = ref(null)
+const errorText = ref(null);
 const route = useRoute();
-const { financeId } = route.params;
+const company = inject("company");
 const formData = inject("formData");
 const isLoading = ref(false);
 const active = inject("active");
@@ -96,11 +91,11 @@ const bankOptions = [
     data: [
       {
         title: "Company name",
-        key: "bankName",
+        key: "companyName",
       },
       {
         title: "Business type",
-        key: "accountName",
+        key: "companyType",
       },
     ],
   },
@@ -108,11 +103,11 @@ const bankOptions = [
     data: [
       {
         title: "Date of incorporation",
-        key: "bankName",
+        key: "dateofIncorporation",
       },
       {
         title: "Sector",
-        key: "accountName",
+        key: "sector",
       },
     ],
   },
@@ -120,23 +115,25 @@ const bankOptions = [
     data: [
       {
         title: "Business address",
-        key: "bankName",
-      },
-    ],
-  },
-  {
-    data: [
-      {
-        title: "Brief description of Product",
-        key: "bankName",
+        key: "address",
       },
     ],
   },
 ];
+const companyInfo = computed(() => ({
+  ...company.value,
+  dateofIncorporation: moment(company.value.dateofIncorporation).format("ll"),
+}));
 const onSubmit = () => {
   isLoading.value = true;
 
-  postCreditRequest(formData)
+  postCreditRequest({
+    ...formData,
+    supportingDocuments: formData?.supportingDocuments.map((i) => ({
+      ...i,
+      urls: i.urls.map((j) => j.url),
+    })),
+  })
     .then((res) => {
       if (res.status === 200) {
         isSuccessOpen.value = true;

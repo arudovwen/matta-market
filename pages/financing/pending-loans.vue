@@ -179,7 +179,7 @@
   />
   <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #content>
-      <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10">
+      <div class="h-full w-full bg-white rounded-lg !pb-20 p-6 lg:p-10">
         <FinanceRequestDetail :detail="detail" />
       </div>
     </template>
@@ -308,16 +308,18 @@ function handleType(key) {
   switch (parseInt(key)) {
     case 0:
       return "trade";
-     
+
     case 1:
       return "supply";
-     
+
     case 2:
       return "import";
-     
+
     case 3:
       return "export";
-     
+
+    case 4:
+      return "credit";
 
     default:
       break;

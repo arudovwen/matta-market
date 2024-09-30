@@ -5,7 +5,10 @@
     <div class="bg-white rounded-lg border border-[#EAECF0]">
       <div class="px-6 py-4 border-b border-[#EAECF0]">
         <span
-          ><button class="text-sm font-medium flex gap-x-2 items-center">
+          ><button
+            @click="navigateTo('/wallet/home')"
+            class="text-sm font-medium flex gap-x-2 items-center"
+          >
             <AppIcon icon="ph:arrow-left-bold" /> <span>Back</span>
           </button></span
         >
@@ -13,7 +16,10 @@
       <div class="py-10 mb-8" v-if="active !== 5">
         <Stepper :tabs="tabs" />
       </div>
-      <div v-if="!loading && !isfetching" class="w-full pb-10 mx-auto max-w-[676px]">
+      <div
+        v-if="!loading && !isfetching"
+        class="w-full pb-10 mx-auto max-w-[676px]"
+      >
         <div
           :class="` mx-auto w-full ${active === 3 ? '' : 'max-w-[676px]'}`"
           v-if="active !== 5"
@@ -73,45 +79,7 @@ const formData = reactive({
       documentType: 1,
     },
   ],
-  companyDocuments: [
-    {
-      url: "",
-      urls: [
-        {
-          url: "",
-        },
-      ],
-      documentType: 0,
-    },
-    {
-      url: "",
-      urls: [
-        {
-          url: "",
-        },
-      ],
-      documentType: 1,
-    },
-    {
-      url: "",
-      urls: [
-        {
-          url: "",
-        },
-      ],
-      documentType: 2,
-    },
-    {
-      url: "",
-      urls: [
-        {
-          url: "",
-        },
-      ],
-      documentType: 3,
-    },
-  ],
-
+  companyDocuments: [],
   kyb: {
     companyName: "",
     sector: "",
@@ -120,44 +88,7 @@ const formData = reactive({
     address: "",
     description: "",
     dateofIncorporation: null,
-    companyDocuments: [
-      {
-        url: "",
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 0,
-      },
-      {
-        url: "",
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 1,
-      },
-      {
-        url: "",
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 2,
-      },
-      {
-        url: "",
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 3,
-      },
-    ],
+    companyDocuments: [],
     statusReport: "",
     incorporation: "", // Assuming incorporation is a dateofIncorporation type
     mermat: "",
@@ -203,9 +134,7 @@ const formData = reactive({
         ],
         documentType: 1,
       },
-     
     ],
- 
   },
 });
 
@@ -250,46 +179,9 @@ function getCompanyData() {
                       url: i?.url || i || "",
                     })),
               }))
-            : [
-                {
-                  url: "",
-                  urls: [
-                    {
-                      url: "",
-                    },
-                  ],
-                  documentType: 0,
-                },
-                {
-                  url: "",
-                  urls: [
-                    {
-                      url: "",
-                    },
-                  ],
-                  documentType: 1,
-                },
-                {
-                  url: "",
-                  urls: [
-                    {
-                      url: "",
-                    },
-                  ],
-                  documentType: 2,
-                },
-                {
-                  url: "",
-                  urls: [
-                    {
-                      url: "",
-                    },
-                  ],
-                  documentType: 3,
-                },
-              ],
+            : [],
       };
-    
+
       company.value = tempData;
       formData.kyb = { ...tempData };
 
@@ -306,10 +198,11 @@ function getCompanyData() {
                 url: i?.url || i || "",
               })),
         }));
+
         formData.kyb.companyDocuments =
           res.data.data.country.toLowerCase() === "nigeria"
             ? tempDocData
-            : tempDocData.filter((i) => i.documentType === 0);
+            : tempDocData.filter((i) => [0, 4].includes(i.documentType));
       }
     })
     .catch(() => {

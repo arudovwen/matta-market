@@ -174,7 +174,18 @@
         <div class="w-full">
           <OnboardingCompanyDocumentsUpload
             :documents="companyDocuments"
-            :hideUpdate="company?.approvalStatus"
+            :hideUpdate="
+              (country?.toLowerCase() === 'nigeria' &&
+                company?.approvalStatus &&
+                nigeriaTypes.every((type) =>
+                  companyDocuments?.some((doc) => doc.documentType === type)
+                )) ||
+              (country?.toLowerCase() !== 'nigeria' &&
+                company?.approvalStatus &&
+                nonNigeriaTypes.every((type) =>
+                  companyDocuments?.some((doc) => doc.documentType === type)
+                ))
+            "
             @get-docs="handleDocUpdate"
             :isNonNigerian="country?.toLowerCase() !== 'nigeria'"
           />
@@ -191,7 +202,7 @@
       <AppButton
         :disabled="
           isLoading ||
-          (country.toLowerCase() === 'nigeria' && (!registrationNo || !tin))
+          (country?.toLowerCase() === 'nigeria' && (!registrationNo || !tin))
         "
         :isLoading="isLoading"
         btnClass="bg-primary-500
@@ -211,7 +222,11 @@ import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "~/utils/countries.json";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import { businessTypes } from "~/utils/constants.js";
+import {
+  businessTypes,
+  nigeriaTypes,
+  nonNigeriaTypes,
+} from "~/utils/constants.js";
 import {
   updateCompanyProfile,
   updateDocuments,
@@ -388,17 +403,17 @@ const onSubmit = handleSubmit((values) => {
     toast.error("Please upload all available document types");
     return;
   }
-
   const nonNigerian = values.companyDocuments
-    .filter((i) => i.documentType === 0)
+    .filter((i) => [0, 4].includes(i.documentType))
     .some((i) => i.urls.filter((i) => i.url).length == 0);
 
   if (
     country.value?.toLowerCase() !== "nigeria" &&
-    nonNigerian &&
-    values.companyDocuments.length < 1
-  )
+    (nonNigerian || values.companyDocuments.length !== 2)
+  ) {
+    toast.error("Please upload all available document types");
     return;
+  }
   isLoading.value = true;
   updateCompanyProfile({
     ...values,

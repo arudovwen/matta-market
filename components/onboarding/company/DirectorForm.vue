@@ -109,14 +109,15 @@
           :modelValue="form.identityUrl"
           :isCumpulsory="true"
         />
-        <span
+        <button
           @click="downloadFile(form.identityUrl, 'Identity card')"
           download
+            class="outline-none"
           v-if="form.identityUrl"
         >
           <span class="block text-xs text-blue-500 mt-1"
             >Download Identity card</span
-          ></span
+          ></button
         >
       </FormGroup>
     </div>
@@ -130,14 +131,15 @@
           :modelValue="form.utilityBillUrl"
           :isCumpulsory="true"
         />
-        <span
+        <button
           @click="downloadFile(form.utilityBillUrl, 'Identity card')"
           download
           v-if="form.utilityBillUrl"
+          class="outline-none"
         >
           <span class="block text-xs text-blue-500 mt-1"
             >Download Utility Bill</span
-          ></span
+          ></button
         >
       </FormGroup>
     </div>
@@ -151,14 +153,15 @@
           :modelValue="form.signatureUrl"
           :isCumpulsory="true"
         />
-        <span
+        <button
           @click="downloadFile(form.signatureUrl, 'Signature')"
           download
           v-if="form.signatureUrl"
+            class="outline-none"
         >
           <span class="block text-xs text-blue-500 mt-1"
             >Download Signature</span
-          ></span
+          ></button
         >
       </FormGroup>
     </div>

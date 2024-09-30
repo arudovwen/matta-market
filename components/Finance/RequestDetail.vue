@@ -2,7 +2,7 @@
   <div v-if="isFetching" class="flex items-center justify-center p-10">
     <AppLoader />
   </div>
-  <div v-else>
+  <div v-else class="pb-20">
     <h1 class="font-bold text-xl mb-10">
       {{ requestDetail?.financeRequestNo }}
     </h1>
@@ -11,7 +11,7 @@
       <div>
         <p class="font-nomrmal text-sm text-gray-500">Date requested</p>
         <p class="font-medium text-sm">
-          {{ moment(requestDetail?.created).format("ll") }}
+          {{ moment(requestDetail?.created).format("lll") }}
         </p>
       </div>
       <div>
@@ -29,7 +29,7 @@
       <div v-if="requestDetail?.approvedOn">
         <p class="font-nomrmal text-sm text-gray-500">Approval date</p>
         <p class="font-medium text-base">
-          {{ moment(requestDetail?.approvedOn).format("ll") }}
+          {{ moment(requestDetail?.approvedOn).format("lll") }}
         </p>
       </div>
       <div>
@@ -73,7 +73,11 @@
         </p>
       </div>
     </div>
-    <DocumentsViewer :documents="documents || []" />
+
+    <DocumentsViewer
+      :documents="documents.filter((i) => i.urls.some((j) => j.url)) || []"
+      :hideUpdate="true"
+    />
   </div>
 </template>
 <script setup>
@@ -112,20 +116,18 @@ function getFinanceData() {
     .then((res) => {
       if (res.status === 200) {
         requestDetail.value = res.data.data;
-        documents.value = res.data.data?.supportingDocuments.map(
-          (doc) => ({
-            ...doc,
-            urls: doc.urls.length
-              ? doc.urls.map((urlObj) => ({
-                  url: urlObj?.url ?? urlObj ?? doc.url ?? null,
-                }))
-              : [
-                  {
-                    url: "",
-                  },
-                ],
-          })
-        )
+        documents.value = res.data.data?.supportingDocuments.map((doc) => ({
+          ...doc,
+          urls: doc.urls.length
+            ? doc.urls.map((urlObj) => ({
+                url: urlObj?.url ?? urlObj ?? doc.url ?? null,
+              }))
+            : [
+                {
+                  url: "",
+                },
+              ],
+        }));
 
         isFetching.value = false;
       }

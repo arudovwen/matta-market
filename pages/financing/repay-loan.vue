@@ -157,9 +157,8 @@ const formValues = {
   amount: null,
   repaymentType: "partial",
   max:
-    props.type === "loan"
-      ? props.detail?.repaymentAmount - props.detail?.totalPayed
-      : props.creditDetail?.creditLimit,
+    parseFloat(props.detail?.repaymentAmount) -
+    parseFloat(props.detail?.totalPayed),
 };
 const options = [
   {
@@ -184,11 +183,11 @@ const [amount] = defineField("amount");
 const [repaymentType] = defineField("repaymentType");
 
 const content = [
-  {
-    label: "Pay with Bank card",
-    value: "bank",
-    icon: "uil:credit-card",
-  },
+  // {
+  //   label: "Pay with Bank card",
+  //   value: "bank",
+  //   icon: "uil:credit-card",
+  // },
   {
     label: "Pay with Monnify",
     value: "monnify",
@@ -255,7 +254,9 @@ onMounted(() => {
 
 watch(repaymentType, () => {
   if (repaymentType.value === "full") {
-    amount.value = props.detail?.repaymentAmount - props.detail?.totalPayed;
+    amount.value =
+      parseFloat(props.detail?.repaymentAmount) -
+      parseFloat(props.detail?.totalPayed);
   }
 });
 </script>

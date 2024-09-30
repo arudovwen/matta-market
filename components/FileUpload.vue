@@ -23,7 +23,8 @@
         :multiple="multiple"
       />
       <span
-        class="flex-1 px-2 truncate text-[#999999] inline-block max-w-[300px] xl:max-w-[380px]"
+        class="flex-1 px-2 truncate text-[#999999] inline-block"
+        :class="lClass"
         >{{ multiple ? multiUrls.join() : title || placeholder }}</span
       >
       <button
@@ -37,8 +38,6 @@
         ></div>
         <span v-else>{{ btnText || "Select file" }}</span>
       </button>
-
-     
     </div>
   </div>
 </template>
@@ -70,9 +69,12 @@ const props = defineProps({
   isCumpulsory: {
     default: false,
   },
-  placeholder:{
-    default:"Select file to upload"
-  }
+  placeholder: {
+    default: "Select file to upload",
+  },
+  lClass: {
+    default: " max-w-[300px] xl:max-w-[380px]",
+  },
 });
 const emits = defineEmits(["update:modelValue"]);
 const handleChange = inject("handleChange");
@@ -177,7 +179,6 @@ function handleMultiple(e) {
       // All files have been successfully uploaded
       handleChange && handleChange(props.id, multiUrls.value);
       emits("update:modelValue", multiUrls.value);
-    
     })
     .catch((error) => {
       // An error occurred during file upload

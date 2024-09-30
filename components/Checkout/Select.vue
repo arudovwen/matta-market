@@ -26,6 +26,7 @@
             iconClass="!text-base"
           />
           <AppButton
+            @click="handleDelete(n)"
             text="Delete"
             icon="bx:trash"
             btnClass=" !px-0  !py-[0] text-xs sm:text-sm !font-normal"
@@ -33,7 +34,8 @@
           />
         </div>
       </div>
-      <div v-if="defaultLoading"
+      <div
+        v-if="defaultLoading"
         class="flex items-center justify-center absolute top-0 left-0 right-0"
       >
         <AppLoader />
@@ -47,11 +49,14 @@
       btnClass=" !px-0 !sm:px-6 !py-[0px] text-xs sm:text-sm !text-[#2176FF]"
     />
   </div>
+ 
 </template>
 <script setup>
 import { setdefaultaddress } from "~/services/cartservice";
 import { toast } from "vue3-toastify";
 
+const isDeleteOpen = inject("isDeleteOpen");
+// const deleteLoading = ref("deleteLoading");
 const shippingStore = useShippingStore();
 const cartStore = useCartStore();
 const detail = inject("detail");
@@ -80,4 +85,11 @@ function handleDefault(id) {
       defaultLoading.value = false;
     });
 }
+function handleDelete(val) {
+  detail.value = val;
+  isOpen.value = false;
+  isDeleteOpen.value = true;
+
+}
+
 </script>

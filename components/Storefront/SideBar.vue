@@ -14,19 +14,19 @@
     </div>
     <hr class="border-[#EFEFEF] my-2" />
     <SideTab
+      v-if="route.params.id"
+      title="Area of applications"
+      :lists="marketStore?.marketMenuData?.map((i) => ({ ...i, value: i.id }))"
+      v-model="query.applications"
+    />
+
+    <hr class="border-[#EFEFEF] my-[1px]" v-if="route.params.id" />
+    <SideTab
       title="Producers"
       :lists="
         supplierStore?.producersData?.map((i) => ({ ...i, value: i.title }))
       "
       v-model="query.producers"
-    />
-
-    <hr class="border-[#EFEFEF] my-[1px]" v-if="route.params.id" />
-    <SideTab
-      v-if="route.params.id"
-      title="Area of applications"
-      :lists="marketStore?.marketMenuData?.map((i) => ({ ...i, value: i.id }))"
-      v-model="query.applications"
     />
   </div>
 </template>

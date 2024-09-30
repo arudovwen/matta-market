@@ -112,6 +112,7 @@ const urls = {
   DEFAULT_SHIPPING_ADDRESS: "/v1/shippingaddress/setasdefault",
   DELETE_SHIPPING: "/v1/shippingaddress/delete",
   SHIPPONG_COST_BREAKDOWN: "/v1/ShoppingCart/shipping-cost-breakdown",
+  PREPAID_CREDIT_INFO: "/v1/ShoppingCart/prepurchase-credit-info",
 
   ADD_PICKUP_ADDRESS: "/v1/pickuplocation/add",
   EDIT_PICKUP_ADDRESS: "/v1/pickuplocation/edit",
@@ -241,9 +242,13 @@ const urls = {
 
   APPLY_DISCOUNT: "v1/discount/apply-discount",
 
-  // Credit 
+  // Credit
   REQUEST_CREDIT: "v1/CreditRequest/new",
   GET_ALL_CREDIT_REQUEST: "v1/CreditRequest/get-all",
-  GET_CREDIT_DETAIL: "v1/CreditRequest/wallet"
+  GET_CREDIT_DETAIL: "v1/CreditRequest/wallet",
+
+  //DELTALOG
+  CALCULATOR_COST: "/Anonymous/shipping-cost",
+  GET_ENQUIRY: "/Anonymous/enquiry"
 };
 export default urls;

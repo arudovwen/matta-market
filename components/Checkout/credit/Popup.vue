@@ -35,7 +35,12 @@
                 <div class="bg-white px-6 py-6">
                   <div class="flex justify-between mb-5 items-center">
                     <div>
-                      <img alt="delte" src="/images/handes.svg" />
+                      <img
+                        alt="delte"
+                        v-if="!insufficient"
+                        src="/images/handes.svg"
+                      />
+                      <img alt="delte" v-else src="/images/reject.svg" />
                     </div>
                     <span
                       v-if="canClose"
@@ -72,9 +77,13 @@
                         </span>
 
                         <span class="text-[#344054] font-semibold">{{
-                          item.key === "dueDate"
-                            ? moment(creditDetail?.[item.key]).format("ll")
-                            : currencyFormat(creditDetail?.[item.key])
+                          item.key === "dueDate" || item.key === "repaymentDate"
+                            ? moment(
+                                handleData(creditDetail)?.[item.key]
+                              ).format("ll")
+                            : currencyFormat(
+                                handleData(creditDetail)?.[item.key]
+                              )
                         }}</span>
                       </div>
                     </div>
@@ -85,20 +94,20 @@
                       v-if="isCancel"
                       type="button"
                       @click="handleclose"
+                      paci
                       class="h-11 appearance-none leading-none px-4 py-[10px] rounded-lg text-matta-black hover:bg-gray-100 text-sm w-full border border-[#D0D5DD] font-medium justify-center flex items-center"
                     >
                       Cancel
                     </button>
 
-                    <button
-                      v-if="!isOkay"
-                      :disabled="loading"
+                    <AppButton
+                      :isDisabled="isLoading || insufficient"
+                      :isLoading="isLoading"
                       type="button"
-                      @click="actionItem"
+                      :text="!available ? 'Apply for credit' : 'Proceed'"
+                      @click="handlePurchase"
                       class="h-11 bg-primary-500 appearance-none leading-none px-4 py-[10px] rounded-lg text-white text-sm w-full border font-medium disabled:opacity-50 flex items-center justify-center"
-                    >
-                      {{ !available ? "Apply for credit" : "Proceed" }}
-                    </button>
+                    />
                   </div>
                 </div>
               </div>
@@ -118,7 +127,13 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import moment from "moment";
+import { toast } from "vue3-toastify";
+import { confirmpurchase } from "~/services/cartservice";
+import { getPrepaidInfo } from "~/services/creditservice";
 
+const isLoading = ref(false);
+const shippingStore = useShippingStore();
+const cartStore = useCartStore();
 const props = defineProps({
   title: {
     default: "",
@@ -135,18 +150,15 @@ const props = defineProps({
   canClose: { default: true },
   creditDetail: { default: null },
 });
-const emits = defineEmits(["actionItem", "close"]);
+const prepaidInfo = ref(null);
+const emits = defineEmits(["close"]);
 
 const text1 = "You are about to make payment for this purchase using credit?";
 const text2 =
   "You are not yet pre-qualified for this option of payment. Would you like to apply for a credit?";
-const text3 =
-  "You do not have sufficient credit to complete this purchase. Would you like to pay the balance";
-function actionItem() {
-  if (!props.available) {
-    navigateTo("/credit/request");
-  }
-}
+const text3 = "You do not have sufficient credit to complete this purchase. ";
+// Would you like to pay the balance";
+function actionItem() {}
 function handleclose() {
   emits("close");
 }
@@ -158,15 +170,15 @@ const bankOptions = [
   },
   {
     title: "Amount to pay",
-    key: "creditLimit",
+    key: "amountToPay",
   },
   {
     title: "Due date",
-    key: "dueDate",
+    key: "repaymentDate",
   },
   {
     title: "Repayment Amount",
-    key: "balance",
+    key: "repaymentAmount",
   },
 ];
 
@@ -181,7 +193,7 @@ const advanceOptions = [
   },
   {
     title: "balance to pay",
-    key: "balance",
+    key: "amountToPay",
   },
   {
     title: "Repayment Amount",
@@ -189,7 +201,50 @@ const advanceOptions = [
   },
   {
     title: "Due date",
-    key: "dueDate",
+    key: "repaymentDate",
   },
 ];
+
+function handlePurchase() {
+  isLoading.value = true;
+  if (!props.available || props.insufficient) {
+    navigateTo("/credit/request");
+    isLoading.value = false;
+    return;
+  }
+  if(!shippingStore?.defaultAddress?.id){
+    toast.info("Please provide a shipping address")
+    isLoading.value = false;
+    return
+  }
+  if (!props.insufficient) {
+    confirmpurchase({
+      paymentOption: 3,
+      shippingAddressId: shippingStore?.defaultAddress.id,
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          cartStore?.clearCart();
+          window.location.href = `/order-success?orderId=${res?.data?.data}`;
+          isLoading.value = false;
+        }
+      })
+      .catch((err) => {
+        toast.error(
+          err?.response?.data?.message || err?.response?.data?.Message
+        );
+        isLoading.value = false;
+      });
+  }
+}
+function handleData(data) {
+  return { ...data, ...prepaidInfo.value };
+}
+onMounted(() => {
+  getPrepaidInfo(props.creditDetail.amountToPay).then((res) => {
+    if (res.status === 200) {
+      prepaidInfo.value = res.data.data;
+    }
+  });
+});
 </script>
