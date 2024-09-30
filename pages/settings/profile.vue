@@ -46,7 +46,9 @@
         <div>
           <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">First name <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >First name <RedDot
+              /></label>
               <input
                 v-model="v$.firstName.$model"
                 :class="{ 'border-red-500': v$.firstName.$error }"
@@ -65,7 +67,9 @@
               </div>
             </div>
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">Last name <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >Last name <RedDot
+              /></label>
               <input
                 v-model="v$.lastName.$model"
                 :class="{ 'border-red-500': v$.lastName.$error }"
@@ -86,7 +90,9 @@
           </div>
           <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">E-mail <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >E-mail <RedDot
+              /></label>
               <div class="flex relative items-center">
                 <input
                   :value="form.email"
@@ -109,7 +115,9 @@
               </div>
             </div>
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">Phone number <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >Phone number <RedDot
+              /></label>
               <div class="flex relative rounded-lg h-11">
                 <FormsPhoneCodes v-model="v$.phone.$model" />
               </div>
@@ -432,11 +440,9 @@ const rules = {
     maxLength: maxLength(50),
   },
   country: {
-    required,
     maxLength: maxLength(50),
   },
   city: {
-    required,
     maxLength: maxLength(50),
   },
   phone: {
