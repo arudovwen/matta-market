@@ -46,7 +46,9 @@
         <div>
           <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">First name <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >First name <RedDot
+              /></label>
               <input
                 v-model="v$.firstName.$model"
                 :class="{ 'border-red-500': v$.firstName.$error }"
@@ -65,7 +67,9 @@
               </div>
             </div>
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">Last name <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >Last name <RedDot
+              /></label>
               <input
                 v-model="v$.lastName.$model"
                 :class="{ 'border-red-500': v$.lastName.$error }"
@@ -86,7 +90,9 @@
           </div>
           <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">E-mail <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >E-mail <RedDot
+              /></label>
               <div class="flex relative items-center">
                 <input
                   :value="form.email"
@@ -109,7 +115,9 @@
               </div>
             </div>
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">Phone number <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >Phone number <RedDot
+              /></label>
               <div class="flex relative rounded-lg h-11">
                 <FormsPhoneCodes v-model="v$.phone.$model" />
               </div>
@@ -124,9 +132,11 @@
               </div>
             </div>
           </div>
-          <!-- <div class="grid lg:grid-cols-2 gap-x-6">
+          <div class="grid lg:grid-cols-2 gap-x-6">
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">Country <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >Country <RedDot
+              /></label>
               <div class="flex relative">
                 <FormsCountriesSelect v-model="v$.country.$model" />
               </div>
@@ -142,7 +152,9 @@
             </div>
 
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">State <RedDot /></label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >State <RedDot
+              /></label>
 
               <FormsStatesSelect v-model="v$.city.$model" :states="states" />
               <div
@@ -158,7 +170,9 @@
           </div>
           <div class="">
             <div class="mb-6">
-              <label for="" class="mb-2 font-normal text-sm block">Timezone</label>
+              <label for="" class="mb-2 font-normal text-sm block"
+                >Timezone</label
+              >
               <div class="flex relative items-center w-full">
                 <select
                   v-model="form.timezone"
@@ -174,7 +188,7 @@
                 ></i>
               </div>
             </div>
-          </div> -->
+          </div>
 
           <div class="mt-6 flex justify-end">
             <button
@@ -183,7 +197,7 @@
               type="submit"
               class="border border-primary-500 text-sm bg-primary-500 text-white rounded-[10px] block w-full lg:w-auto px-10 font-semibold py-[10px] hover:bg-primary/80"
             >
-              Save changes
+              {{ isLoading ? "Saving..." : "Save changes" }}
             </button>
           </div>
         </div>
