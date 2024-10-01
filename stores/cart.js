@@ -21,6 +21,7 @@ export const useCartStore = defineStore(
     const loadingCart = ref(false);
     const cartId = ref(null);
     const discountValue = ref(0);
+    const referralDiscountValue = ref(0);
     const removeLoading = ref(false);
     const cart = computed(() => cartItems.value);
     const cartTotal = computed(() => cartItems.value.length);
@@ -29,67 +30,64 @@ export const useCartStore = defineStore(
         .map((item) => item.packagePrice * item.quantity)
         .reduce((a, b) => Number(a) + Number(b), 0)
     );
-
-    function getMyCart(action = null, loadData = null) {
-      if (!authStore.isLoggedIn) return;
-      loadingCart.value = true;
-      getcart()
-        .then((res) => {
-          loadingCart.value = false;
-
-          if (res.status === 200) {
-            const cartData = res.data.data;
-            const items = cartData?.items || [];
-            const cartId = cartData?.cartId || 0;
-
-            // Merge new items with existing cart items to ensure uniqueness
-            const mergedCart = [...items, ...cartItems.value];
-            const uniqueCart = mergedCart.filter(
-              (item, index, self) =>
-                self.findIndex((i) => i.productId === item.productId) === index
-            );
-
-            if (localStorage.getItem("fetchCart")) {
-              // Create new cart with unique items
-              createcart({ items: uniqueCart }).then((createRes) => {
-                if (createRes.status === 200) {
-                  // Refresh the minicart after updating with unique items
-                  getMyCart();
-                  localStorage.removeItem("fetchCart");
-                }
-              });
-            }
-
-            // Update local state with cart data
-            setCart(uniqueCart);
-            setTax(cartData.tax || 0);
-            SetShippingTotal(cartData.shippingTotal || 0);
-            setCartTotalwithTax(cartData.cartTotalwithTax || 0);
-            setCartId(cartId);
-            setDiscount(cartData.discountValue || 0);
-            setCartData(cartData);
-            if (action) {
-              loadData();
-            }
-          } else {
-            // Handle cases where API response status is not 200
-            resetCartState();
-          }
-        })
-        .catch((err) => {
-          if (cartItems.value.length > 0) {
-            createcart({ items: cartItems.value }).then((createRes) => {
-              if (createRes.status === 200) {
-                getMyCart();
-                localStorage.removeItem("fetchCart");
-              }
-            });
-          }
-          // Handle API request errors
-          resetCartState();
-        });
+    function getUniqueItems(items, existingItems) {
+      const mergedItems = [...items, ...existingItems];
+      return mergedItems.filter(
+        (item, index, self) =>
+          self.findIndex((i) => i.productId === item.productId) === index
+      );
     }
 
+    async function handleCartCreation(uniqueCart) {
+      const createRes = await createcart({ items: uniqueCart });
+      if (createRes.status === 200) {
+        getMyCart();
+        localStorage.removeItem("fetchCart");
+      }
+    }
+
+    async function getMyCart(action = null, loadData = null) {
+      if (!authStore.isLoggedIn) return;
+
+      loadingCart.value = true;
+
+      try {
+        const res = await getcart();
+        loadingCart.value = false;
+
+        if (res.status !== 200) {
+          resetCartState();
+          return;
+        }
+
+        const cartData = res.data.data;
+        const items = cartData?.items || [];
+        const uniqueCart = getUniqueItems(items, cartItems.value);
+
+        if (localStorage.getItem("fetchCart") && cartItems.value.length > 0) {
+          await handleCartCreation(uniqueCart);
+        }
+
+        // Update local state with cart data
+        setCart(uniqueCart);
+        setTax(cartData.tax ?? 0);
+        SetShippingTotal(cartData.shippingTotal ?? 0);
+        setCartTotalwithTax(cartData.cartTotalwithTax ?? 0);
+        setCartId(cartData.cartId ?? 0);
+        setDiscount(cartData.discountValue ?? 0);
+        setRefDiscount(cartData.referralDiscountValue ?? 0);
+        setCartData(cartData);
+
+        if (action) {
+          loadData();
+        }
+      } catch (err) {
+        if (cartItems.value.length > 0) {
+          await handleCartCreation(cartItems.value);
+        }
+        resetCartState();
+      }
+    }
     function resetCartState() {
       setCart([]);
       setTax(0);
@@ -99,6 +97,7 @@ export const useCartStore = defineStore(
       setDiscount(0);
       loadingCart.value = false;
       setCartData(null);
+      setRefDiscount(0);
     }
 
     function setCartData(data) {
@@ -109,6 +108,9 @@ export const useCartStore = defineStore(
     }
     function setDiscount(data) {
       discountValue.value = data;
+    }
+    function setRefDiscount(data) {
+      referralDiscountValue.value = data;
     }
     function setCartId(value) {
       cartId.value = value;
@@ -128,8 +130,6 @@ export const useCartStore = defineStore(
     };
 
     async function addToCart(item, type) {
-      console.log("🚀 ~ addToCart ~ type:", type)
-      console.log("🚀 ~ addToCart ~ item:", item)
       if (
         cartItems.value.some((ct) => ct.productId === item.productId) &&
         cartItems.value.some((ct) => ct.packageId === item.packageId)
@@ -249,6 +249,7 @@ export const useCartStore = defineStore(
       removeId,
       setCartData,
       cartData,
+      referralDiscountValue,
     };
   },
 

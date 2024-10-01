@@ -29,7 +29,7 @@
           }}</span></span
         >
         <span class="block text-sm text-[#333]">{{
-          currencyFormat(n.repaymentAmount)
+          currencyFormat(n.repaymentAmount - n.totalPayed)
         }}</span></span
       >
       <div class="mb-4">

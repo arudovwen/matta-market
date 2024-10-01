@@ -37,7 +37,7 @@ function removeCard() {}
 function openmodal(val) {
 	showing.value = val;
   isOpen.value = true;
-	console.log("fire openmodal");
+	
 }
 function togglePopup() {
   isOpen.value = !isOpen.value;

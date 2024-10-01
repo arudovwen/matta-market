@@ -4,7 +4,9 @@
   >
     <!-- Top bar   -->
     <HeaderComponent
-      title="Add a product"
+      :title="`${
+        route.params.process === 'edit-product' ? 'Edit' : 'Add'
+      } a product`"
       className="!px-5"
       :canGoback="true"
     />
@@ -12,9 +14,9 @@
 
     <div class="mt-[50px]" v-if="!isPageLoading">
       <ProductInfo v-if="active == 1" />
-      <ProductProperties v-if="active == 2" />
-      <ProductDocuments v-if="active == 3" />
-      <AdditionalInformation v-if="active == 4" />
+      <ProductProperties v-if="active == 3" />
+      <ProductDocuments v-if="active == 2" />
+      <!-- <AdditionalInformation v-if="active == 4" /> -->
     </div>
     <div class="text-center p-6 lg:p-8 my-28" v-else>
       <AppLoader />
@@ -62,12 +64,13 @@ const tabs = [
     name: "Product Info",
     value: 1,
   },
+
   {
-    name: "Properties",
+    name: "Documents",
     value: 2,
   },
   {
-    name: "Documents",
+    name: "Properties",
     value: 3,
   },
 ];
@@ -90,6 +93,7 @@ const links = [
   },
 ];
 const route = useRoute();
+
 const router = useRouter();
 const isPreviewing = ref(false);
 const isPageLoading = ref(true);
@@ -101,7 +105,7 @@ const producers = ref([]);
 const form = reactive({
   id: "",
   name: "",
-  pickUpLocationId: "",
+  pickUpLocationId: null,
   manufacturer: "",
   markets: [],
   marketApplications: [],
@@ -165,7 +169,7 @@ function togglePreview() {
 function toggleNext(val) {
   // active.value = val;
   router.push(
-    `/storefront/products/add-product?stage=${val}&id=${route.query.id}`
+    `/storefront/products/${route.params.process}?stage=${val}&id=${route.query.id}`
   );
 }
 onBeforeMount(() => {
@@ -181,7 +185,7 @@ onBeforeMount(() => {
   if (route.query.id) {
     getSupplierProduct(queryParams).then((res) => {
       product.value = res.data.data;
-			updateData(form, product, [], isPageLoading, route);
+      updateData(form, product, [], isPageLoading, route);
       isPageLoading.value = false;
     });
   } else {
@@ -242,7 +246,6 @@ const product = ref({
   unit: "g",
 });
 
-
 watch(
   () => [route.query],
   () => {
@@ -254,7 +257,7 @@ watch(
       getSupplierProduct(queryParams).then((res) => {
         if (res.status === 200) {
           product.value = res.data.data;
-					updateData(form, product, [], isPageLoading, route);
+          updateData(form, product, [], isPageLoading, route);
         }
       });
     }

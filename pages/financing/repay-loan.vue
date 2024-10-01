@@ -3,8 +3,8 @@
     v-if="!isSuccessOpen"
     class="bg-white w-full md:min-w-[400px] text-[#344054]"
   >
-    <legend class="block text-[20px] font-bold mb-8 text-left">
-      Loan Repayment
+    <legend class="block text-[20px] font-bold mb-8 text-left capitalize">
+      {{ type }} Repayment
     </legend>
     <form @submit.prevent="onSubmit" class="grid gap-y-4 w-full">
       <FormGroup
@@ -26,14 +26,14 @@
       </FormGroup>
 
       <FormGroup
-        label="Amount"
+        label="Enter Amount you want to Pay"
         :error="errors.amount"
         name="amount"
         :isCumpulsory="true"
       >
         <CurrencyInput
           min="1"
-          :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white border !rounded-lg !text-[#475467] !h-11 cursor-pointer placeholder:text-[14px] ${
+          :class="`outline-none px-[14px] py-[10px] min-w-[180px] w-full !bg-white disabled:bg-gray-50 border !rounded-lg !text-[#475467] !h-11 cursor-pointer placeholder:text-[14px] ${
             errors.amount ? 'border-red-500' : 'border-[#D0D5DD]'
           }`"
           v-model="amount"
@@ -44,6 +44,7 @@
           :placeholder="`Amount left: ${currencyFormat(
             detail?.repaymentAmount - detail?.totalPayed
           )}`"
+          :disabled="repaymentType === 'full'"
         />
         <div
           v-if="amount > balance?.availableBalance && active === 'wallet'"
@@ -62,7 +63,7 @@
               active = n.value;
             }
           "
-          class="border border-[#D0D5DD] rounded-xl p-5 flex justify-between items-center"
+          class="border border-[#D0D5DD] rounded-lg px-5 py-4 flex justify-between items-center"
         >
           <span class="flex gap-x-3 items-center">
             <span class="text-xl"><AppIcon :icon="n.icon" /></span>
@@ -121,6 +122,7 @@
       () => {
         isOpen = false;
         isSuccessOpen = false;
+        $router.go(0);
       }
     "
   />
@@ -138,13 +140,25 @@ const active = ref("monnify");
 const isOpen = inject("isOpen");
 const isLoading = ref(false);
 const data = ref(null);
-const props = defineProps(["detail"]);
+const props = defineProps({
+  detail: {
+    default: null,
+  },
+  type: {
+    default: "loan",
+  },
+  creditDetail: {
+    default: null,
+  },
+});
 const isSuccessOpen = ref(false);
 const formValues = {
   id: "",
   amount: null,
   repaymentType: "partial",
-  max: props.detail?.repaymentAmount - props.detail?.totalPayed,
+  max:
+    parseFloat(props.detail?.repaymentAmount) -
+    parseFloat(props.detail?.totalPayed),
 };
 const options = [
   {
@@ -160,7 +174,7 @@ const schema = yup.object({
   amount: yup.number().required("Amount is required").max(yup.ref("max")),
   repaymentType: yup.string().required("Country is required"),
 });
-const { handleSubmit, defineField, errors } = useForm({
+const { handleSubmit, defineField, errors, setFieldValue } = useForm({
   validationSchema: schema,
   initialValues: formValues,
 });
@@ -169,6 +183,11 @@ const [amount] = defineField("amount");
 const [repaymentType] = defineField("repaymentType");
 
 const content = [
+  // {
+  //   label: "Pay with Bank card",
+  //   value: "bank",
+  //   icon: "uil:credit-card",
+  // },
   {
     label: "Pay with Monnify",
     value: "monnify",
@@ -231,5 +250,13 @@ onMounted(() => {
       balance.value = res.data.data;
     }
   });
+});
+
+watch(repaymentType, () => {
+  if (repaymentType.value === "full") {
+    amount.value =
+      parseFloat(props.detail?.repaymentAmount) -
+      parseFloat(props.detail?.totalPayed);
+  }
 });
 </script>

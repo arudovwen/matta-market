@@ -338,7 +338,7 @@
   </div>
 
   <div>
-    <Modal :isOpen="isAddingPackage" @toggleModal="isAddingPackage = false">
+    <Modal :isOpen="isAddingPackage" @toggleModal="isAddingPackage = false" :can-close="false">
       <template #content>
         <div
           class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 w-[400px]"

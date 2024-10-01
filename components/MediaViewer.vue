@@ -11,14 +11,20 @@
           >
             <AppIcon icon="fa:spinner" iconClass="fa-spin text-[80px]" />
           </div>
-          <VuePdf
+          <VuePdfEmbed
             v-if="media.includes('.pdf')"
-            v-for="page in numOfPages"
-            :key="page"
-            :src="media"
-            :page="page"
+            annotation-layer
+            text-layer
+            :source="media"
+            @rendered="loading = false"
+            :page="1"
           />
-          <img alt="media" :src="media" class="w-full h-full object-contain" v-else />
+          <img
+            alt="media"
+            :src="media"
+            class="w-full h-full object-contain"
+            v-else
+          />
         </div>
         <div class="flex justify-end">
           <button
@@ -35,19 +41,19 @@
 </template>
 
 <script setup>
-const { VuePdf, createLoadingTask } = require("vue-pdf");
-
+import VuePdfEmbed from "vue-pdf-embed";
 const numOfPages = ref(1);
+// const VuePdf = pdf.VuePdf
 const loading = ref(true);
-onMounted(() => {
-  if (props.media.includes(".pdf")) {
-    const loadingTask = createLoadingTask(props.media);
-    loadingTask.promise.then((pdf) => {
-      loading.value = false;
-      numOfPages.value = pdf.numPages;
-    });
-  }
-});
+// onMounted(() => {
+//   if (props.media.includes(".pdf")) {
+//     const loadingTask = pdf.createLoadingTask(props.media);
+//     loadingTask.promise.then((pdff) => {
+//       loading.value = false;
+//       numOfPages.value = pdff.numPages;
+//     });
+//   }
+// });
 const props = defineProps(["media", "open"]);
 const emits = defineEmits(["close"]);
 </script>

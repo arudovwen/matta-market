@@ -73,7 +73,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  {{ moment(item.orderDate).format("ll") }}
+                  {{ moment(item.orderDate).format("lll") }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
@@ -223,7 +223,7 @@ const isLoading = ref(true);
 const isOrderLoading = ref(false);
 function getData() {
 	isLoading.value = true;
-	console.log("omo");
+	
   storefrontorders(queryParams)
 	.then((res) => {
       if (res.status) {

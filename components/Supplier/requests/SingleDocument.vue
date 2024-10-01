@@ -36,7 +36,7 @@
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-2 uppercase">created</p>
-        <span class="text-xs">{{ moment(document.created).format("ll") }}</span>
+        <span class="text-xs">{{ moment(document.created).format("lll") }}</span>
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-2 uppercase">document type</p>

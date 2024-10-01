@@ -1,4 +1,4 @@
-export default function (id, type=null) {
+export default function (id, type = null) {
   if (type && type === "kyb") {
     switch (id) {
       case 0:
@@ -9,6 +9,8 @@ export default function (id, type=null) {
         return "CAC Status Report";
       case 3:
         return "Utility Bill";
+      case 4:
+        return "Company Profile";
       default:
         return "";
     }

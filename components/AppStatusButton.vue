@@ -56,7 +56,7 @@ const OrderStatusText = {
   },
   2: {
     text: "Payment confirmed",
-    className: StatusClass[3],
+    className: StatusClass[2],
   },
   3: {
     text: "Order received",
@@ -107,6 +107,10 @@ const FinanceStatusText = {
   5: {
     text: "Loan disbursed",
     className: StatusClass[5],
+  },
+  7: {
+    text: "Request approved",
+    className: StatusClass[1],
   },
 };
 const ActiveFinance = {
@@ -178,8 +182,52 @@ const WalletStatus = {
     text: "Order Debit",
     className: StatusClass[4],
   },
+  7: {
+    text: "Repayment",
+    className: StatusClass[1],
+  },
+  8: {
+    text: "Reversal",
+    className: StatusClass[1],
+  },
+};
+const LoanStatus = {
+  0: {
+    text: "pending",
+    className: StatusClass[0],
+  },
+  1: {
+    text: "active",
+    className: StatusClass[2],
+  },
+  2: {
+    text: "paid",
+    className: StatusClass[1],
+  },
 };
 
+const CreditStatus = {
+  0: {
+    text: "pending",
+    className: StatusClass[0],
+  },
+  1: {
+    text: "approved",
+    className: StatusClass[1],
+  },
+  2: {
+    text: "disbursed",
+    className: StatusClass[1],
+  },
+  3: {
+    text: "declined",
+    className: StatusClass[4],
+  },
+  4: {
+    text: "reviewed",
+    className: StatusClass[3],
+  },
+};
 const Stats = computed(() => {
   if (props.stattype === "order") {
     return OrderStatusText;
@@ -198,6 +246,12 @@ const Stats = computed(() => {
   }
   if (props.stattype === "active-finance") {
     return ActiveFinance;
+  }
+  if (props.stattype === "loan") {
+    return LoanStatus;
+  }
+  if (props.stattype === "credit") {
+    return CreditStatus;
   }
   return StatusText;
 });

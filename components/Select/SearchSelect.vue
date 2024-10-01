@@ -142,7 +142,7 @@ export default {
   },
   methods: {
     handleChange(value) {
-      console.log("🚀 ~ handleChange ~ value:", value);
+    
       this.selectedValue = value;
       this.isOpen = false;
     },

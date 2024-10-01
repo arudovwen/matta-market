@@ -67,7 +67,7 @@ onMounted(() => {
 });
 const products = ref([]);
 function getAllProducts() {
-	console.log("yo");
+	
   getProducts(queryParams).then((res) => {
     products.value = res?.data?.data?.data.filter(
       (item) => item.id != product.value.id

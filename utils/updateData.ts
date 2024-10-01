@@ -7,7 +7,7 @@ export default function updateData(form, product, defaultPackagesAvailable, isLo
   form.pickUpLocationId = product.value.pickupLocationId;
   form.name = product.value.name;
   form.unit = product.value.packagesAvailable
-    ? product.value.packagesAvailable[0].unit
+    ? product.value.packagesAvailable[0]?.unit
     : "";
   form.manufacturer = product.value.manufacturer || [];
   form.markets = product.value.markets || [];

@@ -62,7 +62,7 @@
               :class="item.status == 3 ? 'opacity-25' : ''"
               class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
             >
-              {{ moment(item.date).format("ll") }}
+              {{ moment(item.date).format("lll") }}
             </td>
             <td
               class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"

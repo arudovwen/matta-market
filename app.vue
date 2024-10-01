@@ -10,8 +10,8 @@ html {
   box-sizing: border-box;
 }
 body {
-  font-family: "Manrope", sans-serif;
-  color: #333333;
+  font-family: "Onest", sans-serif;
+  color: #344054;
 }
 
 .dark-mode {
@@ -19,7 +19,7 @@ body {
 }
 
 .light-mode {
-  @apply text-[#333] bg-white;
+  @apply text-[#344054] bg-white;
 }
 
 .recommended .carousel__viewport .carousel__track {

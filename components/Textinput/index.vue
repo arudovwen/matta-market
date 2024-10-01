@@ -18,6 +18,7 @@
         v-if="info"
         data-toggle="tooltip"
         data-placement="top"
+        data-animation="false"
         :title="infoTitle"
         class="cursor-pointer h-4 w-4 flex items-center justify-center"
       >
@@ -150,7 +151,7 @@ export default {
       type: String,
     },
     modelValue: {
-      type: String,
+      type: [String, Number],
       default: "",
     },
     error: {

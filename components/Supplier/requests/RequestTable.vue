@@ -62,7 +62,7 @@
               :class="item.status == 3 ? 'opacity-25' : ''"
               class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
             >
-              {{ moment(item.created).format("ll") }}
+              {{ moment(item.created).format("lll") }}
             </td>
             <td
               class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
@@ -208,7 +208,7 @@ const queryParams = reactive({
 const isLoading = ref(true);
 function getRequests() {
   isLoading.value = true;
-	console.log("wo na");
+
   samplerequests(queryParams).then((res) => {
     requests.value = res?.data?.data?.data;
     queryParams.totalCount = res.data.data.totalCount;

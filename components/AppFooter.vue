@@ -150,9 +150,7 @@
 <script setup>
 const route = useRoute();
 const open = ref(false);
-const handleGoogleTranslateSelect = (language) => {
-  console.log(language);
-};
+
 const navs = [
   {
     subject: "company",

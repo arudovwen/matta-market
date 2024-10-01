@@ -15,7 +15,7 @@
           {{ detail?.product }}
         </p>
         <p class="text-[10px] md:text-xs mb-[10px]md: mb-[15px]">
-          <span class="font-normal">Sold by:</span
+          <span class="font-normal">Manufactured by:</span
           ><span class="font-bold"> {{ detail?.producer }}</span>
         </p>
         <div class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 sm:gap-x-6">

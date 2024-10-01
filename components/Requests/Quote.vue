@@ -201,7 +201,6 @@ const quoteForm = reactive({
   expectedVolume: null,
   unit: product.value?.unit,
   deliverAddress: "",
-  contactPhone: "",
   additionalInformation: "",
   contactPhone: null,
   packageType: product.value?.packagesAvailable?.[0]?.package.id,

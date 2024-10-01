@@ -1,8 +1,151 @@
 <template>
-  <section class="px-6 lg:px-[30px] py-[30px]">
-    <div class="flex gap-x-[56px] justify-start text-left flex-col lg:flex-row gap-y-7 lg:gap-y-10">
-      <div class="lg:w-[350px] text-left">
-        <h2 class="text-sm text-[#101828] font-semibold">Product documents</h2>
+  <form class="px-4 lg:px-[30px]" @submit.prevent="handleSubmit">
+    <div
+      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10 mb-10"
+    >
+      <div class="w-full lg:w-[250px]">
+        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">
+          Pickup location<span class="text-red-500 mr-[.5px]">*</span>
+        </h2>
+        <!-- <p class="text-xs text-[#475467]">Provide package information here.</p> -->
+      </div>
+    <div class="max-w-[654px] w-full">
+     
+      <VueSelect
+        v-model="v$.pickUpLocationId.$model"
+        :options="locations"
+        :reduce="(location) => location.value"
+        placeholder="Select location"
+        :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+      />
+      <div class="flex justify-start mt-1">
+        <button
+          @click="isLocationOpen = true"
+          class="text-xs text-primary-500 font-medium"
+          type="button"
+        >
+          + Add a new location
+        </button>
+      </div>
+      <div
+        class="text-red-500 mt-1"
+        v-for="error of v$.pickUpLocationId.$errors"
+        :key="error.$uid"
+      >
+        <div class="error-msg text-error text-xs font-semibold">
+          {{ error.$message }}
+        </div>
+      </div>
+    </div>
+  </div>
+    <div
+      class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10 mb-10"
+    >
+      <div class="w-full lg:w-[250px]">
+        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">
+          Packages & Availability <span class="text-red-500 mr-[.5px]">*</span>
+        </h2>
+        <p class="text-xs text-[#475467]">Provide package information here.</p>
+      </div>
+      <div class="max-w-[654px] w-full">
+        <button
+          type="button"
+          class="bg-primary-500 text-white rounded-lg px-[14px] py-[10px] text-[11px] text-left leading-[normal] block"
+          @click="handleAddingPackage"
+        >
+          <i class="uil uil-plus"></i> Add a package
+        </button>
+        <div
+          class="text-red-500 mt-1"
+          v-for="error of v$.packagesAvailable.$errors"
+          :key="error.$uid"
+        >
+          <div class="error-msg text-error text-xs font-semibold">
+            {{ error.$message }}
+          </div>
+        </div>
+        <div class="border border-[#DCDEE6] rounded-[10px] mt-6">
+          <table class="w-full">
+            <thead>
+              <tr>
+                <th
+                  v-for="(item, i) in headers"
+                  :key="item + i"
+                  class="text-[#475467] text-xs text-left font-medium border-b py-3 px-4 border-[#EAECF0] whitespace-nowrap bg-[#F9FAFB] rounded-t-[10px]"
+                >
+                  {{ item }}
+                </th>
+              </tr>
+            </thead>
+            <tbody v-if="form.packagesAvailable?.length">
+              <tr
+                v-for="item in form.packagesAvailable"
+                :key="item.id"
+                class="border-b border-[#EAECF0] last:border-none last:rounded-b-[10px]"
+              >
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-4 whitespace-nowrap"
+                >
+                  {{ item?.package?.title }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-4 whitespace-nowrap"
+                >
+                  {{ item?.size }}{{ item?.unit }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-4 whitespace-nowrap"
+                >
+                  {{ currencyFormat(item?.purchaseAmount) }}
+                </td>
+                <!-- <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-4 whitespace-nowrap"
+                >
+                  {{ currencyFormat(item?.amount) }}
+                </td> -->
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-4 whitespace-nowrap"
+                >
+                  {{ item?.color || "-" }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-4 whitespace-nowrap"
+                >
+                  {{ item?.purity || "-" }}{{ item?.purity && "%" }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 ] whitespace-nowrap"
+                >
+                  <span class="flex gap-x-5">
+                    <span @click="removepackage(i)" class="cursor-pointer">
+                      <AppIcon icon="fa-trash-o" iconClass="text-[#E53F3F]" />
+                    </span>
+                    <span @click="editPackage(item)" class="cursor-pointer">
+                      <AppIcon icon="prime:pencil" iconClass="text-[#475467]" />
+                    </span>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <EmptyData
+            v-if="!form.packagesAvailable?.length"
+            title="No package added yet"
+            titleClass="text-xs !font-normal text-[#475467]"
+            className="!h-auto py-6"
+            classIcon="!text-3xl w-[120px]"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="flex gap-x-[56px] justify-start text-left flex-col lg:flex-row gap-y-7 lg:gap-y-10"
+    >
+      <div class="lg:w-[250px] text-left">
+        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">
+          Product documents
+        </h2>
         <p class="mb-5 flex items-center text-xs">
           Please attach the manufacturer's MSDS, COA, and TDS here and indicate
           the document type.
@@ -10,7 +153,7 @@
       </div>
 
       <div class="max-w-[654px] w-full">
-        <UploadComponent @onGetFiles="onGetFiles" :isMultiple="true" type="doc" />
+        <Uploader @onGetFiles="onGetFiles" :isMultiple="true" type="doc" />
         <div
           class="bg-white py-6 lg:py-8 rounded-lg"
           v-if="form.documents.length"
@@ -23,7 +166,11 @@
             >
               <div class="border rounded-xl p-4 flex flex-1 justify-between">
                 <div class="flex gap-x-3 items-center">
-                  <img alt=" prodcut" src="~/assets/images/filetype.png" class="w-8 h-auto" />
+                  <img
+                    src="~/assets/images/filetype.png"
+                    alt="prduct"
+                    class="w-8 h-auto"
+                  />
                   <div>
                     <p
                       class="text-sm text-matta-black capitalize truncate max-w-[250px]"
@@ -75,12 +222,12 @@
                               :value="p.value"
                               as="template"
                             >
-                              <span
+                              <li
                                 :class="[
                                   selected
                                     ? 'text-blue-800 bg-blue-50'
                                     : 'font-normal text-matta-black',
-                                  'relative cursor-pointer capitalize text-matta-black  block hover:text-primary select-none py-2 pl-6 pr-4 text-left',
+                                  'relative cursor-pointer capitalize text-matta-black  hover:text-primary select-none py-2 pl-6 pr-4 text-left',
                                 ]"
                               >
                                 <div class="flex gap-x-4 items-start">
@@ -95,7 +242,7 @@
                                     v-if="selected"
                                   ></i>
                                 </div>
-                              </span>
+                              </li>
                             </ListboxOption>
                             <p
                               v-if="!form.documentproperties.length"
@@ -111,8 +258,9 @@
                   <span
                     @click="removeFile(id)"
                     class="text-sm absolute -top-3 -right-2 z-10 text-[#475467] cursor-pointer"
-                    ><AppIcon icon="fa:trash-o"
-                  /></span>
+                  >
+                    <AppIcon icon="fa:trash-o" />
+                  </span>
                 </div>
               </div>
             </div>
@@ -122,102 +270,323 @@
     </div>
     <hr class="border-[#F4F7FE] my-10" />
     <div class="bg-white rounded-lg flex justify-between gap-x-4 items-center">
-      <button
+      <!-- <button
         type="button"
         @click="togglePreview"
-        class="appearance-none leading-none  px-5  lg:px-10px-10 py-[10px] rounded-lg text-primary border-primary-500 text-primary-500 border hover:bg-gray-300 text-[13px]"
+        class="appearance-none leading-none px-5 lg:px-10px-10 py-[10px] rounded-lg text-primary border-primary text-primary border hover:bg-gray-300 text-[13px]"
       >
         Preview
       </button>
-      <div class="flex justify-center gap-x-3 lg:gap-x-4 items-center">
-        <button
-          type="button"
-          @click="toggleNext(2)"
-          class="appearance-none leading-none  px-5  lg:px-10px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
-        >
-          Back
-        </button>
-        <button
-          type="button"
-          @click="handleSubmit"
-          :disabled="isLoading"
-          :class="{
-            'bg-primary/60 cursor-not-allowed': isLoading,
-          }"
-          class="appearance-none leading-none  px-5  lg:px-10px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
-        >
-        {{isLoading?"Saving...":"Complete"}}
-        </button>
-      </div>
+      <div class="flex justify-center gap-x-3 lg:gap-x-4 items-center"> -->
+      <!-- </div> -->
     </div>
-  </section>
+
+    <hr class="border-[#F4F7FE] my-10" />
+
+    <div
+      class="bg-white rounded-lg py-6 flex justify-between gap-x-10 items-center"
+    >
+      <button
+        type="button"
+        @click="toggleNext(1)"
+        class="appearance-none leading-none px-10 py-[10px] rounded-lg text-primary border-primary- border hover:bg-gray-300 text-[13px]"
+      >
+        Back
+      </button>
+      <button
+        :disabled="isLoading || v$.$silentErrors.length"
+        :class="{
+          'opacity-60 cursor-not-allowed': isLoading,
+        }"
+        type="submit"
+        class="appearance-none leading-none px-5 lg:px-10px-10 py-[10px] rounded-lg text-white bg-primary-500 disabled:opacity-50 text-[13px]"
+      >
+        {{ isLoading ? "Saving..." : "Save and continue" }}
+      </button>
+    </div>
+  </form>
   <div>
-    <Modal :isOpen="isAdding" @toggleModal="isAdding = false">
+    <Modal
+      :isOpen="isAddingPackage"
+      @toggleModal="isAddingPackage = false"
+      :canClose="false"
+    >
       <template #content>
-        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 w-[400px]">
-          <div class="flex justify-between mb-5 items-center">
-            <h4 class="font-medium text-matta-black text-xl">Add new value</h4>
+        <form
+          v-if="typeForm === 'producer'"
+          class="bg-white px-4 pt-5 pb-8 sm:p-6 sm:pb-4 w-[500px] rounded-lg"
+          @submit.prevent="handleProducer"
+        >
+          <div class="flex justify-between mb-8 items-center">
+            <h4 class="font-medium text-matta-black text-xl">Add Producer</h4>
             <i
               class="uil uil-times cursor-pointer text-lg hover:ring-1 w-6 h-6 ring-gray-200 flex items-center justify-center hover:ring-offset-2 rounded-full"
-              @click="isAdding = false"
+              @click="isAddingPackage = false"
             ></i>
           </div>
-          <input
-            v-model="category"
-            class="rounded-lg px-3 py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-            autocomplete="off"
-            autofocus="on"
-            placeholder="Enter package name..."
-          />
+          <div class="mb-5">
+            <label for="" class="mb-2 font-normal text-xs block"
+              >Name <span class="text-red-500 pl-[.5px]">*</span></label
+            >
+            <input
+              v-model="producerForm.title"
+              class="rounded-lg px-[14px] py-3 h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              placeholder="Enter producer name"
+              required
+            />
+          </div>
+          <div class="flex gap-x-6 mb-5">
+            <div class="w-full">
+              <label
+                for=""
+                class="mb-2 font-medium text-sm text-[#344054] block text-left"
+                >Country</label
+              >
+              <CountriesSelect v-model="producerForm.country" />
+            </div>
+            <div class="w-full">
+              <label
+                for=""
+                class="mb-2 font-medium text-sm text-[#344054] block text-left"
+                >State</label
+              >
+              <StatesSelect v-model="producerForm.state" :states="states" />
+            </div>
+          </div>
+          <div>
+            <label
+              for=""
+              class="mb-2 font-medium text-sm text-[#344054] block text-left"
+              >Producer Logo</label
+            >
+            <label for="upload" class="cursor-pointer">
+              <input
+                @change="handleEvent($event)"
+                type="file"
+                accept="image/*"
+                id="upload"
+                class="hidden"
+              />
+              <div>
+                <span
+                  v-if="!producerForm.logo"
+                  class="h-16 w-16 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
+                  >Logo</span
+                >
+                <img
+                  v-else
+                  :src="producerForm.logo"
+                  class="h-16 w-16 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
+                />
+              </div>
+              <i
+                class="fa fa-spinner fa-spin ml-6"
+                v-if="isLoadingLogo"
+                aria-hidden="true"
+              ></i>
+            </label>
+          </div>
 
+          <hr class="my-6" />
           <div class="flex justify-end gap-x-2 items-center mt-8">
             <button
               type="button"
-              @click="isAdding = false"
+              @click="isAddingPackage = false"
               class="appearance-none text-xs leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 uppercase"
             >
               Cancel
             </button>
 
             <button
-              type="button"
-              @click="handleAddingPackage"
-              class="appearance-none text-xs leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 uppercase"
+              :disabled="isLoading"
+              type="submit"
+              class="appearance-none text-xs leading-none px-8 py-3 rounded-lg text-white bg-primary hover:opacity-70 uppercase disabled:opacity-50"
             >
               Save
             </button>
           </div>
-        </div>
+        </form>
+        <PackageForm
+          v-if="typeForm === 'package'"
+          @close="
+            () => {
+              isAddingPackage = false;
+              detail = null;
+            }
+          "
+          :detail="detail"
+        />
       </template>
     </Modal>
   </div>
+  <ModalCenter>
+    <template #default>
+      <div class="w-full max-w-max p-6 md:py-9 md:px-10 z-[999] relative">
+        <EditForm @close="pickUpStore.getAlladdress()" />
+      </div>
+    </template>
+  </ModalCenter>
 </template>
+
 <script setup>
+import { ref, provide, onMounted, inject, computed, reactive } from "vue";
+import countries from "~/utils/countries.json";
+import EmptyData from "~/components/EmptyData.vue";
+// import FeaturedProp from "./FeaturedProp.vue";
+import {
+  updateProperties,
+  updateProduct,
+  updateDocuments,
+} from "~/services/productservices";
+import { uploadfile } from "~/services/onboardingservices";
+import { useRoute, useRouter } from "vue-router";
+import useVuelidate from "@vuelidate/core";
+import { getallpickuplocations } from "~/services/cartservice";
+import VueSelect from "~/components/Select/VueSelect.vue";
+import ModalCenter from "~/components/Modal/Center.vue";
+import Modal from "~/components/IndexModal.vue";
+import PackageForm from "./PackageForm.vue";
+import CountriesSelect from "~/components/forms/CountriesSelect.vue";
+import StatesSelect from "~/components/forms/StatesSelect.vue";
+import { addproducer } from "~/services/productservices";
+import AppIcon from "~/components/AppIcon.vue";
+import Uploader from "~/components/UploadComponent.vue";
+import { ChevronUpDownIcon } from "@heroicons/vue/24/solid";
+import { toast } from "vue3-toastify";
+
 import {
   Listbox,
   ListboxButton,
-  ListboxOptions,
   ListboxOption,
+  ListboxOptions,
 } from "@headlessui/vue";
-import { ref, inject } from "vue";
-import {
-  ChevronUpDownIcon,
-  InformationCircleIcon,
-} from "@heroicons/vue/24/solid";
-import Uploader from "~/components/UploadComponent";
-import Modal from "~/components/IndexModal";
-import { updateDocuments } from "~/services/productservices";
-import { useRouter } from "vue-router";
-import { toast } from "vue3-toastify";
+import { helpers, required } from "@vuelidate/validators";
+import EditForm from "~/components/Checkout/pickup/EditForm.vue";
 
+const route = useRoute();
+const pickUpStore = usePickupStore()
 const router = useRouter();
-
-const category = ref("");
-const isAdding = ref(false);
-const index = ref(null);
 const toggleNext = inject("toggleNext");
-const togglePreview = inject("togglePreview");
+const isLocationOpen = ref(false);
+const headers = computed(() => [
+  "Name",
+  `Package Size`,
+  `Unit Price`,
+  "Appearance",
+  "Purity & Grade",
+  "",
+]);
 const form = inject("form");
+const rules = {
+  pickUpLocationId: {
+    required,
+  },
+  packagesAvailable: {
+    required: helpers.withMessage("At least 1 package is required", required),
+  },
+};
+const v$ = useVuelidate(rules, form);
+
+onMounted(() => {
+  pickUpStore.getAlladdress()
+  form.productId = route.query.id;
+});
+
+const isLoading = ref(false);
+
+const states = computed(() => {
+  if (!producerForm.country) return [];
+  return (
+    countries.find(
+      (item) => producerForm.country.toLowerCase() === item.name.toLowerCase()
+    ).states || []
+  );
+});
+
+function handleProducer() {
+  isLoading.value = true;
+  producerForm.location = `${producerForm.state}, ${producerForm.country}`;
+  addproducer(producerForm)
+    .then((res) => {
+      if (res.status == 200) {
+        getProducers();
+        form.manufacturer = producerForm.title;
+        producerForm.title = "";
+        producerForm.location = "";
+        producerForm.country = "";
+        producerForm.state = "";
+        isAddingPackage.value = false;
+        isLoading.value = false;
+      }
+    })
+    .catch((err) => {
+      isLoading.value = false;
+
+      toast.error(err.response.data.message || err.response.data.Message);
+    });
+}
+
+function addProperty(val) {
+  form.properties.push(val);
+}
+function addPropertyValue(val) {
+  form.propertyValueList.push(val.name);
+}
+provide("addPropertyValue", addPropertyValue);
+provide("addProperty", addProperty);
+
+async function handleSubmit() {
+  const validity = await v$.value.$validate();
+  const invalidCredentials = ref(null);
+  if (!validity) return;
+  isLoading.value = true;
+
+  updateProduct(form)
+    .then((res) => {
+      if (res.status === 200) {
+        updateDocuments(form)
+          .then((res) => {
+            if (res.status === 200) {
+              updateProperties(form)
+                .then((res) => {
+                  if (res.status === 200) {
+                    toast.info("Information saved", {
+                      position: "bottom",
+                      duration: 4000,
+                    });
+                    isLoading.value = false;
+                    router.push(
+                      `/storefront/products/${route.params.process}?id=${route.query.id}&stage=3`
+                    );
+                  }
+                })
+                .catch((err) => {
+                  isLoading.value = false;
+
+                  toast.error(err.response.data.Message, {
+                    position: "bottom",
+                  });
+                });
+            }
+          })
+
+          .catch((err) => {
+            isLoading.value = false;
+
+            toast.error(err.response.data.Message, {
+              position: "bottom",
+            });
+          });
+      }
+    })
+
+    .catch((err) => {
+      invalidCredentials.value = true;
+      isLoading.value = false;
+
+      toast.error(err.response.data.message || err.response.data.Message);
+    });
+}
 
 function onGetFiles(file) {
   form.documents = [
@@ -237,36 +606,95 @@ function removeFile(id) {
   form.documents.splice(id, 1);
 }
 
-function handleAddingPackage() {
-  form.documentproperties.push(category.value);
-  form.documents[index.value].category = category.value;
-  isAdding.value = false;
-  category.value = "";
+function editPackage(val) {
+  typeForm.value = "package";
+  detail.value = val;
+  isAddingPackage.value = true;
 }
-// function openmodal(id) {
-//   index.value = id;
-//   isAdding.value = true;
-// }
-const isLoading = ref(false);
-async function handleSubmit() {
-  isLoading.value = true;
 
-  updateDocuments(form)
-    .then((res) => {
-      if (res.status === 200) {
-        toast.info("Information saved", {
-          position: "bottom",
-          duration: 4000,
-        });
-        isLoading.value = false;
-        router.push(`/storefront/products`);
-      }
+const locations = computed(() =>
+  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
+);
+const producerForm = reactive({
+  title: "",
+  location: "",
+  country: "",
+  state: "",
+  logo: "",
+});
+
+function handleEvent(e) {
+  isLoadingLogo.value = true;
+  var files = e.target.files || e.dataTransfer.files;
+  if (!files.length) return;
+
+  const file = files[0];
+
+  // Check file type
+  if (!file.type.startsWith("image/")) {
+    toast.error("Please upload an image file.");
+    isLoadingLogo.value = false;
+    return;
+  }
+
+  // Check file size (in bytes)
+  const maxSize = 800 * 1024; // 800 KB
+  if (file.size > maxSize) {
+    toast.error("File size exceeds the limit (800 KB).");
+    isLoadingLogo.value = false;
+    return;
+  }
+
+  if (producerForm.logo) {
+    URL.revokeObjectURL(producerForm.logo);
+  }
+
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend = () => {
+    const base64String = reader.result;
+
+    uploadfile({
+      base64: base64String.replace(/^data:image\/[a-z]+;base64,/, ""),
     })
-
-    .catch((err) => {
-      isLoading.value = false;
-
-      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
-    });
+      .then((res) => {
+        producerForm.logo = res.data.message;
+        isLoadingLogo.value = false;
+      })
+      .catch(() => {
+        isLoadingLogo.value = false;
+      });
+  };
 }
+
+const typeForm = ref("");
+const isAddingPackage = ref(false);
+const isLoadingLogo = ref(false);
+const detail = ref(null);
+const getProducers = inject("getProducers");
+// const currencyFormat = inject("currencyFormat");
+
+function removepackage(val) {
+  form.packagesAvailable.splice(val, 1);
+}
+
+function handleAddingPackage() {
+  typeForm.value = "package";
+  isAddingPackage.value = true;
+}
+
+provide("form", form);
+provide("v$", v$);
+provide("images", form.gallery);
+provide("isOpen", isLocationOpen);
+provide("detail", null);
 </script>
+
+<style lang="scss" scoped>
+.bg-img {
+  background-image: url("~/assets/img/bee.svg");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: bottom;
+}
+</style>

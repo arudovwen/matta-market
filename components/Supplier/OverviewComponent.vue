@@ -149,7 +149,7 @@
                   <td
                     class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                   >
-                    {{ moment(item.created).format("ll") }}
+                    {{ moment(item.created).format("lll") }}
                   </td>
                   <td
                     class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
@@ -274,7 +274,7 @@ const confirmseries = ref([]);
 
 onMounted(() => {
   getesfrontstats(query).then((res) => {
-		console.log(res.data.data);
+	
     stats.value = res.data.data;
   });
   getstorefronttrending(query).then((res) => {

@@ -28,9 +28,9 @@
               <span class=""> + Add director</span>
             </button>
           </div>
-          <div class="overflow-x-auto max-w-[656px]">
+          <div class="overflow-x-auto max-w-[560px]">
             <DirectorsView
-              :directors="companyInfo.directors"
+              :directors="form.directors"
               :companyInfo="companyInfo"
               @handleDelete="handleDelete"
               @handleEdit="handleEdit"
@@ -57,14 +57,14 @@
         :class="{
           'opacity-60 cursor-not-allowed': !form.directors.length,
         }"
-        class="appearance-none leading-none px-10 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
+        class="appearance-none leading-none px-5 py-[10px] grid-cols-1 lg:grid-cols-2 gap-4 rounded-lg text-white bg-primary-500 hover:opacity-70 text-[13px] capitalize"
       >
         <i
           class="fa fa-spinner fa-spin"
           v-show="isLoading"
           aria-hidden="true"
         ></i>
-        <span v-show="!isLoading">Done</span>
+        <span v-show="!isLoading">Save and continue</span>
       </button>
     </div>
   </div>
@@ -100,7 +100,7 @@
             >
               <DialogPanel
                 class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
-                :class="action == 'add' ? 'sm:max-w-lg' : 'sm:max-w-[343px]'"
+                :class="action == 'add' ? 'sm:max-w-[600px]' : 'sm:max-w-[343px]'"
               >
                 <div class="p-6">
                   <OnboardingCompanyDirectorForm

@@ -19,14 +19,21 @@
   </div>
 </template>
 <script setup>
+const isPopOpen = ref(false);
+const authOpen = ref(false);
+const activeMethod = ref("card");
 definePageMeta({
   layout: "default",
-  middleware: "auth"
+  middleware: "auth",
 });
 useHead({
   title: "Checkout | Matta",
   meta: [{ name: "description", content: "Checkout" }],
 });
-const cartStore = useCartStore()
-cartStore.getMyCart()
+const cartStore = useCartStore();
+cartStore.getMyCart();
+
+provide("isPopOpen", isPopOpen);
+provide("authOpen", authOpen);
+provide("activeMethod", activeMethod);
 </script>

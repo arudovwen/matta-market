@@ -27,25 +27,28 @@
           {{ currencyFormat(cartStore?.cartTotalAmount) }}
         </p>
       </div>
-      <div class="flex justify-between" v-if="cartStore?.discountValue">
-        <p class="text-sm text-[#E1E1E1]">Discount</p>
-
-        <p class="text-white font-medium text-sm">
-          -{{ currencyFormat(cartStore?.discountValue) }}
-        </p>
-      </div>
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
 
         <p class="text-white text-sm font-medium">
-          {{
-            currencyFormat(
-              (cartStore?.cartTotalAmount - cartStore?.discountValue) *
-                cartStore?.tax
-            )
-          }}
+          {{ currencyFormat(cartStore?.cartTotalAmount * cartStore?.tax) }}
         </p>
       </div>
+      <div class="flex justify-between" v-if="cartStore?.discountValue">
+        <p class="text-sm text-[#E1E1E1]">Discount</p>
+
+        <p class="text-white font-medium text-sm">
+          - {{ currencyFormat(cartStore?.discountValue) }}
+        </p>
+      </div>
+      <div class="flex justify-between" v-if="cartStore?.referralDiscountValue">
+        <p class="text-sm text-[#E1E1E1]">Referral Discount</p>
+
+        <p class="text-white font-medium text-sm">
+          - {{ currencyFormat(cartStore?.referralDiscountValue) }}
+        </p>
+      </div>
+  
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
 
@@ -59,9 +62,9 @@
       <p class="text-white font-bold">
         {{
           currencyFormat(
-            (cartStore?.cartTotalAmount - cartStore?.discountValue) *
-              cartStore?.tax +
-              (cartStore?.cartTotalAmount - cartStore?.discountValue)
+            cartStore?.cartTotalAmount * cartStore?.tax +
+              cartStore?.cartTotalAmount -
+              (cartStore?.discountValue + cartStore?.referralDiscountValue)
           )
         }}
       </p>
@@ -98,11 +101,9 @@ const shippingStore = useShippingStore();
 const cartStore = useCartStore();
 const loading = ref(false);
 
-const handleProceed = inject("handleProceed")
-const handleOrderRequest = inject("handleOrderRequest")
+const handleProceed = inject("handleProceed");
+const handleOrderRequest = inject("handleOrderRequest");
 onMounted(() => {
   shippingStore.getAlladdress();
 });
-
-
 </script>

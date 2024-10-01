@@ -38,7 +38,7 @@
           leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <div
-            class="absolute w-full bg-white lg:w-auto lg:min-w-[480px] h-screen top-0 py-6 right-0 align-bottom text-left shadow-xl transform transition-all sm:align-middle"
+            class="absolute w-full bg-white lg:w-auto lg:min-w-[480px] h-screen overflow-y-auto top-0 py-6 right-0 align-bottom text-left shadow-xl transform transition-all sm:align-middle"
           >
             <slot name="content"> </slot>
             <span class="cursor-pointer" v-if="canClose" @click="togglePopup"

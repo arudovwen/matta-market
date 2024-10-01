@@ -36,7 +36,7 @@
           >
             <span class="">
               <i class="uil uil-award mr-1"></i> Member since
-              {{ moment(supplier.activeDate).format("ll") }}</span
+              {{ moment(supplier.activeDate).format("lll") }}</span
             >
 
             <!-- <span>

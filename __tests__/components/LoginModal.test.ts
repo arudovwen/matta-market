@@ -34,7 +34,7 @@ describe("RegisterModal", () => {
 			}
 		})
 		// 
-		console.log(component.html());
+	
 		
 	})
 })

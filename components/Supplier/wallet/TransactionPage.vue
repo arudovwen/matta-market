@@ -14,19 +14,28 @@
             type="search"
           />
         </div>
-        <div class="flex relative items-center">
-          <select
+        <div class="">
+          <SelectVueSelect
             v-model="queryParams.Type"
-            class="appearance-none border border-[#E7E7E7] rounded-lg max-w-[150px] text-sm py-[10px] px-[14px] focus:outline-matta-black/20"
-          >
-            <option value="" disabled>Filter</option>
-            <option value="">Default</option>
-            <option value="1">Credit</option>
-            <option value="0">Debit</option>
-          </select>
-          <i
-            class="uil uil-angle-down absolute right-2 pointer-events-none"
-          ></i>
+            :options="[
+              {
+                label: 'Default',
+                value: '',
+              },
+              {
+                label: 'Credit',
+                value: '1',
+              },
+              {
+                label: 'Debit',
+                value: '0',
+              },
+            ]"
+            :reduce="(option) => option.value"
+            placeholder="Filter"
+            classInput="!bg-white rounded-lg min-w-[180px]"
+            :clearable="false"
+          />
         </div>
         <!-- 
         <AppButton
@@ -41,7 +50,10 @@
         <div
           class="overflow-x-auto border border-[#EAECF0] rounded-lg w-full max-w-full bg-white"
         >
-          <table aria-describedby="true" class="table-auto w-full hidden lg:inline-table">
+          <table
+            aria-describedby="true"
+            class="table-auto w-full hidden lg:inline-table"
+          >
             <thead>
               <tr>
                 <th
@@ -106,7 +118,7 @@
                   <AppStatusButton
                     stattype="wallet"
                     :status="item.transactionType"
-                  />  
+                  />
                 </div>
               </div>
             </div>
