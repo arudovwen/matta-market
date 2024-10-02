@@ -255,9 +255,7 @@ export const useCartStore = defineStore(
 
   {
     persist: {
-      storage: persistedState.cookiesWithOptions({
-        sameSite: "strict",
-      }),
+      storage: persistedState.localStorage,
     },
   }
 );

@@ -36,6 +36,7 @@ import { getProducts, getProductsByTag } from "~/services/productservices";
 import { useProductStore } from "~/stores/products";
 
 const store = useProductStore();
+const searchStore = useSearchStore();
 
 const { productsData, loading } = storeToRefs(store);
 const route = useRoute();
@@ -82,6 +83,13 @@ const tagQuery = reactive({
 const pageRange = 5;
 
 function getAllProducts() {
+  if(route.params.title=== "recent searches"){
+    store.setProducts({
+      data:searchStore.recentSearchesData,
+      total:searchStore.recentSearchesData.length
+    })
+    return;
+  }
   store.setLoader(true);
   if (route.query.tag) {
     getProductsByTag({
@@ -107,6 +115,13 @@ function getAllProducts() {
           store.setProducts(res.data);
           store.setLoader(false);
           query.totalData = res.data.totalCount;
+          if (query.Search) {
+            res.data.data.forEach((ctx) => {
+              searchStore.addToSearch(ctx).then((resp) => {
+                console.log("🚀 ~ searchStore.addToSearch ~ resp:", resp);
+              });
+            });
+          }
         }
       })
       .catch(() => {

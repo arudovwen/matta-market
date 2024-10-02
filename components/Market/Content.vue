@@ -115,4 +115,8 @@ function applyFilter() {
 function togglePopup() {
   open.value = false;
 }
+
+onMounted(()=>{
+
+})
 </script>
