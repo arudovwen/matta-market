@@ -66,6 +66,9 @@ export async function editPickupLocation(data) {
 export async function confirmpurchase(data) {
   return await post(`${urls.CONFIRM_PURCHASE}`, data, config);
 }
+export async function requestACall(data) {
+  return await get(`${urls.REQUEST_A_CALL}`, data, config);
+}
 
 export async function shippingBreakdown() {
   return await get(`${urls.SHIPPONG_COST_BREAKDOWN}`, config);
