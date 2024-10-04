@@ -83,11 +83,11 @@ const tagQuery = reactive({
 const pageRange = 5;
 
 function getAllProducts() {
-  if(route.params.title=== "recent searches"){
+  if (route.params.title === "recent searches") {
     store.setProducts({
-      data:searchStore.recentSearchesData,
-      total:searchStore.recentSearchesData.length
-    })
+      data: searchStore.recentSearchesData,
+      total: searchStore.recentSearchesData.length,
+    });
     return;
   }
   store.setLoader(true);
@@ -117,9 +117,7 @@ function getAllProducts() {
           query.totalData = res.data.totalCount;
           if (query.Search) {
             res.data.data.forEach((ctx) => {
-              searchStore.addToSearch(ctx).then((resp) => {
-                console.log("🚀 ~ searchStore.addToSearch ~ resp:", resp);
-              });
+              searchStore.addToSearch(ctx).then((resp) => {});
             });
           }
         }

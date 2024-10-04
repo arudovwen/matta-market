@@ -6,7 +6,9 @@
       >
         Based on your search
       </h2>
-      <router-link :to="`/category/market/${encodeURIComponent('recent searches')}`">
+      <router-link
+        :to="`/category/market/${encodeURIComponent('recent searches')}`"
+      >
         <button
           class="hover:border-b text-[10px] sm:text-sm lg:text-base border-[#333] darks:text-white darks:border-white leading-tight"
         >
@@ -19,7 +21,13 @@
       class="flex xl:grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar overflow-x-auto pb-6"
     >
       <ProductCard
-        v-for="(n, idx) in searchStore.recentSearchesData.slice(0, 5)"
+        v-for="(n, idx) in [
+          ...searchStore.recentSearchesData,
+          ...content,
+        ].slice(
+          0,
+          [...searchStore.recentSearchesData, ...content].length > 10 ? 10 : 5
+        )"
         :key="idx"
         :index="idx"
         :detail="n"
@@ -28,24 +36,22 @@
   </div>
 </template>
 <script setup>
-const searchStore = useSearchStore();
+import { getProductsByTag } from "~/services/productservices";
 
-const breakpoints = {
-  300: {
-    itemsToShow: 2.4,
-    snapAlign: "start",
-  },
-  565: {
-    itemsToShow: 2.6,
-    snapAlign: "start",
-  },
-  // 700px and up
-  700: {
-    itemsToShow: 3.9,
-  },
-  // 1024 and up
-  1280: {
-    itemsToShow: 4.9,
-  },
-};
+const searchStore = useSearchStore();
+const content = ref([])
+
+function getAllProducts() {
+  getProductsByTag({ PageNumber: 1, PageSize: 10, tag: "search" }).then(
+    (res) => {
+      if (res.status === 200) {
+        content.value = res?.data?.data?.data;
+      }
+    }
+  );
+}
+
+onMounted(() => {
+  getAllProducts();
+});
 </script>
