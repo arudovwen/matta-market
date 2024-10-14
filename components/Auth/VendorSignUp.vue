@@ -207,11 +207,10 @@ const schema = yup.object({
   phone: yup.string().required("Phone number is required"),
   password: yup
     .string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters")
+    .required("Password must be at least 8 characters, must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&#)")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
-      "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&#)"
+      "Password must be at least 8 characters, must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&#)"
     ),
   confirmPassword: yup
     .string()
