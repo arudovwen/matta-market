@@ -315,7 +315,7 @@
                   :class="{ 'border-red-500': newv$.confirmPassword.$error }"
                   v-model="newv$.confirmPassword.$model"
                   class="rounded-lg px-[14px] py-[10px] h-11 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
-                  placeholder="Confirm oldPassword"
+                  placeholder="Confirm new Password"
                   autocomplete="off"
                   :type="!isOpen ? 'oldPassword' : 'text'"
                 />
