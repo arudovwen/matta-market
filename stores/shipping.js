@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getalladdress } from "~/services/cartservice";
+import { getalladdress, setdefaultaddress } from "~/services/cartservice";
 export const useShippingStore = defineStore("shipping", () => {
   const authStore = useAuthStore();
   const addresses = ref([]);
@@ -15,18 +15,28 @@ export const useShippingStore = defineStore("shipping", () => {
   function setAddresses(data) {
     addresses.value = data.map((i) => ({ ...i, label: i.street, value: i.id }));
   }
+
+  const sortAddresses = (addresses) => {
+    return addresses.some((i) => i.isDefault)
+      ? [
+          addresses.find((i) => i.isDefault),
+          ...addresses.filter((i) => !i.isDefault),
+        ]
+      : addresses;
+  };
+
   function getAlladdress() {
     if (!authStore.isLoggedIn) return;
     loading.value = true;
     getalladdress()
-      .then((res) => {
+      .then(async (res) => {
         if (res.data.data.length) {
-          const tempAddress = res.data.data.some((i) => i.isDefault)
-            ? [
-                res.data.data.find((i) => i.isDefault),
-                ...res.data.data.filter((i) => !i.isDefault),
-              ]
-            : res.data.data;
+          const addresses = res.data.data;
+          if (addresses.length === 1 && !addresses[0].isDefault)
+            await setdefaultaddress(addresses[0].id);
+          addresses[0].isDefault = true;
+          setAddresses(addresses);
+          const tempAddress = sortAddresses(addresses);
           setAddresses(tempAddress);
         }
 

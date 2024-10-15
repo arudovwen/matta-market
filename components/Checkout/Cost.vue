@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!shippingStore.isLoading">
     <h2 class="mb-1 font-bold text-xl border-b border-[#f3f3f3]">
       Shipping Cost Breakdown
     </h2>
@@ -93,7 +93,7 @@ onMounted(() => {
 // const refresh = inject("refresh");
 
 watch(
-  () => [shippingStore?.defaultAddress],
+  () => [shippingStore?.defaultAddress, shippingStore?.addresses],
   () => {
     getData();
   }
