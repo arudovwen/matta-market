@@ -18,7 +18,7 @@ export async function getcart() {
   return await get(urls.GET_CART, config);
 }
 export async function clearcart() {
-  return await post(urls.CLEAR_CART,{}, config);
+  return await post(urls.CLEAR_CART, {}, config);
 }
 export async function removecartitem(data) {
   return await post(`${urls.REMOVE_CART}/${data}`, data, config);
@@ -95,10 +95,7 @@ export async function getcartcustomer(data) {
 }
 
 export async function addressSearch(data) {
-  return await get(
-    `${urls.ADDRESS_SEARCH}?${new URLSearchParams(cleanObject(data))}`,
-    config
-  );
+  return await post(`${urls.ADDRESS_SEARCH}`, data, config);
 }
 export async function placeSuggestion(data) {
   return await get(
@@ -106,4 +103,3 @@ export async function placeSuggestion(data) {
     config
   );
 }
-
