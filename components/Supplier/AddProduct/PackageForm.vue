@@ -127,7 +127,6 @@
         name="grade"
         placeholder=""
         :error="errors.grade"
-        icon="ic:baseline-percent"
         hasIcon
         info
         infoTitle=" Kindly state the grade of the product if known"
