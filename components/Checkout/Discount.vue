@@ -3,7 +3,6 @@
     <h2 class="px-[30px] py-5 font-bold text-xl border-b border-[#f3f3f3]">
       Promotion
     </h2>
-
     <form
       @submit.prevent="handleSubmit"
       class="px-[30px] pt-6 pb-[30px] flex items-center gap-x-3"
@@ -54,11 +53,11 @@ function handleSubmit() {
       }
     })
     .catch((err) => {
-      toast.error(
-        err?.response?.data?.message ||
-          err?.response?.data?.Message ||
-          "Invalid code"
-      );
+      // toast.error(
+      //   err?.response?.data?.message ||
+      //     err?.response?.data?.Message ||
+      //     "Invalid code"
+      // );
       loading.value = false;
     });
 }
@@ -66,13 +65,16 @@ function handleFirst() {
   if (
     cartStore?.cartData?.firstOrder &&
     cartStore.cartId &&
-    isApplied.value == false
+    isApplied.value == false &&
+    cartStore?.cartTotalAmount > 500000
   ) {
     code.value = "1ST50KOFF";
     handleSubmit();
+    return;
   }
   if (!cartStore?.cartData?.firstOrder && cartStore.cartId && code.value) {
     handleSubmit();
+    return;
   }
 }
 watch(
