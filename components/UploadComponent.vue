@@ -12,7 +12,7 @@
     >
       <label
         :for="id"
-        class="text-center mb-3 h-10 w-10 flex mx-auto items-center justify-center rounded-[10px] border border-primary"
+        class="text-center cursor-pointer mb-3 h-10 w-10 flex mx-auto items-center justify-center rounded-[10px] border border-primary"
       >
         <AppIcon
           icon="bytesize:upload"
