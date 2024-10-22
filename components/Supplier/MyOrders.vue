@@ -214,10 +214,6 @@ const queryParams = reactive({
 const isLoading = ref(true);
 const options = [
   {
-    label: "In cart",
-    value: 0,
-  },
-  {
     label: "Order created",
     value: 1,
   },

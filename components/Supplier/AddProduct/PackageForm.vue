@@ -127,7 +127,6 @@
         name="grade"
         placeholder=""
         :error="errors.grade"
-        hasIcon
         info
         infoTitle=" Kindly state the grade of the product if known"
       />
