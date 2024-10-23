@@ -26,13 +26,15 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { applyDiscount } from "~/services/cartservice";
+import { applyDiscount, getDiscountByCode } from "~/services/cartservice";
 const code = ref(null);
 const loading = ref(false);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 const authOpen = inject("authOpen");
 const isApplied = ref(false);
+const firstTimeCode = "1ST50KOFF";
+onMounted(() => {});
 function handleSubmit() {
   if (!authStore.isLoggedIn) {
     authOpen.value = true;
@@ -65,12 +67,18 @@ function handleFirst() {
   if (
     cartStore?.cartData?.firstOrder &&
     cartStore.cartId &&
-    isApplied.value == false &&
-    cartStore?.cartTotalAmount > 500000
+    isApplied.value == false
   ) {
-    code.value = "1ST50KOFF";
-    handleSubmit();
-    return;
+    getDiscountByCode(firstTimeCode).then((res) => {
+      if (
+        res.status === 200 &&
+        cartStore?.cartTotalAmount > res.data.minimumOrderValue
+      ) {
+        code.value = firstTimeCode;
+        handleSubmit();
+        return;
+      }
+    });
   }
   if (!cartStore?.cartData?.firstOrder && cartStore.cartId && code.value) {
     handleSubmit();

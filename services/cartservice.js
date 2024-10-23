@@ -37,6 +37,10 @@ export async function applyDiscount(data) {
   return await post(urls.APPLY_DISCOUNT, data, config);
 }
 
+export async function getDiscountByCode(data) {
+  return await get(urls.GET_DISCOUNT(data), config);
+}
+
 export async function setdefaultaddress(addressId) {
   return await post(
     `${urls.DEFAULT_SHIPPING_ADDRESS}/${addressId}`,
