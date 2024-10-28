@@ -242,6 +242,7 @@ const urls = {
   PLACE_SUGGESTION: "Location/place-suggestion",
 
   APPLY_DISCOUNT: "v1/discount/apply-discount",
+  GET_DISCOUNT: (code) => `v1/discount/${code}`,
 
   // Credit
   REQUEST_CREDIT: "v1/CreditRequest/new",
@@ -250,6 +251,6 @@ const urls = {
 
   //DELTALOG
   CALCULATOR_COST: "/Anonymous/shipping-cost",
-  GET_ENQUIRY: "/Anonymous/enquiry"
+  GET_ENQUIRY: "/Anonymous/enquiry",
 };
 export default urls;
