@@ -51,7 +51,7 @@
             v-if="!orders.length"
             url="/markets"
             buttonText="go to catalog"
-            text="No orders have been placed"
+            text="No orders have been placed."
           />
         </div>
       </div>

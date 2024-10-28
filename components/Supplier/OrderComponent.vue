@@ -15,7 +15,9 @@
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">Order date</p>
-        <span class="text-sm">{{ moment(order?.orderDate).format("lll") }}</span>
+        <span class="text-sm">{{
+          moment(order?.orderDate).format("lll")
+        }}</span>
       </div>
       <!-- <div v-if="order?.schedulePickupDate">
         <p class="text-[12px] text-[#B6B7B9] mb-1 capitalize">
@@ -94,15 +96,7 @@
           VAT <span class="text-xs">(7.5%)</span>
         </div>
         <div class="text-right py-1">
-          {{
-            currencyFormat(
-              order?.orderTotalwithTax -
-                order?.orderTotal -
-                (order?.shippingTotal +
-                  order?.discountValue +
-                  order?.referralDiscountValue)
-            )
-          }}
+          {{ currencyFormat(order.totalTax) }}
         </div>
       </div>
       <div class="flex justify-between gap-x-2 border-b border-[#ddd] mb-6">
