@@ -104,6 +104,7 @@ const urls = {
   CLEAR_CART: "/v1/shoppingcart/clear-cart",
   CONFIRM_PURCHASE: "/v1/shoppingcart/confirm-purchase",
   CONFIRM_PAYMENT: "v1/ShoppingCart/confirm-payment",
+  REQUEST_A_CALL: "/admin/v1/ShoppingCart/request-a-call",
 
   //Shipping address
   ADD_SHIPPING_ADDRESS: "/v1/shippingaddress/add",
@@ -241,6 +242,7 @@ const urls = {
   PLACE_SUGGESTION: "Location/place-suggestion",
 
   APPLY_DISCOUNT: "v1/discount/apply-discount",
+  GET_DISCOUNT: (code) => `v1/discount/${code}`,
 
   // Credit
   REQUEST_CREDIT: "v1/CreditRequest/new",
@@ -249,6 +251,6 @@ const urls = {
 
   //DELTALOG
   CALCULATOR_COST: "/Anonymous/shipping-cost",
-  GET_ENQUIRY: "/Anonymous/enquiry"
+  GET_ENQUIRY: "/Anonymous/enquiry",
 };
 export default urls;

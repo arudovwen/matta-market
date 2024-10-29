@@ -3,7 +3,6 @@
     <h2 class="px-[30px] py-5 font-bold text-xl border-b border-[#f3f3f3]">
       Promotion
     </h2>
-
     <form
       @submit.prevent="handleSubmit"
       class="px-[30px] pt-6 pb-[30px] flex items-center gap-x-3"
@@ -27,13 +26,15 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { applyDiscount } from "~/services/cartservice";
+import { applyDiscount, getDiscountByCode } from "~/services/cartservice";
 const code = ref(null);
 const loading = ref(false);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 const authOpen = inject("authOpen");
 const isApplied = ref(false);
+const firstTimeCode = "1ST50KOFF";
+onMounted(() => {});
 function handleSubmit() {
   if (!authStore.isLoggedIn) {
     authOpen.value = true;
@@ -54,11 +55,11 @@ function handleSubmit() {
       }
     })
     .catch((err) => {
-      toast.error(
-        err?.response?.data?.message ||
-          err?.response?.data?.Message ||
-          "Invalid code"
-      );
+      // toast.error(
+      //   err?.response?.data?.message ||
+      //     err?.response?.data?.Message ||
+      //     "Invalid code"
+      // );
       loading.value = false;
     });
 }
@@ -68,11 +69,20 @@ function handleFirst() {
     cartStore.cartId &&
     isApplied.value == false
   ) {
-    code.value = "1ST50KOFF";
-    handleSubmit();
+    getDiscountByCode(firstTimeCode).then((res) => {
+      if (
+        res.status === 200 &&
+        cartStore?.cartTotalAmount > res.data.minimumOrderValue
+      ) {
+        code.value = firstTimeCode;
+        handleSubmit();
+        return;
+      }
+    });
   }
   if (!cartStore?.cartData?.firstOrder && cartStore.cartId && code.value) {
     handleSubmit();
+    return;
   }
 }
 watch(

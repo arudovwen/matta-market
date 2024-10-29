@@ -9,35 +9,34 @@
         </h2>
         <!-- <p class="text-xs text-[#475467]">Provide package information here.</p> -->
       </div>
-    <div class="max-w-[654px] w-full">
-     
-      <VueSelect
-        v-model="v$.pickUpLocationId.$model"
-        :options="locations"
-        :reduce="(location) => location.value"
-        placeholder="Select location"
-        :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
-      />
-      <div class="flex justify-start mt-1">
-        <button
-          @click="isLocationOpen = true"
-          class="text-xs text-primary-500 font-medium"
-          type="button"
+      <div class="max-w-[654px] w-full">
+        <VueSelect
+          v-model="v$.pickUpLocationId.$model"
+          :options="locations"
+          :reduce="(location) => location.value"
+          placeholder="Select location"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer border-[#D0D5DD]`"
+        />
+        <div class="flex justify-start mt-1">
+          <button
+            @click="isLocationOpen = true"
+            class="text-xs text-primary-500 font-medium"
+            type="button"
+          >
+            + Add a new location
+          </button>
+        </div>
+        <div
+          class="text-red-500 mt-1"
+          v-for="error of v$.pickUpLocationId.$errors"
+          :key="error.$uid"
         >
-          + Add a new location
-        </button>
-      </div>
-      <div
-        class="text-red-500 mt-1"
-        v-for="error of v$.pickUpLocationId.$errors"
-        :key="error.$uid"
-      >
-        <div class="error-msg text-error text-xs font-semibold">
-          {{ error.$message }}
+          <div class="error-msg text-error text-xs font-semibold">
+            {{ error.$message }}
+          </div>
         </div>
       </div>
     </div>
-  </div>
     <div
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10 mb-10"
     >
@@ -112,6 +111,11 @@
                   class="capitalize text-matta-black text-sm font-normal py-4 px-4 whitespace-nowrap"
                 >
                   {{ item?.purity || "-" }}{{ item?.purity && "%" }}
+                </td>
+                <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-4 whitespace-nowrap"
+                >
+                  {{ item?.grade || "-" }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 ] whitespace-nowrap"
@@ -464,7 +468,7 @@ import { helpers, required } from "@vuelidate/validators";
 import EditForm from "~/components/Checkout/pickup/EditForm.vue";
 
 const route = useRoute();
-const pickUpStore = usePickupStore()
+const pickUpStore = usePickupStore();
 const router = useRouter();
 const toggleNext = inject("toggleNext");
 const isLocationOpen = ref(false);
@@ -473,7 +477,8 @@ const headers = computed(() => [
   `Package Size`,
   `Unit Price`,
   "Appearance",
-  "Purity & Grade",
+  "Purity",
+  "Grade",
   "",
 ]);
 const form = inject("form");
@@ -488,7 +493,7 @@ const rules = {
 const v$ = useVuelidate(rules, form);
 
 onMounted(() => {
-  pickUpStore.getAlladdress()
+  pickUpStore.getAlladdress();
   form.productId = route.query.id;
 });
 

@@ -49,6 +49,7 @@
   />
 </template>
 <script setup>
+
 import { deleteAddress } from "~/services/cartservice";
 const shippingStore = useShippingStore();
 const type = ref("edit");

@@ -97,6 +97,7 @@ export async function getSupplierProduct({ productId }) {
     config
   );
 }
+
 export async function getSupplierProducts({
   Producer = "",
   PageNumber = 1,

@@ -20,7 +20,11 @@
         />
       </div>
       <div>
-        <FormGroup label="Phone number" isCumpulsory  :error="errors.phoneNumber">
+        <FormGroup
+          label="Phone number"
+          isCumpulsory
+          :error="errors.phoneNumber"
+        >
           <FormsPhoneCodes v-model="phoneNumber" />
         </FormGroup>
       </div>
@@ -197,7 +201,12 @@ const lgasOption = computed(() => {
 });
 const addressOptions = ref([]);
 watch(address, () => {
-  addressSearch({ text: address.value }).then((res) => {
+  const values = {
+    address: address.value,
+    state: state.value,
+    lga: lga.value,
+  };
+  addressSearch(values).then((res) => {
     if (res.status === 200) {
       addressOptions.value = res.data.map((i, index) => ({
         label: i.label,

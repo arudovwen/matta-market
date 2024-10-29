@@ -18,7 +18,7 @@ export async function getcart() {
   return await get(urls.GET_CART, config);
 }
 export async function clearcart() {
-  return await post(urls.CLEAR_CART,{}, config);
+  return await post(urls.CLEAR_CART, {}, config);
 }
 export async function removecartitem(data) {
   return await post(`${urls.REMOVE_CART}/${data}`, data, config);
@@ -35,6 +35,10 @@ export async function editshipping(data) {
 }
 export async function applyDiscount(data) {
   return await post(urls.APPLY_DISCOUNT, data, config);
+}
+
+export async function getDiscountByCode(data) {
+  return await get(urls.GET_DISCOUNT(data), config);
 }
 
 export async function setdefaultaddress(addressId) {
@@ -66,6 +70,9 @@ export async function editPickupLocation(data) {
 export async function confirmpurchase(data) {
   return await post(`${urls.CONFIRM_PURCHASE}`, data, config);
 }
+export async function requestACall(data) {
+  return await get(`${urls.REQUEST_A_CALL}`, data, config);
+}
 
 export async function shippingBreakdown() {
   return await get(`${urls.SHIPPONG_COST_BREAKDOWN}`, config);
@@ -92,10 +99,7 @@ export async function getcartcustomer(data) {
 }
 
 export async function addressSearch(data) {
-  return await get(
-    `${urls.ADDRESS_SEARCH}?${new URLSearchParams(cleanObject(data))}`,
-    config
-  );
+  return await post(`${urls.ADDRESS_SEARCH}`, data, config);
 }
 export async function placeSuggestion(data) {
   return await get(
@@ -103,4 +107,3 @@ export async function placeSuggestion(data) {
     config
   );
 }
-
