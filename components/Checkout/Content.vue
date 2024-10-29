@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="rounded-[10px] pb-20">
+    <div class="rounded-[10px] lg:pb-20">
       <div class="flex flex-col gap-y-8">
         <CheckoutShippingOptions />
         <CheckoutCost />
