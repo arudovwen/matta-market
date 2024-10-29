@@ -366,7 +366,7 @@ provide("isOpen", isSigniningOut);
 <style lang="scss">
 nav {
   .NuxtLink-active.NuxtLink-exact-active {
-    color: #165ef0;
+    color: #1570EF;
   }
 }
 /* Add the transition class for slide-down effect */

@@ -68,6 +68,21 @@
       </p>
     </div>
     <AppButton
+      @click="handleOrderRequest()"
+      text="Submit Order Request"
+      :isLoading="requestLoading"
+      :isDisabled="
+        !cartStore?.cart ||
+        !cartStore?.cartTotalAmount ||
+        cartStore?.loadingCart ||
+        requestLoading ||
+        loading
+      "
+      loadingText="Processing ..."
+      btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
+    />
+
+    <AppButton
       v-if="cartStore?.cartTotalAmount > minCartAmount"
       :isLoading="loading || cartStore?.loadingCart"
       @click="confirmOrder"
@@ -83,21 +98,7 @@
       loadingText="Processing ..."
       btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4 w-full"
     />
-    <AppButton
-      @click="handleOrderRequest()"
-      text="Submit Order Request"
-      :isLoading="requestLoading"
-      :isDisabled="
-        !cartStore?.cart ||
-        !cartStore?.cartTotalAmount ||
-        cartStore?.loadingCart ||
-        requestLoading ||
-        loading
-      "
-      loadingText="Processing ..."
-      btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
-    />
-
+  
     <p class="text-xs text-[#E1E1E1]">
       {{ orderText }}
     </p>

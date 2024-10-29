@@ -119,7 +119,7 @@ export default defineNuxtConfig({
     manifest: {
       name: "Matta trade",
       short_name: "Matta",
-      theme_color: "#165EF0",
+      theme_color: "#1570EF",
       display: "standalone",
       icons: [
         {
@@ -220,7 +220,7 @@ export default defineNuxtConfig({
         }, // Add relevant keywords
         { name: "author", content: "Success Ahon" }, // Add author information
         { name: "robots", content: "index, follow" }, // Control search engine indexing
-        { name: "theme-color", content: "#165EF0" }, // Set the theme color for mobile browsers
+        { name: "theme-color", content: "#1570EF" }, // Set the theme color for mobile browsers
       ],
     },
   },

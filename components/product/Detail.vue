@@ -1,7 +1,7 @@
 <template>
   <div>
     <Breadcrumbs
-      className="mb-8 !text-[#333] last:!text-[#165EF0]"
+      className="mb-8 !text-[#333] last:!text-[#1570EF]"
       :links="links"
     />
     <div

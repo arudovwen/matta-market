@@ -25,7 +25,7 @@
         <AppButton
           link="/category/market/all products"
           text="Continue shopping"
-          btnClass="text-[#2176FF] bg-[#165EF014] w-full !text-sm !font-normal !py-3"
+          btnClass="text-[#2176FF] bg-[#1570EF14] w-full !text-sm !font-normal !py-3"
         />
         <AppButton
           v-if="order_type"
