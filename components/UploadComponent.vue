@@ -5,14 +5,20 @@
   >
     <div
       :class="`relative z-20 ${
-        !isMultiple && (image || url) ? 'invisible group-hover:visible' : 'visible'
+        !isMultiple && (image || url)
+          ? 'invisible group-hover:visible'
+          : 'visible'
       }`"
     >
-      <div
-        class="text-center mb-3 h-10 w-10 flex mx-auto items-center justify-center rounded-[10px] border border-primary"
+      <label
+        :for="id"
+        class="text-center cursor-pointer mb-3 h-10 w-10 flex mx-auto items-center justify-center rounded-[10px] border border-primary"
       >
-        <AppIcon icon="bytesize:upload" iconClass="text-xl text-[#344054]" />
-      </div>
+        <AppIcon
+          icon="bytesize:upload"
+          iconClass="text-xl text-[#344054] cursor-pointer"
+        />
+      </label>
 
       <p class="text-sm mb-2">
         <label
@@ -25,14 +31,15 @@
       <p class="text-xs text-[#ABABAB] mb-1" v-if="support">{{ support }}</p>
       <p class="text-xs text-[#ABABAB]" v-if="recommended">{{ recommended }}</p>
     </div>
-    <img alt="upload"
+    <img
+      alt="upload"
       v-if="!isMultiple && (image || url)"
       :src="image || url"
       class="w-full h-full object-cover absolute z-10 group-hover:opacity-10 backdrop-blur-sm"
     />
   </div>
   <input
-		data-testid="upload"
+    data-testid="upload"
     type="file"
     :id="id"
     class="hidden"
@@ -85,11 +92,11 @@ const props = defineProps({
     default: "",
   },
   id: {
-    default: "file"
+    default: "file",
   },
-  url:{
-    default:""
-  }
+  url: {
+    default: "",
+  },
 });
 const events = ["dragenter", "dragover", "dragleave", "drop"];
 onMounted(() => {

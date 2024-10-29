@@ -107,7 +107,6 @@ label,
 <script setup>
 useHead(
   {
-    
     script: [
       {
         src: "https://sdk.monnify.com/plugin/monnify.js",
@@ -207,6 +206,8 @@ import "aos/dist/aos.css";
 const cartStore = useCartStore();
 const store = useMarketStore();
 const appStore = useApplicationStore();
+const searchStore = useSearchStore();
+
 const query = reactive({
   PageNumber: 1,
   PageSize: 200,
@@ -234,6 +235,6 @@ onMounted(() => {
     cookie.value = languages[navigator.language];
   }
 
-  cartStore.getMyCart()
+  cartStore.getMyCart();
 });
 </script>

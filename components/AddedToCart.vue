@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-4 rounded-xl w-full sm:min-w-[200px] max-w-[250px] fixed bg-white top-20 right-0 md:right-5 shadow-[5px_12px_35px_rgba(44,44,44,0.12)] fade-in-right"
+    class="p-4 rounded-xl w-full sm:min-w-[200px] max-w-[250px] fixed bg-white top-20 right-0 md:right-5 shadow-[5px_12px_35px_rgba(44,44,44,0.12)] fade-in-right z-[999]"
   >
     <div class="flex items-center justify-between mb-4">
       <span class="text-[13px] text-gray-500 font-bold">ADDED TO CART</span>

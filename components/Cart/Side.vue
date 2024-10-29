@@ -27,7 +27,10 @@
           {{ currencyFormat(cartStore?.cartTotalAmount) }}
         </p>
       </div>
-      <div class="flex justify-between">
+      <div
+        class="flex justify-between"
+        v-if="cartStore?.cartTotalAmount * cartStore?.tax"
+      >
         <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
 
         <p class="text-white text-sm font-medium">
@@ -48,7 +51,7 @@
           - {{ currencyFormat(cartStore?.referralDiscountValue) }}
         </p>
       </div>
-  
+
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
 

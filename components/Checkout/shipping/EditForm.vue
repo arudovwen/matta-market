@@ -123,7 +123,11 @@
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
-import { addshipping, editshipping, addressSearch } from "~/services/cartservice";
+import {
+  addshipping,
+  editshipping,
+  addressSearch,
+} from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "~/utils/countries.json";
 import Lgas from "~/utils/lgastate.json";
@@ -235,7 +239,12 @@ const onSubmit = handleSubmit((values) => {
 
 const addressOptions = ref([]);
 watch(street, () => {
-  addressSearch({ text: street.value }).then((res) => {
+  const values = {
+    address: street.value,
+    state: state.value,
+    lga: lga.value,
+  };
+  addressSearch(values).then((res) => {
     if (res.status === 200) {
       addressOptions.value = res.data.map((i) => ({
         label: i.label,

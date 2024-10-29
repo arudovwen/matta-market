@@ -279,7 +279,7 @@
 import { useProductStore } from "~/stores/products";
 import { toast } from "vue3-toastify";
 import { likeproduct } from "~/services/productservices";
-import { confirmpurchase } from "~/services/cartservice";
+import { confirmpurchase, requestACall } from "~/services/cartservice";
 import { Tooltip } from "@programic/vue3-tooltip";
 import "tippy.js/dist/tippy.css";
 
@@ -410,6 +410,7 @@ function handleSave() {
 }
 const requestloading = ref(false);
 function handleOrderRequest(type) {
+  requestACall();
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
     authOpen.value = true;
@@ -439,7 +440,6 @@ function handleOrderRequest(type) {
   };
   requestloading.value = true;
   cartStore?.addToCart(data, type).then((res) => {
-   
     confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
       .then((res) => {
         if (res.status === 200) {

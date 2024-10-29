@@ -31,8 +31,11 @@ useHead({
   meta: [{ name: "description", content: "Checkout" }],
 });
 const cartStore = useCartStore();
-cartStore.getMyCart();
 
+onMounted(()=>{
+  cartStore.getMyCart();
+
+})
 provide("isPopOpen", isPopOpen);
 provide("authOpen", authOpen);
 provide("activeMethod", activeMethod);
