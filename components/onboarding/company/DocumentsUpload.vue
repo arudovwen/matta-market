@@ -1,58 +1,81 @@
 <template>
   <div class="w-full">
-    <div class="flex items-center gap-x-3 w-full mb-8" v-if="!hideUpdate">
-      <SelectVueSelect
-        v-model="selectedDocument"
-        :options="
-          isNonNigerian
-            ? options.filter((i) => i.value == 4 || i.value == 0)
-            : options
-        "
-        :reduce="(option) => option.value"
-        placeholder="Select document type"
-        classInput="flex-1 w-full"
-        :clearable="false"
+    <div
+      class="flex items-center flex-col gap-3 w-full mb-8"
+      v-if="!hideUpdate"
+    >
+      <FileUpload
+        v-for="option in filteredOptions"
+        :label="option.label"
+        :id="option.value"
+        v-model="getDoc(option.value, documents).url"
       />
-      <input
-        id="upload"
-        ref="fileInputRef"
-        type="file"
-        class="hidden"
-        @change="
-          (e) => {
-            handleEvent(e);
-          }
-        "
-        accept="pdf,jpeg,jpg,png"
-      />
-      <AppButton
+      <!-- <div class="flex-1 flex-row">
+        <SelectVueSelect
+          v-model="selectedDocument"
+          :options="
+            isNonNigerian
+              ? options.filter((i) => i.value == 4 || i.value == 0)
+              : options
+          "
+          :reduce="(option) => option.value"
+          placeholder="Select document type"
+        />
+        <input
+          id="upload"
+          ref="fileInputRef"
+          type="file"
+          class="hidden"
+          @change="
+            (e) => {
+              handleEvent(e);
+            }
+          "
+          accept="pdf,jpeg,jpg,png"
+        />
+      </div> -->
+
+      <!-- <FileUpload
+        label="Memorandum and Articles of Association"
+        id="mermat"
+        v-model="values.companyDocuments[0].url"
+        isCumpulsory
+      /> -->
+      <!-- <AppButton
         :disabled="selectedDocument === null || isLoading"
         :isLoading="isLoading"
         @click="triggerFileInput"
-        btnClass="bg-primary-500  text-white !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed border !rounded-lg border-primary-500"
+        btnClass="bg-primary  text-white !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed border !rounded-lg border-primary-500"
         type="button"
         text="Upload"
-      />
+      /> -->
     </div>
-    <div
-      v-if="
-        privateDocuments &&
-        privateDocuments.some((i) => i.urls.filter((i) => i.url).length !== 0)
-      "
-    >
+    <!-- <div v-if="privateDocuments">
       <DocumentsViewer
         type="kyb"
         :documents="privateDocuments"
         @deleteDoc="handleDelete"
         :hideUpdate="hideUpdate"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup>
+import AppButton from "@/components/AppButton.vue";
+import {
+  ref,
+  defineProps,
+  defineEmits,
+  onMounted,
+  computed,
+  provide,
+} from "vue";
 import { toast } from "vue3-toastify";
-import { uploaddocument } from "~/services/onboardingservices";
+import { uploaddocument } from "@/services/onboardingservices";
+import DocumentsViewer from "@/components/DocumentsViewer.vue";
+import SelectVueSelect from "@/components/Select/index.vue";
+import FileUpload from "@/components/FileUpload.vue";
 
 const isLoading = ref(false);
 const loading = ref(false);
@@ -83,6 +106,11 @@ const options = [
     value: 3,
   },
 ];
+const filteredOptions = computed(() =>
+  props.isNonNigerian
+    ? options.filter((i) => i.value == 4 || i.value == 0)
+    : options
+);
 onMounted(() => {
   privateDocuments.value = props.documents;
 });
@@ -93,6 +121,7 @@ function triggerFileInput() {
 function resetFileInput() {
   fileInputRef.value.value = ""; // Clear the file input value
 }
+
 function handleEvent(e) {
   const file = e.target.files[0];
 
@@ -148,7 +177,7 @@ function handleDocuments(url, type) {
     privateDocuments.value = [
       ...tempDocuments,
       {
-        documentType: type,
+        documentType: Number(type),
         url,
         urls: [{ url }], // Make sure `urls` is an array of strings
       },
@@ -174,13 +203,12 @@ function handleDelete({ url, type }) {
 
   emits("getDocs", privateDocuments.value);
 }
-</script>
 
-<style lang="scss" scoped>
-.bg-img {
-  background-image: url("~/assets/img/bee.svg");
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: bottom;
-}
-</style>
+const getDoc = (value, documents) => {
+  return props.documents.find((i) => i.documentType === value) || { url: "" };
+};
+
+provide("handleChange", (id, message) => {
+  handleDocuments(message, id);
+});
+</script>

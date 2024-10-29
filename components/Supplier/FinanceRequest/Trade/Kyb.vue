@@ -300,6 +300,7 @@ const {
   setFieldValue,
   setValues,
   isFieldTouched,
+  values,
 } = useForm({
   validationSchema: formSchema,
   initialValues: formData.kyb,
@@ -479,7 +480,7 @@ const sectorOptions = computed(() => {
     }) ?? []
   ); // Use optional chaining and nullish coalescing operators for safer property access
 });
-
+watch(companyDocuments, () => console.log("v", companyDocuments.value));
 provide("handleChange", null);
 </script>
 
