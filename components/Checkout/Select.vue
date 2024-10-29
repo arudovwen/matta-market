@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div class="w-full">
     <h5 class="block text-[20px] font-bold mb-8 text-left">
       Select shipping address
     </h5>
 
-    <div class="grid gap-y-6 mb-4 max-h-[600px] overflow-y-auto relative">
+    <div
+      class="grid gap-y-6 mb-4 max-h-[600px] overflow-y-auto relative md:min-w-[400px]"
+    >
       <div
         v-for="n in shippingStore.addressesData"
         :key="n"
@@ -49,7 +51,6 @@
       btnClass=" !px-0 !sm:px-6 !py-[0px] text-xs sm:text-sm !text-[#2176FF]"
     />
   </div>
- 
 </template>
 <script setup>
 import { setdefaultaddress } from "~/services/cartservice";
@@ -89,7 +90,5 @@ function handleDelete(val) {
   detail.value = val;
   isOpen.value = false;
   isDeleteOpen.value = true;
-
 }
-
 </script>

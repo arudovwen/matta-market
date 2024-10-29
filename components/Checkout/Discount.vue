@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-white rounded-[10px]">
-    <h2 class="px-[30px] py-5 font-bold text-xl border-b border-[#f3f3f3]">
+  <div class="bg-white rounded-b-[10px] border-t border-[#f3f3f3]">
+    <!-- <h2 class="px-[30px] py-5 font-bold text-xl border-b border-[#f3f3f3]">
       Promotion
-    </h2>
+    </h2> -->
     <form
       @submit.prevent="handleSubmit"
       class="px-[30px] pt-6 pb-[30px] flex items-center gap-x-3"
@@ -16,9 +16,9 @@
       </div>
       <AppButton
         :isLoading="loading"
-        :isDisabled="(!cartStore.cartId && authStore.isLoggedIn) || !code"
+        :isDisabled="!cartStore.cartId || !code"
         type="submit"
-        text="Apply discount"
+        text="Apply voucher"
         btnClass="!px-[14px] !py-[10px] h-11 bg-primary-500 text-sm text-white leading-normal disabled:!opacity-90"
       />
     </form>
@@ -27,20 +27,14 @@
 <script setup>
 import { toast } from "vue3-toastify";
 import { applyDiscount, getDiscountByCode } from "~/services/cartservice";
+
 const code = ref(null);
 const loading = ref(false);
 const cartStore = useCartStore();
-const authStore = useAuthStore();
-const authOpen = inject("authOpen");
 const isApplied = ref(false);
 const firstTimeCode = "1ST50KOFF";
 onMounted(() => {});
 function handleSubmit() {
-  if (!authStore.isLoggedIn) {
-    authOpen.value = true;
-    return;
-  }
-
   loading.value = true;
   applyDiscount({
     discountCode: code.value,

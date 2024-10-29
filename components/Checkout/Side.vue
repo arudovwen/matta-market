@@ -13,7 +13,7 @@
             Qty: {{ item.quantity }} {{ item.selectedPackage }}
           </p>
         </div>
-        <p class="font-medium text-sm text-white">
+        <p class="font-normal text-xs text-white">
           {{ currencyFormat(item.packagePrice) }}
         </p>
       </div>
@@ -23,34 +23,36 @@
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Sub-total</p>
 
-        <p class="text-white font-medium text-sm">
+        <p class="text-white text-xs">
           {{ currencyFormat(cartStore?.cartTotalAmount) }}
         </p>
       </div>
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
 
-        <p class="text-white text-sm font-medium">
+        <p class="text-white text-xs">
           {{ currencyFormat(cartStore?.cartTotalAmount * cartStore?.tax) }}
         </p>
       </div>
       <div class="flex justify-between" v-if="cartStore?.discountValue">
         <p class="text-sm text-[#E1E1E1]">Discount</p>
 
-        <p class="text-white font-medium text-sm">
+        <p class="text-white text-xs">
           - {{ currencyFormat(cartStore?.discountValue) }}
         </p>
       </div>
       <div class="flex justify-between" v-if="cartStore?.referralDiscountValue">
         <p class="text-sm text-[#E1E1E1]">Referral Discount</p>
 
-        <p class="text-white font-medium text-sm">
+        <p class="text-white text-xs">
           - {{ currencyFormat(cartStore?.referralDiscountValue) }}
         </p>
       </div>
-
+    </div>
+    <hr class="my-[20px] border-white/10" />
+    <div>
       <div class="flex justify-between">
-        <p class="text-sm text-[#E1E1E1]">Shipping & Handling</p>
+        <p class="text-sm text-[#E1E1E1]">Estimated Shipping Cost</p>
 
         <p class="text-white font-medium text-sm">
           {{ currencyFormat(cartStore?.shippingTotal) }}
@@ -66,6 +68,7 @@
       </p>
     </div>
     <AppButton
+      v-if="cartStore?.cartTotalAmount > minCartAmount"
       :isLoading="loading || cartStore?.loadingCart"
       @click="confirmOrder"
       :isDisabled="
@@ -77,11 +80,12 @@
         requestLoading
       "
       :text="status"
-      btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
+      loadingText="Processing ..."
+      btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4 w-full"
     />
     <AppButton
       @click="handleOrderRequest()"
-      text="Request a call"
+      text="Submit Order Request"
       :isLoading="requestLoading"
       :isDisabled="
         !cartStore?.cart ||
@@ -90,16 +94,14 @@
         requestLoading ||
         loading
       "
-      icon="ph:phone-outgoing"
-      btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4 w-full"
+      loadingText="Processing ..."
+      btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
     />
 
     <p class="text-xs text-[#E1E1E1]">
-      When your order and payment is confirmed, someone on our end will reach
-      out to you to discuss the fulfilment of your order
+      {{ orderText }}
     </p>
   </div>
-
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
@@ -116,7 +118,7 @@ const loading = ref(false);
 const router = useRouter();
 
 const data = ref(null);
-const status = ref("Confirm order");
+const status = ref("Make Payment");
 const requestLoading = ref(false);
 function onModalClose() {
   loading.value = false;
@@ -157,11 +159,11 @@ function confirmOrder() {
         status.value = "Retry order";
         loading.value = false;
       });
-      return;
+    return;
   }
   if (activeMethod.value === "credit") {
     isPopOpen.value = true;
-    return
+    return;
   }
 }
 function onSuccess(response) {

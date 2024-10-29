@@ -1,7 +1,7 @@
 <template>
   <div v-if="!shippingStore.isLoading">
     <h2 class="mb-1 font-bold text-xl border-b border-[#f3f3f3]">
-      Shipping Cost Breakdown
+      Shipping Cost Estimate
     </h2>
     <p class="text-sm mb-6">
       Your shipping cost is calculated based on the type and sizeof vehicle

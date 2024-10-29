@@ -259,7 +259,7 @@
             />
           </span>
 
-          <NuxtLink to="/cart" class="flex items-center relative">
+          <NuxtLink to="/checkout" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
             >

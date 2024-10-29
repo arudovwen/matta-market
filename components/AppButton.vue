@@ -1,5 +1,4 @@
 <template>
-  
   <button
     :disabled="isDisabled"
     :type="type"
@@ -8,9 +7,9 @@
       ${isDisabled ? ' opacity-40 cursor-not-allowed' : ''}
       ${btnClass}
       `"
-       class="btn inline-flex justify-center"
+    class="btn inline-flex justify-center"
     v-bind="$attrs"
-		data-testid="btn"
+    data-testid="btn"
     v-if="!link && !div"
   >
     <template v-if="!isLoading && !$slots.default">
@@ -51,7 +50,7 @@
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
         ></path>
       </svg>
-      Loading ...
+      {{ loadingText }}
     </template>
     <div v-if="$slots.default && !isLoading">
       <slot></slot>
@@ -106,7 +105,7 @@
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
         ></path>
       </svg>
-      Loading ...
+      {{ loadingText }}
     </template>
     <div v-if="$slots.default && !isLoading">
       <slot></slot>
@@ -159,7 +158,7 @@
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
         ></path>
       </svg>
-      Loading ...
+      {{ loadingText }}
     </template>
     <div v-if="$slots.default && !isLoading">
       <slot></slot>
@@ -211,10 +210,13 @@ export default {
       type: Boolean,
       default: false,
     },
-    type:{
+    type: {
       type: String,
-      default: "button"
-    }
+      default: "button",
+    },
+    loadingText: {
+      default: "Loading ...",
+    },
   },
 };
 </script>

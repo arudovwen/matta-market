@@ -82,21 +82,21 @@
 
         <div
           v-if="productData?.sampleAvailable || productData.hidePrice"
-          class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-4 mb-[17px] items-center"
+          class="flex flex-col gap-y-7 mb-[17px] items-start"
         >
-          <AppButton
-            v-if="productData.hidePrice"
-            @click="handleRequest('quote')"
-            text="Request quote"
-            icon="akar-icons:receipt"
-            btnClass="!rounded-[6px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] !font-normal "
-          />
           <AppButton
             v-if="productData?.sampleAvailable"
             @click="handleRequest('sample')"
             text="Request sample"
             icon="mdi:phone-message-outline"
             btnClass="!rounded-[6px] !text-[#333] px-[15px] !py-[6px] text-xs sm:text-sm border border-[#DBDBDB] !font-normal"
+          />
+          <AppButton
+            v-if="productData.hidePrice"
+            @click="handleRequest('quote')"
+            text="Request a Quote"
+            icon="streamline:receipt-check"
+            btnClass="border border-primary-500 bg-primary-500  text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full !normal-case"
           />
         </div>
 
@@ -119,19 +119,44 @@
         <div
           class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4 w-full"
         >
-          <AppButton
-            v-if="
-              !productData.hidePrice &&
-              productData?.supplierId !== authStore.businessId
-            "
-            @click="handleCart('add')"
-            text="Add to cart"
-            icon="bytesize:cart"
-            :isLoading="cartLoading"
-            :isDisabled="cartLoading || requestloading"
-            btnClass="bg-primary-500  text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full"
-          />
-          <AppButton
+          <div class="grid gap-y-5 w-full">
+            <div class="flex gap-x-3">
+              <AppButton
+                v-if="
+                  !productData.hidePrice &&
+                  productData?.supplierId !== authStore.businessId
+                "
+                @click="handleCart('buy')"
+                text="Send Order Request"
+                icon="pepicons-pop:paper-plane"
+                :isLoading="cartLoading"
+                :isDisabled="cartLoading || requestloading"
+                btnClass="border border-primary-500 bg-primary-500  text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full"
+              />
+              <AppButton
+                @click="handleRequest('call')"
+                text="Request a call"
+                icon="simple-line-icons:call-out"
+                :isLoading="cartLoading"
+                :isDisabled="cartLoading || requestloading"
+                btnClass="text-white  !px-[15px] !py-[13px] !normal-case bg-[#f90] border border-[#f90] flex w-full"
+              />
+            </div>
+            <AppButton
+              v-if="
+                !productData.hidePrice &&
+                productData?.supplierId !== authStore.businessId
+              "
+              @click="handleCart('add')"
+              text="Add to cart"
+              icon="bytesize:cart"
+              :isLoading="cartLoading"
+              :isDisabled="cartLoading || requestloading"
+              btnClass="bg-transparent border border-[#D0D5DD]  text-[#182230] !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full"
+            />
+          </div>
+
+          <!-- <AppButton
             v-if="!productData.hidePrice"
             @click="handleOrderRequest('add')"
             icon="simple-line-icons:call-out"
@@ -139,7 +164,7 @@
             :isLoading="requestloading"
             :isDisabled="cartLoading || requestloading"
             btnClass="text-white  !px-[15px] !py-[13px] !normal-case bg-[#f90] flex w-full"
-          />
+          /> -->
         </div>
       </div>
 
@@ -212,9 +237,21 @@
   </div>
   <ModalCenter :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #default>
-      <div class="h-full w-full bg-white rounded-lg p-6 lg:p-10">
+      <div
+        class="h-full w-full bg-white rounded-lg p-6 lg:p-10"
+        v-if="requestType !== 'call'"
+      >
         <RequestsSample v-if="requestType == 'sample'" />
         <RequestsQuote v-if="requestType == 'quote'" />
+      </div>
+      <div v-if="requestType == 'call'" class="rounded-lg bg-white">
+        <CatalogProductRequest
+          :productOptions="{
+            chemicalName: productData.name,
+          }"
+          :isDetailPage="true"
+          @close="isOpen = false"
+        />
       </div>
     </template>
   </ModalCenter>
@@ -363,6 +400,12 @@ function handleCart(type) {
     toast.info("Please enter a quantity");
     return;
   }
+  if (!authStore.isLoggedIn) {
+    toast.info("Login to continue");
+    authOpen.value = true;
+    return;
+  }
+
   cartLoading.value = true;
   let data = {
     id: 0,
@@ -392,8 +435,8 @@ function handleCart(type) {
         isAdded.value = false;
       }, 3000);
     }
-    if (res.message === "buy") {
-      router.push("/cart");
+    if (type === "buy") {
+      router.push("/checkout");
     }
     cartLoading.value = false;
   });

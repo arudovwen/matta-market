@@ -1164,3 +1164,6 @@ export const productrules = {
 
 export const nigeriaTypes = [0, 1, 2, 3, 4];
 export const nonNigeriaTypes = [0, 4];
+export const minCartAmount = 600000;
+export const orderText =
+  "After submitting your order, our sales manager will contact you to clarify the price and other details of your order.";
