@@ -11,6 +11,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 const cartStore = useCartStore();
 </script>
