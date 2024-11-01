@@ -83,7 +83,7 @@
     />
 
     <AppButton
-      v-if="cartStore?.cartTotalAmount > minCartAmount"
+      v-if="cartStore?.cartTotalAmount < minCartAmount"
       :isLoading="loading || cartStore?.loadingCart"
       @click="confirmOrder"
       :isDisabled="

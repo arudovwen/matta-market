@@ -4,7 +4,7 @@
       <div class="flex flex-col gap-y-8">
         <CheckoutShippingOptions />
         <CheckoutCost />
-        <div v-if="cartStore?.cartTotalAmount > minCartAmount">
+        <div v-if="cartStore?.cartTotalAmount < minCartAmount">
           <CheckoutPayment />
         </div>
       </div>
