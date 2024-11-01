@@ -58,10 +58,10 @@
                   </h4>
 
                   <p class="text-sm text-[#475467]">
-                    {{ insufficient ? text3 : available ? text1 : text2 }}
+                    {{ handleMessage() }}
                   </p>
                   <div
-                    v-if="available"
+                    v-if="available && creditDetail.creditWalletStatus === 1"
                     class="rounded-lg py-6 px-4 border border-[#E2E2E2] bg-[#F2F4F7] mt-4"
                   >
                     <div class="grid gap-y-2">
@@ -89,7 +89,7 @@
                     </div>
                   </div>
 
-                  <div class="flex gap-x-4 items-center mt-6">
+                  <div v-if="!insufficient" class="flex gap-x-4 items-center mt-6">
                     <button
                       v-if="isCancel"
                       type="button"
@@ -157,6 +157,8 @@ const text1 = "You are about to make payment for this purchase using credit?";
 const text2 =
   "You are not yet pre-qualified for this option of payment. Would you like to apply for a credit?";
 const text3 = "You do not have sufficient credit to complete this purchase. ";
+const text4 =
+  "Your credit request is currently pending. Please consider using an alternative payment option";
 // Would you like to pay the balance";
 function actionItem() {}
 function handleclose() {
@@ -212,10 +214,10 @@ function handlePurchase() {
     isLoading.value = false;
     return;
   }
-  if(!shippingStore?.defaultAddress?.id){
-    toast.info("Please provide a shipping address")
+  if (!shippingStore?.defaultAddress?.id) {
+    toast.info("Please provide a shipping address");
     isLoading.value = false;
-    return
+    return;
   }
   if (!props.insufficient) {
     confirmpurchase({
@@ -239,6 +241,18 @@ function handlePurchase() {
 }
 function handleData(data) {
   return { ...data, ...prepaidInfo.value };
+}
+function handleMessage() {
+  if (props.insufficient && props?.creditDetail?.creditWalletStatus === 1) {
+    return text3;
+  }
+  if (props.insufficient && props?.creditDetail?.creditWalletStatus === 0) {
+    return text4;
+  }
+  if (props.available && props?.creditDetail?.creditWalletStatus === 1) {
+    return text1;
+  }
+  return text2;
 }
 onMounted(() => {
   getPrepaidInfo(props.creditDetail.amountToPay).then((res) => {

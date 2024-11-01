@@ -159,55 +159,49 @@ const tabs = [
   },
 ];
 function getCompanyData() {
-  getCompanyProfile()
-    .then((res) => {
-      loading.value = false;
+  loading.value = true; // Assuming loading starts when the function is called
 
-      const tempData = {
-        ...res.data.data,
-        companyDocuments:
-          res.data.data.companyDocuments.length > 0
-            ? res.data.data.companyDocuments?.map((doc) => ({
-                ...doc,
-                urls: !doc.urls.length
-                  ? [
-                      {
-                        url: doc.url || "",
-                      },
-                    ]
-                  : doc.urls.map((i) => ({
-                      url: i?.url || i || "",
-                    })),
+  getCompanyProfile().then((res) => {
+    loading.value = false;
+
+    const { companyDocuments = [], ...companyProfile } = res.data.data;
+
+    const formatDocuments = (documents) => {
+      return documents.map((doc) => ({
+        ...doc,
+        urls:
+          doc.urls.length > 0
+            ? doc.urls.map((urlItem) => ({
+                url: urlItem?.url || urlItem || "",
               }))
-            : [],
-      };
+            : [{ url: doc.url || "" }],
+      }));
+    };
+    console.log("🚀 ~ formatDocuments ~ formatDocuments:", formatDocuments);
 
-      company.value = tempData;
-      formData.kyb = { ...tempData };
+    const tempData = {
+      ...companyProfile,
+      companyDocuments:
+        companyDocuments.length > 0
+          ? formatDocuments(companyDocuments)
+          : KybDocumentDefault,
+    };
+    console.log("🚀 ~ .then ~ tempData:", tempData)
+    company.value = tempData;
+    formData.kyb = { ...tempData };
 
-      if (res.data.data?.companyDocuments?.length > 0) {
-        const tempDocData = res.data.data.companyDocuments?.map((doc) => ({
-          ...doc,
-          urls: !doc.urls.length
-            ? [
-                {
-                  url: doc.url || "",
-                },
-              ]
-            : doc.urls.map((i) => ({
-                url: i?.url || i || "",
-              })),
-        }));
-
-        formData.kyb.companyDocuments =
-          res.data.data.country.toLowerCase() === "nigeria"
-            ? tempDocData
-            : tempDocData.filter((i) => [0, 4].includes(i.documentType));
-      }
-    })
-    .catch(() => {
-      loading.value = false;
-    });
+    if (companyDocuments.length > 0) {
+      const formattedDocData = formatDocuments(companyDocuments);
+      formData.kyb.companyDocuments =
+        res.data.data.country.toLowerCase() === "nigeria"
+          ? formattedDocData
+          : formattedDocData.filter((doc) => [0, 4].includes(doc.documentType));
+      console.log("🚀 ~ .then ~ formattedDocData:", formattedDocData);
+    }
+  }).catch(() => {
+    loading.value = false;
+    // Consider adding error handling here, e.g., logging or notifying the user
+  });
 }
 onMounted(() => {
   getCompanyData();

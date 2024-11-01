@@ -14,18 +14,6 @@
       <div class="w-full max-w-[560px]">
         <OnboardingCompanyDocumentsUpload
           :documents="companyDoc"
-          :hideUpdate="
-            (country?.toLowerCase() === 'nigeria' &&
-              company?.approvalStatus &&
-              nigeriaTypes.every((type) =>
-                companyDocuments?.some((doc) => doc.documentType === type)
-              )) ||
-            (country?.toLowerCase() !== 'nigeria' &&
-              company?.approvalStatus &&
-              nonNigeriaTypes.every((type) =>
-                companyDocuments?.some((doc) => doc.documentType === type)
-              ))
-          "
           @get-docs="handleDocUpdate"
           :isNonNigerian="companyInfo?.country?.toLowerCase() !== 'nigeria'"
         />
@@ -119,14 +107,14 @@ async function handleSubmit() {
     return;
   }
   isLoading.value = true;
-
-  updateDocuments({
+  const dataValue = {
     ...form,
     companyDocuments: form.companyDocuments.map((i) => ({
       ...i,
       urls: i.urls.map((j) => j.url),
     })),
-  })
+  };
+  updateDocuments(dataValue)
     .then((res) => {
       if (res.status === 200) {
         getData();

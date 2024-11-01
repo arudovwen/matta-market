@@ -1,4 +1,4 @@
-import { required, helpers } from "@vuelidate/validators";
+import { required, helpers } from '@vuelidate/validators';
 
 export const measurements = [
   { value: "g", name: "Gramme", label: "Gramme" },
@@ -65,7 +65,61 @@ export const documentsOptions = {
     isNigeria: true,
     isNonNigeria: false,
   },
+  4: {
+    title: "Company profile",
+    short: "Company profile",
+    value: 4,
+    isNigeria: true,
+    isNonNigeria: true,
+  },
 };
+export const KybDocumentDefault = [
+  {
+    urls: [
+      {
+        url: "",
+      },
+    ],
+    url:"",
+    documentType: 0,
+  },
+  {
+    urls: [
+      {
+        url: "",
+      },
+    ],
+    url:"",
+    documentType: 1,
+  },
+  {
+    urls: [
+      {
+        url: "",
+      },
+    ],
+    url:"",
+    documentType: 2,
+  },
+  {
+    urls: [
+      {
+        url: "",
+      },
+    ],
+    url:"",
+    documentType: 3,
+  },
+  {
+    urls: [
+      {
+        url: "",
+      },
+    ],
+    url:"",
+    documentType: 4,
+  },
+];
 export const languagesOptions = [
   {
     code: "en",
@@ -1167,3 +1221,17 @@ export const nonNigeriaTypes = [0, 4];
 export const minCartAmount = 600000;
 export const orderText =
   "After submitting your order, our sales manager will contact you to clarify the price and other details of your order.";
+
+
+  export const maxDate = (max) => {
+    return helpers.withParams(
+      { type: 'maxDate', max },
+      (value) => {
+        if (!value) return true; // Ignore empty values
+        const inputDate = new Date(value);
+        const maxDate = new Date();
+        return inputDate <= maxDate;
+      }
+    );
+  };
+  

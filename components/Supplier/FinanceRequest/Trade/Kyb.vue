@@ -168,24 +168,12 @@
         <label
           for="companyDocuments"
           class="mb-4 mt-3 font-medium text-sm block"
-          >Upload the documents listed in the dropdown below
+          >Upload the documents listed below
         </label>
 
         <div class="w-full">
           <OnboardingCompanyDocumentsUpload
             :documents="companyDocuments"
-            :hideUpdate="
-              (country?.toLowerCase() === 'nigeria' &&
-                company?.approvalStatus &&
-                nigeriaTypes.every((type) =>
-                  companyDocuments?.some((doc) => doc.documentType === type)
-                )) ||
-              (country?.toLowerCase() !== 'nigeria' &&
-                company?.approvalStatus &&
-                nonNigeriaTypes.every((type) =>
-                  companyDocuments?.some((doc) => doc.documentType === type)
-                ))
-            "
             @get-docs="handleDocUpdate"
             :isNonNigerian="country?.toLowerCase() !== 'nigeria'"
           />
@@ -245,13 +233,11 @@ const formSchema = yup.object().shape({
     .date()
     .typeError("Invalid date Of Incorporation")
     .nullable()
-    .max(new Date(), "Date Of Incorporation cannot be after today")
     .required("Date Of Incorporation is required"),
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   description: yup.string().nullable(),
   companyDocuments: yup.array(),
-
   country: yup.string().required(),
   state: yup.string().required(),
   email: yup.string().required(),
@@ -353,6 +339,8 @@ onMounted(() => {
 });
 
 function handleDocUpdate(data) {
+ console.log("🚀 ~ handleDocUpdate ~ data:", data)
+ 
   setFieldValue("companyDocuments", data);
 }
 
@@ -394,6 +382,7 @@ watch(country, () => {
 });
 
 const onSubmit = handleSubmit((values) => {
+  console.log("🚀 ~ onSubmit ~ values.companyDocument:", values.companyDocuments)
   if (
     country.value?.toLowerCase() === "nigeria" &&
     (values.companyDocuments.some(
@@ -480,7 +469,6 @@ const sectorOptions = computed(() => {
     }) ?? []
   ); // Use optional chaining and nullish coalescing operators for safer property access
 });
-watch(companyDocuments, () => console.log("v", companyDocuments.value));
 provide("handleChange", null);
 </script>
 
