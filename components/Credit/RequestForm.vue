@@ -177,7 +177,6 @@ function getCompanyData() {
             : [{ url: doc.url || "" }],
       }));
     };
-    console.log("🚀 ~ formatDocuments ~ formatDocuments:", formatDocuments);
 
     const tempData = {
       ...companyProfile,
@@ -186,7 +185,7 @@ function getCompanyData() {
           ? formatDocuments(companyDocuments)
           : KybDocumentDefault,
     };
-    console.log("🚀 ~ .then ~ tempData:", tempData)
+  
     company.value = tempData;
     formData.kyb = { ...tempData };
 
@@ -196,7 +195,7 @@ function getCompanyData() {
         res.data.data.country.toLowerCase() === "nigeria"
           ? formattedDocData
           : formattedDocData.filter((doc) => [0, 4].includes(doc.documentType));
-      console.log("🚀 ~ .then ~ formattedDocData:", formattedDocData);
+     
     }
   }).catch(() => {
     loading.value = false;

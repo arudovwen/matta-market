@@ -339,8 +339,7 @@ onMounted(() => {
 });
 
 function handleDocUpdate(data) {
- console.log("🚀 ~ handleDocUpdate ~ data:", data)
- 
+
   setFieldValue("companyDocuments", data);
 }
 
@@ -382,7 +381,7 @@ watch(country, () => {
 });
 
 const onSubmit = handleSubmit((values) => {
-  console.log("🚀 ~ onSubmit ~ values.companyDocument:", values.companyDocuments)
+
   if (
     country.value?.toLowerCase() === "nigeria" &&
     (values.companyDocuments.some(
