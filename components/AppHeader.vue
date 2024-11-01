@@ -259,7 +259,7 @@
             />
           </span>
 
-          <NuxtLink to="/checkout" class="flex items-center relative">
+          <button @click="goToCheckout" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
             >
@@ -276,7 +276,7 @@
             <!-- <span class="text-xs sm:text-sm font-medium inline-flex text-[#333]"
               >Cart</span
             > -->
-          </NuxtLink>
+          </button>
 
           <div class="flex gap-x-3 ml-3">
             <AppButton
@@ -418,6 +418,8 @@
       </div>
     </template>
   </ModalSide>
+
+  <ModalAuth goToUrl="/checkout" />
 </template>
 <script setup>
 import { ref } from "vue";
@@ -452,6 +454,8 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const store = useMarketStore();
+
+const isAuthOpen = ref(false);
 const notifications = ref([]);
 const router = useRouter();
 const { currentRoute } = router;
@@ -497,7 +501,13 @@ function getNotifications() {
     notifications.value = res.data.data;
   });
 }
-
+function goToCheckout() {
+  if (!authStore.isLoggedIn) {
+    isAuthOpen.value = true;
+    return;
+  }
+  navigateTo("/checkout");
+}
 function handleScroll() {
   // when the user scrolls, check the pageYOffset
   if (window?.pageYOffset > 500) {
@@ -537,11 +547,12 @@ provide("notifications", notifications);
 provide("unreadnotifications", unreadnotifications);
 provide("open", open);
 provide("isOpen", isSigniningOut);
+provide("authOpen", isAuthOpen)
 </script>
 <style lang="scss">
 nav {
   .NuxtLink-active.NuxtLink-exact-active {
-    color: #1570EF;
+    color: #1570ef;
   }
 }
 /* Add the transition class for slide-down effect */

@@ -42,6 +42,8 @@
                 () => {
                   authOpen = false;
                   cartStore.getMyCart(action, loadData);
+                  goToUrl && navigateTo(goToUrl)
+                  
                 }
               "
               @toggleAuth="(val) => (type = val)"
@@ -56,6 +58,7 @@
                 () => {
                   authOpen = false;
                   cartStore.getMyCart(action, loadData);
+                  goToUrl && navigateTo(goToUrl)
                 }
               "
             />
@@ -105,6 +108,9 @@ defineProps({
   className: {
     default: "",
   },
+  goToUrl:{
+    default:null
+  }
 });
 
 function loadData() {
