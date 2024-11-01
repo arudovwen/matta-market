@@ -23,6 +23,7 @@
     </button>
   </div>
 </template>
+
 <script setup>
 defineProps(["tabs", "className", "count"]);
 const active = inject("active");
