@@ -548,6 +548,9 @@ provide("unreadnotifications", unreadnotifications);
 provide("open", open);
 provide("isOpen", isSigniningOut);
 provide("authOpen", isAuthOpen)
+provide("action", null)
+provide("handleProceed", null)
+provide("handleOrderRequest", null)
 </script>
 <style lang="scss">
 nav {
