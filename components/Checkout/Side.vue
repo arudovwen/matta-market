@@ -74,9 +74,10 @@
       :isDisabled="
         !cartStore?.cart ||
         !cartStore?.cartTotalAmount ||
+        loading ||
+        !shippingStore?.defaultAddress?.id ||
         cartStore?.loadingCart ||
-        requestLoading ||
-        loading
+        requestLoading
       "
       loadingText="Processing ..."
       btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
@@ -98,7 +99,7 @@
       loadingText="Processing ..."
       btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4 w-full"
     />
-  
+
     <p class="text-xs text-[#E1E1E1]">
       {{ orderText }}
     </p>
