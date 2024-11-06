@@ -171,7 +171,7 @@
           >Upload the documents listed below
         </label>
 
-        <div class="w-full">
+        <div class="w-full" v-if="country">
           <OnboardingCompanyDocumentsUpload
             :documents="companyDocuments"
             @get-docs="handleDocUpdate"
@@ -339,49 +339,49 @@ onMounted(() => {
 });
 
 function handleDocUpdate(data) {
-
   setFieldValue("companyDocuments", data);
 }
 
 watch(country, () => {
-  if (country?.value?.toLowerCase() !== "nigeria") {
-    setFieldValue(
-      "companyDocuments",
-      formData.kyb?.companyDocuments?.filter((i) => i.documentType === 0)
-    );
+  const isNigeria = country?.value?.toLowerCase() === "nigeria";
+  const defaultDocuments = [
+    {
+      urls: [{ url: "" }],
+      url: "",
+      documentType: 1,
+    },
+    {
+      urls: [{ url: "" }],
+      url: "",
+      documentType: 2,
+    },
+    {
+      urls: [{ url: "" }],
+      url: "",
+      documentType: 3,
+    },
+  ];
+
+  // Filter documents based on document type (0 and 4)
+  const filterDocuments = (documents) =>
+    documents.filter((i) => i.documentType === 0 || i.documentType === 4);
+
+  if (!isNigeria) {
+    const filteredDocuments = filterDocuments(formData.kyb?.companyDocuments);
+    setFieldValue("companyDocuments", filteredDocuments);
+    formData.kyb.companyDocuments = filteredDocuments;
   } else {
-    setFieldValue("companyDocuments", [
+    const updatedDocuments = [
       ...formData.kyb?.companyDocuments,
-      {
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 1,
-      },
-      {
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 2,
-      },
-      {
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 3,
-      },
-    ]);
+      ...defaultDocuments,
+    ];
+    setFieldValue("companyDocuments", updatedDocuments);
+    formData.kyb.companyDocuments = updatedDocuments;
   }
 });
 
 const onSubmit = handleSubmit((values) => {
-
+  
   if (
     country.value?.toLowerCase() === "nigeria" &&
     (values.companyDocuments.some(

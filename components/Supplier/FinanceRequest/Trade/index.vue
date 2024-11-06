@@ -190,36 +190,36 @@ function getCompanyData() {
       loading.value = false;
 
       const { companyDocuments = [], ...companyProfile } = res.data.data;
-
+      companyProfile.country = companyProfile.country || "Nigeria";
       const formatDocuments = (documents) => {
         return documents.map((doc) => ({
           ...doc,
-          urls: doc.urls.length > 0
-            ? doc.urls.map((urlItem) => ({
-                url: urlItem?.url || urlItem || "",
-              }))
-            : [{ url: doc.url || "" }],
+          urls:
+            doc.urls.length > 0
+              ? doc.urls.map((urlItem) => ({
+                  url: urlItem?.url || urlItem || "",
+                }))
+              : [{ url: doc.url || "" }],
         }));
       };
-   
+
       const tempData = {
         ...companyProfile,
-        companyDocuments: companyDocuments.length > 0
-          ? formatDocuments(companyDocuments)
-          : KybDocumentDefault,
+
+        companyDocuments:
+          companyDocuments.length > 0
+            ? formatDocuments(companyDocuments)
+            : companyProfile.country.toLowerCase() === "nigeria"
+            ? KybDocumentDefault
+            : KybDocumentDefault.filter((doc) =>
+                [0, 4].includes(doc.documentType)
+              ),
       };
 
       company.value = tempData;
       formData.kyb = { ...tempData };
-
-      if (companyDocuments.length > 0) {
-        const formattedDocData = formatDocuments(companyDocuments);
-        formData.kyb.companyDocuments =
-          res.data.data.country.toLowerCase() === "nigeria"
-            ? formattedDocData
-            : formattedDocData.filter((doc) => [0, 4].includes(doc.documentType));
-      }
     })
+
     .catch(() => {
       loading.value = false;
       // Consider adding error handling here, e.g., logging or notifying the user

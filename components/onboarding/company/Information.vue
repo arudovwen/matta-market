@@ -622,11 +622,7 @@ import {
   minLength,
 } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
-import {
-
-  uploadfile,
- 
-} from "~/services/onboardingservices";
+import { uploadfile } from "~/services/onboardingservices";
 import { useRouter } from "vue-router";
 import {
   getCompanyProfile,
@@ -695,7 +691,7 @@ const isLoading = ref(false);
 const validPhoneLength = (value) =>
   form.code === "+234" ? value.length > 9 && value.length < 18 : true;
 const mystates = computed(() => {
-  return states.value.map((item) => {
+  return states.value?.map((item) => {
     return {
       id: item.code,
       label: item.name,
@@ -705,7 +701,7 @@ const mystates = computed(() => {
 });
 
 const allcountries = computed(() => {
-  return CountryList.map((item) => {
+  return CountryList?.map((item) => {
     return {
       id: "",
       label: `${item.name}`,
@@ -762,7 +758,7 @@ const states = computed(() => {
   if (!form.country) return [];
   return countries.find(
     (item) => item.name.toLowerCase() == form.country.toLowerCase()
-  ).states;
+  )?.states;
 });
 
 function handleEvent(e) {
@@ -858,7 +854,7 @@ async function handleSubmit() {
   const validity = await v$.value.$validate();
   if (!validity) return;
   isLoading.value = true;
-
+  companyInfo.value.country = form.country;
   updateCompanyProfile(form)
     .then((res) => {
       if (res.status === 200) {

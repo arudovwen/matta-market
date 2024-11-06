@@ -72,7 +72,7 @@ const form = reactive({
 const companyDoc = computed(() => {
   if (companyInfo?.value.country?.toLowerCase() !== "nigeria") {
     return companyInfo?.value.companyDocuments.filter(
-      (i) => i.documentType === 0
+      (i) => i.documentType === 0 || i.documentType === 4
     );
   } else {
     return companyInfo?.value.companyDocuments;
@@ -130,6 +130,11 @@ async function handleSubmit() {
       toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
+
+onMounted(() => {
+  console.log("🚀 ~ onMounted ~ country:",  companyInfo?.value.country)
+});
+
 watch(companyDoc, () => {
   form.companyDocuments = companyDoc.value;
 });
