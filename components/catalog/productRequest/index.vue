@@ -4,7 +4,9 @@
       @submit.prevent="onSubmit"
       class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF]"
     >
-      <h4 class="text-2xl font-semibold text-left mb-7">Request a product</h4>
+      <h4 class="text-2xl font-semibold text-left mb-7">
+        {{ isDetailPage ? "Request a call" : "Request a product" }}
+      </h4>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -118,7 +120,7 @@
 </template>
 <script setup>
 import { useForm } from "vee-validate";
-import * as yup from "yup";;
+import * as yup from "yup";
 import { createproductrequest } from "~/services/productservices";
 import { toast } from "vue3-toastify";
 

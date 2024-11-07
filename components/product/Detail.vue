@@ -250,7 +250,7 @@
             chemicalName: productData.name,
           }"
           :isDetailPage="true"
-          @close="isOpen = false"
+        @close="isOpen = false"
         />
       </div>
     </template>
