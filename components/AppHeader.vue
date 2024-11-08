@@ -185,6 +185,18 @@
                 Request a product</NuxtLink
               >
             </li>
+            <li
+              class="flex gap-x-[6px] items-center text-sm border-transparent group"
+            >
+              <a
+                target="_blank"
+                href="https://corporate.matta.trade"
+                activeClass="text-[#165EF0] font-medium"
+                class="flex gap-x-1 items-center group-hover:text-[#165EF0] cursor-pointer"
+              >
+                About Us</a
+              >
+            </li>
           </ul>
         </div>
         <div class="flex items-center gap-x-2 text-sm">
