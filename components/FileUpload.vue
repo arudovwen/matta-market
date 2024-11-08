@@ -1,16 +1,12 @@
 <template>
-  <div>
-    <label
-      for="upload"
-      v-if="label"
-      class="block text-sm mb-[10px] text-[#344054]"
+  <div class="w-full">
+    <label v-if="label" class="block text-sm mb-[10px] text-[#344054]"
       >{{ label }} <RedDot v-if="isCumpulsory"
     /></label>
     <div
-      class="flex-1 rounded-lg py-1 pr-[4px] pl-2 h-11 text-sm w-full border border-[##EAECF0] placeholder:text-[#B6B7B9] bg-[#F9FAFB] focus:outline-matta-black/20 flex items-center justify-between"
+      class="flex-1 rounded-lg py-1 pr-[14px] pl-2 h-12 text-sm w-full border border-[##EAECF0] placeholder:text-[#B6B7B9] bg-[#F9FAFB] focus:outline-matta-black/20 flex items-center"
     >
       <input
-        id="upload"
         ref="fileInputRef"
         type="file"
         class="hidden"
@@ -22,29 +18,36 @@
         :accept="accept"
         :multiple="multiple"
       />
-      <span
-        class="flex-1 px-2 truncate text-[#999999] inline-block"
-        :class="lClass"
-        >{{ multiple ? multiUrls.join() : title || placeholder }}</span
-      >
+
       <button
         type="button"
         @click="triggerFileInput"
-        class="text-xs text-white border border-[#667085] bg-[#667085] rounded px-5 py-[6px] h-full active:scale-[.95] leading-normal flex justify-center items-center"
+        class="text-xs text-white border border-[#1570Ef] !bg-[#1570EF] rounded px-5 py-[10px] active:scale-[.95] leading-normal flex justify-center"
       >
         <div
           v-if="loading"
           class="loader border-t-2 border-white border-solid rounded-full h-3 w-3 animate-spin whitespace-nowrap"
         ></div>
-        <span v-else>{{ btnText || "Select file" }}</span>
+        <span v-else class="flex flex-row justify-between">
+          <Icon icon="lucide:upload" class="mr-2" />
+          <span>{{ btnText || "Select file" }}</span>
+        </span>
       </button>
+
+      <span
+        :class="lClass"
+        class="flex-1 px-4 truncate text-[#999999] inline-bloc"
+        >{{ multiple ? multiUrls.join() : title }}</span
+      >
     </div>
   </div>
 </template>
 
 <script setup>
-import { uploaddocument } from "~/services/onboardingservices";
-import { defineProps, ref, inject } from "vue";
+import RedDot from "@/components/RedDot.vue";
+import { uploaddocument } from "@/services/onboardingservices";
+import { Icon } from "@iconify/vue";
+import { defineProps, ref, inject, watch, onMounted, defineEmits } from "vue";
 import { toast } from "vue3-toastify";
 
 const props = defineProps({
@@ -68,9 +71,6 @@ const props = defineProps({
   },
   isCumpulsory: {
     default: false,
-  },
-  placeholder: {
-    default: "Select file to upload",
   },
   lClass: {
     default: " max-w-[300px] xl:max-w-[380px]",
@@ -126,7 +126,6 @@ function handleMultiple(e) {
   const files = Object.values(e.target.files);
 
   if (!files.length) return;
-
   const promises = [];
   files.forEach((file) => {
     multiUrls.value = [];
@@ -140,7 +139,6 @@ function handleMultiple(e) {
     }
 
     const reader = new FileReader();
-
     const promise = new Promise((resolve, reject) => {
       reader.onload = function (event) {
         const base64String = event.target.result.split(",")[1];

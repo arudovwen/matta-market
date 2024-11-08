@@ -117,7 +117,7 @@ function getAllProducts() {
           query.totalData = res.data.totalCount;
           if (query.Search) {
             res.data.data.forEach((ctx) => {
-              searchStore.addToSearch(ctx).then((resp) => {});
+              searchStore.addToSearch(ctx);
             });
           }
         }

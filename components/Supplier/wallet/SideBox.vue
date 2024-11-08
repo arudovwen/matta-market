@@ -132,10 +132,17 @@
       </div>
       <div class="px-4 pt-4 flex justify-end gap-x-4" v-if="!isLoading">
         <AppButton
-          v-if="hasCredit"
-          @click="navigateTo('/wallet/active-credits') "
+          v-if="hasCredit && creditDetail.creditWalletStatus === 1"
+          @click="navigateTo('/wallet/active-credits')"
           type="button"
           text="Repay credit"
+          btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
+        />
+        <AppButton
+          v-if="hasCredit && creditDetail.creditWalletStatus === 0"
+          type="button"
+          text="Pending Approval"
+          :disabled="true"
           btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
         />
         <AppButton

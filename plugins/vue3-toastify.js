@@ -3,8 +3,9 @@ import "vue3-toastify/dist/index.css";
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.use(Vue3Toastify, {
-    autoClose: 5000,
+    autoClose: 3500,
     clearOnUrlChange: false,
+    multiple: false,
   });
 
   return {

@@ -2,14 +2,15 @@
   <div class="container py-10 w-full">
     <div class="mb-6">
       <AppButton
-        link="/cart"
+        link="/category/market/all"
         icon="ion:arrow-back-sharp"
-        text="Back to cart"
+        text="Back to market"
         btnClass="text-xs sm:text-sm !py-0 !px-0 !font-semibold"
       />
     </div>
     <div class="flex gap-x-5 w-full flex-col lg:flex-row gap-y-8 lg:gap-y-0">
-      <div class="flex-1">
+      <div class="flex-1 grid gap-y-4">
+        <CartContent />
         <CheckoutContent />
       </div>
       <div>

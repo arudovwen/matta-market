@@ -35,32 +35,42 @@ const isLoading = ref(true);
 function getData() {
   getCompanyProfile()
     .then((res) => {
-      if (res.status === 200) {
-        isLoading.value = false;
+      isLoading.value = false;
 
-        const tempData = {
-          ...res.data.data,
-          companyDocuments: res.data.data?.companyDocuments?.map((doc) => ({
-            ...doc,
-            urls: !doc.urls.length
-              ? [
-                  {
-                    url: doc.url || "",
-                  },
-                ]
-              : doc.urls.map((i) => ({
-                  url: i?.url ?? i ?? "",
-                })),
-          })),
-        };
+      const { companyDocuments = [], ...companyProfile } = res.data.data;
 
-        companyInfo.value = tempData;
+      const formatDocuments = (documents) => {
+        return documents.map((doc) => ({
+          ...doc,
+          urls: doc.urls.length > 0
+            ? doc.urls.map((urlItem) => ({
+                url: urlItem?.url || urlItem || "",
+              }))
+            : [{ url: doc.url || "" }],
+        }));
+      };
+   
+      const tempData = {
+        ...companyProfile,
+        companyDocuments: companyDocuments.length > 0
+          ? formatDocuments(companyDocuments)
+          : KybDocumentDefault,
+      };
+
+      companyInfo.value = tempData;
     
+
+      if (companyDocuments.length > 0) {
+        const formattedDocData = formatDocuments(companyDocuments);
+        formData.kyb.companyDocuments =
+          res.data.data.country.toLowerCase() === "nigeria"
+            ? formattedDocData
+            : formattedDocData.filter((doc) => [0, 4].includes(doc.documentType));
       }
     })
-    .catch((err) => {
-    
+    .catch(() => {
       isLoading.value = false;
+      // Consider adding error handling here, e.g., logging or notifying the user
     });
 }
 onBeforeMount(() => {

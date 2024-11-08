@@ -1,10 +1,12 @@
 <template>
-  <div class="bg-white flex-1">
+  <div class="bg-white flex-1 rounded-lg">
     <form
       @submit.prevent="onSubmit"
       class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF]"
     >
-      <h4 class="text-2xl font-semibold text-left mb-7">Request a product</h4>
+      <h4 class="text-2xl font-semibold text-left mb-7">
+        {{ isDetailPage ? "Request a call" : "Request a product" }}
+      </h4>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -96,7 +98,7 @@
         <button
           type="submit"
           :disabled="isLoading"
-          class="border text-[13px] mb-4 border-primary- uppercase text-white w-full lg:min-w-[150px] mx-auto bg-primary-500 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
+          class="border text-[13px] mb-4 border-primary-500 uppercase text-white w-full lg:min-w-[150px] mx-auto bg-primary-500 disabled:opacity-75 rounded-lg px-6 py-2 hover:bg-primary/80 h-11"
         >
           <span>
             <span
@@ -119,29 +121,37 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
-import { useStore } from "vuex";
 import { createproductrequest } from "~/services/productservices";
-import { uploaddocument } from "~/services/onboardingservices";
 import { toast } from "vue3-toastify";
 
 const isComplete = ref(false);
-
-const store = useStore();
+const emits = defineEmits(["close"]);
+const props = defineProps({
+  productOptions: {
+    default: null,
+  },
+  isDetailPage: {
+    default: false,
+    type: Boolean,
+  },
+});
+const authStore = useAuthStore();
 
 const form = reactive({
-  fullName: "",
-  businessName: "",
-  email: store.getters.loggedUser?.email || "",
-  phone: store.getters.loggedUser?.phoneNumber || "",
+  fullName: authStore.userInfo?.fullName,
+  businessName: authStore.userInfo?.companyName,
+  email: authStore.userInfo?.email || "",
+  phone: authStore.userInfo?.phoneNumber || "",
   address: "",
   uploadedDocumentUrl: "",
-  chemicalName: "",
+  chemicalName: props.productOptions?.chemicalName,
   quantity: "",
   confirm: false,
   unit: "g",
   productUse: "",
   phoneCode: "+234",
 });
+
 const validationSchema = yup.object({
   fullName: yup.string().required("Full name is required"),
   businessName: yup.string().required("Business name is required"),
@@ -154,6 +164,7 @@ const validationSchema = yup.object({
   chemicalName: yup.string().required("Chemical name is required"),
   quantity: yup
     .number()
+    .typeError("Enter a number")
     .required("Quantity is required")
     .positive("Quantity must be positive"),
   unit: yup.string().required("Unit is required"),
@@ -178,13 +189,17 @@ const isLoading = ref(false);
 const isUploading = ref(false);
 
 const onSubmit = handleSubmit((values) => {
+  isLoading.value = true;
   createproductrequest(values)
     .then((res) => {
       if (res.status === 200) {
         isComplete.value = true;
         isLoading.value = false;
         resetForm();
-        toast.success("Product request submitted");
+        toast.success("Request Successful");
+        if (props.isDetailPage) {
+          emits("close");
+        }
       }
     })
 

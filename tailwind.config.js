@@ -40,7 +40,7 @@ export default {
           200: "#ADC9FF",
           300: "#87B0FF",
           400: "#6197FF",
-          500: "#165EF0", // Default shade
+          500: "#1570EF", // Default shade
           600: "#0042CB",
           700: "#0033A2",
           800: "#002378",

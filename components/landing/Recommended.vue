@@ -123,7 +123,7 @@ onMounted(() => {
 </script>
 <style>
 .carousel__next {
-  color: #165ef0;
+  color: #1570EF;
   background-color: white;
   border-radius: 50em;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

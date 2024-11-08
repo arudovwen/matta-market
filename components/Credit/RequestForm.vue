@@ -159,54 +159,45 @@ const tabs = [
   },
 ];
 function getCompanyData() {
+  loading.value = true; // Assuming loading starts when the function is called
+
   getCompanyProfile()
     .then((res) => {
       loading.value = false;
 
+      const { companyDocuments = [], ...companyProfile } = res.data.data;
+      companyProfile.country = companyProfile.country || "Nigeria";
+      const formatDocuments = (documents) => {
+        return documents.map((doc) => ({
+          ...doc,
+          urls:
+            doc.urls.length > 0
+              ? doc.urls.map((urlItem) => ({
+                  url: urlItem?.url || urlItem || "",
+                }))
+              : [{ url: doc.url || "" }],
+        }));
+      };
+
       const tempData = {
-        ...res.data.data,
+        ...companyProfile,
+        country: companyProfile.country || "Nigeria",
         companyDocuments:
-          res.data.data.companyDocuments.length > 0
-            ? res.data.data.companyDocuments?.map((doc) => ({
-                ...doc,
-                urls: !doc.urls.length
-                  ? [
-                      {
-                        url: doc.url || "",
-                      },
-                    ]
-                  : doc.urls.map((i) => ({
-                      url: i?.url || i || "",
-                    })),
-              }))
-            : [],
+          companyDocuments.length > 0
+            ? formatDocuments(companyDocuments)
+            : companyProfile.country.toLowerCase() === "nigeria"
+            ? KybDocumentDefault
+            : KybDocumentDefault.filter((doc) =>
+                [0, 4].includes(doc.documentType)
+              ),
       };
 
       company.value = tempData;
       formData.kyb = { ...tempData };
-
-      if (res.data.data?.companyDocuments?.length > 0) {
-        const tempDocData = res.data.data.companyDocuments?.map((doc) => ({
-          ...doc,
-          urls: !doc.urls.length
-            ? [
-                {
-                  url: doc.url || "",
-                },
-              ]
-            : doc.urls.map((i) => ({
-                url: i?.url || i || "",
-              })),
-        }));
-
-        formData.kyb.companyDocuments =
-          res.data.data.country.toLowerCase() === "nigeria"
-            ? tempDocData
-            : tempDocData.filter((i) => [0, 4].includes(i.documentType));
-      }
     })
     .catch(() => {
       loading.value = false;
+      // Consider adding error handling here, e.g., logging or notifying the user
     });
 }
 onMounted(() => {
