@@ -203,8 +203,8 @@ const states = computed(() => {
   return mystates.value.map((item) => {
     return {
       id: item.code,
-      label: item.name,
-      value: item.name,
+      label: item.name.toLowerCase().includes("abuja") ? "Abuja FCT" : item.name,
+      value: item.name.toLowerCase().includes("abuja") ? "Abuja FCT" : item.name,
     };
   });
 });

@@ -16,7 +16,7 @@
         >
         <button
           @click="getStartedIsOpen = true"
-          class="bg-[#165EF0] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold"
+          class="bg-[#1570EF] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold"
         >
           Get Started
         </button>

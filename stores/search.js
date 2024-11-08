@@ -4,21 +4,16 @@ export const useSearchStore = defineStore(
   "recentSearch",
   () => {
     const recentSearches = ref([]);
-    const recentSearchIds = new Set();
-
     const recentSearchesData = computed(() => recentSearches.value);
 
     function setRecentSearch(data) {
       recentSearches.value = data;
-      recentSearchIds.clear();
-      data.forEach((item) => recentSearchIds.add(item.id));
     }
 
     async function addToSearch(value) {
       const { id } = value;
-
       // Check if the value already exists using the Set
-      if (recentSearchIds.has(id)) {
+      if (recentSearches.value.some((i) => i.id === id)) {
         return { status: false, message: "inhistory" };
       }
 

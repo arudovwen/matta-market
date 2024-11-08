@@ -6,7 +6,7 @@
       )"
       :key="n.name"
       @click="activeKey = n.name"
-      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
+      class="flex gap-x-1 items-center group-hover:text-[#1570EF] justify-between text-sm font-medium text-[#333]"
     >
       {{ n.name }}
       <AppIcon icon="pepicons-pencil:angle-right" />
@@ -25,13 +25,10 @@
     <li
       class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
     >
-      <a
-        target="_blank"
-        href="https://corporate.matta.trade"
-        class="flex gap-x-1 items-center group-hover:text-[#165EF0] cursor-pointer"
-      >
-        About Us</a
-      >
+     <NuxtLink to="/finance">
+     <span class="flex gap-x-1 items-center group-hover:text-[#1570EF] justify-between text-sm font-medium text-[#333]"> Finance
+      <AppIcon icon="pepicons-pencil:angle-right" /></span>
+     </NuxtLink>
     </li>
   </ul>
   <button
@@ -45,7 +42,7 @@
     <li
       v-for="cat in handleDropDown()"
       :key="cat.title"
-      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
+      class="flex gap-x-1 items-center group-hover:text-[#1570EF] justify-between text-sm font-medium text-[#333]"
     >
       <NuxtLink
         v-if="activeKey.toLowerCase() !== 'finance'"
@@ -71,6 +68,15 @@
         <AppIcon :icon="`fa6-solid:${cat.imagePath}`" v-if="cat.imagePath" />
         {{ cat.title }}
       </button>
+    </li>
+    <li   class="flex gap-x-1 items-center group-hover:text-[#1570EF] justify-between text-sm font-medium text-[#333] mt-2">
+      <NuxtLink
+        to="/request-product"
+        activeClass="text-[#1570EF] font-medium"
+        class="flex gap-x-1 items-center group-hover:text-[#1570EF]"
+      >
+        Request a product</NuxtLink
+      >
     </li>
   </ul>
 </template>

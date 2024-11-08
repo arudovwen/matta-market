@@ -92,7 +92,7 @@
               class="flex gap-x-[6px] items-center text-sm border-transparent group"
               :class="`${
                 currentRoute?.name?.toLowerCase() == n?.name?.toLowerCase()
-                  ? 'border-[#165EF0]'
+                  ? 'border-[#1570EF]'
                   : ''
               }`"
             >
@@ -104,7 +104,7 @@
               >
                 <MenuButton
                   :id="n.name"
-                  class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
+                  class="flex gap-x-1 items-center group-hover:text-[#1570EF]"
                 >
                   {{ n.name }}
                   <AppIcon
@@ -169,7 +169,7 @@
                 </transition>
               </Menu>
               <NuxtLink :to="n.url" v-else>
-                <span class="cursor-pointer hover:text-[#165EF0]">
+                <span class="cursor-pointer hover:text-[#1570EF]">
                   {{ n.name }}</span
                 >
               </NuxtLink>
@@ -179,8 +179,8 @@
             >
               <NuxtLink
                 to="/request-product"
-                activeClass="text-[#165EF0] font-medium"
-                class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
+                activeClass="text-[#1570EF] font-medium"
+                class="flex gap-x-1 items-center group-hover:text-[#1570EF]"
               >
                 Request a product</NuxtLink
               >
@@ -271,7 +271,7 @@
             />
           </span>
 
-          <NuxtLink to="/cart" class="flex items-center relative">
+          <button @click="goToCheckout" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
             >
@@ -288,7 +288,7 @@
             <!-- <span class="text-xs sm:text-sm font-medium inline-flex text-[#333]"
               >Cart</span
             > -->
-          </NuxtLink>
+          </button>
 
           <div class="flex gap-x-3 ml-3">
             <AppButton
@@ -313,7 +313,7 @@
               <div>
                 <MenuButton
                   id="myaccount"
-                  class="bg-[#165EF0] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold"
+                  class="bg-[#1570EF] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold"
                 >
                   My account <AppIcon icon="mdi:chevron-down" class="text-lg" />
                 </MenuButton>
@@ -430,6 +430,8 @@
       </div>
     </template>
   </ModalSide>
+
+  <ModalAuth goToUrl="/checkout" />
 </template>
 <script setup>
 import { ref } from "vue";
@@ -464,6 +466,8 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const store = useMarketStore();
+
+const isAuthOpen = ref(false);
 const notifications = ref([]);
 const router = useRouter();
 const { currentRoute } = router;
@@ -509,7 +513,13 @@ function getNotifications() {
     notifications.value = res.data.data;
   });
 }
-
+function goToCheckout() {
+  if (!authStore.isLoggedIn) {
+    isAuthOpen.value = true;
+    return;
+  }
+  navigateTo("/checkout");
+}
 function handleScroll() {
   // when the user scrolls, check the pageYOffset
   if (window?.pageYOffset > 500) {
@@ -549,11 +559,15 @@ provide("notifications", notifications);
 provide("unreadnotifications", unreadnotifications);
 provide("open", open);
 provide("isOpen", isSigniningOut);
+provide("authOpen", isAuthOpen)
+provide("action", null)
+provide("handleProceed", null)
+provide("handleOrderRequest", null)
 </script>
 <style lang="scss">
 nav {
   .NuxtLink-active.NuxtLink-exact-active {
-    color: #165ef0;
+    color: #1570ef;
   }
 }
 /* Add the transition class for slide-down effect */

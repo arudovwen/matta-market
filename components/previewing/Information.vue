@@ -9,7 +9,7 @@
         :key="n.key"
         :class="`${
           active === n.key
-            ? 'text-[#165EF0] border-[#165EF0]'
+            ? 'text-[#1570EF] border-[#1570EF]'
             : 'border-transparent'
         } text-xs pb-[19px] border-b-2 block whitespace-nowrap`"
       >

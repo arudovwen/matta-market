@@ -168,24 +168,12 @@
         <label
           for="companyDocuments"
           class="mb-4 mt-3 font-medium text-sm block"
-          >Upload the documents listed in the dropdown below
+          >Upload the documents listed below
         </label>
 
-        <div class="w-full">
+        <div class="w-full" v-if="country">
           <OnboardingCompanyDocumentsUpload
             :documents="companyDocuments"
-            :hideUpdate="
-              (country?.toLowerCase() === 'nigeria' &&
-                company?.approvalStatus &&
-                nigeriaTypes.every((type) =>
-                  companyDocuments?.some((doc) => doc.documentType === type)
-                )) ||
-              (country?.toLowerCase() !== 'nigeria' &&
-                company?.approvalStatus &&
-                nonNigeriaTypes.every((type) =>
-                  companyDocuments?.some((doc) => doc.documentType === type)
-                ))
-            "
             @get-docs="handleDocUpdate"
             :isNonNigerian="country?.toLowerCase() !== 'nigeria'"
           />
@@ -245,13 +233,11 @@ const formSchema = yup.object().shape({
     .date()
     .typeError("Invalid date Of Incorporation")
     .nullable()
-    .max(new Date(), "Date Of Incorporation cannot be after today")
     .required("Date Of Incorporation is required"),
   companyType: yup.string().required("Business Type is required"),
   address: yup.string().required("Address is required"),
   description: yup.string().nullable(),
   companyDocuments: yup.array(),
-
   country: yup.string().required(),
   state: yup.string().required(),
   email: yup.string().required(),
@@ -300,6 +286,7 @@ const {
   setFieldValue,
   setValues,
   isFieldTouched,
+  values,
 } = useForm({
   validationSchema: formSchema,
   initialValues: formData.kyb,
@@ -356,43 +343,45 @@ function handleDocUpdate(data) {
 }
 
 watch(country, () => {
-  if (country?.value?.toLowerCase() !== "nigeria") {
-    setFieldValue(
-      "companyDocuments",
-      formData.kyb?.companyDocuments?.filter((i) => i.documentType === 0)
-    );
+  const isNigeria = country?.value?.toLowerCase() === "nigeria";
+  const defaultDocuments = [
+    {
+      urls: [{ url: "" }],
+      url: "",
+      documentType: 1,
+    },
+    {
+      urls: [{ url: "" }],
+      url: "",
+      documentType: 2,
+    },
+    {
+      urls: [{ url: "" }],
+      url: "",
+      documentType: 3,
+    },
+  ];
+
+  // Filter documents based on document type (0 and 4)
+  const filterDocuments = (documents) =>
+    documents.filter((i) => i.documentType === 0 || i.documentType === 4);
+
+  if (!isNigeria) {
+    const filteredDocuments = filterDocuments(formData.kyb?.companyDocuments);
+    setFieldValue("companyDocuments", filteredDocuments);
+    formData.kyb.companyDocuments = filteredDocuments;
   } else {
-    setFieldValue("companyDocuments", [
+    const updatedDocuments = [
       ...formData.kyb?.companyDocuments,
-      {
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 1,
-      },
-      {
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 2,
-      },
-      {
-        urls: [
-          {
-            url: "",
-          },
-        ],
-        documentType: 3,
-      },
-    ]);
+      ...defaultDocuments,
+    ];
+    setFieldValue("companyDocuments", updatedDocuments);
+    formData.kyb.companyDocuments = updatedDocuments;
   }
 });
 
 const onSubmit = handleSubmit((values) => {
+  
   if (
     country.value?.toLowerCase() === "nigeria" &&
     (values.companyDocuments.some(
@@ -479,7 +468,6 @@ const sectorOptions = computed(() => {
     }) ?? []
   ); // Use optional chaining and nullish coalescing operators for safer property access
 });
-
 provide("handleChange", null);
 </script>
 

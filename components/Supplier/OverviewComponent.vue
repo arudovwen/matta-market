@@ -350,7 +350,7 @@ const series = computed(() => {
 
 const chartOptions = computed(() => {
   return {
-    colors: ["#165EF0", "#B6B7B9"],
+    colors: ["#1570EF", "#B6B7B9"],
     yaxis: {
       show: false,
     },
@@ -386,7 +386,7 @@ const chartOptions = computed(() => {
 });
 const viewOptions = computed(() => {
   return {
-    colors: ["#165EF0"],
+    colors: ["#1570EF"],
     yaxis: {
       show: false,
     },
@@ -431,7 +431,7 @@ const viewSeries = computed(() => {
 });
 const quoteOptions = computed(() => {
   return {
-    colors: ["#165EF0"],
+    colors: ["#1570EF"],
     yaxis: {
       show: false,
     },
@@ -476,7 +476,7 @@ const quoteSeries = computed(() => {
 });
 const balanceOptions = computed(() => {
   return {
-    colors: ["#165EF0"],
+    colors: ["#1570EF"],
     yaxis: {
       show: false,
     },
@@ -528,7 +528,7 @@ const balanceSeries = computed(() => {
 });
 const confirmOptions = computed(() => {
   return {
-    colors: ["#165EF0"],
+    colors: ["#1570EF"],
     yaxis: {
       show: false,
     },
@@ -573,7 +573,7 @@ const confirmSeries = computed(() => {
 });
 // const pendingOptions = computed(() => {
 //   return {
-//     colors: ["#165EF0"],
+//     colors: ["#1570EF"],
 //     yaxis: {
 //       show: false,
 //     },

@@ -12,7 +12,7 @@
           :disabled="n?.disabled"
           :class="`${
             activeMethod === n.key
-              ? 'bg-[#165EF01F] border-[#165EF080]'
+              ? 'bg-[#1570EF1F] border-[#1570EF80]'
               : 'border-[#E7E7E780]'
           } ${
             !n?.disabled ? '' : 'opacity-50 cursor-not-allowed'

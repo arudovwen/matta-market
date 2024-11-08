@@ -1,5 +1,5 @@
 <template>
-  <div class="container mb-[30px]" v-if="searchStore.recentSearchesData.length">
+  <div class="container mb-[30px]" v-if="searchStore.recentSearchesData?.length">
     <div class="flex justify-between items-center mb-4">
       <h2
         class="text-xs sm:text-base lg:text-xl font-bold text-[#222] darks:text-white"
@@ -26,7 +26,7 @@
           ...content,
         ].slice(
           0,
-          [...searchStore.recentSearchesData, ...content].length > 10 ? 10 : 5
+          [...searchStore.recentSearchesData, ...content]?.length > 10 ? 10 : 5
         )"
         :key="idx"
         :index="idx"

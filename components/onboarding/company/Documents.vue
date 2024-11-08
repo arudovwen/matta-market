@@ -14,18 +14,6 @@
       <div class="w-full max-w-[560px]">
         <OnboardingCompanyDocumentsUpload
           :documents="companyDoc"
-          :hideUpdate="
-            (country?.toLowerCase() === 'nigeria' &&
-              company?.approvalStatus &&
-              nigeriaTypes.every((type) =>
-                companyDocuments?.some((doc) => doc.documentType === type)
-              )) ||
-            (country?.toLowerCase() !== 'nigeria' &&
-              company?.approvalStatus &&
-              nonNigeriaTypes.every((type) =>
-                companyDocuments?.some((doc) => doc.documentType === type)
-              ))
-          "
           @get-docs="handleDocUpdate"
           :isNonNigerian="companyInfo?.country?.toLowerCase() !== 'nigeria'"
         />
@@ -84,7 +72,7 @@ const form = reactive({
 const companyDoc = computed(() => {
   if (companyInfo?.value.country?.toLowerCase() !== "nigeria") {
     return companyInfo?.value.companyDocuments.filter(
-      (i) => i.documentType === 0
+      (i) => i.documentType === 0 || i.documentType === 4
     );
   } else {
     return companyInfo?.value.companyDocuments;
@@ -119,14 +107,14 @@ async function handleSubmit() {
     return;
   }
   isLoading.value = true;
-
-  updateDocuments({
+  const dataValue = {
     ...form,
     companyDocuments: form.companyDocuments.map((i) => ({
       ...i,
       urls: i.urls.map((j) => j.url),
     })),
-  })
+  };
+  updateDocuments(dataValue)
     .then((res) => {
       if (res.status === 200) {
         getData();
@@ -142,6 +130,11 @@ async function handleSubmit() {
       toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
+
+onMounted(() => {
+  console.log("🚀 ~ onMounted ~ country:",  companyInfo?.value.country)
+});
+
 watch(companyDoc, () => {
   form.companyDocuments = companyDoc.value;
 });
