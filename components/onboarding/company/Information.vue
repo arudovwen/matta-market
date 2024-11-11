@@ -658,7 +658,7 @@ const sectorOptions = computed(() => {
         value: i.subSectorName, // Use subSectorCode as the value
       };
     }) ?? []
-  ); // Use optional chaining and nullish coalescing operators for safer property access
+  ); 
 });
 const form = reactive({
   companyName: "",
