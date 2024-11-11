@@ -617,8 +617,7 @@ import {
   email,
   helpers,
   maxLength,
-  url,
-  numeric,
+  requiredIf,
   minLength,
 } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
@@ -679,17 +678,10 @@ const form = reactive({
   tin: "",
   sector: "",
   dateofIncorporation: "",
-  socials: [
-    {
-      name: "",
-      link: "",
-    },
-  ],
 });
 
 const isLoading = ref(false);
-const validPhoneLength = (value) =>
-  form.code === "+234" ? value.length > 9 && value.length < 18 : true;
+
 const mystates = computed(() => {
   return states.value?.map((item) => {
     return {
@@ -710,12 +702,7 @@ const allcountries = computed(() => {
   });
 });
 
-function addsocial() {
-  form.socials.push({
-    name: "",
-    link: "",
-  });
-}
+
 onMounted(() => {
   form.companyName = authStore.userInfo?.companyName;
   form.photo = image.value = companyInfo?.value?.photo;
@@ -724,12 +711,7 @@ onMounted(() => {
   form.fax = companyInfo?.value?.fax;
   form.email = companyInfo?.value?.email;
   form.description = companyInfo?.value?.description;
-  form.socials = companyInfo?.value?.socials || [
-    {
-      name: "",
-      link: "",
-    },
-  ];
+
   form.address = companyInfo?.value?.address;
   form.country = companyInfo?.value?.country;
   form.city = companyInfo?.value?.city;
@@ -789,7 +771,7 @@ function crop() {
   });
 }
 
-const rules = {
+const rules = computed(() => ({
   email: {
     required,
     email: helpers.withMessage("Email is invalid", email),
@@ -812,7 +794,6 @@ const rules = {
   sector: {
     required,
   },
-
   city: {
     required,
     maxLength: maxLength(50),
@@ -821,11 +802,15 @@ const rules = {
     required,
     maxLength: maxLength(250),
   },
-  tin: form.country?.toLowerCase() === "nigeria" ? { required } : {},
-  registrationNo:
-    form.country?.toLowerCase() === "nigeria"
-      ? { required, minLength: minLength(7) }
-      : {},
+  tin: {
+    required: requiredIf(() => form.country.toLowerCase() === "nigeria"),
+  },
+  registrationNo: {
+    required: requiredIf(() => form.country.toLowerCase() === "nigeria"),
+    minLength: requiredIf(() => form.country.toLowerCase() === "nigeria")
+      ? minLength(7)
+      : undefined,
+  },
   companyType: { required },
   state: {
     required,
@@ -841,7 +826,9 @@ const rules = {
     maxLength: maxLength(1000),
   },
   logo: {},
-};
+}));
+
+
 
 const invalidCredentials = ref(false);
 const v$ = useVuelidate(rules, form);
