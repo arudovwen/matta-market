@@ -13,7 +13,6 @@ body {
   font-family: "Onest", sans-serif;
   color: #344054;
 }
-
 .dark-mode {
   @apply text-white bg-gray-800;
 }
