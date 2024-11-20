@@ -43,13 +43,13 @@
         <AppLoader />
       </div>
     </div>
-    <AppButton
+    <!-- <AppButton
       :class="defaultLoading ? 'opacity-30' : ''"
       @click="type = 'form'"
       text="New shipping address"
       icon="icon-park-outline:plus"
       btnClass=" !px-0 !sm:px-6 !py-[0px] text-xs sm:text-sm !text-[#2176FF]"
-    />
+    /> -->
   </div>
 </template>
 <script setup>
