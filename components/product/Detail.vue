@@ -120,7 +120,7 @@
           class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4 w-full"
         >
           <div class="grid gap-y-5 w-full">
-            <div class="flex gap-x-3">
+            <div class="flex  flex-col md:flex-row gap-3">
               <AppButton
                 v-if="
                   !productData.hidePrice &&
