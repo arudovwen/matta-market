@@ -131,10 +131,6 @@ async function handleSubmit() {
     });
 }
 
-onMounted(() => {
-  console.log("🚀 ~ onMounted ~ country:",  companyInfo?.value.country)
-});
-
 watch(companyDoc, () => {
   form.companyDocuments = companyDoc.value;
 });
