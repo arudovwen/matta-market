@@ -5,7 +5,7 @@ import { toast } from "vue3-toastify";
 
 // const axios = setupCache(Axios);
 
-const API_URL = "https://dev.gateway.matta.trade/api/";
+const API_URL = "https://gateway.matta.trade/api/";
 
 const axiosApi = Axios.create({
   baseURL: API_URL,
