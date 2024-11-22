@@ -11,15 +11,25 @@
       {{ n.name }}
       <AppIcon icon="pepicons-pencil:angle-right" />
     </li>
-    <!-- <li
-     
-      
+    <li
+      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
+    >
+      <NuxtLink
+        to="/request-product"
+        activeClass="text-[#165EF0] font-medium"
+        class="flex gap-x-1 items-center group-hover:text-[#165EF0]"
+      >
+        Request a product</NuxtLink
+      >
+    </li>
+    <li
+      class="flex gap-x-1 items-center group-hover:text-[#165EF0] justify-between text-sm font-medium text-[#333]"
     >
      <NuxtLink to="/finance">
      <span class="flex gap-x-1 items-center group-hover:text-[#1570EF] justify-between text-sm font-medium text-[#333]"> Finance
       <AppIcon icon="pepicons-pencil:angle-right" /></span>
      </NuxtLink>
-    </li> -->
+    </li>
   </ul>
   <button
     class="flex gap-x-1 items-center text-xs mb-5"

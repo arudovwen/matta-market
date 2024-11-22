@@ -5,7 +5,7 @@ import { toast } from "vue3-toastify";
 
 // const axios = setupCache(Axios);
 
-const API_URL = "https://dev.gateway.matta.trade/api/";
+const API_URL = "https://gateway.matta.trade/api/";
 
 const axiosApi = Axios.create({
   baseURL: API_URL,
@@ -50,7 +50,7 @@ const handleTokenRefresh = async () => {
 axiosApi.interceptors.response.use(
   (response) => response,
   async (error) => {
-    if (error?.response?.status === 403) {
+    if (error.response.status === 403) {
       try {
         // Attempt to refresh the token
         const newAccessToken = await handleTokenRefresh();
