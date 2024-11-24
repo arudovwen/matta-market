@@ -5,7 +5,6 @@
         :isCumpulsory="true"
         formClass="col-span-2 grid grid-cols-1 gap-y-4"
       >
-     
         <div v-for="(file, idx) in doc?.urls" :key="idx" class="mb-4 last:mb-0">
           <div class="relative">
             <FileUpload
@@ -67,21 +66,24 @@ onMounted(() => {
 });
 function ensureDocumentTypes(arr) {
   // Define the possible document types (0 to 4)
-  const requiredDocumentTypes = [0, 1, 2, 3, 4];
+  const requiredNigerianDocumentTypes = [0, 1, 2, 3, 4];
+  const requiredNonNigerianDocumentTypes = [0, 4];
 
   // Create a Set of existing document types in the array for quick lookup
-  const existingDocumentTypes = new Set(arr.map(item => item.documentType));
+  const existingDocumentTypes = new Set(arr.map((item) => item.documentType));
 
   // Iterate through all required document types
-  requiredDocumentTypes.forEach(type => {
+  (props.isNonNigerian
+    ? requiredNonNigerianDocumentTypes
+    : requiredNigerianDocumentTypes
+  ).forEach((type) => {
     if (!existingDocumentTypes.has(type)) {
-      
       arr.push({
-        url: '',
+        url: "",
         urls: [
           {
-            url: '', 
-          }
+            url: "",
+          },
         ],
         documentType: type,
       });
@@ -100,12 +102,12 @@ function removeField(id, idx) {
   privateDocuments?.value[id].urls.splice(idx, 1);
 }
 watch(
-      () => privateDocuments.value,
-      (newValue) => {
-        emit("getDocs", newValue);
-      },
-      { deep: true } // Enable deep watching
-    );
+  () => privateDocuments.value,
+  (newValue) => {
+    emit("getDocs", newValue);
+  },
+  { deep: true } // Enable deep watching
+);
 
 provide("handleChange", null);
 </script>
