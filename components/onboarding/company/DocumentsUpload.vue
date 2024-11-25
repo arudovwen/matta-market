@@ -68,10 +68,8 @@ function ensureDocumentTypes(arr) {
   // Define the possible document types (0 to 4)
   const requiredNigerianDocumentTypes = [0, 1, 2, 3, 4];
   const requiredNonNigerianDocumentTypes = [0, 4];
-
   // Create a Set of existing document types in the array for quick lookup
   const existingDocumentTypes = new Set(arr.map((item) => item.documentType));
-
   // Iterate through all required document types
   (props.isNonNigerian
     ? requiredNonNigerianDocumentTypes
