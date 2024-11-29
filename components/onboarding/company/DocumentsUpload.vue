@@ -6,10 +6,11 @@
         formClass="col-span-2 grid grid-cols-1 gap-y-4"
       >
         <div v-for="(file, idx) in doc?.urls" :key="idx" class="mb-4 last:mb-0">
+
           <div class="relative">
             <FileUpload
-              :label="documentsOptions[index]?.title"
-              :id="documentsOptions[index]?.short"
+              :label="documentsOptions[doc.documentType]?.title"
+              :id="documentsOptions[doc.documentType]?.short"
               :isCumpulsory="true"
               v-model="file.url"
             />
@@ -23,9 +24,9 @@
             </button>
           </div>
           <div class="flex flex-wrap gap-x-4 gap-y-3" v-if="file.url">
-            <span @click="downloadFile(file.url, 'Mermat')">
+            <span @click="downloadFile(file.url, documentsOptions[doc.documentType]?.title)">
               <span class="block text-xs text-blue-500 mt-1"
-                >Download {{ documentsOptions[index]?.short }}
+                >Download {{ documentsOptions[doc.documentType]?.short }}
                 {{ idx + 1 }}</span
               ></span
             >
