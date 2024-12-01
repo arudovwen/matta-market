@@ -9,7 +9,7 @@
     class="grid grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-5"
   >
     <div>
-      <Textinput
+      <TextinputTwo
         placeholder=""
         label="First name"
         type="text"
@@ -21,7 +21,7 @@
       />
     </div>
     <div>
-      <Textinput
+      <TextinputTwo
         placeholder=""
         label="Last name"
         type="text"
@@ -33,7 +33,7 @@
       />
     </div>
     <div>
-      <Textinput
+      <TextinputTwo
         placeholder="Email address"
         label="Email"
         type="email"
@@ -45,7 +45,7 @@
       />
     </div>
     <div>
-      <Textinput
+      <TextinputTwo
         placeholder=""
         label="Phone number"
         type="tel"
@@ -57,7 +57,7 @@
       />
     </div>
     <div class="lg:col-span-2">
-      <Textinput
+      <TextinputTwo
         placeholder=""
         label="Company name"
         type="text"
@@ -69,7 +69,7 @@
       />
     </div>
     <div>
-      <Textinput
+      <TextinputTwo
         placeholder=""
         label="Password"
         type="password"
@@ -82,7 +82,7 @@
       />
     </div>
     <div>
-      <Textinput
+      <TextinputTwo
         placeholder=""
         label="Confirm Password"
         type="password"
@@ -95,7 +95,7 @@
       />
     </div>
     <div class="lg:col-span-2">
-      <Textinput
+      <TextinputTwo
         placeholder=""
         label="Referral Code (Optional)"
         type="text"

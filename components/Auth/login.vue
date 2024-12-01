@@ -8,7 +8,7 @@
     </p>
     <form @submit.prevent="onSubmit">
       <div class="mb-5">
-        <Textinput
+        <TextinputTwo
           icon="line-md:email"
           placeholder=""
           label="Email"
@@ -21,7 +21,7 @@
       </div>
 
       <div class="mb-5">
-        <Textinput
+        <TextinputTwo
           hasicon
           placeholder=""
           label="Password"
