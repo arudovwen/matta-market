@@ -3,6 +3,10 @@ import { defineStore } from "pinia";
 export const useAuthStore = defineStore(
   "auth",
   () => {
+    const cookie = useCookie("MATTA_AUTH", {
+      domain: ".matta.trade",
+      path: "/",
+    });
     const loggedUser = ref("");
     const hasPin = ref(false);
     const language = ref(window?.navigator?.language);
@@ -17,6 +21,7 @@ export const useAuthStore = defineStore(
 
     function setLoggedUser(data) {
       loggedUser.value = data;
+      cookie.value = data
     }
 
     function setHasPin(data) {
@@ -75,7 +80,7 @@ export const useAuthStore = defineStore(
   },
   {
     persist: {
-      storage: persistedState.localStorage,
+      storage: persistedState.cookies,
     },
   }
 );
