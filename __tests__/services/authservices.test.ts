@@ -20,8 +20,6 @@ vi.mock("~/store", () => ({
   },
 }));
 
-
-
 vi.mock("~/helpers/url_helpers", () => ({
   default: {
     LOGIN_USER: "mock-login-user-url",
@@ -35,6 +33,19 @@ vi.mock("~/helpers/url_helpers", () => ({
     SOCIAL_LOGIN: "mock-social-login-url",
   },
 }));
+const mockCookies = [
+  { name: "cookie1", path: "/", domain: "example.com" },
+  { name: "cookie2", path: "/", domain: "example.com" },
+];
+
+// Mock the cookieStore.getAll and cookieStore.delete methods
+const getAllMock = vi.fn().mockResolvedValue(mockCookies);
+const deleteMock = vi.fn().mockResolvedValue(mockCookies);
+
+global.cookieStore = {
+  getAll: getAllMock,
+  delete: deleteMock,
+};
 
 describe("Authentication Helpers", () => {
   beforeEach(() => {
