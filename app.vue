@@ -107,20 +107,6 @@ const cartStore = useCartStore();
 const store = useMarketStore();
 const appStore = useApplicationStore();
 const searchStore = useSearchStore();
-const authStore = useAuthStore()
-onBeforeMount(() => {
-  const cookie = useCookie("MATTA_AUTH", {
-    domain: ".matta.trade",
-    path: "/",
-  });
-  console.log("🚀 ~ onBeforeMount ~ cookie:", cookie.value);
-
-  if (cookie.value && !authStore.isLoggedIn) {
-    authStore.setLoggedUser(cookie.value);
-    authStore.setHasPin(cookie.value?.hasTransactionPIN);
-    navigateTo("/")
-  }
-});
 const query = reactive({
   PageNumber: 1,
   PageSize: 200,
