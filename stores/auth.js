@@ -48,9 +48,12 @@ export const useAuthStore = defineStore(
     }
 
     const logOut = () => {
+      setLoggedUser(null)
       localStorage.clear();
-      clearCookies()
-      window.location.href = "/";
+      clearCookies().then(()=>{
+        window.location.href = "/";
+      })
+    
     };
     return {
       updateUser,
