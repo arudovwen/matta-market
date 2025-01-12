@@ -1,19 +1,25 @@
 import { defineStore } from "pinia";
+import { logoutUser } from "~/services/authservices";
 
-const cookieDomain = process.env.NODE_ENV === "production" ? ".matta.trade" : undefined;
+const cookieDomain =
+  process.env.NODE_ENV === "production" ? ".matta.trade" : undefined;
+
+  const UserTypes = {
+    0: 'buyer',
+    1: 'supplier'
+  }
 export const useAuthStore = defineStore(
   "matta_auth",
   () => {
-
     const loggedUser = ref("");
     const hasPin = ref(false);
     const language = ref(window?.navigator?.language);
     const isLoggedIn = computed(() => !!loggedUser.value);
-    const refresh_token = computed(() => loggedUser?.value?.jwToken);
+    const refresh_token = computed(() => loggedUser?.value?.refreshToken);
     const access_token = computed(() => loggedUser?.value?.jwToken);
     const roles = computed(() => loggedUser?.value?.roles);
     const userId = computed(() => loggedUser?.value?.id);
-    const userType = computed(() => loggedUser?.value?.businessUserType);
+    const userType = computed(() => UserTypes[loggedUser?.value?.businessUserType]);
     const businessId = computed(() => loggedUser?.value?.businessId);
     const userInfo = computed(() => loggedUser?.value);
 
@@ -47,13 +53,14 @@ export const useAuthStore = defineStore(
       setLoggedUser(userInfo);
     }
 
-    const logOut = () => {
-      setLoggedUser(null)
-      localStorage.clear();
-      clearCookies().then(()=>{
-        window.location.href = "/";
-      })
-    
+    const logOut = async () => {
+      const response = await logoutUser({ refreshToken: refresh_token.value });
+      if (response.status === 200) {
+        localStorage.clear();
+        clearCookies().then(() => {
+          window.location.href = "/auth/login";
+        });
+      }
     };
     return {
       updateUser,
@@ -80,10 +87,10 @@ export const useAuthStore = defineStore(
   {
     persist: {
       storage: persistedState.cookiesWithOptions({
-        domain:cookieDomain,
+        domain: cookieDomain,
         path: "/",
         secure: process.env.NODE_ENV === "production",
-        sameSite: "Lax",  
+        sameSite: "Lax",
       }),
     },
   }

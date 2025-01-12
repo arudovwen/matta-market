@@ -173,7 +173,7 @@
           :error="errors.haveyoudonebusiness"
         />
       </div>
-      <div class="md:col-span-2" v-if="id == 0 || id == 3">
+      <div class="md:col-span-2" v-if="id == 3">
         <Textinput
           placeholder=""
           label="Have you previously exported to the order’s country of destination?"

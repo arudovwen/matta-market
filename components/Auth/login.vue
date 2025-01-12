@@ -84,6 +84,11 @@
     :isLoading="isLoading"
     :email="formValues.email"
   />
+  <iframe
+    ref="authProfile"
+    :src="profileUrl"
+    class="h-[400px] w-[500px] hidden"
+  ></iframe>
 </template>
 <script setup>
 import { useForm } from "vee-validate";
@@ -91,6 +96,11 @@ import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { loginUser, sociallogin, loginUser2FA } from "~/services/authservices";
 
+const authProfile = ref(null);
+let profileUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://dev.profile.matta.trade"
+    : "http://localhost:3020/auth/swift";
 const props = defineProps({
   main: {
     default: true,
@@ -157,16 +167,20 @@ const handleFinalSubmit = (token) => {
   loginUser2FA({ token, email: formValues.email })
     .then((res) => {
       if (res.status === 200) {
-      
         isLoading.value = false;
         authStore.setLoggedUser(res.data.data);
         authStore.setHasPin(res.data.data.hasTransactionPIN);
+        authProfile.value?.contentWindow.postMessage(
+          JSON.stringify(res.data.data),
+          "*"
+        );
         localStorage.setItem("fetchCart", true);
         if (!props.main) {
           toast.info("Login successful");
           emits("close");
           return;
         }
+        
         if (route.query.redirected_from) {
           window.location.replace(route.query.redirected_from);
           return;

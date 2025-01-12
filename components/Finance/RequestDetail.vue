@@ -56,7 +56,7 @@
           {{ requestDetail?.haveyoudonebusiness || "-" }}
         </p>
       </div>
-      <div class="">
+      <div class="" v-if=" requestDetail?.haveyouexportedtotheothercourty">
         <p class="font-nomrmal text-sm text-gray-500">
           Have you previously exported to the order’s country of destination?
         </p>

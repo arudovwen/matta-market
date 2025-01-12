@@ -1,19 +1,39 @@
-export default defineNuxtRouteMiddleware((to, from) => {
-
+export default defineNuxtRouteMiddleware(async (to) => {
   const authStore = useAuthStore();
+  const routeName = to?.name?.toString() || "";
+  const isAuthRoute = routeName.includes("auth");
 
-  // if token exists and url is /login redirect to homepage
-  if (authStore.isLoggedIn && to?.name.includes("auth")) {
-    return navigateTo("/");
-  }
+  // Single source of truth for validation URL
+  const validationUrl = `http${
+    process.env.NODE_ENV === "production"
+      ? "s://dev.profile.matta.trade"
+      : "://localhost:3020"
+  }`;
 
-  // if token doesn't exist redirect to log in
-  if (!authStore.isLoggedIn && !to?.name.includes("auth")) {
+  // Not logged in handling
+  if (!authStore.isLoggedIn) {
+    if (isAuthRoute) {
+      abortNavigation();
+      await navigateTo(`${validationUrl}/subapp/validate/0?app=0`, {
+        external: true,
+      });
+      return;
+    }
+    // Redirect non-auth routes to login with return path
     abortNavigation();
     return navigateTo(`/auth/login?redirected_from=${to.path}`);
   }
 
-  // if (authStore?.isLoggedIn && authStore?.userType?.toLowerCase() === "buyer" && !buyerRoutes.includes(to.name)) {
-  //   return navigateTo("/");
-  // }
+  // Logged in handling
+  if (authStore.isLoggedIn) {
+    if (authStore.userType === undefined) {
+      abortNavigation();
+      return navigateTo("/user-type");
+    } else {
+      if (isAuthRoute) {
+        return navigateTo("/");
+      }
+    }
+    // Prevent accessing auth routes when logged in
+  }
 });

@@ -1,5 +1,7 @@
 import { required, helpers } from '@vuelidate/validators';
 
+export const validationUrl = `http${process.env.NODE_ENV === 'production' ? 's://dev.profile.matta.trade' : '://localhost:3020'}`;
+
 export const measurements = [
   { value: "g", name: "Gramme", label: "Gramme" },
   { value: "kg", name: "Kilogramme", label: "Kilogram" },

@@ -10,7 +10,9 @@ const config = {
 export async function inviteUsers(data) {
   return await post(urls.INVITE_USERS, data, config);
 }
-
+export async function signUpWithMatta(data) {
+  return await post(`${urls.SIGN_UP_WITH_MATTA}`, data, config);
+}
 export async function deleteInvite(data) {
   return await post(
     `${urls.DELETE_INVITES}?invitationId=${data.invitationId}`,

@@ -1,6 +1,7 @@
 const urls = {
   //Auth urls
   LOGIN_USER: "v1/account/login",
+  LOGIN_OUT: "v1/account/logout",
   LOGIN_USER_2FA: "v1/account/login2fa",
   CONFIRM_2FA: "v1/account/confirm-2fa",
   REGISTER: "/v1/register",
@@ -13,6 +14,7 @@ const urls = {
   SOCIAL_REGISTER: "v1/register/social",
   SOCIAL_LOGIN: "v1/account/sociallogin",
   RESEND_2FA_OTP: "v1/account/resend-2fa-code",
+  GET_TOKEN_INFORMATION: "v1/account/token-login",
 
   //Onboarding
   COMPANY_UPDATE_PERSONAL_INFO: "/v1/Onboarding/company/update-PersonalInfo",
@@ -83,6 +85,7 @@ const urls = {
   STOREFRONT_TRENDING_PRODUCT: "v1/storefront/trendingproducts",
 
   //Users
+  SIGN_UP_WITH_MATTA: "/v1/account/sign-up-with-matta",
   INVITE_USERS: "v1/usermanagement/invite-users",
   RESEND_INVITE_USERS: "v1/usermanagement/resend-invite",
   GET_INVITES: "v1/usermanagement/get-invites",

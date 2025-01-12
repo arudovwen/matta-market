@@ -24,7 +24,7 @@
           placeholder=""
           label="Last name"
           type="text"
-          name="lasttName"
+          name="lastName"
           v-bind="lastNameAtt"
           v-model="lastName"
           :error="errors.lastName"

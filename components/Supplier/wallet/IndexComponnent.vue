@@ -8,7 +8,7 @@
     />
     <div class="">
       <VerificationBox
-        v-if="authstore.userInfo.businessUserType.toLowerCase() !== 'buyer'"
+        v-if="authstore.userType.toLowerCase() !== 'buyer'"
       />
     </div>
     <div

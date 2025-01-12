@@ -293,14 +293,16 @@
           <div class="flex gap-x-3 ml-3">
             <AppButton
               v-if="!authStore?.isLoggedIn"
-              link="/auth/login"
+              type="button"
+              @click="handleRouting('login')"
               text="Log in"
               btnClass="text-[#475467] !px-4 !sm:px-6 !py-[6px] !font-semibold text-xs sm:!text-base hidden md:flex"
             />
 
             <AppButton
               v-if="!authStore?.isLoggedIn"
-              link="/auth/vendor-register"
+              type="button"
+              @click="handleRouting('register')"
               text="Sign up"
               btnClass="!text-[12px] sm:!text-sm text-white  !font-semibold !px-[15px] !py-[6px] !normal-case bg-primary-500 flex"
             />
@@ -498,6 +500,13 @@ onMounted(() => {
   }
   // geoFindMe();
 });
+
+const handleRouting = (value) => {
+  navigateTo(
+    `${validationUrl}/auth/${value}/0?redirected_from=/subapp/validate/0&app=0`,
+    { external: true }
+  );
+};
 const notifyParams = reactive({
   PageNumber: 1,
   PageSize: 30,
@@ -559,10 +568,10 @@ provide("notifications", notifications);
 provide("unreadnotifications", unreadnotifications);
 provide("open", open);
 provide("isOpen", isSigniningOut);
-provide("authOpen", isAuthOpen)
-provide("action", null)
-provide("handleProceed", null)
-provide("handleOrderRequest", null)
+provide("authOpen", isAuthOpen);
+provide("action", null);
+provide("handleProceed", null);
+provide("handleOrderRequest", null);
 </script>
 <style lang="scss">
 nav {

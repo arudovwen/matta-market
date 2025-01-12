@@ -29,5 +29,6 @@
 <script setup>
 definePageMeta({
   layout: "default",
+  middleware: "user-type"
 });
 </script>
