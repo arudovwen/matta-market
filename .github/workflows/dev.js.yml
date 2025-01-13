@@ -35,7 +35,7 @@ jobs:
     - name: Archive production artifacts (Windows)
       run: |
            # xcopy C:\matta-frontend-action-runner\_work\Matta-Trade-Frontend-New\Matta-Trade-Frontend-New\dist C:\inetpub\wwwroot\Matta.Dev.Frontend /E /I /Y # Adjust "public" to match your build output folder
-             Copy-Item -Path C:\matta-frontend-action-runner\_work\Matta-Trade-Frontend-New\Matta-Trade-Frontend-New\dist -Destination C:\inetpub\wwwroot\Matta.Dev.Frontend\ -recurse -Force
+             Copy-Item -Path C:\matta-frontend-action-runner\_work\Matta-Trade-Frontend-New\Matta-Trade-Frontend-New\.output\public -Destination C:\inetpub\wwwroot\Matta.Dev.Frontend\ -recurse -Force
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
