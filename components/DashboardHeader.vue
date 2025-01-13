@@ -223,7 +223,6 @@
       </div>
     </div>
   </nav>
-
   <div class="z-[999]" v-if="open">
     <AppSideMenu />
   </div>
