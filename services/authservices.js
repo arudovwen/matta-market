@@ -18,7 +18,6 @@ export async function ssoConfirmEmail(user, config = {}) {
   return await ssoPost(`${urls.CONFIRM_EMAIL}`,user, config);
 }
 export async function getTokenInfo(config = {}) {
-  console.log("🚀 ~ getTokenInfo ~ config:", config)
   return await ssoPost(`${urls.GET_TOKEN_INFORMATION}`, {}, config);
 }
 export async function logOut() {

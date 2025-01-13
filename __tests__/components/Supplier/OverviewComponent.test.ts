@@ -88,6 +88,10 @@ describe("OverviewComponent", () => {
                   firstName: "Bruce",
                   lastName: "Wayne",
                 },
+                userInfo: {
+                  firstName: "Bruce",
+                  lastName: "Wayne",
+                },
               },
             },
           }),
@@ -95,8 +99,8 @@ describe("OverviewComponent", () => {
       },
     });
 
-    await screen.findByText("Welcome back, Bruce");
+    await screen.findByText("Your current sales summary and activity.");
 
-    expect(screen.getByText("Welcome back, Bruce")).toBeTruthy();
+    expect(screen.getByText("Your current sales summary and activity.")).toBeTruthy();
   });
 });
