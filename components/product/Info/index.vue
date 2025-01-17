@@ -31,7 +31,7 @@
       No information available
     </div>
   </div>
-  <div v-else class="grid grid-cols-1 gap-x-[75px] gap-y-6">
+  <!-- <div v-else class="grid grid-cols-1 gap-x-[75px] gap-y-6">
     <div
       class="flex jus items-center"
       v-for="(n, id) in documentList"
@@ -62,10 +62,10 @@
     >
       No information available
     </div>
-  </div>
+  </div> -->
 </template>
 <script setup>
-defineProps(["detail", "keydata"]);
+const props = defineProps(["detail", "keydata"]);
 const documentType = ref("");
 const documents = [
   {
@@ -91,8 +91,8 @@ const documents = [
 ];
 
 const documentList = computed(() => {
-  return detail.filter((i) =>
-    i.category.toLowerCase().includes(documentType.value.toLowerCase())
+  return props.detail?.filter((i) =>
+    i.category?.toLowerCase()?.includes(documentType.value.toLowerCase())
   );
 });
 </script>

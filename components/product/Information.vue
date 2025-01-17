@@ -17,7 +17,15 @@
       </button>
     </div>
     <div class="p-5 max-w-[700px]">
-      <ProductInfo :detail="handleProp(active)" :keydata="active" />
+      <ProductInfo
+        :detail="handleProp(active)"
+        :keydata="active"
+        v-if="active !== 'documents'"
+      />
+      <ProductInfoDocuments
+        :detail="productData?.documentInfoModels"
+        v-if="active == 'documents' && productData?.documentInfoModels?.length"
+      />
     </div>
   </div>
 </template>
