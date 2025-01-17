@@ -54,7 +54,7 @@ export const useAuthStore = defineStore(
     }
 
     const logOut = async () => {
-      const response = await logoutUser({ refreshToken: refresh_token.value });
+      const response = await logoutUser({ refreshToken: refresh_token.value,token: access_token.value });
       if (response.status === 200) {
         localStorage.clear();
         clearCookies().then(() => {
