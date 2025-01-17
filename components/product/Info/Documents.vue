@@ -14,13 +14,15 @@
 
       <div class="flex items-center gap-x-5 text-sm">
         <p class="flex-1 whitespace-nowrap">{{ n.category }}</p>
-        <span class="text-gray-200 text-3xl font-light">| </span>
+        <span class="text-gray-200 text-xl font-light">| </span>
         <div class="flex items-center">
-          <a :href="n.documentUrl" :download="n.fileName">
-            <span
-              class="border border-gray-300 rounded-full h-8 w-8 flex items-center justify-center"
-              ><i class="uil uil-import"></i></span
-          ></a>
+          <button
+            @click="downloadFile(n.documentUrl)"
+            type="button"
+            class="border border-gray-300 text-sm rounded-full h-7 w-7 flex items-center justify-center"
+          >
+            <i class="uil uil-import"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -31,11 +33,11 @@
   </div>
 </template>
 <script setup>
-defineProps(["detail"]);
+const props = defineProps(["detail"]);
 const documentType = ref("");
 
 const documentList = computed(() => {
-  return detail.filter((i) =>
+  return props.detail?.filter((i) =>
     i.category.toLowerCase().includes(documentType.value.toLowerCase())
   );
 });
