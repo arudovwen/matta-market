@@ -1,29 +1,30 @@
 <template>
-  <div class="grid grid-cols-1 gap-x-[75px] gap-y-6">
+  <div class="grid grid-cols-2 w-full gap-x-10 gap-y-6 ">
     <div
-      class="flex jus items-center"
+      class="flex gap-x-8 items-center border p-3 rounded max-w-max"
       v-for="(n, id) in documentList"
       :key="id"
     >
-      <div class="flex gap-x-2">
-        <p class="text-sm font-medium">{{ n.fileName }}</p>
-        <p class="text-[#A4A4A4] text-xs">
-          {{ parseInt(n.fileSize / 1000) }}kb
-        </p>
-      </div>
-
-      <div class="flex items-center gap-x-5 text-sm">
-        <p class="flex-1 whitespace-nowrap">{{ n.category }}</p>
-        <span class="text-gray-200 text-xl font-light">| </span>
-        <div class="flex items-center">
-          <button
-            @click="downloadFile(n.documentUrl)"
-            type="button"
-            class="border border-gray-300 text-sm rounded-full h-7 w-7 flex items-center justify-center"
-          >
-            <i class="uil uil-import"></i>
-          </button>
+      <div>
+        <div class="flex gap-x-2 items-center">
+          <p class="text-sm font-medium">{{ n.fileName }}</p>
+          <p class="text-[#A4A4A4] text-xs">
+            {{ parseInt(n.fileSize / 1000) }}kb
+          </p>
         </div>
+        <div class="flex items-center gap-x-5 text-sm">
+          <p class="flex-1 whitespace-nowrap text-xs text-gray-500">{{ n.category }}</p>
+        </div>
+      </div>
+   
+      <div class="flex items-center">
+        <button
+          @click="downloadFile(n.documentUrl)"
+          type="button"
+          class="border border-gray-300 text-sm rounded-full h-7 w-7 flex items-center justify-center"
+        >
+          <i class="uil uil-import"></i>
+        </button>
       </div>
     </div>
 

@@ -16,7 +16,7 @@
         {{ n.title }}
       </button>
     </div>
-    <div class="p-5 max-w-[700px]">
+    <div class="p-5 max-w-[700px]  min-h-[200px]">
       <ProductInfo
         :detail="handleProp(active)"
         :keydata="active"
