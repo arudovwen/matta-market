@@ -4,13 +4,15 @@ import { logoutUser } from "~/services/authservices";
 const cookieDomain =
   process.env.NODE_ENV === "production" ? ".matta.trade" : undefined;
 
-  const UserTypes = {
-    0: 'buyer',
-    1: 'supplier'
-  }
+const UserTypes = {
+  0: "buyer",
+  1: "supplier",
+};
+
 export const useAuthStore = defineStore(
   "matta_auth",
   () => {
+    const config = useRuntimeConfig()
     const loggedUser = ref("");
     const hasPin = ref(false);
     const language = ref(window?.navigator?.language);
@@ -19,7 +21,9 @@ export const useAuthStore = defineStore(
     const access_token = computed(() => loggedUser?.value?.jwToken);
     const roles = computed(() => loggedUser?.value?.roles);
     const userId = computed(() => loggedUser?.value?.id);
-    const userType = computed(() => UserTypes[loggedUser?.value?.businessUserType]);
+    const userType = computed(
+      () => UserTypes[loggedUser?.value?.businessUserType]
+    );
     const businessId = computed(() => loggedUser?.value?.businessId);
     const userInfo = computed(() => loggedUser?.value);
 
@@ -54,11 +58,15 @@ export const useAuthStore = defineStore(
     }
 
     const logOut = async () => {
-      const response = await logoutUser({ refreshToken: refresh_token.value,token: access_token.value });
+      const response = await logoutUser({
+        refreshToken: refresh_token.value,
+        token: access_token.value,
+      });
       if (response.status === 200) {
         localStorage.clear();
         clearCookies().then(() => {
-          window.location.href = "/auth/login";
+          loggedUser.value = null;
+          window.location.href = `${validationUrl}/auth/logout/${config.public.APP_ID}`;
         });
       }
     };

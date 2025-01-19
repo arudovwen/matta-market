@@ -1,7 +1,26 @@
-import { required, helpers } from '@vuelidate/validators';
+import { required, helpers } from "@vuelidate/validators";
 
-export const validationUrl = `http${process.env.NODE_ENV === 'production' ? 's://dev.profile.matta.trade' : '://localhost:3020'}`;
+export const validationUrl = `http${
+  process.env.NODE_ENV === "production"
+    ? "s://dev.profile.matta.trade"
+    : "://localhost:3020"
+}`;
+export const appUrl = `http${
+  process.env.NODE_ENV === "production"
+    ? "s://dev.matta.trade"
+    : "://localhost:3002"
+}`;
 
+export const handleRouting = (value = "login") => {
+  navigateTo(
+    `${validationUrl}/auth/${value}/${
+      process.env.APP_ID ?? 0
+    }?continue=${appUrl}`,
+    {
+      external: true,
+    }
+  );
+};
 export const measurements = [
   { value: "g", name: "Gramme", label: "Gramme" },
   { value: "kg", name: "Kilogramme", label: "Kilogram" },
@@ -82,7 +101,7 @@ export const KybDocumentDefault = [
         url: "",
       },
     ],
-    url:"",
+    url: "",
     documentType: 0,
   },
   {
@@ -91,7 +110,7 @@ export const KybDocumentDefault = [
         url: "",
       },
     ],
-    url:"",
+    url: "",
     documentType: 1,
   },
   {
@@ -100,7 +119,7 @@ export const KybDocumentDefault = [
         url: "",
       },
     ],
-    url:"",
+    url: "",
     documentType: 2,
   },
   {
@@ -109,7 +128,7 @@ export const KybDocumentDefault = [
         url: "",
       },
     ],
-    url:"",
+    url: "",
     documentType: 3,
   },
   {
@@ -118,7 +137,7 @@ export const KybDocumentDefault = [
         url: "",
       },
     ],
-    url:"",
+    url: "",
     documentType: 4,
   },
 ];
@@ -1224,16 +1243,11 @@ export const minCartAmount = 600000;
 export const orderText =
   "After submitting your order, our sales manager will contact you to clarify the price and other details of your order.";
 
-
-  export const maxDate = (max) => {
-    return helpers.withParams(
-      { type: 'maxDate', max },
-      (value) => {
-        if (!value) return true; // Ignore empty values
-        const inputDate = new Date(value);
-        const maxDate = new Date();
-        return inputDate <= maxDate;
-      }
-    );
-  };
-  
+export const maxDate = (max) => {
+  return helpers.withParams({ type: "maxDate", max }, (value) => {
+    if (!value) return true; // Ignore empty values
+    const inputDate = new Date(value);
+    const maxDate = new Date();
+    return inputDate <= maxDate;
+  });
+};

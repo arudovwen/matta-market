@@ -501,12 +501,7 @@ onMounted(() => {
   // geoFindMe();
 });
 
-const handleRouting = (value) => {
-  navigateTo(
-    `${validationUrl}/auth/${value}/0?redirected_from=/subapp/validate/0&app=0`,
-    { external: true }
-  );
-};
+
 const notifyParams = reactive({
   PageNumber: 1,
   PageSize: 30,

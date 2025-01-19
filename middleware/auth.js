@@ -1,22 +1,15 @@
+import { handleRouting } from "~/utils/constants";
+
 export default defineNuxtRouteMiddleware(async (to) => {
   const authStore = useAuthStore();
   const routeName = to?.name?.toString() || "";
   const isAuthRoute = routeName.includes("auth");
 
-  // Single source of truth for validation URL
-  const validationUrl = `http${
-    process.env.NODE_ENV === "production"
-      ? "s://dev.profile.matta.trade"
-      : "://localhost:3020"
-  }`;
-
   // Not logged in handling
   if (!authStore.isLoggedIn) {
     if (isAuthRoute) {
       abortNavigation();
-      await navigateTo(`${validationUrl}/subapp/validate/0?app=0`, {
-        external: true,
-      });
+      await handleRouting();
       return;
     }
     // Redirect non-auth routes to login with return path
