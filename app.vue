@@ -100,6 +100,7 @@ amplitude.init('662bcea7400aa949c2cbbd4e0a9fa5c9', {
 import { useMarketStore } from "~/stores/markets";
 import { useApplicationStore } from "~/stores/applications";
 import { getMarkets, getTechLevels } from "~/services/productservices";
+import { getCurrencyRate } from "~/services/currencyservice";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -125,10 +126,18 @@ const getAllApplications = () => {
     }
   });
 };
+const getRate = () => {
+  getCurrencyRate("USD").then((res) => {
+    if (res.status === 200) {
+      cartStore.setUSDRate(res.data.data.rate);
+    }
+  });
+};
 onMounted(() => {
   AOS.init();
   getAllApplications();
   getAllMarkets();
+  getRate();
   const cookie = useCookie("googtrans");
   if (window?.navigator) {
     cookie.value = languages[navigator.language];

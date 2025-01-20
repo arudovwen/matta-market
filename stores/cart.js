@@ -15,6 +15,7 @@ export const useCartStore = defineStore(
     const cartItems = ref([]);
     const cartData = ref(null);
     const tax = ref(0);
+    const usdRate = ref(0)
     const shippingTotal = ref(0);
     const removeId = ref(null);
     const cartTotalwithTax = ref(0);
@@ -30,6 +31,10 @@ export const useCartStore = defineStore(
         .map((item) => item.packagePrice * item.quantity)
         .reduce((a, b) => Number(a) + Number(b), 0)
     );
+
+    function setUSDRate(data){
+      usdRate.value = data
+    }
     function getUniqueItems(items, existingItems) {
       const mergedItems = [...items, ...existingItems];
       return mergedItems.filter(
@@ -250,6 +255,8 @@ export const useCartStore = defineStore(
       setCartData,
       cartData,
       referralDiscountValue,
+      usdRate,
+      setUSDRate
     };
   },
 

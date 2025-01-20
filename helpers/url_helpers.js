@@ -255,5 +255,8 @@ const urls = {
   //DELTALOG
   CALCULATOR_COST: "/Anonymous/shipping-cost",
   GET_ENQUIRY: "/Anonymous/enquiry",
+
+  // Currency
+  GET_CURRENCY_RATE: '/v1/currencyrate/getrates'
 };
 export default urls;

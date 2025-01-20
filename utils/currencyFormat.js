@@ -4,15 +4,19 @@ export default function (
   fraction = 0,
   showSymbol = true
 ) {
+  const { value: newValue, currency: newCurrency } = handleCurrencyZone(value);
+  console.log("🚀 ~ newCurrency:", newCurrency);
+  console.log("🚀 ~ newVlaue:", newValue);
+
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency,
+    currency: newCurrency,
     currencyDisplay: "narrowSymbol",
     minimumFractionDigits: fraction,
-    maximumFractionDigits:2
+    maximumFractionDigits: 2,
   });
 
-  const formattedValue = formatter.format(value || 0);
+  const formattedValue = formatter.format(newValue || 0);
 
   return showSymbol ? formattedValue : formattedValue.replace(/[^0-9.-]/g, "");
 }
