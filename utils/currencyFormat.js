@@ -5,8 +5,6 @@ export default function (
   showSymbol = true
 ) {
   const { value: newValue, currency: newCurrency } = handleCurrencyZone(value);
-  console.log("🚀 ~ newCurrency:", newCurrency);
-  console.log("🚀 ~ newVlaue:", newValue);
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
