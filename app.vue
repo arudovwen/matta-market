@@ -148,16 +148,6 @@ const setCurrency = () => {
   }
 };
 
-function registerUser() {
-  signUpWithMatta({
-    email: authStore.userInfo.email,
-  });
-}
-onMounted(() => {
-  if (!authStore.userInfo?.subApps?.includes(0)) {
-    registerUser();
-  }
-});
 onMounted(() => {
   AOS.init();
   getAllApplications();
