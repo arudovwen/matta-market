@@ -199,7 +199,7 @@
             </li>
           </ul>
         </div>
-        <div class="flex items-center gap-x-2 text-sm">
+        <div class="flex items-center gap-x-[10px] text-sm">
           <!-- <span
             :class="{
               'hidden md:flex': view.atTopOfPage,
@@ -263,7 +263,7 @@
               >
             </span> -->
           <!-- </span> -->
-           <span lass="text-sm"><CurrencyChanger /></span>
+          <span lass="text-sm"><CurrencyChanger /></span>
           <span class="text-sm" v-if="showlang">
             <GoogleTranslateSelect
               :fetch-browser-language="false"
@@ -290,7 +290,11 @@
               >Cart</span
             > -->
           </button>
-
+          <div
+            class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
+          >
+            <AppMenu />
+          </div>
           <div class="flex gap-x-3 ml-3">
             <AppButton
               v-if="!authStore?.isLoggedIn"
@@ -357,13 +361,26 @@
                     <ul class="grid gap-y-3 text-[#555] darks:text-white/80">
                       <li v-for="n in filteredMenu" :key="n.name" class="">
                         <MenuItem v-slot="{ active }">
-                          <NuxtLink :to="n.url" v-if="n.key !== 'sign-out'">
+                          <NuxtLink :to="n.url" v-if="n.key !== 'sign-out' && n.key !== 'settings'">
                             <button
                               class="flex gap-x-3 items-center text-[13px] font-medium text-[#555]"
                             >
                               <AppIcon :icon="n.icon" /> {{ n.name }}
                             </button>
                           </NuxtLink>
+                          <button
+                            v-else-if="n.key === 'settings'"
+                            @click="
+                              navigateTo('https://dev.profile.matta.trade', {
+                                open: {
+                                  target: '_blank',
+                                },
+                              })
+                            "
+                            class="flex gap-x-3 items-center text-[13px] font-medium"
+                          >
+                            <AppIcon :icon="n.icon" iconClass="text-base" /> {{ n.name }}
+                          </button>
                           <button
                             v-else
                             @click="isSigniningOut = true"
@@ -501,7 +518,6 @@ onMounted(() => {
   }
   // geoFindMe();
 });
-
 
 const notifyParams = reactive({
   PageNumber: 1,

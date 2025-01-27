@@ -106,6 +106,7 @@ import "aos/dist/aos.css";
 
 const cartStore = useCartStore();
 const store = useMarketStore();
+const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const currentCurrency = ref('NGN')
 const searchStore = useSearchStore();
@@ -146,6 +147,17 @@ const setCurrency = () => {
      currentCurrency.value = 'USD'
   }
 };
+
+function registerUser() {
+  signUpWithMatta({
+    email: authStore.userInfo.email,
+  });
+}
+onMounted(() => {
+  if (!authStore.userInfo?.subApps?.includes(0)) {
+    registerUser();
+  }
+});
 onMounted(() => {
   AOS.init();
   getAllApplications();

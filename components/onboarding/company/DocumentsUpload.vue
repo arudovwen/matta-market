@@ -70,14 +70,14 @@ function ensureDocumentTypes(arr) {
   const requiredNigerianDocumentTypes = [0, 1, 2, 3, 4];
   const requiredNonNigerianDocumentTypes = [0, 4];
   // Create a Set of existing document types in the array for quick lookup
-  const existingDocumentTypes = new Set(arr.map((item) => item.documentType));
+  const existingDocumentTypes = new Set(arr?.map((item) => item.documentType));
   // Iterate through all required document types
   (props.isNonNigerian
     ? requiredNonNigerianDocumentTypes
     : requiredNigerianDocumentTypes
   ).forEach((type) => {
     if (!existingDocumentTypes.has(type)) {
-      arr.push({
+      arr?.push({
         url: "",
         urls: [
           {

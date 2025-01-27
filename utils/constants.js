@@ -225,21 +225,18 @@ export const FinancesOptions = [
 ];
 
 export const buyerRoutes = [
-  "settings",
   "procurement-my-orders",
   "procurement-my-requests",
   "wallet-home",
   "financing",
   "procurement-shipping-addresses",
   "account-saved-searches",
-  "company-settings",
-  "profile",
+
   "sign-out",
   "financing-requests-type-id-financeId",
 ];
 export const vendorRoutes = [
   "overview",
-  "settings",
   "procurement-my-orders",
   "procurement-my-requests",
   "wallet-home",
@@ -253,7 +250,7 @@ export const vendorRoutes = [
   "storefront-requests",
   "user-managemennt",
   "company-settings",
-  "profile",
+
   "sign-out",
   "financing-requests-type-id-financeId",
 ];
@@ -328,18 +325,19 @@ export const navigation = [
     key: "user-management",
   },
 
-  {
-    name: "Company Settings",
-    url: "/company/settings",
-    icon: "mingcute:building-5-line",
-    key: "company-settings",
-  },
+  // {
+  //   name: "Company Settings",
+  //   url: "/company/settings",
+  //   icon: "mingcute:building-5-line",
+  //   key: "company-settings",
+  // },
 
   {
-    name: "Account",
-    url: "/settings",
-    icon: "lucide:user",
+    name: "Profile",
+    url: "https://dev.profile.matta.trade",
+    icon: "heroicons:arrow-top-right-on-square-16-solid",
     key: "settings",
+    external: true,
   },
   {
     name: "Sign out",

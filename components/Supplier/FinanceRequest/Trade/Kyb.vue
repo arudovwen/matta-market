@@ -1,34 +1,50 @@
 <template>
   <form @submit.prevent="onSubmit" class="w-full mt-6">
-    <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
-      <div class="md:col-span-2">
-        <Textinput
-          placeholder=""
-          label="Company name"
-          name="companyName"
-          v-bind="companyNameAtt"
-          v-model="companyName"
-          :error="errors.companyName"
-          :isCumpulsory="true"
-        />
-      </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-[25px] gap-y-4 mb-6">
       <Textinput
         placeholder=""
-        label="Email"
-        name="email"
+        label="Company name"
+        name="companyName"
+        v-bind="companyNameAtt"
+        v-model="companyName"
+        :error="errors.companyName"
+        :isCumpulsory="true"
+      />
+
+      <FormGroup
+        label="Date of incorporation"
+        name="dateOfIncorporation"
+        :error="errors.dateOfIncorporation"
+        :isCumpulsory="true"
+      >
+        <ClientOnly>
+          <VueDatePicker
+            auto-apply
+            v-model="dateOfIncorporation"
+            placeholder="Select date"
+            :enable-time-picker="false"
+            :input-class-name="`!rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20
+                        border-[#DCDEE6]`"
+          />
+        </ClientOnly>
+      </FormGroup>
+      <Textinput
+        placeholder=""
+        label="Email address"
+        name="companyEmail"
         v-bind="emailAtt"
-        v-model="email"
-        :error="errors.email"
-        disabled
+        v-model="companyEmail"
+        :error="errors.companyEmail"
+        :disabled="!!companyEmail"
         :isCumpulsory="true"
       />
       <FormGroup
         label="Phone number"
-        name="phone"
-        :error="errors.phone"
+        name="companyPhone"
+        :error="errors.companyPhone"
         :isCumpulsory="true"
       >
-        <FormsPhoneCodes v-model="phone" />
+        <FormsPhoneCodes v-model="companyPhone" />
       </FormGroup>
       <FormGroup
         :isCumpulsory="true"
@@ -36,7 +52,7 @@
         :error="errors.country"
         name="sector"
       >
-        <SelectVueSelect
+        <Select
           :options="allcountries"
           v-model.value="country"
           :reduce="(country) => country.value"
@@ -51,7 +67,7 @@
         :error="errors.state"
         name="state"
       >
-        <SelectVueSelect
+        <Select
           :options="mystates"
           :reduce="(state) => state.value"
           v-model="state"
@@ -60,54 +76,35 @@
           }`"
         />
       </FormGroup>
-
-      <FormGroup
-        label="Date of incorporation"
-        name="dateofIncorporation"
-        :error="errors.dateofIncorporation"
-        :isCumpulsory="true"
-      >
-        <ClientOnly>
-          <VueDatePicker
-            auto-apply
-            v-model="dateofIncorporation"
-            placeholder="Select date"
-            :enable-time-picker="false"
-            :input-class-name="`!rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20
-                        border-[#DCDEE6]`"
-          />
-        </ClientOnly>
-      </FormGroup>
-
-      <FormGroup
-        label="Business type"
-        :error="errors.companyType"
-        name="companyType"
-        :isCumpulsory="true"
-      >
-        <Select
-          v-model="companyType"
-          :options="companyTypesOptions"
-          placeholder="Select type"
-          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
-            errors.tenor ? 'border-red-500' : 'border-[#D0D5DD]'
-          }`"
-        />
-      </FormGroup>
-
       <FormGroup
         :isCumpulsory="true"
-        label="Sector"
+        label="Business Sector"
         :error="errors.sector"
         name="sector"
       >
         <Select
           v-model="sector"
           :options="sectorOptions"
-          :disabled="!companyType"
           placeholder="Select sector"
           :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
             errors.sector ? 'border-red-500' : 'border-[#D0D5DD]'
+          }`"
+        />
+      </FormGroup>
+
+      <FormGroup
+        label="Business category"
+        :error="errors.category"
+        name="category"
+        :isCumpulsory="true"
+      >
+        <Select
+          v-model="category"
+          :disabled="!sector"
+          :options="categorysOptions"
+          placeholder="Select type"
+          :classInput="`min-w-[180px] !bg-white  !rounded-lg !text-[#475467] !h-11 cursor-pointer ${
+            errors.tenor ? 'border-red-500' : 'border-[#D0D5DD]'
           }`"
         />
       </FormGroup>
@@ -120,6 +117,7 @@
         v-bind="registrationNoAtt"
         v-model="registrationNo"
         :error="errors.registrationNo"
+        :isCumpulsory="true"
       />
       <Textinput
         v-if="country?.toLowerCase() === 'nigeria'"
@@ -131,6 +129,30 @@
         :error="errors.tin"
         :isCumpulsory="true"
       />
+
+      <div class="md:col-span-2">
+        <Textinput
+          :isCumpulsory="true"
+          placeholder=""
+          label="Business address"
+          name="address"
+          v-bind="addressAtt"
+          v-model="address"
+          :error="errors.address"
+          icon="majesticons:map-marker-area-line"
+          icon-position="left"
+        />
+      </div>
+      <div>
+        <Textinput
+          placeholder=""
+          label="Company website"
+          name="website"
+          v-bind="cityAtt"
+          v-model="website"
+          :error="errors.website"
+        />
+      </div>
       <div>
         <Textinput
           :isCumpulsory="true"
@@ -143,27 +165,18 @@
         />
       </div>
       <div class="md:col-span-2">
-        <Textinput
-          :isCumpulsory="true"
-          placeholder=""
-          label="Business address"
-          name="address"
-          v-bind="addressAtt"
-          v-model="address"
-          :error="errors.address"
-        />
-      </div>
-      <div class="md:col-span-2">
         <Textarea
           :isCumpulsory="true"
           placeholder=""
           label="Brief description of the company"
-          name="description"
-          v-bind="descriptionAtt"
-          v-model="description"
-          :error="errors.description"
+          name="notes"
+          v-bind="notesAtt"
+          v-model="notes"
+          :error="errors.notes"
         />
       </div>
+    </div>
+    <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
       <div class="md:col-span-2 mt-6">
         <label
           for="companyDocuments"
@@ -223,40 +236,65 @@ import { toast } from "vue3-toastify";
 
 const company = inject("company");
 const formData = inject("formData");
+console.log("🚀 ~ formData:", formData);
 const isLoading = ref(false);
 const active = inject("active");
 const authStore = useAuthStore();
-const formSchema = yup.object().shape({
-  companyName: yup.string().required("Company Name is required"),
-  sector: yup.string().required("Sector is required"),
-  dateofIncorporation: yup
+const formSchema = yup.object({
+  companyName: yup
+    .string()
+    .required("Company name is required")
+    .min(2, "Company name must be at least 2 characters long")
+    .max(100, "Company name cannot exceed 100 characters"),
+
+  dateOfIncorporation: yup
     .date()
-    .typeError("Invalid date Of Incorporation")
-    .nullable()
-    .required("Date Of Incorporation is required"),
-  companyType: yup.string().required("Business Type is required"),
-  address: yup.string().required("Address is required"),
-  description: yup.string().nullable(),
+    .required("Date of incorporation is required")
+    .max(new Date(), "Date of incorporation cannot be in the future"),
   companyDocuments: yup.array(),
-  country: yup.string().required(),
-  state: yup.string().required(),
-  email: yup.string().required(),
-  phone: yup.string().required(),
-  city: yup.string().required(),
+  country: yup.string().required("Country is required"),
+  state: yup.string().required("State is required"),
+  companyEmail: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
+
+  companyPhone: yup.string().required("Phone number is required").min(10), // Adjust companyPhone number pattern to your country format
+
+  sector: yup.string().required("Business sector is required"),
+  category: yup.string().required("Business type is required"),
   registrationNo: yup.string().when("country", {
-    is: "Nigeria",
-    then: (schema) =>
-      schema
-        .min(7, "Provide a valid number")
-        .required("CAC Registration number is required"),
+    is: (country) => country?.toLowerCase() === "nigeria",
+    then: (schema) => schema.required("CAC registration number is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
+
   tin: yup.string().when("country", {
-    is: "Nigeria",
-    then: (schema) => schema.required("TIN is required"),
+    is: (country) => country?.toLowerCase() === "nigeria",
+    then: (schema) => schema.required("TIN number is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
+
+  website: yup.string().nullable(),
+  // .required("Company website is required"),
+
+  address: yup
+    .string()
+    .required("Company address is required")
+    .min(5, "Address must be at least 5 characters long"),
+
+  city: yup
+    .string()
+    .required("City is required")
+    .min(2, "City name must be at least 2 characters long"),
+
+  notes: yup
+    .string()
+    // .required("Description is required")
+    // .min(10, "Description must be at least 10 characters long")
+    .max(500, "Description cannot exceed 500 characters"),
 });
+
 const options = [
   {
     label: "Company profile",
@@ -297,15 +335,17 @@ const [companyName, companyNameAtt] = defineField("companyName");
 const [registrationNo, registrationNoAtt] = defineField("registrationNo");
 const [tin, tinAtt] = defineField("tin");
 const [sector] = defineField("sector");
-const [email, emailAtt] = defineField("email");
-const [phone] = defineField("phone");
-const [dateofIncorporation] = defineField("dateofIncorporation");
-const [companyType] = defineField("companyType");
+const [companyEmail, emailAtt] = defineField("companyEmail");
+const [companyPhone] = defineField("companyPhone");
+const [dateOfIncorporation] = defineField("dateOfIncorporation");
+const [category] = defineField("category");
 const [address, addressAtt] = defineField("address");
-const [description, descriptionAtt] = defineField("description");
+const [notes, notesAtt] = defineField("notes");
 const [country] = defineField("country");
 const [state] = defineField("state");
 const [city, cityAtt] = defineField("city");
+const [website, websiteAtt] = defineField("website");
+
 const allcountries = computed(() => {
   return CountryList.map((item) => {
     return {
@@ -381,7 +421,6 @@ watch(country, () => {
 });
 
 const onSubmit = handleSubmit((values) => {
-  
   if (
     country.value?.toLowerCase() === "nigeria" &&
     (values.companyDocuments.some(
@@ -413,27 +452,10 @@ const onSubmit = handleSubmit((values) => {
   })
     .then((res) => {
       if (res.status === 200) {
-        updateDocuments({
-          companyDocuments: values.companyDocuments.map((i) => ({
-            ...i,
-            urls: i.urls.map((j) => j.url),
-          })),
-        })
-          .then((res) => {
-            isLoading.value = false;
-          })
-          .catch((err) => {
-            isLoading.value = false;
-            toast.error(
-              err?.response?.data?.message ||
-                err?.response?.data?.Message ||
-                "Something went wrong, try again later"
-            );
-          });
-        // }
+        getCompanyData();
         active.value = 3;
       }
-      getCompanyData();
+     
     })
     .catch((err) => {
       isLoading.value = false;
@@ -447,20 +469,20 @@ const onSubmit = handleSubmit((values) => {
   // formData.kyb = values;
 });
 
-const companyTypesOptions = businessTypes?.map((i) => {
+const sectorOptions = businessTypes?.map((i) => {
   return {
     label: i.sector,
     value: i.sector,
   };
 });
-const sectorOptions = computed(() => {
-  const selectedcompanyType = businessTypes?.find(
-    (i) => i.sector === companyType.value
+const categorysOptions = computed(() => {
+  const selectedcategory = businessTypes?.find(
+    (i) => i.sector === sector.value
   );
-  if (!selectedcompanyType) return []; // Handle case when selected business type is not found
+  if (!selectedcategory) return []; // Handle case when selected business type is not found
 
   return (
-    selectedcompanyType.subSectors?.map((i) => {
+    selectedcategory.subSectors?.map((i) => {
       return {
         label: i.subSectorName,
         value: i.subSectorName, // Use subSectorCode as the value

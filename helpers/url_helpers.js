@@ -83,7 +83,10 @@ const urls = {
   DELETE_ACCOUNT: "v1/settings/delete-account",
   STOREFRONT_STAT: "v1/storefront/stats",
   STOREFRONT_TRENDING_PRODUCT: "v1/storefront/trendingproducts",
+  //SSO Profile api
 
+  GET_SSO_BUSINESS_PROFILE: "/v1/register/business-profile",
+  GET_SSO_PERSONAL_PROFILE: "/v1/register/user-profile",
   //Users
   SIGN_UP_WITH_MATTA: "/v1/account/sign-up-with-matta",
   INVITE_USERS: "v1/usermanagement/invite-users",
@@ -257,6 +260,6 @@ const urls = {
   GET_ENQUIRY: "/Anonymous/enquiry",
 
   // Currency
-  GET_CURRENCY_RATE: '/v1/currencyrate/getrates'
+  GET_CURRENCY_RATE: "/v1/currencyrate/getrates",
 };
 export default urls;

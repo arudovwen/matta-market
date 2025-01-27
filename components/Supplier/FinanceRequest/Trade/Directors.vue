@@ -90,13 +90,13 @@
                     :director="director"
                     :id="id"
                   />
-                 <div class="max-w-sm">
-                  <OnboardingCompanyDeleteModal
-                    v-if="action === 'delete'"
-                    @delete="onDelete"
-                    @close="open = false"
-                  />
-                 </div>
+                  <div class="max-w-sm">
+                    <OnboardingCompanyDeleteModal
+                      v-if="action === 'delete'"
+                      @delete="onDelete"
+                      @close="open = false"
+                    />
+                  </div>
                 </div>
               </DialogPanel>
             </TransitionChild>
@@ -126,6 +126,7 @@ const route = useRoute();
 const open = ref(false);
 const active = inject("active");
 const form = reactive({
+  ...company.value,
   directors: company.value.directors || [],
 });
 
@@ -155,10 +156,15 @@ async function handleSubmit() {
   if (!form.directors.length) return;
   isLoading.value = true;
 
-  updateDirectors(form)
+  updateDirectors({
+    ...form,
+    companyDocuments: form.companyDocuments.map((i) => ({
+      ...i,
+      urls: i.urls.map((j) => j.url),
+    })),
+  })
     .then((res) => {
       if (res.status === 200) {
-        getCompanyData();
         isLoading.value = false;
         active.value = 4;
       }
@@ -171,7 +177,7 @@ async function handleSubmit() {
     });
 }
 provide("form", form);
-provide("open", open)
+provide("open", open);
 </script>
 
 <style lang="scss" scoped>

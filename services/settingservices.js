@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { post, get } from "../helpers/api_helpers";
+import { post, get, ssoGet, ssoPost, ssoPut } from "../helpers/api_helpers";
 import store from "../store";
 
 const config = {
@@ -9,25 +9,25 @@ const config = {
 
 //Markets
 export async function getProfile() {
-  return await get(`${urls.GET_PROFILE}`, config);
+  return await ssoGet(`${urls.GET_SSO_PERSONAL_PROFILE}`, config);
 }
 export async function getCompanyProfile() {
-  return await get(`${urls.GET_COMPANY_PROFILE}`, config);
+  return await ssoGet(`${urls.GET_SSO_BUSINESS_PROFILE}`, config);
 }
 export async function updateProfile(data) {
-  return await post(`${urls.UPDATE_PROFILE}`, data, config);
+  return await ssoPut(`${urls.GET_SSO_PERSONAL_PROFILE}`, data, config);
 }
 export async function updateDocuments(data) {
-  return await post(`${urls.UPDATE_DOCUMENTS}`, data, config);
+  return await ssoPut(`${urls.GET_SSO_BUSINESS_PROFILE}`, data, config);
 }
 export async function updateDirectors(data) {
-  return await post(`${urls.UPDATE_DIRECTORS}`, data, config);
+  return await ssoPut(`${urls.GET_SSO_BUSINESS_PROFILE}`, data, config);
 }
 export async function changepassword(data) {
   return await post(`${urls.CHANGE_PASSWORD}`, data, config);
 }
 export async function updateCompanyProfile(data) {
-  return await post(`${urls.UPDATE_COMPANY_PROFILE}`, data, config);
+  return await ssoPut(`${urls.GET_SSO_BUSINESS_PROFILE}`, data, config);
 }
 export async function settimezone(data) {
   return await post(`${urls.SET_TIMEZONE}`, data, config);
