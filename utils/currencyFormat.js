@@ -4,11 +4,12 @@ export default function (
   fraction = 0,
   showSymbol = true
 ) {
-  const { value: newValue, currency: newCurrency } = handleCurrencyZone(value);
+  const currentCurrency = inject('currentCurrency')
+  const { value: newValue } = handleCurrencyZone(value, currentCurrency?.value ?? currency);
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: newCurrency,
+    currency: currentCurrency?.value ?? currency,
     currencyDisplay: "narrowSymbol",
     minimumFractionDigits: fraction,
     maximumFractionDigits: 2,

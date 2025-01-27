@@ -321,6 +321,7 @@ import { Tooltip } from "@programic/vue3-tooltip";
 import "tippy.js/dist/tippy.css";
 
 const orderRequestStore = useOrderRequestStore();
+const currentCurrency = inject('currentCurrency')
 const isRequestAdded = ref(false);
 const isLoading = inject("isLoading");
 const store = useProductStore();
@@ -340,7 +341,7 @@ const packageOptions = computed(() =>
   productData?.value?.packagesAvailable?.map((i) => {
     return {
       label: `${i.package.title}/${i.size}${i.unit} - ${currencyFormat(
-        i.amount * i.size
+        i.amount * i.size, currentCurrency?.value
       )}`,
       value: JSON.stringify({ ...i }),
     };

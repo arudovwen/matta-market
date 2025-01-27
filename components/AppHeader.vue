@@ -263,6 +263,7 @@
               >
             </span> -->
           <!-- </span> -->
+           <span lass="text-sm"><CurrencyChanger /></span>
           <span class="text-sm" v-if="showlang">
             <GoogleTranslateSelect
               :fetch-browser-language="false"

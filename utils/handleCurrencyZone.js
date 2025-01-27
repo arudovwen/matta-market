@@ -1,11 +1,9 @@
-export function handleCurrencyZone(value) {
+export function handleCurrencyZone(value, currency) {
   const usdRate = useCartStore().usdRate;
-  const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  const NIGERIA_ZONE = "Africa/Lagos";
-  if (zone.toLowerCase() === NIGERIA_ZONE.toLowerCase()) {
-    return { value, currency: "NGN" };
+  if (currency?.toLowerCase() === "ngn") {
+    return { value };
   } else {
-    return { value: value / usdRate, currency: "USD" };
+    return { value: value / usdRate };
   }
 }

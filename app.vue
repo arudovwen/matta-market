@@ -107,6 +107,7 @@ import "aos/dist/aos.css";
 const cartStore = useCartStore();
 const store = useMarketStore();
 const appStore = useApplicationStore();
+const currentCurrency = ref('NGN')
 const searchStore = useSearchStore();
 const query = reactive({
   PageNumber: 1,
@@ -133,11 +134,24 @@ const getRate = () => {
     }
   });
 };
+const setCurrency = () => {
+  const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const NIGERIA_ZONE = "Africa/Lagos";
+  if (zone.toLowerCase() === NIGERIA_ZONE.toLowerCase()) {
+    setItem("currency", "NGN");
+    currentCurrency.value = 'NGN'
+  } else {
+    setItem("currency", "USD");
+     currentCurrency.value = 'USD'
+  }
+};
 onMounted(() => {
   AOS.init();
   getAllApplications();
   getAllMarkets();
   getRate();
+  setCurrency()
   const cookie = useCookie("googtrans");
   if (window?.navigator) {
     cookie.value = languages[navigator.language];
@@ -145,6 +159,7 @@ onMounted(() => {
 
   cartStore.getMyCart();
 });
+provide('currentCurrency',currentCurrency)
 </script>
 <style>
 html {
