@@ -57,3 +57,6 @@ export async function updateVendorInfo(data) {
 export async function postStoreName(data) {
   return await get(`${urls.POST_VENDOR_STORE_NAME}?storename=${data}`, config);
 }
+export async function getBusinessType() {
+  return await get(`${urls.GET_BUSINESS_TYPE}`, config);
+}

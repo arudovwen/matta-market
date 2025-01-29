@@ -16,6 +16,8 @@ const urls = {
   RESEND_2FA_OTP: "v1/account/resend-2fa-code",
   GET_TOKEN_INFORMATION: "v1/account/token-login",
 
+  GET_BUSINESS_TYPE: "v1/account/business-type",
+
   //Onboarding
   COMPANY_UPDATE_PERSONAL_INFO: "/v1/Onboarding/company/update-PersonalInfo",
   COMPANY_UPDATE_ADDITIONAL_INFORMATION:

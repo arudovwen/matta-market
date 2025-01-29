@@ -55,6 +55,8 @@
 
 </template>
 <script setup>
+import { getBusinessType } from "~/services/userservices";
+
 definePageMeta({
   layout: "empty",
 });
@@ -114,4 +116,15 @@ const onSubmit = handleSubmit((values) => {
       isLoading.value = false;
     });
 });
+
+onMounted( async()=>{
+  const typeResponse = await getBusinessType();
+    if (typeResponse.status === 200) {
+      authStore.setLoggedUser({
+        ...authStore.loggedUser,
+        businessUserType: typeResponse.data,
+      });
+      navigateTo('/')
+    }
+})
 </script>
