@@ -13,7 +13,7 @@
 <script setup>
 defineProps({
   url:{
-    default:"https://res.cloudinary.com/arudovwen-me/image/upload/f_auto,q_auto/nhgtgwivu3kvuaheufnd"
+    default:"https://res.cloudinary.com/arudovwen-me/image/upload/f_auto,q_auto/v0q5ahswrqzvtqrfkp9g"
   }
 })
 const imageSrc = "";

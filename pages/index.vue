@@ -15,6 +15,9 @@
         <!-- <LandingRecommended tag="recommended" /> -->
         <LandingHot title="Recommended" tag="recommended" />
         <LandingHot title="Best sellers" tag="bestsellers" />
+       <div class="container">
+        <LandingBoard url="https://res.cloudinary.com/arudovwen-me/image/upload/f_auto,q_auto/icxwdfiszid12mimlr3h" />
+       </div>
       </div>
       <LandingInfo />
     </div>
