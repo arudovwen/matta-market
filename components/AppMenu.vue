@@ -41,25 +41,25 @@ import Orbital from "@/assets/apps/orb.png";
 const apps = [
   {
     label: "Flux",
-    url: "https://dev.deltalog.co",
+    url: "https://staging.deltalog.co",
     appId: "",
     logo: Flux,
   },
   {
     label: "Oxide",
-    url: "https://dev.oxide.matta.trade/",
+    url: "https://staging.oxide.matta.trade/",
     appId: "",
     logo: Oxide,
   },
   // {
   //   label: "Matta",
-  //   url: "https://dev.matta.trade",
+  //   url: "https://staging.matta.trade",
   //   appId: "",
   //   logo: Matta,
   // },
   {
     label: "Orbital",
-    url: "https://dev.orbital.matta.trade/",
+    url: "https://staging.orbital.matta.trade/",
     appId: "",
     logo: Orbital,
   },
