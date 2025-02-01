@@ -78,7 +78,8 @@ export default defineNuxtConfig({
       APP_MONNIFYISTEST: process.env.APP_MONNIFYISTEST,
       APP_MONNIFYISTESTMODE: process.env.APP_MONNIFYISTESTMODE,
       TINY_MCE: process.env.APP_TINYMCE_KEY,
-      APP_ID: process.env.APP_ID ?? 0
+      APP_ID: process.env.APP_ID,
+      APP_CODE: process.env.APP_CODE
     },
   },
   ssr: false,

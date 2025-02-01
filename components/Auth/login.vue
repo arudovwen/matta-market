@@ -218,10 +218,10 @@ const handleFinalSubmit = (token) => {
 };
 
 const handleLoginSuccess = (response) => {
-  const { access_token } = response;
+  const { jwToken } = response;
   let data = {
     provider: "GOOGLE",
-    idToken: access_token,
+    idToken: jwToken,
     business_UserType: 0,
   };
 

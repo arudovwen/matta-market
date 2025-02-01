@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { logoutUser } from "~/services/authservices";
+import { logoutUrl } from "~/utils/constants";
 
 const cookieDomain =
   process.env.NODE_ENV === "production" ? ".matta.trade" : undefined;
@@ -12,13 +13,15 @@ const UserTypes = {
 export const useAuthStore = defineStore(
   "matta_auth",
   () => {
-    const config = useRuntimeConfig()
+    const config = useRuntimeConfig();
+    const appInfo = ref(null);
+    const appList = ref([]);
     const loggedUser = ref("");
     const hasPin = ref(false);
     const language = ref(window?.navigator?.language);
     const isLoggedIn = computed(() => !!loggedUser.value);
     const refresh_token = computed(() => loggedUser?.value?.refreshToken);
-    const access_token = computed(() => loggedUser?.value?.jwToken);
+    const jwToken = computed(() => loggedUser?.value?.jwToken);
     const roles = computed(() => loggedUser?.value?.roles);
     const userId = computed(() => loggedUser?.value?.id);
     const userType = computed(
@@ -31,12 +34,18 @@ export const useAuthStore = defineStore(
       loggedUser.value = data;
     }
 
+    function setAppInfo(data) {
+      appInfo.value = data;
+    }
+    function setAppList(data) {
+      appList.value = data;
+    }
     function setHasPin(data) {
       hasPin.value = data;
     }
 
     function setAccessToken(value) {
-      let userInfo = { ...loggedUser?.value, access_token: value };
+      let userInfo = { ...loggedUser?.value, jwToken: value };
       setLoggedUser(userInfo);
     }
     function setRefreshToken(value) {
@@ -60,13 +69,13 @@ export const useAuthStore = defineStore(
     const logOut = async () => {
       const response = await logoutUser({
         refreshToken: refresh_token.value,
-        token: access_token.value,
+        token: jwToken.value,
       });
       if (response.status === 200) {
         localStorage.clear();
         clearCookies().then(() => {
           loggedUser.value = null;
-          window.location.href = `${validationUrl}/auth/logout/${config.public.APP_ID}`;
+          window.location.href = logoutUrl()
         });
       }
     };
@@ -74,7 +83,7 @@ export const useAuthStore = defineStore(
       updateUser,
       isLoggedIn,
       refresh_token,
-      access_token,
+      jwToken,
       roles,
       userId,
       userType,
@@ -89,7 +98,10 @@ export const useAuthStore = defineStore(
       businessId,
       language,
       setHasPin,
-      hasPin,
+      hasPin, appInfo,
+      setAppInfo,
+      setAppList,
+      appList,
     };
   },
   {

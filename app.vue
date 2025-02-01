@@ -101,6 +101,8 @@ import { useMarketStore } from "~/stores/markets";
 import { useApplicationStore } from "~/stores/applications";
 import { getMarkets, getTechLevels } from "~/services/productservices";
 import { getCurrencyRate } from "~/services/currencyservice";
+import { getSubApps } from "~/services/userservices";
+
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -147,12 +149,29 @@ const setCurrency = () => {
      currentCurrency.value = 'USD'
   }
 };
-
+function getAppList() {
+  getSubApps().then((res) => {
+    if (res.status === 200) {
+      const appList = res.data.data
+        .map((i) => ({
+          ...i,
+          url: `${i.url}/auth/validate?token=${authStore.jwToken}`,
+        }))
+        .filter((i) => !["matta", "mattapedia"].includes(i.name.toLowerCase()));
+      const appInfo = res.data.data.find(
+        (i) => i.name.toLowerCase() === "matta"
+      );
+      authStore.setAppInfo(appInfo);
+      authStore.setAppList(appList);
+    }
+  });
+}
 onMounted(() => {
   AOS.init();
   getAllApplications();
   getAllMarkets();
   getRate();
+  getAppList()
   setCurrency()
   const cookie = useCookie("googtrans");
   if (window?.navigator) {

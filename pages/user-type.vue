@@ -76,7 +76,7 @@ const props = defineProps({
 });
 const emits = defineEmits(["close", "toggleAuth"]);
 const route = useRoute();
-
+const config = useRuntimeConfig();
 const loading = ref(true);
 const authStore = useAuthStore();
 const isVerifyPin = ref(false);
@@ -84,6 +84,7 @@ const isLoading = ref(false);
 const formValues = {
   email: authStore.loggedUser.email,
   businessUserType: 0,
+  appCode: config.public.APP_CODE
 };
 const step = ref(1);
 const schema = yup.object({
