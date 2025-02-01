@@ -35,8 +35,3 @@ jobs:
     - name: Archive production artifacts (Windows)
       run: |
              Copy-Item -Path C:\matta-frontend-action-runner\_work\Matta-Trade-Frontend-New\Matta-Trade-Frontend-New\.output\public\* -Destination C:\inetpub\wwwroot\Matta.Dev.Frontend\ -recurse -Force
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-          name: deployable-package
-          path: C:\build\deployable-package.zip
