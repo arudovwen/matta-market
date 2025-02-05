@@ -1,17 +1,18 @@
 import Axios from "axios";
-import { useAuthStore } from "~/stores/auth";
-import { toast } from "vue3-toastify";
-import { logOut } from "~/services/authservices";
 
-const API_URL = "https://dev.gateway.matta.trade/api/";
-const SSO_URL = "https://dev.sso.matta.trade/api/";
-const WALLET_URL = "https://dev.wallets.matta.trade/api/";
-const Matta_URL = "https://dev.gateway.matta.trade/api/";
-const DELTALOG_URL = "https://dev.gateway.deltalog.co/api/";
+// Max refresh attempts
+const MAX_REFRESH_ATTEMPTS = 3;
+let refreshAttemptCount = 0;
 
-const createAxiosInstance = (baseURL) => {
-  const instance = Axios.create({ baseURL });
-  instance.defaults.withCredentials = true;
+// Base URL for API services
+const BASE_URL = "https://dev.gateway.matta.trade";
+
+// Create an Axios instance with custom configuration
+const createAxiosInstance = (service) => {
+  const instance = Axios.create({
+    baseURL: `${BASE_URL}/${service}/`,
+  });
+
   instance.interceptors.request.use((config) => {
     const authStore = useAuthStore();
     config.headers.Authorization = authStore?.jwToken
@@ -20,19 +21,45 @@ const createAxiosInstance = (baseURL) => {
     config.headers.Accept = "application/json";
     return config;
   });
+
+  instance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      if ([401, 403].includes(error?.response?.status)) {
+        try {
+          const newAccessToken = await handleTokenRefresh();
+          error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+          return instance.request(error.config);
+        } catch (refreshError) {
+          handleRefreshError();
+          return Promise.reject(refreshError);
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
+
   return instance;
 };
 
-const axiosApi = createAxiosInstance(API_URL);
-const axiosSSO = createAxiosInstance(SSO_URL);
-const mattaApi = createAxiosInstance(Matta_URL);
-const walletApi = createAxiosInstance(WALLET_URL);
-const deltaApi = createAxiosInstance(DELTALOG_URL);
+// Create axios instances for each service
+const axiosApi = createAxiosInstance("matta");
+const axiosSSO = createAxiosInstance("sso");
+const mattaApi = createAxiosInstance("matta");
+const walletApi = createAxiosInstance("wallet");
+const deltaApi = createAxiosInstance("flux");
 
 // Handle token refresh logic
 const handleTokenRefresh = async () => {
   const authStore = useAuthStore();
+  if (refreshAttemptCount >= MAX_REFRESH_ATTEMPTS) {
+    authStore.clearAuth();
+    throw new Error("Max refresh attempts reached");
+  }
+
   try {
+    refreshAttemptCount += 1;
+
     const { data } = await axiosApi.post("/v1/Account/refreshtoken", {
       token: authStore.refresh_token,
       ipAddress: "",
@@ -45,80 +72,53 @@ const handleTokenRefresh = async () => {
     ] = `Bearer ${data.jwToken}`;
     return data.jwToken;
   } catch (error) {
-    // logOut();
+    authStore.clearAuth();
     throw error;
   }
 };
-
-// Response interceptor for handling token refresh
-axiosApi.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (error?.response?.status === 403) {
-      try {
-        const newAccessToken = await handleTokenRefresh();
-        error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
-        return axiosApi.request(error.config);
-      } catch (refreshError) {
-        handleRefreshError(refreshError);
-        return Promise.reject(refreshError);
-      }
-    } else {
-      return Promise.reject(error);
-    }
-  }
-);
 
 // Handle errors when refreshing token
 const handleRefreshError = (error) => {
   const authStore = useAuthStore();
   if (window.location.pathname !== "/checkout") {
-    // Uncomment to show a toast message
-    // toast.info("Your session has expired");
-    // authStore.setLoggedUser(null);
-    // window.location.href = `/auth/login?info=session_expired&redirected_from=${window.location.href}`;
+    toast.info("Your session has expired");
+    authStore.logOut();
   }
 };
 
-// General API methods
-export const apiGet = (url, config = {}) => axiosApi.get(url, config);
-export const apiPost = (url, data, config = {}) =>
-  axiosApi.post(url, data, config);
-export const apiPut = (url, data, config = {}) =>
-  axiosApi.put(url, data, config);
-export const apiDelete = (url, config = {}) => axiosApi.delete(url, config);
+// General API methods for each service
+const createApiMethods = (apiInstance) => ({
+  get: (url, config = {}) => apiInstance.get(url, config),
+  post: (url, data, config = {}) => apiInstance.post(url, data, config),
+  put: (url, data, config = {}) => apiInstance.put(url, data, config),
+  delete: (url, config = {}) => apiInstance.delete(url, config),
+});
 
-export const get = (url, config = {}) => axiosApi.get(url, config);
-export const post = (url, data, config = {}) =>
-  axiosApi.post(url, data, config);
-export const put = (url, data, config = {}) => axiosApi.put(url, data, config);
-export const del = (url, config = {}) => axiosApi.delete(url, config);
+// Create API methods for each service
+export const apiMethods = createApiMethods(axiosApi);
+export const mattaMethods = createApiMethods(mattaApi);
+export const ssoMethods = createApiMethods(axiosSSO);
+export const walletMethods = createApiMethods(walletApi);
+export const deltaMethods = createApiMethods(deltaApi);
 
-// General API methods for mattaApi
-export const mattaGet = (url, config = {}) => mattaApi.get(url);
-export const mattaPost = (url, data, config = {}) =>
-  mattaApi.post(url, data, config);
-export const mattaPut = (url, data, config = {}) => mattaApi.put(url, data);
-export const mattaDelete = (url, config = {}) => mattaApi.delete(url, config);
+// Export the API methods
+export const { get, post, put, delete: del } = apiMethods;
+export const mattaGet = mattaMethods.get;
+export const mattaPost = mattaMethods.post;
+export const mattaPut = mattaMethods.put;
+export const mattaDelete = mattaMethods.delete;
 
-// General API methods for ssoApi
-export const ssoGet = (url, config = {}) => axiosSSO.get(url, config);
-export const ssoPost = (url, data, config = {}) =>
-  axiosSSO.post(url, data, config);
-export const ssoPut = (url, data, config = {}) =>
-  axiosSSO.put(url, data, config);
-export const ssoDelete = (url, config = {}) => axiosSSO.delete(url, config);
+export const ssoGet = ssoMethods.get;
+export const ssoPost = ssoMethods.post;
+export const ssoPut = ssoMethods.put;
+export const ssoDelete = ssoMethods.delete;
 
-// General API methods for mattaApi
-export const walletGet = (url, config = {}) => walletApi.get(url);
-export const walletPost = (url, data, config = {}) =>
-  walletApi.post(url, data, config);
-export const walletPut = (url, data, config = {}) => walletApi.put(url, data);
-export const walletDelete = (url, config = {}) => walletApi.delete(url, config);
+export const walletGet = walletMethods.get;
+export const walletPost = walletMethods.post;
+export const walletPut = walletMethods.put;
+export const walletDelete = walletMethods.delete;
 
-// General API methods for deltalog
-export const deltaGet = (url, config = {}) => deltaApi.get(url);
-export const deltaPost = (url, data, config = {}) =>
-  deltaApi.post(url, data, config);
-export const deltaPut = (url, data, config = {}) => deltaApi.put(url, data);
-export const delataDelete = (url, config = {}) => deltaApi.delete(url, config);
+export const deltaGet = deltaMethods.get;
+export const deltaPost = deltaMethods.post;
+export const deltaPut = deltaMethods.put;
+export const deltaDelete = deltaMethods.delete;

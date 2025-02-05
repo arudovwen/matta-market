@@ -1,12 +1,13 @@
 import { handleRouting } from "~/utils/constants";
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  const authStore = useAuthStore();
+  const mattaAuth = useCookie("mattaAuth");
   const routeName = to?.name?.toString() || "";
   const isAuthRoute = routeName.includes("auth");
+  const isLoggedIn = !!mattaAuth.value;
 
   // Not logged in handling
-  if (!authStore.isLoggedIn) {
+  if (!isLoggedIn) {
     if (isAuthRoute) {
       abortNavigation();
       await handleRouting();
@@ -18,15 +19,15 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   // Logged in handling
-  if (authStore.isLoggedIn) {
-    if (authStore.userType === undefined) {
+  if (isLoggedIn) {
+    if (mattaAuth.value.businessUserType === undefined) {
       abortNavigation();
       return navigateTo("/user-type");
-    } else {
-      if (isAuthRoute) {
-        return navigateTo("/");
-      }
     }
+    if (isAuthRoute) {
+      return navigateTo("/");
+    }
+
     // Prevent accessing auth routes when logged in
   }
 });

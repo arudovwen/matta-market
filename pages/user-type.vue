@@ -82,7 +82,7 @@ const authStore = useAuthStore();
 const isVerifyPin = ref(false);
 const isLoading = ref(false);
 const formValues = {
-  email: authStore.loggedUser.email,
+  email: authStore.userInfo?.email,
   businessUserType: 0,
   appCode: config.public.APP_CODE
 };
@@ -109,7 +109,7 @@ const onSubmit = handleSubmit((values) => {
     .then((res) => {
       if (res.status === 200) {
         authStore.setLoggedUser({
-          ...authStore.loggedUser,
+          ...authStore.userInfo,
           businessUserType: values?.businessUserType,
           accountType: values?.businessUserType,
         });
@@ -128,7 +128,7 @@ onMounted(async () => {
     const typeResponse = await getBusinessType();
     if (typeResponse.status === 200) {
       authStore.setLoggedUser({
-        ...authStore.loggedUser,
+        ...authStore.userInfo,
         businessUserType: typeResponse.data?.data?.businessUserType,
       });
       navigateTo("/");

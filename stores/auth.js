@@ -13,25 +13,26 @@ const UserTypes = {
 export const useAuthStore = defineStore(
   "matta_auth",
   () => {
-    const config = useRuntimeConfig();
+    const mattaAuth = useCookie("mattaAuth");
     const appInfo = ref(null);
     const appList = ref([]);
     const loggedUser = ref("");
     const hasPin = ref(false);
     const language = ref(window?.navigator?.language);
-    const isLoggedIn = computed(() => !!loggedUser.value);
-    const refresh_token = computed(() => loggedUser?.value?.refreshToken);
-    const jwToken = computed(() => loggedUser?.value?.jwToken);
-    const roles = computed(() => loggedUser?.value?.roles);
-    const userId = computed(() => loggedUser?.value?.id);
+    const isLoggedIn = computed(() => !!mattaAuth.value);
+    const refresh_token = computed(() => mattaAuth?.value?.refreshToken);
+    const jwToken = computed(() => mattaAuth?.value?.jwToken);
+    const roles = computed(() => mattaAuth?.value?.roles);
+    const userId = computed(() => mattaAuth?.value?.id);
     const userType = computed(
-      () => UserTypes[loggedUser?.value?.businessUserType]
+      () => UserTypes[mattaAuth?.value?.businessUserType]
     );
-    const businessId = computed(() => loggedUser?.value?.businessId);
-    const userInfo = computed(() => loggedUser?.value);
+    const businessId = computed(() => mattaAuth?.value?.businessId);
+    const userInfo = computed(() => mattaAuth?.value);
 
     function setLoggedUser(data) {
       loggedUser.value = data;
+      mattaAuth.value = data;
     }
 
     function setAppInfo(data) {
@@ -75,9 +76,16 @@ export const useAuthStore = defineStore(
         localStorage.clear();
         clearCookies().then(() => {
           loggedUser.value = null;
-          window.location.href = logoutUrl()
+          window.location.href = logoutUrl();
         });
       }
+    };
+    const clearAuth = () => {
+      mattaAuth.value = null;
+      clearCookies().then(() => {
+        loggedUser.value = null;
+        window.location.href = logoutUrl();
+      });
     };
     return {
       updateUser,
@@ -98,10 +106,12 @@ export const useAuthStore = defineStore(
       businessId,
       language,
       setHasPin,
-      hasPin, appInfo,
+      hasPin,
+      appInfo,
       setAppInfo,
       setAppList,
       appList,
+      clearAuth,
     };
   },
   {

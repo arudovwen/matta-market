@@ -24,11 +24,11 @@
             <div
               class="w-[38px] h-[38px] bg-gray-200 flex rounded-[50%] uppercase items-center justify-center font-semibold text-sm"
             >
-              <span v-if="authStore.loggedUser?.firstName">{{
-                authStore.loggedUser?.firstName?.slice(0, 1)
+              <span v-if="authStore.userInfo?.firstName">{{
+                authStore.userInfo?.firstName?.slice(0, 1)
               }}</span>
-              <span v-if="authStore.loggedUser?.lastName">{{
-                authStore.loggedUser?.lastName?.slice(0, 1)
+              <span v-if="authStore.userInfo?.lastName">{{
+                authStore.userInfo?.lastName?.slice(0, 1)
               }}</span>
               <span v-if="authStore.userInfo?.accountType == 2">SA</span>
             </div>
@@ -37,9 +37,9 @@
                 class="h-[20px] w w-[120px] truncate whitespace-nowrap text-left font-medium text-[14px] leading-[20px] text-[#344054] flex-none order-0 flex-grow-0"
               >
                 {{
-                  authStore?.loggedUser?.fullName &&
-                  authStore?.loggedUser?.fullName !== " "
-                    ? authStore?.loggedUser?.fullName
+                  authStore?.userInfo?.fullName &&
+                  authStore?.userInfo?.fullName !== " "
+                    ? authStore?.userInfo?.fullName
                     : "Superadmin"
                 }}
               </p>
