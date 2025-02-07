@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { toast } from "vue3-toastify";
 
 // Max refresh attempts
 const MAX_REFRESH_ATTEMPTS = 3;
@@ -25,7 +26,7 @@ const createAxiosInstance = (service) => {
   instance.interceptors.response.use(
     (response) => response,
     async (error) => {
-      if ([401, 403].includes(error?.response?.status)) {
+      if ([403].includes(error?.response?.status)) {
         try {
           const newAccessToken = await handleTokenRefresh();
           error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
@@ -34,6 +35,10 @@ const createAxiosInstance = (service) => {
           handleRefreshError();
           return Promise.reject(refreshError);
         }
+      }
+      if ([401].includes(error?.response?.status)) {
+        toast.error(error?.response?.data?.Message || "Unauthorised access!");
+        return Promise.reject(error);
       }
       return Promise.reject(error);
     }

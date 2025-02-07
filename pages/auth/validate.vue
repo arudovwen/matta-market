@@ -2,7 +2,7 @@
   <div class="flex justify-center items-center p-10 h-screen w-screen">
     <div class="text-center flex flex-col justify-center items-center gap-y-6">
       <AppLoaderV2 />
-      <span class="text-sm text-center block">Logging user</span>
+      <span class="text-sm text-center block">Validating user</span>
     </div>
   </div>
 </template>

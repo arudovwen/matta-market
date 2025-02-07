@@ -1,8 +1,11 @@
 <template>
-  <NuxtLayout>
+  <NuxtLayout v-if="!AppLoading">
     <NuxtPwaManifest />
     <NuxtPage />
   </NuxtLayout>
+  <div v-else class="h-screen w-screen flex justify-center items-center">
+    <AppLoaderV2 />
+  </div>
 </template>
 
 <script setup>
@@ -101,17 +104,18 @@ import { useMarketStore } from "~/stores/markets";
 import { useApplicationStore } from "~/stores/applications";
 import { getMarkets, getTechLevels } from "~/services/productservices";
 import { getCurrencyRate } from "~/services/currencyservice";
-import { getSubApps } from "~/services/userservices";
+import { getSubApps, getBusinessType } from "~/services/userservices";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+const AppLoading = ref(false);
 const cartStore = useCartStore();
 const store = useMarketStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
-const currentCurrency = ref('NGN')
-const searchStore = useSearchStore();
+const currentCurrency = ref("NGN");
+
 const query = reactive({
   PageNumber: 1,
   PageSize: 200,
@@ -143,10 +147,10 @@ const setCurrency = () => {
   const NIGERIA_ZONE = "Africa/Lagos";
   if (zone.toLowerCase() === NIGERIA_ZONE.toLowerCase()) {
     setItem("currency", "NGN");
-    currentCurrency.value = 'NGN'
+    currentCurrency.value = "NGN";
   } else {
     setItem("currency", "USD");
-     currentCurrency.value = 'USD'
+    currentCurrency.value = "USD";
   }
 };
 function getAppList() {
@@ -166,13 +170,34 @@ function getAppList() {
     }
   });
 }
+function getBusinessUserType() {
+  AppLoading.value = true;
+  getBusinessType()
+    .then((res) => {
+      if (res.status === 200) {
+        authStore.setLoggedUser({
+          ...authStore.userInfo,
+          businessUserType: res.data?.data?.businessUserType,
+        });
+        AppLoading.value = false;
+      }
+    })
+    .catch(() => {
+      AppLoading.value = false;
+      navigateTo("/user-type");
+    });
+}
 onMounted(() => {
   AOS.init();
   getAllApplications();
   getAllMarkets();
   getRate();
-  getAppList()
-  setCurrency()
+  getAppList();
+  setCurrency();
+
+  if (authStore.userInfo) {
+    getBusinessUserType();
+  }
   const cookie = useCookie("googtrans");
   if (window?.navigator) {
     cookie.value = languages[navigator.language];
@@ -180,7 +205,7 @@ onMounted(() => {
 
   cartStore.getMyCart();
 });
-provide('currentCurrency',currentCurrency)
+provide("currentCurrency", currentCurrency);
 </script>
 <style>
 html {
