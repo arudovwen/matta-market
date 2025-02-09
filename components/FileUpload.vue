@@ -107,8 +107,8 @@ function handleEvent(e) {
     uploaddocument(data)
       .then((res) => {
         loading.value = false;
-        handleChange && handleChange(props.id, res.data.message);
-        emits("update:modelValue", res.data.message);
+        handleChange && handleChange(props.id, res.data.data);
+        emits("update:modelValue", res.data.data);
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
@@ -148,7 +148,7 @@ function handleMultiple(e) {
         // Assuming uploaddocument is available
         uploaddocument(data)
           .then((res) => {
-            multiUrls.value = [...multiUrls.value, res.data.message];
+            multiUrls.value = [...multiUrls.value, res.data.data];
             resolve(); // Resolve the promise after successful upload
           })
           .catch((error) => {
