@@ -290,7 +290,7 @@
               >Cart</span
             > -->
           </button>
-          <div
+          <div v-if="authStore.isLoggedIn"
             class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
           >
             <AppMenu />

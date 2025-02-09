@@ -263,5 +263,7 @@ const urls = {
 
   // Currency
   GET_CURRENCY_RATE: "/v1/currencyrate/getrates",
+
+  GET_SUBAPPS: "admin/v1/subapplication/apps",
 };
 export default urls;

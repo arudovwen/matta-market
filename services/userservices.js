@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { post, get } from "../helpers/api_helpers";
+import { post, get, ssoGet } from "../helpers/api_helpers";
 import store from "../store";
 
 const config = {
@@ -59,4 +59,8 @@ export async function postStoreName(data) {
 }
 export async function getBusinessType() {
   return await get(`${urls.GET_BUSINESS_TYPE}`);
+}
+
+export async function getSubApps(data) {
+  return await ssoGet(`${urls.GET_SUBAPPS}`, data);
 }

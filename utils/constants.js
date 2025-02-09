@@ -5,22 +5,28 @@ export const validationUrl = `http${
     ? "s://staging.profile.matta.trade"
     : "://localhost:3020"
 }`;
+
 export const appUrl = `http${
   process.env.NODE_ENV === "production"
     ? "s://staging.matta.trade"
     : "://localhost:3002"
 }`;
 
+export const logoutUrl = () => {
+  const config = useRuntimeConfig();
+  return `${validationUrl}/auth/logout/${config.public.APP_CODE}`;
+};
+
 export const handleRouting = (value = "login") => {
+  const config = useRuntimeConfig();
   navigateTo(
-    `${validationUrl}/auth/${value}/${
-      process.env.APP_ID ?? 0
-    }?continue=${appUrl}`,
+    `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${appUrl}`,
     {
       external: true,
     }
   );
 };
+
 export const measurements = [
   { value: "g", name: "Gramme", label: "Gramme" },
   { value: "kg", name: "Kilogramme", label: "Kilogram" },

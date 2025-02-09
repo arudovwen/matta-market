@@ -1,5 +1,5 @@
 <template>
-  <section v-if="!loading" class="h-full w-screen flex items-center justify-center">
+  <section  class="h-full w-screen flex items-center justify-center">
     <div class="w-full max-w-[900px] mx-auto bg-white p-16 rounded-lg">
       <div>
         <h1
@@ -51,16 +51,9 @@
       </div>
     </div>
   </section>
-  <div v-else class="flex justify-center items-center p-10 h-screen w-screen">
-    <div class="text-center flex flex-col justify-center items-center gap-y-6">
-      <AppLoaderV2 />
-      <span class="text-sm text-center block">Logging user</span>
-    </div>
-  </div>
+
 </template>
 <script setup>
-import { getBusinessType } from "~/services/userservices";
-
 definePageMeta({
   layout: "empty",
 });
@@ -76,14 +69,15 @@ const props = defineProps({
 });
 const emits = defineEmits(["close", "toggleAuth"]);
 const route = useRoute();
+const config = useRuntimeConfig();
 
-const loading = ref(true);
 const authStore = useAuthStore();
 const isVerifyPin = ref(false);
 const isLoading = ref(false);
 const formValues = {
-  email: authStore.loggedUser.email,
+  email: authStore.userInfo?.email,
   businessUserType: 0,
+  appCode: config.public.APP_CODE
 };
 const step = ref(1);
 const schema = yup.object({
@@ -108,7 +102,7 @@ const onSubmit = handleSubmit((values) => {
     .then((res) => {
       if (res.status === 200) {
         authStore.setLoggedUser({
-          ...authStore.loggedUser,
+          ...authStore.userInfo,
           businessUserType: values?.businessUserType,
           accountType: values?.businessUserType,
         });
@@ -122,18 +116,4 @@ const onSubmit = handleSubmit((values) => {
     });
 });
 
-onMounted(async () => {
-  try {
-    const typeResponse = await getBusinessType();
-    if (typeResponse.status === 200) {
-      authStore.setLoggedUser({
-        ...authStore.loggedUser,
-        businessUserType: typeResponse.data?.data?.businessUserType,
-      });
-      navigateTo("/");
-    }
-  } finally {
-    loading.value = false;
-  }
-});
 </script>
