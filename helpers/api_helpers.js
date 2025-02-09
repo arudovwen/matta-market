@@ -6,7 +6,7 @@ const MAX_REFRESH_ATTEMPTS = 3;
 let refreshAttemptCount = 0;
 
 // Base URL for API services
-const BASE_URL = "https://dev.gateway.matta.trade";
+const BASE_URL = "https://staging.gateway.matta.trade";
 
 // Create an Axios instance with custom configuration
 const createAxiosInstance = (service) => {
