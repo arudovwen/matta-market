@@ -39,6 +39,6 @@
 <script setup>
 definePageMeta({
   layout: "default",
-  middleware: "user-type"
+  middleware: "auth"
 });
 </script>

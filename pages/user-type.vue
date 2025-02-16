@@ -1,5 +1,9 @@
 <template>
-  <section  class="h-full w-screen flex items-center justify-center">
+  <section
+    v-if="!authStore.userType"
+    section
+    class="h-full w-screen flex items-center justify-center"
+  >
     <div class="w-full max-w-[900px] mx-auto bg-white p-16 rounded-lg">
       <div>
         <h1
@@ -51,33 +55,25 @@
       </div>
     </div>
   </section>
-
 </template>
 <script setup>
 definePageMeta({
   layout: "empty",
+  middleware: "auth",
 });
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { signUpWithMatta } from "~/services/userservices";
 
-const props = defineProps({
-  main: {
-    default: true,
-  },
-});
-const emits = defineEmits(["close", "toggleAuth"]);
-const route = useRoute();
 const config = useRuntimeConfig();
 
 const authStore = useAuthStore();
-const isVerifyPin = ref(false);
 const isLoading = ref(false);
 const formValues = {
   email: authStore.userInfo?.email,
   businessUserType: 0,
-  appCode: config.public.APP_CODE
+  appCode: config.public.APP_CODE,
 };
 const step = ref(1);
 const schema = yup.object({
@@ -88,7 +84,7 @@ const schema = yup.object({
     .email("Please enter a valid email address"),
 });
 
-const { handleSubmit, defineField, errors, values, meta, setFieldValue } =
+const { handleSubmit, defineField, meta, setFieldValue } =
   useForm({
     validationSchema: schema,
     initialValues: formValues,
@@ -116,4 +112,9 @@ const onSubmit = handleSubmit((values) => {
     });
 });
 
+onBeforeMount(() => {
+  if (authStore.userType) {
+    navigateTo("/");
+  }
+});
 </script>

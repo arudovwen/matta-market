@@ -9,25 +9,18 @@ export default defineNuxtRouteMiddleware(async (to) => {
   // Not logged in handling
   if (!isLoggedIn) {
     if (isAuthRoute) {
-      abortNavigation();
-      await handleRouting();
-      return;
+      return handleRouting();
     }
-    // Redirect non-auth routes to login with return path
-    abortNavigation();
-    return navigateTo(`/auth/login?redirected_from=${to.path}`);
   }
 
-  // Logged in handling
-  if (isLoggedIn) {
-    if (mattaAuth.value.businessUserType === undefined) {
-      abortNavigation();
-      return navigateTo("/user-type");
-    }
-    if (isAuthRoute) {
-      return navigateTo("/");
-    }
-
-    // Prevent accessing auth routes when logged in
+  // Route based on user type
+  if (!mattaAuth.value.businessUserType && to.name !== "user-type") {
+    return navigateTo("/user-type");
   }
+
+  if (to.name === "user-type" && mattaAuth.value.businessUserType) {
+    return navigateTo("/");
+  }
+
+  return;
 });
