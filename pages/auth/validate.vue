@@ -22,7 +22,7 @@ onMounted(async () => {
     authStore.setLoggedUser(response.data.data);
     authStore.setHasPin(response.data.data.hasTransactionPIN);
     localStorage.setItem("fetchCart", true);
-    window.location.replace("/");
+    window.location.replace("/user-type");
     return;
   }
 });
