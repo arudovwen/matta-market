@@ -14,11 +14,18 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   // Route based on user type
-  if (!mattaAuth.value.businessUserType && to.name !== "user-type") {
+  if (
+    !mattaAuth.value?.businessUserType &&
+    to.name !== "user-type" &&
+    isLoggedIn
+  ) {
     return navigateTo("/user-type");
   }
 
-  if (to.name === "user-type" && mattaAuth.value.businessUserType) {
+  if (
+    (!isLoggedIn && to.name === "user-type") ||
+    (isLoggedIn && mattaAuth.value?.businessUserType)
+  ) {
     return navigateTo("/");
   }
 
