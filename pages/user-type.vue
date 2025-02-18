@@ -38,6 +38,7 @@
       </form>
     </div>
   </section>
+  <AppLoaderV2 v-else />
 </template>
 
 <script setup>
