@@ -20,10 +20,13 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: "auth",
+});
 import { getCompanyProfile } from "~/services/settingservices";
 import { createcart, getcart } from "~/services/cartservice";
 
-const cartStore = useCartStore()
+const cartStore = useCartStore();
 const authStore = useAuthStore();
 const company = ref(null);
 const router = useRouter();

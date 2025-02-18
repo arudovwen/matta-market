@@ -59,7 +59,7 @@
 <script setup>
 definePageMeta({
   layout: "empty",
-  middleware: "auth",
+  middleware: "user-type",
 });
 import { useForm } from "vee-validate";
 import * as yup from "yup";
