@@ -2,8 +2,9 @@ import Axios from "axios";
 import { toast } from "vue3-toastify";
 
 // Max refresh attempts
-const MAX_REFRESH_ATTEMPTS = 3;
+const MAX_REFRESH_ATTEMPTS = 2;
 let refreshAttemptCount = 0;
+let hasLoggedOut = false; // Track if logout has already been called
 
 // Base URL for API services
 const BASE_URL = "https://staging.gateway.matta.trade";
@@ -77,17 +78,18 @@ const handleTokenRefresh = async () => {
     ] = `Bearer ${data.jwToken}`;
     return data.jwToken;
   } catch (error) {
-    authStore.clearAuth();
-    throw error;
+    throw error; // Don't clear auth here, handled later in the error handler
   }
 };
 
 // Handle errors when refreshing token
-const handleRefreshError = (error) => {
+const handleRefreshError = () => {
   const authStore = useAuthStore();
+  if (hasLoggedOut) return; // Ensure logout only happens once
   if (window.location.pathname !== "/checkout") {
     toast.info("Your session has expired");
-    authStore.logOut();
+    hasLoggedOut = true; // Flag logout to prevent multiple logouts
+    authStore.logOut(); // Perform the logout only once
   }
 };
 

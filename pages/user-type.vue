@@ -1,120 +1,125 @@
 <template>
   <section
     v-if="!authStore.userType"
-    section
-    class="h-full w-screen flex items-center justify-center"
+    class="flex h-full w-screen items-center justify-center"
   >
-    <div class="w-full max-w-[900px] mx-auto bg-white p-16 rounded-lg">
-      <div>
-        <h1
-          class="text-[#101828] darks:text-white mb-[4px] text-[30px] font-medium"
-        >
+    <div class="mx-auto w-full max-w-[900px] rounded-lg bg-white p-8 sm:p-16">
+      <header class="mb-8">
+        <h1 class="mb-1 text-2xl font-medium text-[#101828] dark:text-white sm:text-[30px]">
           Complete your profile
         </h1>
-        <p class="mb-8 text-base darks:text-white/80">
+        <p class="text-base dark:text-white/80">
           To get started, please select the type of service that best fits you
         </p>
-      </div>
-      <div class="mb-8 flex gap-x-1 items-center w-full">
-        <div class="w-full">
-          <form
-            v-if="step === 1"
-            @submit.prevent="onSubmit"
-            class="grid w-full grid-cols-1 lg:grid-cols-2 gap-x-[18px] gap-y-5"
-          >
-            <div class="lg:col-span-2 grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <AuthUserTypeCard
-                :active="businessUserType === 0"
-                @click="setFieldValue('businessUserType', 0)"
-                icon="ri:user-3-line"
-                title="Buyer Account"
-                description="Search, buy and place orders for products"
-              />
-              <AuthUserTypeCard
-                :active="businessUserType === 1"
-                @click="setFieldValue('businessUserType', 1)"
-                icon="solar:shop-linear"
-                title="Vendor Account"
-                description="For merchants who wants to sell their products"
-              />
-            </div>
+      </header>
 
-            <div
-              class="lg:col-span-2 grid gap-y-[22px] mb-[13px] mt-4 max-w-[400px] mx-auto w-full"
-            >
-              <AppButton
-                type="submit"
-                :isLoading="isLoading"
-                text="Get Started"
-                btnClass="normal-case btn-primary !py-3"
-                :isDisabled="isLoading || !meta.valid"
-              />
-            </div>
-          </form>
+      <form @submit.prevent="onSubmit" class="w-full">
+        <div class="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <AuthUserTypeCard
+            v-for="option in userTypeOptions"
+            :key="option.type"
+            :active="businessUserType === option.type"
+            :icon="option.icon"
+            :title="option.title"
+            :description="option.description"
+            @click="setFieldValue('businessUserType', option.type)"
+          />
         </div>
-      </div>
+
+        <div class="mx-auto w-full max-w-[400px]">
+          <AppButton
+            type="submit"
+            :is-loading="isLoading"
+            :is-disabled="isLoading || !meta.valid"
+            text="Get Started"
+            btn-class="normal-case btn-primary !py-3 w-full"
+          />
+        </div>
+      </form>
     </div>
   </section>
+  <AppLoaderV2 v-else />
 </template>
+
 <script setup>
+import { ref, onBeforeMount } from 'vue'
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
+import { toast } from 'vue3-toastify'
+import { signUpWithMatta } from '~/services/userservices'
+
 definePageMeta({
-  layout: "empty",
-  middleware: "auth",
-});
-import { useForm } from "vee-validate";
-import * as yup from "yup";
-import { toast } from "vue3-toastify";
-import { signUpWithMatta } from "~/services/userservices";
+  layout: 'empty',
+  middleware: 'user-type'
+})
 
-const config = useRuntimeConfig();
+const config = useRuntimeConfig()
+const authStore = useAuthStore()
+const isLoading = ref(false)
 
-const authStore = useAuthStore();
-const isLoading = ref(false);
-const formValues = {
-  email: authStore.userInfo?.email,
-  businessUserType: 0,
-  appCode: config.public.APP_CODE,
-};
-const step = ref(1);
+// Constants
+const userTypeOptions = [
+  {
+    type: 0,
+    icon: 'ri:user-3-line',
+    title: 'Buyer Account',
+    description: 'Search, buy and place orders for products'
+  },
+  {
+    type: 1,
+    icon: 'solar:shop-linear',
+    title: 'Vendor Account',
+    description: 'For merchants who wants to sell their products'
+  }
+]
+
+// Form setup
 const schema = yup.object({
-  businessUserType: yup.mixed(),
+  businessUserType: yup.number().required(),
   email: yup
     .string()
-    .required("Email is required")
-    .email("Please enter a valid email address"),
-});
+    .required('Email is required')
+    .email('Please enter a valid email address')
+})
 
-const { handleSubmit, defineField, meta, setFieldValue } =
-  useForm({
-    validationSchema: schema,
-    initialValues: formValues,
-  });
+const { handleSubmit, defineField, meta, setFieldValue } = useForm({
+  validationSchema: schema,
+  initialValues: {
+    email: authStore.userInfo?.email,
+    businessUserType: 0,
+    appCode: config.public.APP_CODE
+  }
+})
 
-const [businessUserType] = defineField("businessUserType");
+const [businessUserType] = defineField('businessUserType')
 
-const onSubmit = handleSubmit((values) => {
-  isLoading.value = true;
-  signUpWithMatta({ ...values })
-    .then((res) => {
-      if (res.status === 200) {
-        authStore.setLoggedUser({
-          ...authStore.userInfo,
-          businessUserType: values?.businessUserType,
-          accountType: values?.businessUserType,
-        });
-        toast.success("Profile updated!");
-        navigateTo("/");
-      }
-    })
-    .catch((err) => {
-      toast.error(err.response.data.message);
-      isLoading.value = false;
-    });
-});
+// Form submission handler
+const onSubmit = handleSubmit(async (values) => {
+  try {
+    isLoading.value = true
+    const response = await signUpWithMatta({ ...values })
+    
+    if (response.status === 200) {
+      authStore.setLoggedUser({
+        ...authStore.userInfo,
+        businessUserType: values.businessUserType,
+        accountType: values.businessUserType
+      })
+      
+      toast.success('Profile updated!')
+      navigateTo('/')
+    }
+  } catch (error) {
+    toast.error(error.response?.data?.message || 'An error occurred')
+  } finally {
+    isLoading.value = false
+  }
+})
 
+// Navigation guard
 onBeforeMount(() => {
   if (authStore.userType) {
-    navigateTo("/");
+    navigateTo('/')
   }
-});
+})
 </script>
