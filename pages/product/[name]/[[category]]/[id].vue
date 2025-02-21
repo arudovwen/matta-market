@@ -15,9 +15,9 @@
   </div>
 </template>
 <script setup>
-definePageMeta({
-  middleware: "auth",
-});
+// definePageMeta({
+//   middleware: "auth",
+// });
 import { getProduct } from "~/services/productservices";
 import { useProductStore } from "~/stores/products";
 
