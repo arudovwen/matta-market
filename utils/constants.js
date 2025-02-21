@@ -1,5 +1,18 @@
 import { required, helpers } from "@vuelidate/validators";
 
+const isProduction = process.env.NODE_ENV === "production";
+const cookieDomain = isProduction ? ".matta.trade" : "localhost";
+
+export const defaultOptions = {
+  domain: cookieDomain,
+  path: "/",
+  secure: isProduction,
+  sameSite: "Strict",
+  maxAge: 60 * 60 * 24 * 7, // 7 days default
+  httpOnly: false, // false by default to allow JS access
+};
+
+
 export const validationUrl = `http${
   process.env.NODE_ENV === "production"
     ? "s://dev.profile.matta.trade"

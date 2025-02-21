@@ -1,14 +1,13 @@
 import { handleRouting } from "~/utils/constants";
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  const mattaAuth = useCookie("mattaAuth");
+  const mattaAuth = useCookie("mattaAuth", defaultOptions);
   const routeName = to?.name?.toString() || "";
   const isAuthRoute = routeName.includes("auth");
   const isLoggedIn = !!mattaAuth.value;
   const businessUserType = mattaAuth.value?.businessUserType;
 
   if (isLoggedIn) {
-   
     if (!businessUserType && to.name !== "user-type") {
       return navigateTo("/user-type");
     }

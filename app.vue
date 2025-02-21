@@ -161,7 +161,7 @@ function getAppList() {
           ...i,
           url: `${i.url}/auth/validate?token=${authStore.jwToken}`,
         }))
-        .filter((i) => !["matta", "mattapedia"].includes(i.name.toLowerCase()));
+        .filter((i) => !["matta"].includes(i.name.toLowerCase()));
       const appInfo = res.data.data.find(
         (i) => i.name.toLowerCase() === "matta"
       );
