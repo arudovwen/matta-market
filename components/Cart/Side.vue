@@ -79,12 +79,12 @@
           !cartStore?.cartTotalAmount ||
           cartStore?.loadingCart
         "
-        @click="handleProceed"
+        @click="hanldeCheckout"
         :isLoading="cartStore?.loadingCart"
         text="Proceed to Checkout"
         btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm !normal-case"
       />
-      <AppButton
+      <!-- <AppButton
         @click="handleOrderRequest()"
         text="Request a call"
         :isLoading="loading"
@@ -95,7 +95,7 @@
         "
         icon="ph:phone-outgoing"
         btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case"
-      />
+      /> -->
     </div>
   </div>
 </template>
@@ -103,10 +103,17 @@
 const shippingStore = useShippingStore();
 const cartStore = useCartStore();
 const loading = ref(false);
-
+const authStore = useAuthStore()
 const handleProceed = inject("handleProceed");
 const handleOrderRequest = inject("handleOrderRequest");
 onMounted(() => {
   shippingStore.getAlladdress();
 });
+function hanldeCheckout() {
+  if (!authStore.isLoggedIn) {
+    handleRouting("login", `${appUrl}/checkout`);
+    return
+  }
+  navigateTo('/checkout')
+}
 </script>

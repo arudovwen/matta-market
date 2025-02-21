@@ -17,10 +17,10 @@ export const logoutUrl = () => {
   return `${validationUrl}/auth/logout/${config.public.APP_CODE}`;
 };
 
-export const handleRouting = (value = "login") => {
+export const handleRouting = (value = "login", url = appUrl) => {
   const config = useRuntimeConfig();
   window.open(
-    `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${appUrl}`,
+    `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`,
     {
       target: '_blank',
     }

@@ -87,7 +87,8 @@ const { handleSubmit, defineField, meta, setFieldValue } = useForm({
   initialValues: {
     email: authStore.userInfo?.email,
     businessUserType: 0,
-    appCode: config.public.APP_CODE
+    appCode: config.public.APP_CODE,
+    ssoUserCategory: authStore.userInfo?.userCategory,
   }
 })
 
