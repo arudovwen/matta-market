@@ -13,7 +13,12 @@ const UserTypes = {
 export const useAuthStore = defineStore(
   "matta_auth",
   () => {
-    const mattaAuth = useCookie("mattaAuth");
+    const mattaAuth = useCookie("mattaAuth", {
+      domain: cookieDomain,
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+    });
     const appInfo = ref(null);
     const appList = ref([]);
     const loggedUser = ref("");
