@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   // Handle not logged in
   if (!isLoggedIn) {
-    handleRouting();
+    handleRouting({ target: "_self" });
   }
 
   return;
