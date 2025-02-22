@@ -18,7 +18,7 @@ export const useAuthStore = defineStore(
     const hasPin = ref(false);
     const language = ref(window?.navigator?.language);
     const isLoggedIn = computed(() => !!mattaAuth.value);
-    const refresh_token = computed(() => mattaAuth?.value?.refreshToken);
+    const refreshToken = computed(() => mattaAuth?.value?.refreshToken);
     const jwToken = computed(() => mattaAuth?.value?.jwToken);
     const roles = computed(() => mattaAuth?.value?.roles);
     const userId = computed(() => mattaAuth?.value?.id);
@@ -48,7 +48,7 @@ export const useAuthStore = defineStore(
       setLoggedUser(userInfo);
     }
     function setRefreshToken(value) {
-      let userInfo = { ...loggedUser?.value, refresh_token: value };
+      let userInfo = { ...loggedUser?.value, refreshToken: value };
       setLoggedUser(userInfo);
     }
     function updateUser(value) {
@@ -67,7 +67,7 @@ export const useAuthStore = defineStore(
 
     const logOut = async () => {
       const response = await logoutUser({
-        refreshToken: refresh_token.value,
+        refreshToken: refreshToken.value,
         token: jwToken.value,
       });
       if (response.status === 200) {
@@ -88,7 +88,7 @@ export const useAuthStore = defineStore(
     return {
       updateUser,
       isLoggedIn,
-      refresh_token,
+      refreshToken,
       jwToken,
       roles,
       userId,
