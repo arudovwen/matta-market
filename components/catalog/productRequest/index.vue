@@ -138,6 +138,8 @@
             placeholder="Select document to upload"
             id="uploadedDocumentUrl"
             v-model="uploadedDocumentUrl"
+            @getName="(value) => setFieldValue('documentName', value)"
+            :name="documentName"
           />
         </div>
       </div>
@@ -190,6 +192,7 @@ const form = reactive({
   email: authStore.userInfo?.email || "",
   phone: authStore.userInfo?.phoneNumber || "",
   address: "",
+  documentName: "",
   uploadedDocumentUrl: "",
   confirm: false,
   productUse: "",
@@ -204,7 +207,8 @@ const form = reactive({
 });
 const productSchema = yup.object().shape({
   quantity: yup
-    .number().typeError('Invalid value')
+    .number()
+    .typeError("Invalid value")
     .positive()
     .required("Quantity is required"),
   unit: yup.string().required("Unit is required"),
@@ -222,6 +226,7 @@ const validationSchema = yup.object({
     .required("Email is required"),
   phone: yup.string().required("Phone number is required"),
   uploadedDocumentUrl: yup.string(),
+  documentName: yup.string(),
   products: yup
     .array()
     .of(productSchema)
@@ -229,10 +234,12 @@ const validationSchema = yup.object({
     .required("Products array is required"),
 });
 
-const { handleSubmit, defineField, errors, resetForm } = useForm({
-  validationSchema: validationSchema,
-  initialValues: form,
-});
+const { handleSubmit, defineField, errors, resetForm, setFieldValue } = useForm(
+  {
+    validationSchema: validationSchema,
+    initialValues: form,
+  }
+);
 
 const [fullName, fullNameAtt] = defineField("fullName");
 const [businessName, businessNameAtt] = defineField("businessName");
@@ -240,7 +247,7 @@ const [email, emailAtt] = defineField("email");
 const [phone] = defineField("phone");
 const [productUse, productUseAtt] = defineField("productUse");
 const [uploadedDocumentUrl] = defineField("uploadedDocumentUrl");
-const [quantity, quantityAtt] = defineField("quantity");
+const [documentName] = defineField("documentName");
 const [products] = defineField("products");
 const isLoading = ref(false);
 const isUploading = ref(false);
@@ -250,9 +257,7 @@ const addProduct = () => {
   products.value.push({
     quantity: null,
     unit: "g",
-    productUse: "",
     chemicalName: "",
-    uploadedDocumentUrl: "",
   });
 };
 
