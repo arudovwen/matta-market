@@ -4,7 +4,7 @@
       >{{ label }} <RedDot v-if="isCumpulsory"
     /></label>
     <div
-      class="flex-1 rounded-lg py-1 pr-[14px] pl-2 h-12 text-sm w-full border border-[##EAECF0] placeholder:text-[#B6B7B9] bg-[#F9FAFB] focus:outline-matta-black/20 flex items-center"
+      class="flex-1 rounded-lg py-[6px] pr-[14px] pl-2 h-12 text-sm w-full relative border border-[##EAECF0]  placeholder:text-[#B6B7B9] bg-[#F9FAFB] focus:outline-matta-black/20 flex items-center"
     >
       <input
         ref="fileInputRef"
@@ -19,26 +19,27 @@
         :multiple="multiple"
       />
 
-      <button
-        type="button"
-        @click="triggerFileInput"
-        class="text-xs text-white border border-[#1570Ef] !bg-[#1570EF] rounded px-5 py-[10px] active:scale-[.95] leading-normal flex justify-center"
-      >
-        <div
-          v-if="loading"
-          class="loader border-t-2 border-white border-solid rounded-full h-3 w-3 animate-spin whitespace-nowrap"
-        ></div>
-        <span v-else class="flex flex-row justify-between">
-          <Icon icon="lucide:upload" class="mr-2" />
-          <span>{{ btnText || "Select file" }}</span>
+      <button type="button" @click="triggerFileInput" class="mr-4">
+        <span>
+          <UploadSvg />
         </span>
+       
       </button>
-
-      <span
-        :class="lClass"
-        class="flex-1 px-4 truncate text-[#999999] inline-bloc"
-        >{{ multiple ? multiUrls.join() : title }}</span
+      <span  v-if="!loading" class="flex-1 max-w-max truncate">
+        <span v-if="!title && !multiUrls?.join()" class="text-[#98A2B3]">{{
+          btnText || "Select file for upload"
+        }}</span>
+        <span
+          v-else
+          :class="lClass"
+          class="flex-1 truncate text-[#999999] inline-bloc"
+          >{{ multiple ? multiUrls.join() : title }}</span
+        ></span
       >
+      <div
+      v-if="loading" 
+          class="loader border-t-2 border-primary-500 border-solid rounded-full h-4 w-4 animate-spin whitespace-nowrap absolute right-4"
+        ></div>
     </div>
   </div>
 </template>

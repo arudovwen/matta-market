@@ -98,22 +98,31 @@
       /> -->
     </div>
   </div>
+  <ModalAuth />
 </template>
 <script setup>
+import { toast } from 'vue3-toastify';
+
 const shippingStore = useShippingStore();
 const cartStore = useCartStore();
 const loading = ref(false);
-const authStore = useAuthStore()
-const handleProceed = inject("handleProceed");
-const handleOrderRequest = inject("handleOrderRequest");
+const authStore = useAuthStore();
+const isOpen = ref(false);
+const active = ref("signin");
+const authOpen = ref(false);
+const isAuthOpen = ref(false);
 onMounted(() => {
   shippingStore.getAlladdress();
 });
 function hanldeCheckout() {
   if (!authStore.isLoggedIn) {
-    handleRouting("login", `${appUrl}/checkout`);
-    return
+    toast.info("Login to continue");
+    authOpen.value = true;
+    return;
   }
-  navigateTo('/checkout')
+  navigateTo("/checkout");
 }
+provide("isOpen", isOpen);
+provide("authOpen", authOpen);
+provide("action", null);
 </script>

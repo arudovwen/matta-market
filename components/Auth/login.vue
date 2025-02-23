@@ -37,7 +37,7 @@
           >Forgot password?</NuxtLink
         >
       </span>
-      <div class="grid gap-y-[22px] mb-9">
+      <div class="grid gap-y-[22px]">
         <AppButton
           type="submit"
           :isLoading="isLoading"
@@ -55,22 +55,17 @@
           type="button"
         />
       </div>
-      <span
-        class="flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
+      <span  v-if="main"
+        class="flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center mt-9"
       >
         Don’t have an account?
         <NuxtLink
           to="/auth/register"
-          v-if="main"
+         
           class="font-semibold text-[#2176FF]"
           >Sign Up</NuxtLink
         >
-        <span
-          v-else
-          @click="emits('toggleAuth', 'register')"
-          class="font-semibold text-[#2176FF] cursor-pointer"
-          >Sign Up</span
-        >
+      
       </span>
     </form>
   </div>

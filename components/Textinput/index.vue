@@ -22,10 +22,13 @@
         :title="infoTitle"
         class="cursor-pointer h-4 w-4 flex items-center justify-center"
       >
-        <AppIcon icon="quill:info" iconClass="text-gray-600" /> </span
-    ></label>
+        <AppIcon icon="quill:info" iconClass="text-gray-600" />
+      </span>
+    </label>
+
     <div class="relative flex items-center" :class="horizontal ? 'flex-1' : ''">
       <input
+        v-if="!isMask"
         :type="types"
         :name="name"
         :data-testid="name"
@@ -34,27 +37,27 @@
           hasicon ? 'pr-10' : ''
         } ${iconPosition === 'left' ? '!pl-10' : 'pr-10'} `"
         :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+        @input="handleInput"
         :error="error"
         :id="name"
         :readonly="isReadonly"
         :disabled="disabled"
         :validate="validate"
-        v-if="!isMask"
       />
+
       <cleave
+        v-if="isMask"
         :class="`${classInput} cleave input-control block w-full focus:outline-none h-[44px] `"
         :name="name"
         :placeholder="placeholder"
         :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+        @input="handleInput"
         :error="error"
         :id="name"
         :readonly="isReadonly"
         :disabled="disabled"
         :validate="validate"
         :options="options"
-        v-if="isMask"
         modelValue="modelValue"
       />
 
@@ -83,45 +86,60 @@
         <span v-if="validate" class="text-success-500">
           <AppIcon icon="bi:check-lg" />
         </span>
+
         <span v-if="icon" class="text-[#667085]">
           <AppIcon :icon="icon" iconClass="text-[#667085]" />
         </span>
-        <span class="text-sm"> <slot name="suffix"></slot></span>
+
+        <span class="text-sm">
+          <slot name="suffix"></slot>
+        </span>
       </div>
+
       <slot name="content"></slot>
     </div>
 
     <span
       v-if="error"
-      class=""
       :class="
         msgTooltip
-          ? ' inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded'
-          : ' text-danger-500 block text-sm'
+          ? 'inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded'
+          : 'text-danger-500 block text-sm'
       "
-      >{{ error }}</span
     >
+      {{ error }}
+    </span>
+
     <span
       v-if="validate"
-      class=""
       :class="
         msgTooltip
-          ? ' inline-block bg-success-500 text-white text-[10px] px-2 py-1 rounded'
-          : ' text-success-500 block text-sm'
+          ? 'inline-block bg-success-500 text-white text-[10px] px-2 py-1 rounded'
+          : 'text-success-500 block text-sm'
       "
-      >{{ validate }}</span
     >
+      {{ validate }}
+    </span>
+
     <span
-      class="block text-secondary-500 font-light leading-4 text-xs mt-2"
       v-if="description"
-      >{{ description }}</span
+      class="block text-secondary-500 font-light leading-4 text-xs mt-2"
     >
+      {{ description }}
+    </span>
   </div>
 </template>
+
 <script>
 import Cleave from "vue-cleave-component";
+
 export default {
-  components: { Cleave },
+  name: 'CustomInput',
+  
+  components: { 
+    Cleave 
+  },
+
   props: {
     placeholder: {
       type: String,
@@ -129,6 +147,7 @@ export default {
     },
     label: {
       type: String,
+      default: "",
     },
     classLabel: {
       type: String,
@@ -141,7 +160,6 @@ export default {
     type: {
       type: String,
       default: "text",
-      //required: true,
     },
     isCumpulsory: {
       type: Boolean,
@@ -149,6 +167,7 @@ export default {
     },
     name: {
       type: String,
+      required: true,
     },
     modelValue: {
       type: [String, Number],
@@ -156,6 +175,7 @@ export default {
     },
     error: {
       type: String,
+      default: "",
     },
     hasicon: {
       type: Boolean,
@@ -175,6 +195,7 @@ export default {
     },
     validate: {
       type: String,
+      default: "",
     },
     msgTooltip: {
       type: Boolean,
@@ -182,12 +203,15 @@ export default {
     },
     description: {
       type: String,
+      default: "",
     },
     icon: {
       type: String,
+      default: "",
     },
     iconPosition: {
       type: String,
+      default: "right",
     },
     isMask: {
       type: Boolean,
@@ -202,14 +226,22 @@ export default {
     },
     infoTitle: {
       type: String,
+      default: "",
     },
     info: {
       type: Boolean,
+      default: false,
     },
     suffix: {
       default: "",
     },
+    // New prop to explicitly handle number inputs
+    isNumber: {
+      type: Boolean,
+      default: false,
+    },
   },
+
   data() {
     return {
       types: this.type,
@@ -217,11 +249,35 @@ export default {
   },
 
   methods: {
+    handleInput(event) {
+      let value = event.target?.value ?? event;
+      
+      if (this.isNumber && this.type === 'number') {
+        // Handle empty input
+        if (value === '') {
+          this.$emit('update:modelValue', null);
+          return;
+        }
+        
+        // Convert to number if valid
+        const numberValue = Number(value);
+        if (!isNaN(numberValue)) {
+          this.$emit('update:modelValue', numberValue);
+          return;
+        }
+      }
+      
+      // Emit original value if not a number input
+      this.$emit('update:modelValue', value);
+    },
+
     toggleType() {
-      // toggle the type of the input field
       this.types = this.types === "text" ? "password" : "text";
     },
   },
 };
 </script>
-<style lang="scss"></style>
+
+<style lang="scss">
+/* Add any custom styles here */
+</style>

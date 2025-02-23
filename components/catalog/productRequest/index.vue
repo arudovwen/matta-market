@@ -2,7 +2,7 @@
   <div class="bg-white flex-1 rounded-lg">
     <form
       @submit.prevent="onSubmit"
-      class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF]"
+      class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF] max-h-[700px] overflow-y-auto"
     >
       <h4 class="text-2xl font-semibold text-left mb-7">
         {{ isDetailPage ? "Request a call" : "Request a product" }}
@@ -56,19 +56,31 @@
           />
         </div> -->
 
-        <div class="rounded-lg col-span-2 mb-8">
+        <div
+          class="rounded-lg col-span-2 p-4 border border-gray-200 grid gap-y-4"
+        >
           <div
             v-for="(item, idx) in products"
             :key="idx"
-            class="grid md:grid-cols-2 gap-4 p-4 border border-gray-200 rounded-lg col-span-2"
+            class="flex md:flex-row gap-4 items-center"
           >
+            <div class="flex-1">
+              <Textinput
+                placeholder="Chemical Name"
+                label=""
+                name="chemicalName"
+                v-model="products[idx].chemicalName"
+              />
+            </div>
+
             <div class="relative">
               <Textinput
-                placeholder=""
-                label="Quantity"
+                placeholder="Quantity"
+                label=""
                 name="quantity"
-                v-bind="quantityAtt"
                 v-model="products[idx].quantity"
+                type="number"
+                :isNumber="true"
               >
                 <template #suffix>
                   <span class="request">
@@ -85,42 +97,14 @@
               </Textinput>
             </div>
 
-            <div>
-              <Textinput
-                placeholder=""
-                label="What do you want to use it for?"
-                name="productUse"
-                v-bind="productUseAtt"
-                v-model="products[idx].productUse"
-              />
-            </div>
-
-            <div>
-              <Textinput
-                placeholder=""
-                label="Chemical Name"
-                name="chemicalName"
-                v-model="products[idx].chemicalName"
-              />
-            </div>
-
             <div class="">
-              <FileUpload
-                label="Select file to upload"
-                placeholder="Select file to upload"
-                id="uploadedDocumentUrl"
-                v-model="products[idx].uploadedDocumentUrl"
-              />
-            </div>
-
-            <div class="md:col-span-2 flex justify-end">
               <button
                 v-if="products.length > 1"
                 @click="removeProduct(idx)"
                 type="button"
-                class="text-red-500 hover:text-red-700 text-sm flex items-center"
+                class="hover:text-red-700 text-xl flex items-center"
               >
-                <span class="mr-1">×</span> Remove Product
+                <AppIcon icon="lets-icons:trash-duotone" />
               </button>
             </div>
           </div>
@@ -129,7 +113,7 @@
             class="text-danger-500 block placeholder-[#f9bb64] text-sm"
             >{{ errors.products }}</span
           >
-          <div class="mt-4">
+          <div class="">
             <button
               @click="addProduct"
               type="button"
@@ -138,6 +122,23 @@
               + Add Another Product
             </button>
           </div>
+        </div>
+        <div class="col-span-2">
+          <Textinput
+            placeholder=""
+            label="What do you want to use it for?"
+            name="productUse"
+            v-bind="productUseAtt"
+            v-model="productUse"
+          />
+        </div>
+        <div class="mb-6 col-span-2">
+          <FileUpload
+            label="Document upload"
+            placeholder="Select document to upload"
+            id="uploadedDocumentUrl"
+            v-model="uploadedDocumentUrl"
+          />
         </div>
       </div>
       <div class="flex justify-center">
@@ -190,46 +191,27 @@ const form = reactive({
   phone: authStore.userInfo?.phoneNumber || "",
   address: "",
   uploadedDocumentUrl: "",
-  chemicalName: props.productOptions?.chemicalName,
-  quantity: "",
   confirm: false,
-  unit: "g",
   productUse: "",
   phoneCode: "+234",
   products: [
     {
       quantity: null,
       unit: "g",
-      productUse: "",
-      chemicalName: "",
-      uploadedDocumentUrl: "",
+      chemicalName: props.productOptions?.chemicalName,
     },
   ],
 });
 const productSchema = yup.object().shape({
   quantity: yup
-    .number()
-    .nullable()
-    .transform((value) => (isNaN(value) ? null : value))
+    .number().typeError('Invalid value')
+    .positive()
     .required("Quantity is required"),
-
   unit: yup.string().required("Unit is required"),
-
-  productUse: yup
-    .string()
-    .required("Product use is required")
-    .min(3, "Product use must be at least 3 characters"),
-
   chemicalName: yup
     .string()
     .required("Chemical name is required")
     .min(2, "Chemical name must be at least 2 characters"),
-
-  uploadedDocumentUrl: yup
-    .string()
-    .url("Document URL must be a valid URL")
-    .nullable()
-    .transform((value) => (value === "" ? null : value)),
 });
 const validationSchema = yup.object({
   fullName: yup.string().required("Full name is required"),
@@ -240,13 +222,6 @@ const validationSchema = yup.object({
     .required("Email is required"),
   phone: yup.string().required("Phone number is required"),
   uploadedDocumentUrl: yup.string(),
-  chemicalName: yup.string().required("Chemical name is required"),
-  quantity: yup
-    .number()
-    .typeError("Enter a number")
-    .required("Quantity is required")
-    .positive("Quantity must be positive"),
-  unit: yup.string().required("Unit is required"),
   products: yup
     .array()
     .of(productSchema)
@@ -265,8 +240,6 @@ const [email, emailAtt] = defineField("email");
 const [phone] = defineField("phone");
 const [productUse, productUseAtt] = defineField("productUse");
 const [uploadedDocumentUrl] = defineField("uploadedDocumentUrl");
-const [chemicalName, chemicalNameAtt] = defineField("chemicalName");
-const [unit, unitAtt] = defineField("unit");
 const [quantity, quantityAtt] = defineField("quantity");
 const [products] = defineField("products");
 const isLoading = ref(false);
