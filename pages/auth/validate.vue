@@ -10,16 +10,24 @@
 <script setup>
 import { getTokenInfo } from "~/services/authservices";
 
+const { decrypt } = useEncryption();
 const route = useRoute();
-const { token } = route.query;
+const { token, code } = route.query;
 const authStore = useAuthStore();
+
 onMounted(async () => {
+  const decryptedRefresh = decrypt(code);
+  const decryptedToken = decrypt(token);
   const config = {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${decryptedToken}` },
   };
   const response = await getTokenInfo(config);
   if (response.status === 200) {
-    authStore.setLoggedUser(response.data.data);
+    authStore.setLoggedUser({
+    ...response.data.data,
+    jwToken: decryptedToken,
+    refreshToken: decryptedRefresh,
+  });
     authStore.setHasPin(response.data.data.hasTransactionPIN);
     localStorage.setItem("fetchCart", true);
     window.location.replace("/user-type");

@@ -2,7 +2,7 @@
   <div class="bg-white flex-1 rounded-lg">
     <form
       @submit.prevent="onSubmit"
-      class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF]"
+      class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF] max-h-[700px] overflow-y-auto"
     >
       <h4 class="text-2xl font-semibold text-left mb-7">
         {{ isDetailPage ? "Request a call" : "Request a product" }}
@@ -45,7 +45,7 @@
             <FormsPhoneCodes v-model="phone" />
           </FormGroup>
         </div>
-        <div>
+        <!-- <div>
           <Textinput
             placeholder=""
             label="Chemical name"
@@ -54,43 +54,92 @@
             v-model="chemicalName"
             :error="errors.chemicalName"
           />
-        </div>
-        <div class="z-[90] relative">
-          <Textinput
-            placeholder=""
-            label="Quantity"
-            name="unit"
-            v-bind="quantityAtt"
-            v-model="quantity"
-            :error="errors.quantity"
-            ><template #suffix>
-              <span class="request"
-                ><SelectVueSelect
-                  v-model="unit"
-                  :options="minimeasurements"
-                  :reduce="(option) => option.value"
-                  placeholder="unit"
-                  classInput="!border-none"
-                  :clearable="false"
-              /></span> </template
-          ></Textinput>
-        </div>
+        </div> -->
 
-        <div class="md:col-span-2">
+        <div
+          class="rounded-lg col-span-2 p-4 border border-gray-200 grid gap-y-4"
+        >
+          <div
+            v-for="(item, idx) in products"
+            :key="idx"
+            class="flex md:flex-row gap-4 items-center"
+          >
+            <div class="flex-1">
+              <Textinput
+                placeholder="Chemical Name"
+                label=""
+                name="chemicalName"
+                v-model="products[idx].chemicalName"
+              />
+            </div>
+
+            <div class="relative">
+              <Textinput
+                placeholder="Quantity"
+                label=""
+                name="quantity"
+                v-model="products[idx].quantity"
+                type="number"
+                :isNumber="true"
+              >
+                <template #suffix>
+                  <span class="request">
+                    <SelectVueSelect
+                      v-model="products[idx].unit"
+                      :options="minimeasurements"
+                      :reduce="(option) => option.value"
+                      placeholder="unit"
+                      classInput="!border-none"
+                      :clearable="false"
+                    />
+                  </span>
+                </template>
+              </Textinput>
+            </div>
+
+            <div class="">
+              <button
+                v-if="products.length > 1"
+                @click="removeProduct(idx)"
+                type="button"
+                class="hover:text-red-700 text-xl flex items-center"
+              >
+                <AppIcon icon="lets-icons:trash-duotone" />
+              </button>
+            </div>
+          </div>
+          <span
+            v-if="errors.products"
+            class="text-danger-500 block placeholder-[#f9bb64] text-sm"
+            >{{ errors.products }}</span
+          >
+          <div class="">
+            <button
+              @click="addProduct"
+              type="button"
+              class="rounded text-primary-500 text-sm"
+            >
+              + Add Another Product
+            </button>
+          </div>
+        </div>
+        <div class="col-span-2">
           <Textinput
             placeholder=""
             label="What do you want to use it for?"
             name="productUse"
             v-bind="productUseAtt"
             v-model="productUse"
-            :error="errors.productUse"
           />
         </div>
-        <div class="mb-6 md:col-span-2">
+        <div class="mb-6 col-span-2">
           <FileUpload
-            placeholder="Select file to upload"
+            label="Document upload"
+            placeholder="Select document to upload"
             id="uploadedDocumentUrl"
             v-model="uploadedDocumentUrl"
+            @getName="(value) => setFieldValue('documentName', value)"
+            :name="documentName"
           />
         </div>
       </div>
@@ -143,15 +192,31 @@ const form = reactive({
   email: authStore.userInfo?.email || "",
   phone: authStore.userInfo?.phoneNumber || "",
   address: "",
+  documentName: "",
   uploadedDocumentUrl: "",
-  chemicalName: props.productOptions?.chemicalName,
-  quantity: "",
   confirm: false,
-  unit: "g",
   productUse: "",
   phoneCode: "+234",
+  products: [
+    {
+      quantity: null,
+      unit: "g",
+      chemicalName: props.productOptions?.chemicalName,
+    },
+  ],
 });
-
+const productSchema = yup.object().shape({
+  quantity: yup
+    .number()
+    .typeError("Invalid value")
+    .positive()
+    .required("Quantity is required"),
+  unit: yup.string().required("Unit is required"),
+  chemicalName: yup
+    .string()
+    .required("Chemical name is required")
+    .min(2, "Chemical name must be at least 2 characters"),
+});
 const validationSchema = yup.object({
   fullName: yup.string().required("Full name is required"),
   businessName: yup.string().required("Business name is required"),
@@ -161,19 +226,20 @@ const validationSchema = yup.object({
     .required("Email is required"),
   phone: yup.string().required("Phone number is required"),
   uploadedDocumentUrl: yup.string(),
-  chemicalName: yup.string().required("Chemical name is required"),
-  quantity: yup
-    .number()
-    .typeError("Enter a number")
-    .required("Quantity is required")
-    .positive("Quantity must be positive"),
-  unit: yup.string().required("Unit is required"),
+  documentName: yup.string(),
+  products: yup
+    .array()
+    .of(productSchema)
+    .min(1, "At least one product is required")
+    .required("Products array is required"),
 });
 
-const { handleSubmit, defineField, errors, resetForm } = useForm({
-  validationSchema: validationSchema,
-  initialValues: form,
-});
+const { handleSubmit, defineField, errors, resetForm, setFieldValue } = useForm(
+  {
+    validationSchema: validationSchema,
+    initialValues: form,
+  }
+);
 
 const [fullName, fullNameAtt] = defineField("fullName");
 const [businessName, businessNameAtt] = defineField("businessName");
@@ -181,13 +247,27 @@ const [email, emailAtt] = defineField("email");
 const [phone] = defineField("phone");
 const [productUse, productUseAtt] = defineField("productUse");
 const [uploadedDocumentUrl] = defineField("uploadedDocumentUrl");
-const [chemicalName, chemicalNameAtt] = defineField("chemicalName");
-const [unit, unitAtt] = defineField("unit");
-const [quantity, quantityAtt] = defineField("quantity");
-
+const [documentName] = defineField("documentName");
+const [products] = defineField("products");
 const isLoading = ref(false);
 const isUploading = ref(false);
 
+// Add new product
+const addProduct = () => {
+  products.value.push({
+    quantity: null,
+    unit: "g",
+    chemicalName: "",
+  });
+};
+
+// Remove product
+const removeProduct = (index) => {
+  if (products.value.length > 1) {
+    products.value.splice(index, 1);
+    // emit('update:modelValue', products.value);
+  }
+};
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
   createproductrequest(values)

@@ -37,13 +37,13 @@
             :class="className"
             class="inline-block relative align-bottom bg-white rounded-lg text-left invisible-scrollbar shadow-xl transform transition-all sm:my-8 sm:align-middle md:min-w-[500px] p-6 w-full max-w-[500px] max-h-[95vh]"
           >
+            <AppTab :tabs="tabs" className="" />
             <AuthLogin
               @close="
                 () => {
                   authOpen = false;
                   cartStore.getMyCart(action, loadData);
-                  goToUrl && navigateTo(goToUrl)
-                  
+                  goToUrl && navigateTo(goToUrl);
                 }
               "
               @toggleAuth="(val) => (type = val)"
@@ -58,14 +58,14 @@
                 () => {
                   authOpen = false;
                   cartStore.getMyCart(action, loadData);
-                  goToUrl && navigateTo(goToUrl)
+                  goToUrl && navigateTo(goToUrl);
                 }
               "
             />
 
             <span
               v-if="canClose"
-              class="cursor-pointer hover:border w-8 h-8 absolute top-[20px] right-[20px] rounded-full bg-[#F5F5F5] flex items-center justify-center z-[999]"
+              class="cursor-pointer hover:border w-8 h-8 absolute top-[14px] right-[20px] rounded-full bg-[#F5F5F5] flex items-center justify-center z-[999]"
               @click="
                 () => {
                   authOpen = false;
@@ -101,6 +101,17 @@ const action = inject("action");
 const handleProceed = inject("handleProceed");
 const handleOrderRequest = inject("handleOrderRequest");
 const type = ref("login");
+const active = ref("Sign up");
+const tabs = [
+  {
+    title: "login",
+    key: "login",
+  },
+  {
+    title: "register",
+    key: "register",
+  },
+];
 defineProps({
   canClose: {
     default: true,
@@ -108,14 +119,15 @@ defineProps({
   className: {
     default: "",
   },
-  goToUrl:{
-    default:null
-  }
+  goToUrl: {
+    default: null,
+  },
 });
 
 function loadData() {
   action.value === "call" ? handleOrderRequest() : handleProceed();
 }
 provide("type", type);
+provide("active", type);
 provide("step", step);
 </script>

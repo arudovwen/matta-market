@@ -1,5 +1,17 @@
 import { required, helpers } from "@vuelidate/validators";
 
+const isProduction = process.env.NODE_ENV === "production";
+const cookieDomain = isProduction ? ".matta.trade" : "localhost";
+
+export const defaultOptions = {
+  domain: cookieDomain,
+  path: "/",
+  secure: isProduction,
+  sameSite: "Strict",
+  maxAge: 60 * 60 * 24 * 7, // 7 days default
+  httpOnly: false, // false by default to allow JS access
+};
+
 export const validationUrl = `http${
   process.env.NODE_ENV === "production"
     ? "s://staging.profile.matta.trade"
@@ -17,16 +29,33 @@ export const logoutUrl = () => {
   return `${validationUrl}/auth/logout/${config.public.APP_CODE}`;
 };
 
-export const handleRouting = (value = "login") => {
+export const handleRouting = (
+  value = "login",
+  url = appUrl,
+  target = "_blank"
+) => {
   const config = useRuntimeConfig();
   window.open(
-    `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${appUrl}`,
+    `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`,
     {
-      target: '_blank',
+      target,
     }
   );
 };
 
+export const handleRoute = ({
+  value = "login",
+  url = appUrl,
+  target = "_blank",
+}) => {
+  const config = useRuntimeConfig();
+  window.open(
+    `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`,
+    {
+      target,
+    }
+  );
+};
 export const measurements = [
   { value: "g", name: "Gramme", label: "Gramme" },
   { value: "kg", name: "Kilogramme", label: "Kilogram" },

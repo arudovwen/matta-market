@@ -2,8 +2,6 @@ import { defineStore } from "pinia";
 import { logoutUser } from "~/services/authservices";
 import { logoutUrl } from "~/utils/constants";
 
-const cookieDomain =
-  process.env.NODE_ENV === "production" ? ".matta.trade" : undefined;
 
 const UserTypes = {
   0: "buyer",
@@ -11,23 +9,23 @@ const UserTypes = {
 };
 
 export const useAuthStore = defineStore(
-  "matta_auth",
+  "matta_user",
   () => {
-    const mattaAuth = useCookie("mattaAuth");
+    const mattaAuth = useCookie("mattaAuth", defaultOptions);
     const appInfo = ref(null);
     const appList = ref([]);
     const loggedUser = ref("");
     const hasPin = ref(false);
     const language = ref(window?.navigator?.language);
     const isLoggedIn = computed(() => !!mattaAuth.value);
-    const refresh_token = computed(() => mattaAuth?.value?.refreshToken);
+    const refreshToken = computed(() => mattaAuth?.value?.refreshToken);
     const jwToken = computed(() => mattaAuth?.value?.jwToken);
     const roles = computed(() => mattaAuth?.value?.roles);
     const userId = computed(() => mattaAuth?.value?.id);
     const userType = computed(
       () => UserTypes[mattaAuth?.value?.businessUserType]
     );
-    const businessId = computed(() => mattaAuth?.value?.businessId);
+  const businessId = computed(() => mattaAuth?.value?.businessId);
     const userInfo = computed(() => mattaAuth?.value);
 
     function setLoggedUser(data) {
@@ -50,7 +48,7 @@ export const useAuthStore = defineStore(
       setLoggedUser(userInfo);
     }
     function setRefreshToken(value) {
-      let userInfo = { ...loggedUser?.value, refresh_token: value };
+      let userInfo = { ...loggedUser?.value, refreshToken: value };
       setLoggedUser(userInfo);
     }
     function updateUser(value) {
@@ -69,7 +67,7 @@ export const useAuthStore = defineStore(
 
     const logOut = async () => {
       const response = await logoutUser({
-        refreshToken: refresh_token.value,
+        refreshToken: refreshToken.value,
         token: jwToken.value,
       });
       if (response.status === 200) {
@@ -90,7 +88,7 @@ export const useAuthStore = defineStore(
     return {
       updateUser,
       isLoggedIn,
-      refresh_token,
+      refreshToken,
       jwToken,
       roles,
       userId,
@@ -116,12 +114,7 @@ export const useAuthStore = defineStore(
   },
   {
     persist: {
-      storage: persistedState.cookiesWithOptions({
-        domain: cookieDomain,
-        path: "/",
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "Lax",
-      }),
+      storage: persistedState.localStorage
     },
   }
 );

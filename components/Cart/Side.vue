@@ -79,12 +79,12 @@
           !cartStore?.cartTotalAmount ||
           cartStore?.loadingCart
         "
-        @click="handleProceed"
+        @click="hanldeCheckout"
         :isLoading="cartStore?.loadingCart"
         text="Proceed to Checkout"
         btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm !normal-case"
       />
-      <AppButton
+      <!-- <AppButton
         @click="handleOrderRequest()"
         text="Request a call"
         :isLoading="loading"
@@ -95,18 +95,34 @@
         "
         icon="ph:phone-outgoing"
         btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case"
-      />
+      /> -->
     </div>
   </div>
+  <ModalAuth />
 </template>
 <script setup>
+import { toast } from 'vue3-toastify';
+
 const shippingStore = useShippingStore();
 const cartStore = useCartStore();
 const loading = ref(false);
-
-const handleProceed = inject("handleProceed");
-const handleOrderRequest = inject("handleOrderRequest");
+const authStore = useAuthStore();
+const isOpen = ref(false);
+const active = ref("signin");
+const authOpen = ref(false);
+const isAuthOpen = ref(false);
 onMounted(() => {
   shippingStore.getAlladdress();
 });
+function hanldeCheckout() {
+  if (!authStore.isLoggedIn) {
+    toast.info("Login to continue");
+    authOpen.value = true;
+    return;
+  }
+  navigateTo("/checkout");
+}
+provide("isOpen", isOpen);
+provide("authOpen", authOpen);
+provide("action", null);
 </script>

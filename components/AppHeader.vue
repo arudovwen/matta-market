@@ -272,7 +272,7 @@
             />
           </span>
 
-          <button @click="goToCheckout" class="flex items-center relative">
+          <button @click="navigateTo('/cart')" class="flex items-center relative">
             <span
               class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
             >

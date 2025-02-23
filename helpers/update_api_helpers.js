@@ -26,7 +26,7 @@ export const createApiClient = (baseURL) => {
     const authStore = useAuthStore();
     try {
       const refreshResponse = await axiosApi.post("/v1/Account/refreshtoken", {
-        token: authStore.refresh_token,
+        token: authStore.refreshToken,
         ipAddress: "",
       });
 

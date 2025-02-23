@@ -115,14 +115,18 @@
         labelClass="text-xs lg:text-sm"
       />
       <span>
-        <NuxtLink to="/terms-and-conditions" class="text-[#2176FF]">Terms </NuxtLink>
+        <NuxtLink to="/terms-and-conditions" class="text-[#2176FF]"
+          >Terms
+        </NuxtLink>
         and
-        <NuxtLink to="/privacy-policies" class="text-[#2176FF]">Policy</NuxtLink>
+        <NuxtLink to="/privacy-policies" class="text-[#2176FF]"
+          >Policy</NuxtLink
+        >
         of Matta Trade
       </span>
     </div>
 
-    <div class="lg:col-span-2 grid gap-y-[22px] mb-9 mt-4">
+    <div class="lg:col-span-2 grid gap-y-[22px] mt-4">
       <AppButton
         type="submit"
         :isLoading="isLoading"
@@ -132,7 +136,8 @@
       />
     </div>
     <span
-      class="lg:col-span-2 flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center"
+      v-if="main"
+      class="lg:col-span-2 flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center mt-9"
     >
       Already have an account?
       <NuxtLink
@@ -140,12 +145,6 @@
         to="/auth/login"
         class="font-semibold text-[#2176FF]"
         >Login</NuxtLink
-      >
-      <span
-        v-else
-        @click="emits('toggleAuth', 'login')"
-        class="font-semibold text-[#2176FF] cursor-pointer"
-        >Login</span
       >
     </span>
   </form>
@@ -207,7 +206,9 @@ const schema = yup.object({
   phone: yup.string().required("Phone number is required"),
   password: yup
     .string()
-    .required("Password must be at least 8 characters, must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&#)")
+    .required(
+      "Password must be at least 8 characters, must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&#)"
+    )
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
       "Password must be at least 8 characters, must contain at least one uppercase letter, one lowercase letter, one digit, and one special character (@$!%*?&#)"
