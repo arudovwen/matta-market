@@ -34,6 +34,7 @@ import Directors from "./Directors";
 import Final from "./Final";
 import { getCompanyProfile } from "~/services/settingservices";
 import { getFinance } from "~/services/financeservice";
+import { getDraft } from "~/services/requestservice";
 
 const loading = ref(true);
 const isfetching = ref(false);
@@ -225,9 +226,40 @@ function getCompanyData() {
       // Consider adding error handling here, e.g., logging or notifying the user
     });
 }
+
+function retrieveDraft() {
+  isfetching.value = true;
+  getDraft()
+    .then((res) => {
+      if (res.status === 200) {
+        formData.amountRequired = res.data.data.amountRequired;
+        formData.tenor = res.data.data.tenor;
+        formData.whereDidYouHearAboutUs = res.data.data.whereDidYouHearAboutUs;
+        console.log(res.data.data.supportingDocuments.length);
+        if (res.data.data.supportingDocuments.length > 0) {
+          formData.supportingDocuments = res.data.data.supportingDocuments.map(
+            (i) => ({
+              ...i,
+              urls: i.urls.map((j) => ({ url: j })),
+            })
+          );
+        }
+        formData.haveyoudonebusiness = res.data.data.haveyoudonebusiness;
+        formData.haveyouexportedtotheothercourty =
+          res.data.data.haveyouexportedtotheothercourty;
+
+        isfetching.value = false;
+      }
+    })
+    .catch((err) => {
+      isfetching.value = false;
+    });
+}
+
 onMounted(() => {
   getCompanyData();
   getFinanceData();
+  retrieveDraft();
 });
 function getFinanceData() {
   if (!financeId) return;
@@ -238,12 +270,15 @@ function getFinanceData() {
         formData.amountRequired = res.data.data.amountRequired;
         formData.tenor = res.data.data.tenor;
         formData.whereDidYouHearAboutUs = res.data.data.whereDidYouHearAboutUs;
-        formData.supportingDocuments = res.data.data.supportingDocuments.map(
-          (i) => ({
-            ...i,
-            urls: i.urls.map((j) => ({ url: j })),
-          })
-        );
+        console.log(res.data.data.supportingDocuments.length);
+        if (res.data.data.supportingDocuments.length > 0) {
+          formData.supportingDocuments = res.data.data.supportingDocuments.map(
+            (i) => ({
+              ...i,
+              urls: i.urls.map((j) => ({ url: j })),
+            })
+          );
+        }
         formData.haveyoudonebusiness = res.data.data.haveyoudonebusiness;
         formData.haveyouexportedtotheothercourty =
           res.data.data.haveyouexportedtotheothercourty;

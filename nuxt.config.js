@@ -3,12 +3,14 @@ export default defineNuxtConfig({
   site: {
     url: "https://matta.trade",
   },
+
   nitro: {
     baseURL: "/",
     prerender: {
       crawlLinks: true,
     },
   },
+
   image: {
     inject: true,
     cloudinary: {
@@ -58,6 +60,7 @@ export default defineNuxtConfig({
       xFrameOptions: "deny",
     },
   },
+
   cache: {
     useHostPrefix: false,
     pages: ["/"],
@@ -69,6 +72,7 @@ export default defineNuxtConfig({
       ttl: 60,
     },
   },
+
   runtimeConfig: {
     public: {
       API_BASE_URL: process.env.API_BASE_URL,
@@ -83,13 +87,16 @@ export default defineNuxtConfig({
       encryptionKey: process.env.ENCRYPTION_KEY,
     },
   },
+
   ssr: false,
   spaLoadingTemplate: true,
+
   router: {
     options: {
       hashMode: false,
     },
   },
+
   routeRules: {
     "/finance": { redirect: "/" },
   },
@@ -100,9 +107,11 @@ export default defineNuxtConfig({
     clientId:
       "56799988480-4d51egljupar9la4djc2tknjodn2vsj5.apps.googleusercontent.com",
   },
+
   colorMode: {
     classSuffix: "",
   },
+
   css: [
     "vue-toastification/dist/index.css",
     "vue3-carousel/dist/carousel.css",
@@ -112,12 +121,15 @@ export default defineNuxtConfig({
     "~/assets/scss/_form.scss",
     "~/assets/scss/style.scss",
   ],
+
   googleFonts: {
     families: {
       Onest: [100, 200, 300, 400, 500, 600, 700, 800], // Enable the IntOnester font
     },
   },
+
   devtools: { enabled: process.env.NODE_ENV === "development" },
+
   pwa: {
     registerType: "autoUpdate",
     manifest: {
@@ -228,4 +240,6 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  compatibilityDate: "2025-02-22",
 });

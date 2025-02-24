@@ -193,25 +193,33 @@
         </div>
       </div>
     </div>
-    <div class="flex gap-x-4 items-center justify-end">
+    <div class="flex gap-x-4 items-center justify-between">
       <AppButton
         @click="active--"
         btnClass="bg-white text-white !px-11  !text-sm !py-[10px] disabled:cursor-not-allowed border border-[#BDC0C5] !rounded-lg !text-[#333]"
         type="button"
         text="Back"
       />
-      <AppButton
-        :disabled="
-          isLoading ||
-          (country?.toLowerCase() === 'nigeria' && (!registrationNo || !tin))
-        "
-        :isLoading="isLoading"
-        btnClass="bg-primary-500
-      text-white !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed border
-      !rounded-lg border-primary-500"
-        type="submit"
-        text="Next"
-      />
+      <div class="flex gap-x-4 items-center">
+        <AppButton
+          :disabled="isLoading"
+          :isLoading="isSaving"
+          btnClass="border border-primary-500 text-primary-500 !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed"
+          type="button"
+          text="Save as Draft"
+          @click="onSaveAndContinue"
+        />
+        <AppButton
+          :disabled="
+            isLoading ||
+            (country?.toLowerCase() === 'nigeria' && (!registrationNo || !tin))
+          "
+          :isLoading="isLoading"
+          btnClass="bg-primary-500 text-white !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed border !rounded-lg border-primary-500"
+          type="submit"
+          text="Next"
+        />
+      </div>
     </div>
   </form>
 </template>
@@ -233,6 +241,9 @@ import {
   updateDocuments,
 } from "~/services/settingservices";
 import { toast } from "vue3-toastify";
+import { saveAsDraft } from "~/services/requestservice";
+const router = useRouter();
+const isSaving = ref(false);
 
 const company = inject("company");
 const formData = inject("formData");
@@ -294,6 +305,47 @@ const formSchema = yup.object({
     // .min(10, "Description must be at least 10 characters long")
     .max(500, "Description cannot exceed 500 characters"),
 });
+
+const onSaveAndContinue = async () => {
+  try {
+    isSaving.value = true;
+    const formattedValues = {
+      ...values,
+      companyDocuments: values.companyDocuments.map((i) => ({
+        ...i,
+        urls: i.urls.map((j) => j.url),
+      })),
+    };
+
+    // Update formData with current values
+    Object.assign(formData.kyb, formattedValues);
+
+    // Save as draft
+    await saveAsDraft({
+      ...formData,
+      ...(!formData?.supportingDocuments[0]?.urls[0].length && {
+        supportingDocuments: formData?.supportingDocuments.map((i) => ({
+          ...i,
+          urls: i.urls.map((j) => j?.url),
+        })),
+      }),
+    });
+
+    // Update company profile
+    await updateCompanyProfile(formattedValues);
+
+    toast.success("Draft saved successfully");
+    router.push("/financing");
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message ||
+        error?.response?.data?.Message ||
+        "Failed to save draft"
+    );
+  } finally {
+    isSaving.value = false;
+  }
+};
 
 const options = [
   {
@@ -420,7 +472,7 @@ watch(country, () => {
   }
 });
 
-const onSubmit = handleSubmit((values) => {
+const onSubmit = handleSubmit(async (values) => {
   if (
     country.value?.toLowerCase() === "nigeria" &&
     (values.companyDocuments.some(
@@ -431,6 +483,7 @@ const onSubmit = handleSubmit((values) => {
     toast.error("Please upload all available document types");
     return;
   }
+
   const nonNigerian = values.companyDocuments
     .filter((i) => [0, 4].includes(i.documentType))
     .some((i) => i.urls.filter((i) => i.url).length == 0);
@@ -442,31 +495,55 @@ const onSubmit = handleSubmit((values) => {
     toast.error("Please upload all available document types");
     return;
   }
+
   isLoading.value = true;
-  updateCompanyProfile({
-    ...values,
-    companyDocuments: values.companyDocuments.map((i) => ({
-      ...i,
-      urls: i.urls.map((j) => j.url),
-    })),
-  })
-    .then((res) => {
-      if (res.status === 200) {
-        getCompanyData();
-        active.value = 3;
-      }
-     
-    })
-    .catch((err) => {
-      isLoading.value = false;
-      toast.error(
-        err?.response?.data?.message ||
-          err?.response?.data?.Message ||
-          "Something went wrong, try again later"
-      );
+
+  try {
+    // First save as draft
+    const formattedValues = {
+      ...values,
+      companyDocuments: values.companyDocuments.map((i) => ({
+        ...i,
+        urls: i.urls.map((j) => j.url),
+      })),
+    };
+
+    // Update formData with current values
+    Object.assign(formData.kyb, formattedValues);
+
+    // Handle empty documents
+    if (!formData.kyb.companyDocuments?.[0]?.urls[0]?.length) {
+      formData.kyb.companyDocuments = [];
+    }
+
+    // Save as draft first
+    await saveAsDraft({
+      ...formData,
+      ...(!formData?.supportingDocuments[0]?.urls[0].length && {
+        supportingDocuments: formData?.supportingDocuments.map((i) => ({
+          ...i,
+          urls: i.urls.map((j) => j?.url),
+        })),
+      }),
     });
 
-  // formData.kyb = values;
+    // Then proceed with the company profile update
+    const response = await updateCompanyProfile(formattedValues);
+
+    if (response.status === 200) {
+      await getCompanyData();
+      active.value = 3;
+    }
+  } catch (err) {
+    console.log("er", err);
+    toast.error(
+      err?.response?.data?.message ||
+        err?.response?.data?.Message ||
+        "Something went wrong, try again later"
+    );
+  } finally {
+    isLoading.value = false;
+  }
 });
 
 const sectorOptions = businessTypes?.map((i) => {
