@@ -32,21 +32,31 @@
       </div>
     </div>
 
-    <div class="flex gap-x-4 items-center justify-end mt-8">
+    <div class="flex gap-x-4 items-center justify-between mt-8">
       <AppButton
         @click="active--"
         btnClass="bg-white text-white !px-11  !text-sm !py-[10px] disabled:cursor-not-allowed border border-[#BDC0C5] !rounded-lg !text-[#333]"
         type="button"
         text="Back"
       />
-      <AppButton
-        @click="handleSubmit"
-        :disabled="!form.directors.length || isLoading"
-        :isLoading="isLoading"
-        btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
-        type="button"
-        text="Next"
-      />
+      <div class="flex gap-x-4 items-center">
+        <AppButton
+          :disabled="isLoading"
+          :isLoading="isSaving"
+          btnClass="border border-primary-500 text-primary-500 !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed"
+          type="button"
+          text="Save as Draft"
+          @click="onSaveAndContinue"
+        />
+        <AppButton
+          @click="handleSubmit"
+          :disabled="!form.directors.length || isLoading"
+          :isLoading="isLoading"
+          btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed border !rounded-lg border-primary-500"
+          type="button"
+          text="Next"
+        />
+      </div>
     </div>
   </div>
 
@@ -115,16 +125,20 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { updateDirectors } from "~/services/settingservices";
+import { saveAsDraft } from "~/services/requestservice";
 import { toast } from "vue3-toastify";
 
 const company = inject("company");
 const getCompanyData = inject("getCompanyData");
+const formData = inject("formData");
+const router = useRouter();
 const id = ref(null);
 const director = ref(null);
 const action = ref("");
 const route = useRoute();
 const open = ref(false);
 const active = inject("active");
+const isSaving = ref(false);
 const form = reactive({
   ...company.value,
   directors: company.value.directors || [],
@@ -156,26 +170,87 @@ async function handleSubmit() {
   if (!form.directors.length) return;
   isLoading.value = true;
 
-  updateDirectors({
-    ...form,
-    companyDocuments: form.companyDocuments.map((i) => ({
-      ...i,
-      urls: i.urls.map((j) => j.url),
-    })),
-  })
-    .then((res) => {
-      if (res.status === 200) {
-        isLoading.value = false;
-        active.value = 4;
-      }
-    })
-
-    .catch((err) => {
-      isLoading.value = false;
-
-      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
+  try {
+    // First save as draft
+    formData.directors = form.directors;
+    await saveAsDraft({
+      ...formData,
+      ...(!formData?.supportingDocuments[0]?.urls[0].length && {
+        supportingDocuments: formData?.supportingDocuments.map((i) => ({
+          ...i,
+          urls: i.urls.map((j) => j?.url),
+        })),
+      }),
     });
+
+    // Then update directors
+    const formattedData = {
+      ...form,
+      companyDocuments: form.companyDocuments.map((i) => ({
+        ...i,
+        urls: i.urls.map((j) => j.url),
+      })),
+    };
+
+    const response = await updateDirectors(formattedData);
+
+    if (response.status === 200) {
+      toast.success("Directors updated successfully");
+      active.value = 4;
+    }
+  } catch (err) {
+    toast.error(
+      err?.response?.data?.message ||
+        err?.response?.data?.Message ||
+        "Failed to save directors"
+    );
+  } finally {
+    isLoading.value = false;
+  }
 }
+
+// Updated save as draft handler with both operations
+const onSaveAndContinue = async () => {
+  try {
+    isSaving.value = true;
+    formData.directors = form.directors;
+    // Save as draft
+    await saveAsDraft({
+      ...formData,
+      ...(!formData?.supportingDocuments[0]?.urls[0].length && {
+        supportingDocuments: formData?.supportingDocuments.map((i) => ({
+          ...i,
+          urls: i.urls.map((j) => j?.url),
+        })),
+      }),
+    });
+
+    // Also update directors
+    const formattedData = {
+      ...form,
+      companyDocuments: form.companyDocuments.map((i) => ({
+        ...i,
+        urls: i.urls.map((j) => j.url),
+      })),
+    };
+
+    await updateDirectors(formattedData);
+
+    toast.success("Draft saved successfully");
+    router.push("/financing");
+  } catch (err) {
+    toast.error(
+      err?.response?.data?.message ||
+        err?.response?.data?.Message ||
+        "Failed to save draft"
+    );
+  } finally {
+    isSaving.value = false;
+  }
+};
+
+onMounted(() => console.log("fd", formData));
+
 provide("form", form);
 provide("open", open);
 </script>
