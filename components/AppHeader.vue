@@ -148,7 +148,7 @@
               <div>
                 <MenuButton
                   id="myaccount"
-                  class="bg-[#1570EF] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold"
+                  class="bg-[#1570EF] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold whitespace-nowrap"
                 >
                   My account <AppIcon icon="mdi:chevron-down" class="text-lg" />
                 </MenuButton>
