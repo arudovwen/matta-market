@@ -10,12 +10,15 @@
       </p>
     </div>
     <div class="flex items-end">
-      <NuxtLink to="/company/settings" class="w-full lg:w-auto"
+      <a
+        target="_blank"
+        :href="`${validationUrl}/business-information`"
+        class="w-full lg:w-auto"
         ><button
           class="px-8 py-[11px] rounded-[5px] bg-primary-500 hover:bg-primary/80 text-white text-sm whitespace-nowrap w-full lg:w-auto"
         >
           Add Company details
-        </button></NuxtLink
+        </button></a
       >
     </div>
   </div>
