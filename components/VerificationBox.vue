@@ -10,12 +10,15 @@
       </p>
     </div>
     <div class="flex items-end">
-      <NuxtLink to="/company/settings" class="w-full lg:w-auto"
+      <a
+        target="_blank"
+        :href="`${validationUrl}/business-information`"
+        class="w-full lg:w-auto"
         ><button
           class="px-8 py-[11px] rounded-[5px] bg-primary-500 hover:bg-primary/80 text-white text-sm whitespace-nowrap w-full lg:w-auto"
         >
           Add Company details
-        </button></NuxtLink
+        </button></a
       >
     </div>
   </div>
@@ -28,9 +31,9 @@ const isOpen = ref(false);
 const detail = ref(null);
 const authStore = useAuthStore();
 const defaultText =
-  "To use some of our features, we are required to verify your company registration information. Kindly proceed t o provide your company details";
+  "To use some of our features, we are required to verify your company registration information. Kindly proceed to provide your company details";
 const walletText =
-  "To request for a wallet, we are required to verifiy your company registration information. Kindly proceed t o provide your company details";
+  "To request for a wallet, we are required to verifiy your company registration information. Kindly proceed to provide your company details";
 onMounted(() => {
   getData();
 });

@@ -5,11 +5,11 @@
   >
     <div class="mx-auto w-full max-w-[900px] rounded-lg bg-white p-8 sm:p-16">
       <header class="mb-8">
-        <h1 class="mb-1 text-2xl font-medium text-[#101828] dark:text-white sm:text-[30px]">
+        <h1 class="mb-1 text-2xl font-medium text-[#101828] sm:text-[30px]">
           Complete your profile
         </h1>
-        <p class="text-base dark:text-white/80">
-          To get started, please select the type of service that best fits you
+        <p class="text-base">
+          To continue, please select the type of service that best fits you
         </p>
       </header>
 

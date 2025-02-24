@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { logoutUser } from "~/services/authservices";
 import { logoutUrl } from "~/utils/constants";
 
-
 const UserTypes = {
   0: "buyer",
   1: "supplier",
@@ -25,7 +24,7 @@ export const useAuthStore = defineStore(
     const userType = computed(
       () => UserTypes[mattaAuth?.value?.businessUserType]
     );
-  const businessId = computed(() => mattaAuth?.value?.businessId);
+    const businessId = computed(() => mattaAuth?.value?.businessId);
     const userInfo = computed(() => mattaAuth?.value);
 
     function setLoggedUser(data) {
@@ -66,23 +65,28 @@ export const useAuthStore = defineStore(
     }
 
     const logOut = async () => {
-      const response = await logoutUser({
-        refreshToken: refreshToken.value,
-        token: jwToken.value,
-      });
-      if (response.status === 200) {
-        localStorage.clear();
-        clearCookies().then(() => {
-          loggedUser.value = null;
-          window.location.href = logoutUrl();
+      try {
+        const response = await logoutUser({
+          refreshToken: refreshToken.value,
+          token: jwToken.value,
         });
+
+        if (response.status === 200) {
+          localStorage.clear();
+          mattaAuth.value = null;
+          signOut();
+        }
+      } catch (error) {
+        console.error("Logout failed:", error);
+        signOut();
       }
     };
-    const clearAuth = () => {
+
+    const signOut = () => {
       mattaAuth.value = null;
       clearCookies().then(() => {
         loggedUser.value = null;
-        window.location.href = logoutUrl();
+        window.location.replace(logoutUrl());
       });
     };
     return {
@@ -109,12 +113,12 @@ export const useAuthStore = defineStore(
       setAppInfo,
       setAppList,
       appList,
-      clearAuth,
+      signOut,
     };
   },
   {
     persist: {
-      storage: persistedState.localStorage
+      storage: persistedState.localStorage,
     },
   }
 );
