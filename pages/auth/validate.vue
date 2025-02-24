@@ -30,7 +30,7 @@ onMounted(async () => {
   });
     authStore.setHasPin(response.data.data.hasTransactionPIN);
     localStorage.setItem("fetchCart", true);
-    window.location.replace("/user-type");
+    window.location.replace("/");
     return;
   }
 });

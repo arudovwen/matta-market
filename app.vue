@@ -187,7 +187,7 @@ function getBusinessUserType() {
     })
     .catch(() => {
       AppLoading.value = false;
-      navigateTo("/user-type");
+  
     });
 }
 onMounted(() => {

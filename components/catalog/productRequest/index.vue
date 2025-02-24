@@ -73,7 +73,7 @@
               />
             </div>
 
-            <div class="relative">
+            <div class="relative z-10">
               <Textinput
                 placeholder="Quantity"
                 label=""
