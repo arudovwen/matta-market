@@ -35,7 +35,6 @@
         v-bind="emailAtt"
         v-model="companyEmail"
         :error="errors.companyEmail"
-        :disabled="!!companyEmail"
         :isCumpulsory="true"
       />
       <FormGroup
