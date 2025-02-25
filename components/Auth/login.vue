@@ -79,11 +79,6 @@
     :isLoading="isLoading"
     :email="formValues.email"
   />
-  <iframe
-    ref="authProfile"
-    :src="profileUrl"
-    class="h-[400px] w-[500px] hidden"
-  ></iframe>
 </template>
 <script setup>
 import { useForm } from "vee-validate";
@@ -165,10 +160,7 @@ const handleFinalSubmit = (token) => {
         isLoading.value = false;
         authStore.setLoggedUser(res.data.data);
         authStore.setHasPin(res.data.data.hasTransactionPIN);
-        authProfile.value?.contentWindow.postMessage(
-          JSON.stringify(res.data.data),
-          "*"
-        );
+       
         localStorage.setItem("fetchCart", true);
         if (!props.main) {
           toast.info("Login successful");

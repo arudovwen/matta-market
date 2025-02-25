@@ -1,7 +1,11 @@
 <template>
   <form @submit.prevent="onSubmit" class="w-full mt-6">
     <div class="grid grid-cols-2 gap-x-[25px] gap-y-4 mb-[50px]">
-      <FormGroup class="col-span-2" label="Bank Statement (6 months statement is required)" isCumpulsory>
+      <FormGroup
+        class="col-span-2"
+        label="Bank Statement (6 months statement is required)"
+        isCumpulsory
+      >
         <div class="grid gap-y-7 mb-4">
           <div
             v-for="(file, idx) in formData?.supportingDocuments[0].urls"
@@ -184,22 +188,32 @@
         />
       </div>
     </div>
-    <div class="flex gap-x-4 items-center justify-start">
+    <div class="flex gap-x-4 items-center justify-between">
       <AppButton
         btnClass="bg-white text-white !px-11  !text-sm !py-[10px] disabled:cursor-not-allowed border border-[#BDC0C5] !rounded-lg !text-[#333]"
         type="button"
         text="Back"
         @click="active--"
       />
-      <AppButton
-        :disabled="
-          isLoading || errors?.BankStatement || errors?.ProformaInvoice
-        "
-        :isLoading="isLoading"
-        btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
-        type="submit"
-        text="Submit"
-      />
+      <div class="flex gap-x-4 items-center">
+        <AppButton
+          :disabled="isLoading"
+          :isLoading="isSaving"
+          btnClass="border border-primary-500 text-primary-500 !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed"
+          type="button"
+          text="Save as Draft"
+          @click="onSaveAndContinue"
+        />
+        <AppButton
+          :disabled="
+            isLoading || errors?.BankStatement || errors?.ProformaInvoice
+          "
+          :isLoading="isLoading"
+          btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed border  !rounded-lg border-primary-500"
+          type="submit"
+          text="Submit"
+        />
+      </div>
     </div>
   </form>
 </template>
@@ -209,13 +223,16 @@ import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { addFinance, editFinance } from "~/services/financeservice";
+import { deleteDraft, saveAsDraft } from "~/services/requestservice";
+
+const router = useRouter();
+const isSaving = ref(false);
+const active = inject("active");
+const formData = inject("formData");
 
 const isLoading = ref(false);
 const route = useRoute();
 const { id, financeId } = route.params;
-
-const active = inject("active");
-const formData = inject("formData");
 
 const formSchema = yup.object().shape({
   haveyouexportedtotheothercourty: yup.string(),
@@ -236,6 +253,7 @@ const {
   setFieldValue,
   setFieldTouched,
   isFieldTouched,
+  values,
 } = useForm({
   validationSchema: formSchema,
   initialValues: {
@@ -264,50 +282,76 @@ function removeField(id, idx) {
   formData?.supportingDocuments[id].urls.splice(idx, 1);
 }
 
-const onSubmit = handleSubmit((values) => {
-  isLoading.value = true;
-  formData.haveyoudonebusiness = values.haveyoudonebusiness;
-  formData.haveyouexportedtotheothercourty =
-    values.haveyouexportedtotheothercourty;
-  if (financeId) {
-    editFinance({
-      ...formData,
-      supportingDocuments: formData?.supportingDocuments.map((i) => ({
-        ...i,
-        urls: i.urls.map((j) => j.url),
-      })),
-      id: financeId,
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          active.value = 5;
-          isLoading.value = false;
-        }
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.Message || err?.response?.data?.message);
-        isLoading.value = false;
+const onSubmit = handleSubmit(async (values) => {
+  try {
+    isLoading.value = true;
+    formData.haveyoudonebusiness = values.haveyoudonebusiness;
+    formData.haveyouexportedtotheothercourty =
+      values.haveyouexportedtotheothercourty;
+
+    // Then proceed with final submission
+    if (financeId) {
+      const res = await editFinance({
+        ...formData,
+        supportingDocuments: formData?.supportingDocuments.map((i) => ({
+          ...i,
+          urls: i.urls.map((j) => j.url),
+        })),
+        id: financeId,
       });
-  } else {
-    addFinance({
-      ...formData,
-      supportingDocuments: formData?.supportingDocuments.map((i) => ({
-        ...i,
-        urls: i.urls.map((j) => j.url),
-      })),
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          active.value = 5;
-          isLoading.value = false;
-        }
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.Message || err?.response?.data?.message);
-        isLoading.value = false;
+
+      if (res.status === 200) {
+        active.value = 5;
+      }
+    } else {
+      const res = await addFinance({
+        ...formData,
+        supportingDocuments: formData?.supportingDocuments.map((i) => ({
+          ...i,
+          urls: i.urls.map((j) => j.url),
+        })),
       });
+      deleteDraft();
+      if (res.status === 200) {
+        active.value = 5;
+      }
+    }
+  } catch (err) {
+    toast.error(err?.response?.data?.Message || err?.response?.data?.message);
+  } finally {
+    isLoading.value = false;
   }
 });
+
+const onSaveAndContinue = async () => {
+  try {
+    isSaving.value = true;
+    const currentValues = {
+      ...formData,
+      haveyoudonebusiness: values.haveyoudonebusiness,
+      haveyouexportedtotheothercourty: values.haveyouexportedtotheothercourty,
+      supportingDocuments: formData?.supportingDocuments.map((i) => ({
+        ...i,
+        urls: i.urls.map((j) => j.url),
+      })),
+    };
+
+    // Save as draft
+    await saveAsDraft(currentValues);
+
+    toast.success("Draft saved successfully");
+    router.push("/financing");
+  } catch (err) {
+    console.log(err);
+    toast.error(
+      err?.response?.data?.message ||
+        err?.response?.data?.Message ||
+        "Failed to save draft"
+    );
+  } finally {
+    isSaving.value = false;
+  }
+};
 
 function handleChange(id, value) {}
 watch(
@@ -322,7 +366,8 @@ watch(
       "BankStatement",
       formData?.supportingDocuments[0].urls.some((i) => !i.url) ? "" : "Valid"
     );
-  }
+  },
+  { immediate: true }
 );
 provide("handleChange", handleChange);
 </script>

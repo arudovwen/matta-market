@@ -1,5 +1,4 @@
 <template>
- <section class="bg-white relative z-10">
   <ClientOnly>
     <div
       v-if="$pwa?.offlineReady || $pwa?.needRefresh"
@@ -74,184 +73,18 @@
       'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 border-b border-[rgba(242, 242, 242, 1)] darks:border-gray-900':
         !view?.atTopOfPage,
     }"
-    class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 transition-all duration-500 ease-in-out"
-  >
-    <div class="container mx-auto">
-      <div class="flex justify-between items-center gap-x-16">
-        <div class="logo flex gap-x-10 items-center flex-1">
-          <NuxtLink to="/">
-            <img
-              src="/images/logo.png"
-              alt="Matta"
-              class="w-20 md:w-[130px] h-auto object-contain"
-          /></NuxtLink>
-          <div class="max-w-[600px] flex-1">
-            <NavSearchBar />
-          </div>
-        </div>
-
-        <div class="flex items-center gap-x-[10px] text-sm">
-          <span lass="text-sm"><CurrencyChanger /></span>
-          <span class="text-sm" v-if="showlang">
-            <GoogleTranslateSelect
-              :fetch-browser-language="false"
-              trigger="click"
-              @select="handleGoogleTranslateSelect"
-            />
-          </span>
-
-          <button
-            @click="navigateTo('/cart')"
-            class="flex items-center relative"
-          >
-            <span
-              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
-            >
-              <AppIcon
-                class="text-base md:text-lg text-[#484848]"
-                icon="lucide:shopping-cart"
-              />
-              <span
-                v-if="cartStore?.cartTotal > 0"
-                class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
-                >{{ cartStore?.cartTotal }}</span
-              >
-            </span>
-            <!-- <span class="text-xs sm:text-sm font-medium inline-flex text-[#333]"
-              >Cart</span
-            > -->
-          </button>
-          <div
-            v-if="authStore.isLoggedIn"
-            class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
-          >
-            <AppMenu />
-          </div>
-          <div class="flex gap-x-3 ml-3">
-            <AppButton
-              v-if="!authStore?.isLoggedIn"
-              type="button"
-              @click="handleRouting('login')"
-              text="Log in"
-              btnClass="text-[#475467] !px-4 !sm:px-6 !py-[6px] !font-semibold text-xs sm:!text-base hidden md:flex"
-            />
-
-            <AppButton
-              v-if="!authStore?.isLoggedIn"
-              type="button"
-              @click="handleRouting('register')"
-              text="Sign up"
-              btnClass="!text-[12px] sm:!text-sm text-white  !font-semibold !px-[15px] !py-[6px] !normal-case bg-primary-500 flex"
-            />
-
-            <Menu
-              as="div"
-              class="relative hidden lg:inline-flex text-left"
-              v-if="authStore?.isLoggedIn"
-            >
-              <div>
-                <MenuButton
-                  id="myaccount"
-                  class="bg-[#1570EF] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold whitespace-nowrap"
-                >
-                  My account <AppIcon icon="mdi:chevron-down" class="text-lg" />
-                </MenuButton>
-              </div>
-
-              <transition
-                enter-active-class="transition duration-100 ease-out"
-                enter-from-class="transform scale-95 opacity-0"
-                enter-to-class="transform scale-100 opacity-100"
-                leave-active-class="transition duration-75 ease-in"
-                leave-from-class="transform scale-100 opacity-100"
-                leave-to-class="transform scale-95 opacity-0"
-              >
-                <MenuItems
-                  class="absolute right-0 mt-2 w-56 origin-top-right rounded-[5px] border border-[#F6F6F6] bg-white darks:bg-gray-800 z-[99] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.06)]"
-                >
-                  <div
-                    class="flex items-center gap-x-2 px-[15px] pt-3 pb-[14px] border-b border-[#F4F4F4]"
-                  >
-                    <div
-                      class="h-8 w-8 rounded-full flex items-center justify-center text-sm text-white bg-[#f90] font-semibold"
-                    >
-                      {{ authStore.userInfo?.firstName.slice(0, 1) }}
-                      {{ authStore.userInfo?.lastName.slice(0, 1) }}
-                    </div>
-                    <div class="flex-1">
-                      <span
-                        class="text-[#333] text-[13px] font-semibold block capitalize"
-                        >{{ authStore.userInfo?.fullName }}</span
-                      >
-                      <span
-                        class="block text-[11px] text-[#666] darks:text-white/70 truncate max-w-[151px]"
-                        >{{ authStore.userInfo?.email }}</span
-                      >
-                    </div>
-                  </div>
-                  <div class="px-[15px] pt-[14px] pb-5 flex-1">
-                    <ul class="grid gap-y-3 text-[#555] darks:text-white/80">
-                      <li v-for="n in filteredMenu" :key="n.name" class="">
-                        <MenuItem v-slot="{ active }">
-                          <NuxtLink
-                            :to="n.url"
-                            v-if="n.key !== 'sign-out' && n.key !== 'settings'"
-                          >
-                            <button
-                              class="flex gap-x-3 items-center text-[13px] font-medium text-[#555]"
-                            >
-                              <AppIcon :icon="n.icon" /> {{ n.name }}
-                            </button>
-                          </NuxtLink>
-                          <button
-                            v-else-if="n.key === 'settings'"
-                            @click="
-                              navigateTo('https://dev.profile.matta.trade', {
-                                open: {
-                                  target: '_blank',
-                                },
-                              })
-                            "
-                            class="flex gap-x-3 items-center text-[13px] font-medium"
-                          >
-                            <AppIcon :icon="n.icon" iconClass="text-base" />
-                            {{ n.name }}
-                          </button>
-                          <button
-                            v-else
-                            @click="isSigniningOut = true"
-                            class="flex gap-x-3 items-center text-[13px] font-medium"
-                          >
-                            <AppIcon :icon="n.icon" /> {{ n.name }}
-                          </button>
-                        </MenuItem>
-                      </li>
-                    </ul>
-                  </div>
-                </MenuItems>
-              </transition>
-            </Menu>
-            <span class="lg:hidden" @click="open = true">
-              <AppIcon icon="ci:menu-alt-01" class="text-[30px]" />
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <hr class="border-[rgba(242, 242, 242, 1)] my-1" />
-  <nav
-    :class="{
-      relative: view?.atTopOfPage,
-      'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5  darks:border-gray-900':
-        !view?.atTopOfPage,
-    }"
-    class="relative pt-4 pb-6 w-full bg-white darks:bg-gray-800 transition-all duration-500 ease-in-out"
+    class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 z-[999] transition-all duration-500 ease-in-out"
   >
     <div class="container mx-auto">
       <div class="flex justify-between items-center gap-x-5">
         <div class="logo flex gap-x-10 items-center">
+          <NuxtLink to="/">
+            <img
+              src="/images/logo.png"
+              alt="Matta"
+              class="w-20 md:w-[100px] h-auto object-contain"
+          /></NuxtLink>
+
           <ul class="lg:flex items-center gap-x-6 hidden">
             <li
               v-for="n in navigations.filter((i) => i.key !== 'sign-out')"
@@ -290,7 +123,7 @@
                   leave-to-class="transform scale-95 opacity-0"
                 >
                   <MenuItems
-                    class="grid grid-cols-1 absolute left-0 mt-[22px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-[303px] origin-top-right bg-white darks:bg-gray-800 rounded-b-[10px] px-5 py-5 text-sm"
+                    class="z-[999] grid grid-cols-1 absolute left-0 mt-[22px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-[303px] origin-top-right bg-white darks:bg-gray-800 rounded-b-[10px] px-5 py-5 text-sm"
                   >
                     <div class="" v-for="cat in handleDropDown(n.key)">
                       <MenuItem v-slot="{ active }">
@@ -366,12 +199,212 @@
             </li>
           </ul>
         </div>
-        <div class="flex items-center gap-x-[10px] text-sm"></div>
+        <div class="flex items-center gap-x-[10px] text-sm">
+          <!-- <span
+            :class="{
+              'hidden md:flex': view.atTopOfPage,
+              'hidden md:hidden': !view.atTopOfPage,
+            }"
+            class="gap-x-1 items-center"
+          >
+             <img
+              src="~/assets/images/nigeria.svg"
+              width="20"
+              height="20"
+              alt="Matta"
+              class="w-5 h-auto"
+            />
+            NGN</span
+          > -->
+          <!--   <span
+            :class="{
+              'md:flex ': view.atTopOfPage,
+              'md:hidden': !view.atTopOfPage,
+            }"
+            class="hidden gap-x-1 items-center"
+          >
+            <AppIcon class="text-lg" icon="ion:globe-outline" />
+            <select class="appearance-none outline-none text-sm bg-transparent">
+              <option value="">English-NGN</option>
+            </select></span
+          > -->
+          <!-- <NuxtLink
+            :class="` items-center  relative ${
+              authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
+            }`"
+          >
+            <span
+              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
+            >
+              <AppIcon
+                class="text-lg text-[#484848]"
+                icon="akar-icons:search"
+              />
+            </span>
+          </NuxtLink> -->
+          <!-- <span
+            v-if="authStore.isLoggedIn"
+            :class="` items-center  relative ${
+              authStore.isLoggedIn ? 'flex' : 'hidden md:flex'
+            }`"
+            @click="isOpen = true"
+          >
+            <span
+              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center cursor-pointer"
+            >
+              <AppIcon
+                class="text-lg text-[#484848]"
+                icon="mingcute:message-2-line"
+              />
+              <span
+                v-if="unreadnotifications > 0"
+                class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
+                >{{ unreadnotifications }}</span
+              >
+            </span> -->
+          <!-- </span> -->
+          <span lass="text-sm"><CurrencyChanger /></span>
+          <span class="text-sm" v-if="showlang">
+            <GoogleTranslateSelect
+              :fetch-browser-language="false"
+              trigger="click"
+              @select="handleGoogleTranslateSelect"
+            />
+          </span>
+
+          <button @click="navigateTo('/cart')" class="flex items-center relative">
+            <span
+              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
+            >
+              <AppIcon
+                class="text-base md:text-lg text-[#484848]"
+                icon="lucide:shopping-cart"
+              />
+              <span
+                v-if="cartStore?.cartTotal > 0"
+                class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
+                >{{ cartStore?.cartTotal }}</span
+              >
+            </span>
+            <!-- <span class="text-xs sm:text-sm font-medium inline-flex text-[#333]"
+              >Cart</span
+            > -->
+          </button>
+          <div v-if="authStore.isLoggedIn"
+            class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
+          >
+            <AppMenu />
+          </div>
+          <div class="flex gap-x-3 ml-3">
+            <AppButton
+              v-if="!authStore?.isLoggedIn"
+              type="button"
+              @click="handleRouting('login')"
+              text="Log in"
+              btnClass="text-[#475467] !px-4 !sm:px-6 !py-[6px] !font-semibold text-xs sm:!text-base hidden md:flex"
+            />
+
+            <AppButton
+              v-if="!authStore?.isLoggedIn"
+              type="button"
+              @click="handleRouting('register')"
+              text="Sign up"
+              btnClass="!text-[12px] sm:!text-sm text-white  !font-semibold !px-[15px] !py-[6px] !normal-case bg-primary-500 flex"
+            />
+
+            <Menu
+              as="div"
+              class="relative hidden lg:inline-flex text-left"
+              v-if="authStore?.isLoggedIn"
+            >
+              <div>
+                <MenuButton
+                  id="myaccount"
+                  class="bg-[#1570EF] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold"
+                >
+                  My account <AppIcon icon="mdi:chevron-down" class="text-lg" />
+                </MenuButton>
+              </div>
+
+              <transition
+                enter-active-class="transition duration-100 ease-out"
+                enter-from-class="transform scale-95 opacity-0"
+                enter-to-class="transform scale-100 opacity-100"
+                leave-active-class="transition duration-75 ease-in"
+                leave-from-class="transform scale-100 opacity-100"
+                leave-to-class="transform scale-95 opacity-0"
+              >
+                <MenuItems
+                  class="absolute right-0 mt-2 w-56 origin-top-right rounded-[5px] border border-[#F6F6F6] bg-white darks:bg-gray-800 z-[99] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.06)]"
+                >
+                  <div
+                    class="flex items-center gap-x-2 px-[15px] pt-3 pb-[14px] border-b border-[#F4F4F4]"
+                  >
+                    <div
+                      class="h-8 w-8 rounded-full flex items-center justify-center text-sm text-white bg-[#f90] font-semibold"
+                    >
+                      {{ authStore.userInfo?.firstName.slice(0, 1) }}
+                      {{ authStore.userInfo?.lastName.slice(0, 1) }}
+                    </div>
+                    <div class="flex-1">
+                      <span
+                        class="text-[#333] text-[13px] font-semibold block capitalize"
+                        >{{ authStore.userInfo?.fullName }}</span
+                      >
+                      <span
+                        class="block text-[11px] text-[#666] darks:text-white/70 truncate max-w-[151px]"
+                        >{{ authStore.userInfo?.email }}</span
+                      >
+                    </div>
+                  </div>
+                  <div class="px-[15px] pt-[14px] pb-5 flex-1">
+                    <ul class="grid gap-y-3 text-[#555] darks:text-white/80">
+                      <li v-for="n in filteredMenu" :key="n.name" class="">
+                        <MenuItem v-slot="{ active }">
+                          <NuxtLink :to="n.url" v-if="n.key !== 'sign-out' && n.key !== 'settings'">
+                            <button
+                              class="flex gap-x-3 items-center text-[13px] font-medium text-[#555]"
+                            >
+                              <AppIcon :icon="n.icon" /> {{ n.name }}
+                            </button>
+                          </NuxtLink>
+                          <button
+                            v-else-if="n.key === 'settings'"
+                            @click="
+                              navigateTo('https://dev.profile.matta.trade', {
+                                open: {
+                                  target: '_blank',
+                                },
+                              })
+                            "
+                            class="flex gap-x-3 items-center text-[13px] font-medium"
+                          >
+                            <AppIcon :icon="n.icon" iconClass="text-base" /> {{ n.name }}
+                          </button>
+                          <button
+                            v-else
+                            @click="isSigniningOut = true"
+                            class="flex gap-x-3 items-center text-[13px] font-medium"
+                          >
+                            <AppIcon :icon="n.icon" /> {{ n.name }}
+                          </button>
+                        </MenuItem>
+                      </li>
+                    </ul>
+                  </div>
+                </MenuItems>
+              </transition>
+            </Menu>
+            <span class="lg:hidden" @click="open = true">
+              <AppIcon icon="ci:menu-alt-01" class="text-[30px]" />
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 
-  <div class="" v-if="open">
+  <div class="z-[999]" v-if="open">
     <AppSideMenu />
   </div>
 
@@ -419,7 +452,6 @@
   </ModalSide>
 
   <ModalAuth goToUrl="/checkout" />
- </section>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -429,7 +461,6 @@ import { logOut } from "~/services/authservices";
 import { getnotification } from "~/services/notificationservice";
 import GoogleTranslateSelect from "@google-translate-select/vue3";
 import { toast } from "vue3-toastify";
-import { getProducts } from "~/services/productservices";
 
 defineProps({
   showlang: {
@@ -472,7 +503,6 @@ const filteredMenu = computed(() =>
 const view = ref({
   atTopOfPage: true,
 });
-const searchQuery = ref("");
 const open = ref(false);
 onBeforeMount(() => {
   window?.addEventListener("scroll", handleScroll);

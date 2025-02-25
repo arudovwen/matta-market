@@ -48,13 +48,13 @@
             Effortlessly source your chemicals, raw materials, ingredients, and
             commodities on our platform.
           </p>
-          <NuxtLink to="/auth/register">
+        
             <AppButton
-              
+              @click="handleRouting('register')"
               text="Begin Your Journey with Matta"
               btnClass="bg-white text-[#333] !px-10 !py-[10px] !normal-case !font-medium"
             />
-          </NuxtLink>
+       
         </div>
       </div>
     </div>

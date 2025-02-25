@@ -265,5 +265,9 @@ const urls = {
   GET_CURRENCY_RATE: "/v1/currencyrate/getrates",
 
   GET_SUBAPPS: "admin/v1/subapplication/apps",
+
+  SAVE_REQUEST_DRAFT: "v1/financing/save-draft",
+  GET_REQUEST_DRAFT: "v1/financing/retreive-draft",
+  DELETE_REQUEST_DRAFT: "v1/financing/delete-draft",
 };
 export default urls;

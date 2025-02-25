@@ -85,7 +85,6 @@ export const sellerdoc = withRetryHandling(
     RequestStatus,
     SupplierId,
   }) => {
-    
     return get(
       `${urls.SELLER_DOCUMENTS}?PageSize=${PageSize}&PageNumber=${PageNumber}&Search=${Search}&SortOrder=${SortOrder}
       &SupplierId=${store.getters.userId}&RequestStatus=${RequestStatus}&ProducerId=${ProducerId}&ProductId=${ProductId}&SupplierId=${SupplierId}`,
@@ -104,4 +103,15 @@ export async function sellersetascancelled(data) {
 
 export async function uploaddoc(data) {
   return await post(`${urls.SAMPLE_REQUEST_UPLOAD_DOCUMENT}`, data, config);
+}
+
+export async function saveAsDraft(data) {
+  return await post(`${urls.SAVE_REQUEST_DRAFT}`, data, config);
+}
+
+export async function getDraft() {
+  return await get(`${urls.GET_REQUEST_DRAFT}`, config);
+}
+export async function deleteDraft() {
+  return await get(`${urls.DELETE_REQUEST_DRAFT}`, config);
 }

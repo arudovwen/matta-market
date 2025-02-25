@@ -109,6 +109,7 @@ import { getSubApps, getBusinessType } from "~/services/userservices";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+const { encrypt } = useEncryption();
 const AppLoading = ref(false);
 const cartStore = useCartStore();
 const store = useMarketStore();
@@ -159,7 +160,9 @@ function getAppList() {
       const appList = res.data.data
         .map((i) => ({
           ...i,
-          url: `${i.url}/auth/validate?token=${authStore.jwToken}`,
+          url: `${i.url}/auth/validate?token=${encodeURIComponent(
+            encrypt(authStore.jwToken)
+          )}&code=${encodeURIComponent(encrypt(authStore.refreshToken))}`,
         }))
         .filter((i) => !["matta"].includes(i.name.toLowerCase()));
       const appInfo = res.data.data.find(
@@ -184,7 +187,7 @@ function getBusinessUserType() {
     })
     .catch(() => {
       AppLoading.value = false;
-      navigateTo("/user-type");
+  
     });
 }
 onMounted(() => {

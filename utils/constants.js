@@ -32,29 +32,15 @@ export const logoutUrl = () => {
 export const handleRouting = (
   value = "login",
   url = appUrl,
-  target = "_blank"
+  target = "_self"
 ) => {
   const config = useRuntimeConfig();
-  window.open(
-    `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`,
-    {
-      target,
-    }
-  );
+  window.location.href = `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`;
 };
 
-export const handleRoute = ({
-  value = "login",
-  url = appUrl,
-  target = "_blank",
-}) => {
+export const handleRoute = () => {
   const config = useRuntimeConfig();
-  window.open(
-    `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`,
-    {
-      target,
-    }
-  );
+  window.location.href = `${validationUrl}/auth/login/${config.public.APP_CODE}?continue=${appUrl}`;
 };
 export const measurements = [
   { value: "g", name: "Gramme", label: "Gramme" },

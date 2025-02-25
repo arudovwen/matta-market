@@ -20,7 +20,12 @@
         />
       </FormGroup>
 
-      <FormGroup label="Tenor" :error="errors.tenor" name="tenor"  :isCumpulsory="true">
+      <FormGroup
+        label="Tenor"
+        :error="errors.tenor"
+        name="tenor"
+        :isCumpulsory="true"
+      >
         <Select
           v-model="tenor"
           :options="options"
@@ -44,6 +49,14 @@
     <div class="flex gap-x-4 items-center justify-end">
       <AppButton
         :disabled="isLoading"
+        :isLoading="isSaving"
+        btnClass="border border-primary-500 text-primary-500 !px-12 !text-sm !py-[10px] disabled:cursor-not-allowed"
+        type="button"
+        text="Save as Draft"
+        @click="onSaveAndContinue"
+      />
+      <AppButton
+        :disabled="isLoading"
         :isLoading="isLoading"
         btnClass="bg-primary-500 text-white !px-12  !text-sm !py-[10px] disabled:cursor-not-allowed"
         type="submit"
@@ -56,8 +69,12 @@
 <script setup>
 import { useForm } from "vee-validate";
 import * as yup from "yup";
+import { saveAsDraft } from "@/services/requestservice.js";
 
+const router = useRouter();
 const isLoading = ref(false);
+const isSaving = ref(false);
+
 const formValues = reactive({
   amountRequired: null,
   tenor: "",
@@ -75,7 +92,7 @@ const schema = yup.object({
   whereDidYouHearAboutUs: yup.string(),
 });
 
-const { handleSubmit, defineField, errors, setFieldValue } = useForm({
+const { handleSubmit, defineField, errors, setFieldValue, values } = useForm({
   validationSchema: schema,
   initialValues: {
     amountRequired: formData.amountRequired,
@@ -91,12 +108,46 @@ const [whereDidYouHearAboutUs, whereDidYouHearAboutUsAtt] = defineField(
 );
 
 const onSubmit = handleSubmit((values) => {
-	formData.amountRequired = values.amountRequired;
+  const data = {};
+  formData.amountRequired = values.amountRequired;
   formData.tenor = values.tenor;
   formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs;
-  active.value = 2;
-
+  saveAsDraft({
+    ...formData,
+    ...(!formData?.supportingDocuments[0]?.urls[0].length && {
+      supportingDocuments: formData?.supportingDocuments.map((i) => ({
+        ...i,
+        urls: i.urls.map((j) => j?.url),
+      })),
+    }),
+  })
+    .then(() => {
+      active.value = 2;
+    })
+    .catch(() => {});
 });
+
+const onSaveAndContinue = async () => {
+  formData.amountRequired = values.amountRequired;
+  formData.tenor = values.tenor;
+  formData.whereDidYouHearAboutUs = values.whereDidYouHearAboutUs;
+  if (!formData.supportingDocuments[0]?.urls[0].length) {
+    formData.supportingDocuments = [];
+  }
+  saveAsDraft({
+    ...formData,
+    ...(!formData?.supportingDocuments[0]?.urls[0].length && {
+      supportingDocuments: formData?.supportingDocuments.map((i) => ({
+        ...i,
+        urls: i.urls.map((j) => j?.url),
+      })),
+    }),
+  })
+    .then(() => {
+      router.push(`/financing`);
+    })
+    .catch(() => {});
+};
 
 const options = [
   {
