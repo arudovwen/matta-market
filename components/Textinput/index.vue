@@ -22,7 +22,7 @@
         :title="infoTitle"
         class="cursor-pointer h-4 w-4 flex items-center justify-center"
       >
-        <AppIcon icon="quill:info" iconClass="text-gray-600" />
+        <AppIcon icon="quill:info" iconClass="text-[#98A2B3]" />
       </span>
     </label>
 

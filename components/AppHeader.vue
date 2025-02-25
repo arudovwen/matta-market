@@ -1,5 +1,5 @@
 <template>
- <section class="bg-white">
+ <section class="bg-white relative z-10">
   <ClientOnly>
     <div
       v-if="$pwa?.offlineReady || $pwa?.needRefresh"

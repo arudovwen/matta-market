@@ -1,5 +1,4 @@
 <template>
-  {{ authStore?.userInfo?.onboardingPageStatus }}
   <div
     v-if="!authStore?.userInfo?.onboardingStatus"
     class="px-5 py-[14px] bg-[#182230] rounded-[5px] flex flex-col lg:flex-row justify-between gap-y-5 lg:gap-y-0 lg:gap-x-40 relative mb-3"
