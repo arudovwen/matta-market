@@ -13,10 +13,12 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   // Handle businessUserType check if logged in
   if (isLoggedIn) {
-    if (!mattaAuth.value.businessUserType) {
-      // Redirect the user to /user-type if businessUserType is missing
-      return navigateTo("/user-type"); // Use next() to redirect to the user-type page
+    const businessUserType = mattaAuth.value.businessUserType;
+  
+    // Check if businessUserType is not 0 or 1
+    if (businessUserType !== 0 && businessUserType !== 1) {
+      return navigateTo("/user-type"); // Redirect to /user-type page
     }
   }
-
+  
 });

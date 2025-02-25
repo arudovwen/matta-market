@@ -1,4 +1,5 @@
 <template>
+ <section class="bg-white">
   <ClientOnly>
     <div
       v-if="$pwa?.offlineReady || $pwa?.needRefresh"
@@ -73,19 +74,22 @@
       'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 border-b border-[rgba(242, 242, 242, 1)] darks:border-gray-900':
         !view?.atTopOfPage,
     }"
-    class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800  transition-all duration-500 ease-in-out"
+    class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 transition-all duration-500 ease-in-out"
   >
     <div class="container mx-auto">
-      <div class="flex justify-between items-center gap-x-5">
-        <div class="logo flex gap-x-10 items-center">
+      <div class="flex justify-between items-center gap-x-16">
+        <div class="logo flex gap-x-10 items-center flex-1">
           <NuxtLink to="/">
             <img
               src="/images/logo.png"
               alt="Matta"
-              class="w-20 md:w-[100px] h-auto object-contain"
+              class="w-20 md:w-[130px] h-auto object-contain"
           /></NuxtLink>
+          <div class="max-w-[600px] flex-1">
+            <NavSearchBar />
+          </div>
         </div>
-        <NavSearchBar />
+
         <div class="flex items-center gap-x-[10px] text-sm">
           <span lass="text-sm"><CurrencyChanger /></span>
           <span class="text-sm" v-if="showlang">
@@ -235,13 +239,15 @@
       </div>
     </div>
   </nav>
+
+  <hr class="border-[rgba(242, 242, 242, 1)] my-1" />
   <nav
     :class="{
       relative: view?.atTopOfPage,
-      'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 border-b border-[rgba(242, 242, 242, 1)] darks:border-gray-900':
+      'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5  darks:border-gray-900':
         !view?.atTopOfPage,
     }"
-    class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800  transition-all duration-500 ease-in-out"
+    class="relative pt-4 pb-6 w-full bg-white darks:bg-gray-800 transition-all duration-500 ease-in-out"
   >
     <div class="container mx-auto">
       <div class="flex justify-between items-center gap-x-5">
@@ -284,7 +290,7 @@
                   leave-to-class="transform scale-95 opacity-0"
                 >
                   <MenuItems
-                    class=" grid grid-cols-1 absolute left-0 mt-[22px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-[303px] origin-top-right bg-white darks:bg-gray-800 rounded-b-[10px] px-5 py-5 text-sm"
+                    class="grid grid-cols-1 absolute left-0 mt-[22px] shadow-[0px_4px_4px_0px_rgba(0,0,0,0.25)] w-[303px] origin-top-right bg-white darks:bg-gray-800 rounded-b-[10px] px-5 py-5 text-sm"
                   >
                     <div class="" v-for="cat in handleDropDown(n.key)">
                       <MenuItem v-slot="{ active }">
@@ -413,6 +419,7 @@
   </ModalSide>
 
   <ModalAuth goToUrl="/checkout" />
+ </section>
 </template>
 <script setup>
 import { ref } from "vue";
