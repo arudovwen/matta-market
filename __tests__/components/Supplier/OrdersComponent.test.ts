@@ -69,7 +69,7 @@ describe("OrdersComponent", () => {
                 packType: "Plastic drum",
                 logo: null,
                 converPhoto:
-                  "https://staging.gateway.matta.trade/uploads/9e905f49-50d4-40ae-9b40-fa797d255756.jpg",
+                  "https://dev.gateway.matta.trade/uploads/9e905f49-50d4-40ae-9b40-fa797d255756.jpg",
                 isAvailable: true,
                 customerId: "3379915000002081001",
                 manufacturer: "BASF",
@@ -134,7 +134,7 @@ describe("OrdersComponent", () => {
                 packType: "Metal drum",
                 logo: null,
                 converPhoto:
-                  "https://staging.gateway.matta.trade/uploads/47d3e928-4ffc-4b6d-bd6b-88ff0ee95c35.jpg",
+                  "https://dev.gateway.matta.trade/uploads/47d3e928-4ffc-4b6d-bd6b-88ff0ee95c35.jpg",
                 isAvailable: true,
                 customerId: "3379915000003144001",
                 manufacturer: "BASF",

@@ -371,7 +371,7 @@
                           <button
                             v-else-if="n.key === 'settings'"
                             @click="
-                              navigateTo('https://staging.profile.matta.trade', {
+                              navigateTo('https://dev.profile.matta.trade', {
                                 open: {
                                   target: '_blank',
                                 },

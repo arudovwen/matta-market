@@ -102,7 +102,7 @@
 
             <button
               @click="navigateTo('/cart')"
-              class="!lg:flex items-center relative !hidden"
+              class="flex items-center relative"
             >
               <span
                 class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
