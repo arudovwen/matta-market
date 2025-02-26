@@ -37,6 +37,10 @@ export const handleRouting = (
   const config = useRuntimeConfig();
   window.location.href = `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`;
 };
+export const getRoute = (value = "login", url = appUrl, target = "_self") => {
+  const config = useRuntimeConfig();
+  return `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`;
+};
 
 export const handleRoute = () => {
   const config = useRuntimeConfig();

@@ -148,6 +148,8 @@
 </template>
 
 <script setup>
+import { getRoute } from "~/utils/constants";
+
 const route = useRoute();
 const open = ref(false);
 
@@ -209,11 +211,11 @@ const navs = [
       },
       {
         title: "Become a Verified Supplier",
-        url: "/auth/vendor-register",
+        url: getRoute("register"),
       },
       {
         title: "Join agent network program",
-        url: "#",
+        url: getRoute("register"),
       },
     ],
   },

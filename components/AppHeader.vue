@@ -77,17 +77,17 @@
       class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 transition-all duration-500 ease-in-out"
     >
       <div class="container mx-auto">
-        <div class="flex justify-between items-center gap-x-16">
-          <div class="logo flex gap-x-10 items-center flex-1">
+        <div class="flex justify-between items-center">
+          <div class="logo flex gap-x-10 items-center">
             <NuxtLink to="/">
               <img
                 src="/images/logo.png"
                 alt="Matta"
                 class="w-20 md:w-[130px] h-auto object-contain"
             /></NuxtLink>
-            <div class="max-w-[600px] flex-1">
-              <NavSearchBar />
-            </div>
+          </div>
+          <div class="max-w-[600px] w-full flex-1 hidden lg:block">
+            <NavSearchBar />
           </div>
 
           <div class="flex items-center gap-x-[10px] text-sm">
@@ -102,7 +102,7 @@
 
             <button
               @click="navigateTo('/cart')"
-              class="flex items-center relative"
+              class="!lg:flex items-center relative !hidden"
             >
               <span
                 class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
@@ -141,7 +141,7 @@
                 type="button"
                 @click="handleRouting('register')"
                 text="Sign up"
-                btnClass="!text-[12px] sm:!text-sm text-white  !font-semibold !px-[15px] !py-[6px] !normal-case bg-primary-500 flex"
+                btnClass="!text-[12px] sm:!text-sm text-white  hidden lg:block !font-semibold !px-[15px] !py-[6px] !normal-case bg-primary-500 flex"
               />
 
               <Menu
@@ -371,6 +371,9 @@
             </ul>
           </div>
           <div class="flex items-center gap-x-[10px] text-sm"></div>
+        </div>
+        <div class="max-w-[600px] w-full flex-1 lg:hidden">
+          <NavSearchBar />
         </div>
       </div>
     </nav>
