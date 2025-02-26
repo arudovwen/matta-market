@@ -14,13 +14,13 @@ export const defaultOptions = {
 
 export const validationUrl = `http${
   process.env.NODE_ENV === "production"
-    ? "s://dev.profile.matta.trade"
+    ? "s://staging.profile.matta.trade"
     : "://localhost:3020"
 }`;
 
 export const appUrl = `http${
   process.env.NODE_ENV === "production"
-    ? "s://dev.matta.trade"
+    ? "s://staging.matta.trade"
     : "://localhost:3002"
 }`;
 
@@ -36,6 +36,10 @@ export const handleRouting = (
 ) => {
   const config = useRuntimeConfig();
   window.location.href = `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`;
+};
+export const getRoute = (value = "login", url = appUrl, target = "_self") => {
+  const config = useRuntimeConfig();
+  return `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`;
 };
 
 export const handleRoute = () => {
@@ -355,7 +359,7 @@ export const navigation = [
 
   {
     name: "Profile",
-    url: "https://dev.profile.matta.trade",
+    url: "https://staging.profile.matta.trade",
     icon: "heroicons:arrow-top-right-on-square-16-solid",
     key: "settings",
     external: true,
