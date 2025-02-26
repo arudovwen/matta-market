@@ -89,7 +89,7 @@ import { loginUser, sociallogin, loginUser2FA } from "~/services/authservices";
 const authProfile = ref(null);
 let profileUrl =
   process.env.NODE_ENV === "production"
-    ? "https://dev.profile.matta.trade"
+    ? "https://staging.profile.matta.trade"
     : "http://localhost:3020/auth/swift";
 const props = defineProps({
   main: {

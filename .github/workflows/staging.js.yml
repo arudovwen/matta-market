@@ -36,7 +36,7 @@ jobs:
       run: |
              Copy-Item -Path C:\matta-frontend-action-runner\_work\Matta-Trade-Frontend-New\Matta-Trade-Frontend-New\.output\public\* -Destination C:\inetpub\wwwroot\Matta.Staging.Frontend\ -recurse -Force
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
           name: deployable-package
           path: C:\build\deployable-package.zip

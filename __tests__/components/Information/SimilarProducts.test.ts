@@ -105,7 +105,7 @@ vi.mock("~/services/productservices", () => ({
             packType: "Plastic drum",
             logo: null,
             converPhoto:
-              "https://dev.gateway.matta.trade/uploads/9e905f49-50d4-40ae-9b40-fa797d255756.jpg",
+              "https://staging.gateway.matta.trade/uploads/9e905f49-50d4-40ae-9b40-fa797d255756.jpg",
             isAvailable: true,
             customerId: "3379915000002081001",
             manufacturer: "BASF",
@@ -170,7 +170,7 @@ vi.mock("~/services/productservices", () => ({
             packType: "Metal drum",
             logo: null,
             converPhoto:
-              "https://dev.gateway.matta.trade/uploads/47d3e928-4ffc-4b6d-bd6b-88ff0ee95c35.jpg",
+              "https://staging.gateway.matta.trade/uploads/47d3e928-4ffc-4b6d-bd6b-88ff0ee95c35.jpg",
             isAvailable: true,
             customerId: "3379915000003144001",
             manufacturer: "BASF",
@@ -222,7 +222,7 @@ vi.mock("~/services/productservices", () => ({
             packType: "Plastic drum",
             logo: null,
             converPhoto:
-              "https://dev.gateway.matta.trade/uploads/b9c6f47b-66ed-461e-92f8-23ff99b49001.jpg",
+              "https://staging.gateway.matta.trade/uploads/b9c6f47b-66ed-461e-92f8-23ff99b49001.jpg",
             isAvailable: true,
             customerId: "3379915000002081001",
             manufacturer: "BASF",
@@ -261,7 +261,7 @@ vi.mock("~/services/productservices", () => ({
             packType: "Carton",
             logo: null,
             converPhoto:
-              "https://dev.gateway.matta.trade/uploads/ffd3d069-aa44-4b7c-84d0-06d26b953e40.jpg",
+              "https://staging.gateway.matta.trade/uploads/ffd3d069-aa44-4b7c-84d0-06d26b953e40.jpg",
             isAvailable: true,
             customerId: "3379915000002081001",
             manufacturer: "Phamazell",
@@ -313,7 +313,7 @@ vi.mock("~/services/productservices", () => ({
             packType: "Cylinder",
             logo: null,
             converPhoto:
-              "https://dev.gateway.matta.trade/uploads/ec112a4c-a73d-4316-b79c-e5b581da247d.jpg",
+              "https://staging.gateway.matta.trade/uploads/ec112a4c-a73d-4316-b79c-e5b581da247d.jpg",
             isAvailable: true,
             customerId: "3379915000003722002",
             manufacturer: "Defoamers Inc",
@@ -352,7 +352,7 @@ vi.mock("~/services/productservices", () => ({
             packType: "Carton",
             logo: null,
             converPhoto:
-              "https://dev.gateway.matta.trade/uploads/61081b95-0837-4f33-9d68-a35c84c3ae36.jpg",
+              "https://staging.gateway.matta.trade/uploads/61081b95-0837-4f33-9d68-a35c84c3ae36.jpg",
             isAvailable: true,
             customerId: "3379915000002081001",
             manufacturer: "BASF",
