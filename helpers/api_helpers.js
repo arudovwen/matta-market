@@ -54,6 +54,7 @@ const axiosSSO = createAxiosInstance("sso");
 const mattaApi = createAxiosInstance("matta");
 const walletApi = createAxiosInstance("wallet");
 const deltaApi = createAxiosInstance("flux");
+const currencyApi = createAxiosInstance("currency");
 
 // Handle token refresh logic
 const handleTokenRefresh = async () => {
@@ -107,6 +108,7 @@ export const mattaMethods = createApiMethods(mattaApi);
 export const ssoMethods = createApiMethods(axiosSSO);
 export const walletMethods = createApiMethods(walletApi);
 export const deltaMethods = createApiMethods(deltaApi);
+export const currencyMethods = createApiMethods(currencyApi);
 
 // Export the API methods
 export const { get, post, put, delete: del } = apiMethods;
@@ -129,3 +131,8 @@ export const deltaGet = deltaMethods.get;
 export const deltaPost = deltaMethods.post;
 export const deltaPut = deltaMethods.put;
 export const deltaDelete = deltaMethods.delete;
+
+export const currencyGet = currencyMethods.get;
+export const currencyPost = currencyMethods.post;
+export const currencyPut = currencyMethods.put;
+export const currencyDelete = currencyMethods.delete;

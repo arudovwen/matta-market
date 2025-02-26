@@ -71,7 +71,7 @@
   <nav
     :class="{
       relative: view?.atTopOfPage,
-      'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 border-b border-[rgba(242, 242, 242, 1)] darks:border-gray-900':
+      'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 ':
         !view?.atTopOfPage,
     }"
     class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 transition-all duration-500 ease-in-out"
@@ -244,10 +244,10 @@
   <nav
     :class="{
       relative: view?.atTopOfPage,
-      'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5  darks:border-gray-900':
+      'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5  ':
         !view?.atTopOfPage,
     }"
-    class="relative pt-4 pb-6 w-full bg-white darks:bg-gray-800 transition-all duration-500 ease-in-out"
+    class="relative pt-4 pb-6 w-full bg-white transition-all duration-500 ease-in-out "
   >
     <div class="container mx-auto">
       <div class="flex justify-between items-center gap-x-5">
