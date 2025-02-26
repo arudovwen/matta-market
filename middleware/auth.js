@@ -16,7 +16,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     const businessUserType = mattaAuth.value.businessUserType;
   
     // Check if businessUserType is not 0 or 1
-    if (businessUserType !== 0 && businessUserType !== 1) {
+    if (businessUserType !== 0 && businessUserType !== 1 && to.path !== '/checkout') {
       return navigateTo("/user-type"); // Redirect to /user-type page
     }
   }
