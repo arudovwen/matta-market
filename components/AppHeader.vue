@@ -83,7 +83,7 @@
               <img
                 src="/images/logo.png"
                 alt="Matta"
-                class="w-20 md:w-[130px] h-auto object-contain"
+                class="w-20 md:w-[120px] h-auto object-contain"
             /></NuxtLink>
           </div>
           <div class="max-w-[600px] w-full flex-1 hidden lg:block">

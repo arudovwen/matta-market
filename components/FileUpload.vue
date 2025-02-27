@@ -25,7 +25,7 @@
         </span>
       </button>
       <span v-if="!loading" class="flex-1 max-w-max truncate">
-        <span v-if="!name && !title" class="text-[#98A2B3]">{{
+        <span @click="triggerFileInput" v-if="!name && !title" class="text-[#98A2B3]">{{
           btnText || "Select file for upload"
         }}</span>
         <span
@@ -46,7 +46,6 @@
 <script setup>
 import RedDot from "@/components/RedDot.vue";
 import { uploaddocument } from "@/services/onboardingservices";
-import { Icon } from "@iconify/vue";
 import { defineProps, ref, inject, watch, onMounted, defineEmits } from "vue";
 import { toast } from "vue3-toastify";
 
