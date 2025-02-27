@@ -90,7 +90,7 @@
             <NavSearchBar />
           </div>
 
-          <div class="flex items-center gap-x-[10px] text-sm">
+          <div class="flex items-center gap-x-3 text-sm">
             <span lass="text-sm"><CurrencyChanger /></span>
             <span class="text-sm" v-if="showlang">
               <GoogleTranslateSelect
@@ -122,12 +122,12 @@
             > -->
             </button>
             <div
-              v-if="authStore.isLoggedIn"
+             
               class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
             >
               <AppMenu />
             </div>
-            <div class="flex gap-x-3 ml-3">
+            <div class="flex gap-x-3 ml-">
               <AppButton
                 v-if="!authStore?.isLoggedIn"
                 type="button"
