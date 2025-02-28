@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-x-8">
+  <div class="flex gap-x-6">
     <div
       class="bg-white w-full border border-[#EAECF0] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-3 mb-8"
     >
@@ -69,6 +69,38 @@
         />
       </div>
     </div>
+ <div class="flex-1">
+  <div
+    v-if="hasWallet"
+    class="border border-[#EAECF0] bg-[#F2F4F7] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-4 px-4 min-w-[360px]"
+  >
+    <p class="text-base text-[#344054] font-semibold mb-3">
+      Bank Transfer Information
+    </p>
+
+    <div class="grid gap-y-1">
+      <div
+        class="flex gap-x-2 items-center text-base"
+        v-for="item in bankData"
+        :key="item.title"
+      >
+        <span class="font-normal text-[#667085]">{{ item.title }}: </span>
+        <span class="flex gap-x-4 items-center">
+          <span class="font-medium text-[#101828]">{{
+            details[item.key]
+          }}</span>
+          <button
+            v-if="item.key === 'accountNumber'"
+            v-clipboard="details?.accountNumber"
+            @click="toast.success('Copied')"
+            class="cursor-pointer"
+          >
+            <i class="uil uil-copy text-[#101828]"></i></button
+        ></span>
+      </div>
+    </div>
+  </div>
+ </div>
 
     <!-- <div
       class="bg-white w-full border border-[#EAECF0] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-3 mb-8"
@@ -155,36 +187,7 @@
       </div>
     </div> -->
   </div>
-  <!-- <div
-    v-if="hasWallet"
-    class="border border-[#EAECF0] bg-[#F2F4F7] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-4 px-4"
-  >
-    <p class="text-sm text-[#344054] font-semibold mb-3">
-      Bank Transfer Information
-    </p>
 
-    <div class="grid gap-y-1">
-      <div
-        class="flex gap-x-2 items-center text-xs"
-        v-for="item in bankData"
-        :key="item.title"
-      >
-        <span class="font-normal text-[#667085]">{{ item.title }}: </span>
-        <span class="flex gap-x-4 items-center">
-          <span class="font-medium text-[#101828]">{{
-            details[item.key]
-          }}</span>
-          <button
-            v-if="item.key === 'accountNumber'"
-            v-clipboard="details?.accountNumber"
-            @click="toast.success('Copied')"
-            class="cursor-pointer"
-          >
-            <i class="uil uil-copy text-[#101828]"></i></button
-        ></span>
-      </div>
-    </div>
-  </div> -->
   <IndexModal :isOpen="isOpen" @togglePopup="handleClose">
     <template #content>
       <div class="max-w-[800px]">
