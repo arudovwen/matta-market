@@ -200,7 +200,7 @@ const urls = {
   SET_UPPER_LIMIT: "v1/wallet/setupperlimit",
   VALIDATE_ACCOUNT: "v1/wallet/validate-account",
   VALIDATE_BVN: "v1/wallet/verify-bvn",
-  CONFIRM_FUNDING: "v1/wallet/confirm-wallet-funding",
+  CONFIRM_FUNDING: "v1/wallet/confirm-funding",
   WITHDRAW_FUNDS: "v1/wallet/withdraw",
   GET_WITHDRAW_CHARGE: "v1/wallet/get-withdrawalfee",
   GET_DEPOSIT_CHARGE: "v1/wallet/get-depositfee",
