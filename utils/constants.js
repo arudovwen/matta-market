@@ -305,12 +305,12 @@ export const navigation = [
     icon: "ion:wallet-outline",
     key: "wallet-home",
   },
-  {
-    name: "Financing",
-    url: "/financing",
-    icon: "la:hand-holding-usd",
-    key: "financing",
-  },
+  // {
+  //   name: "Financing",
+  //   url: "/financing",
+  //   icon: "la:hand-holding-usd",
+  //   key: "financing",
+  // },
   {
     name: "Shipping Addresses",
     url: "/procurement/shipping-addresses",

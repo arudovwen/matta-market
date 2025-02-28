@@ -243,7 +243,7 @@ const urls = {
   VIEW_SETTLEMENT: "v1/settlement/view-settlement-account",
   UPDATE_SETTLEMENT: "v1/settlement/update-settlement-account",
   DELETE_SETTLEMENT: "v1/settlement/delete-settlement-account",
-  GET_BANKS: "v1/bank/get-bank",
+  GET_BANKS: "v1/wallet/get-bank",
   GET_LEDGER_TRANSACTIONS: "v1/ledger/get-all",
 
   ADDRESS_SEARCH: "Location/address-search",

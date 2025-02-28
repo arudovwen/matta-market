@@ -401,7 +401,7 @@ function handleCart(type) {
     toast.info("Please enter a quantity");
     return;
   }
-  if (!authStore.isLoggedIn) {
+  if (!authStore.isLoggedIn && type !== 'add') {
     toast.info("Login to continue");
     authOpen.value = true;
     return;

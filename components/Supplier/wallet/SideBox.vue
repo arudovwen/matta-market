@@ -70,7 +70,7 @@
       </div>
     </div>
 
-    <div
+    <!-- <div
       class="bg-white w-full border border-[#EAECF0] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-3 mb-8"
     >
       <div class="px-6 pb-4 border-b border-[#EAECF0]">
@@ -153,7 +153,7 @@
           btnClass="!px-[14px]  !py-[10px] text-sm text-[#344054] bg-transparent border border-[#D0D5DD] !rounded-lg"
         />
       </div>
-    </div>
+    </div> -->
   </div>
   <!-- <div
     v-if="hasWallet"
