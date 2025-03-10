@@ -27,7 +27,6 @@
                   >: {{ currencyFormat(balance.ledgerBalance) }}</span
                 >
               </div>
-
               <span class="absolute top-4 right-4">
                 <img src="/images/pass.svg" class="w-4" alt="side"
               /></span>
