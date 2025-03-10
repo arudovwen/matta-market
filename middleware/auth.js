@@ -10,7 +10,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
   if (
     authStore.isLoggedIn &&
-    !allowedCategory.includes(mattaAuth.value.userCategory)
+    !allowedCategory.includes(mattaAuth.value?.userCategory)
   ) {
     authStore.logOut();
     return;
