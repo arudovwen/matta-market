@@ -86,7 +86,7 @@ export const useAuthStore = defineStore(
       mattaAuth.value = null;
       clearCookies().then(() => {
         loggedUser.value = null;
-        window.location.replace(logoutUrl());
+        window.location.replace("/");
       });
     };
     return {

@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { get, post, del, put } from "../helpers/api_helpers";
+import { get, post, del, put, walletGet } from "../helpers/api_helpers";
 import store from "../store";
 
 const config = {
@@ -30,7 +30,7 @@ export const deleteSettlement = (data) => {
 };
 
 export const getBanks = () => {
-  return get(
+  return walletGet(
     `${urls.GET_BANKS}`,
 
     config

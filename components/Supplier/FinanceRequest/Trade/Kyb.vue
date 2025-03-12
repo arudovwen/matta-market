@@ -300,6 +300,7 @@ const formSchema = yup.object({
 
   notes: yup
     .string()
+    .nullable()
     // .required("Description is required")
     // .min(10, "Description must be at least 10 characters long")
     .max(500, "Description cannot exceed 500 characters"),

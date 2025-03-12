@@ -401,11 +401,11 @@ function handleCart(type) {
     toast.info("Please enter a quantity");
     return;
   }
-  // if (!authStore.isLoggedIn) {
-  //   toast.info("Login to continue");
-  //   authOpen.value = true;
-  //   return;
-  // }
+  if (!authStore.isLoggedIn && type !== 'add') {
+    toast.info("Login to continue");
+    authOpen.value = true;
+    return;
+  }
 
   cartLoading.value = true;
   let data = {

@@ -83,14 +83,14 @@
               <img
                 src="/images/logo.png"
                 alt="Matta"
-                class="w-20 md:w-[130px] h-auto object-contain"
+                class="w-20 md:w-[120px] h-auto object-contain"
             /></NuxtLink>
           </div>
           <div class="max-w-[600px] w-full flex-1 hidden lg:block">
             <NavSearchBar />
           </div>
 
-          <div class="flex items-center gap-x-[10px] text-sm">
+          <div class="flex items-center gap-x-3 text-sm">
             <span lass="text-sm"><CurrencyChanger /></span>
             <span class="text-sm" v-if="showlang">
               <GoogleTranslateSelect
@@ -102,7 +102,7 @@
 
             <button
               @click="navigateTo('/cart')"
-              class="!lg:flex items-center relative !hidden"
+              class="flex items-center relative"
             >
               <span
                 class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
@@ -122,12 +122,12 @@
             > -->
             </button>
             <div
-              v-if="authStore.isLoggedIn"
+             
               class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
             >
               <AppMenu />
             </div>
-            <div class="flex gap-x-3 ml-3">
+            <div class="flex gap-x-3 ml-">
               <AppButton
                 v-if="!authStore?.isLoggedIn"
                 type="button"
