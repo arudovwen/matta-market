@@ -29,7 +29,7 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "nuxt-swiper",
     "@nuxt/image",
-    // "nuxt-security",
+    "nuxt-security",
     "@nuxt/devtools",
     "nuxt-ssr-cache",
     "@vite-pwa/nuxt",
@@ -47,6 +47,7 @@ export default defineNuxtConfig({
           "data:",
           "https://gateway.matta.trade",
           "https://res.cloudinary.com",
+          "https://matta.s3.us-east-1.amazonaws.com"
         ],
         "script-src": [
           "'self'",
