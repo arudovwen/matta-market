@@ -122,7 +122,6 @@
             > -->
             </button>
             <div
-             
               class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
             >
               <AppMenu />
@@ -196,9 +195,9 @@
                           <MenuItem v-slot="{ active }">
                             <NuxtLink
                               :to="n.url"
-                              v-if="
-                                n.key !== 'sign-out' && n.key !== 'settings'
-                              "
+                              v-if="n.key !== 'sign-out'"
+                              :external="n.external"
+                              :target="n.external ? '_blank' : '_self'"
                             >
                               <button
                                 class="flex gap-x-3 items-center text-[13px] font-medium text-[#555]"
@@ -206,20 +205,7 @@
                                 <AppIcon :icon="n.icon" /> {{ n.name }}
                               </button>
                             </NuxtLink>
-                            <button
-                              v-else-if="n.key === 'settings'"
-                              @click="
-                                navigateTo('https://staging.profile.matta.trade', {
-                                  open: {
-                                    target: '_blank',
-                                  },
-                                })
-                              "
-                              class="flex gap-x-3 items-center text-[13px] font-medium"
-                            >
-                              <AppIcon :icon="n.icon" iconClass="text-base" />
-                              {{ n.name }}
-                            </button>
+
                             <button
                               v-else
                               @click="isSigniningOut = true"

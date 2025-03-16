@@ -7,13 +7,13 @@
         <li v-for="item in mappedNav" :key="item.name">
           <NuxtLink
             :to="item.url"
-            class="text-sm flex items-center px-5 border-r-[3px] border-transparent font-medium hover:bg-[#2270FA0F] hover:text-primary-500 hover:border-primary-500"
-            :activeClass="`${
-              storeOpen ? '' : ' bg-[#2270FA0F] text-primary-500 block'
-            }`"
+            class="text-sm flex items-center px-5 border-r-[3px] border-transparent font-medium hover:bg-[#2270FA0F] hover:text-primary-500"
+            activeClass="bg-[#2270FA0F] text-primary-500 !border-primary-500"
+            :external="item.external"
+            :target="item.external ? '_blank' : '_self'"
           >
             <span class="flex items-center gap-x-[10px] flex-1 py-[9px]">
-              <AppIcon :icon="item.icon" iconClass="text-xl text-[#667085]" />
+              <AppIcon :icon="item.icon" iconClass="text-xl" />
               <span> {{ item.name }}</span>
             </span>
           </NuxtLink>
@@ -39,12 +39,14 @@ onMounted(() => {
 const authstore = useAuthStore();
 
 const mappedNav = computed(() => {
-  return navigation.filter(i=>i.key !== 'sign-out').filter((i) =>
-    (authStore?.userType?.toLowerCase() === "supplier"
-      ? vendorRoutes
-      : buyerRoutes
-    ).includes(i.key)
-  );
+  return navigation
+    .filter((i) => i.key !== "sign-out")
+    .filter((i) =>
+      (authStore?.userType?.toLowerCase() === "supplier"
+        ? vendorRoutes
+        : buyerRoutes
+      ).includes(i.key)
+    );
 });
 const openIndex = ref([
   "Company",

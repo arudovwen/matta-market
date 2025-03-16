@@ -285,6 +285,7 @@ export const navigation = [
     url: "/overview",
     icon: "mingcute:layout-3-line",
     key: "overview",
+    external: false,
   },
 
   {
@@ -292,36 +293,42 @@ export const navigation = [
     url: "/procurement/my-orders",
     icon: "lucide:shopping-bag",
     key: "procurement-my-orders",
+    external: false,
   },
   {
     name: "My Requests",
     url: "/procurement/my-requests",
     icon: "ri:hand-coin-line",
     key: "procurement-my-requests",
+    external: false,
   },
   {
     name: "Wallet",
     url: "/wallet/home",
     icon: "ion:wallet-outline",
     key: "wallet-home",
+    external: false,
   },
-  // {
-  //   name: "Financing",
-  //   url: "/financing",
-  //   icon: "la:hand-holding-usd",
-  //   key: "financing",
-  // },
+  {
+    name: "Financing",
+    url: "https://dev.oxide.matta.trade/financing",
+    icon: "la:hand-holding-usd",
+    key: "financing",
+    external: true,
+  },
   {
     name: "Shipping Addresses",
     url: "/procurement/shipping-addresses",
     icon: "ion:map-outline",
     key: "procurement-shipping-addresses",
+    external: false,
   },
   {
     name: "Pickup locations",
     url: "/pickup-locations",
     icon: "lucide:truck",
     key: "pickup-locations",
+    external: false,
   },
 
   {
@@ -329,18 +336,21 @@ export const navigation = [
     url: "/account/saved-searches",
     icon: "tdesign:heart",
     key: "account-saved-searches",
+    external: false,
   },
   {
     name: "Storefront",
     url: "/storefront",
     icon: "solar:shop-outline",
     key: "storefront",
+    external: false,
   },
   {
     name: "Products",
     url: "/products",
     icon: "fluent-mdl2:product-variant",
     key: "products",
+    external: false,
   },
 
   {
@@ -348,6 +358,7 @@ export const navigation = [
     url: "/user-management",
     icon: "lucide:users",
     key: "user-management",
+    external: false,
   },
 
   // {
