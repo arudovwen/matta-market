@@ -89,7 +89,10 @@
                     </div>
                   </div>
 
-                  <div v-if="!insufficient" class="flex gap-x-4 items-center mt-6">
+                  <div
+                    v-if="!insufficient"
+                    class="flex gap-x-4 items-center mt-6"
+                  >
                     <button
                       v-if="isCancel"
                       type="button"
@@ -210,7 +213,7 @@ const advanceOptions = [
 function handlePurchase() {
   isLoading.value = true;
   if (!props.available || props.insufficient) {
-    navigateTo("/credit/request");
+    window.open("https://dev.oxide.matta.trade/credit", "_blank");
     isLoading.value = false;
     return;
   }
