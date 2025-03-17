@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   site: {
     url: "https://matta.trade",
@@ -47,7 +46,7 @@ export default defineNuxtConfig({
           "data:",
           "https://gateway.matta.trade",
           "https://res.cloudinary.com",
-          "https://matta.s3.us-east-1.amazonaws.com"
+          "https://matta.s3.us-east-1.amazonaws.com",
         ],
         "script-src": [
           "'self'",
@@ -65,11 +64,9 @@ export default defineNuxtConfig({
   cache: {
     useHostPrefix: false,
     pages: ["/"],
-
     store: {
       type: "memory",
       max: 100,
-      // number of seconds to store this page in cache
       ttl: 60,
     },
   },
@@ -93,16 +90,17 @@ export default defineNuxtConfig({
   spaLoadingTemplate: true,
 
   router: {
-    options: {
-      hashMode: false,
+    scrollBehavior(to, from, savedPosition) {
+      if (savedPosition) {
+        return savedPosition;
+      }
+      return { left: 0, top: 0 };
     },
   },
 
   routeRules: {
     "/finance": { redirect: "/" },
   },
-
-  // plugins: ["~/plugins/pdf-viewer.client.js"],
 
   googleSignIn: {
     clientId:
@@ -125,7 +123,7 @@ export default defineNuxtConfig({
 
   googleFonts: {
     families: {
-      Onest: [100, 200, 300, 400, 500, 600, 700, 800], // Enable the IntOnester font
+      Onest: [100, 200, 300, 400, 500, 600, 700, 800],
     },
   },
 
@@ -207,13 +205,13 @@ export default defineNuxtConfig({
           hid: "og:image",
           property: "og:image",
           content: "https://matta.trade/img/3.png",
-        }, // Add OG image URL
+        },
         // Twitter Tags
         {
           hid: "twitter:card",
           name: "twitter:card",
           content: "https://matta.trade/img/3.png",
-        }, // Use 'summary_large_image' for large images
+        },
         {
           hid: "twitter:title",
           name: "twitter:title",
@@ -229,15 +227,15 @@ export default defineNuxtConfig({
           hid: "twitter:image",
           name: "twitter:image",
           content: "URL to your Twitter image",
-        }, // Add Twitter image URL
+        },
         {
           name: "keywords",
           content:
             "Matta, Chemicals, Business, materials, manufacturers, producers, importers, raw materials, supplier",
-        }, // Add relevant keywords
-        { name: "author", content: "Success Ahon" }, // Add author information
-        { name: "robots", content: "index, follow" }, // Control search engine indexing
-        { name: "theme-color", content: "#1570EF" }, // Set the theme color for mobile browsers
+        },
+        { name: "author", content: "Success Ahon" },
+        { name: "robots", content: "index, follow" },
+        { name: "theme-color", content: "#1570EF" },
       ],
     },
   },

@@ -121,6 +121,7 @@ const router = useRouter();
 const referenceData = reactive({
   zohoorderId: null,
   transactionRef: null,
+  orderId: null
 });
 const data = ref(null);
 const status = ref("Make Payment");
@@ -140,8 +141,7 @@ function makePayment() {
     name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
     amount: cartStore?.cartTotalwithTax,
     phoneNumber: authStore.userInfo?.phoneNumber,
-    reference:referenceData.transactionRef,
-   
+    reference: referenceData.transactionRef,
   };
 
   payWithMonnify(data.value, onModalClose, onSuccess);
@@ -155,6 +155,7 @@ function confirmOrder() {
         if (res.status === 200) {
           referenceData.transactionRef = `ORD-${res.data.data}-${nanoid(6)}`;
           referenceData.zohoorderId = `ORD-${res.data.data}`;
+          referenceData.orderId = res.data.data
           makePayment();
         }
       })
@@ -175,11 +176,14 @@ function confirmOrder() {
 }
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
-    confirmpayment(referenceData)
+    confirmpayment({
+      ...referenceData,
+      transactionRef: response.transactionReference,
+    })
       .then((res) => {
         if (res.status === 200) {
           cartStore?.clearCart();
-          window.location.href = `/order-success?orderId=${data.value.orderId}`;
+          window.location.href = `/order-success?orderId=${referenceData.orderId}`;
         }
       })
       .catch((err) => {

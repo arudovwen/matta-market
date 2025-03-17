@@ -102,7 +102,10 @@ function makePayment() {
 
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
-    confirmpayment(referenceData)
+    confirmpayment({
+      ...referenceData,
+      transactionRef: response.transactionReference,
+    })
       .then((res) => {
         if (res.status === 200) {
           cartStore?.clearCart();

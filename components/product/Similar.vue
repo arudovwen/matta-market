@@ -117,6 +117,14 @@ const breakpoints = {
     itemsToShow: 4.4,
   },
 };
+function scroll(){
+  console.log('scroll')
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth'
+  });
+}
 const queryParams = reactive({
   MarketApplication: "",
   Status: "",
