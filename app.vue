@@ -1,4 +1,5 @@
 <template>
+  <NuxtLoadingIndicator :throttle="0" color="#1570ef" />
   <NuxtLayout v-if="!AppLoading">
     <NuxtPwaManifest />
     <NuxtPage />
@@ -109,6 +110,11 @@ import { getSubApps, getBusinessType } from "~/services/userservices";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+const nuxtApp = useNuxtApp();
+
+nuxtApp.hook("page:finish", () => {
+  window.scrollTo(0, 0);
+});
 const { encrypt } = useEncryption();
 const AppLoading = ref(false);
 const cartStore = useCartStore();
@@ -187,7 +193,6 @@ function getBusinessUserType() {
     })
     .catch(() => {
       AppLoading.value = false;
-  
     });
 }
 onMounted(() => {
