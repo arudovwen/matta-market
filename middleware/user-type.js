@@ -1,7 +1,7 @@
 import { handleRouting } from "~/utils/constants";
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  const mattaAuth = useCookie("mattaAuth", defaultOptions);
+  const mattaAuth = useCookie("mattaAuth_Dev", defaultOptions);
   const routeName = to?.name?.toString() || "";
   const isAuthRoute = routeName.includes("auth");
   const isLoggedIn = !!mattaAuth.value;
