@@ -88,16 +88,6 @@ export default defineNuxtConfig({
 
   ssr: false,
   spaLoadingTemplate: true,
-
-  router: {
-    scrollBehavior(to, from, savedPosition) {
-      if (savedPosition) {
-        return savedPosition;
-      }
-      return { left: 0, top: 0 };
-    },
-  },
-
   routeRules: {
     "/finance": { redirect: "/" },
   },
@@ -106,11 +96,6 @@ export default defineNuxtConfig({
     clientId:
       "56799988480-4d51egljupar9la4djc2tknjodn2vsj5.apps.googleusercontent.com",
   },
-
-  colorMode: {
-    classSuffix: "",
-  },
-
   css: [
     "vue-toastification/dist/index.css",
     "vue3-carousel/dist/carousel.css",
