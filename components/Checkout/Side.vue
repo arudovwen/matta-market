@@ -118,7 +118,10 @@ const authStore = useAuthStore();
 const cartStore = useCartStore();
 const loading = ref(false);
 const router = useRouter();
-
+const referenceData = reactive({
+  zohoorderId: null,
+  transactionRef: null,
+});
 const data = ref(null);
 const status = ref("Make Payment");
 const requestLoading = ref(false);
@@ -128,7 +131,7 @@ function onModalClose() {
   status.value = "Retry payment";
   loading.value = false;
 }
-function makePayment(reference) {
+function makePayment() {
   status.value = "Processing order...";
   loading.value = true;
   data.value = {
@@ -137,8 +140,8 @@ function makePayment(reference) {
     name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
     amount: cartStore?.cartTotalwithTax,
     phoneNumber: authStore.userInfo?.phoneNumber,
-    reference: `ORD-${reference}-${nanoid(6)}`,
-    orderId: reference,
+    reference:referenceData.transactionRef,
+   
   };
 
   payWithMonnify(data.value, onModalClose, onSuccess);
@@ -150,7 +153,9 @@ function confirmOrder() {
     confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress.id })
       .then((res) => {
         if (res.status === 200) {
-          makePayment(res.data.data);
+          referenceData.transactionRef = `ORD-${res.data.data}-${nanoid(6)}`;
+          referenceData.zohoorderId = `ORD-${res.data.data}`;
+          makePayment();
         }
       })
       .catch((err) => {
@@ -170,7 +175,7 @@ function confirmOrder() {
 }
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
-    confirmpayment({ orderId: data.value.orderId })
+    confirmpayment(referenceData)
       .then((res) => {
         if (res.status === 200) {
           cartStore?.clearCart();

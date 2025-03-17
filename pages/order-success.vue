@@ -52,7 +52,6 @@ import { toast } from "vue3-toastify";
 import { confirmpayment } from "~/services/cartservice";
 import { nanoid } from "nanoid";
 
-const shippingStore = useShippingStore();
 const authStore = useAuthStore();
 const cartStore = useCartStore();
 definePageMeta({
@@ -65,6 +64,10 @@ const isLoading = ref(false);
 const loading = ref(false);
 const route = useRoute();
 const { orderId, order_type } = route.query;
+const referenceData = reactive({
+  zohoorderId: null,
+  transactionRef: null,
+});
 function onModalClose() {
   loading.value = false;
   toast.error("Payment cancelled");
@@ -76,13 +79,15 @@ onMounted(() => {
     .then((res) => {
       if (res.status == 200) {
         isLoading.value = false;
+        referenceData.transactionRef = `ORD-${res.data.data}-${nanoid(6)}`;
+        referenceData.zohoorderId = `ORD-${res.data.data}`;
+
         data.value = {
           email: authStore.userInfo?.email,
           name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
           amount: res.data.data?.cartTotalwithTax,
           phoneNumber: authStore.userInfo?.phoneNumber,
-          reference: `ORD-${orderId}-${nanoid(6)}`,
-          orderId: orderId,
+          reference: referenceData.transactionRef,
         };
       }
     })
@@ -97,7 +102,7 @@ function makePayment() {
 
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
-    confirmpayment({ orderId })
+    confirmpayment(referenceData)
       .then((res) => {
         if (res.status === 200) {
           cartStore?.clearCart();

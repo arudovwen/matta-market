@@ -79,7 +79,7 @@ export async function shippingBreakdown() {
 }
 export async function confirmpayment(data) {
   return await post(
-    `${urls.CONFIRM_PAYMENT}?orderId=${data.orderId}`,
+    `${urls.CONFIRM_PAYMENT}`,
     data,
     config
   );
