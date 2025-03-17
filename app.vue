@@ -110,11 +110,7 @@ import { getSubApps, getBusinessType } from "~/services/userservices";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const nuxtApp = useNuxtApp();
 
-nuxtApp.hook("page:finish", () => {
-  window.scrollTo(0, 0);
-});
 const { encrypt } = useEncryption();
 const AppLoading = ref(false);
 const cartStore = useCartStore();
@@ -224,10 +220,6 @@ body {
   font-family: "Onest", sans-serif;
   color: #344054;
 }
-.dark-mode {
-  @apply text-white bg-gray-800;
-}
-
 .light-mode {
   @apply text-[#344054] bg-white;
 }
@@ -261,11 +253,6 @@ body {
 }
 .carousel__next {
   right: -26px !important;
-}
-body::-webkit-scrollbar,
-body {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 }
 
 /* width */

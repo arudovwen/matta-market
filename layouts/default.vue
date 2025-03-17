@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-[#F4F4F4] darks:bg-gray-800 relative w-screen flex flex-col h-screen overflow-y-auto"
+    class="bg-[#F4F4F4] relative w-screen flex flex-col min-h-screen overflow-y-auto"
   >
     <AppHeader :showlang="true" />
     <div class="flex-1">
