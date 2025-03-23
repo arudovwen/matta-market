@@ -1,6 +1,6 @@
 <template>
   <div class="items-center flex justify-center p-6">
-    <div class="bg-white rounded-[10px] p-5 md:p-9 text-center max-w-[500px]">
+    <div class="bg-white rounded-[10px] p-5 md:p-9 text-center max-w-[500px]" v-if="!loading">
       <img src="/images/success.png" class="mx-auto mb-[10px]" alt="success" />
       <h1 class="text-2xl mb-[24px] font-bold">
         {{ !order_type ? "Order Successful" : "Order Request Submitted" }}
@@ -44,6 +44,10 @@
         />
       </div>
     </div>
+    <div v-else class="bg-white p-6 rounded-lg flex flex-col justify-center items-center gap-y-4">
+      <AppLoaderV2 />
+      <p class="text-xs font-semibold">Processing payment</p>
+    </div>
   </div>
 </template>
 <script setup>
@@ -65,7 +69,7 @@ const loading = ref(false);
 const route = useRoute();
 const { orderId, order_type } = route.query;
 const referenceData = reactive({
-  zohoorderId: null,
+  zohoorderId: `ORD-${orderId}`,
   transactionRef: null,
 });
 function onModalClose() {
@@ -79,9 +83,7 @@ onMounted(() => {
     .then((res) => {
       if (res.status == 200) {
         isLoading.value = false;
-        referenceData.transactionRef = `ORD-${res.data.data}-${nanoid(6)}`;
-        referenceData.zohoorderId = `ORD-${res.data.data}`;
-
+      
         data.value = {
           email: authStore.userInfo?.email,
           name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
@@ -101,6 +103,7 @@ function makePayment() {
 }
 
 function onSuccess(response) {
+ 
   if (response.status.toLowerCase() === "success") {
     confirmpayment({
       ...referenceData,
@@ -110,6 +113,7 @@ function onSuccess(response) {
         if (res.status === 200) {
           cartStore?.clearCart();
           window.location.replace(`/order-success?orderId=${orderId}`);
+          loading.value = false;
         }
       })
       .catch((err) => {
