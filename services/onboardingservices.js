@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { post, get } from "../helpers/api_helpers";
+import { post, get, ssoPost } from "../helpers/api_helpers";
 import store from "../store";
 
 const config = {
@@ -21,10 +21,10 @@ export async function getOnboarding() {
 }
 
 export async function uploadfile(data) {
-  return await post(urls.UPLOAD_FILE, data, config);
+  return await ssoPost(urls.UPLOAD_FILE, data, config);
 }
 export async function uploaddocument(data) {
-  return await post(urls.UPLOAD_DOCUMENT, data, config);
+  return await ssoPost(urls.UPLOAD_DOCUMENT, data, config);
 }
 export async function setOnboardingcomplete() {
   return await post(urls.SETONBOARDING_COMPLETE, "", config);

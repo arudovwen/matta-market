@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!authStore?.userInfo?.onboardingStatus"
+    v-if="!mattaAuth?.onboardingStatus"
     class="px-5 py-[14px] bg-[#182230] rounded-[5px] flex flex-col lg:flex-row justify-between gap-y-5 lg:gap-y-0 lg:gap-x-40 relative mb-3"
   >
     <div class="flex gap-x-4 items-center">
@@ -26,6 +26,8 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { getCompanyProfile } from "~/services/settingservices";
+
+const mattaAuth = useCookie("mattaAuth_Dev", defaultOptions);
 const route = useRoute();
 const isOpen = ref(false);
 const detail = ref(null);
