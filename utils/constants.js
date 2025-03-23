@@ -311,7 +311,7 @@ export const navigation = [
   },
   {
     name: "Financing",
-    url: "https://dev.oxide.matta.trade/financing",
+    url: "https://staging.oxide.matta.trade/financing",
     icon: "la:hand-holding-usd",
     key: "financing",
     external: true,
