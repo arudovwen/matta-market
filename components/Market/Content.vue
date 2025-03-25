@@ -19,7 +19,7 @@
   <div v-if="!productStore?.loading">
     <div
       class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-[30px]"
-      v-if="productStore?.productsData.length"
+      v-if="productStore?.productsData?.length"
     >
       <ProductCard
         v-for="(n, idx) in productStore?.productsData"
@@ -30,7 +30,7 @@
     </div>
     <EmptyData
      title="No product found"
-      v-if="!productStore?.productsData.length"
+      v-if="!productStore?.productsData?.length"
       @btnFunction="
         () => {
           navigateTo('/request-product');
