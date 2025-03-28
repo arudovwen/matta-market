@@ -1,7 +1,7 @@
 <template>
   <div
     @drop.prevent="onDrop"
-    class="border mb-6 flex-1 border-[#DCDEE6] rounded-[12px] px-6 py-10 flex items-center justify-center text-center relative group overflow-hidden min-h-[190px]"
+    class="border mb-6 flex-1 border-[#DCDEE6] rounded-[12px] px-6 py-8 flex items-center justify-center text-center relative group overflow-hidden min-h-[140px]"
   >
     <div
       :class="`relative z-20 ${
@@ -53,7 +53,7 @@
   >
     <span v-for="(n, i) in gallery" :key="i">
       <span
-        class="h-24 w-24 rounded-lg bg-white flex items-center justify-center border relative border-[#E7EBEE]"
+        class="h-16 w-16 rounded-lg bg-white flex items-center justify-center border relative border-[#E7EBEE]"
       >
         <img :src="n" alt="logo" class="w-full h-full rounded-lg" />
         <span
@@ -75,7 +75,7 @@
 <script setup>
 import { toast } from "vue3-toastify";
 import { ref, onMounted, defineProps, defineEmits, computed } from "vue";
-import { uploadfile, uploaddocument } from "~/services/onboardingservices";
+import { uploaddocument } from "~/services/onboardingservices";
 // import axios from "axios";
 const images = ref([]);
 const image = ref("");
@@ -143,11 +143,11 @@ function handleFile(e) {
       }
 
       if (props.type == "image") {
-        uploadfile({
+        uploaddocument({
           base64: base64String.replace("data:", "").replace(/^.+,/, ""),
         }).then((res) => {
-          emits("onGetFiles", res.data.message);
-          image.value = res.data.message;
+          emits("onGetFiles", res.data.data);
+          image.value = res.data.data;
           isLoading.value = false;
         });
       } else {
@@ -155,12 +155,12 @@ function handleFile(e) {
           base64: base64String.replace("data:", "").replace(/^.+,/, ""),
           ext: `.${ext}`,
         }).then((res) => {
-          data.url = res.data.message;
+          data.url = res.data.data;
           emits("onGetFiles", data);
           isLoading.value = false;
         });
       }
-      // uploadfile({
+      // uploaddocument({
       //   base64: base64String.replace("data:", "").replace(/^.+,/, ""),
       // }).then((res) => {
       //   emits("onGetFiles", props.type == "image" ? res.data.message : data);

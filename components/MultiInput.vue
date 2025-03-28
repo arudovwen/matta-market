@@ -17,7 +17,7 @@
               <li
                 v-for="id in data.selectedmarkets"
                 :key="id"
-                class="bg-white rounded-[6px] px-2 py-1 flex items-center text-xs gap-x-3 border border-[#D0D5DD]"
+                class=" rounded-full px-2 py-1 flex items-center text-xs gap-x-3 border border-[#D0D5DD] bg-primary-500 text-white"
               >
                 <span class="leading-[initial]"> {{ getMarketName(id) }}</span>
                 <i class="uil uil-times" @click="removeValue(id)"></i>
@@ -35,7 +35,7 @@
 
       <div
         v-show="isOpen"
-        class="flex flex-col z-40 max-h-[500px] w-[500px] rounded-lg p-[30px] bg-white text-base shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] focus:outline-none sm:text-sm border border-[#DCDEE6] mt-1"
+        class="flex flex-col z-40 max-h-[500px] w-[500px] rounded-lg p-6 bg-white text-base shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)] focus:outline-none sm:text-sm border border-[#DCDEE6] mt-1"
       >
         <div class="relative flex items-center mb-6">
           <input
@@ -50,7 +50,7 @@
             <label class="flex items-center text-sm gap-x-2">
               <input
                 type="checkbox"
-                class="accent-matta-black"
+                class="accent-primary-500"
                 :value="market.id"
                 v-model="data.selectedmarkets"
                 @change="handleUpdate(market.id, 'market')"
@@ -70,7 +70,7 @@
                   <input
                     :value="app.id"
                     type="checkbox"
-                    class="accent-matta-black"
+                    class="accent-primary-500"
                     v-model="data.applications"
                     @change="handleUpdate(app.id, 'application', market.id)"
                   />
@@ -103,17 +103,11 @@
         </ul>
         <hr class="my-4" />
         <div class="relative flex items-center justify-end gap-x-4">
-          <!-- <button
-            type="button"
-            class="text-sm text-matta-black"
-            @click="isOpen = false"
-          >
-            Cancel
-          </button> -->
+       
           <button
             type="button"
             @click="handleSave"
-            class="px-4 py-2 hover:opacity-80 rounded-lg bg-primary-500 text-white text-sm"
+            class="px-4 py-2 hover:opacity-80 rounded-lg bg-primary-500 text-white text-xs"
           >
             Close
           </button>
