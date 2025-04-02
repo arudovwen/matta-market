@@ -115,11 +115,11 @@ const urls = {
   REQUEST_A_CALL: "/admin/v1/ShoppingCart/request-a-call",
 
   //Shipping address
-  ADD_SHIPPING_ADDRESS: "/v1/shippingaddress/add",
-  EDIT_SHIPPING_ADDRESS: "/v1/shippingaddress/edit",
-  GET_SHIPPING_ADDRESS: "/v1/shippingaddress/getall",
-  DEFAULT_SHIPPING_ADDRESS: "/v1/shippingaddress/setasdefault",
-  DELETE_SHIPPING: "/v1/shippingaddress/delete",
+  ADD_SHIPPING_ADDRESS: "/v1/businessshippingaddress/add",
+  EDIT_SHIPPING_ADDRESS: "/v1/businessshippingaddress/edit",
+  GET_SHIPPING_ADDRESS: "/v1/businessshippingaddress/getall",
+  DEFAULT_SHIPPING_ADDRESS: "/v1/businessshippingaddress/setasdefault",
+  DELETE_SHIPPING: "/v1/businessshippingaddress/delete",
   SHIPPONG_COST_BREAKDOWN: "/v1/ShoppingCart/shipping-cost-breakdown",
   PREPAID_CREDIT_INFO: "/v1/ShoppingCart/prepurchase-credit-info",
 

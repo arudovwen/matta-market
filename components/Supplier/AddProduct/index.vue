@@ -154,6 +154,7 @@ const form = reactive({
   productQuestions: [],
   tags: [],
   unit: "g",
+  useZoho: true,
 });
 const queryParams = reactive({
   Search: "",
@@ -236,7 +237,7 @@ const product = ref({
 watch(
   () => [route.query],
   () => {
-    console.log(route.query)
+    console.log(route.query);
     if (route?.query?.stage) {
       active.value = route.query.stage;
     }

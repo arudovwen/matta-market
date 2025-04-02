@@ -35,7 +35,11 @@ export async function getMarkets({ PageNumber = 1, PageSize = 10 }) {
 }
 
 export async function getProductsByTag(payload) {
-  return await marketPost(`${urls.GET_PRODUCTS_BY_TAG}`, payload, config);
+  return await marketPost(
+    `${urls.GET_PRODUCTS_BY_TAG}`,
+    { ...payload, withZoho: true },
+    config
+  );
 }
 
 export async function getMarketmenu({
@@ -89,7 +93,11 @@ export async function getProduct(productId) {
   return await marketGet(`${urls.GET_PRODUCT}?productId=${productId}`, config);
 }
 export async function getProducts(payload) {
-  return await marketPost(`${urls.GET_PRODUCTS}`, cleanObject(payload), config);
+  return await marketPost(
+    `${urls.GET_PRODUCTS}`,
+    cleanObject({ ...payload, withZoho: true }),
+    config
+  );
 }
 export async function getSupplierProduct({ productId }) {
   return await marketGet(

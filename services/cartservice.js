@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { post, get, del, put } from "../helpers/api_helpers";
+import { post, get, del, put, marketPost, marketGet } from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
 
@@ -9,19 +9,19 @@ const config = {
 //Authentication
 
 export async function createcart(data) {
-  return await post(urls.CREATE_CART, data, config);
+  return await marketPost(urls.CREATE_CART, data, config);
 }
 export async function updatecart(data) {
-  return await post(urls.UPDATE_CART, data, config);
+  return await marketPost(urls.UPDATE_CART, data, config);
 }
 export async function getcart() {
-  return await get(urls.GET_CART, config);
+  return await marketGet(urls.GET_CART, config);
 }
 export async function clearcart() {
-  return await post(urls.CLEAR_CART, {}, config);
+  return await marketPost(urls.CLEAR_CART, {}, config);
 }
 export async function removecartitem(data) {
-  return await post(`${urls.REMOVE_CART}/${data}`, data, config);
+  return await marketPost(`${urls.REMOVE_CART}/${data}`, data, config);
 }
 export async function deleteAddress(data) {
   return await post(`${urls.DELETE_SHIPPING}/${data}`, data, config);
