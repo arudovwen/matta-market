@@ -11,7 +11,7 @@
       </div>
 
       <EmptyData v-else title="You have no item in your cart" />
-      <!-- <CheckoutDiscount /> -->
+      <CheckoutDiscount />
     </div>
    
   </div>
