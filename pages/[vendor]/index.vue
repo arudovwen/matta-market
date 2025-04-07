@@ -12,7 +12,7 @@
           <Pagination
             v-if="
               !productStore.loading &&
-              productStore?.productsData.length &&
+              productStore?.productsData?.length &&
               query.totalData > query.PageSize
             "
             :total="productStore.total"

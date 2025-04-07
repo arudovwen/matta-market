@@ -513,7 +513,6 @@
 </template>
 
 <script setup>
-import CurrencyInput from "~/components/CurrencyInput";
 import PackageForm from "./PackageForm";
 import {
   TransitionRoot,
@@ -523,12 +522,7 @@ import {
   ComboboxOptions,
   ComboboxOption,
 } from "@headlessui/vue";
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-} from "@headlessui/vue";
+
 import Modal from "~/components/IndexModal";
 import {
   ref,
@@ -748,7 +742,7 @@ async function handleSubmit() {
             duration: 4000,
           });
           router.push(
-            `/storefront/products/${route.params.process}?id=${res.data.data.item_id}&stage=2`
+            `/storefront/products/${route.params.process}?id=${res.data.data}&stage=2`
           );
         }
       })

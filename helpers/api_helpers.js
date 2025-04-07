@@ -51,7 +51,7 @@ const createAxiosInstance = (service) => {
 // Create axios instances for each service
 const axiosApi = createAxiosInstance("matta");
 const axiosSSO = createAxiosInstance("sso");
-const mattaApi = createAxiosInstance("matta");
+const marketApi = createAxiosInstance("market");
 const walletApi = createAxiosInstance("wallet");
 const deltaApi = createAxiosInstance("flux");
 const currencyApi = createAxiosInstance("currency");
@@ -104,7 +104,7 @@ const createApiMethods = (apiInstance) => ({
 
 // Create API methods for each service
 export const apiMethods = createApiMethods(axiosApi);
-export const mattaMethods = createApiMethods(mattaApi);
+export const marketMethods = createApiMethods(marketApi);
 export const ssoMethods = createApiMethods(axiosSSO);
 export const walletMethods = createApiMethods(walletApi);
 export const deltaMethods = createApiMethods(deltaApi);
@@ -112,10 +112,10 @@ export const currencyMethods = createApiMethods(currencyApi);
 
 // Export the API methods
 export const { get, post, put, delete: del } = apiMethods;
-export const mattaGet = mattaMethods.get;
-export const mattaPost = mattaMethods.post;
-export const mattaPut = mattaMethods.put;
-export const mattaDelete = mattaMethods.delete;
+export const marketGet = marketMethods.get;
+export const marketPost = marketMethods.post;
+export const marketPut = marketMethods.put;
+export const marketDelete = marketMethods.delete;
 
 export const ssoGet = ssoMethods.get;
 export const ssoPost = ssoMethods.post;
