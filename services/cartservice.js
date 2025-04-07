@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { post, get, del, put, marketPost, marketGet } from "../helpers/api_helpers";
+import { post, get, del, put, marketPost, marketGet, marketPut, marketDelete } from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
 
@@ -54,18 +54,18 @@ export const getalladdress = withRetryHandling(() => {
 });
 
 export const getallpickuplocations = withRetryHandling(() => {
-  return get(`${urls.GET_PICKUP_ADDRESS}`, config);
+  return marketGet(`${urls.GET_PICKUP_ADDRESS}`, config);
 });
 
 export async function deletePickupLocation(data) {
-  return await del(`${urls.DELETE_PICKUP}/${data}`, data, config);
+  return await marketDelete(`${urls.DELETE_PICKUP}/${data}`, data, config);
 }
 export async function addPickupLocation(data) {
-  return await post(urls.ADD_PICKUP_ADDRESS, data, config);
+  return await marketPost(urls.ADD_PICKUP_ADDRESS, data, config);
 }
 
 export async function editPickupLocation(data) {
-  return await put(`${urls.EDIT_PICKUP_ADDRESS}/${data.id}`, data, config);
+  return await marketPut(`${urls.EDIT_PICKUP_ADDRESS}/${data.id}`, data, config);
 }
 export async function confirmpurchase(data) {
   return await marketPost(`${urls.CONFIRM_PURCHASE}`, data, config);
