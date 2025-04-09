@@ -2,7 +2,6 @@
   <div class="bg-white flex-1">
     <form @submit.prevent="onSubmit" class="h-full max-w-[600px] mx-auto">
       <h4 class="text-2xl font-semibold text-left mb-7">Request for quote</h4>
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="md:col-span-2" v-if="!authStore.isLoggedIn">
           <Textinput
@@ -179,13 +178,12 @@ const isErrorOpen = ref(false);
 const isComplete = ref(false);
 const product = inject("product");
 const store = useStore();
-const supplierStore = useSupplierStore();
 const togglePopup = inject("togglePopup");
 const authStore = useAuthStore();
 const errorText = ref("Quote request failed");
 const quoteForm = reactive({
   sellerId: product.value?.supplierId,
-  seller: supplierStore.supplierData?.companyName,
+  seller: product.value?.supplier,
   productId: product.value?.id,
   productImg: product.value?.gallery?.[0],
   productName: product.value?.name,
@@ -194,7 +192,7 @@ const quoteForm = reactive({
   producer: product.value?.producer.title,
   buyerBusinessName: "",
   requestedBy: authStore?.userInfo?.fullName || "",
-  sellerName: supplierStore.supplierData?.companyName,
+  sellerName: product.value?.supplier,
   market: "",
   email: "",
   productUse: "",

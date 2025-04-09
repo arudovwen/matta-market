@@ -113,7 +113,6 @@
         name="purity"
         placeholder=""
         min="0"
-        max="100"
         :error="errors.purity"
         icon="ic:baseline-percent"
         hasIcon
@@ -250,7 +249,6 @@ const packFormSchema = yup.object({
   purity: yup
     .number()
     .typeError("Invalid value")
-    .max(100, "Maximum is 100")
     .nullable()
     .notRequired(),
   grade: yup.string().nullable().notRequired(),
