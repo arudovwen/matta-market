@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { get, post } from "../helpers/api_helpers";
+import { get, marketPost, post } from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
 
@@ -57,7 +57,7 @@ export const procurementsuppliers = withRetryHandling(() => {
   );
 });
 export async function setascancelled(data) {
-  return await post(`${urls.PROCUREMENT_SET_CANCELLED}`, data, config);
+  return await marketPost(`${urls.PROCUREMENT_SET_CANCELLED}`, data, config);
 }
 export async function addrequest(data) {
   return await post(`${urls.ADD_SAMPLE_REQUEST}`, data, config);
