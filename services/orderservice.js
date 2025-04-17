@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { get } from "../helpers/api_helpers";
+import { get, marketGet } from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
 
@@ -10,7 +10,7 @@ const config = {
 
 export const procurementorders = withRetryHandling(
   (payload) => {
-    return get(
+    return marketGet(
       `${urls.PROCUREMENT_ORDERS}?${new URLSearchParams(cleanObject(payload))}`,
       config
     );
@@ -23,5 +23,5 @@ export const buyerordertimeline = withRetryHandling((salesorderId) => {
   );
 });
 export const procurementorderdetails = withRetryHandling((orderId) => {
-  return get(`${urls.PROCUREMENT_ORDER_DETAILS}?orderId=${orderId}`, config);
+  return marketGet(`${urls.PROCUREMENT_ORDER_DETAILS}?orderId=${orderId}`, config);
 });

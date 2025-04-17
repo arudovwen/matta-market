@@ -62,6 +62,7 @@ const query = reactive({
   sortOrder: "",
   sortBy: "",
   storelug: vendor.toLowerCase(),
+  withZoho: false
 });
 
 function perPage({ currentPerPage }) {
