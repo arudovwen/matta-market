@@ -95,7 +95,10 @@ export async function getProduct(productId) {
 export async function getProducts(payload) {
   return await marketPost(
     `${urls.GET_PRODUCTS}`,
-    cleanObject({ ...payload, withZoho: true }),
+    cleanObject({
+      ...payload,
+      withZoho: payload.withZoho !== undefined ? payload.withZoho : true,
+    }),
     config
   );
 }
