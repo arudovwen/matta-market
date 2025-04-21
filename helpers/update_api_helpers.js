@@ -74,5 +74,5 @@ export const createApiClient = (baseURL) => {
 };
 
 // Example usage
-// const API_URL = "https://gateway.matta.trade/api/";
+// const API_URL = "https://proxy.matta.trade/api/";
 // const apiClient = createApiClient(API_URL);

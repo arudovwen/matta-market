@@ -44,7 +44,7 @@ export default defineNuxtConfig({
           "'self'",
           "https:",
           "data:",
-          "https://gateway.matta.trade",
+          "https://proxy.matta.trade",
           "https://res.cloudinary.com",
           "https://matta.s3.us-east-1.amazonaws.com",
         ],
