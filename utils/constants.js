@@ -14,13 +14,13 @@ export const defaultOptions = {
 
 export const validationUrl = `http${
   process.env.NODE_ENV === "production"
-    ? "s://staging.profile.matta.trade"
+    ? "s://profile.matta.trade"
     : "://localhost:3020"
 }`;
 
 export const appUrl = `http${
   process.env.NODE_ENV === "production"
-    ? "s://staging.matta.trade"
+    ? "s://matta.trade"
     : "://localhost:3002"
 }`;
 
@@ -311,7 +311,7 @@ export const navigation = [
   },
   {
     name: "Financing",
-    url: "https://staging.oxide.matta.trade/financing",
+    url: "https://oxide.matta.trade/financing",
     icon: "la:hand-holding-usd",
     key: "financing",
     external: true,
@@ -370,7 +370,7 @@ export const navigation = [
 
   {
     name: "Profile",
-    url: "https://staging.profile.matta.trade",
+    url: "https://profile.matta.trade",
     icon: "heroicons:arrow-top-right-on-square-16-solid",
     key: "settings",
     external: true,

@@ -66,7 +66,7 @@
         <MenuItem>
             <button
               @click="
-                navigateTo('https://staging.profile.matta.trade', {
+                navigateTo('https://profile.matta.trade', {
                   open: {
                     target: '_blank',
                   },

@@ -7,7 +7,7 @@ let refreshAttemptCount = 0;
 let hasLoggedOut = false; // Track if logout has already been called
 
 // Base URL for API services
-const BASE_URL = "https://staging.gateway.matta.trade";
+const BASE_URL = "https://gateway.matta.trade";
 
 // Create an Axios instance with custom configuration
 const createAxiosInstance = (service) => {

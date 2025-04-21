@@ -213,7 +213,7 @@ const advanceOptions = [
 function handlePurchase() {
   isLoading.value = true;
   if (!props.available || props.insufficient) {
-    window.open("https://staging.oxide.matta.trade/credit", "_blank");
+    window.open("https://oxide.matta.trade/credit", "_blank");
     isLoading.value = false;
     return;
   }
