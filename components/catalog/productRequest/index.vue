@@ -2,13 +2,13 @@
   <div class="bg-white flex-1 rounded-lg">
     <form
       @submit.prevent="onSubmit"
-      class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF] max-h-[700px] overflow-y-auto"
+      class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF] max-h-[750px] overflow-y-auto"
     >
       <h4 class="text-2xl font-semibold text-left mb-7">
         {{ isDetailPage ? "Request a call" : "Request a product" }}
       </h4>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div>
           <Textinput
             placeholder=""
@@ -57,7 +57,7 @@
         </div> -->
 
         <div
-          class="rounded-lg col-span-2 p-4 border border-gray-200 grid gap-y-4"
+          class="rounded-lg lg:col-span-2 p-4 border border-gray-200 grid gap-y-4"
         >
           <div
             v-for="(item, idx) in products"
@@ -123,7 +123,32 @@
             </button>
           </div>
         </div>
-        <div class="col-span-2">
+        <!-- <FormGroup
+          isCumpulsory
+          class="lg:col-span-2"
+          label="Address"
+          :error="errors.address"
+        >
+          <SelectSearchSelect
+            class="w-full"
+            v-model.value="address"
+            :options="addressOptions"
+            placeholder=""
+            name="address"
+            :reduce="(address) => address.value"
+            :loading="addressLoading"
+          />
+        </FormGroup> -->
+
+        <div class="lg:col-span-2">
+          <Textinput
+            placeholder=""
+            label="Address"
+            name="address"
+            v-model="address"
+          />
+        </div>
+        <div class="lg:col-span-2">
           <Textinput
             placeholder=""
             label="What do you want to use it for?"
@@ -132,7 +157,7 @@
             v-model="productUse"
           />
         </div>
-        <div class="mb-6 col-span-2">
+        <div class="mb-6 lg:col-span-2">
           <FileUpload
             label="Document upload"
             placeholder="Select document to upload"
@@ -172,6 +197,8 @@ import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { createproductrequest } from "~/services/productservices";
 import { toast } from "vue3-toastify";
+import { placeSuggestion } from "~/services/cartservice";
+import debounce from "lodash/debounce";
 
 const isComplete = ref(false);
 const emits = defineEmits(["close"]);
@@ -232,6 +259,7 @@ const validationSchema = yup.object({
     .of(productSchema)
     .min(1, "At least one product is required")
     .required("Products array is required"),
+  address: yup.string("Address is required").min(3),
 });
 
 const { handleSubmit, defineField, errors, resetForm, setFieldValue } = useForm(
@@ -249,6 +277,8 @@ const [productUse, productUseAtt] = defineField("productUse");
 const [uploadedDocumentUrl] = defineField("uploadedDocumentUrl");
 const [documentName] = defineField("documentName");
 const [products] = defineField("products");
+const [address] = defineField("address");
+
 const isLoading = ref(false);
 const isUploading = ref(false);
 
@@ -288,6 +318,27 @@ const onSubmit = handleSubmit((values) => {
 
       toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
+});
+const addressOptions = ref([]);
+const addressLoading = ref(false);
+const debounceSearch = debounce(() => {
+  addressLoading.value = true;
+  placeSuggestion({ text: address.value })
+    .then((res) => {
+      if (res.status === 200) {
+        addressOptions.value = res.data.map((i, index) => ({
+          label: i.text,
+          value: i.text,
+        }));
+        addressLoading.value = false;
+      }
+    })
+    .catch(() => {
+      addressLoading.value = false;
+    });
+}, 1000);
+watch(address, () => {
+  debounceSearch();
 });
 provide("isComplete", isComplete);
 provide("handleChange", null);
