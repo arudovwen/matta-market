@@ -10,9 +10,8 @@
       :class="`${classLabel} inline-block input-label `"
       :for="name"
     >
-      {{ label }}  <RedDot v-if="isCumpulsory"
-    /></label
-    >
+      {{ label }} <RedDot v-if="isCumpulsory"
+    /></label>
     <div class="relative">
       <div class="text-sm">
         <input
@@ -32,7 +31,7 @@
         v-if="isOpen"
         class="absolute right-0 origin-top-right rounded bg-white shadow-dropdown z-[999] max-h-[450px] overflow-y-auto w-full py-3 border border-gray-50"
       >
-        <ul class="grid gap-y-1">
+        <ul class="grid gap-y-1" v-if="!loading">
           <li
             class="py-2 px-4 hover:bg-gray-100 cursor-pointer text-sm"
             v-for="option in options"
@@ -42,6 +41,7 @@
             {{ option.label }}
           </li>
         </ul>
+        <div v-if="loading" class="p-2 text-xs text-center">Loading list ...</div>
       </div>
     </div>
   </div>
@@ -118,6 +118,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     options: {
       type: Array,
     },
@@ -142,7 +146,6 @@ export default {
   },
   methods: {
     handleChange(value) {
-    
       this.selectedValue = value;
       this.isOpen = false;
     },

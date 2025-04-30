@@ -472,15 +472,15 @@ onBeforeMount(() => {
   window?.addEventListener("resize", getWindowSize);
 });
 
-onMounted(() => {
-  if (authStore?.isLoggedIn) {
-    getNotifications();
-    setInterval(() => {
-      getNotifications();
-    }, 2 * 60 * 1000);
-  }
-  // geoFindMe();
-});
+// onMounted(() => {
+//   if (authStore?.isLoggedIn) {
+//     getNotifications();
+//     setInterval(() => {
+//       getNotifications();
+//     }, 2 * 60 * 1000);
+//   }
+//   // geoFindMe();
+// });
 
 const notifyParams = reactive({
   PageNumber: 1,

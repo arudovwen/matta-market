@@ -307,14 +307,14 @@ const open = ref(false);
 onBeforeMount(() => {
   window.addEventListener("scroll", handleScroll);
 });
-onMounted(() => {
-  if (authStore.isLoggedIn) {
-    getNotifications();
-    setInterval(() => {
-      getNotifications();
-    }, 2 * 60 * 1000);
-  }
-});
+// onMounted(() => {
+//   if (authStore.isLoggedIn) {
+//     getNotifications();
+//     setInterval(() => {
+//       getNotifications();
+//     }, 2 * 60 * 1000);
+//   }
+// });
 const notifyParams = reactive({
   PageNumber: 1,
   PageSize: 30,
