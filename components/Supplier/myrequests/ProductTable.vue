@@ -173,7 +173,10 @@ function selectall() {
 function getRequestDoc() {
   isLoading.value = true;
   getproductrequests(queryParams).then((res) => {
-    requests.value = res?.data?.data?.data;
+    requests.value = res?.data?.data?.data.map(i=>({
+      ...i,
+      chemicalName: i.products.map(k=> k.chemicalName).join(", ")
+    }));
     queryParams.totalCount = res.data.data.totalCount;
     isLoading.value = false;
   });

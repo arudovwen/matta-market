@@ -69,16 +69,25 @@
           <span class="font-bold"> {{ productData?.producer?.title }}</span>
         </p>
 
-        <p
+        <div
           v-if="!productData.hidePrice"
-          class="text-xl lg:text-2xl font-[800] mb-[29px]"
+          class="flex gap-x-2 items-center mb-[29px]"
         >
-          <span class="font-normal text-base">Starting from</span>
-          {{ currencyFormat(mypackage?.amount || 0) }}
-          <span class="text-sm text-[#444] font-normal"
-            >/{{ `${mypackage?.unit || ""}` }}</span
+          <p class="text-xl lg:text-2xl font-[800]">
+            <span class="font-normal text-base">Starting from</span>
+            {{ currencyFormat(mypackage?.amount || 0) }}
+            <span class="text-sm text-[#444] font-normal"
+              >/{{ `${mypackage?.unit || ""}` }}</span
+            >
+          </p>
+          <sub
+            v-if="mypackage?.oldPrice > 0"
+            class="text-lg text-gray-400 line-through"
           >
-        </p>
+            {{ currencyFormat(mypackage?.oldPrice || 0) }}
+            <span class="">/{{ `${mypackage?.unit || ""}` }}</span>
+          </sub>
+        </div>
 
         <div
           v-if="productData?.sampleAvailable || productData.hidePrice"
@@ -120,7 +129,7 @@
           class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4 w-full"
         >
           <div class="grid gap-y-5 w-full">
-            <div class="flex  flex-col md:flex-row gap-3">
+            <div class="flex flex-col md:flex-row gap-3">
               <AppButton
                 v-if="
                   !productData.hidePrice &&
@@ -250,7 +259,7 @@
             chemicalName: productData.name,
           }"
           :isDetailPage="true"
-        @close="isOpen = false"
+          @close="isOpen = false"
         />
       </div>
     </template>
@@ -321,7 +330,7 @@ import { Tooltip } from "@programic/vue3-tooltip";
 import "tippy.js/dist/tippy.css";
 
 const orderRequestStore = useOrderRequestStore();
-const currentCurrency = inject('currentCurrency')
+const currentCurrency = inject("currentCurrency");
 const isRequestAdded = ref(false);
 const isLoading = inject("isLoading");
 const store = useProductStore();
@@ -341,7 +350,8 @@ const packageOptions = computed(() =>
   productData?.value?.packagesAvailable?.map((i) => {
     return {
       label: `${i.package.title}/${i.size}${i.unit} - ${currencyFormat(
-        i.amount * i.size, currentCurrency?.value
+        i.amount * i.size,
+        currentCurrency?.value
       )}`,
       value: JSON.stringify({ ...i }),
     };
@@ -401,7 +411,7 @@ function handleCart(type) {
     toast.info("Please enter a quantity");
     return;
   }
-  if (!authStore.isLoggedIn && type !== 'add') {
+  if (!authStore.isLoggedIn && type !== "add") {
     toast.info("Login to continue");
     authOpen.value = true;
     return;

@@ -17,18 +17,30 @@
         {{ request.businessName }}
       </p>
       <p class="font-medium text-base mb-4">
-        <span class="text-gray-500">Chemical name </span> <br />
-        {{ request.chemicalName }}
+        <span class="text-gray-500">Address </span> <br />
+        {{ request.address }}
       </p>
-      <p class="font-medium text-base mb-4 gap-x-2">
-        <span class="text-gray-500">Quantity </span> <br />
-        {{ request.quantity }}
-      </p>
-      <p class="font-medium text-base mb-4 gap-x-2">
-        <span class="text-gray-500">Unit </span> <br />
-        {{ request.unit }}
-      </p>
-
+      <div>
+        <h3 class="font-semibold mb-2">Chemical Information</h3>
+        <div
+          class="flex gap-x-10"
+          v-for="(item, idx) in request.products"
+          :key="idx"
+        >
+          <p class="font-medium text-base mb-4 gap-x-2">
+            <span class="text-gray-500 block">Chemical Name </span>
+            <span class="flex flex-wrap max-w-[180px]">
+              {{ item.chemicalName }}</span
+            >
+          </p>
+          <p class="font-medium text-base mb-4 gap-x-2">
+            <span class="text-gray-500 block">Quantity </span>
+            <span class="flex flex-wrap max-w-[180px]">
+              {{ item.quantity }}{{ item.unit }}</span
+            >
+          </p>
+        </div>
+      </div>
       <div class="bg-[#F1F3F5] rounded-lg p-6 text-matta-black mb-6">
         <div class="flex justify-between mb-4">
           <h3 class="text-lg font-medium">Customer information</h3>

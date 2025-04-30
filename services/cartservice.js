@@ -103,7 +103,7 @@ export async function addressSearch(data) {
 }
 export async function placeSuggestion(data) {
   return await get(
-    `${urls.PLCAE_SUGGESTION}?${new URLSearchParams(cleanObject(data))}`,
+    `${urls.PLACE_SUGGESTION}?${new URLSearchParams(cleanObject(data))}`,
     config
   );
 }
