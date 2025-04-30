@@ -82,7 +82,7 @@
           </p>
           <sub
             v-if="mypackage?.oldPrice > 0"
-            class="text-lg text-gray-400 line-through"
+            class="text-lg lg:text-xl text-gray-400 line-through"
           >
             {{ currencyFormat(mypackage?.oldPrice || 0) }}
             <span class="">/{{ `${mypackage?.unit || ""}` }}</span>
