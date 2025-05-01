@@ -15,7 +15,7 @@ export const useCartStore = defineStore(
     const cartItems = ref([]);
     const cartData = ref(null);
     const tax = ref(0);
-    const usdRate = ref(0)
+    const usdRate = ref(0);
     const shippingTotal = ref(0);
     const removeId = ref(null);
     const cartTotalwithTax = ref(0);
@@ -32,8 +32,8 @@ export const useCartStore = defineStore(
         .reduce((a, b) => Number(a) + Number(b), 0)
     );
 
-    function setUSDRate(data){
-      usdRate.value = data
+    function setUSDRate(data) {
+      usdRate.value = data;
     }
     function getUniqueItems(items, existingItems) {
       const mergedItems = [...items, ...existingItems];
@@ -57,6 +57,10 @@ export const useCartStore = defineStore(
       loadingCart.value = true;
 
       try {
+        if (!authStore.userType && cartItems.value.length > 0) {
+          navigateTo("/user-type?return_to=/cart");
+          return;
+        }
         const res = await getcart();
         loadingCart.value = false;
 
@@ -87,6 +91,10 @@ export const useCartStore = defineStore(
           loadData();
         }
       } catch (err) {
+        if (!authStore.userType && cartItems.value.length > 0) {
+          navigateTo("/user-type?return_to=/cart");
+          return;
+        }
         if (cartItems.value.length > 0) {
           await handleCartCreation(cartItems.value);
         }
@@ -256,7 +264,7 @@ export const useCartStore = defineStore(
       cartData,
       referralDiscountValue,
       usdRate,
-      setUSDRate
+      setUSDRate,
     };
   },
 

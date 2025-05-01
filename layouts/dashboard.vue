@@ -24,7 +24,6 @@ definePageMeta({
   middleware: "auth",
 });
 import { getCompanyProfile } from "~/services/settingservices";
-import { createcart, getcart } from "~/services/cartservice";
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
