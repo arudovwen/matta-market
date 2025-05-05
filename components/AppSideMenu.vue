@@ -105,14 +105,16 @@
                         v-if="!authStore.isLoggedIn"
                       >
                         <AppButton
-                          link="/auth/vendor-register"
+                          @click="handleRouting('register')"
                           text="Become a Supplier"
+                          type="button"
                           btnClass="text-white !text-[13px] !font-normal  !px-[10px] !py-[6px] !normal-case bg-[#f90] flex w-full"
                         />
                         <AppButton
                           v-if="!authStore.isLoggedIn"
-                          link="/auth/login"
+                         @click="handleRouting('login')"
                           text="Sign In"
+                          type="button"
                           btnClass="bg-primary-500  text-white !px-4 !sm:px-6 !py-[6px] !text-[13px] sm:text-sm !font-normal w-full"
                         />
                       </div>
