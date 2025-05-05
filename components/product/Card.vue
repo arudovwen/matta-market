@@ -50,15 +50,16 @@
             v-else
           >
             <span class="gap-x-1 flex items-center">
-              <span
-                v-if="detail.oldprice"
-                class="line-through text-[#666] darks:text-white/80 text-[12px] sm:text-sm xl:text-base font-semibold leading-tight"
-                >{{ currencyFormat(detail.oldprice) }}/{{ detail.unit }}</span
-              >
+          
               <span
                 class="font-bold ml-[2px] text-[12px] sm:text-sm xl:text-base text-[#333] darks:text-white leading-tight"
                 >{{ currencyFormat(detail.price) }}/{{ detail.unit }}</span
               >
+              <span
+                    v-if="detail?.packString?.[0]?.oldPrice"
+                    class="line-through text-gray-400  text-[12px] sm:text-sm xl:text-base leading-tight"
+                    >{{ currencyFormat(detail?.packString?.[0]?.oldPrice) }}/{{ detail.unit }}</span
+                  >
             </span>
           </span>
         </div>

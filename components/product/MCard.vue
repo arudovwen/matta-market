@@ -44,16 +44,17 @@
               >From</span
             > -->
             <span class="gap-x-1 flex items-center">
-              <span
-                v-if="detail.oldprice"
-                class="line-through text-[#666] darks:text-white/80 text-[13px] md:text-base font-semibold leading-tight"
-                >{{ currencyFormat(detail.oldprice) }}/kg</span
-              >
+           
               <span
                 class="font-bold ml-[2px] text-[13px] md:text-base text-[#333] darks:text-white leading-tight"
                 >{{ currencyFormat(detail.newprice) }}/kg</span
               ></span
             >
+            <span
+                    v-if="detail?.packString?.[0]?.oldPrice"
+                    class="line-through text-gray-400  text-[12px] sm:text-sm xl:text-base leading-tight"
+                    >{{ currencyFormat(detail?.packString?.[0]?.oldPrice) }}/{{ detail.unit }}</span
+                  >
           </span>
         </div>
       </div>
