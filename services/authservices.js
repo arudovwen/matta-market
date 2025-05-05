@@ -26,7 +26,7 @@ export async function logOut() {
   authStore.logOut();
 }
 export async function registerUser(user, config = {}) {
-  return await post(urls.REGISTER, user, config);
+  return await ssoPost(urls.REGISTER, user, config);
 }
 export async function registerInvitedUser(user, config = {}) {
   return await post(urls.REGISTER_INVITED_USER, user, config);

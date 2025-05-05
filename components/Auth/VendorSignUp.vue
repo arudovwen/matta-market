@@ -173,6 +173,7 @@ const props = defineProps({
 });
 const emits = defineEmits(["close", "toggleAuth"]);
 const route = useRoute();
+const config = useRuntimeConfig()
 const { type } = route.params;
 const agree = ref(false);
 const authStore = useAuthStore();
@@ -189,6 +190,7 @@ const formValues = {
   business_UserType: type === "register" || !props.main ? 0 : 1,
   companyName: "",
   AgentReferralCode: "",
+  appCode: config.public.APP_CODE
 };
 const schema = yup.object({
   business_UserType: yup.string(),

@@ -56,7 +56,7 @@ definePageMeta({
 const config = useRuntimeConfig()
 const authStore = useAuthStore()
 const isLoading = ref(false)
-
+const route = useRoute()
 // Constants
 const userTypeOptions = [
   {
@@ -108,7 +108,7 @@ const onSubmit = handleSubmit(async (values) => {
       })
       
       toast.success('Profile updated!')
-      navigateTo('/')
+      navigateTo(route.query?.return_to || '/')
     }
   } catch (error) {
     toast.error(error.response?.data?.message || 'An error occurred')

@@ -9,6 +9,7 @@
           placeholder="Enter a discount code here if you have one"
           required
           v-model="code"
+          name="code"
         />
       </div>
       <AppButton
