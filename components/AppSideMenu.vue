@@ -1,5 +1,3 @@
-
-
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
   <TransitionRoot as="template" :show="open">
@@ -59,25 +57,36 @@
                   <div class="relative flex-1 px-4 sm:px-6">
                     <!-- Replace with your content -->
                     <div class="absolute inset-0 pt-5">
-                      <div class="px-5 pb-4" v-if="!authStore.isLoggedIn">
+                      <div class="px-5 pb-4 flex justify-between items-center mb-3">
                         <img
                           src="/images/logo.png"
-                          width="100"
+                          width="80"
                           height="26"
                           alt="Matta"
-                          class="w-[100px] h-auto"
+                          class="w-[80px] h-auto"
                         />
+                        <span class="text-sm lg:hidden">
+                          <GoogleTranslateSelect
+                            :fetch-browser-language="false"
+                            trigger="click"
+                          />
+                        </span>
                       </div>
                       <div
                         class="flex gap-x-2 px-5 pb-[1px]"
                         v-if="authStore.isLoggedIn"
                       >
                         <span
-                          class="h-10 w-10 rounded-full flex items-center justify-center text-white bg-[#f90] font-semibold"
+                          class="h-8 w-8 rounded-full flex items-center justify-center text-white bg-[#f90] font-semibold"
                         >
-                          {{ authStore.userInfo?.firstName.slice(0, 1) }}
-                          {{ authStore.userInfo?.lastName.slice(0, 1) }}</span
-                        >
+                          <NuxtImg
+                            v-if="authStore.userInfo?.profilepic"
+                            alt="avatar"
+                            class="h-8 w-8 rounded-full"
+                            :src="authStore.userInfo?.profilepic"
+                          />
+                          <span v-else>{{ getUserInitials }}</span>
+                        </span>
                         <div class="flex-1">
                           <span
                             v-if="authStore.isLoggedIn"
@@ -112,7 +121,7 @@
                         />
                         <AppButton
                           v-if="!authStore.isLoggedIn"
-                         @click="handleRouting('login')"
+                          @click="handleRouting('login')"
                           text="Sign In"
                           type="button"
                           btnClass="bg-primary-500  text-white !px-4 !sm:px-6 !py-[6px] !text-[13px] sm:text-sm !font-normal w-full"
@@ -145,7 +154,6 @@
                               />
                               {{ n.name }}
                             </NuxtLink>
-                 
                           </li>
                         </ul>
                       </div>
@@ -165,18 +173,16 @@ import { ref } from "vue";
 import {
   Dialog,
   DialogPanel,
-  // DialogTitle,
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
+import GoogleTranslateSelect from "@google-translate-select/vue3";
 
 const storeOpen = ref(false);
 const route = useRoute();
 const activeKey = ref(null);
-const cartStore = useCartStore();
 const authStore = useAuthStore();
-const isSigniningOut = ref(false);
 const mappedNav = computed(() => {
   return navigation.filter((i) =>
     (authStore?.userType?.toLowerCase() === "supplier"
@@ -186,6 +192,11 @@ const mappedNav = computed(() => {
   );
 });
 const open = inject("open");
+const getUserInitials = computed(() => {
+  const firstNameInitial = authStore.userInfo?.firstName.slice(0, 1) || "";
+  const lastNameInitial = authStore.userInfo?.lastName.slice(0, 1) || "";
+  return `${firstNameInitial}${lastNameInitial}`;
+});
 watch(
   () => route.path,
   () => {

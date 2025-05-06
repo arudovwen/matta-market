@@ -1,72 +1,6 @@
 <template>
   <section class="bg-white">
-    <ClientOnly>
-      <div
-        v-if="$pwa?.offlineReady || $pwa?.needRefresh"
-        class="flex justify-start items-center gap-x-6 py-2 container"
-        role="alert"
-      >
-        <div class="message font-bold">
-          <span v-if="$pwa.offlineReady"> App ready to work offline </span>
-          <span v-else>
-            New content available, click on reload button to update.
-          </span>
-        </div>
-        <div class="flex items-center gap-x-6">
-          <button
-            class="btn btn-sm bg-primary-500 text-white text-sm px-3 py-2"
-            v-if="$pwa.needRefresh"
-            @click="$pwa.updateServiceWorker()"
-          >
-            Reload
-          </button>
-          <button class="btn-sm text-sm" @click="$pwa.cancelPrompt()">
-            Close
-          </button>
-        </div>
-      </div>
-      <div
-        v-if="
-          $pwa?.showInstallPrompt && !$pwa?.offlineReady && !$pwa?.needRefresh
-        "
-        class="flex justify-start items-center gap-x-6 py-2 container"
-        role="alert"
-      >
-        <div class="font-bold text-sm">
-          <span> Install Matta?</span>
-        </div>
-        <div class="flex gap-x-4">
-          <button
-            class="btn btn-sm bg-primary-500 text-white text-sm px-3 py-2"
-            @click="$pwa.install()"
-          >
-            Install
-          </button>
-          <button class="btn-sm text-sm" @click="$pwa.cancelInstall()">
-            Cancel
-          </button>
-        </div>
-      </div>
-    </ClientOnly>
-    <div
-      data-testid="deal-container"
-      class="bg-[#1849A9] text-xs sm:text-sm py-3"
-    >
-      <div class="container flex gap-x-2 items-center text-white font-normal">
-        <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" />
-        <span data-testid="promo"
-          >Get N50,000 off when you sign up and make your first purchase. &nbsp;
-          Use the code
-          <span
-            v-clipboard="'1ST50KOFF'"
-            @click="toast.success('Copied')"
-            class="md:border md:border-white rounded-[4px] md:px-1 md:py-[2px] cursor-pointer font-semibold md:font-bold text-xs"
-            >1ST50KOFF</span
-          >
-          on checkout</span
-        >
-      </div>
-    </div>
+    <DealBanner />
 
     <nav
       :class="{
@@ -91,36 +25,36 @@
           </div>
 
           <div class="flex items-center gap-x-3 text-sm">
-            <span lass="text-sm"><CurrencyChanger /></span>
-            <span class="text-sm" v-if="showlang">
-              <GoogleTranslateSelect
-                :fetch-browser-language="false"
-                trigger="click"
-                @select="handleGoogleTranslateSelect"
-              />
+            <span class="flex items-center gap-x-3 text-sm">
+              <span lass="text-sm"><CurrencyChanger /></span>
+              <span class="text-sm hidden lg:inline" v-if="showlang">
+                <GoogleTranslateSelect
+                  :fetch-browser-language="false"
+                  trigger="click"
+                  @select="handleGoogleTranslateSelect"
+                />
+              </span>
+
+              <button
+                @click="navigateTo('/cart')"
+                class="flex items-center relative"
+              >
+                <span
+                  class="relative h-9 w-9 rounded-full bg-[#F7F7F7] flex items-center justify-center"
+                >
+                  <AppIcon
+                    class="text-base md:text-lg text-[#484848]"
+                    icon="lucide:shopping-cart"
+                  />
+                  <span
+                    v-if="cartStore?.cartTotal > 0"
+                    class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
+                    >{{ cartStore?.cartTotal }}</span
+                  >
+                </span>
+              </button>
             </span>
 
-            <button
-              @click="navigateTo('/cart')"
-              class="flex items-center relative"
-            >
-              <span
-                class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
-              >
-                <AppIcon
-                  class="text-base md:text-lg text-[#484848]"
-                  icon="lucide:shopping-cart"
-                />
-                <span
-                  v-if="cartStore?.cartTotal > 0"
-                  class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
-                  >{{ cartStore?.cartTotal }}</span
-                >
-              </span>
-              <!-- <span class="text-xs sm:text-sm font-medium inline-flex text-[#333]"
-              >Cart</span
-            > -->
-            </button>
             <div
               class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
             >
@@ -172,12 +106,17 @@
                     <div
                       class="flex items-center gap-x-2 px-[15px] pt-3 pb-[14px] border-b border-[#F4F4F4]"
                     >
-                      <div
-                        class="h-8 w-8 rounded-full flex items-center justify-center text-sm text-white bg-[#f90] font-semibold"
-                      >
-                        {{ authStore.userInfo?.firstName.slice(0, 1) }}
-                        {{ authStore.userInfo?.lastName.slice(0, 1) }}
-                      </div>
+                    <span
+                          class="h-8 w-8 rounded-full flex items-center justify-center text-white bg-[#f90] font-semibold"
+                        >
+                          <NuxtImg
+                            v-if="authStore.userInfo?.profilepic"
+                            alt="avatar"
+                            class="h-8 w-8 rounded-full"
+                            :src="authStore.userInfo?.profilepic"
+                          />
+                          <span v-else>{{ getUserInitials }}</span>
+                        </span>
                       <div class="flex-1">
                         <span
                           class="text-[#333] text-[13px] font-semibold block capitalize"
@@ -373,10 +312,6 @@
         <div class="bg-white p-6 sm:pb-4 rounded-lg" v-if="isSigniningOut">
           <div class="flex justify-between mb-5 items-center">
             <h4 class="font-medium text-matta-black text-xl">Sign Out</h4>
-            <!-- <i
-            class="uil uil-times cursor-pointer text-lg"
-            @click="isSigniningOut = false"
-          ></i> -->
           </div>
 
           <p class="text-sm text-matta-black mb-2">
@@ -403,14 +338,6 @@
         </div>
       </template>
     </ModalCenter>
-    <ModalSide :isOpen="isOpen" @togglePopup="openModal" v-if="isOpen">
-      <template #content>
-        <div class="h-full md:w-[480px] bg-white rounded-lg p-6 lg:p-10">
-          <NotificationComponent />
-        </div>
-      </template>
-    </ModalSide>
-
     <ModalAuth goToUrl="/checkout" />
   </section>
 </template>
@@ -419,10 +346,7 @@ import { ref } from "vue";
 import { financeMenu } from "~/utils/data";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
-import { getnotification } from "~/services/notificationservice";
 import GoogleTranslateSelect from "@google-translate-select/vue3";
-import { toast } from "vue3-toastify";
-import { getProducts } from "~/services/productservices";
 
 defineProps({
   showlang: {
@@ -439,10 +363,7 @@ const handleGoogleTranslateSelect = (language) => {
   console.log(language);
 };
 const isOpen = ref(false);
-function openModal() {
-  isOpen.value = !isOpen.value;
-}
-const { $pwa } = useNuxtApp();
+
 const isSigniningOut = ref(false);
 const cartStore = useCartStore();
 const authStore = useAuthStore();
@@ -450,7 +371,6 @@ const appStore = useApplicationStore();
 const store = useMarketStore();
 
 const isAuthOpen = ref(false);
-const notifications = ref([]);
 const router = useRouter();
 const { currentRoute } = router;
 const filteredMenu = computed(() =>
@@ -465,45 +385,13 @@ const filteredMenu = computed(() =>
 const view = ref({
   atTopOfPage: true,
 });
-const searchQuery = ref("");
+
 const open = ref(false);
 onBeforeMount(() => {
   window?.addEventListener("scroll", handleScroll);
   window?.addEventListener("resize", getWindowSize);
 });
 
-// onMounted(() => {
-//   if (authStore?.isLoggedIn) {
-//     getNotifications();
-//     setInterval(() => {
-//       getNotifications();
-//     }, 2 * 60 * 1000);
-//   }
-//   // geoFindMe();
-// });
-
-const notifyParams = reactive({
-  PageNumber: 1,
-  PageSize: 30,
-  BusinessId: authStore?.businessId,
-  UserId: authStore.userId,
-  Role: "",
-});
-const unreadnotifications = computed(() => {
-  return notifications?.value?.filter((i) => !i.isViewed)?.length;
-});
-function getNotifications() {
-  getnotification(notifyParams).then((res) => {
-    notifications.value = res.data.data;
-  });
-}
-function goToCheckout() {
-  if (!authStore.isLoggedIn) {
-    isAuthOpen.value = true;
-    return;
-  }
-  navigateTo("/checkout");
-}
 function handleScroll() {
   // when the user scrolls, check the pageYOffset
   if (window?.pageYOffset > 500) {
@@ -511,17 +399,12 @@ function handleScroll() {
     if (view.value.atTopOfPage) view.value.atTopOfPage = false;
   } else if (!view.value.atTopOfPage) view.value.atTopOfPage = true;
 }
-function handleWidth() {
-  windowWidth.value = window?.innerWidth;
-}
+
 function getWindowSize() {
   windowWidth.value =
     window?.innerWidth ||
     document?.documentElement?.clientWidth ||
     document?.body?.clientWidth;
-  // const height = window?.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-
-  // return { width, height };
 }
 function handleDropDown(val) {
   if (val === "markets") {
@@ -534,13 +417,15 @@ function handleDropDown(val) {
     return financeMenu;
   }
 }
+const getUserInitials = computed(() => {
+  const firstNameInitial = authStore.userInfo?.firstName.slice(0, 1) || "";
+  const lastNameInitial = authStore.userInfo?.lastName.slice(0, 1) || "";
+  return `${firstNameInitial}${lastNameInitial}`;
+});
 watch(currentRoute, () => {
   open.value = false;
 });
 
-provide("getNotifications", getNotifications);
-provide("notifications", notifications);
-provide("unreadnotifications", unreadnotifications);
 provide("open", open);
 provide("isOpen", isSigniningOut);
 provide("authOpen", isAuthOpen);
@@ -559,18 +444,7 @@ nav {
   -webkit-animation: fade-in-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
   animation: fade-in-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
-/* ----------------------------------------------
- * Generated by Animista on 2023-11-20 13:54:55
- * Licensed under FreeBSD License.
- * See http://animista.net/license for more info. 
- * w: http://animista.net, t: @cssanimista
- * ---------------------------------------------- */
 
-/**
- * ----------------------------------------
- * animation fade-in-top
- * ----------------------------------------
- */
 @-webkit-keyframes fade-in-top {
   0% {
     -webkit-transform: translateY(-50px);
