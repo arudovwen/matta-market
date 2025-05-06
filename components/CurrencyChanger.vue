@@ -1,8 +1,11 @@
 <template>
   <div class="">
-   <select v-model="currentCurrency" class="px-2 outline-none cursor-pointer text-sm">
-    <option v-for="n in options" :key="n.label" :value="n.label">{{ n.label }}</option>
-   </select>
+    <Select
+      v-model="currentCurrency"
+      :options="options"
+      placeholder="Select currency"
+      classInput="px-2 outline-none cursor-pointer text-sm !border-none !shadow-none !w-[80px]"
+    />
   </div>
 </template>
 
