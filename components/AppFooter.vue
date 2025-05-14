@@ -7,11 +7,11 @@
         >
           <div class="flex-1">
             <div class="">
-              <h2
+              <h5
                 class="text-white font-semibold text-lg md:text-[30px] leading-[1.2] mb-4"
               >
                 {{ n.title }}
-              </h2>
+              </h5>
               <p class="mb-8 text-sm md:text-lg text-[#EAECF0] max-w-[768px]">
                 {{ n.text }}
               </p>

@@ -4,13 +4,13 @@
       <div
         class="flex flex-col md:flex-row gap-y-9 xl:gap-y-0 justify-between sm:mb-[90px] md:gap-x-10"
       >
-        <h1
+        <h2
          
           class="max-w-[633px] text-[#222] darks:text-white text-3xl xl:text-[49px] font-bold leading-[44.6px] xl:leading-[67.6px]"
         >
         Explore our wide range of solutions, designed for your specific business needs
 
-        </h1>
+        </h2>
 
         <div class="grid grid-cols-2 gap-5 md:min-w-[250px]">
           <div
@@ -19,9 +19,9 @@
             :key="n.text"
             
           >
-            <span
+            <h3
               class="block font-bold text-[#2176FF] text-2xl xl:text-[44px] mb-2 xl:mb-[15px]"
-              >{{ n.title }}</span
+              >{{ n.title }}</h3
             >
             <span
               class="block font-normal text-[#333] darks:text-white/80 text-sm xl:text-[20px]"

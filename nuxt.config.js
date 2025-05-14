@@ -33,8 +33,13 @@ export default defineNuxtConfig({
     "nuxt-ssr-cache",
     "@vite-pwa/nuxt",
     "@nuxt/test-utils/module",
+    "@zadigetvoltaire/nuxt-gtm",
   ],
-
+  gtm: {
+    id: "GTM-M7KP6CJG",
+    enabled: false,
+    debug: false,
+  },
   security: {
     hidePoweredBy: false,
     headers: {
@@ -167,14 +172,28 @@ export default defineNuxtConfig({
     head: {
       title: "Matta - Africa's Leading B2B Marketplace for chemicals",
       charset: "utf-8",
-      viewport: "width=device-width, initial-scale=1 ",
+      viewport: "width=device-width, initial-scale=1",
+      htmlAttrs: {
+        lang: "en",
+      },
       meta: [
+        // Primary Meta
         {
           hid: "description",
           name: "description",
           content:
-            "Matta is an online B2B platform that serves as a detailed and comprehensive market place for chemicals and materials. We aggregate demand from manufacturers, and supply from producers and importers into a single market place, creating an eco-system that ensures constant supply of essential raw materials within the economy. We also provide the necessary financial incentives and vehicles to aid the processes of supplier manufacturing, Importation and procurement.",
+            "Matta is an online B2B platform that serves as a detailed and comprehensive marketplace for chemicals and materials.",
         },
+        {
+          hid: "keywords",
+          name: "keywords",
+          content:
+            "Matta, Chemicals, Business, materials, manufacturers, producers, importers, raw materials, supplier",
+        },
+        { name: "robots", content: "index, follow" },
+        { name: "theme-color", content: "#1570EF" },
+
+        // Open Graph (Facebook/LinkedIn)
         {
           hid: "og:title",
           property: "og:title",
@@ -184,18 +203,21 @@ export default defineNuxtConfig({
           hid: "og:description",
           property: "og:description",
           content:
-            "Matta is an online B2B platform that serves as a detailed and comprehensive market place for chemicals and materials. We aggregate demand from manufacturers, and supply from producers and importers into a single market place, creating an eco-system that ensures constant supply of essential raw materials within the economy. We also provide the necessary financial incentives and vehicles to aid the processes of supplier manufacturing, Importation and procurement.",
+            "Matta is an online B2B platform that serves as a detailed and comprehensive marketplace for chemicals and materials.",
         },
         {
           hid: "og:image",
           property: "og:image",
-          content: "https://matta.trade/img/3.png",
+          content: "https://matta.trade/images/logo.png",
         },
-        // Twitter Tags
+        { hid: "og:url", property: "og:url", content: "https://matta.trade" },
+        { hid: "og:type", property: "og:type", content: "website" },
+
+        // Twitter Meta
         {
           hid: "twitter:card",
           name: "twitter:card",
-          content: "https://matta.trade/img/3.png",
+          content: "summary_large_image",
         },
         {
           hid: "twitter:title",
@@ -206,21 +228,39 @@ export default defineNuxtConfig({
           hid: "twitter:description",
           name: "twitter:description",
           content:
-            "Matta is an online B2B platform that serves as a detailed and comprehensive market place for chemicals and materials. We aggregate demand from manufacturers, and supply from producers and importers into a single market place, creating an eco-system that ensures constant supply of essential raw materials within the economy. We also provide the necessary financial incentives and vehicles to aid the processes of supplier manufacturing, Importation and procurement.",
+            "Matta is an online B2B platform that serves as a detailed and comprehensive marketplace for chemicals and materials.",
         },
         {
           hid: "twitter:image",
           name: "twitter:image",
-          content: "URL to your Twitter image",
+          content: "https://matta.trade/images/logo.png",
         },
+      ],
+
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+        { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+        { rel: "canonical", href: "https://matta.trade" },
+      ],
+
+      script: [
         {
-          name: "keywords",
-          content:
-            "Matta, Chemicals, Business, materials, manufacturers, producers, importers, raw materials, supplier",
+          hid: "ld-json",
+          type: "application/ld+json",
+          json: {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Matta",
+            url: "https://matta.trade",
+            logo: "https://matta.trade/images/logo.png",
+            sameAs: [
+              "https://www.linkedin.com/company/matta-trade",
+              "https://twitter.com/matta-trade",
+            ],
+            description:
+              "Matta is Africa’s leading online B2B platform for chemicals and materials.",
+          },
         },
-        { name: "author", content: "Success Ahon" },
-        { name: "robots", content: "index, follow" },
-        { name: "theme-color", content: "#1570EF" },
       ],
     },
   },
