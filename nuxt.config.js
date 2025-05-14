@@ -33,11 +33,11 @@ export default defineNuxtConfig({
     "nuxt-ssr-cache",
     "@vite-pwa/nuxt",
     "@nuxt/test-utils/module",
-    "@nuxtjs/gtm",
+    "@zadigetvoltaire/nuxt-gtm",
   ],
   gtm: {
     id: "GTM-M7KP6CJG",
-    enabled: true,
+    enabled: false,
     debug: false,
   },
   security: {
@@ -247,7 +247,7 @@ export default defineNuxtConfig({
         {
           hid: "ld-json",
           type: "application/ld+json",
-          innerHTML: JSON.stringify({
+          json: {
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "Matta",
@@ -259,12 +259,9 @@ export default defineNuxtConfig({
             ],
             description:
               "Matta is Africa’s leading online B2B platform for chemicals and materials.",
-          }),
+          },
         },
       ],
-      __dangerouslyDisableSanitizersByTagID: {
-        "ld-json": ["innerHTML"],
-      },
     },
   },
 
