@@ -241,6 +241,11 @@ export default defineNuxtConfig({
         { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
         { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
         { rel: "canonical", href: "https://matta.trade" },
+        {
+          rel: "alternate",
+          hreflang: "en",
+          href: "https://matta.trade",
+        },
       ],
 
       script: [
@@ -261,7 +266,72 @@ export default defineNuxtConfig({
               "Matta is Africa’s leading online B2B platform for chemicals and materials.",
           },
         },
+        {
+          id: 'about-schema',
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "Matta",
+              "url": "https://corporate.matta.trade",
+              "logo": "https://matta.trade/images/logo.png",
+              "sameAs": [
+                "https://www.linkedin.com/company/matta-trade",
+                "https://twitter.com/matta-trade"
+              ],
+              "description": "Matta is Africa’s leading B2B platform for buying and selling chemicals and raw materials."
+            }
+          })
+        },
+        {
+          id: 'contact-schema',
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "Matta",
+              "url": "https://matta.trade/request-product",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                // "telephone": "+234-800-123-4567",
+                "contactType": "Customer Support",
+                "areaServed": "NG",
+                "availableLanguage": ["English"]
+              }
+            }
+          })
+        },
+        {
+          id: 'product-schema',
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "Hot deals",
+            "image": [
+              "https://matta.trade/images/products/acetone.jpg"
+            ],
+            "description": "Hot deals suitable for chemical manufacturing.",
+            "sku": "ACETONE-12345",
+            "brand": {
+              "@type": "Brand",
+              "name": "Best Sellers"
+            },
+            "offers": {
+              "@type": "Offer",
+              "url": "https://matta.trade/category/market/Hot%20deals?tag=hotdeals",
+             
+            }
+          }),
+        },
       ],
+      __dangerouslyDisableSanitizersByTagID: {
+        "ld-json": ["innerHTML"],
+      }
     },
   },
 
