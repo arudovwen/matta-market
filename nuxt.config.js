@@ -250,7 +250,7 @@ export default defineNuxtConfig({
 
       script: [
         {
-          hid: "ld-json",
+          hid: "ld-json-organization",
           type: "application/ld+json",
           json: {
             "@context": "https://schema.org",
@@ -267,71 +267,70 @@ export default defineNuxtConfig({
           },
         },
         {
-          id: 'about-schema',
-          type: 'application/ld+json',
-          innerHTML: JSON.stringify({
+          hid: "ld-json-about",
+          type: "application/ld+json",
+          json: {
             "@context": "https://schema.org",
             "@type": "AboutPage",
-            "mainEntity": {
+            mainEntity: {
               "@type": "Organization",
-              "name": "Matta",
-              "url": "https://corporate.matta.trade",
-              "logo": "https://matta.trade/images/logo.png",
-              "sameAs": [
+              name: "Matta",
+              url: "https://corporate.matta.trade",
+              logo: "https://matta.trade/images/logo.png",
+              sameAs: [
                 "https://www.linkedin.com/company/matta-trade",
-                "https://twitter.com/matta-trade"
+                "https://twitter.com/matta-trade",
               ],
-              "description": "Matta is Africa’s leading B2B platform for buying and selling chemicals and raw materials."
-            }
-          })
+              description:
+                "Matta is Africa’s leading B2B platform for buying and selling chemicals and raw materials.",
+            },
+          },
         },
         {
-          id: 'contact-schema',
-          type: 'application/ld+json',
-          innerHTML: JSON.stringify({
+          hid: "ld-json-contact",
+          type: "application/ld+json",
+          json: {
             "@context": "https://schema.org",
             "@type": "ContactPage",
-            "mainEntity": {
+            mainEntity: {
               "@type": "Organization",
-              "name": "Matta",
-              "url": "https://matta.trade/request-product",
-              "contactPoint": {
+              name: "Matta",
+              url: "https://matta.trade/request-product",
+              contactPoint: {
                 "@type": "ContactPoint",
-                // "telephone": "+234-800-123-4567",
-                "contactType": "Customer Support",
-                "areaServed": "NG",
-                "availableLanguage": ["English"]
-              }
-            }
-          })
+                contactType: "Customer Support",
+                areaServed: "NG",
+                availableLanguage: ["English"],
+              },
+            },
+          },
         },
         {
-          id: 'product-schema',
-          type: 'application/ld+json',
-          innerHTML: JSON.stringify({
+          hid: "ld-json-product",
+          type: "application/ld+json",
+          json: {
             "@context": "https://schema.org",
             "@type": "Product",
-            "name": "Hot deals",
-            "image": [
-              "https://matta.trade/images/products/acetone.jpg"
-            ],
-            "description": "Hot deals suitable for chemical manufacturing.",
-            "sku": "ACETONE-12345",
-            "brand": {
+            name: "Hot deals",
+            image: ["https://matta.trade/images/products/acetone.jpg"],
+            description: "Hot deals suitable for chemical manufacturing.",
+            sku: "ACETONE-12345",
+            brand: {
               "@type": "Brand",
-              "name": "Best Sellers"
+              name: "Best Sellers",
             },
-            "offers": {
+            offers: {
               "@type": "Offer",
-              "url": "https://matta.trade/category/market/Hot%20deals?tag=hotdeals",
-             
-            }
-          }),
+              url: "https://matta.trade/category/market/Hot%20deals?tag=hotdeals",
+              priceCurrency: "NGN",
+              price: "120.00",
+            },
+          },
         },
       ],
       __dangerouslyDisableSanitizersByTagID: {
         "ld-json": ["innerHTML"],
-      }
+      },
     },
   },
 
