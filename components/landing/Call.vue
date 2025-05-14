@@ -35,19 +35,19 @@
         class="absolute inset-0 flex items-center justify-start text-white text-center container"
       >
         <div class="mx-auto">
-          <p
+          <h2
        
             class="font-bold text-[#fff] text-3xl md:text-5xl xl:leading-[58px] mb-[23px]"
           >
             Ready to get started?
-          </p>
-          <p
+          </h2>
+          <h4
            
             class="font-medium text-[#fff] text-base lg:text-xl mb-9 max-w-[700px] mx-auto"
           >
             Effortlessly source your chemicals, raw materials, ingredients, and
             commodities on our platform.
-          </p>
+          </h4>
         
             <AppButton
               @click="handleRouting('register')"

@@ -1,11 +1,11 @@
 <template>
   <div class="py-10 container hidden lg:block">
-    <h2
+    <h3
      
       class="text-xl font-semibold mb-10 text-center darks:text-white/80"
     >
       {{title}}
-    </h2>
+    </h3>
 
     <div
       class="grid grid-cols-3 lg:grid-cols-6 gap-6 justify-between items-center"
