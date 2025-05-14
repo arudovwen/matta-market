@@ -37,7 +37,7 @@ export default defineNuxtConfig({
   ],
   gtm: {
     id: "GTM-M7KP6CJG",
-    enabled: false,
+    enabled: true,
     debug: false,
   },
   security: {
