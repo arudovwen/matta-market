@@ -13,7 +13,7 @@
           >
              <img :src="n.img" :alt="n.title" width="40" height="40" />
           </span>
-          <p class="mb-3 text-white text-lg md:text-xl max-w-[200px] leading-normal">{{ n.title }}</p>
+          <h4 class="mb-3 text-white text-lg md:text-xl max-w-[200px] leading-normal">{{ n.title }}</h4>
           <p class="mb-2 text-white text-sm">{{ n.text }}</p>
         </div>
       </div>

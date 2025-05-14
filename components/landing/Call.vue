@@ -41,13 +41,13 @@
           >
             Ready to get started?
           </h2>
-          <h4
+          <h3
            
             class="font-medium text-[#fff] text-base lg:text-xl mb-9 max-w-[700px] mx-auto"
           >
             Effortlessly source your chemicals, raw materials, ingredients, and
             commodities on our platform.
-          </h4>
+          </h3>
         
             <AppButton
               @click="handleRouting('register')"
