@@ -246,6 +246,11 @@ export default defineNuxtConfig({
           hreflang: "en",
           href: "https://matta.trade",
         },
+        {
+          rel: "preload",
+          href: "https://res.cloudinary.com/arudovwen-me/image/upload/f_webp/c_scale,h_600/xddierf8sf3w2gn1csau.jpg",
+          as: "image",
+        },
       ],
 
       script: [
