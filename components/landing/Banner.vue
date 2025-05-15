@@ -1,8 +1,9 @@
 <template>
   <div class="relative w-full bg-black-400">
     <div
-      class="bg-cover bg-center min-h-[480px] md:min-h-[600px]"
-      :style="backgroundStyles"
+      class="bg-cover bg-center min-h-[480px] md:min-h-[600px] transition-all duration-500 ease-in-out"
+      :style="{ backgroundImage: `url('${backgroundImage}')` }"
+      :class="{ loaded: isLoaded }"
     >
       <!-- Overlay -->
       <div class="absolute inset-0 bg-[rgba(0,0,0,0.72)]"></div>
@@ -71,22 +72,32 @@
 
 <script setup>
 const img = useImage();
-const backgroundStyles = computed(() => {
-  const imgUrl = img(
-    `https://res.cloudinary.com/arudovwen-me/image/upload/f_webp/c_scale,h_600/xddierf8sf3w2gn1csau.jpg`,
-    {
-      sizes: {
-        xl: "100vw",
-        lg: "100vw",
-        md: "100vw",
-        sm: "100vw",
-        xs: "100vw",
-      },
-    }
-  );
-  return { backgroundImage: `url('${imgUrl}')` };
+const highQualityImageUrl = img(
+  "https://res.cloudinary.com/arudovwen-me/image/upload/f_webp/c_scale,h_600/xddierf8sf3w2gn1csau.jpg",
+  {
+    sizes: {
+      xl: "100vw",
+      lg: "100vw",
+      md: "100vw",
+      sm: "100vw",
+      xs: "100vw",
+    },
+  }
+);
+const lqipSource =
+  "https://res.cloudinary.com/arudovwen-me/image/upload/imageedit_4_4515965894_r27igz.jpg";
+const backgroundImage = ref(lqipSource);
+const isLoaded = ref(false);
+
+onMounted(() => {
+  const imgLoader = new Image();
+  imgLoader.onload = () => {
+    backgroundImage.value = highQualityImageUrl;
+    isLoaded.value = true;
+  };
+  imgLoader.src = highQualityImageUrl;
 });
-// http://localhost:3000/images/banner.png
+
 const router = useRouter();
 const route = useRoute();
 
