@@ -22,7 +22,7 @@
         class="flex gap-x-4 mb-[64px] max-w-[731px]"
       >
         <AppButton
-          @click="navigateTo('/auth/register')"
+           @click="handleRouting('register')"
           text="Sign up for free"
           btnClass="bg-transparent border-[#D0D5DD] border !px-[18px] !py-3 text-[#344054]"
         />
