@@ -165,6 +165,10 @@ const navs = [
         title: "Careers",
         url: "https://corporate.matta.trade/",
       },
+        {
+        title: "Blog",
+        url: "https://blog.matta.trade/",
+      },
       {
         title: "Newsletter",
         url: "#",
