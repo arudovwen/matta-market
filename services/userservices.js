@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { post, get, ssoGet } from "../helpers/api_helpers";
+import { post, get, ssoGet, marketPost, marketGet } from "../helpers/api_helpers";
 import store from "../store";
 
 const config = {
@@ -49,13 +49,13 @@ export async function getRoles() {
   return await get(`${urls.GET_ROLES}`, config);
 }
 export async function getVendorInfo() {
-  return await get(`${urls.GET_VENDOR_STORE}`, config);
+  return await marketGet(`${urls.GET_VENDOR_STORE}`, config);
 }
 export async function updateVendorInfo(data) {
-  return await post(`${urls.UPDATE_VENDOR_STORE}`,data, config);
+  return await marketPost(`${urls.UPDATE_VENDOR_STORE}`,data, config);
 }
 export async function postStoreName(data) {
-  return await get(`${urls.POST_VENDOR_STORE_NAME}?storename=${data}`, config);
+  return await marketGet(`${urls.POST_VENDOR_STORE_NAME}?storename=${data}`, config);
 }
 export async function getBusinessType() {
   return await get(`${urls.GET_BUSINESS_TYPE}`);
