@@ -182,7 +182,7 @@ export default defineNuxtConfig({
           hid: "description",
           name: "description",
           content:
-            "Matta is an online B2B platform that serves as a detailed and comprehensive marketplace for chemicals and materials.",
+            "Matta is a B2B platform offering a comprehensive, detailed marketplace for sourcing chemicals and materials efficiently and reliably",
         },
         {
           hid: "keywords",
@@ -203,7 +203,7 @@ export default defineNuxtConfig({
           hid: "og:description",
           property: "og:description",
           content:
-            "Matta is an online B2B platform that serves as a detailed and comprehensive marketplace for chemicals and materials.",
+            "Matta is a B2B platform offering a comprehensive, detailed marketplace for sourcing chemicals and materials efficiently and reliably",
         },
         {
           hid: "og:image",
@@ -228,7 +228,7 @@ export default defineNuxtConfig({
           hid: "twitter:description",
           name: "twitter:description",
           content:
-            "Matta is an online B2B platform that serves as a detailed and comprehensive marketplace for chemicals and materials.",
+            "Matta is a B2B platform offering a comprehensive, detailed marketplace for sourcing chemicals and materials efficiently and reliably",
         },
         {
           hid: "twitter:image",
@@ -257,7 +257,7 @@ export default defineNuxtConfig({
         {
           hid: "ld-json-organization",
           type: "application/ld+json",
-          json: {
+          children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "Matta",
@@ -269,12 +269,12 @@ export default defineNuxtConfig({
             ],
             description:
               "Matta is Africa’s leading online B2B platform for chemicals and materials.",
-          },
+          }),
         },
         {
           hid: "ld-json-about",
           type: "application/ld+json",
-          json: {
+          children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "AboutPage",
             mainEntity: {
@@ -289,12 +289,12 @@ export default defineNuxtConfig({
               description:
                 "Matta is Africa’s leading B2B platform for buying and selling chemicals and raw materials.",
             },
-          },
+          }),
         },
         {
           hid: "ld-json-contact",
           type: "application/ld+json",
-          json: {
+          children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ContactPage",
             mainEntity: {
@@ -308,12 +308,12 @@ export default defineNuxtConfig({
                 availableLanguage: ["English"],
               },
             },
-          },
+          }),
         },
         {
           hid: "ld-json-product",
           type: "application/ld+json",
-          json: {
+          children: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
             name: "Hot deals",
@@ -330,9 +330,10 @@ export default defineNuxtConfig({
               priceCurrency: "NGN",
               price: "120.00",
             },
-          },
+          }),
         },
       ],
+
       __dangerouslyDisableSanitizersByTagID: {
         "ld-json": ["innerHTML"],
       },
