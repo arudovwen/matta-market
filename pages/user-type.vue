@@ -42,45 +42,45 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from 'vue'
-import { useForm } from 'vee-validate'
-import * as yup from 'yup'
-import { toast } from 'vue3-toastify'
-import { signUpWithMatta } from '~/services/userservices'
+import { ref, onBeforeMount } from "vue";
+import { useForm } from "vee-validate";
+import * as yup from "yup";
+import { toast } from "vue3-toastify";
+import { signUpWithMatta } from "~/services/userservices";
 
 definePageMeta({
-  layout: 'empty',
-  middleware: 'user-type'
-})
+  layout: "empty",
+  middleware: "user-type",
+});
 
-const config = useRuntimeConfig()
-const authStore = useAuthStore()
-const isLoading = ref(false)
-const route = useRoute()
+const config = useRuntimeConfig();
+const authStore = useAuthStore();
+const isLoading = ref(false);
+const route = useRoute();
 // Constants
 const userTypeOptions = [
   {
     type: 0,
-    icon: 'ri:user-3-line',
-    title: 'Buyer Account',
-    description: 'Search, buy and place orders for products'
+    icon: "ri:user-3-line",
+    title: "Buyer Account",
+    description: "Search, buy and place orders for products",
   },
   {
     type: 1,
-    icon: 'solar:shop-linear',
-    title: 'Vendor Account',
-    description: 'For merchants who wants to sell their products'
-  }
-]
+    icon: "solar:shop-linear",
+    title: "Vendor Account",
+    description: "For merchants who wants to sell their products",
+  },
+];
 
 // Form setup
 const schema = yup.object({
   businessUserType: yup.number().required(),
   email: yup
     .string()
-    .required('Email is required')
-    .email('Please enter a valid email address')
-})
+    .required("Email is required")
+    .email("Please enter a valid email address"),
+});
 
 const { handleSubmit, defineField, meta, setFieldValue } = useForm({
   validationSchema: schema,
@@ -89,38 +89,39 @@ const { handleSubmit, defineField, meta, setFieldValue } = useForm({
     businessUserType: 0,
     appCode: config.public.APP_CODE,
     ssoUserCategory: authStore.userInfo?.userCategory,
-  }
-})
+  },
+});
 
-const [businessUserType] = defineField('businessUserType')
+const [businessUserType] = defineField("businessUserType");
 
 // Form submission handler
 const onSubmit = handleSubmit(async (values) => {
   try {
-    isLoading.value = true
-    const response = await signUpWithMatta({ ...values })
-    
+    isLoading.value = true;
+    const response = await signUpWithMatta({ ...values });
+
     if (response.status === 200) {
+      removeItem("isMattaSignup");
       authStore.setLoggedUser({
         ...authStore.userInfo,
         businessUserType: values.businessUserType,
-        accountType: values.businessUserType
-      })
-      
-      toast.success('Profile updated!')
-      navigateTo(route.query?.return_to || '/')
+        accountType: values.businessUserType,
+      });
+
+      toast.success("Profile updated!");
+      navigateTo(route.query?.return_to || "/");
     }
   } catch (error) {
-    toast.error(error.response?.data?.message || 'An error occurred')
+    toast.error(error.response?.data?.message || "An error occurred");
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
-})
+});
 
 // Navigation guard
 onBeforeMount(() => {
   if (authStore.userType) {
-    navigateTo('/')
+    navigateTo("/");
   }
-})
+});
 </script>

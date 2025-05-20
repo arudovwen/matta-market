@@ -35,7 +35,7 @@ amplitude.init('662bcea7400aa949c2cbbd4e0a9fa5c9', {
         defer: true,
         crossorigin: "anonymous",
       },
- 
+
       {
         innerHTML: `
             (function (h, o, t, j, a, r) {
@@ -75,15 +75,15 @@ import { getSubApps, getBusinessType } from "~/services/userservices";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-
 const { encrypt } = useEncryption();
+const isMattaSignup = getItem("isMattaSignup");
 const AppLoading = ref(false);
 const cartStore = useCartStore();
 const store = useMarketStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const currentCurrency = ref("NGN");
-
+const route = useRoute();
 const query = reactive({
   PageNumber: 1,
   PageSize: 200,
@@ -142,6 +142,7 @@ function getAppList() {
 }
 function getBusinessUserType() {
   AppLoading.value = true;
+
   getBusinessType()
     .then((res) => {
       if (res.status === 200) {
@@ -153,6 +154,9 @@ function getBusinessUserType() {
       }
     })
     .catch(() => {
+      if (isMattaSignup) {
+        navigateTo("/user-type");
+      }
       AppLoading.value = false;
     });
 }
@@ -175,6 +179,14 @@ onMounted(() => {
   cartStore.getMyCart();
 });
 provide("currentCurrency", currentCurrency);
+watch(
+  () => route.fullPath,
+  () => {
+    if (isMattaSignup) {
+      navigateTo("/user-type");
+    }
+  }
+);
 </script>
 <style>
 html {
