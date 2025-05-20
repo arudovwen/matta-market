@@ -34,6 +34,7 @@ export const handleRouting = (
   url = appUrl,
   target = "_self"
 ) => {
+  setItem('isMattaSignup', true)
   const config = useRuntimeConfig();
   window.location.href = `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`;
 };
