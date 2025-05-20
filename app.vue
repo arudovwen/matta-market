@@ -182,7 +182,7 @@ provide("currentCurrency", currentCurrency);
 watch(
   () => route.fullPath,
   () => {
-    if (isMattaSignup) {
+    if (isMattaSignup && authStore?.isLoggedIn && !authStore?.userType) {
       navigateTo("/user-type");
     }
   }
