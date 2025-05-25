@@ -17,3 +17,6 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: "d52d0916bb23ea78bb81b78bf42408f845ac7823"
+          with:
+             args:>
+             -Dsonar.organization=matta-trade
