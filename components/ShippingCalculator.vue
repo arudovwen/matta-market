@@ -216,6 +216,12 @@ const calculate = (v) => {
   isLoading.value = true;
   calculateCost({
     ...values,
+    pickupAddress: {
+      state: values.pickupLocation,
+    },
+    shippingAddress: {
+      state: values.destination,
+    },
     size: parseFloat(values.size),
   })
     .then((res) => {

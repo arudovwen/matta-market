@@ -3,7 +3,9 @@ import { createApiClient } from "~/helpers/update_api_helpers";
 import store from "../store";
 // import { withRetryHandling } from "../utils/retry-handling";
 
-const { get, post } = createApiClient("https://dev.gateway.deltalog.co/api");
+const { get, post } = createApiClient(
+  "https://dev.gateway.matta.trade/flux/v1/"
+);
 
 const config = {
   headers: { Authorization: `Bearer ${store.getters.accessToken}` },
