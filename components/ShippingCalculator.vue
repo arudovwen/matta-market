@@ -126,14 +126,14 @@
         </div>
         <button
           @click="cost = null"
-          class="bg-[#1570EF] w-full text-white flex justify-center items-center mt-4 rounded-[5px] px-[24px] py-[9px] gap-x-1 font-semibold"
+          class="bg-[#E50031] w-full text-white flex justify-center items-center mt-4 rounded-[5px] px-[24px] py-[9px] gap-x-1 font-semibold"
         >
           <span class="text-[#fff]">Do another calculation</span>
         </button>
       </template>
       <button
         v-else
-        class="bg-[#1570EF] w-full text-white flex justify-center items-center mt-4 rounded-[5px] px-[24px] py-[9px] gap-x-1 font-semibold"
+        class="bg-[#E50031] w-full text-white flex justify-center items-center mt-4 rounded-[5px] px-[24px] py-[9px] gap-x-1 font-semibold"
       >
         <span v-if="!isLoading" class="text-[#fff]">Calculate</span>
         <template v-if="isLoading">
