@@ -16,7 +16,7 @@
         >
         <button
           @click="getStartedIsOpen = true"
-          class="bg-[#1570EF] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold"
+          class="bg-[#E50031] text-white rounded-[5px] px-[24px] py-[9px] flex gap-x-1 items-center font-semibold"
         >
           Get Started
         </button>
@@ -279,7 +279,7 @@
       </div>
       <button
         @click="getStartedIsOpen = true"
-        class="bg-blue-600 h-[48%] py-[12px] px-[18px] text-white rounded-lg flex items-center w-[155px]"
+        class="bg-[#E50031] h-[48%] py-[12px] px-[18px] text-white rounded-lg flex items-center w-[155px]"
       >
         Get Started
         <img alt="deltalog" src="/assets/images/Buttons/arrow-narrow-right.svg" class="ml-2" />
