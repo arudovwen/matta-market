@@ -14,7 +14,7 @@
       </header>
 
       <form @submit.prevent="onSubmit" class="w-full">
-        <div class="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
           <AuthUserTypeCard
             v-for="option in userTypeOptions"
             :key="option.type"
@@ -25,8 +25,24 @@
             @click="setFieldValue('businessUserType', option.type)"
           />
         </div>
+        <div class="mt-6" v-if="businessUserType === 0">
+          <SelectSearch
+            placeholder=""
+            label="Which chemical do you use frequently?"
+            name="chemical"
+            v-model="chemical"
+            :error="errors.chemical"
+            :options="products"
+            @getQuery="
+              (val) => {
+                query.search = val;
+                console.log(val)
+              }
+            "
+          />
+        </div>
 
-        <div class="mx-auto w-full max-w-[400px]">
+        <div class="mx-auto w-full max-w-[400px] mt-8">
           <AppButton
             type="submit"
             :is-loading="isLoading"
@@ -42,17 +58,25 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, onMounted } from "vue";
 import { useForm } from "vee-validate";
 import * as yup from "yup";
 import { toast } from "vue3-toastify";
 import { signUpWithMatta } from "~/services/userservices";
+import { getProducts } from "~/services/productservices";
 
 definePageMeta({
   layout: "empty",
-  middleware: "user-type",
+  // middleware: "user-type",
 });
 
+const query = reactive({
+  search: "",
+  page: 1,
+  pageSize: 100,
+});
+const products = ref([]);
+const loading = ref(false);
 const config = useRuntimeConfig();
 const authStore = useAuthStore();
 const isLoading = ref(false);
@@ -76,13 +100,18 @@ const userTypeOptions = [
 // Form setup
 const schema = yup.object({
   businessUserType: yup.number().required(),
-  email: yup
+   email: yup
     .string()
     .required("Email is required")
     .email("Please enter a valid email address"),
+  chemical: yup.mixed().when("businessUserType", {
+    is: 0,
+    then: (schema) => schema.required("Chemical is required"),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
 
-const { handleSubmit, defineField, meta, setFieldValue } = useForm({
+const { handleSubmit, defineField, meta, setFieldValue, errors } = useForm({
   validationSchema: schema,
   initialValues: {
     email: authStore.userInfo?.email,
@@ -93,6 +122,7 @@ const { handleSubmit, defineField, meta, setFieldValue } = useForm({
 });
 
 const [businessUserType] = defineField("businessUserType");
+const [chemical, chemicalAtt] = defineField("chemical");
 
 // Form submission handler
 const onSubmit = handleSubmit(async (values) => {
@@ -123,5 +153,32 @@ onBeforeMount(() => {
   if (authStore.userType) {
     navigateTo("/");
   }
+});
+async function getData() {
+  loading.value = true;
+  getProducts(query)
+    .then((res) => {
+      if (res.status === 200) {
+        products.value = res.data?.data?.map((i) => ({
+          ...i,
+          label: i.title,
+          value: i.title,
+        }));
+      }
+      loading.value = false;
+    })
+    .catch(() => {
+      loading.value = false;
+    });
+}
+watch(
+  () => [query.search],
+  () => {
+    getData();
+    console.log(query.search);
+  }
+);
+onMounted(() => {
+  getData();
 });
 </script>
