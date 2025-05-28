@@ -4,7 +4,7 @@ import store from "../store";
 // import { withRetryHandling } from "../utils/retry-handling";
 
 const { get, post } = createApiClient(
-  "https://dev.gateway.matta.trade/flux/v1/"
+  "https://staging.gateway.matta.trade/flux/v1/"
 );
 
 const config = {
