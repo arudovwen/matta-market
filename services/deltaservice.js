@@ -13,9 +13,15 @@ const config = {
 //Orders
 
 export const calculateCost = (data) => {
-  return post(`${urls.CALCULATOR_COST}`, data, config);
+  return post(`${urls.CALCULATOR_COST}`, data, {
+    ...config,
+    withCredentials: false,
+  });
 };
 
 export const getEnquiry = (data) => {
-  return post(`${urls.GET_ENQUIRY}`, data, config);
+  return post(`${urls.GET_ENQUIRY}`, data, {
+    ...config,
+    withCredentials: false,
+  });
 };
