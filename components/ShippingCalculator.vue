@@ -235,18 +235,18 @@ const calculate = (v) => {
 };
 
 const measurements = [
-  { value: "g", name: "Gramme (g)" },
-  { value: "kg", name: "Kilogramme (kg)" },
-  { value: "l", name: "Litre (l)" },
-  { value: "m3", name: "Cubic metre (m3)" },
-  { value: "sqm", name: "Square metre (sqm)" },
-  { value: "truck", name: "Truck" },
-  { value: "ton", name: "Ton (ton)" },
-  { value: "ml", name: "Millilitre (ml)" },
-  { value: "mm", name: "Millimetre (mm)" },
-  { value: "bag", name: "Bag" },
-  { value: "drum", name: "Drum" },
-  { value: "others", name: "Others" },
+  { value: "g", name: "Gramme (g)", label: "Gramme (g)" },
+  { value: "kg", name: "Kilogramme (kg)", label: "Kilogramme (kg)" },
+  { value: "l", name: "Litre (l)", label: "Litre (l)" },
+  { value: "m3", name: "Cubic metre (m3)", label: "Cubic metre (m3)" },
+  { value: "sqm", name: "Square metre (sqm)", label: "Square metre (sqm)" },
+  { value: "truck", name: "Truck", label: "Truck" },
+  { value: "ton", name: "Ton (ton)", label: "Ton (ton)" },
+  { value: "ml", name: "Millilitre (ml)", label: "Millilitre (ml)" },
+  { value: "mm", name: "Millimetre (mm)", label: "Millimetre (mm)" },
+  { value: "bag", name: "Bag", label: "Bag" },
+  { value: "drum", name: "Drum", label: "Drum" },
+  { value: "others", name: "Others", label: "Others" },
 ];
 
 const onSubmit = handleSubmit((values) => calculate(values));
