@@ -235,15 +235,18 @@ const calculate = (v) => {
 };
 
 const measurements = [
-  { value: "Gram", name: "Gramme", label: "Gramme" },
-  { value: "Kilogram", name: "Kilogramme", label: "Kilogram" },
-  { value: "Liter", name: "Litre", label: "Litre" },
-  { value: "CubicMeter", name: "Cubicmetre", label: "Cubic Metre" },
-  { value: "SquareMeter", name: "Squaremetre", label: "Square Metre" },
-  { value: "Tonne", name: "Ton", label: "Ton" },
-  { value: "Milliliter", name: "Millilitre", label: "Millilitre" },
-  { value: "mm", name: "Millimetre", label: "Millimetre" },
-  { value: "mm", name: "Millimetre", label: "Millimetre" },
+  { value: "g", name: "Gramme (g)" },
+  { value: "kg", name: "Kilogramme (kg)" },
+  { value: "l", name: "Litre (l)" },
+  { value: "m3", name: "Cubic metre (m3)" },
+  { value: "sqm", name: "Square metre (sqm)" },
+  { value: "truck", name: "Truck" },
+  { value: "ton", name: "Ton (ton)" },
+  { value: "ml", name: "Millilitre (ml)" },
+  { value: "mm", name: "Millimetre (mm)" },
+  { value: "bag", name: "Bag" },
+  { value: "drum", name: "Drum" },
+  { value: "others", name: "Others" },
 ];
 
 const onSubmit = handleSubmit((values) => calculate(values));
