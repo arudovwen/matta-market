@@ -14,7 +14,7 @@
     placeholder:text-[#CDD2DA] text-[#344054] text-sm px-[14px] py-[10px] placeholder:font-normal block w-full ;
 }
 .input-label {
-  @apply mb-2 text-[#344054]  text-sm leading-6 capitalize cursor-pointer font-medium;
+  @apply mb-[6px] text-[#344054]  text-sm leading-6 capitalize cursor-pointer font-medium;
 }
 .formGroup {
   &.has-error {

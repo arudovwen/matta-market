@@ -9,18 +9,18 @@
   >
     <div class="mb-3">
       <!-- Dynamically render the correct icon component based on the 'active' state -->
-      <span class="block text-[40px]"  :class="active ? 'text-primary-500' : 'text-[#344054]'"><AppIcon :icon="icon" /></span>
+      <span class="block text-4xl"  :class="active ? 'text-primary-500' : 'text-[#344054]'"><AppIcon :icon="icon" /></span>
     </div>
 
     <div
-      class="font-medium text-xl"
+      class="font-medium text-lg"
       :class="active ? 'text-primary-500' : 'text-[#344054]'"
     >
       {{ title }}
     </div>
 
     <div
-      class="font-normal text-base text-[#667085]"
+      class="font-normal text-sm text-[#667085]"
       :class="active ? 'text-primary-500' : 'text-[#667085]'"
     >
       {{ description }}

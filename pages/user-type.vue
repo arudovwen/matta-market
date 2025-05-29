@@ -3,7 +3,7 @@
     v-if="!authStore.userType"
     class="flex h-full w-screen items-center justify-center"
   >
-    <div class="mx-auto w-full max-w-[900px] rounded-lg bg-white p-8 sm:p-16">
+    <div class="mx-auto w-full max-w-[750px] rounded-lg bg-white p-8 sm:p-10">
       <header class="mb-8">
         <h1 class="mb-1 text-2xl font-medium text-[#101828] sm:text-[30px]">
           Complete your profile
