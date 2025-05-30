@@ -2,10 +2,11 @@
   <div class="w-full">
     <label
       v-if="label"
-      :class="`${classLabel} inline-block input-label `"
       :for="name"
+      :class="`${classLabel} inline-block input-label`"
     >
-      {{ label }} <RedDot v-if="isCumpulsory" />
+      {{ label }}
+      <RedDot v-if="isCumpulsory" />
     </label>
 
     <Combobox v-model="selected">
@@ -46,7 +47,7 @@
 
             <ComboboxOption
               v-for="option in filteredOptions"
-              :key="option.id"
+              :key="option.value"
               :value="option"
               v-slot="{ selected, active }"
             >
@@ -76,21 +77,23 @@
         </TransitionRoot>
       </div>
     </Combobox>
+
     <span
       v-if="error"
       class="mt-2"
       :class="
         msgTooltip
-          ? ' inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded'
-          : ' text-danger-500 block text-sm'
+          ? 'inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded'
+          : 'text-danger-500 block text-sm'
       "
-      >{{ error }}</span
     >
+      {{ error }}
+    </span>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import {
   Combobox,
   ComboboxInput,
@@ -100,55 +103,63 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/vue/20/solid";
-
+import { debounce } from "lodash";
 const props = defineProps({
-  name: {
-    default: "",
-  },
-  label: {
-    type: String,
-  },
-  isCumpulsory: {
-    type: Boolean,
-    default: false,
-  },
+  name: String,
+  label: String,
+  isCumpulsory: Boolean,
   options: {
     type: Array,
     required: true,
   },
   modelValue: {
-    type: Object,
-    default: () => null,
-  },
-  msgTooltip: {
-    default: false,
-  },
-  error: {
+    type: [String, Number],
     default: "",
   },
+  msgTooltip: {
+    type: Boolean,
+    default: false,
+  },
+  error: String,
   classLabel: {
     type: String,
-    default: " ",
+    default: "",
   },
   classInput: {
     type: String,
-    default: "classinput",
+    default: "",
   },
 });
+
 const emit = defineEmits(["update:modelValue", "getQuery"]);
+
+const query = ref("");
+const selected = ref(
+  props.options.find((opt) => opt.value === props.modelValue) || null
+);
+
 const filteredOptions = computed(() => {
-  return props.options.filter((option) =>
-    option.label.toLowerCase().includes(query.value.toLowerCase())
+  return props.options.filter((opt) =>
+    opt.label.toLowerCase().includes(query.value.toLowerCase())
   );
 });
-const selected = ref(props.modelValue || props.options[0]);
-const query = ref("");
-
-watch(selected, (newVal) => {
-  emit("update:modelValue", newVal);
+const debouncedSearch = debounc((val) => {
+  emit("getQuery", val);
+}, 800);
+watch(query, (val) => {
+  debouncedSearch(val);
 });
 
-watch(query, (newVal) => {
-  emit("getQuery", newVal);
+watch(selected, (val) => {
+  if (val) {
+    emit("update:modelValue", val.value);
+  }
 });
+
+watch(
+  () => props.modelValue,
+  (val) => {
+    selected.value = props.options.find((opt) => opt.value === val) || null;
+  }
+);
 </script>

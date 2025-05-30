@@ -30,13 +30,12 @@
             placeholder=""
             label="Which chemical do you use frequently?"
             name="chemical"
-            v-model="chemical"
-            :error="errors.chemical"
+            v-model="buyersQuestion"
+            :error="errors.buyersQuestion"
             :options="products"
             @getQuery="
               (val) => {
                 query.search = val;
-                console.log(val)
               }
             "
           />
@@ -104,7 +103,7 @@ const schema = yup.object({
     .string()
     .required("Email is required")
     .email("Please enter a valid email address"),
-  chemical: yup.mixed().when("businessUserType", {
+  buyersQuestion: yup.string().when("businessUserType", {
     is: 0,
     then: (schema) => schema.required("Chemical is required"),
     otherwise: (schema) => schema.notRequired(),
@@ -118,11 +117,12 @@ const { handleSubmit, defineField, meta, setFieldValue, errors } = useForm({
     businessUserType: 0,
     appCode: config.public.APP_CODE,
     ssoUserCategory: authStore.userInfo?.userCategory,
+    buyersQuestion:""
   },
 });
 
 const [businessUserType] = defineField("businessUserType");
-const [chemical, chemicalAtt] = defineField("chemical");
+const [buyersQuestion] = defineField("buyersQuestion");
 
 // Form submission handler
 const onSubmit = handleSubmit(async (values) => {
