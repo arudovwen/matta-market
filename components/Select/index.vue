@@ -13,7 +13,7 @@
       {{ label }}  <RedDot v-if="isCumpulsory"
     /></label
     >
-    <div class="relative flex items-center">
+    <div class="relative flex items-center custom-select">
       <select
         :name="name"
         :class="`${classInput} input-control block w-full focus:outline-none min-h-[40px] appearance-none`"
@@ -159,7 +159,7 @@ select {
   background-position-x: 98%;
 }
 option {
-  @apply capitalize;
+  @apply capitalize text-secondary-600;
 }
 .dark {
   select {

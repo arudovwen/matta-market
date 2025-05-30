@@ -25,9 +25,9 @@
           </div>
 
           <div class="flex items-center gap-x-3 text-sm">
-            <span class="flex items-center gap-x-3 text-sm">
+            <span class="flex items-center gap-x-4 text-sm md:hidden">
               <span lass="text-sm"><CurrencyChanger /></span>
-              <span class="text-sm hidden lg:inline" v-if="showlang">
+              <span class="text-sm hidden lg:inline ">
                 <GoogleTranslateSelect
                   :fetch-browser-language="false"
                   trigger="click"
@@ -54,7 +54,13 @@
                 </span>
               </button>
             </span>
-
+            <AppButton
+              v-if="!authStore?.isLoggedIn"
+              type="button"
+              @click="navigateTo('/request-product')"
+              text="Request a product"
+              btnClass="text-[#475467] !mr-6 !px-4 !sm:px-6 !py-[7px] !font-semibold text-xs sm:!text-base !normal-case  hidden md:flex border border-primary-500/10 !bg-primary-500/10"
+            />
             <div
               class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
             >
@@ -66,7 +72,7 @@
                 type="button"
                 @click="handleRouting('login')"
                 text="Log in"
-                btnClass="text-[#475467] !px-4 !sm:px-6 !py-[6px] !font-semibold text-xs sm:!text-base hidden md:flex"
+                btnClass="text-[#475467] !px-4 !sm:px-6 !py-[7px] !font-semibold text-xs sm:!text-base hidden md:flex"
               />
 
               <AppButton
@@ -106,17 +112,17 @@
                     <div
                       class="flex items-center gap-x-2 px-[15px] pt-3 pb-[14px] border-b border-[#F4F4F4]"
                     >
-                    <span
-                          class="h-8 w-8 rounded-full flex items-center justify-center text-white bg-[#f90] font-semibold"
-                        >
-                          <NuxtImg
-                            v-if="authStore.userInfo?.profilepic"
-                            alt="avatar"
-                            class="h-8 w-8 rounded-full"
-                            :src="authStore.userInfo?.profilepic"
-                          />
-                          <span v-else>{{ getUserInitials }}</span>
-                        </span>
+                      <span
+                        class="h-8 w-8 rounded-full flex items-center justify-center text-white bg-[#f90] font-semibold"
+                      >
+                        <NuxtImg
+                          v-if="authStore.userInfo?.profilepic"
+                          alt="avatar"
+                          class="h-8 w-8 rounded-full"
+                          :src="authStore.userInfo?.profilepic"
+                        />
+                        <span v-else>{{ getUserInitials }}</span>
+                      </span>
                       <div class="flex-1">
                         <span
                           class="text-[#333] text-[13px] font-semibold block capitalize"
@@ -270,7 +276,7 @@
                   >
                 </NuxtLink>
               </li>
-              <li
+              <!-- <li
                 class="flex gap-x-[6px] items-center text-sm border-transparent group"
               >
                 <NuxtLink
@@ -280,7 +286,7 @@
                 >
                   Request a product</NuxtLink
                 >
-              </li>
+              </li> -->
               <li
                 class="flex gap-x-[6px] items-center text-sm border-transparent group"
               >

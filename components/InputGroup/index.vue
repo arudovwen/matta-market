@@ -240,7 +240,7 @@ export default {
   rounded placeholder:text-slate-400 text-slate-900 text-sm px-3  placeholder:font-light focus:border-slate-600  darks:focus:border-slate-900 darks:text-white;
 }
 .input-label {
-  @apply mb-2 text-slate-500 text-sm leading-6 capitalize cursor-pointer;
+  @apply mb-[6px] text-slate-500 text-sm leading-6 capitalize cursor-pointer;
 }
 .formGroup2 {
   &.has-error {
