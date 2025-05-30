@@ -24,7 +24,7 @@
             <NavSearchBar />
           </div>
 
-          <div class="flex items-center gap-x-3 text-sm">
+          <div class="flex items-center gap-x-4 text-sm">
             <span class="flex items-center gap-x-4 text-sm md:hidden">
               <span lass="text-sm"><CurrencyChanger /></span>
               <span class="text-sm hidden lg:inline ">
@@ -55,18 +55,18 @@
               </button>
             </span>
             <AppButton
-              v-if="!authStore?.isLoggedIn"
+              
               type="button"
               @click="navigateTo('/request-product')"
               text="Request a product"
-              btnClass="text-[#475467] !mr-6 !px-4 !sm:px-6 !py-[7px] !font-semibold text-xs sm:!text-base !normal-case  hidden md:flex border border-primary-500/10 !bg-primary-500/10"
+              btnClass="text-[#475467] !mr-4 !px-4 !sm:px-6 !py-[7px] !font-semibold text-xs sm:!text-sm !normal-case  hidden md:flex border border-primary-500/10 !bg-primary-500/10"
             />
             <div
               class="flex-none order-0 flex-grow-0 h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
             >
               <AppMenu />
             </div>
-            <div class="flex gap-x-3 ml-">
+            <div class="flex gap-x-3">
               <AppButton
                 v-if="!authStore?.isLoggedIn"
                 type="button"
@@ -276,7 +276,7 @@
                   >
                 </NuxtLink>
               </li>
-              <!-- <li
+             <li
                 class="flex gap-x-[6px] items-center text-sm border-transparent group"
               >
                 <NuxtLink
@@ -286,7 +286,7 @@
                 >
                   Request a product</NuxtLink
                 >
-              </li> -->
+              </li>
               <li
                 class="flex gap-x-[6px] items-center text-sm border-transparent group"
               >
