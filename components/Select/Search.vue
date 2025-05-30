@@ -143,7 +143,7 @@ const filteredOptions = computed(() => {
     opt.label.toLowerCase().includes(query.value.toLowerCase())
   );
 });
-const debouncedSearch = debounc((val) => {
+const debouncedSearch = debounce((val) => {
   emit("getQuery", val);
 }, 800);
 watch(query, (val) => {
