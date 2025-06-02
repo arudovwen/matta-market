@@ -4,6 +4,7 @@
     class="bg-[#1849A9] text-xs sm:text-sm py-3"
   >
     <div class="container flex items-center justify-between gap-x-6">
+     
       <div class="flex gap-x-2 text-left md:items-center text-white font-normal">
         <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" />
         <span class="" data-testid="promo"
@@ -19,18 +20,10 @@
         >
       </div>
       <span class="hidden md:flex items-center gap-x-4 text-sm ">
-        <span lass="text-sm"><CurrencyChanger /></span>
-        <span class="text-sm hidden lg:inline text-white">
-          <GoogleTranslateSelect
-            :fetch-browser-language="false"
-            trigger="click"
-            @select="handleGoogleTranslateSelect"
-          />
-        </span>
-
+         
         <button @click="navigateTo('/cart')" class="flex items-center relative">
           <span
-            class="relative h-9 w-9 rounded-full bg-[#F7F7F7] flex items-center justify-center "
+            class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center "
           >
             <AppIcon
               class="text-base md:text-lg text-[#484848]"
@@ -43,6 +36,15 @@
             >
           </span>
         </button>
+        <span lass="text-sm"><CurrencyChanger /></span>
+        <span class="text-sm hidden lg:inline text-white">
+          <GoogleTranslateSelect
+            :fetch-browser-language="false"
+            trigger="click"
+            @select="handleGoogleTranslateSelect"
+          />
+        </span>
+
       </span>
     </div>
   </div>
