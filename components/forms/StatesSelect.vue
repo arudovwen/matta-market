@@ -2,8 +2,11 @@
   <Listbox v-model="selectedOption">
     <div class="relative w-full">
       <ListboxButton
-        :class="classStyles"
-        class="rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+        :class="`rounded-lg px-[14px] py-[10px] h-11 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20 ${
+          errors
+            ? 'inline-block border-danger-500 text-white text-[10px] px-2 py-1 rounded'
+            : 'text-danger-500 block text-sm'
+        } ${classStyles}`"
       >
         <span class="text-sm" v-if="selectedOption">
           <div class="text-[#3A3745] flex items-center gap-x-1">
@@ -31,7 +34,7 @@
             <input
               v-model="query"
               placeholder="Search"
-              class="text-xs rounded-lg px-3 py-1 h-10 w-full border  placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
+              class="text-xs rounded-lg px-3 py-1 h-10 w-full border placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             />
           </div>
           <div class="max-h-60 overflow-y-auto py-2">
@@ -77,6 +80,7 @@ const props = defineProps([
   "placeholder",
   "classStyles",
   "states",
+  "errors",
 ]);
 const emits = defineEmits(["update:modelValue"]);
 const selectedOption = ref(null);
