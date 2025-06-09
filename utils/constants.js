@@ -34,7 +34,7 @@ export const handleRouting = (
   url = appUrl,
   target = "_self"
 ) => {
-  setItem('isMattaSignup', true)
+  setItem("isMattaSignup", true);
   const config = useRuntimeConfig();
   window.location.href = `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`;
 };
@@ -1393,3 +1393,79 @@ export const maxDate = (max) => {
     return inputDate <= maxDate;
   });
 };
+
+export const truckSizeOptions = [
+  {
+    name: "1 ton",
+    label: "1 ton",
+    value: 1,
+  },
+  {
+    name: "2 ton",
+    label: "2 ton",
+    value: 2,
+  },
+  {
+    name: "5 tons",
+    label: "5 tons",
+    value: 5,
+  },
+  {
+    name: "10 tons",
+    label: "10 tons",
+    value: 10,
+  },
+  {
+    name: "15 tons",
+    label: "15 tons",
+    value: 15,
+  },
+  {
+    name: "20 tons",
+    label: "20 tons",
+    value: 20,
+  },
+  {
+    name: "30 tons",
+    label: "30 tons",
+    value: 30,
+  },
+  {
+    name: "45 tons",
+    label: "45 tons",
+    value: 45,
+  },
+];
+
+export const vehicleOptions = [
+  {
+    name: "Delivery Truck",
+    label: "Delivery Truck",
+    value: 0,
+  },
+  {
+    name: "Sided Body",
+    label: "Sided Body",
+    value: 1,
+  },
+  {
+    name: "Flat Bed Truck",
+    label: "Flat Bed Truck",
+    value: 2,
+  },
+  {
+    name: "Tanker Truck",
+    label: "Tanker Truck",
+    value: 3,
+  },
+  {
+    name: "Dump Truck",
+    label: "Dump Truck",
+    value: 4,
+  },
+  {
+    name: "Others",
+    label: "Others",
+    value: 5,
+  },
+];
