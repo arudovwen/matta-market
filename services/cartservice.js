@@ -1,5 +1,14 @@
 import urls from "../helpers/url_helpers";
-import { post, get, del, put, marketPost, marketGet, marketPut, marketDelete } from "../helpers/api_helpers";
+import {
+  post,
+  get,
+  del,
+  put,
+  marketPost,
+  marketGet,
+  marketPut,
+  marketDelete,
+} from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
 
@@ -65,10 +74,20 @@ export async function addPickupLocation(data) {
 }
 
 export async function editPickupLocation(data) {
-  return await marketPut(`${urls.EDIT_PICKUP_ADDRESS}/${data.id}`, data, config);
+  return await marketPut(
+    `${urls.EDIT_PICKUP_ADDRESS}/${data.id}`,
+    data,
+    config
+  );
 }
 export async function confirmpurchase(data) {
   return await marketPost(`${urls.CONFIRM_PURCHASE}`, data, config);
+}
+export async function confirmavailablilty(data) {
+  return await marketPost(`${urls.CONFIRM_AVAILABILITY}`, data, config);
+}
+export async function editOrder(data) {
+  return await marketPost(`${urls.EDIT_ORDER}`, data, config);
 }
 export async function requestACall(data) {
   return await marketGet(`${urls.REQUEST_A_CALL}`, data, config);
@@ -78,11 +97,7 @@ export async function shippingBreakdown() {
   return await marketGet(`${urls.SHIPPONG_COST_BREAKDOWN}`, config);
 }
 export async function confirmpayment(data) {
-  return await marketPost(
-    `${urls.CONFIRM_PAYMENT}`,
-    data,
-    config
-  );
+  return await marketPost(`${urls.CONFIRM_PAYMENT}`, data, config);
 }
 
 export async function getcartorder(data) {

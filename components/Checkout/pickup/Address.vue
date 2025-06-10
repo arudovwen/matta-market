@@ -1,6 +1,6 @@
 <template>
   <div class="py-2" v-if="detail">
-    <div class="flex justify-between items-center">
+    <div class="flex items-center justify-between">
       <p class="text-base font-bold mb-[10px] capitalize">
         {{ detail.storeName }}
       </p>
@@ -8,7 +8,7 @@
     <p class="text-sm mb-[7px]">
       {{ detail.address }} ,{{ detail.lga?` ,${detail.lga}`:'' }}
     </p>
-    <p class="text-sm capitalize mb-2">
+    <p class="mb-2 text-sm capitalize">
       {{ detail.phoneNumber }}
     </p>
     <p class="text-sm capitalize">

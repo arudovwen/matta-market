@@ -2,7 +2,7 @@
   <div
     class="bg-[#101828] rounded-[10px] py-[30px] px-5 w-full lg:w-[250px] xl:w-[360px]"
   >
-    <div class="font-semibold text-2xl text-white pb-6">Order Details</div>
+    <div class="pb-6 text-2xl font-semibold text-white">Order Details</div>
     <div class="flex flex-col gap-y-5">
       <div class="flex justify-between" v-for="item in cartStore?.cart">
         <div>
@@ -13,7 +13,7 @@
             Qty: {{ item.quantity }} {{ item.selectedPackage }}
           </p>
         </div>
-        <p class="font-normal text-xs text-white">
+        <p class="text-xs font-normal text-white">
           {{ currencyFormat(item.packagePrice) }}
         </p>
       </div>
@@ -23,28 +23,28 @@
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Sub-total</p>
 
-        <p class="text-white text-xs">
+        <p class="text-xs text-white">
           {{ currencyFormat(cartStore?.cartTotalAmount) }}
         </p>
       </div>
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">VAT (7.5%)</p>
 
-        <p class="text-white text-xs">
+        <p class="text-xs text-white">
           {{ currencyFormat(cartStore?.cartTotalAmount * cartStore?.tax) }}
         </p>
       </div>
       <div class="flex justify-between" v-if="cartStore?.discountValue">
         <p class="text-sm text-[#E1E1E1]">Discount</p>
 
-        <p class="text-white text-xs">
+        <p class="text-xs text-white">
           - {{ currencyFormat(cartStore?.discountValue) }}
         </p>
       </div>
       <div class="flex justify-between" v-if="cartStore?.referralDiscountValue">
         <p class="text-sm text-[#E1E1E1]">Referral Discount</p>
 
-        <p class="text-white text-xs">
+        <p class="text-xs text-white">
           - {{ currencyFormat(cartStore?.referralDiscountValue) }}
         </p>
       </div>
@@ -54,7 +54,7 @@
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Estimated Shipping Cost</p>
 
-        <p class="text-white font-medium text-sm">
+        <p class="text-sm font-medium text-white">
           {{ currencyFormat(cartStore?.shippingTotal) }}
         </p>
       </div>
@@ -63,7 +63,7 @@
     <div class="flex justify-between mb-[25px]">
       <p class="text-sm text-[#E1E1E1]">Total</p>
 
-      <p class="text-white font-bold">
+      <p class="font-bold text-white">
         {{ currencyFormat(cartStore?.cartTotalwithTax) }}
       </p>
     </div>
@@ -121,7 +121,7 @@ const router = useRouter();
 const referenceData = reactive({
   zohoorderId: null,
   transactionRef: null,
-  orderId: null
+  orderId: null,
 });
 const data = ref(null);
 const status = ref("Make Payment");
@@ -142,6 +142,7 @@ function makePayment() {
     amount: cartStore?.cartTotalwithTax,
     phoneNumber: authStore.userInfo?.phoneNumber,
     reference: referenceData.transactionRef,
+    orderRequest: false,
   };
 
   payWithMonnify(data.value, onModalClose, onSuccess);
@@ -150,12 +151,15 @@ function confirmOrder() {
   // status.value = "Processing order...";
   if (activeMethod.value === "card") {
     loading.value = true;
-    confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress.id })
+    confirmpurchase({
+      shippingAddressId: shippingStore?.defaultAddress.id,
+      orderRequest: false,
+    })
       .then((res) => {
         if (res.status === 200) {
           referenceData.transactionRef = `ORD-${res.data.data}-${nanoid(6)}`;
           referenceData.zohoorderId = `ORD-${res.data.data}`;
-          referenceData.orderId = res.data.data
+          referenceData.orderId = res.data.data;
           makePayment();
         }
       })
@@ -202,7 +206,10 @@ function handleOrderRequest() {
     return;
   }
   requestLoading.value = true;
-  confirmpurchase({ shippingAddressId: shippingStore?.defaultAddress?.id })
+  confirmpurchase({
+    shippingAddressId: shippingStore?.defaultAddress?.id,
+    orderRequest: true,
+  })
     .then((res) => {
       if (res.status === 200) {
         requestLoading.value = false;

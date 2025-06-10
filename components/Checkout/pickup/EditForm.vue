@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white w-full">
+  <div class="w-full bg-white">
     <legend class="block text-[20px] font-bold mb-8 text-left">
       {{ detail ? "Update" : "Add" }} Pickup location
     </legend>
@@ -90,14 +90,14 @@
       </FormGroup>
 
       <div
-        class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-5 mb-9 mt-8"
+        class="grid grid-cols-1 gap-5 mt-8 lg:col-span-2 md:grid-cols-2"
       >
         <AppButton
           type="button"
           :isDisabled="isLoading"
           @click="isOpen = false"
           text="Cancel"
-          btnClass="normal-case bg-trnasparent border border-gray-100 rounded-lg !py-3"
+          btnClass="normal-case bg-trnasparent border border-[#F3F3F3] rounded-lg !py-3"
         />
         <AppButton
           type="submit"

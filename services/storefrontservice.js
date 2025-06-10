@@ -9,9 +9,9 @@ const config = {
 //Orders
 
 export const storefrontorders = withRetryHandling(
-  ({ Status, SortOrder, Search, PageNumber, PageSize }) => {
+  (payload) => {
     return marketGet(
-      `${urls.STOREFRONT_ORDERS}?PageSize=${PageSize}&PageNumber=${PageNumber}&Search=${Search}&SortOrder=${SortOrder}&Status=${Status}`,
+      `${urls.STOREFRONT_ORDERS}?${new URLSearchParams((cleanObject(payload)))}}`,
       config
     );
   }

@@ -12,6 +12,7 @@
     <div>
       <div>
         <SupplierOrdersComponent v-if="active === 'customer orders'" />
+          <SupplierOrdersConfirmation v-if="active === 'pending confirmation'" />
         <SupplierStoreRequests v-if="active === 'customer requests'" />
         <SupplierCustomization v-if="active === 'settings'" />
       </div>
@@ -31,6 +32,11 @@ const tabs = [
     title: "customer orders",
     key: "customer orders",
   },
+    {
+    title: "pending confirmation",
+    key: "pending confirmation",
+  },
+
   {
     title: "customer requests",
     key: "customer requests",
