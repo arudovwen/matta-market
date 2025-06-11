@@ -142,6 +142,10 @@ const ParentOrderStatusText = {
     text: "Payment Confirmed",
     className: StatusClass[2],
   },
+ 4: {
+    text: "Quote request",
+    className: StatusClass[5],
+  },
 
   2: {
     text: "Completed",
