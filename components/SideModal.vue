@@ -6,7 +6,7 @@
       @close="togglePopup"
     >
       <div
-        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+        class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0"
       >
         <TransitionChild
           as="div"
@@ -38,12 +38,12 @@
           leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <div
-            class="absolute w-full bg-white lg:w-auto lg:min-w-[480px] h-screen overflow-y-auto top-0 py-6 right-0 align-bottom text-left shadow-xl transform transition-all sm:align-middle"
+            class="absolute w-full bg-white lg:w-auto lg:min-w-[400px] h-screen overflow-y-auto top-0 py-6 right-0 align-bottom text-left shadow-xl transform transition-all sm:align-middle"
           >
             <slot name="content"> </slot>
             <span class="cursor-pointer" v-if="canClose" @click="togglePopup"
               ><AppIcon icon="heroicons-solid:x"
-                class="w-6 h-6 absolute top-3 text-gray-600 left-3 z-40"
+                class="absolute z-40 w-6 h-6 text-gray-600 top-3 left-3"
             /></span>
           </div>
         </TransitionChild>

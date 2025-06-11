@@ -37,12 +37,12 @@ const selectedPickup = ref(pickupStore.addressesData?.[0]?.id || null);
 const crumbsData = ref([
   {
     title: "Store Orders",
-    url: "/category/markets",
+    url: "/storefront",
   },
 
   {
     title: "Order Confirmation",
-    url: "/category/markets",
+    url: "/storefront?tab=pending confirmation",
   },
   {
     title: orderNumber,

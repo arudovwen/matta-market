@@ -59,7 +59,7 @@
       :isLoading="loading && value == false"
       :isDisabled="loading"
       @click="confirmOrder(false)"
-      text="Confirm product is unavailable"
+      text="Confirm product is Unavailable"
       loadingText="Processing ..."
       btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#F04438] !normal-case mb-4 w-full"
     />

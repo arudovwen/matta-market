@@ -1,7 +1,7 @@
 <template>
   <div v-if="!quoteLoading">
-    <div class="flex justify-between items-center mb-8">
-      <div class="flex gap-x-4 px-5">
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex px-5 gap-x-4">
         <div class="relative flex items-center">
           <span class="absolute left-4 pointer-events-none text-[#667085]"
             ><i class="uil uil-search"></i
@@ -106,17 +106,17 @@
                   class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
                 >
                   <div
-                    class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
+                    class="px-5 py-2 text-sm cursor-pointer hover:bg-gray-50 whitespace-nowrap"
                     @click="openRequest(item)"
                   >
-                    <i class="uil uil-file mr-2"></i> Open quote
+                    <i class="mr-2 uil uil-file"></i> Open quote
                   </div>
 
                   <!-- <div
                   @click="cancelRequest"
-                  class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                  class="px-5 py-2 text-sm hover:bg-gray-50 whitespace-nowrap"
                 >
-                  <i class="uil uil-trash mr-2"></i> Set as Cancelled
+                  <i class="mr-2 uil uil-trash"></i> Set as Cancelled
                 </div> -->
                 </MenuItems>
               </Menu>
@@ -133,7 +133,7 @@
     />
   </div>
 
-  <div class="text-center p-6 lg:p-8 my-20" v-if="quoteLoading">
+  <div class="p-6 my-20 text-center lg:p-8" v-if="quoteLoading">
     <AppLoader />
   </div>
   <div
@@ -143,16 +143,16 @@
     <span class="flex items-center gap-x-3">
       <span>{{ multi.length }} items selected</span>
       <span class="text-gray-300">|</span>
-      <span class="flex gap-x-3 items-center">
-        <button class="uppercase px-2" @click="selectall">select all</button>
-        <button class="uppercase px-2" @click="multi = []">
+      <span class="flex items-center gap-x-3">
+        <button class="px-2 uppercase" @click="selectall">select all</button>
+        <button class="px-2 uppercase" @click="multi = []">
           deselect
         </button></span
       ></span
     >
-    <span class="flex gap-x-4 items-center">
+    <span class="flex items-center gap-x-4">
       <!-- <button
-        class="py-4 px-5 uppercase bg-primary-500 text-white rounded-lg hover:bg-primary/80"
+        class="px-5 py-4 text-white uppercase rounded-lg bg-primary-500 hover:bg-primary/80"
       >
         add to card
       </button> -->
@@ -175,11 +175,11 @@
   <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #content>
       <div
-        class="h-full w-full max-w-[500px] bg-white rounded-lg p-6 lg:py-10 px-6 overflow-auto max-h-full"
+        class="h-full w-full max-w-[400px] bg-white rounded-lg p-6 lg:py-10 px-6 overflow-auto max-h-full"
       >
         <div class="mb-3">
           <p class="text-[13px] text-[#B6B7B9] mb-2">Quote No</p>
-          <h2 class="font-medium text-2xl">{{ quote.quoteNo }}</h2>
+          <h2 class="text-2xl font-medium">{{ quote.quoteNo }}</h2>
         </div>
 
         <hr class="my-3 border-gray-200" />

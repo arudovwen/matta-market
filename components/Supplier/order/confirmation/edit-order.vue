@@ -27,12 +27,12 @@
 
       <div class="relative z-[999] grid grid-cols-2 gap-x-5">
         <FormGroup
-          name="packageId"
-          :error="errors.packageId"
+          name="packageName"
+          :error="errors.packageName"
           label="Package type"
         >
           <SelectVueSelect
-            v-model="packageId"
+            v-model="packageName"
             :options="packageForms"
             :reduce="(title) => title.value"
             placeholder="Select package"
@@ -91,7 +91,7 @@ import { useForm } from "vee-validate";
 import { editOrder } from "~/services/cartservice";
 import { toast } from "vue3-toastify";
 
-const getData = inject("getData")
+const getData = inject("getData");
 const props = defineProps({
   detail: {
     default: null,
@@ -104,18 +104,21 @@ const packForm = reactive({
   orderId: id,
   productName: "",
   brand: null,
+  packageName: null,
   packageId: null,
   purchaseAmount: null,
   isAvailable: false,
+  productId: null
 });
 onMounted(() => {
   if (props.detail) {
     setValues({
       productName: props?.detail?.product,
-      packageId: props?.detail?.selectedPackage,
-      id: props?.detail?.id,
+      packageName: props?.detail?.selectedPackage,
+      productId: props?.detail?.id,
       purchaseAmount: props?.detail?.itemTotal,
       brand: props?.detail?.brand,
+      packageId: props?.detail.packageId,
     });
   }
 });
@@ -158,7 +161,7 @@ const packageForms = [
 //   "orderId": 0,
 //   "brand": "string",
 //   "productId": "string",
-//   "packageId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+//   "packageName": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
 //   "purchasepurchaseAmount": 0
 // }
 const packFormSchema = yup.object({
@@ -166,7 +169,7 @@ const packFormSchema = yup.object({
   purchaseAmount: yup.string().required("purchaseAmount is required"),
   brand: yup.string().nullable(),
   isAvailable: yup.boolean(),
-  packageId: yup.string().nullable(),
+  packageName: yup.string().nullable(),
 });
 
 const { handleSubmit, defineField, errors, setValues } = useForm({
@@ -177,7 +180,7 @@ const { handleSubmit, defineField, errors, setValues } = useForm({
 const [productName] = defineField("productName");
 const [purchaseAmount] = defineField("purchaseAmount");
 const [brand] = defineField("brand");
-const [packageId] = defineField("packageId");
+const [packageName] = defineField("packageName");
 const [isAvailable, isAvailableAtt] = defineField("isAvailable");
 
 const onSubmit = handleSubmit(async (values) => {
@@ -185,8 +188,8 @@ const onSubmit = handleSubmit(async (values) => {
     loading.value = true;
     const { status } = editOrder(values);
     if (status === 200) {
-      getData()
-      toast.success("Product updated!")
+      getData();
+      toast.success("Product updated!");
       emits("close");
     }
   } catch (error) {

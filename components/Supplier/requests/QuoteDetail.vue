@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="mb-8">
-      <p class="text-gray-700 text-base mb-1">Dear {{ quote.sellerName }},</p>
-      <p class="text-gray-700 text-base">
+      <p class="mb-1 text-base text-gray-700">Dear {{ quote.sellerName }},</p>
+      <p class="text-base text-gray-700">
         We’ll be pleased if you could be kind to provide a quote based on the
         details below for <strong>{{ quote.productName }}</strong
         >.
@@ -11,56 +11,56 @@
     <div class="mb-8">
       <div class="grid grid-cols-2 gap-x-3 gap-y-6">
         <div>
-          <p class="font-nomrmal text-sm text-gray-500">Product name</p>
-          <p class="font-medium text-sm">{{ quote.productName }}</p>
+          <p class="text-sm text-gray-500 font-nomrmal">Product name</p>
+          <p class="text-sm font-medium">{{ quote.productName }}</p>
         </div>
         <div>
-          <p class="font-nomrmal text-sm text-gray-500">Supplier</p>
-          <p class="font-medium text-sm">{{ quote.sellerName }}</p>
+          <p class="text-sm text-gray-500 font-nomrmal">Supplier</p>
+          <p class="text-sm font-medium">{{ quote.sellerName }}</p>
         </div>
         <div>
-          <p class="font-nomrmal text-sm text-gray-500">Market</p>
-          <p class="font-medium text-sm">{{ quote.market }}</p>
+          <p class="text-sm text-gray-500 font-nomrmal">Market</p>
+          <p class="text-sm font-medium">{{ quote.market }}</p>
         </div>
         <div>
-          <p class="font-nomrmal text-sm text-gray-500">Application</p>
-          <p class="font-medium text-sm">{{ quote?.applications }}</p>
+          <p class="text-sm text-gray-500 font-nomrmal">Application</p>
+          <p class="text-sm font-medium">{{ quote?.applications }}</p>
         </div>
         <div>
-          <p class="font-nomrmal text-sm text-gray-500">Package type</p>
-          <p class="font-medium text-sm capitalize">
+          <p class="text-sm text-gray-500 font-nomrmal">Package type</p>
+          <p class="text-sm font-medium capitalize">
             {{ quote?.package?.package?.title }}
           </p>
         </div>
         <!-- <div>
-          <p class="font-nomrmal text-sm text-gray-500">Expected Volume</p>
-          <p class="font-medium text-sm">
+          <p class="text-sm text-gray-500 font-nomrmal">Expected Volume</p>
+          <p class="text-sm font-medium">
             {{ quote?.expectedVolume }} {{ quote?.unit }}
           </p>
         </div> -->
       </div>
 
       <div>
-        <!-- <h4 class="text-base font-medium mb-4 text-gray-700">
+        <!-- <h4 class="mb-4 text-base font-medium text-gray-700">
           Order preference
         </h4>
-        <div class="flex items-start gap-x-3 mb-3">
-          <i class="fas fa-clipboard-list text-base text-gray-500 w-5"></i>
+        <div class="flex items-start mb-3 gap-x-3">
+          <i class="w-5 text-base text-gray-500 fas fa-clipboard-list"></i>
           <div>
-            <p class="text-sm flex font-medium items-center gap-x-2">
-              <span class="text-gray-500 text-base">Special instruction:</span>
+            <p class="flex items-center text-sm font-medium gap-x-2">
+              <span class="text-base text-gray-500">Special instruction:</span>
               <span> {{ quote.additionalInformation }}</span>
             </p>
           </div>
         </div> -->
-        <!-- <div class="flex items-start gap-x-3 mb-3">
+        <!-- <div class="flex items-start mb-3 gap-x-3">
           <i
-            class="fa fa-user text-lg text-gray-500 w-5"
+            class="w-5 text-lg text-gray-500 fa fa-user"
             aria-hidden="true"
           ></i>
           <div>
-            <p class="text-sm font-medium mb-2 text-gray-700">Requested by</p>
-            <p class="text-sm mb-1">
+            <p class="mb-2 text-sm font-medium text-gray-700">Requested by</p>
+            <p class="mb-1 text-sm">
               {{ quote.requestedBy }} - {{ quote.buyerBusinessName }}
             </p>
             <p class="text-sm font-normal">{{ quote.contactPhone }}</p>
@@ -68,14 +68,16 @@
         </div> -->
       </div>
       <hr class="my-4" />
-      <div class="bg-[#F1F3F5] rounded-lg p-6 text-matta-black">
+      <div class="bg-[#F1F3F5] border rounded-lg p-6 text-matta-black">
         <div class="mb-6">
-          <label for="formFile" class="mb-2 text-xs block text-matta-black font-bold"
+          <label
+            for="formFile"
+            class="block mb-2 text-xs font-bold text-matta-black"
             >Upload Quote</label
           >
           <div class="relative flex items-center">
             <input
-              class="border flex-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
+              class="flex-1 block w-full text-sm border text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200"
               type="file"
               id="formFile"
               accept=".xls, .xlsx, .png, .jpg, .jpeg, .docx, .pdf"
@@ -86,20 +88,30 @@
             </div>
           </div>
           <div
-            class="text-red-500 mt-1"
+            class="mt-1 text-red-500"
             v-for="error of request$.url.$errors"
             :key="error.$uid"
           >
-            <div class="error-msg text-error text-xs font-semibold">
+            <div class="text-xs font-semibold error-msg text-error">
               {{ error.$message }}
             </div>
           </div>
         </div>
-        <div>
+        <div class="flex items-center justify-between">
+          <span>
+            <button
+              v-if="quote.documentUrl"
+              @click="downloadFile(quote?.documentUrl)"
+              type="button"
+              class="text-primary-500 rounded-lg text-xs px-0 py-[10px]"
+            >
+              Download document
+            </button>
+          </span>
           <button
             @click="handleSubmit"
             :disabled="!form.url || isLoading"
-            class="bg-matta-black text-sm px-6 py-2 rounded-lg text-white active:scale-95 ml-auto block disabled:opacity-60"
+            class="block px-6 py-2 ml-auto text-sm text-white rounded-lg bg-matta-black active:scale-95 disabled:opacity-60"
           >
             Upload
             <i
@@ -110,6 +122,25 @@
           </button>
         </div>
       </div>
+      <div class="mt-8">
+        <AppButton
+          text="Confirm product is available"
+          :isLoading="loading && value == true"
+          :isDisabled="loading"
+          @click="confirmOrder(true)"
+          loadingText="Processing ..."
+          btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
+        />
+
+        <AppButton
+          :isLoading="loading && value == false"
+          :isDisabled="loading"
+          @click="confirmOrder(false)"
+          text="Confirm product is Unavailable"
+          loadingText="Processing ..."
+          btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#F04438] !normal-case mb-4 w-full"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -118,7 +149,8 @@ import { uploaddocument } from "~/services/onboardingservices";
 import { uploaddoc } from "~/services/quoteservice";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
+import { confirmavailablilty } from "~/services/cartservice";
 
 const quote = inject("quote");
 
@@ -152,7 +184,7 @@ async function handleFile(e) {
     base64: await toBase64(file),
     ext: `.${ext}`,
   }).then((res) => {
-    form.url = res.data.message;
+    form.url = res.data.data;
     isUploading.value = false;
   });
 }
@@ -175,7 +207,34 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
+}
+async function confirmOrder(val) {
+  try {
+    if (!selectedPickup.value) {
+      toast.info("Select a pickup location");
+      return;
+    }
+    loading.value = true;
+    value.value = val;
+    const res = await confirmavailablilty({
+      shippingAddressId: selectedPickup.value,
+      orderItemId: id,
+      available: val,
+    });
+
+    if (res.status === 200) {
+      toast.success("Successful");
+    }
+  } catch (err) {
+    const errorText = `${
+      err?.response?.data?.Message || err?.response?.data?.message
+    }, Contact us for assistance on your order`;
+    toast.error(errorText);
+    loading.value = false;
+  } finally {
+    value.value = null;
+  }
 }
 </script>

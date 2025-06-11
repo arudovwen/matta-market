@@ -3,7 +3,7 @@
     <div
       class="flex items-center justify-between px-[30px] py-4 border-b border-[#F4F4F4]"
     >
-      <h2 class="text-xl font-semibbold text-[#333333]">Pickup Location</h2>
+      <h2 class="text-xl font-semibold text-[#333333]">Pickup Location</h2>
       <AppButton
         @click="
           () => {
