@@ -15,6 +15,7 @@
         placeholder=""
         type="text"
         :error="errors.productName"
+        disabled
       />
       <Textinput
         label="Brand"
@@ -22,7 +23,7 @@
         name="brand"
         placeholder=""
         type="text"
-        :error="errors.brand"
+        :error="errors.brand" disabled
       />
 
       <div class="relative z-[999] grid grid-cols-2 gap-x-5">
@@ -31,7 +32,7 @@
           :error="errors.packageName"
           label="Package type"
         >
-          <SelectVueSelect
+          <SelectVueSelect disabled
             v-model="packageName"
             :options="packageForms"
             :reduce="(title) => title.value"
@@ -75,12 +76,11 @@
       </div>
     </div>
     <div class="flex items-center justify-end gap-x-4">
-      <button
+      <AppButton
         type="submit"
-        class="w-full px-10 py-4 text-sm leading-none text-white rounded-lg appearance-none bg-primary-500 hover:opacity-70"
-      >
-        Update Order
-      </button>
+        btnClass="w-full px-10 py-4 text-sm leading-none text-white rounded-lg appearance-none bg-primary-500 hover:opacity-70"
+        text="    Update Order"
+      />
     </div>
   </form>
 </template>
@@ -108,14 +108,14 @@ const packForm = reactive({
   packageId: null,
   purchaseAmount: null,
   isAvailable: false,
-  productId: null
+  productId: null,
 });
 onMounted(() => {
   if (props.detail) {
     setValues({
       productName: props?.detail?.product,
       packageName: props?.detail?.selectedPackage,
-      productId: props?.detail?.id,
+      productId: props?.detail?.zohoProductId,
       purchaseAmount: props?.detail?.itemTotal,
       brand: props?.detail?.brand,
       packageId: props?.detail.packageId,
@@ -186,7 +186,7 @@ const [isAvailable, isAvailableAtt] = defineField("isAvailable");
 const onSubmit = handleSubmit(async (values) => {
   try {
     loading.value = true;
-    const { status } = editOrder(values);
+    const { status } = await editOrder(values);
     if (status === 200) {
       getData();
       toast.success("Product updated!");

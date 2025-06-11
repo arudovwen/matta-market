@@ -8,8 +8,8 @@
       @click="router.push('/markets')"
     /> -->
 
-    <div class="rounded-lg bg-white">
-      <div class="hidden lg:flex justify-between items-center mb-8 px-5">
+    <div class="bg-white rounded-lg">
+      <div class="items-center justify-between hidden px-5 mb-8 lg:flex">
         <div class="flex gap-x-4">
           <div class="relative flex items-center">
             <span class="absolute left-4 pointer-events-none text-[#667085]"
@@ -24,7 +24,7 @@
               type="search"
             />
           </div>
-          <div class="flex relative items-center">
+          <div class="relative flex items-center">
             <Select
               v-model="status"
               :options="subOptions"
@@ -73,7 +73,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  {{ moment(item.orderDate).format("lll") }}
+                  {{ moment(item.lastModified).format("lll") }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
@@ -93,12 +93,13 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <div
+                  <button
+                    type="button"
                     class="text-sm whitespace-nowrap hover:underline"
                     @click="openOrder(item)"
                   >
                     View order
-                  </div>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -112,7 +113,7 @@
         />
       </div>
     </div>
-    <div class="text-center p-6 lg:p-8 my-20" v-if="isLoading">
+    <div class="p-6 my-20 text-center lg:p-8" v-if="isLoading">
       <AppLoader />
     </div>
     <div class="p-5">
@@ -129,11 +130,11 @@
   <SideModal :isOpen="isOpen" @togglePopup="openModal">
     <template #content>
       <div
-        class="h-full w-full bg-white rounded-lg p-6 lg:p-8 overflow-auto max-h-full"
+        class="w-full h-full max-h-full p-6 overflow-auto bg-white rounded-lg lg:p-8"
       >
         <div class="mb-3" v-if="!isOrderLoading">
           <p class="text-[13px] text-[#B6B7B9] mb-2">Order ID</p>
-          <h2 class="font-medium text-2xl">#{{ order?.orderNumber }}</h2>
+          <h2 class="text-2xl font-medium">#{{ order?.orderNumber }}</h2>
         </div>
 
         <hr class="my-3 border-gray-200" />
@@ -222,10 +223,10 @@ const subOptions = [
 const isLoading = ref(true);
 const isOrderLoading = ref(false);
 function getData() {
-	isLoading.value = true;
-	
+  isLoading.value = true;
+
   storefrontorders(queryParams)
-	.then((res) => {
+    .then((res) => {
       if (res.status) {
         orders.value = res.data.data;
         queryParams.totalCount = res.data.totalCount;
@@ -260,7 +261,7 @@ function openModal() {
   isOpen.value = !isOpen.value;
 }
 
-const theads = ["order id", "customer name", "created", "amount", "status", ""];
+const theads = ["order id", "customer name", "updated at", "amount", "status", ""];
 
 function next() {
   queryParams.PageNumber++;

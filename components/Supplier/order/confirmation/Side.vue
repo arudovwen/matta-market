@@ -28,7 +28,7 @@
         </p>
       </div>
     </div>
-    <hr class="my-[20px] border-white/10" />
+    <!-- <hr class="my-[20px] border-white/10" />
     <div>
       <div class="flex justify-between">
         <p class="text-sm text-[#E1E1E1]">Total cost of products</p>
@@ -37,7 +37,7 @@
           {{ currencyFormat(order?.orderTotal) }}
         </p>
       </div>
-    </div>
+    </div> -->
     <hr class="my-[20px] border-white/10" />
     <div class="flex justify-between mb-[25px]">
       <p class="text-sm text-[#E1E1E1]">Total</p>
@@ -85,7 +85,7 @@ async function confirmOrder(val) {
     value.value = val;
     const res = await confirmavailablilty({
       shippingAddressId: selectedPickup.value,
-      orderItemId: id,
+      orderItemId: order.value?.orderDetails?.[0]?.id,
       available: val,
     });
 

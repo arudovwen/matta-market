@@ -51,7 +51,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  {{ moment(item.orderDate).format("lll") }}
+                  {{ moment(item.lastModified).format("lll") }}
                 </td>
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
@@ -72,7 +72,7 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <div
+                  <button type="button"
                     class="text-sm whitespace-nowrap hover:underline"
                     @click="
                       navigateTo(
@@ -81,7 +81,7 @@
                     "
                   >
                     View order
-                  </div>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -219,7 +219,7 @@ function openModal() {
   isOpen.value = !isOpen.value;
 }
 
-const theads = ["order id", "customer", "created", "amount", "status", ""];
+const theads = ["order id", "customer", "updated at", "amount", "status", ""];
 
 const debounceSearch = debounce(() => {
   getData();
