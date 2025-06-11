@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { get, marketGet } from "../helpers/api_helpers";
+import { marketGet } from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
 
@@ -11,7 +11,7 @@ const config = {
 export const storefrontorders = withRetryHandling(
   (payload) => {
     return marketGet(
-      `${urls.STOREFRONT_ORDERS}?${new URLSearchParams((cleanObject(payload)))}}`,
+      `${urls.STOREFRONT_ORDERS}?${new URLSearchParams((cleanObject(payload)))}`,
       config
     );
   }
