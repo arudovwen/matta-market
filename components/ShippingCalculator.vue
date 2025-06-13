@@ -17,7 +17,7 @@
               name="fullName"
               placeholder=""
               type="text"
-              :error="errors.name"
+              :error="errors.fullName"
               classInput="!w-full"
             />
           </div>
@@ -38,13 +38,13 @@
         <div class="w-full flex flex-row justify-between">
           <div class="w-[48%]">
             <Textinput
-              label="Company (optional)"
-              v-model="company"
-              v-bind="companyAtt"
-              name="company"
+              label="Consignment"
+              v-model="consignment"
+              v-bind="consignmentAtt"
+              name="consignment"
               placeholder=""
               type="text"
-              :error="errors.company"
+              :error="errors.consignment"
               classInput="!w-full"
               info
               infoTitle="What is the appearance of the product?"
@@ -60,6 +60,7 @@
               <FormsStatesSelect
                 v-model="pickupLocation"
                 :vbind="pickupLocationAtt"
+                :errors="errors.pickupLocation"
                 :states="countries.find((i) => i.name === 'Nigeria')?.states"
               />
             </FormGroup>
@@ -68,7 +69,7 @@
         <div class="w-full flex flex-row justify-between">
           <div class="w-[48%]">
             <FormGroup
-              name="title"
+              name="destination"
               :error="errors.destination"
               label="Destination"
               isCumpulsory
@@ -76,19 +77,21 @@
               <FormsStatesSelect
                 v-model="destination"
                 :vbind="destinationAtt"
+                :errors="errors.destination"
                 :states="countries.find((i) => i.name === 'Nigeria')?.states"
               />
             </FormGroup>
           </div>
           <div class="w-[48%]">
             <Textinput
-              v-model="size"
-              v-bind="sizeAtt"
-              name="size"
+              v-model="consignmentWeight"
+              v-bind="consignmentWeightAtt"
+              name="consignmentWeight"
               placeholder=""
               type="number"
               isCumpulsory
-              label="Package Size"
+              label="Consignment Weight"
+              :error="errors.consignmentWeight"
               info
               infoTitle="Indicate what quantity of unit of measurement makes up the selected package type"
             >
@@ -106,6 +109,28 @@
                 />
               </template>
             </Textinput>
+          </div>
+        </div>
+        <div class="w-full flex flex-row justify-between">
+          <div class="w-[48%]">
+            <SelectVueSelect
+              label="Truck Size"
+              container-class="mt-6"
+              :options="truckSizeOptions"
+              :reduce="(p) => p.value"
+              v-model="truckSize"
+              :error="errors.truckSize"
+            />
+          </div>
+          <div class="w-[48%]">
+            <SelectVueSelect
+              label="Truck Body"
+              container-class="mt-6"
+              :options="vehicleOptions"
+              :reduce="(p) => p.value"
+              v-model="truckType"
+              :error="errors.truckType"
+            />
           </div>
         </div>
         <div
@@ -126,14 +151,14 @@
         </div>
         <button
           @click="cost = null"
-          class="bg-[#1570EF] w-full text-white flex justify-center items-center mt-4 rounded-[5px] px-[24px] py-[9px] gap-x-1 font-semibold"
+          class="bg-[#E50031] w-full text-white flex justify-center items-center mt-4 rounded-[5px] px-[24px] py-[9px] gap-x-1 font-semibold"
         >
           <span class="text-[#fff]">Do another calculation</span>
         </button>
       </template>
       <button
         v-else
-        class="bg-[#1570EF] w-full text-white flex justify-center items-center mt-4 rounded-[5px] px-[24px] py-[9px] gap-x-1 font-semibold"
+        class="bg-[#E50031] w-full text-white flex justify-center items-center mt-4 rounded-[5px] px-[24px] py-[9px] gap-x-1 font-semibold"
       >
         <span v-if="!isLoading" class="text-[#fff]">Calculate</span>
         <template v-if="isLoading">
@@ -183,17 +208,19 @@ const {
   validationSchema: yup.object({
     fullName: yup.string().required(),
     email: yup.string().email().required(),
-    companyName: yup.string().notRequired(),
+    consignment: yup.string().required(),
     pickupLocation: yup.string().required(),
     destination: yup.string().required(),
-    size: yup.number(),
+    consignmentWeight: yup.number(),
     unit: yup.string().required(),
+    truckSize: yup.string().required(),
+    truckType: yup.string().required(),
   }),
   initialValues: reactive({
     fullName: "",
     email: "",
-    companyName: "",
-    size: null,
+    consignment: "",
+    consignmentWeight: null,
     unit: "gramme",
     pickupLocation: "",
     destination: "",
@@ -202,11 +229,14 @@ const {
 
 const [fullName, fullNameAtt] = defineField("fullName");
 const [email, emailAtt] = defineField("email");
-const [company, companyAtt] = defineField("companyName");
+const [consignment, consignmentAtt] = defineField("consignment");
 const [pickupLocation, pickupLocationAtt] = defineField("pickupLocation");
 const [destination, destinationAtt] = defineField("destination");
-const [size, sizeAtt] = defineField("size");
+const [consignmentWeight, consignmentWeightAtt] =
+  defineField("consignmentWeight");
 const [unit, unitAtt] = defineField("unit");
+const [truckSize, truckSizeAtt] = defineField("truckSize");
+const [truckType, truckTypeAtt] = defineField("truckType");
 
 const cost = ref(null);
 const requestError = ref(null);
@@ -216,7 +246,7 @@ const calculate = (v) => {
   isLoading.value = true;
   calculateCost({
     ...values,
-    size: parseFloat(values.size),
+    consignmentWeight: parseFloat(values.consignmentWeight),
   })
     .then((res) => {
       cost.value = res.data.data?.cost;
@@ -229,15 +259,18 @@ const calculate = (v) => {
 };
 
 const measurements = [
-  { value: "Gram", name: "Gramme", label: "Gramme" },
-  { value: "Kilogram", name: "Kilogramme", label: "Kilogram" },
-  { value: "Liter", name: "Litre", label: "Litre" },
-  { value: "CubicMeter", name: "Cubicmetre", label: "Cubic Metre" },
-  { value: "SquareMeter", name: "Squaremetre", label: "Square Metre" },
-  { value: "Tonne", name: "Ton", label: "Ton" },
-  { value: "Milliliter", name: "Millilitre", label: "Millilitre" },
-  { value: "mm", name: "Millimetre", label: "Millimetre" },
-  { value: "mm", name: "Millimetre", label: "Millimetre" },
+  { value: "g", name: "Gramme (g)", label: "Gramme (g)" },
+  { value: "kg", name: "Kilogramme (kg)", label: "Kilogramme (kg)" },
+  { value: "l", name: "Litre (l)", label: "Litre (l)" },
+  { value: "m3", name: "Cubic metre (m3)", label: "Cubic metre (m3)" },
+  { value: "sqm", name: "Square metre (sqm)", label: "Square metre (sqm)" },
+  { value: "truck", name: "Truck", label: "Truck" },
+  { value: "ton", name: "Ton (ton)", label: "Ton (ton)" },
+  { value: "ml", name: "Millilitre (ml)", label: "Millilitre (ml)" },
+  { value: "mm", name: "Millimetre (mm)", label: "Millimetre (mm)" },
+  { value: "bag", name: "Bag", label: "Bag" },
+  { value: "drum", name: "Drum", label: "Drum" },
+  { value: "others", name: "Others", label: "Others" },
 ];
 
 const onSubmit = handleSubmit((values) => calculate(values));
