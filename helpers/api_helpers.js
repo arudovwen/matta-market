@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { toast } from "vue3-toastify";
 
-// Max refresh attempts
+// Max refresh attempts 2
 const MAX_REFRESH_ATTEMPTS = 2;
 let refreshAttemptCount = 0;
 let hasLoggedOut = false; // Track if logout has already been called
