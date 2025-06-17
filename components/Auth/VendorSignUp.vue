@@ -49,10 +49,10 @@
         placeholder=""
         label="Phone number"
         type="tel"
-        name="phone"
-        v-bind="phoneAtt"
-        v-model="phone"
-        :error="errors.phone"
+        name="phoneNumber"
+        v-bind="phoneNumberAtt"
+        v-model="phoneNumber"
+        :error="errors.phoneNumber"
         isCumpulsory
       />
     </div>
@@ -173,7 +173,7 @@ const props = defineProps({
 });
 const emits = defineEmits(["close", "toggleAuth"]);
 const route = useRoute();
-const config = useRuntimeConfig()
+const config = useRuntimeConfig();
 const { type } = route.params;
 const agree = ref(false);
 const authStore = useAuthStore();
@@ -184,13 +184,13 @@ const formValues = {
   email: "",
   firstName: "",
   lastName: "",
-  phone: "",
+  phoneNumber: "",
   password: "",
   confirmPassword: "",
   business_UserType: type === "register" || !props.main ? 0 : 1,
   companyName: "",
   AgentReferralCode: "",
-  appCode: config.public.APP_CODE
+  appCode: config.public.APP_CODE,
 };
 const schema = yup.object({
   business_UserType: yup.string(),
@@ -205,7 +205,7 @@ const schema = yup.object({
     otherwise: (schema) => schema.required("Company name is required"),
   }),
   lastName: yup.string().required("Last name is required"),
-  phone: yup.string().required("Phone number is required"),
+  phoneNumber: yup.string().required("Phone number is required"),
   password: yup
     .string()
     .required(
@@ -231,7 +231,7 @@ const [email, emailAtt] = defineField("email");
 const [password, passwordAtt] = defineField("password");
 const [firstName, firstNameAtt] = defineField("firstName");
 const [lastName, lastNameAtt] = defineField("lastName");
-const [phone, phoneAtt] = defineField("phone");
+const [phoneNumber, phoneNumberAtt] = defineField("phoneNumber");
 const [confirmPassword, confirmPasswordAtt] = defineField("confirmPassword");
 const [companyName, companyNameAtt] = defineField("companyName");
 const [AgentReferralCode, AgentReferralCodeAtt] =
