@@ -7,7 +7,7 @@
         <div class="max-w-[250px] w-full hidden lg:block">
           <StorefrontSideBar />
         </div>
-        <div class="flex-1 flex flex-col gap-y-6 overflow-y-auto no-scrollbar">
+        <div class="flex flex-col flex-1 overflow-y-auto gap-y-6 no-scrollbar">
           <StorefrontContent />
           <Pagination
             v-if="
@@ -62,7 +62,7 @@ const query = reactive({
   sortOrder: "",
   sortBy: "",
   storelug: vendor.toLowerCase(),
-  withZoho: false
+  withZoho: true
 });
 
 function perPage({ currentPerPage }) {
