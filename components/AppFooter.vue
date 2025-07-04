@@ -3,7 +3,7 @@
     <div v-for="n in extraContent" :key="n.key" data-testid="extraContent">
       <div class="container" v-if="route.name == n.key">
         <div
-          class="flex justify-between md:gap-x-20 flex-col md:flex-row mb-6 md:mb-0"
+          class="flex flex-col justify-between mb-6 md:gap-x-20 md:flex-row md:mb-0"
         >
           <div class="flex-1">
             <div class="">
@@ -32,9 +32,9 @@
       </div>
     </div>
 
-    <div class="rounded-lg container">
+    <div class="container rounded-lg">
       <div
-        class="grid text-center lg:text-left grid-cols-1 lg:grid-cols-4 gap-y-8 lg:gap-x-10 lg:pt-8 md:mb-14"
+        class="grid grid-cols-1 text-center lg:text-left lg:grid-cols-4 gap-y-8 lg:gap-x-10 lg:pt-8 md:mb-14"
       >
         <div class="">
           <div class="mb-[15px]">
@@ -69,7 +69,7 @@
           </div>
         </div>
         <div
-          class="grid grid-cols-2 md:grid-cols-3 gap-y-8 md:gap-x-10 col-span-3 text-left"
+          class="grid grid-cols-2 col-span-3 text-left md:grid-cols-3 gap-y-8 md:gap-x-10"
         >
           <div v-for="n in navs" :key="n.subject">
             <span
@@ -97,7 +97,7 @@
             </ul>
           </div>
         </div>
-        <div class="text-sm lg:hidden text-white">
+        <div class="text-sm text-white lg:hidden">
           <!-- <GoogleTranslateSelect
             :fetch-browser-language="false"
             :languages="[
@@ -121,17 +121,17 @@
 
       <hr class="border-[#182230] mb-6" />
       <div
-        class="flex flex-col-reverse lg:flex-row gap-4 lg:gap-0 justify-between lg:items-center"
+        class="flex flex-col-reverse justify-between gap-4 lg:flex-row lg:gap-0 lg:items-center"
       >
         <div
           class="order-1 md:grid-cols-2 grid gap-y-3 lg:gap-y-6 md:gap-y-0 text-left md:gap-x-4 text-[#EAECF0]"
         >
-          <div class="order-2 lg:order-1 flex justify-between items-center">
+          <div class="flex items-center justify-between order-2 lg:order-1">
             <p class="text-sm">
               © {{ new Date().getFullYear() }} Matta. All Rights Reserved.
             </p>
           </div>
-          <div class="order-1 lg:order-2 flex gap-x-2 md:gap-x-4 items-center">
+          <div class="flex items-center order-1 lg:order-2 gap-x-2 md:gap-x-4">
             <NuxtLink to="/privacy-policies" class="text-sm md:text-sm"
               >Privacy policy</NuxtLink
             >
@@ -192,7 +192,7 @@ const navs = [
       },
       {
         title: "Logistics solutions",
-        url: "#",
+        url: "https://fluxafrica.co/",
       },
 
       {
