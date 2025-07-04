@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="productUrl" class="w-full block">
+  <NuxtLink :to="productUrl" class="block w-full">
     <div
       class="w-full min-w-[160px] sm:max-w-[160px] md:min-w-[200px] md:max-w-[200px] xl:max-w-[280px] bg-white darks:bg-gray-800 rounded-[10px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.05)] darks:shadow-[0px_2px_8px_0px_rgba(0,0,0,0.1)] overflow-hidden"
     >
@@ -14,23 +14,22 @@
             class="text-xs sm:text-sm md:text-base darks:text-white"
           />
         </span>
-        <img
+        <NuxtImg
           v-if="detail.converPhoto"
           :src="detail.converPhoto"
           alt="Card"
           width="276"
           height="160"
-          class="w-full h-full object-cover"
+          class="object-cover w-full h-full"
           fit="cover"
-          loading="lazy"
-          crossorigin
+       
         />
         <div
           v-else
-          class="w-full h-full bg-gray-200 bg-cover bg-center relative"
+          class="relative w-full h-full bg-gray-200 bg-center bg-cover"
         ></div>
       </div>
-      <div class="w-full py-3 md:py-5 px-3 xl:px-5">
+      <div class="w-full px-3 py-3 md:py-5 xl:px-5">
         <span
           class="block mb-1 font-medium truncate max-w-[120px] md:max-w-max text-[12px] sm:text-sm xl:text-base darks:text-white leading-tight"
           >{{ detail.title }}</span
@@ -39,17 +38,17 @@
           class="block mb-[14px] sm:mb-[25px] text-[10px] sm:text-[12px] xl:text-sm truncate max-w-max text-[#666] darks:text-white/80 leading-tight"
           >{{ detail.manufacturer }}</span
         >
-        <div class="flex justify-between items-start md:items-center">
+        <div class="flex items-start justify-between md:items-center">
           <span
             v-if="detail.hidePrice"
             class="font-semibold text-[12px] sm:text-sm xl:text-base text-[#2176FF] leading-tight"
             >Request Quote</span
           >
           <span
-            class="text-base flex flex-col md:flex-row gap-x-1 md:items-center"
+            class="flex flex-col text-base md:flex-row gap-x-1 md:items-center"
             v-else
           >
-            <span class="gap-x-1 flex items-center">
+            <span class="flex items-center gap-x-1">
           
               <span
                 class="font-bold ml-[2px] text-[12px] sm:text-sm xl:text-base text-[#333] darks:text-white leading-tight"

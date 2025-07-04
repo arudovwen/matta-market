@@ -1,7 +1,7 @@
 <template>
   <div class="rounded-[20px] bg-white p-4">
     <div class="mb-4 sm:mb-8 relative h-[100px] sm:h-[150px]">
-      <img
+      <NuxtImg
         alt="cover"
         class="h-[100px] sm:h-[150px] w-full rounded-[20px] object-cover z-[2] relative"
         :src="
@@ -16,7 +16,7 @@
       <span
         class="w-16 sm:w-20 h-16 sm:h-20 rounded-lg bg-white shadow p-4 flex items-center justify-center absolute left-5 -bottom-10 z-[2]"
       >
-        <img
+        <NuxtImg
           alt="prod"
           class=""
           src="../assets/img/logo.svg"
@@ -51,7 +51,7 @@
               from
             </p>
             <p
-              class="font-medium text-base sm:text-lg lg:text-xl text-matta-black"
+              class="text-base font-medium sm:text-lg lg:text-xl text-matta-black"
             >
               {{ currencyFormat(product.price) }}
               <span class="font-normal text-xs lg:text-[13px] uppercase"
@@ -73,12 +73,12 @@
 
         <hr class="my-3 sm:my-4 border-[#E7EBEE]" />
         <div>
-          <div class="flex justify-start gap-x-2 items-center">
-            <p class="font-normal text-sm text-matta-black">
-              <i class="uil uil-box mr-1"></i> {{ product.optionCount }} options
+          <div class="flex items-center justify-start gap-x-2">
+            <p class="text-sm font-normal text-matta-black">
+              <i class="mr-1 uil uil-box"></i> {{ product.optionCount }} options
             </p>
             <span class="bg-[#ddd] rounded-full h-1 w-1"></span>
-            <p class="font-normal text-sm text-matta-black">
+            <p class="text-sm font-normal text-matta-black">
               {{ product.packType }}
             </p>
           </div>
