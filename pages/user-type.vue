@@ -1,7 +1,7 @@
 <template>
   <section
     v-if="!authStore.userType"
-    class="flex h-full w-screen items-center justify-center"
+    class="flex items-center justify-center w-screen h-full"
   >
     <div class="mx-auto w-full max-w-[750px] rounded-lg bg-white p-8 sm:p-10">
       <header class="mb-8">
@@ -13,8 +13,8 @@
         </p>
       </header>
 
-      <form @submit.prevent="onSubmit" class="w-full">
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
+      <form @submit.prevent="onSubmit" class="grid w-full gap-y-6">
+        <div class="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-2">
           <AuthUserTypeCard
             v-for="option in userTypeOptions"
             :key="option.type"
@@ -25,7 +25,7 @@
             @click="setFieldValue('businessUserType', option.type)"
           />
         </div>
-        <div class="mt-6" v-if="businessUserType === 0">
+        <div class="" v-if="businessUserType === 0">
           <SelectSearch
             placeholder=""
             label="Which chemical do you use frequently?"
@@ -38,6 +38,14 @@
                 query.search = val;
               }
             "
+          />
+        </div>
+
+        <div>
+          <Checkbox
+            v-model.value="allowNewsLetter"
+            label="I agree to receive Matta’s newsletter with price insights, product alerts, and sourcing deals. You can unsubscribe anytime."
+            labelClass="text-xs lg:text-sm"
           />
         </div>
 
@@ -99,7 +107,7 @@ const userTypeOptions = [
 // Form setup
 const schema = yup.object({
   businessUserType: yup.number().required(),
-   email: yup
+  email: yup
     .string()
     .required("Email is required")
     .email("Please enter a valid email address"),
@@ -108,6 +116,7 @@ const schema = yup.object({
     then: (schema) => schema.required("Chemical is required"),
     otherwise: (schema) => schema.notRequired(),
   }),
+  allowNewsLetter: yup.boolean().default(false),
 });
 
 const { handleSubmit, defineField, meta, setFieldValue, errors } = useForm({
@@ -117,13 +126,14 @@ const { handleSubmit, defineField, meta, setFieldValue, errors } = useForm({
     businessUserType: 0,
     appCode: config.public.APP_CODE,
     ssoUserCategory: authStore.userInfo?.userCategory,
-    buyersQuestion:""
+    buyersQuestion: "",
+    allowNewsLetter: false,
   },
 });
 
 const [businessUserType] = defineField("businessUserType");
 const [buyersQuestion] = defineField("buyersQuestion");
-
+const  [allowNewsLetter] = defineField("allowNewsLetter");
 // Form submission handler
 const onSubmit = handleSubmit(async (values) => {
   try {
