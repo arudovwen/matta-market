@@ -40,41 +40,41 @@ export default defineNuxtConfig({
     enabled: true,
     debug: false,
   },
-  security: {
-    hidePoweredBy: false,
-    headers: {
-      crossOriginEmbedderPolicy: "unsafe-none",
-      contentSecurityPolicy: {
-        "img-src": [
-          "'self'",
-          "https:",
-          "data:",
-          "https://proxy.matta.trade",
-          "https://res.cloudinary.com",
-          "https://matta.s3.us-east-1.amazonaws.com",
-        ],
-        "script-src": [
-          "'self'",
-          "https:",
-          "'unsafe-inline'",
-          "'strict-dynamic'",
-          "'nonce-{{nonce}}'",
-        ],
-        "upgrade-insecure-requests": true,
-      },
-      xFrameOptions: "deny",
-    },
-  },
+  // security: {
+  //   hidePoweredBy: false,
+  //   headers: {
+  //     crossOriginEmbedderPolicy: "unsafe-none",
+  //     contentSecurityPolicy: {
+  //       "img-src": [
+  //         "'self'",
+  //         "https:",
+  //         "data:",
+  //         "https://gateway.matta.trade",
+  //         "https://res.cloudinary.com",
+  //         "https://matta.s3.us-east-1.amazonaws.com",
+  //       ],
+  //       "script-src": [
+  //         "'self'",
+  //         "https:",
+  //         "'unsafe-inline'",
+  //         "'strict-dynamic'",
+  //         "'nonce-{{nonce}}'",
+  //       ],
+  //       "upgrade-insecure-requests": true,
+  //     },
+  //     xFrameOptions: "deny",
+  //   },
+  // },
 
-  cache: {
-    useHostPrefix: false,
-    pages: ["/"],
-    store: {
-      type: "memory",
-      max: 100,
-      ttl: 60,
-    },
-  },
+  // cache: {
+  //   useHostPrefix: false,
+  //   pages: ["/"],
+  //   store: {
+  //     type: "memory",
+  //     max: 100,
+  //     ttl: 60,
+  //   },
+  // },
 
   runtimeConfig: {
     public: {
