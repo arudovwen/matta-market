@@ -142,6 +142,8 @@ const urls = {
   STOREFRONT_ORDERS: "v1/storefront/orders",
   STOREFRONT_ORDER_DETAILS: "v1/storefront/orderdetails",
   CONFIRM_AVAILABILITY: "/v1/storefront/confirm-order-availability",
+  CONFIRM_QUOTE_AVAILABILITY: "/v1/quotes/confirm-quote",
+
   EDIT_ORDER: "/v1/storefront/edit-order",
 
   //SAMPLE requests

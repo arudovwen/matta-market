@@ -40,13 +40,13 @@
           {{ currencyFormat(detail?.itemTotal) }}
         </p>
 
-        <AppButton
+        <!-- <AppButton
           @click="open = true"
           text="Edit Order"
           icon="charm:refresh"
           btnClass=" !px-0  !py-[0] !text-[11px] sm:text-xs md:text-sm !font-normal !text-primary-500"
           iconClass="!text-[10px] md:!text-base !mr-1"
-        />
+        /> -->
       </div>
     </div>
   </div>

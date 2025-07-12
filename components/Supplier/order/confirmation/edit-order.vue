@@ -23,7 +23,8 @@
         name="brand"
         placeholder=""
         type="text"
-        :error="errors.brand" disabled
+        :error="errors.brand"
+        disabled
       />
 
       <div class="relative z-[999] grid grid-cols-2 gap-x-5">
@@ -32,7 +33,8 @@
           :error="errors.packageName"
           label="Package type"
         >
-          <SelectVueSelect disabled
+          <SelectVueSelect
+            disabled
             v-model="packageName"
             :options="packageForms"
             :reduce="(title) => title.value"
@@ -113,12 +115,13 @@ const packForm = reactive({
 onMounted(() => {
   if (props.detail) {
     setValues({
-      productName: props?.detail?.product,
-      packageName: props?.detail?.selectedPackage,
-      productId: props?.detail?.zohoProductId,
-      purchaseAmount: props?.detail?.itemTotal,
+      productName: props?.detail?.productName,
+      packageName: props?.detail?.package.title,
+      productId: props?.detail?.productId,
+      purchaseAmount: props?.detail?.purchaseAmount,
       brand: props?.detail?.brand,
-      packageId: props?.detail.packageId,
+      packageId: props?.detail.package.id,
+      quoteId: props?.detail.quoteId,
     });
   }
 });

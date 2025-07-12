@@ -42,3 +42,7 @@ export async function newquote(data) {
 export async function uploaddoc(data) {
   return await post(`${urls.QUOTE_UPLOAD_DOCUMENT}`, data, config);
 }
+
+export async function confirmavailablilty(data) {
+  return await post(`${urls.CONFIRM_QUOTE_AVAILABILITY}`, data, config);
+}

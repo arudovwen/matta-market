@@ -122,12 +122,21 @@
           </button>
         </div>
       </div>
-      <div class="mt-8">
+      <div class="mt-4">
+        <AppButton
+          @click="open = true"
+          text="Edit Order"
+          icon="charm:refresh"
+          btnClass=" !px-0  !py-[0] !text-[11px] sm:text-xs md:text-sm !font-normal !text-primary-500"
+          iconClass="!text-[10px] md:!text-base !mr-1"
+        />
+      </div>
+      <div class="mt-6">
         <AppButton
           text="Confirm product is available"
           :isLoading="loading && value == true"
           :isDisabled="loading"
-          @click="confirmOrder(true)"
+          @click="confirmOrder(2)"
           loadingText="Processing ..."
           btnClass="bg-primary-500  w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
         />
@@ -135,13 +144,29 @@
         <AppButton
           :isLoading="loading && value == false"
           :isDisabled="loading"
-          @click="confirmOrder(false)"
+          @click="confirmOrder(3)"
           text="Confirm product is Unavailable"
           loadingText="Processing ..."
           btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#F04438] !normal-case mb-4 w-full"
         />
       </div>
     </div>
+
+    <IndexModal :isOpen="open" @togglePopup="open = false" v-if="open">
+      <template #content>
+        <EditOrder
+          @close="open = false"
+          :detail="{
+            ...quote.package,
+            productName: quote.productName,
+            productId: quote.productId,
+            brand: quote.brand,
+            quoteId: quote.quoteId,
+            id: quote.id,
+          }"
+        />
+      </template>
+    </IndexModal>
   </div>
 </template>
 <script setup>
@@ -150,11 +175,13 @@ import { uploaddoc } from "~/services/quoteservice";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { toast } from "vue3-toastify";
-import { confirmavailablilty } from "~/services/cartservice";
+import { confirmavailablilty } from "~/services/quoteservice";
+import EditOrder from "../order/confirmation/edit-order.vue";
 
 const quote = inject("quote");
-
+const open = ref(false);
 const isUploading = ref(false);
+const loading = ref(false);
 const form = reactive({
   sampleRequestId: quote?.value?.id,
   documentName: `${quote?.value?.productName?.replaceAll(" ", "")}-Quote`,
@@ -212,29 +239,19 @@ async function handleSubmit() {
 }
 async function confirmOrder(val) {
   try {
-    if (!selectedPickup.value) {
-      toast.info("Select a pickup location");
-      return;
-    }
     loading.value = true;
-    value.value = val;
     const res = await confirmavailablilty({
-      shippingAddressId: selectedPickup.value,
-      orderItemId: id,
-      available: val,
+      id: quote?.value?.id,
+      status: val,
     });
 
     if (res.status === 200) {
       toast.success("Successful");
     }
   } catch (err) {
-    const errorText = `${
-      err?.response?.data?.Message || err?.response?.data?.message
-    }, Contact us for assistance on your order`;
-    toast.error(errorText);
-    loading.value = false;
+    errorResponse(err);
   } finally {
-    value.value = null;
+    loading.value = false;
   }
 }
 </script>

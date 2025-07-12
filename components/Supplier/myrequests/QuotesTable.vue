@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center mb-8 px-5">
+  <div class="flex items-center justify-between px-5 mb-8">
     <div class="flex gap-x-4">
       <div class="relative flex items-center">
         <span class="absolute left-4 pointer-events-none text-[#667085]"
@@ -10,7 +10,7 @@
           @change="getRequests()"
           @keyup="debounceSearch"
           placeholder="Search"
-          class="border border-[#E7E7E7] text-sm  focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
+          class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
           type="search"
         />
       </div>
@@ -69,26 +69,26 @@
               v-if="item.status == 0"
               class="px-[6px] py-[2px] text-xs rounded-full text-[#5925DC] border border-[#D9D6FE] bg-[#F4F3FF] flex gap-x-1 items-center max-w-max"
             >
-            <AppIcon icon="octicon:dot-fill-24" />  {{ item.statusText }}</span
+              <AppIcon icon="octicon:dot-fill-24" /> {{ item.statusText }}</span
             >
             <span
               v-if="item.status == 1"
               class="px-[6px] py-1 text-xs rounded-full border border-pink-100 bg-pink-50 text-pink-500 flex gap-x-1 items-center max-w-max"
             >
-            <AppIcon icon="octicon:dot-fill-24" />  {{ item.statusText }}</span
+              <AppIcon icon="octicon:dot-fill-24" /> {{ item.statusText }}</span
             >
 
             <span
               v-if="item.status == 2"
               class="px-[6px] py-1 text-xs rounded-full text-[#17B26A] border border-[#ABEFC6] bg-[#ECFDF3] flex gap-x-1 items-center max-w-max"
             >
-            <AppIcon icon="octicon:dot-fill-24" />  {{ item.statusText }}</span
+              <AppIcon icon="octicon:dot-fill-24" /> {{ item.statusText }}</span
             >
             <span
               v-if="item.status == 3"
               class="px-[6px] py-1 text-xs rounded-full text-[#17B26A] border border-[#ABEFC6] bg-[#ECFDF3] flex gap-x-1 items-center max-w-max"
             >
-            <AppIcon icon="octicon:dot-fill-24" /> {{ item.statusText }}</span
+              <AppIcon icon="octicon:dot-fill-24" /> {{ item.statusText }}</span
             >
           </td>
           <!-- <td
@@ -103,23 +103,23 @@
           >
             <Menu class="relative" as="div">
               <MenuButton class="outline-none">
-                 <AppIcon icon="heroicons:ellipsis-vertical-solid" />
+                <AppIcon icon="heroicons:ellipsis-vertical-solid" />
               </MenuButton>
               <MenuItems
                 class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
               >
                 <div
-                  class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
+                  class="px-5 py-2 text-sm cursor-pointer hover:bg-gray-50 whitespace-nowrap"
                   @click="openRequest(item)"
                 >
-                  <i class="uil uil-file mr-2"></i> Open quote
+                  <i class="mr-2 uil uil-file"></i> Open quote
                 </div>
 
                 <!-- <div
                   @click="cancelRequest"
-                  class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap"
+                  class="px-5 py-2 text-sm hover:bg-gray-50 whitespace-nowrap"
                 >
-                  <i class="uil uil-trash mr-2"></i> Set as Cancelled
+                  <i class="mr-2 uil uil-trash"></i> Set as Cancelled
                 </div> -->
               </MenuItems>
             </Menu>
@@ -151,7 +151,7 @@
       >
         <div class="mb-3">
           <p class="text-[13px] text-[#B6B7B9] mb-2">Quote No</p>
-          <h2 class="font-medium text-2xl">{{ quote.quoteNo }}</h2>
+          <h2 class="text-2xl font-medium">{{ quote.quoteNo }}</h2>
         </div>
 
         <hr class="my-3 border-gray-200" />
@@ -181,7 +181,7 @@ function selectall() {
 }
 function openRequest(item) {
   sellerquotedetail(item.id).then((res) => {
-    quote.value = res.data.data;
+    quote.value = { ...res.data.data, quoteId: item.id, id: item.id };
     isOpen.value = true;
   });
 }
