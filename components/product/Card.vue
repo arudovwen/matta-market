@@ -21,7 +21,7 @@
           width="276"
           height="160"
           class="object-cover w-full h-full"
-          fit="cover"
+          fit="cover" format="webp"
        
         />
         <div

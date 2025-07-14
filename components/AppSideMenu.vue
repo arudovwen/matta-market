@@ -17,7 +17,7 @@
       <div class="fixed inset-0 overflow-hidden">
         <div class="absolute inset-0 overflow-hidden">
           <div
-            class="pointer-events-none fixed inset-y-0 left-0 flex max-w-full pr-16 md:pr-10"
+            class="fixed inset-y-0 left-0 flex max-w-full pr-16 pointer-events-none md:pr-10"
           >
             <TransitionChild
               as="template"
@@ -29,7 +29,7 @@
               leave-to="-translate-x-full"
             >
               <DialogPanel
-                class="pointer-events-auto relative w-screen max-w-md"
+                class="relative w-screen max-w-md pointer-events-auto"
               >
                 <TransitionChild
                   as="template"
@@ -40,10 +40,10 @@
                   leave-from="opacity-100"
                   leave-to="opacity-0"
                 >
-                  <div class="absolute top-0 right-0 -mr-11 flex pt-4">
+                  <div class="absolute top-0 right-0 flex pt-4 -mr-11">
                     <button
                       type="button"
-                      class="rounded-md text-gray-300 hover:text-white outline-none"
+                      class="text-gray-300 rounded-md outline-none hover:text-white"
                       @click="open = false"
                     >
                       <span class="sr-only">Close</span>
@@ -52,12 +52,12 @@
                   </div>
                 </TransitionChild>
                 <div
-                  class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl pb-8"
+                  class="flex flex-col h-full pb-8 overflow-y-scroll bg-white shadow-xl"
                 >
                   <div class="relative flex-1 px-4 sm:px-6">
                     <!-- Replace with your content -->
                     <div class="absolute inset-0 pt-5">
-                      <div class="px-5 pb-4 flex justify-between items-center mb-3">
+                      <div class="flex items-center justify-between px-5 pb-4 mb-3">
                         <img
                           src="/images/logo.png"
                           width="80"
@@ -82,8 +82,8 @@
                           <NuxtImg
                             v-if="authStore.userInfo?.profilepic"
                             alt="avatar"
-                            class="h-8 w-8 rounded-full"
-                            :src="authStore.userInfo?.profilepic"
+                            class="w-8 h-8 rounded-full"
+                            :src="authStore.userInfo?.profilepic" format="webp"
                           />
                           <span v-else>{{ getUserInitials }}</span>
                         </span>
@@ -110,7 +110,7 @@
                         </div>
                       </div>
                       <div
-                        class="flex gap-x-3 w-full px-5"
+                        class="flex w-full px-5 gap-x-3"
                         v-if="!authStore.isLoggedIn"
                       >
                         <AppButton
@@ -135,7 +135,7 @@
                           v-if="authStore.isLoggedIn && !activeKey"
                         />
                         <ul
-                          class="grid gap-y-5 pb-8"
+                          class="grid pb-8 gap-y-5"
                           v-if="authStore.isLoggedIn && !activeKey"
                         >
                           <li

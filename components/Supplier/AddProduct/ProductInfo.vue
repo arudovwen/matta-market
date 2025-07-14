@@ -28,11 +28,11 @@
                     placeholder=""
                   />
                   <div
-                    class="text-red-500 mt-1"
+                    class="mt-1 text-red-500"
                     v-for="error of v$.name.$errors"
                     :key="error.$uid"
                   >
-                    <div class="error-msg text-error text-xs font-semibold">
+                    <div class="text-xs font-semibold error-msg text-error">
                       {{ error.$message }}
                     </div>
                   </div>
@@ -45,7 +45,7 @@
                     Product brand name
                   </label>
 
-                  <div class="flex relative items-center">
+                  <div class="relative flex items-center">
                     <input
                       id="productBrandName"
                       v-model="v$.productBrandName.$model"
@@ -54,11 +54,11 @@
                     />
                   </div>
                   <div
-                    class="text-red-500 mt-1"
+                    class="mt-1 text-red-500"
                     v-for="error of v$.productBrandName.$errors"
                     :key="error.$uid"
                   >
-                    <div class="error-msg text-error text-xs font-semibold">
+                    <div class="text-xs font-semibold error-msg text-error">
                       {{ error.$message }}
                     </div>
                   </div>
@@ -77,7 +77,7 @@
                   <Combobox v-model="form.manufacturer">
                     <div class="relative mt-1">
                       <div
-                        class="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
+                        class="relative w-full overflow-hidden text-left bg-white rounded-lg cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
                       >
                         <ComboboxInput
                           class="px-[14px] py-[10px] h-11 rounded-lg w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -109,7 +109,7 @@
                             v-if="
                               filteredProducers.length === 0 && query !== ''
                             "
-                            class="relative cursor-default select-none py-2 px-4 text-gray-700"
+                            class="relative px-4 py-2 text-gray-700 cursor-default select-none"
                           >
                             <p class="mb-2">Nothing found.</p>
                             <hr class="my-4" />
@@ -117,7 +117,7 @@
                               <button
                                 @click="handleAddingProducer"
                                 type="button"
-                                class="appearance-none text-xs leading-none px-6 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 uppercase"
+                                class="px-6 py-3 text-xs leading-none text-white uppercase rounded-lg appearance-none bg-primary-500 hover:opacity-70"
                               >
                                 Add new
                               </button>
@@ -131,7 +131,7 @@
                             v-slot="{ selected, active }"
                           >
                             <span
-                              class="relative cursor-default select-none py-2"
+                              class="relative py-2 cursor-default select-none"
                             >
                               <div class="flex items-center gap-x-4">
                                 <span
@@ -141,15 +141,16 @@
                                     v-if="i.logo"
                                     :src="i.logo"
                                     alt="logo"
+                                     format="webp"
                                   />
-                                  <p class="uppercase text-base" v-else>
+                                  <p class="text-base uppercase" v-else>
                                     {{ i.title.slice(0, 2) }}
                                   </p>
                                 </span>
 
                                 <div>
                                   <p
-                                    class="block truncate mb-1"
+                                    class="block mb-1 truncate"
                                     :class="{
                                       'font-medium': selected,
                                       'font-normal': !selected,
@@ -158,7 +159,7 @@
                                     {{ i.title }}
                                   </p>
                                   <p
-                                    class="block truncate text-matta-black/80 text-sm"
+                                    class="block text-sm truncate text-matta-black/80"
                                   >
                                     {{ i.location }}
                                   </p>
@@ -172,7 +173,7 @@
                                   'text-teal-600': !active,
                                 }"
                               >
-                                <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                                <CheckIcon class="w-5 h-5" aria-hidden="true" />
                               </span>
                             </span>
                           </ComboboxOption>
@@ -181,11 +182,11 @@
                     </div>
                   </Combobox>
                   <div
-                    class="text-red-500 mt-1"
+                    class="mt-1 text-red-500"
                     v-for="error of v$.manufacturer.$errors"
                     :key="error.$uid"
                   >
-                    <div class="error-msg text-error text-xs font-semibold">
+                    <div class="text-xs font-semibold error-msg text-error">
                       {{ error.$message }}
                     </div>
                   </div>
@@ -207,20 +208,20 @@
                     @getValue="getMarketValue"
                   />
                   <div
-                    class="text-red-500 mt-1"
+                    class="mt-1 text-red-500"
                     v-for="error of v$.markets.$errors"
                     :key="error.$uid"
                   >
-                    <div class="error-msg text-error text-xs font-semibold">
+                    <div class="text-xs font-semibold error-msg text-error">
                       {{ error.$message }}
                     </div>
                   </div>
                   <div
-                    class="text-red-500 mt-1"
+                    class="mt-1 text-red-500"
                     v-for="error of v$.marketApplications.$errors"
                     :key="error.$uid"
                   >
-                    <div class="error-msg text-error text-xs font-semibold">
+                    <div class="text-xs font-semibold error-msg text-error">
                       {{ error.$message }}
                     </div>
                   </div>
@@ -242,20 +243,20 @@
                     :subapplications="form.techSubApplications"
                   />
                   <div
-                    class="text-red-500 mt-1"
+                    class="mt-1 text-red-500"
                     v-for="error of v$.technologies.$errors"
                     :key="error.$uid"
                   >
-                    <div class="error-msg text-error text-xs font-semibold">
+                    <div class="text-xs font-semibold error-msg text-error">
                       {{ error.$message }}
                     </div>
                   </div>
                   <div
-                    class="text-red-500 mt-1"
+                    class="mt-1 text-red-500"
                     v-for="error of v$.techApplications.$errors"
                     :key="error.$uid"
                   >
-                    <div class="error-msg text-error text-xs font-semibold">
+                    <div class="text-xs font-semibold error-msg text-error">
                       {{ error.$message }}
                     </div>
                   </div>
@@ -272,7 +273,7 @@
                     data-toggle="tooltip"
                     data-placement="top"
                     title="Brief general information about the chemicals, its chemical composition, other names, important uses or any specificity"
-                    class="cursor-pointer h-4 w-4 flex items-center justify-center"
+                    class="flex items-center justify-center w-4 h-4 cursor-pointer"
                   >
                     <AppIcon icon="quill:info" iconClass="text-gray-600" />
                   </span>
@@ -284,11 +285,11 @@
                   class="rounded-lg px-[14px] py-[10px] w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20 resize-none"
                 ></textarea>
                 <div
-                  class="text-red-500 mt-1"
+                  class="mt-1 text-red-500"
                   v-for="error of v$.description.$errors"
                   :key="error.$uid"
                 >
-                  <div class="error-msg text-error text-xs font-semibold">
+                  <div class="text-xs font-semibold error-msg text-error">
                     {{ error.$message }}
                   </div>
                 </div>
@@ -318,16 +319,16 @@
           support="SVG, PNG, JPG or GIF (max. 800x400px)"
         />
         <div
-          class="text-red-500 mt-1"
+          class="mt-1 text-red-500"
           v-for="error of v$.gallery.$errors"
           :key="error.$uid"
         >
-          <div class="error-msg text-error text-xs font-semibold">
+          <div class="text-xs font-semibold error-msg text-error">
             {{ error.$message }}
           </div>
         </div>
         <div
-          class="bg-white rounded-lg py-6 mt-6 flex flex-col lg:flex-row gap-x-10 justify-start lg:items-center gap-y-2 lg:gap-y-0"
+          class="flex flex-col justify-start py-6 mt-6 bg-white rounded-lg lg:flex-row gap-x-10 lg:items-center gap-y-2 lg:gap-y-0"
         >
           <label
             for="sampleAvailable"
@@ -399,15 +400,15 @@
           class="bg-white px-4 pt-5 pb-8 sm:p-6 sm:pb-4 w-[500px] rounded-lg"
           @submit.prevent="handleProducer"
         >
-          <div class="flex justify-between mb-8 items-center">
-            <h4 class="font-medium text-matta-black text-xl">Add Producer</h4>
+          <div class="flex items-center justify-between mb-8">
+            <h4 class="text-xl font-medium text-matta-black">Add Producer</h4>
             <i
-              class="uil uil-times cursor-pointer text-lg hover:ring-1 w-6 h-6 ring-gray-200 flex items-center justify-center hover:ring-offset-2 rounded-full"
+              class="flex items-center justify-center w-6 h-6 text-lg rounded-full cursor-pointer uil uil-times hover:ring-1 ring-gray-200 hover:ring-offset-2"
               @click="isAddingPackage = false"
             ></i>
           </div>
           <div class="mb-5">
-            <label for="title" class="mb-2 font-normal text-xs block"
+            <label for="title" class="block mb-2 text-xs font-normal"
               >Name <span class="text-red-500 pl-[.5px]">*</span></label
             >
             <input
@@ -418,7 +419,7 @@
               required
             />
           </div>
-          <div class="flex gap-x-6 mb-5">
+          <div class="flex mb-5 gap-x-6">
             <div class="w-full">
               <label
                 for="country"
@@ -457,13 +458,14 @@
                   >Logo</span
                 >
                 <NuxtImg
-                  v-else
+                  v-else format="webp"
+                  alt="prouct"
                   :src="producerForm.logo"
                   class="h-16 w-16 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
                 />
               </div>
               <i
-                class="fa fa-spinner fa-spin ml-6"
+                class="ml-6 fa fa-spinner fa-spin"
                 v-if="isLoadingLogo"
                 aria-hidden="true"
               ></i>
@@ -471,11 +473,11 @@
           </div>
 
           <hr class="my-6" />
-          <div class="flex justify-end gap-x-2 items-center mt-8">
+          <div class="flex items-center justify-end mt-8 gap-x-2">
             <button
               type="button"
               @click="isAddingPackage = false"
-              class="appearance-none text-xs leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 uppercase"
+              class="px-8 py-3 text-xs leading-none uppercase rounded-lg appearance-none text-matta-black hover:bg-gray-100"
             >
               Cancel
             </button>
@@ -483,7 +485,7 @@
             <button
               :disabled="isLoading"
               type="submit"
-              class="appearance-none text-xs leading-none px-8 py-3 rounded-lg text-white bg-primary-500 hover:opacity-70 uppercase disabled:opacity-50"
+              class="px-8 py-3 text-xs leading-none text-white uppercase rounded-lg appearance-none bg-primary-500 hover:opacity-70 disabled:opacity-50"
             >
               Save
             </button>

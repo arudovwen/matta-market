@@ -8,26 +8,27 @@
         'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 border-b border-[rgba(242, 242, 242, 1)] darks:border-gray-900':
           !view?.atTopOfPage,
       }"
-      class="relative pt-6 pb-6 w-full bg-white darks:bg-gray-800 transition-all duration-500 ease-in-out"
+      class="relative w-full pt-6 pb-6 transition-all duration-500 ease-in-out bg-white darks:bg-gray-800"
     >
       <div class="container mx-auto">
-        <div class="flex justify-between items-center">
-          <div class="logo flex gap-x-10 items-center">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center logo gap-x-10">
             <NuxtLink to="/">
-              <img
+              <NuxtImg
                 src="/images/logo.png"
                 alt="Matta"
                 class="w-20 md:w-[120px] h-auto object-contain"
+                format="webp"
             /></NuxtLink>
           </div>
           <div class="max-w-[600px] w-full flex-1 hidden lg:block">
             <NavSearchBar />
           </div>
 
-          <div class="flex items-center gap-x-4 text-sm">
-            <span class="flex items-center gap-x-4 text-sm md:hidden">
+          <div class="flex items-center text-sm gap-x-4">
+            <span class="flex items-center text-sm gap-x-4 md:hidden">
               <span lass="text-sm"><CurrencyChanger /></span>
-              <span class="text-sm hidden lg:inline ">
+              <span class="hidden text-sm lg:inline">
                 <GoogleTranslateSelect
                   :fetch-browser-language="false"
                   trigger="click"
@@ -37,7 +38,7 @@
 
               <button
                 @click="navigateTo('/cart')"
-                class="flex items-center relative"
+                class="relative flex items-center"
               >
                 <span
                   class="relative h-9 w-9 rounded-full bg-[#F7F7F7] flex items-center justify-center"
@@ -55,7 +56,6 @@
               </button>
             </span>
             <AppButton
-              
               type="button"
               @click="navigateTo('/request-product')"
               text="Request a product"
@@ -85,7 +85,7 @@
 
               <Menu
                 as="div"
-                class="relative hidden lg:inline-flex text-left"
+                class="relative hidden text-left lg:inline-flex"
                 v-if="authStore?.isLoggedIn"
               >
                 <div>
@@ -118,8 +118,9 @@
                         <NuxtImg
                           v-if="authStore.userInfo?.profilepic"
                           alt="avatar"
-                          class="h-8 w-8 rounded-full"
+                          class="w-8 h-8 rounded-full"
                           :src="authStore.userInfo?.profilepic"
+                          format="webp"
                         />
                         <span v-else>{{ getUserInitials }}</span>
                       </span>
@@ -181,12 +182,12 @@
         'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5  darks:border-gray-900':
           !view?.atTopOfPage,
       }"
-      class="relative pt-4 pb-6 w-full bg-white darks:bg-gray-800 transition-all duration-500 ease-in-out"
+      class="relative w-full pt-4 pb-6 transition-all duration-500 ease-in-out bg-white darks:bg-gray-800"
     >
       <div class="container mx-auto">
-        <div class="flex justify-between items-center gap-x-5">
-          <div class="logo flex gap-x-10 items-center">
-            <ul class="lg:flex items-center gap-x-6 hidden">
+        <div class="flex items-center justify-between gap-x-5">
+          <div class="flex items-center logo gap-x-10">
+            <ul class="items-center hidden lg:flex gap-x-6">
               <li
                 v-for="n in navigations.filter((i) => i.key !== 'sign-out')"
                 :key="n.name"
@@ -276,7 +277,7 @@
                   >
                 </NuxtLink>
               </li>
-             <li
+              <li
                 class="flex gap-x-[6px] items-center text-sm border-transparent group"
               >
                 <NuxtLink
@@ -315,16 +316,16 @@
 
     <ModalCenter v-if="isSigniningOut">
       <template #default>
-        <div class="bg-white p-6 sm:pb-4 rounded-lg" v-if="isSigniningOut">
-          <div class="flex justify-between mb-5 items-center">
-            <h4 class="font-medium text-matta-black text-xl">Sign Out</h4>
+        <div class="p-6 bg-white rounded-lg sm:pb-4" v-if="isSigniningOut">
+          <div class="flex items-center justify-between mb-5">
+            <h4 class="text-xl font-medium text-matta-black">Sign Out</h4>
           </div>
 
-          <p class="text-sm text-matta-black mb-2">
+          <p class="mb-2 text-sm text-matta-black">
             Are you sure you want to sign out?
           </p>
 
-          <div class="flex justify-between gap-x-2 items-center mt-8">
+          <div class="flex items-center justify-between mt-8 gap-x-2">
             <button
               type="button"
               @click="isSigniningOut = false"

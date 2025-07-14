@@ -39,13 +39,14 @@
         <div class="">
           <div class="mb-[15px]">
             <NuxtLink to="/">
-              <img
+              <NuxtImg
                 data-testid="logo"
                 src="/logo-matta-white.png"
                 class="w-[132px]"
                 alt="Matta"
                 width="132"
                 height="auto"
+                format="webp"
               />
             </NuxtLink>
           </div>
@@ -165,7 +166,7 @@ const navs = [
         title: "Careers",
         url: "https://corporate.matta.trade/",
       },
-        {
+      {
         title: "Blog",
         url: "https://blog.matta.trade/",
       },

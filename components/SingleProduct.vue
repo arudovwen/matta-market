@@ -9,6 +9,7 @@
             ? product.converPhoto
             : require('../assets/img/img1.png')
         "
+        format="webp"
       />
       <div
         class="bg-gray-200 animate-pulse h-[100px] sm:h-[150px] w-full rounded-[20px] z-[1] absolute top-0"
@@ -22,6 +23,7 @@
           src="../assets/img/logo.svg"
           width="80"
           height="80"
+          format="webp"
         />
       </span>
     </div>

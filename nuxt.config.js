@@ -10,11 +10,10 @@ export default defineNuxtConfig({
     },
   },
 
-  image: {
-    inject: true,
-    cloudinary: {
-      baseURL: "https://res.cloudinary.com/arudovwen-me/image/upload/",
-    },
+image: {
+    // Use ipx (default) or specify another provider
+    provider: 'ipx',
+    // other options
   },
 
   modules: [

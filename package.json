@@ -41,7 +41,7 @@
     "nuxt-simple-sitemap": "^4.2.1",
     "nuxt-swiper": "^1.2.2",
     "playwright-core": "^1.44.1",
-    "sharp": "^0.33.1",
+    "sharp": "^0.33.5",
     "vitest": "^1.6.0",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"

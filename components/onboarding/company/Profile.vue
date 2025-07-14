@@ -1,6 +1,6 @@
 <template>
   <div
-    class="gap-y-2 flex flex-col flex-1 p-6 lg:p-10 justify-center bg-white rounded-lg"
+    class="flex flex-col justify-center flex-1 p-6 bg-white rounded-lg gap-y-2 lg:p-10"
   >
     <div class="mb-5 text-center text-[13px]"><p>STEP 1/4</p></div>
     <!-- Top bar   -->
@@ -12,12 +12,12 @@
           >
             Set your personal profile
           </h1>
-          <p class="text-sm lg:text-base text-center">
+          <p class="text-sm text-center lg:text-base">
             Recommended filling out your profile
           </p>
         </div>
         <div
-          class="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-10 gap-y-8"
+          class="flex flex-col mb-10 lg:flex-row lg:justify-between lg:items-center gap-y-8"
         >
           <div class="flex items-center">
             <span>
@@ -28,22 +28,23 @@
               >
               <NuxtImg
                 v-else
-                :src="image"
+                :src="image" format="webp"
+                alt="profile"
                 class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
               />
             </span>
             <span>
-              <p class="text-xs lg:text-sm font-medium mb-1">Your photo</p>
+              <p class="mb-1 text-xs font-medium lg:text-sm">Your photo</p>
 
-              <p class="text-xs lg:text-sm font-normal">
+              <p class="text-xs font-normal lg:text-sm">
                 Recommended 200x200 px
               </p>
               <div
-                class="text-red-500 mt-1"
+                class="mt-1 text-red-500"
                 v-for="error of v$.photo.$errors"
                 :key="error.$uid"
               >
-                <div class="error-msg text-error text-xs font-semibold">
+                <div class="text-xs font-semibold error-msg text-error">
                   {{ error.$message }}
                 </div>
               </div>
@@ -52,7 +53,7 @@
           <div class="flex items-center justify-between gap-x-3">
             <label for="upload">
               <span
-                class="text-primary border border-primary- rounded-lg px-4 lg:px-6 py-2 lg:py-3 text-xs lg:text-sm cursor-pointer"
+                class="px-4 py-2 text-xs border rounded-lg cursor-pointer text-primary border-primary- lg:px-6 lg:py-3 lg:text-sm"
               >
                 Upload photo
               </span>
@@ -73,9 +74,9 @@
         </div>
         <form @submit.prevent="handleSubmit">
           <div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
               <div class="mb-6">
-                <label for="firstName" class="mb-2 font-normal text-xs block"
+                <label for="firstName" class="block mb-2 text-xs font-normal"
                   >First name <RedDot />
                 </label>
                 <input
@@ -87,17 +88,17 @@
                   autofocus="on"
                 />
                 <div
-                  class="text-red-500 mt-1"
+                  class="mt-1 text-red-500"
                   v-for="error of v$.firstName.$errors"
                   :key="error.$uid"
                 >
-                  <div class="error-msg text-error text-xs font-semibold">
+                  <div class="text-xs font-semibold error-msg text-error">
                     {{ error.$message }}
                   </div>
                 </div>
               </div>
               <div class="mb-6">
-                <label for="lastName" class="mb-2 font-normal text-xs block"
+                <label for="lastName" class="block mb-2 text-xs font-normal"
                   >Last name <RedDot />
                 </label>
                 <input
@@ -109,23 +110,23 @@
                   autofocus="on"
                 />
                 <div
-                  class="text-red-500 mt-1"
+                  class="mt-1 text-red-500"
                   v-for="error of v$.lastName.$errors"
                   :key="error.$uid"
                 >
-                  <div class="error-msg text-error text-xs font-semibold">
+                  <div class="text-xs font-semibold error-msg text-error">
                     {{ error.$message }}
                   </div>
                 </div>
               </div>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
               <div class="mb-6">
-                <label for="allcountries" class="mb-2 font-normal text-xs block"
+                <label for="allcountries" class="block mb-2 text-xs font-normal"
                   >Country <RedDot />
                 </label>
                 <div class="relative">
-                  <div class="flex relative items-center w-full">
+                  <div class="relative flex items-center w-full">
                     <FormsSelectComponent
                       id="allcountries"
                       :options="allcountries"
@@ -150,15 +151,15 @@
                       </option>
                     </select>
                     <i
-                      class="uil uil-sort absolute right-3 pointer-events-none"
+                      class="absolute pointer-events-none uil uil-sort right-3"
                     ></i> -->
                   </div>
                   <div
-                    class="text-red-500 mt-1"
+                    class="mt-1 text-red-500"
                     v-for="error of v$.country.$errors"
                     :key="error.$uid"
                   >
-                    <div class="error-msg text-error text-xs font-semibold">
+                    <div class="text-xs font-semibold error-msg text-error">
                       {{ error.$message }}
                     </div>
                   </div>
@@ -166,7 +167,7 @@
               </div>
 
               <div class="mb-6">
-                <label for="mystates" class="mb-2 font-normal text-xs block"
+                <label for="mystates" class="block mb-2 text-xs font-normal"
                   >State <RedDot />
                 </label>
                 <FormsSelectComponent
@@ -180,7 +181,7 @@
                   } rounded-lg appearance-none px-[14px] py-[10px] h-11 text-sm border w-full !bg-[#F1F3F5] placeholder:text-[#B6B7B9] focus:outline-matta-black/20`"
                 />
 
-                <!-- <div class="flex relative items-center w-full">
+                <!-- <div class="relative flex items-center w-full">
                   <select
                     v-model="v$.city.$model"
                     :class="{ 'border-red-500': v$.city.$error }"
@@ -193,43 +194,43 @@
                     </option>
                   </select>
                   <i
-                    class="uil uil-sort absolute right-3 pointer-events-none"
+                    class="absolute pointer-events-none uil uil-sort right-3"
                   ></i>
                 </div> -->
                 <div
-                  class="text-red-500 mt-1"
+                  class="mt-1 text-red-500"
                   v-for="error of v$.city.$errors"
                   :key="error.$uid"
                 >
-                  <div class="error-msg text-error text-xs font-semibold">
+                  <div class="text-xs font-semibold error-msg text-error">
                     {{ error.$message }}
                   </div>
                 </div>
               </div>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
               <div class="mb-6">
-                <label for="phone" class="mb-2 font-normal text-xs block"
+                <label for="phone" class="block mb-2 text-xs font-normal"
                   >Phone number <RedDot
                 /></label>
-                <div class="flex relative rounded-lg h-11">
+                <div class="relative flex rounded-lg h-11">
                   <FormsPhoneCodes v-model="v$.phone.$model" />
                 </div>
                 <div
-                  class="text-red-500 mt-1"
+                  class="mt-1 text-red-500"
                   v-for="error of v$.phone.$errors"
                   :key="error.$uid"
                 >
-                  <div class="error-msg text-error text-xs font-semibold">
+                  <div class="text-xs font-semibold error-msg text-error">
                     {{ error.$message }}
                   </div>
                 </div>
               </div>
               <div class="mb-6">
-                <label for="email" class="mb-2 font-normal text-xs block"
+                <label for="email" class="block mb-2 text-xs font-normal"
                   >E-mail <RedDot />
                 </label>
-                <div class="flex relative items-center">
+                <div class="relative flex items-center">
                   <input
                   id="email"
                     :class="{ 'border-red-500': v$.email.$error }"
@@ -239,14 +240,14 @@
                     autofocus="on"
                     disabled
                   />
-                  <i class="uil uil-lock absolute right-4 text-gray-600"></i>
+                  <i class="absolute text-gray-600 uil uil-lock right-4"></i>
                 </div>
                 <div
-                  class="text-red-500 mt-1"
+                  class="mt-1 text-red-500"
                   v-for="error of v$.email.$errors"
                   :key="error.$uid"
                 >
-                  <div class="error-msg text-error text-xs font-semibold">
+                  <div class="text-xs font-semibold error-msg text-error">
                     {{ error.$message }}
                   </div>
                 </div>
@@ -255,9 +256,9 @@
           </div>
           <hr class="my-8" />
 
-          <legend class="font-medium mb-4">Timezone <RedDot /></legend>
+          <legend class="mb-4 font-medium">Timezone <RedDot /></legend>
           <div class="mb-10">
-            <div class="flex relative items-center w-full">
+            <div class="relative flex items-center w-full">
               <select
                 v-model="v$.timeZone.$model"
                 :class="{ 'border-red-500': v$.timeZone.$error }"
@@ -268,19 +269,19 @@
                   {{ moment.tz(new Date(), z).format("zz") }} {{ z }}
                 </option>
               </select>
-              <i class="uil uil-sort absolute right-3 pointer-events-none"></i>
+              <i class="absolute pointer-events-none uil uil-sort right-3"></i>
             </div>
             <div
-              class="text-red-500 mt-1"
+              class="mt-1 text-red-500"
               v-for="error of v$.timeZone.$errors"
               :key="error.$uid"
             >
-              <div class="error-msg text-error text-xs font-semibold">
+              <div class="text-xs font-semibold error-msg text-error">
                 {{ error.$message }}
               </div>
             </div>
           </div>
-          <div class="flex justify-center gap-x-4 items-center mt-16 w-full">
+          <div class="flex items-center justify-center w-full mt-16 gap-x-4">
             <span></span>
 
             <button
@@ -315,13 +316,13 @@
           leave-to="opacity-0"
         >
           <div
-            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+            class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
           />
         </TransitionChild>
 
-        <div class="fixed z-10 inset-0 overflow-y-auto">
+        <div class="fixed inset-0 z-10 overflow-y-auto">
           <div
-            class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0"
+            class="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0"
           >
             <TransitionChild
               as="template"
@@ -333,15 +334,15 @@
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <DialogPanel
-                class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full"
+                class="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-lg sm:w-full"
               >
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div class="flex justify-between mb-5 items-center">
-                    <h4 class="font-medium text-matta-black text-xl">
+                <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                  <div class="flex items-center justify-between mb-5">
+                    <h4 class="text-xl font-medium text-matta-black">
                       Customize photo
                     </h4>
                     <i
-                      class="uil uil-times cursor-pointer text-lg"
+                      class="text-lg cursor-pointer uil uil-times"
                       @click="open = false"
                     ></i>
                   </div>
@@ -356,7 +357,7 @@
                       height: 200,
                     }"
                   />
-                  <div class="flex justify-end gap-x-2 items-center mt-8">
+                  <div class="flex items-center justify-end mt-8 gap-x-2">
                     <button
                       @click="open = false"
                       class="appearance-none leading-none px-8 py-3 rounded-lg text-matta-black hover:bg-gray-100 text-[13px] uppercase"
