@@ -1,13 +1,13 @@
 <template>
   <NuxtLink to="/">
-    <NuxtImg
+    <img
       v-if="!dark"
       src="/images/logo.png"
       alt="flux"
       :class="className"
 
     />
-    <NuxtImg
+    <img
       v-else
       src="/images/logo.png"
       alt="flux"

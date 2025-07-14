@@ -137,7 +137,7 @@
                                 <span
                                   class="h-11 w-12 rounded-lg bg-white shadow p-4 flex items-center justify-center mr-4 border border-[#E7EBEE]"
                                 >
-                                  <NuxtImg
+                                  <img
                                     v-if="i.logo"
                                     :src="i.logo"
                                     alt="logo"
@@ -457,7 +457,7 @@
                   class="h-16 w-16 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                   >Logo</span
                 >
-                <NuxtImg
+                <img
                   v-else 
                   alt="prouct"
                   :src="producerForm.logo"

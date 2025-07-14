@@ -39,7 +39,7 @@
         <div class="">
           <div class="mb-[15px]">
             <NuxtLink to="/">
-              <NuxtImg
+              <img
                 data-testid="logo"
                 src="/logo-matta-white.png"
                 class="w-[132px]"

@@ -79,7 +79,7 @@
                         <span
                           class="h-8 w-8 rounded-full flex items-center justify-center text-white bg-[#f90] font-semibold"
                         >
-                          <NuxtImg
+                          <img
                             v-if="authStore.userInfo?.profilepic"
                             alt="avatar"
                             class="w-8 h-8 rounded-full"

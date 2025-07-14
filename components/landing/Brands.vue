@@ -10,7 +10,7 @@
     <div
       class="grid items-center justify-between grid-cols-3 gap-6 lg:grid-cols-6"
     >
-      <NuxtImg
+      <img
        
         v-for="n in brands"
         :src="n"

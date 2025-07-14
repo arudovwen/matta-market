@@ -14,7 +14,7 @@
         <div class="flex items-center justify-between">
           <div class="flex items-center logo gap-x-10">
             <NuxtLink to="/">
-              <NuxtImg
+              <img
                 src="/images/logo.png"
                 alt="Matta"
                 class="w-20 md:w-[120px] h-auto object-contain"
@@ -115,7 +115,7 @@
                       <span
                         class="h-8 w-8 rounded-full flex items-center justify-center text-white bg-[#f90] font-semibold"
                       >
-                        <NuxtImg
+                        <img
                           v-if="authStore.userInfo?.profilepic"
                           alt="avatar"
                           class="w-8 h-8 rounded-full"

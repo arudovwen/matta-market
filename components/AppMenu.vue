@@ -16,7 +16,7 @@
             class="flex flex-col items-center w-full p-2 text-sm font-medium rounded-lg bg-primary-50/40 gap-y-1"
           >
             <span>
-              <NuxtImg
+              <img
                 :src="item?.iconUrl"
                 :alt="item.name"
                 width="80"

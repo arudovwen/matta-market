@@ -1,7 +1,7 @@
 <template>
   <div class="rounded-[20px] bg-white p-4">
     <div class="mb-4 sm:mb-8 relative h-[100px] sm:h-[150px]">
-      <NuxtImg
+      <img
         alt="cover"
         class="h-[100px] sm:h-[150px] w-full rounded-[20px] object-cover z-[2] relative"
         :src="
@@ -17,7 +17,7 @@
       <span
         class="w-16 sm:w-20 h-16 sm:h-20 rounded-lg bg-white shadow p-4 flex items-center justify-center absolute left-5 -bottom-10 z-[2]"
       >
-        <NuxtImg
+        <img
           alt="prod"
           class=""
           src="../assets/img/logo.svg"

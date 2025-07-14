@@ -26,7 +26,7 @@
                 class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                 >Photo</span
               >
-              <NuxtImg
+              <img
                 v-else
                 :src="image"
                 alt="profile"

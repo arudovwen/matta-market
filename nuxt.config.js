@@ -10,10 +10,8 @@ export default defineNuxtConfig({
     },
   },
 
-image: {
-    // Use ipx (default) or specify another provider
-    provider: 'ipx',
-    // other options
+  image: {
+    inject: true,
   },
 
   modules: [
