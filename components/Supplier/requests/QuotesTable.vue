@@ -187,7 +187,12 @@
         </div>
 
         <hr class="my-3 border-gray-200" />
-        <SupplierRequestsQuoteDetail />
+        <SupplierRequestsQuoteDetail
+          @close="
+            isOpen = false;
+            getquotes();
+          "
+        />
       </div>
     </template>
   </SideModal>

@@ -134,7 +134,7 @@
       <div class="mt-6">
         <AppButton
           text="Confirm product is available"
-          :isLoading="loading && value == true"
+          :isLoading="loading && confirmvalue == 2"
           :isDisabled="loading"
           @click="confirmOrder(2)"
           loadingText="Processing ..."
@@ -142,7 +142,7 @@
         />
 
         <AppButton
-          :isLoading="loading && value == false"
+          :isLoading="loading && confirmvalue == 3"
           :isDisabled="loading"
           @click="confirmOrder(3)"
           text="Confirm product is Unavailable"
@@ -182,6 +182,8 @@ const quote = inject("quote");
 const open = ref(false);
 const isUploading = ref(false);
 const loading = ref(false);
+const confirmvalue= ref(null)
+const emit = defineEmits(['close'])
 const form = reactive({
   sampleRequestId: quote?.value?.id,
   documentName: `${quote?.value?.productName?.replaceAll(" ", "")}-Quote`,
@@ -240,6 +242,7 @@ async function handleSubmit() {
 async function confirmOrder(val) {
   try {
     loading.value = true;
+    confirmvalue.value = val
     const res = await confirmavailablilty({
       id: quote?.value?.id,
       status: val,
@@ -247,6 +250,7 @@ async function confirmOrder(val) {
 
     if (res.status === 200) {
       toast.success("Successful");
+      emit('close')
     }
   } catch (err) {
     errorResponse(err);
