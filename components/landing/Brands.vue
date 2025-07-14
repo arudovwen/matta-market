@@ -17,7 +17,7 @@
         :alt="n"
         width="150"
         class="mb-1 mx-auto w-100% h-auto"
-        format="webp"
+     
       />
     </div>
   </div>

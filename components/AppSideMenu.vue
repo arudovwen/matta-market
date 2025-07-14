@@ -83,7 +83,7 @@
                             v-if="authStore.userInfo?.profilepic"
                             alt="avatar"
                             class="w-8 h-8 rounded-full"
-                            :src="authStore.userInfo?.profilepic" format="webp"
+                            :src="authStore.userInfo?.profilepic"
                           />
                           <span v-else>{{ getUserInitials }}</span>
                         </span>

@@ -141,7 +141,7 @@
                                     v-if="i.logo"
                                     :src="i.logo"
                                     alt="logo"
-                                     format="webp"
+                                 
                                   />
                                   <p class="text-base uppercase" v-else>
                                     {{ i.title.slice(0, 2) }}
@@ -458,7 +458,7 @@
                   >Logo</span
                 >
                 <NuxtImg
-                  v-else format="webp"
+                  v-else 
                   alt="prouct"
                   :src="producerForm.logo"
                   class="h-16 w-16 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"

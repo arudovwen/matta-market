@@ -5,14 +5,14 @@
       src="/images/logo.png"
       alt="flux"
       :class="className"
-      format="webp"
+
     />
     <NuxtImg
       v-else
       src="/images/logo.png"
       alt="flux"
       :class="className"
-      format="webp"
+    
     />
   </NuxtLink>
 </template>

@@ -22,7 +22,7 @@
                 width="80"
                 height="26"
                 class="w-auto h-[28px] mx-auto block"
-                format="webp"
+               
             /></span>
             <span class="text-xs"> {{ item.name }} </span>
           </button>

@@ -46,7 +46,6 @@
                 alt="Matta"
                 width="132"
                 height="auto"
-                format="webp"
               />
             </NuxtLink>
           </div>
