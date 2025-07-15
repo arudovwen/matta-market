@@ -6,7 +6,8 @@ import { get, post, del, put } from "~/helpers/api_helpers";
 import store from "~/store";
 
 // Mock store and helpers
-vi.mock("~/helpers/api_helpers", () => ({
+vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
+  ...(await importOriginal()),
   get: vi.fn(),
   post: vi.fn(),
   del: vi.fn(),
@@ -136,9 +137,6 @@ describe("Order Helper Functions", () => {
     expect(del).toHaveBeenCalled();
     expect(response).toEqual({ data: "mock-response" });
   });
-
-
- 
 
   // Test for autoSettlement function
   it("should call autoSettlement with the correct URL and data", async () => {

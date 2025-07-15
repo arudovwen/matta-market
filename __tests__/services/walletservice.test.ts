@@ -23,7 +23,6 @@ import {
   getLedgerTransactions,
 } from "~/services/walletservice"; // Replace with actual path
 
-
 // Import mock dependencies
 import urls from "~/helpers/url_helpers";
 import { get, post } from "~/helpers/api_helpers";
@@ -35,10 +34,14 @@ const mockConfig = {
 };
 
 // Mocking API helpers and store
-vi.mock("~/helpers/api_helpers", () => ({
-  get: vi.fn(),
-  post: vi.fn(),
-}));
+vi.mock("~/helpers/api_helpers", async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    get: vi.fn(),
+    post: vi.fn(),
+  };
+});
 
 vi.mock("~/store", () => ({
   default: {

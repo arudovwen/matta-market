@@ -101,10 +101,10 @@ const formData = reactive({
     country: "Nigeria",
     city: "",
     state: "",
-    email: authStore.userInfo.email,
-    phone: authStore.userInfo.phoneNumber,
+    email: authStore.userInfo?.email,
+    phone: authStore.userInfo?.phoneNumber,
   },
-  customerId: authStore.userId,
+  customerId: authStore?.userId,
   loanRequestType: parseInt(id),
   directors: [
     {

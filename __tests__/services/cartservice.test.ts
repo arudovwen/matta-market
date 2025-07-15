@@ -7,7 +7,8 @@ import { get, post, del, put } from "~/helpers/api_helpers";
 // import { withRetryHandling } from "~/utils/retry-handling";
 
 // Mock the dependencies
-vi.mock("~/helpers/api_helpers", () => ({
+vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
+  ...(await importOriginal()),
   get: vi.fn(),
   post: vi.fn(),
   del: vi.fn(),
@@ -216,7 +217,7 @@ describe("Cart and Shipping Helpers", () => {
   });
 
   it("should call confirmpurchase with the correct URL, data, and config", async () => {
-    const mockData = {items: [] };
+    const mockData = { items: [] };
     const expectedConfig = {
       headers: { Authorization: `Bearer mock-access-token` },
     };
@@ -279,7 +280,7 @@ describe("Cart and Shipping Helpers", () => {
   });
 
   it("should call deletePickupLocation with the correct URL, data, and config", async () => {
-    const mockData =  "456";
+    const mockData = "456";
     const expectedConfig = {
       headers: { Authorization: `Bearer mock-access-token` },
     };
@@ -297,7 +298,7 @@ describe("Cart and Shipping Helpers", () => {
   });
 
   it("should call addPickupLocation with the correct URL, data, and config", async () => {
-    const mockData = {  location: "123 Main St" };
+    const mockData = { location: "123 Main St" };
     const expectedConfig = {
       headers: { Authorization: `Bearer mock-access-token` },
     };

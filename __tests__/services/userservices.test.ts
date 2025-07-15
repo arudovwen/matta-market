@@ -25,7 +25,8 @@ const mockConfig = {
   headers: { Authorization: `Bearer mock-access-token` },
 };
 // Mocking API helpers and store
-vi.mock("~/helpers/api_helpers", () => ({
+vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
+  ...(await importOriginal()),
   post: vi.fn(),
   get: vi.fn(),
 }));

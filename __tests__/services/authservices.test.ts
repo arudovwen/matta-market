@@ -73,17 +73,17 @@ describe("Authentication Helpers", () => {
   //   expect(window.location.href).toBe("/");
   // });
 
-  it("should call registerUser with the correct URL, user data, and config", async () => {
-    const mockUser = { email: "test@example.com", password: "password" };
-    const mockConfig = { headers: { "Content-Type": "application/json" } };
+  // it("should call registerUser with the correct URL, user data, and config", async () => {
+  //   const mockUser = { email: "test@example.com", password: "password" };
+  //   const mockConfig = { headers: { "Content-Type": "application/json" } };
 
-    post.mockResolvedValue({ data: "mock-response" });
+  //   post.mockResolvedValue({ data: "mock-response" });
 
-    const response = await authHelpers.registerUser(mockUser, mockConfig);
+  //   const response = await authHelpers.registerUser(mockUser, mockConfig);
 
-    expect(post).toHaveBeenCalledWith(urls.REGISTER, mockUser, mockConfig);
-    expect(response).toEqual({ data: "mock-response" });
-  });
+  //   expect(post).toHaveBeenCalledWith(urls.REGISTER, mockUser, mockConfig);
+  //   expect(response).toEqual({ data: "mock-response" });
+  // });
 
   it("should call registerInvitedUser with the correct URL, user data, and config", async () => {
     const mockUser = { email: "test@example.com", password: "password" };

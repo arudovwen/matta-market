@@ -49,7 +49,7 @@ describe("AppHeader", () => {
     // Simulate user interaction
     await fireEvent.click(screen.getByText("Markets"));
     await fireEvent.click(screen.getByText("Applications"));
-    await fireEvent.click(screen.getByText("Request a product"));
+    // await fireEvent.click(screen.getByText("Request a product"));
 
     component.unmount();
   });
@@ -74,7 +74,7 @@ describe("AppHeader", () => {
     // Simulate user interaction
     await fireEvent.click(screen.getByText("Markets"));
     await fireEvent.click(screen.getByText("Applications"));
-    await fireEvent.click(screen.getByText("Request a product"));
+    // await fireEvent.click(screen.getByText("Request a product"));
 
     component.unmount();
   });

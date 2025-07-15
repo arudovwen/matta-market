@@ -6,7 +6,8 @@ import { post, get } from "~/helpers/api_helpers";
 // import store from '~/store';
 
 // Mock store and helpers
-vi.mock("~/helpers/api_helpers", () => ({
+vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
+  ...(await importOriginal()),
   post: vi.fn(),
   get: vi.fn(),
 }));

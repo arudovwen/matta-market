@@ -6,7 +6,8 @@ import { get, post } from "~/helpers/api_helpers";
 import store from "~/store";
 
 // Mock store and helpers
-vi.mock("~/helpers/api_helpers", () => ({
+vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
+  ...(await importOriginal()),
   get: vi.fn(),
   post: vi.fn(),
 }));
@@ -81,9 +82,6 @@ describe("Auth and Market Helper Functions", () => {
     expect(response).toEqual({ data: "mock-response" });
   });
 
-
-
-
   // Test for updateProfile function
   it("should call updateProfile with the correct URL and data", async () => {
     const mockData = { someData: "mock-data" };
@@ -103,7 +101,6 @@ describe("Auth and Market Helper Functions", () => {
     expect(response).toEqual({ data: "mock-response" });
   });
 
-
   // Test for changepassword function
   it("should call changepassword with the correct URL and data", async () => {
     const mockData = { someData: "mock-data" };
@@ -122,7 +119,6 @@ describe("Auth and Market Helper Functions", () => {
     );
     expect(response).toEqual({ data: "mock-response" });
   });
-
 
   // Test for settimezone function
   it("should call settimezone with the correct URL and data", async () => {
