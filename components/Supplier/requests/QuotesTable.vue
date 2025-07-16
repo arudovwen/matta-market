@@ -223,11 +223,12 @@ function selectall() {
   multi.value = quotes.value.map((i) => i.id);
 }
 function openRequest(item) {
-  buyerquotedetail(item.id).then((res) => {
-    quote.value = { ...res.data.data, quoteId: item.id, id: item.id };
+  // buyerquotedetail(item.id).then((res) => {
+  //   quote.value = { ...res.data.data, quoteId: item.id, id: item.id };
 
-    isOpen.value = true;
-  });
+  //   isOpen.value = true;
+  // });
+  navigateTo(`/storefront/quote/confirmation/${item.id}?orderNumber=${item.quoteNo}`)
 }
 const quote = ref({});
 function next() {

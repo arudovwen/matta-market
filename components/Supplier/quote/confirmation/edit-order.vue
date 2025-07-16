@@ -103,12 +103,12 @@ onMounted(() => {
   if (props.detail) {
     setValues({
       productName: props?.detail?.productName,
-      packageName: props?.detail?.package.title,
+      packageName: props?.detail?.package.package?.title,
       productId: props?.detail?.productId,
-      purchaseAmount: props?.detail?.purchaseAmount,
+      purchaseAmount: props?.detail?.package?.purchaseAmount,
       brand: props?.detail?.brand,
-      packageId: props?.detail.package.id,
-      quoteId: props?.detail.quoteId,
+      packageId: props?.detail.package.package.id,
+      quoteId: id,
     });
   }
 });
