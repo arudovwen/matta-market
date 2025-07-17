@@ -71,9 +71,7 @@ function handleFirst() {
           handleSubmit();
         }
       })
-      .catch(() => {
-        toast.error("Error applying first-time discount");
-      });
+      .catch();
   }
 }
 
