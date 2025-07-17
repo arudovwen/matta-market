@@ -14,7 +14,7 @@
               ? 'bg-[#1849A9] border-[#2E90FA] !text-white'
               : 'border-[#ECECEC] text-matta-black'
           } ${
-            !n?.disabled ? '' : 'opacity-50 cursor-not-allowed '
+            !n?.disabled ? '' : 'opacity-60 cursor-not-allowed '
           } w-full  border  `"
         >
           <label
