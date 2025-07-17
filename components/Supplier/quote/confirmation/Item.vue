@@ -41,6 +41,7 @@
         </p>
 
         <AppButton
+          v-if="order?.status === 0"
           @click="open = true"
           text="Edit Order"
           icon="charm:refresh"
@@ -59,5 +60,6 @@
 <script setup>
 import EditOrder from "./edit-order.vue";
 const props = defineProps(["detail"]);
+const order = inject("order");
 const open = ref(false);
 </script>

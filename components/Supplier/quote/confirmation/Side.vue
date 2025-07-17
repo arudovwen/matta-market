@@ -46,7 +46,7 @@
         {{ currencyFormat(order?.package?.purchaseAmount * order?.quantity) }}
       </p>
     </div>
-    <div class="mt-6">
+    <div class="mt-6" v-if="order?.status === 0">
       <AppButton
         text="Confirm product is available"
         :isLoading="loading && confirmvalue == 2"
@@ -75,7 +75,7 @@ const selectedPickup = inject("selectedPickup");
 const order = inject("order");
 const loading = ref(false);
 const { id } = useRoute().params;
-const confirmvalue = ref(null)
+const confirmvalue = ref(null);
 async function confirmOrder(val) {
   try {
     if (!selectedPickup.value) {
