@@ -1,27 +1,78 @@
 <template>
-  <div class="bg-white rounded-[10px]">
-    <h2 class="px-[30px] py-5 font-bold text-2xl border-b border-[#f3f3f3]">
+  <div class="">
+    <h2 class="py-5 font-bold text-2xl border-b border-[#f3f3f3]">
       Payment Method
     </h2>
-    <div class="p-[30px]">
-      <div class="flex flex-wrap gap-y-6 md:gap-y-0 gap-x-6">
-        <button
+    <div class="p-[30px] w-full bg-white rounded-[10px]">
+      <div class="grid w-full gap-y-4">
+        <div
           v-for="n in data"
           :key="n.title"
-          @click="activeMethod = n.key"
-          :disabled="n?.disabled"
+          class="overflow-hidden rounded-lg"
           :class="`${
-            activeMethod === n.key
-              ? 'bg-[#1570EF1F] border-[#1570EF80]'
-              : 'border-[#E7E7E780]'
+            'credit' === n.key
+              ? 'bg-[#1849A9] border-[#2E90FA] !text-white'
+              : 'border-[#ECECEC] text-matta-black'
           } ${
-            !n?.disabled ? '' : 'opacity-50 cursor-not-allowed'
-          } shadow-[0px_0px _4px_0px_rgba(0,0,0,0.11)] min-w-[180px] mx-auto lg:mx-0 w-[200px] lg:w-[180px] rounded-[10px] py-6 lg:py-5 px-[16px] flex flex-col justify-center items-center border-2`"
+            !n?.disabled ? '' : 'opacity-50 cursor-not-allowed '
+          } w-full  border  `"
         >
-          <AppIcon class="text-4xl mb-2" :icon="n.icon" />
-          <p class="text-xs">{{ n.title }}</p>
-          <p class="text-[9px] font-bold" v-if="n.key==='credit'">{{ currencyFormat(creditDetail?.availableCredit) }}</p>
-        </button>
+          <label
+            @click="activeMethod = n.key"
+            :class="`${
+              'credit' === n.key ? ' !text-white' : ' text-matta-black'
+            } ${n?.disabled ? 'opacity-60' : ''} `"
+            class="flex items-center justify-between p-4"
+          >
+            <div class="flex items-center gap-x-3">
+              <span class="flex items-center">
+                <input
+                  :value="n.key"
+                  type="radio"
+                  v-model="activeMethod"
+                  class="hidden peer"
+                  :disabled="n?.disabled"
+                />
+                <span :class="'hidden peer-checked:inline'">
+                  <AppIcon
+                    icon="fa6-solid:circle-dot"
+                    :iconClass="`${
+                      n.key === 'credit' ? 'text-white' : 'text-[#1570EF]'
+                    }`"
+                /></span>
+                <span :class="'inline peer-checked:hidden'">
+                  <AppIcon
+                    icon="fa-regular:circle"
+                    :iconClass="'text-[#D0D5DD]'"
+                  />
+                </span>
+              </span>
+
+              <AppIcon class="ml-1 text-2xl" :icon="n.icon" />
+              <p class="text-sm font-bold">{{ n.title }}</p>
+            </div>
+            <p class="text-sm font-semibold" v-if="n.key === 'credit'">
+              {{ currencyFormat(creditDetail?.availableCredit) }}
+            </p>
+          </label>
+          <div
+            v-if="'credit' === n.key"
+            :class="`${
+              'credit' === n.key ? ' !text-white' : ' text-matta-black'
+            }  `"
+            class="py-4 border-t border-[#FFFFFF24] px-4 text-xs flex justify-between items-end gap-x-16"
+          >
+            <div class="flex-1">
+              <span class="block mb-1 text-xs font-bold">{{ n.text }}</span>
+              <span>{{ n.subtext }}</span>
+            </div>
+            <AppButton
+            @click=" window.open('https://dev.oxide.matta.trade/credit', '_blank')"
+              text="Apply now"
+              btnClass="bg-white !text-[#1570EF] !text-xs !py-[6px] !px-[10px] font-semibold"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -50,16 +101,7 @@ const hasCredit = ref(true);
 const isLoading = ref(false);
 const data = [
   {
-    title: "Card / Bank Transfer",
-    icon: "uil:credit-card",
-    key: "card",
-    url: "",
-    text: "Pay instantly and securely with your credit/debit card",
-    value: 0,
-    disabled: false,
-  },
-  {
-    title: "Matta Wallet",
+    title: "Pay With Wallet Balance",
     icon: "ion:wallet-outline",
     url: "",
     key: "wallet",
@@ -67,20 +109,23 @@ const data = [
     value: 1,
     disabled: true,
   },
-  // {
-  //   title: "Pay with Trade Finance",
-  //   icon: "teenyicons:credit-card-outline",
-  //   url: "",
-  //   key: "trade",
-  //   text: "Make payment with trade finance",
-  //   value: 2,
-  // },
   {
-    title: "Credit Wallet",
-    icon: "ph:hand-coins-bold",
-    text: "Pay with your buy now ,pay later wallet",
+    title: "Buy Now Pay Later",
+    icon: "uil:credit-card",
+    text: " Get the materials you need today — pay later at your convenience.",
+    subtext:
+      " With our flexible Buy Now Pay Later option, you can complete your procurement instantly and spread your payments over time. It's fast, secure, and designed to support your business growth without cash flow disruptions.",
     key: "credit",
     value: 3,
+    disabled: false,
+  },
+  {
+    title: "Submit Order Only",
+    icon: "famicons:cart-outline",
+    key: "card",
+    url: "",
+    text: "Pay instantly and securely with your credit/debit card",
+    value: 0,
     disabled: false,
   },
 ];
