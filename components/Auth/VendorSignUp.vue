@@ -173,7 +173,7 @@ const props = defineProps({
 });
 const emits = defineEmits(["close", "toggleAuth"]);
 const route = useRoute();
-const config = useRuntimeConfig()
+const config = useRuntimeConfig();
 const { type } = route.params;
 const agree = ref(false);
 const authStore = useAuthStore();
@@ -190,7 +190,7 @@ const formValues = {
   business_UserType: type === "register" || !props.main ? 0 : 1,
   companyName: "",
   AgentReferralCode: "",
-  appCode: config.public.APP_CODE
+  appCode: config.public.APP_CODE,
 };
 const schema = yup.object({
   business_UserType: yup.string(),
@@ -263,25 +263,23 @@ const onSubmit = handleSubmit((values) => {
 const handleFinalSubmit = (code) => {
   isLoading.value = true;
   confirm2FA({ code, email: email.value || route.query.email })
-    .then((res) => {
+    .then(async (res) => {
       if (res.status === 200) {
         isLoading.value = false;
         toast.success("Sign up successful");
         authStore.setLoggedUser(res.data.data);
         authStore.setHasPin(res.data.data.hasTransactionPIN);
         localStorage.setItem("fetchCart", true);
-        if (props.main) {
-          if (
-            !res.data.data?.onboardingPageStatus &&
-            res.data.data?.businessUserType.toLowerCase() === "supplier"
-          ) {
-            // toast.info("Login successful");
-            window.location.replace("/products");
-            return;
+        if (!props.main) {
+          toast.info("Login successful");
+          const userTypeResponse = await authStore.getBusinessUserType();
+          console.log({ userTypeResponse });
+
+          if (userTypeResponse) {
+            emits("close");
           }
-          window.location.replace("/");
-        } else {
-          emits("close");
+
+          return;
         }
       }
     })

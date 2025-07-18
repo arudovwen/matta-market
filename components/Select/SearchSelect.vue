@@ -1,6 +1,6 @@
 <template>
   <div
-    class="formGroup relative"
+    class="relative formGroup"
     :class="`${error ? 'has-error' : ''}  ${horizontal ? 'flex' : ''}  ${
       validate ? 'is-valid' : ''
     } `"
@@ -33,9 +33,9 @@
       >
         <ul class="grid gap-y-1" v-if="!loading">
           <li
-            class="py-2 px-4 hover:bg-gray-100 cursor-pointer text-sm"
-            v-for="option in options"
-            :key="option.label"
+            class="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
+            v-for="(option, index) in options"
+            :key="index"
             @click="handleChange(option.value)"
           >
             {{ option.label }}

@@ -16,7 +16,7 @@
           />
         </TransitionChild>
 
-        <div class="fixed z-10 inset-0 overflow-y-auto">
+        <div class="fixed inset-0 z-10 overflow-y-auto">
           <div
             class="flex items-center justify-center min-h-full p-4 text-center sm:p-0"
           >
@@ -30,10 +30,10 @@
               leave-to="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <div
-                class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full"
+                class="relative overflow-hidden text-left transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:max-w-sm sm:w-full"
               >
-                <div class="bg-white px-6 py-6">
-                  <div class="flex justify-between mb-5 items-center">
+                <div class="px-6 py-6 bg-white">
+                  <div class="flex items-center justify-between mb-5">
                     <div>
                       <img
                         alt="delte"
@@ -66,7 +66,7 @@
                   >
                     <div class="grid gap-y-2">
                       <div
-                        class="flex gap-x-2 items-center justify-between text-xs"
+                        class="flex items-center justify-between text-xs gap-x-2"
                         v-for="item in insufficient
                           ? advanceOptions
                           : bankOptions"
@@ -91,7 +91,7 @@
 
                   <div
                     v-if="!insufficient"
-                    class="flex gap-x-4 items-center mt-6"
+                    class="flex items-center mt-6 gap-x-4"
                   >
                     <button
                       v-if="isCancel"

@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
 import { logoutUser } from "~/services/authservices";
+import { getCreditDetail } from "~/services/creditservice";
+import { getBusinessType } from "~/services/userservices";
+import { getWalletBalance } from "~/services/walletservice";
 import { logoutUrl } from "~/utils/constants";
 
 const UserTypes = {
@@ -16,6 +19,7 @@ export const useAuthStore = defineStore(
     const loggedUser = ref("");
     const hasPin = ref(false);
     const language = ref(window?.navigator?.language);
+    const userBalance = ref(null);
     const isLoggedIn = computed(() => !!mattaAuth.value);
     const refreshToken = computed(() => mattaAuth?.value?.refreshToken);
     const jwToken = computed(() => mattaAuth?.value?.jwToken);
@@ -89,6 +93,62 @@ export const useAuthStore = defineStore(
         window.location.replace("/");
       });
     };
+    async function getBusinessUserType() {
+      try {
+        const res = await getBusinessType();
+        if (res.status === 200) {
+          setLoggedUser({
+            ...userInfo.value,
+            businessUserType: res.data?.data?.businessUserType,
+          });
+          return true;
+        }
+        return false;
+      } catch (error) {
+        return false;
+      }
+    }
+    async function getUserBalance() {
+      try {
+        let creditDetail = null;
+        let balance = null;
+        let hasCredit = false;
+
+        const [creditRes, walletRes] = await Promise.allSettled([
+          getCreditDetail(),
+          getWalletBalance(),
+        ]);
+
+        if (
+          creditRes.status === "fulfilled" &&
+          creditRes.value.status === 200
+        ) {
+          creditDetail = creditRes.value.data.data;
+          hasCredit = true;
+        } else {
+          hasCredit = false;
+        }
+
+        if (
+          walletRes.status === "fulfilled" &&
+          walletRes.value.status === 200
+        ) {
+          balance = walletRes.value.data.data;
+        }
+
+        userBalance.value = {
+          balance,
+          creditDetail: {
+            ...creditDetail,
+            hasCredit,
+          },
+        };
+      } catch (error) {
+        console.error("Unexpected error:", error);
+      } finally {
+      }
+    }
+
     return {
       updateUser,
       isLoggedIn,
@@ -114,6 +174,9 @@ export const useAuthStore = defineStore(
       setAppList,
       appList,
       signOut,
+      getBusinessUserType,
+      userBalance,
+      getUserBalance,
     };
   },
   {

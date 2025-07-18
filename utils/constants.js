@@ -1469,3 +1469,53 @@ export const vehicleOptions = [
     value: 5,
   },
 ];
+
+const creditText1 =
+  "You are about to make payment for this purchase using credit?";
+const creditText2 =
+  "With our flexible Buy Now Pay Later option, you can complete your procurement instantly and spread your payments over time. It's fast, secure, and designed to support your business growth without cash flow disruptions.";
+
+const creditText3 =
+  "You do not have sufficient credit to complete this purchase. ";
+const creditText4 =
+  "Your credit request is currently pending. Please consider using an alternative payment option";
+
+
+const creditTitle1 =
+  "You are about to make payment for this purchase using credit?";
+const creditTitle2 =
+  "Get the materials you need today — pay later at your convenience.";
+
+const creditTitle3 =
+  "Insufficient Credit";
+const credittTitle4 =
+  "Pending Credit Request";
+
+export function handleMessage(insufficient, available, creditWalletStatus) {
+  if (insufficient && creditWalletStatus === 1) {
+    return creditText3;
+  }
+  if (insufficient && creditWalletStatus === 0) {
+    return creditText4;
+  }
+  if (available && creditWalletStatus === 1) {
+    return creditText1;
+  }
+  return creditText2;
+}
+export function handleMessageTitle(
+  insufficient,
+  available,
+  creditWalletStatus
+) {
+  if (insufficient && creditWalletStatus === 1) {
+    return creditTitle3;
+  }
+  if (insufficient && creditWalletStatus === 0) {
+    return credittTitle4;
+  }
+  if (available && creditWalletStatus === 1) {
+    return creditTitle1;
+  }
+  return creditTitle2;
+}

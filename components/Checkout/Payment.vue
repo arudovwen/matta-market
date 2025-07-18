@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="" v-if="cartStore?.cartTotalwithTax">
     <h2 class="py-5 font-bold text-2xl border-b border-[#f3f3f3]">
       Payment Method
     </h2>
@@ -18,7 +18,6 @@
           } w-full  border  `"
         >
           <label
-            @click="activeMethod = n.key"
             :class="`${
               'credit' === n.key ? ' !text-white' : ' text-matta-black'
             } ${n?.disabled ? 'opacity-60' : ''} `"
@@ -51,8 +50,28 @@
               <AppIcon class="ml-1 text-2xl" :icon="n.icon" />
               <p class="text-sm font-bold">{{ n.title }}</p>
             </div>
-            <p class="text-sm font-semibold" v-if="n.key === 'credit'">
-              {{ currencyFormat(creditDetail?.availableCredit) }}
+            <div v-if="n.key === 'credit'">
+              <p
+                class="text-sm font-semibold"
+                v-if="authStore.userBalance?.creditDetail?.hasCredit"
+              >
+                {{
+                  currencyFormat(
+                    authStore.userBalance?.creditDetail?.availableCredit
+                  )
+                }}
+              </p>
+              <AppButton
+                v-if="!authStore.userBalance?.creditDetail?.hasCredit"
+                @click="openCreditPage"
+                text="Apply now"
+                btnClass="bg-white !text-[#1570EF] !text-xs !py-[6px] !px-[10px] font-semibold"
+              />
+            </div>
+            <p class="text-sm font-semibold" v-if="n.key === 'wallet'">
+              {{
+                currencyFormat(authStore.userBalance?.balance?.availableBalance)
+              }}
             </p>
           </label>
           <div
@@ -63,41 +82,58 @@
             class="py-4 border-t border-[#FFFFFF24] px-4 text-xs flex justify-between items-end gap-x-16"
           >
             <div class="flex-1">
-              <span class="block mb-1 text-xs font-bold">{{ n.text }}</span>
-              <span>{{ n.subtext }}</span>
+              <span class="block mb-1 text-xs font-bold">{{
+                handleMessageTitle(
+                  cartStore?.cartTotalwithTax >
+                    authStore.userBalance?.creditDetail?.availableCredit,
+                  hasCredit,
+                  authStore.userBalance?.creditDetail?.creditWalletStatus
+                )
+              }}</span>
+              <span>{{
+                handleMessage(
+                  cartStore?.cartTotalwithTax >
+                    authStore.userBalance?.creditDetail?.availableCredit,
+                  hasCredit,
+                  authStore.userBalance?.creditDetail?.creditWalletStatus
+                )
+              }}</span>
             </div>
-            <AppButton
-            @click=" window.open('https://dev.oxide.matta.trade/credit', '_blank')"
-              text="Apply now"
-              btnClass="bg-white !text-[#1570EF] !text-xs !py-[6px] !px-[10px] font-semibold"
-            />
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  <!-- {{ authStore.userBalance }} -->
   <CheckoutCreditPopup
     v-if="isPopOpen"
     @close="isPopOpen = false"
     :open="isPopOpen"
     :available="hasCredit"
-    :insufficient="cartStore?.cartTotalwithTax > creditDetail?.availableCredit"
+    :insufficient="
+      cartStore?.cartTotalwithTax >
+      authStore.userBalance?.creditDetail?.availableCredit
+    "
     :creditDetail="{
-      ...creditDetail,
-      balance: creditDetail?.creditLimit - creditDetail?.creditUsed,
+      ...authStore.userBalance?.creditDetail,
+      balance:
+        authStore.userBalance?.creditDetail?.creditLimit -
+        authStore.userBalance?.creditDetail?.creditUsed,
       amountToPay: cartStore?.cartTotalwithTax,
     }"
   />
 </template>
 <script setup>
 import { getCreditDetail } from "~/services/creditservice";
+import { getWalletBalance } from "~/services/walletservice";
 
 const cartStore = useCartStore();
 const activeMethod = inject("activeMethod");
 const isPopOpen = inject("isPopOpen");
 const creditDetail = ref(null);
+const details = ref(null);
 const hasCredit = ref(true);
+
 const isLoading = ref(false);
 const data = [
   {
@@ -107,7 +143,7 @@ const data = [
     key: "wallet",
     text: "Make payment with funds from your Matta wallet",
     value: 1,
-    disabled: true,
+    disabled: false,
   },
   {
     title: "Buy Now Pay Later",
@@ -129,27 +165,45 @@ const data = [
     disabled: false,
   },
 ];
+function openCreditPage() {
+  window.open('https://dev.oxide.matta.trade/credit', '_blank');
+}
 watch(activeMethod, () => {
   activeMethod.value === "credit"
     ? (isPopOpen.value = true)
     : (isPopOpen.value = false);
 });
-function handleWalletDetails() {
+
+async function handleWalletDetails() {
   isLoading.value = true;
-  getCreditDetail()
-    .then((res) => {
-      if (res.status === 200) {
-        creditDetail.value = res.data.data;
-        hasCredit.value = true;
-        isLoading.value = false;
-      }
-    })
-    .catch(() => {
+
+  try {
+    const [creditRes, walletRes] = await Promise.allSettled([
+      getCreditDetail(),
+      getWalletBalance(),
+    ]);
+
+    if (creditRes.status === "fulfilled" && creditRes.value.status === 200) {
+      creditDetail.value = creditRes.value.data.data;
+      hasCredit.value = true;
+    } else {
       hasCredit.value = false;
-      isLoading.value = false;
-    });
+    }
+
+    if (walletRes.status === "fulfilled" && walletRes.value.status === 200) {
+      details.value = walletRes.value.data.data;
+    }
+  } catch (error) {
+    // Optional: global unexpected error handling
+    console.error("Unexpected error:", error);
+    hasCredit.value = false;
+  } finally {
+    isLoading.value = false;
+  }
 }
+const authStore = useAuthStore();
 onMounted(() => {
-  handleWalletDetails();
+  // handleWalletDetails();
+  authStore.getUserBalance();
 });
 </script>
