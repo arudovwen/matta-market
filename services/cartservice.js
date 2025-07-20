@@ -87,7 +87,7 @@ export async function confirmavailablilty(data) {
   return await marketPost(`${urls.CONFIRM_AVAILABILITY}`, data, config);
 }
 export async function editOrder(data) {
-  return await marketPost(`${urls.EDIT_ORDER}`, data, config);
+  return await post(`${urls.EDIT_ORDER}`, data, config);
 }
 export async function requestACall(data) {
   return await marketGet(`${urls.REQUEST_A_CALL}`, data, config);
