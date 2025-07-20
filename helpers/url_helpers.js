@@ -144,7 +144,7 @@ const urls = {
   CONFIRM_AVAILABILITY: "/v1/storefront/confirm-order-availability",
   CONFIRM_QUOTE_AVAILABILITY: "/v1/quotes/confirm-quote",
 
-  EDIT_ORDER: "/v1/storefront/edit-order",
+  EDIT_ORDER: "/v1/quotes/edit-order",
 
   //SAMPLE requests
   ADD_SAMPLE_REQUEST: "v1/procurement/newsamplerequest",
