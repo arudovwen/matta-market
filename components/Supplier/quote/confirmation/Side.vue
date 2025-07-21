@@ -14,7 +14,7 @@
           </p>
         </div>
         <p class="text-xs font-normal text-white">
-          {{ currencyFormat(order?.orderTotal) }}
+          {{ currencyFormat(order?.package?.purchaseAmount) }}
         </p>
       </div>
     </div>
