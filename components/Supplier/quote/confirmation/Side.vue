@@ -69,7 +69,7 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { confirmavailablilty } from "~/services/cartservice";
+import { confirmavailablilty } from "~/services/quoteservice";
 
 const selectedPickup = inject("selectedPickup");
 const order = inject("order");
