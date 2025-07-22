@@ -1,5 +1,5 @@
 <template>
-  <div class="gap-y-2 flex flex-col">
+  <div class="flex flex-col gap-y-2">
     <!-- Top bar   -->
     <div>
       <HeaderComponent
@@ -10,13 +10,12 @@
     </div>
     <VerificationBox />
 
-    <div class="pb-10" v-if="stats">
-	
+    <div class="grid pb-10 gap-y-10" v-if="stats">
       <div
-        class="p-4 lg:p-6 rounded-[10px] bg-white mb-8 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
+        class="p-4 lg:p-6 rounded-[10px] bg-white shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
       >
         <div
-          class="mb-10 flex flex-col lg:flex-row lg:justify-between lg:items-center gap-y-4"
+          class="flex flex-col mb-10 lg:flex-row lg:justify-between lg:items-center gap-y-4"
         >
           <div
             class="border border-[#D0D5DD] rounded-lg overflow-hidden text-xs lg:text-sm text-[#344054] max-w-max"
@@ -45,7 +44,7 @@
           </div>
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-x-8 w-full">
+        <div class="flex flex-col w-full lg:flex-row gap-x-8">
           <div class="flex-1">
             <div class="">
               <div class="flex justify-between">
@@ -54,7 +53,7 @@
                     >Total Amount</span
                   >
 
-                  <div class="flex gap-x-1 items-start">
+                  <div class="flex items-start gap-x-1">
                     <span class="block text-[30px] font-bold">
                       <span
                         class="block text-xl xl:text-[30px] font-semibold text-[#101828]"
@@ -95,7 +94,7 @@
                 class="block text-[#475467] font-medium text-xs lg:text-sm capitalize"
                 >{{ n.title }}</span
               >
-              <div class="flex gap-x-1 items-start">
+              <div class="flex items-start gap-x-1">
                 <span
                   class="block text-base lg:text-xl xl:text-[30px] font-bold"
                   >{{ stats[n.key] }}</span
@@ -119,7 +118,11 @@
         <HeaderComponent title="Trending Products" className="!px-5" />
         <div>
           <div class="overflow-x-auto max-w-[80vw] lg:max-w-full">
-            <table aria-describedby="true" class="w-full" v-if="trending.length">
+            <table
+              aria-describedby="true"
+              class="w-full"
+              v-if="trending.length"
+            >
               <thead>
                 <tr>
                   <th
@@ -174,8 +177,15 @@
           />
         </div>
       </div>
+
+      <div
+        class="rounded-[10px] bg-white border border-[#F4F7FE] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
+      >
+        <HeaderComponent title="Pending Orders" className="!px-5" />
+        <SupplierOrdersConfirmation :no-header="true" />
+      </div>
     </div>
-    <div class="text-center p-6 lg:p-8 my-24" v-else>
+    <div class="p-6 my-24 text-center lg:p-8" v-else>
       <AppLoader />
     </div>
   </div>
@@ -274,7 +284,6 @@ const confirmseries = ref([]);
 
 onMounted(() => {
   getesfrontstats(query).then((res) => {
-	
     stats.value = res.data.data;
   });
   getstorefronttrending(query).then((res) => {

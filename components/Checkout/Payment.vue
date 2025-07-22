@@ -1,5 +1,5 @@
 <template>
-  <div class="" v-if="cartStore?.cartTotalwithTax">
+  <div v-if="cartStore?.cartTotalwithTax">
     <h2 class="py-5 font-bold text-2xl border-b border-[#f3f3f3]">
       Payment Method
     </h2>
@@ -7,53 +7,66 @@
       <div class="grid w-full gap-y-4">
         <div
           v-for="n in data"
-          :key="n.title"
-          class="overflow-hidden rounded-lg"
-          :class="`${
-            'credit' === n.key
+          :key="n.key"
+          class="w-full overflow-hidden border rounded-lg"
+          :class="[
+            activeMethod === 'credit' && n.key === 'credit'
               ? 'bg-[#1849A9] border-[#2E90FA] !text-white'
-              : 'border-[#ECECEC] text-matta-black'
-          } ${
-            !n?.disabled ? '' : 'opacity-60 cursor-not-allowed '
-          } w-full  border  `"
+              : 'border-[#ECECEC] text-matta-black',
+            n.disabled ? 'opacity-60 cursor-not-allowed' : '',
+          ]"
         >
           <label
-            :class="`${
-              'credit' === n.key ? ' !text-white' : ' text-matta-black'
-            } ${n?.disabled ? 'opacity-60' : ''} `"
             class="flex items-center justify-between p-4"
+            :class="[
+              activeMethod === 'credit' && n.key === 'credit'
+                ? '!text-white'
+                : 'text-matta-black',
+              n.disabled ? 'opacity-60' : '',
+            ]"
           >
             <div class="flex items-center gap-x-3">
               <span class="flex items-center">
                 <input
-                  :value="n.key"
                   type="radio"
-                  v-model="activeMethod"
                   class="hidden peer"
-                  :disabled="n?.disabled"
+                  :value="n.key"
+                  v-model="activeMethod"
+                  :disabled="n.disabled"
                 />
-                <span :class="'hidden peer-checked:inline'">
+                <span class="hidden peer-checked:inline">
                   <AppIcon
                     icon="fa6-solid:circle-dot"
-                    :iconClass="`${
-                      n.key === 'credit' ? 'text-white' : 'text-[#1570EF]'
-                    }`"
-                /></span>
-                <span :class="'inline peer-checked:hidden'">
+                    :iconClass="
+                      activeMethod === 'credit' && n.key === 'credit'
+                        ? 'text-white'
+                        : 'text-[#1570EF]'
+                    "
+                  />
+                </span>
+                <span class="inline peer-checked:hidden">
                   <AppIcon
                     icon="fa-regular:circle"
-                    :iconClass="'text-[#D0D5DD]'"
+                    iconClass="text-[#D0D5DD]"
                   />
                 </span>
               </span>
-
-              <AppIcon class="ml-1 text-2xl" :icon="n.icon" />
+              <AppIcon :icon="n.icon" class="ml-1 text-2xl" />
               <p class="text-sm font-bold">{{ n.title }}</p>
             </div>
-            <div v-if="n.key === 'credit'">
+
+            <!-- Wallet Balance -->
+            <p v-if="n.key === 'wallet'" class="text-sm font-semibold">
+              {{
+                currencyFormat(authStore.userBalance?.balance?.availableBalance)
+              }}
+            </p>
+
+            <!-- Credit Option -->
+            <div v-if="n.key === 'credit'" class="text-right">
               <p
-                class="text-sm font-semibold"
                 v-if="authStore.userBalance?.creditDetail?.hasCredit"
+                class="text-sm font-semibold"
               >
                 {{
                   currencyFormat(
@@ -62,84 +75,92 @@
                 }}
               </p>
               <AppButton
-                v-if="!authStore.userBalance?.creditDetail?.hasCredit"
-                @click="openCreditPage"
+                v-else
                 text="Apply now"
+                @click="openCreditPage"
                 btnClass="bg-white !text-[#1570EF] !text-xs !py-[6px] !px-[10px] font-semibold"
               />
+              <p
+                class="mt-1 text-xs"
+                :class="insufficient ? 'text-red-600' : 'text-[#667085]'"
+                v-if="authStore.userBalance?.creditDetail?.hasCredit"
+              >
+                {{ insufficient ? "Insufficient" : "Available" }} credit
+              </p>
             </div>
-            <p class="text-sm font-semibold" v-if="n.key === 'wallet'">
-              {{
-                currencyFormat(authStore.userBalance?.balance?.availableBalance)
-              }}
-            </p>
           </label>
+
+          <!-- Additional Credit Info -->
           <div
-            v-if="'credit' === n.key"
-            :class="`${
-              'credit' === n.key ? ' !text-white' : ' text-matta-black'
-            }  `"
+            v-if="n.key === 'credit' && activeMethod === 'credit'"
             class="py-4 border-t border-[#FFFFFF24] px-4 text-xs flex justify-between items-end gap-x-16"
+            :class="
+              activeMethod === 'credit' && n.key === 'credit'
+                ? '!text-white'
+                : 'text-matta-black'
+            "
           >
             <div class="flex-1">
-              <span class="block mb-1 text-xs font-bold">{{
-                handleMessageTitle(
-                  cartStore?.cartTotalwithTax >
-                    authStore.userBalance?.creditDetail?.availableCredit,
-                  hasCredit,
-                  authStore.userBalance?.creditDetail?.creditWalletStatus
-                )
-              }}</span>
-              <span>{{
-                handleMessage(
-                  cartStore?.cartTotalwithTax >
-                    authStore.userBalance?.creditDetail?.availableCredit,
-                  hasCredit,
-                  authStore.userBalance?.creditDetail?.creditWalletStatus
-                )
-              }}</span>
+              <span class="block mb-1 text-xs font-bold">
+                {{
+                  handleMessageTitle(
+                    cartStore?.cartTotalwithTax >
+                      authStore.userBalance?.creditDetail?.availableCredit,
+                    hasCredit,
+                    authStore.userBalance?.creditDetail?.creditWalletStatus
+                  )
+                }}
+              </span>
+              <span>
+                {{
+                  handleMessage(
+                    cartStore?.cartTotalwithTax >
+                      authStore.userBalance?.creditDetail?.availableCredit,
+                    hasCredit,
+                    authStore.userBalance?.creditDetail?.creditWalletStatus
+                  )
+                }}
+              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- {{ authStore.userBalance }} -->
-  <CheckoutCreditPopup
+
+  <!-- <CheckoutCreditPopup
     v-if="isPopOpen"
     @close="isPopOpen = false"
     :open="isPopOpen"
     :available="hasCredit"
-    :insufficient="
-      cartStore?.cartTotalwithTax >
-      authStore.userBalance?.creditDetail?.availableCredit
-    "
+    :insufficient="cartStore?.cartTotalwithTax > authStore.userBalance?.creditDetail?.availableCredit"
     :creditDetail="{
       ...authStore.userBalance?.creditDetail,
-      balance:
-        authStore.userBalance?.creditDetail?.creditLimit -
-        authStore.userBalance?.creditDetail?.creditUsed,
-      amountToPay: cartStore?.cartTotalwithTax,
+      balance: authStore.userBalance?.creditDetail?.creditLimit - authStore.userBalance?.creditDetail?.creditUsed,
+      amountToPay: cartStore?.cartTotalwithTax
     }"
-  />
+  /> -->
 </template>
 <script setup>
 import { getCreditDetail } from "~/services/creditservice";
 import { getWalletBalance } from "~/services/walletservice";
 
 const cartStore = useCartStore();
+const authStore = useAuthStore();
+
 const activeMethod = inject("activeMethod");
-const isPopOpen = inject("isPopOpen");
+// const isPopOpen = inject("isPopOpen");
+
 const creditDetail = ref(null);
 const details = ref(null);
 const hasCredit = ref(true);
-
+const insufficient = ref(false);
 const isLoading = ref(false);
+
 const data = [
   {
     title: "Pay With Wallet Balance",
     icon: "ion:wallet-outline",
-    url: "",
     key: "wallet",
     text: "Make payment with funds from your Matta wallet",
     value: 1,
@@ -148,35 +169,29 @@ const data = [
   {
     title: "Buy Now Pay Later",
     icon: "uil:credit-card",
-    text: " Get the materials you need today — pay later at your convenience.",
-    subtext:
-      " With our flexible Buy Now Pay Later option, you can complete your procurement instantly and spread your payments over time. It's fast, secure, and designed to support your business growth without cash flow disruptions.",
     key: "credit",
     value: 3,
+    text: "Get the materials you need today — pay later at your convenience.",
+    subtext:
+      "With our flexible Buy Now Pay Later option, you can complete your procurement instantly and spread your payments over time.",
     disabled: false,
   },
   {
     title: "Submit Order Only",
     icon: "famicons:cart-outline",
     key: "card",
-    url: "",
     text: "Pay instantly and securely with your credit/debit card",
     value: 0,
     disabled: false,
   },
 ];
+
 function openCreditPage() {
-  window.open('https://dev.oxide.matta.trade/credit', '_blank');
+  window.open("https://dev.oxide.matta.trade/credit", "_blank");
 }
-watch(activeMethod, () => {
-  activeMethod.value === "credit"
-    ? (isPopOpen.value = true)
-    : (isPopOpen.value = false);
-});
 
 async function handleWalletDetails() {
   isLoading.value = true;
-
   try {
     const [creditRes, walletRes] = await Promise.allSettled([
       getCreditDetail(),
@@ -194,16 +209,22 @@ async function handleWalletDetails() {
       details.value = walletRes.value.data.data;
     }
   } catch (error) {
-    // Optional: global unexpected error handling
     console.error("Unexpected error:", error);
     hasCredit.value = false;
   } finally {
     isLoading.value = false;
   }
 }
-const authStore = useAuthStore();
+
+// Optional: fetch if needed
 onMounted(() => {
-  // handleWalletDetails();
   authStore.getUserBalance();
+});
+
+// Dynamically watch for insufficiency
+watchEffect(() => {
+  insufficient.value =
+    cartStore?.cartTotalwithTax >
+    authStore.userBalance?.creditDetail?.availableCredit;
 });
 </script>

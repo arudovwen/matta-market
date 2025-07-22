@@ -1,13 +1,25 @@
 <template>
-  <div class="bg-[#101828] rounded-[10px] py-[30px] px-5 w-full lg:w-[250px] xl:w-[360px]">
+  <div
+    class="bg-[#101828] rounded-[10px] py-[30px] px-5 w-full lg:w-[250px] xl:w-[360px]"
+  >
     <div class="pb-6 text-2xl font-semibold text-white">Order Details</div>
     <div class="flex flex-col gap-y-5">
-      <div class="flex justify-between" v-for="item in cartStore?.cart" :key="item.product + item.selectedPackage">
+      <div
+        class="flex justify-between"
+        v-for="item in cartStore?.cart"
+        :key="item.product + item.selectedPackage"
+      >
         <div>
-          <p class="font-semibold text-sm text-white mb-[2px]">{{ item.product }}</p>
-          <p class="text-xs text-[#959595]">Qty: {{ item.quantity }} {{ item.selectedPackage }}</p>
+          <p class="font-semibold text-sm text-white mb-[2px]">
+            {{ item.product }}
+          </p>
+          <p class="text-xs text-[#959595]">
+            Qty: {{ item.quantity }} {{ item.selectedPackage }}
+          </p>
         </div>
-        <p class="text-xs font-normal text-white">{{ currencyFormat(item.packagePrice) }}</p>
+        <p class="text-xs font-normal text-white">
+          {{ currencyFormat(item.packagePrice) }}
+        </p>
       </div>
     </div>
 
@@ -15,7 +27,10 @@
 
     <div class="flex flex-col gap-y-3">
       <OrderSummaryRow label="Sub-total" :value="cartStore?.cartTotalAmount" />
-      <OrderSummaryRow label="VAT (7.5%)" :value="cartStore?.cartTotalAmount * cartStore?.tax" />
+      <OrderSummaryRow
+        label="VAT (7.5%)"
+        :value="cartStore?.cartTotalAmount * cartStore?.tax"
+      />
 
       <OrderSummaryRow
         v-if="cartStore?.discountValue"
@@ -33,13 +48,19 @@
 
     <hr class="my-[20px] border-white/10" />
 
-    <OrderSummaryRow label="Estimated Shipping Cost" :value="cartStore?.shippingTotal" isBold />
+    <OrderSummaryRow
+      label="Estimated Shipping Cost"
+      :value="cartStore?.shippingTotal"
+      isBold
+    />
 
     <hr class="my-[20px] border-white/10" />
 
     <div class="flex justify-between mb-[25px]">
       <p class="text-sm text-[#E1E1E1]">Total</p>
-      <p class="font-bold text-white">{{ currencyFormat(cartStore?.cartTotalwithTax) }}</p>
+      <p class="font-bold text-white">
+        {{ currencyFormat(cartStore?.cartTotalwithTax) }}
+      </p>
     </div>
 
     <AppButton
@@ -55,7 +76,7 @@
       v-if="cartStore?.cartTotalAmount < minCartAmount"
       @click="confirmOrder"
       :isLoading="loading || cartStore?.loadingCart"
-      :isDisabled="isPaymentDisabled"
+      :isDisabled="isPaymentDisabled || insufficient && activeMethod === 'credit'"
       :text="status"
       loadingText="Processing ..."
       btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4 w-full"
@@ -83,7 +104,7 @@ const loading = ref(false);
 const requestLoading = ref(false);
 const status = ref("Make Payment");
 const router = useRouter();
-
+const insufficient = ref(false);
 const referenceData = reactive({
   zohoorderId: null,
   transactionRef: null,
@@ -93,23 +114,27 @@ const referenceData = reactive({
 const data = ref(null);
 
 // Computed to simplify button disabling
-const isOrderRequestDisabled = computed(() =>
-  !cartStore?.cart ||
-  !cartStore?.cartTotalwithTax ||
-  loading.value ||
-  !shippingStore?.defaultAddress?.id ||
-  cartStore?.loadingCart ||
-  requestLoading.value
+const isOrderRequestDisabled = computed(
+  () =>
+    !cartStore?.cart ||
+    !cartStore?.cartTotalwithTax ||
+    loading.value ||
+    !shippingStore?.defaultAddress?.id ||
+    cartStore?.loadingCart ||
+    requestLoading.value
 );
 
-const isPaymentDisabled = computed(() =>
-  !cartStore?.cart ||
-  !cartStore?.cartTotalAmount ||
-  loading.value ||
-  !shippingStore?.defaultAddress?.id ||
-  cartStore?.loadingCart ||
-  requestLoading.value ||
-  (activeMethod.value === "wallet" && authStore.userBalance?.balance?.availableBalance < cartStore?.cartTotalwithTax)
+const isPaymentDisabled = computed(
+  () =>
+    !cartStore?.cart ||
+    !cartStore?.cartTotalAmount ||
+    loading.value ||
+    !shippingStore?.defaultAddress?.id ||
+    cartStore?.loadingCart ||
+    requestLoading.value ||
+    (activeMethod.value === "wallet" &&
+      authStore.userBalance?.balance?.availableBalance <
+        cartStore?.cartTotalwithTax)
 );
 
 function onModalClose() {
@@ -134,7 +159,11 @@ function makePayment() {
 }
 
 async function confirmOrder() {
-  if (activeMethod.value === "wallet" && authStore.userBalance?.balance?.availableBalance < cartStore?.cartTotalwithTax) {
+  if (
+    activeMethod.value === "wallet" &&
+    authStore.userBalance?.balance?.availableBalance <
+      cartStore?.cartTotalwithTax
+  ) {
     toast.info("Insufficient Wallet balance");
     return;
   }
@@ -164,7 +193,11 @@ async function confirmOrder() {
       }
     }
   } catch (err) {
-    toast.error(`${err?.response?.data?.Message || err?.response?.data?.message}, Contact us for assistance on your order`);
+    toast.error(
+      `${
+        err?.response?.data?.Message || err?.response?.data?.message
+      }, Contact us for assistance on your order`
+    );
     status.value = "Retry order";
   } finally {
     loading.value = false;
@@ -185,7 +218,11 @@ async function onSuccess(response) {
       window.location.href = `/order-success?orderId=${referenceData.orderId}`;
     }
   } catch (err) {
-    toast.error(`${err?.response?.data?.Message || err?.response?.data?.message}, Contact us for assistance on your order`);
+    toast.error(
+      `${
+        err?.response?.data?.Message || err?.response?.data?.message
+      }, Contact us for assistance on your order`
+    );
     status.value = "Retry order";
     loading.value = false;
   }
@@ -209,9 +246,20 @@ async function handleOrderRequest() {
       window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
     }
   } catch (err) {
-    toast.error(`${err?.response?.data?.Message || err?.response?.data?.message}, Contact us for assistance on your order`);
+    toast.error(
+      `${
+        err?.response?.data?.Message || err?.response?.data?.message
+      }, Contact us for assistance on your order`
+    );
   } finally {
     requestLoading.value = false;
   }
 }
+
+// Dynamically watch for insufficiency
+watchEffect(() => {
+  insufficient.value =
+    cartStore?.cartTotalwithTax >
+    authStore.userBalance?.creditDetail?.availableCredit;
+});
 </script>

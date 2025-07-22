@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="bg-white rounded-lg">
-      <div class="items-center justify-between hidden px-5 mb-8 lg:flex">
+      <div
+        v-if="!noHeader"
+        class="items-center justify-between hidden px-5 mb-8 lg:flex"
+      >
         <div class="flex gap-x-4">
           <div class="relative flex items-center">
             <span class="absolute left-4 pointer-events-none text-[#667085]"
@@ -72,7 +75,8 @@
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
-                  <button type="button"
+                  <button
+                    type="button"
                     class="text-sm whitespace-nowrap hover:underline"
                     @click="
                       navigateTo(
@@ -141,12 +145,16 @@ import { toast } from "vue3-toastify";
 onMounted(() => {
   getData();
 });
+
 const orders = ref([]);
+const route = useRoute();
+const props = defineProps(["title", "noHeader"]);
+
 const queryParams = reactive({
   Status: "4",
   SortOrder: "",
   Role: "",
-  PageSize: 10,
+  PageSize: props.noHeader ? 6 : 10,
   PageNumber: 1,
   pagecount: 0,
   totalCount: 0,
@@ -196,8 +204,6 @@ function getData() {
       toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
-const route = useRoute();
-defineProps(["title"]);
 
 const order = ref(null);
 const isOpen = ref(false);
