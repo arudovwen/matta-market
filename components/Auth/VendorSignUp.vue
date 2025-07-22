@@ -49,10 +49,10 @@
         placeholder=""
         label="Phone number"
         type="tel"
-        name="phoneNumber"
-        v-bind="phoneNumberAtt"
-        v-model="phoneNumber"
-        :error="errors.phoneNumber"
+        name="phone"
+        v-bind="phoneAtt"
+        v-model="phone"
+        :error="errors.phone"
         isCumpulsory
       />
     </div>
@@ -184,7 +184,7 @@ const formValues = {
   email: "",
   firstName: "",
   lastName: "",
-  phoneNumber: "",
+  phone: "",
   password: "",
   confirmPassword: "",
   business_UserType: type === "register" || !props.main ? 0 : 1,
@@ -205,7 +205,7 @@ const schema = yup.object({
     otherwise: (schema) => schema.required("Company name is required"),
   }),
   lastName: yup.string().required("Last name is required"),
-  phoneNumber: yup.string().required("Phone number is required"),
+  phone: yup.string().required("Phone number is required"),
   password: yup
     .string()
     .required(
@@ -231,7 +231,7 @@ const [email, emailAtt] = defineField("email");
 const [password, passwordAtt] = defineField("password");
 const [firstName, firstNameAtt] = defineField("firstName");
 const [lastName, lastNameAtt] = defineField("lastName");
-const [phoneNumber, phoneNumberAtt] = defineField("phoneNumber");
+const [phone, phoneAtt] = defineField("phone");
 const [confirmPassword, confirmPasswordAtt] = defineField("confirmPassword");
 const [companyName, companyNameAtt] = defineField("companyName");
 const [AgentReferralCode, AgentReferralCodeAtt] =
@@ -263,25 +263,23 @@ const onSubmit = handleSubmit((values) => {
 const handleFinalSubmit = (code) => {
   isLoading.value = true;
   confirm2FA({ code, email: email.value || route.query.email })
-    .then((res) => {
+    .then(async (res) => {
       if (res.status === 200) {
         isLoading.value = false;
         toast.success("Sign up successful");
         authStore.setLoggedUser(res.data.data);
         authStore.setHasPin(res.data.data.hasTransactionPIN);
         localStorage.setItem("fetchCart", true);
-        if (props.main) {
-          if (
-            !res.data.data?.onboardingPageStatus &&
-            res.data.data?.businessUserType.toLowerCase() === "supplier"
-          ) {
-            // toast.info("Login successful");
-            window.location.replace("/products");
-            return;
+        if (!props.main) {
+          toast.info("Login successful");
+          const userTypeResponse = await authStore.getBusinessUserType();
+          console.log({ userTypeResponse });
+
+          if (userTypeResponse) {
+            emits("close");
           }
-          window.location.replace("/");
-        } else {
-          emits("close");
+
+          return;
         }
       }
     })
