@@ -31,7 +31,7 @@ import { applyDiscount, getDiscountByCode } from "~/services/cartservice";
 const code = ref(null);
 const loading = ref(false);
 const cartStore = useCartStore();
-const isApplied = ref(false);
+const isApplied = ref(0);
 const firstTimeCode = "1ST50KOFF";
 
 function handleSubmit() {
@@ -42,7 +42,7 @@ function handleSubmit() {
   })
     .then((res) => {
       if (res.status === 200) {
-        isApplied.value = true;
+        isApplied.value = 1;
         toast.success("Discount applied");
         cartStore.getMyCart();
       }
@@ -52,7 +52,7 @@ function handleSubmit() {
         err?.response?.data?.message ||
         err?.response?.data?.Message ||
         "Invalid code";
-      toast.error(errorMsg);
+      console.log(errorMsg);
     })
     .finally(() => {
       loading.value = false;
@@ -71,9 +71,7 @@ function handleFirst() {
           handleSubmit();
         }
       })
-      .catch(() => {
-        toast.error("Error applying first-time discount");
-      });
+      .catch();
   }
 }
 
