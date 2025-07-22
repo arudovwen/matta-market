@@ -55,17 +55,14 @@
           type="button"
         />
       </div>
-      <span  v-if="main"
+      <span
+        v-if="main"
         class="flex items-center text-center text-sm text-[#333] darks:text-white/80 gap-x-1 justify-center mt-9"
       >
         Don’t have an account?
-        <NuxtLink
-          to="/auth/register"
-         
-          class="font-semibold text-[#2176FF]"
+        <NuxtLink to="/auth/register" class="font-semibold text-[#2176FF]"
           >Sign Up</NuxtLink
         >
-      
       </span>
     </form>
   </div>
@@ -152,22 +149,28 @@ const onSubmit = handleSubmit((values) => {
       }
     });
 });
-const handleFinalSubmit = (token) => {
+const handleFinalSubmit = async (token) => {
   isLoading.value = true;
   loginUser2FA({ token, email: formValues.email })
-    .then((res) => {
+    .then(async (res) => {
       if (res.status === 200) {
         isLoading.value = false;
         authStore.setLoggedUser(res.data.data);
         authStore.setHasPin(res.data.data.hasTransactionPIN);
-       
+
         localStorage.setItem("fetchCart", true);
         if (!props.main) {
           toast.info("Login successful");
-          emits("close");
+          const userTypeResponse = await authStore.getBusinessUserType();
+          console.log({ userTypeResponse });
+
+          if (userTypeResponse) {
+            navigateTo("/checkout");
+          }
+
           return;
         }
-        
+
         if (route.query.redirected_from) {
           window.location.replace(route.query.redirected_from);
           return;
