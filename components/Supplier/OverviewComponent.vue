@@ -115,6 +115,12 @@
       <div
         class="rounded-[10px] bg-white border border-[#F4F7FE] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
       >
+        <HeaderComponent title="Pending Orders" className="!px-5" />
+        <SupplierOrdersConfirmation :no-header="true" />
+      </div>
+      <div
+        class="rounded-[10px] bg-white border border-[#F4F7FE] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
+      >
         <HeaderComponent title="Trending Products" className="!px-5" />
         <div>
           <div class="overflow-x-auto max-w-[80vw] lg:max-w-full">
@@ -176,13 +182,6 @@
             text="No orders yet"
           />
         </div>
-      </div>
-
-      <div
-        class="rounded-[10px] bg-white border border-[#F4F7FE] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.04)]"
-      >
-        <HeaderComponent title="Pending Orders" className="!px-5" />
-        <SupplierOrdersConfirmation :no-header="true" />
       </div>
     </div>
     <div class="p-6 my-24 text-center lg:p-8" v-else>
