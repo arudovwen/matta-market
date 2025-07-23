@@ -7,12 +7,12 @@
       >
         <carousel class="mx-auto text-center">
           <slide v-for="slide in testimonialData" :key="slide">
-            <div class="carousel__item px-5">
-              <p class="text-base xl:text-3xl text-white font-medium mb-10">
+            <div class="px-5 carousel__item">
+              <p class="mb-10 text-base font-medium text-white xl:text-3xl">
                 “{{ slide.text }}”
               </p>
               <div
-                class="flex flex-col justify-center gap-y-1 mb-6 items-center"
+                class="flex flex-col items-center justify-center mb-6 gap-y-1"
               >
              
                 <p class="text-xs xl:text-base text-[#D0D5DD] text-center">
@@ -32,6 +32,11 @@
 </template>
 <script setup>
 import { Carousel, Slide, Pagination } from "vue3-carousel";
+
+onMounted(async () => {
+  await import('vue3-carousel/dist/carousel.css');
+});
+
 </script>
 
 <style lang="scss">

@@ -1,6 +1,6 @@
 <template>
   <div class="py-6 pl-6 lg:py-10 lg:pl-10 rounded-xl bg-[#F1F3F5]">
-    <div class="flex justify-between items-center pr-6 lg:pr-10 mb-6 gap-x-4">
+    <div class="flex items-center justify-between pr-6 mb-6 lg:pr-10 gap-x-4">
       <h2 class="text-[26px] lg:text-4xl font-medium text-matta-black lg:mb-6">
         Similar products
       </h2>
@@ -9,13 +9,13 @@
           class="w-8 h-8 lg:w-12 lg:h-11 bg-[#E7EBEE] rounded-full flex items-center justify-center cursor-pointer"
           @click="prev"
         >
-          <i class="uil uil-arrow-left text-base lg:text-lg"></i>
+          <i class="text-base uil uil-arrow-left lg:text-lg"></i>
         </div>
         <div
           class="w-8 h-8 lg:w-12 lg:h-11 text-lg bg-[#E7EBEE] rounded-full flex items-center justify-center cursor-pointer"
           @click="next"
         >
-          <i class="uil uil-arrow-right text-base lg:text-lg"></i>
+          <i class="text-base uil uil-arrow-right lg:text-lg"></i>
         </div>
       </span>
     </div>
@@ -50,7 +50,7 @@ const queryParams = reactive({
   MarketSubApplication: product.value.marketSubapplications.length
     ? product.value.marketSubapplications.shift()
     : "",
-    pagecount: 0,
+  pagecount: 0,
   totalData: 0,
   SortOrder: "A",
   Pricefilter: "",
@@ -60,10 +60,8 @@ const queryParams = reactive({
   PageNumber: 1,
   ShowSubMenu: true,
   Producer: "",
- 
 });
 const slider = ref(null);
-
 
 const products = ref([]);
 
@@ -97,7 +95,8 @@ function getAllProducts() {
 function prev() {
   slider.value.prev();
 }
-onMounted(() => {
+onMounted(async () => {
   getAllProducts();
+  await import("vue3-carousel/dist/carousel.css");
 });
 </script>

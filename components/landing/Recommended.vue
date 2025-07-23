@@ -3,7 +3,7 @@
     <div
       class="bg-white darks:bg-gray-800 rounded-[20px] pt-5 px-4 md:px-[32px] mb-[30px]"
     >
-      <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center justify-between mb-4">
         <h2
           class="text-xs sm:text-base lg:text-xl font-bold text-[#222] darks:text-white"
         >
@@ -15,7 +15,7 @@
           )}?tag=${tag}`"
         >
           <button
-            class="hover:border-b text-[10px] sm:text-sm lg:text-base border-[#333] darks:text-white darks:border-white leading-tight"
+            class="hover:border-b text-[10px] sm:text-sm lg:text-base border-[#333] darks:text-white darks:border-white leading-tight  px-2 py-1"
           >
             See all items
           </button>
@@ -23,7 +23,7 @@
       </div>
       <div
         v-if="content.length"
-        class="flex overflow-x-hidden hover:overflow-x-auto gap-x-4 md:gP-X-6 pb-6"
+        class="flex pb-6 overflow-x-hidden hover:overflow-x-auto gap-x-4 md:gP-X-6"
       >
         <div
           v-for="slide in content.slice(0, 8)"
@@ -35,7 +35,7 @@
               )}/${slide.id}`
             )
           "
-          class="bg-white darks:bg-gray-800 w-full"
+          class="w-full bg-white darks:bg-gray-800"
         >
           <div
             class="w-[120px] md:w-auto h-[77px] sm:h-[130px] xl:h-[185px] bg-gray-200 bg-cover bg-center rounded-[10px] overflow-hidden"
@@ -53,8 +53,8 @@
               >{{ slide.manufacturer }}</span
             >
 
-            <div class="flex justify-between items-center">
-              <span class="text-base flex gap-x-1 items-center">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center text-base gap-x-1">
                 <span
                   class="font-semibold ml-[2px] text-xs sm:text-sm xl:text-base text-[#333] darks:text-white"
                   >{{ currencyFormat(slide.price) }}/{{ slide.unit }}</span

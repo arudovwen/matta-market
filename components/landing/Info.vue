@@ -1,6 +1,6 @@
 <template>
   <div class="bg-[#222] py-20">
-    <div class="container grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+    <div class="container grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
       <div
         class="p-[30px] rounded-[16px] bg-[rgba(255,255,255,0.03)]"
         v-for="n in content"
@@ -13,8 +13,8 @@
           >
              <img :src="n.img" :alt="n.title" width="40" height="40" />
           </span>
-          <h4 class="mb-3 text-white text-lg md:text-xl max-w-[200px] leading-normal">{{ n.title }}</h4>
-          <p class="mb-2 text-white text-sm">{{ n.text }}</p>
+          <p class="mb-3 text-white text-lg md:text-xl max-w-[200px] leading-normal">{{ n.title }}</p>
+          <p class="mb-2 text-sm text-white">{{ n.text }}</p>
         </div>
       </div>
     </div>

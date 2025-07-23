@@ -1,6 +1,6 @@
 <template>
   <div class="container mb-[30px]" v-if="searchStore.recentSearchesData?.length">
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex items-center justify-between mb-4">
       <h2
         class="text-xs sm:text-base lg:text-xl font-bold text-[#222] darks:text-white"
       >
@@ -10,7 +10,7 @@
         :to="`/category/market/${encodeURIComponent('recent searches')}`"
       >
         <button
-          class="hover:border-b text-[10px] sm:text-sm lg:text-base border-[#333] darks:text-white darks:border-white leading-tight"
+          class="hover:border-b text-[10px] sm:text-sm lg:text-base border-[#333] darks:text-white darks:border-white leading-tight px-2 py-1"
         >
           See all items
         </button>
@@ -18,7 +18,7 @@
     </div>
 
     <div
-      class="flex xl:grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar overflow-x-auto pb-6"
+      class="flex grid-cols-2 pb-6 overflow-x-auto xl:grid lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar"
     >
       <ProductCard
         v-for="(n, idx) in [

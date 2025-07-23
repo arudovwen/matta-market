@@ -1,10 +1,10 @@
 <template>
   <div
-    class="grid grid-cols-1 gap-12 bg-white rounded-xl p-6 lg:p-8"
+    class="grid grid-cols-1 gap-12 p-6 bg-white rounded-xl lg:p-8"
     v-if="product"
   >
     <div class="bg-[#F1F3F5] flex h-[200px] lg:h-[350px] rounded-xl z-10">
-      <div class="flex-1 rounded-lg overflow-hidden relative z-10">
+      <div class="relative z-10 flex-1 overflow-hidden rounded-lg">
         <div class="h-full w-full bg-[#F1F3F5]">
           <carousel
             ref="myslide"
@@ -29,7 +29,7 @@
         class="flex flex-col justify-between md:w-[70px] p-2 md:p-4 text-center items-center"
       >
         <div
-          class="flex flex-col gap-y-2 items-center text-center text-xs md:text-sm"
+          class="flex flex-col items-center text-xs text-center gap-y-2 md:text-sm"
         >
           <p v-if="count">{{ count }}</p>
           <div
@@ -72,7 +72,7 @@
       >
     </div> -->
 
-    <div class="flex gap-x-4 overflow-x-auto">
+    <div class="flex overflow-x-auto gap-x-4">
       <button
         @click="active = 'overview'"
         :class="
@@ -134,19 +134,19 @@
       </div>
 
       <div v-for="d in sideData" :key="d.id">
-        <div class="flex justify-between gap-4 items-start">
+        <div class="flex items-start justify-between gap-4">
           <span
-            class="flex-1 text-matta-black font-medium text-base sm:text-lg lg:text-2xl"
+            class="flex-1 text-base font-medium text-matta-black sm:text-lg lg:text-2xl"
             >{{ d.title }}</span
           >
           <span
-            class="text-right text-sm sm:text-base lg:text-lg"
+            class="text-sm text-right sm:text-base lg:text-lg"
             @click="handleIndex(d.id)"
             v-if="!openIndex.includes(d.id)"
             ><i class="uil uil-plus"></i
           ></span>
           <span
-            class="text-right text-sm sm:text-base lg:text-lg"
+            class="text-sm text-right sm:text-base lg:text-lg"
             @click="dropIndex(d.id)"
             v-if="openIndex.includes(d.id)"
             ><i class="uil uil-minus"></i
@@ -158,7 +158,7 @@
         <div v-if="openIndex.includes(d.id)">
           <div v-if="technical && d.id === 'tech'">
             <div
-              class="grid grid-cols-1 lg:grid-cols-3 gap-4"
+              class="grid grid-cols-1 gap-4 lg:grid-cols-3"
               v-if="technical.propertyItems && technical.propertyItems.length"
             >
               <div
@@ -173,7 +173,7 @@
                   {{ n.property.name }}
                 </h5>
                 <p
-                  class="text-matta-black text-sm sm:text-base mb-1"
+                  class="mb-1 text-sm text-matta-black sm:text-base"
                   v-for="(sub, i) in n.propertyValue"
                   :key="i"
                 >
@@ -190,7 +190,7 @@
           </div>
           <div v-if="compliance && d.id === 'compliance'">
             <div
-              class="grid grid-cols-1 lg:grid-cols-3 gap-4"
+              class="grid grid-cols-1 gap-4 lg:grid-cols-3"
               v-if="compliance.propertyItems && compliance.propertyItems.length"
             >
               <div
@@ -205,7 +205,7 @@
                   {{ n.property.name }}
                 </h5>
                 <p
-                  class="text-matta-black text-sm sm:text-base mb-1"
+                  class="mb-1 text-sm text-matta-black sm:text-base"
                   v-for="(sub, i) in n.propertyValue"
                   :key="i"
                 >
@@ -226,7 +226,7 @@
           </div>
           <div v-if="property && d.id === 'property'">
             <div
-              class="grid grid-cols-1 lg:grid-cols-3 gap-4 gap-4"
+              class="grid grid-cols-1 gap-4 lg:grid-cols-3"
               v-if="property.propertyItems && property.propertyItems.length"
             >
               <div
@@ -241,7 +241,7 @@
                   {{ n.property.name }}
                 </h5>
                 <p
-                  class="text-matta-black text-sm sm:text-base mb-1"
+                  class="mb-1 text-sm text-matta-black sm:text-base"
                   v-for="(sub, i) in n.propertyValue"
                   :key="i"
                 >
@@ -348,6 +348,11 @@ function handleIndex(val) {
 function dropIndex(val) {
   openIndex.value = openIndex.value.filter((i) => i !== val);
 }
+
+onMounted(async () => {
+  await import('vue3-carousel/dist/carousel.css');
+});
+
 </script>
 <style scoped>
 p {

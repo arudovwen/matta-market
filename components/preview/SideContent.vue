@@ -1,23 +1,23 @@
 <template>
-  <aside class="rounded-xl grid grid-cols-1 gap-y-3" v-if="product">
+  <aside class="grid grid-cols-1 rounded-xl gap-y-3" v-if="product">
     <article
       class="p-6 lg:p-8 rounded-xl bg-[#F1F3F5]"
       v-if="product && product.productExperts && product.productExperts.length"
     >
-      <div class="flex justify-between items-center">
-        <h5 class="font-medium text-lg mb-6">Experts</h5>
+      <div class="flex items-center justify-between">
+        <h5 class="mb-6 text-lg font-medium">Experts</h5>
         <span class="flex gap-x-3">
           <span
             class="w-6 h-6 flex items-center justify-center text-[10px] bg-[#E7EBEE] rounded-full hover:shadow cursor-pointer"
             @click="prev"
           >
-            <i class="uil uil-arrow-left text-lg"></i>
+            <i class="text-lg uil uil-arrow-left"></i>
           </span>
           <span
             class="w-6 h-6 flex items-center justify-center text-[10px] bg-[#E7EBEE] rounded-full hover:shadow cursor-pointer"
             @click="next"
           >
-            <i class="uil uil-arrow-right text-lg"></i>
+            <i class="text-lg uil uil-arrow-right"></i>
           </span>
         </span>
       </div>
@@ -35,7 +35,7 @@
           <div class="w-full">
             <div class="mb-5 text-center">
               <div
-                class="w-28 h-28 rounded-full mx-auto border border-white mb-4 overflow-hidden flex items-center justify-center"
+                class="flex items-center justify-center mx-auto mb-4 overflow-hidden border border-white rounded-full w-28 h-28"
               >
                 <img
                   :src="item.photo ? item.photo : defaultImage"
@@ -44,7 +44,7 @@
                 />
               </div>
               <div>
-                <p class="font-medium text-base text-matta-black">
+                <p class="text-base font-medium text-matta-black">
                   {{ item.name }}
                 </p>
                 <p class="font-normal text-sm text-[#ABABAB]">
@@ -52,7 +52,7 @@
                 </p>
               </div>
             </div>
-            <table aria-describedby="true" class="mb-6 w-full table-auto">
+            <table aria-describedby="true" class="w-full mb-6 table-auto">
               <thead>
                 <tr>
                   <th></th>
@@ -64,7 +64,7 @@
                   <td class="font-normal text-sm text-[#ABABAB] text-left">
                     E-mail
                   </td>
-                  <td class="font-normal text-sm text-matta-black text-right">
+                  <td class="text-sm font-normal text-right text-matta-black">
                     {{ item.email || "-" }}
                   </td>
                 </tr>
@@ -72,7 +72,7 @@
                   <td class="font-normal text-sm text-[#ABABAB] text-left">
                     Phone number
                   </td>
-                  <td class="font-normal text-sm text-matta-black text-right">
+                  <td class="text-sm font-normal text-right text-matta-black">
                     {{ item.phone || "-" }}
                   </td>
                 </tr>
@@ -80,7 +80,7 @@
                   <td class="font-normal text-sm text-[#ABABAB] text-left">
                     Language
                   </td>
-                  <td class="font-normal text-sm text-matta-black text-right">
+                  <td class="text-sm font-normal text-right text-matta-black">
                     {{ item.language || "-" }}
                   </td>
                 </tr>
@@ -100,10 +100,10 @@
     </article>
 
     <article class="p-6 lg:p-8 rounded-xl bg-[#F1F3F5]" v-if="producer">
-      <h5 class="font-medium text-lg mb-6">Producer</h5>
-      <div class="flex items-center gap-x-4 mb-6">
+      <h5 class="mb-6 text-lg font-medium">Producer</h5>
+      <div class="flex items-center mb-6 gap-x-4">
         <div
-          class="w-20 h-20 rounded-xl bg-white flex items-center justify-center"
+          class="flex items-center justify-center w-20 h-20 bg-white rounded-xl"
         >
           <img
             v-if="producer.logo"
@@ -116,11 +116,11 @@
           }}</span>
         </div>
         <div>
-          <p class="font-medium text-base text-matta-black">
+          <p class="text-base font-medium text-matta-black">
             {{ producer.title }}
           </p>
           <p
-            class="font-normal text-sm text-matta-black"
+            class="text-sm font-normal text-matta-black"
             v-if="producer.location"
           >
             <i class="uil uil-map-marker"></i> {{ producer.location }}
@@ -169,12 +169,13 @@ function handleIndex(val) {
 function dropIndex(val) {
   openIndex.value = openIndex.value.filter((i) => i !== val);
 }
-onMounted(() => {
+onMounted(async () => {
   getProducers({ Search: product.manufacturer }).then((res) => {
     producer.value = res.data.data?.data?.[0];
   });
   getsupplier({ supplierId: product.supplierId }).then((res) => {
     supplier.value = res.data;
   });
+  await import("vue3-carousel/dist/carousel.css");
 });
 </script>
