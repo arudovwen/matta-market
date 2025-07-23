@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full bg-black-400 min-h-[480px] md:min-h-[600px]">
+  <div class="relative w-full bg-black-400 min-h-[480px] ">
     <!-- LQIP blurred layer -->
     <div
       class="absolute inset-0 transition-opacity duration-500 bg-center bg-cover"
@@ -18,7 +18,7 @@
 
     <!-- Content -->
     <div
-      class="container relative z-10 flex items-center justify-start h-full py-16 text-left text-white"
+      class="container relative z-10 flex items-center justify-start h-full py-24 text-left text-white"
     >
       <div>
         <div class="max-w-[761px] mb-10">

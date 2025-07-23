@@ -8,7 +8,7 @@
         'sticky top-0 opacity-95 fade-in-top pb-5 lg:pb-5 border-b border-[rgba(242, 242, 242, 1)] darks:border-gray-900':
           !view?.atTopOfPage,
       }"
-      class="relative w-full pt-6 pb-6 transition-all duration-500 ease-in-out bg-white darks:bg-gray-800"
+      class="relative w-full py-4 transition-all duration-500 ease-in-out bg-white md:py-6 darks:bg-gray-800"
     >
       <div class="container mx-auto">
         <div class="flex items-center justify-between">

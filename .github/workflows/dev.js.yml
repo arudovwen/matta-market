@@ -1,13 +1,13 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Production CI
+name: Node.js CI
 
 on:
   push:
-    branches: [ "new-prod" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "new-prod" ]
+    branches: [ "development" ]
 
 jobs:
   build:
@@ -34,9 +34,4 @@ jobs:
     
     - name: Archive production artifacts (Windows)
       run: |
-             Copy-Item -Path C:\matta-frontend-action-runner\_work\Matta-Trade-Frontend-New\Matta-Trade-Frontend-New\.output\public\* -Destination C:\inetpub\wwwroot\Matta.New.Frontend\ -recurse -Force
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-          name: deployable-package
-          path: C:\build\deployable-package.zip
+             Copy-Item -Path C:\matta-frontend-action-runner\_work\Matta-Trade-Frontend-New\Matta-Trade-Frontend-New\.output\public\* -Destination C:\inetpub\wwwroot\Matta.Dev.Frontend\ -recurse -Force
