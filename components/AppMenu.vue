@@ -1,6 +1,7 @@
 <template>
   <Menu as="div" class="relative">
-    <MenuButton class="outline-none">
+    <MenuButton  
+              aria-label="menu" class="outline-none">
       <span
         class="h-[36px] w-[36px] flex justify-center items-center bg-gray-100 rounded-[50%]"
       >

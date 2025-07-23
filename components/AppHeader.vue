@@ -36,6 +36,8 @@
               </span>
 
               <button
+              type="button"
+              aria-label="cart"
                 @click="navigateTo('/cart')"
                 class="flex items-center relative"
               >

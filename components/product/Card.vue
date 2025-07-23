@@ -53,12 +53,10 @@
                 >{{ currencyFormat(detail.price) }}/{{ detail.unit }}</span
               >
               <span
-                v-if="detail?.packString?.[0]?.oldPrice"
-                class="line-through text-gray-400 text-[12px] sm:text-sm xl:text-base leading-tight"
-                >{{ currencyFormat(detail?.packString?.[0]?.oldPrice) }}/{{
-                  detail.unit
-                }}</span
-              >
+                    v-if="detail?.packString?.[0]?.oldPrice"
+                    class="line-through text-gray-500  text-[12px] sm:text-sm xl:text-base leading-tight"
+                    >{{ currencyFormat(detail?.packString?.[0]?.oldPrice) }}/{{ detail.unit }}</span
+                  >
             </span>
           </span>
         </div>

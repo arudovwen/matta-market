@@ -1,6 +1,6 @@
 <template>
   <div
-    class="formGroup relative w-full md:w-auto"
+    class="relative w-full formGroup md:w-auto"
     :class="`${error ? 'has-error' : ''}  ${horizontal ? 'flex' : ''}  ${
       validate ? 'is-valid' : ''
     } `"
@@ -28,6 +28,7 @@
         :size="size"
         :multiple="multiple"
 				data-testid="select"
+        aria-label="select"
       >
         <option value="" disabled selected>{{ placeholder }}</option>
         <template v-if="!$slots.default && options">
@@ -65,7 +66,7 @@
       >{{ validate }}</span
     >
     <span
-      class="block text-secondary-500 font-light leading-4 text-xs mt-2"
+      class="block mt-2 text-xs font-light leading-4 text-secondary-500"
       v-if="description"
       >{{ description }}</span
     >
