@@ -5,7 +5,7 @@
   >
     <div class="container flex items-center justify-between gap-x-6">
      
-      <div class="flex gap-x-2 text-left md:items-center text-white font-normal">
+      <div class="flex font-normal text-left text-white gap-x-2 md:items-center">
         <AppIcon icon="gravity-ui:seal-percent" iconClass="text-lg" />
         <span class="" data-testid="promo"
           >Get N50,000 off when you sign up and make your first purchase. &nbsp;
@@ -19,9 +19,9 @@
           on checkout</span
         >
       </div>
-      <span class="hidden md:flex items-center gap-x-4 text-sm ">
+      <span class="items-center hidden text-sm md:flex gap-x-4 ">
          
-        <button @click="navigateTo('/cart')" class="flex items-center relative">
+        <button type="button" aria-label="cart" @click="navigateTo('/cart')" class="relative flex items-center">
           <span
             class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center "
           >
@@ -37,7 +37,7 @@
           </span>
         </button>
         <span lass="text-sm"><CurrencyChanger /></span>
-        <span class="text-sm hidden lg:inline text-white">
+        <span class="hidden text-sm text-white lg:inline">
           <GoogleTranslateSelect
             :fetch-browser-language="false"
             trigger="click"

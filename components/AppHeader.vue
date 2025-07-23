@@ -18,7 +18,6 @@
                 src="/images/logo.png"
                 alt="Matta"
                 class="w-20 md:w-[120px] h-auto object-contain"
-           
             /></NuxtLink>
           </div>
           <div class="max-w-[600px] w-full flex-1 hidden lg:block">
@@ -37,8 +36,8 @@
               </span>
 
               <button
-              type="button"
-              aria-label="cart"
+                type="button"
+                aria-label="cart"
                 @click="navigateTo('/cart')"
                 class="relative flex items-center"
               >
@@ -122,7 +121,6 @@
                           alt="avatar"
                           class="w-8 h-8 rounded-full"
                           :src="authStore.userInfo?.profilepic"
-                        
                         />
                         <span v-else>{{ getUserInitials }}</span>
                       </span>
