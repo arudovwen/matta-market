@@ -60,6 +60,7 @@
               :key="s.title"
               :href="s.link"
             >
+            <span class="sr-only">{{ s.title }}</span>
               <span class="">
                 <AppIcon
                   :icon="s.icon"

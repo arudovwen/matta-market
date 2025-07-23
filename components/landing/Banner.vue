@@ -1,125 +1,135 @@
 <template>
-  <div class="relative w-full bg-black-400">
+  <div class="relative w-full bg-black-400 min-h-[480px] md:min-h-[600px]">
+    <!-- LQIP blurred layer -->
     <div
-      class="bg-cover bg-center min-h-[480px] md:min-h-[600px] transition-all duration-500 ease-in-out"
-      :style="{ backgroundImage: `url('${backgroundImage}')` }"
-      :class="{ loaded: isLoaded }"
-    >
-      <!-- Overlay -->
-      <div class="absolute inset-0 bg-[rgba(0,0,0,0.72)]"></div>
+      class="absolute inset-0 transition-opacity duration-500 bg-center bg-cover"
+      :style="{ backgroundImage: `url('${lqipSource}')` }"
+    ></div>
 
-      <!-- assets/images/banner.pngContent in the banner -->
-      <div
-        class="absolute inset-0 flex items-center justify-start text-white text-left container"
-      >
-        <div>
-          <div class="max-w-[761px] mb-10">
-            <h1
-              class="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] lg:leading-[67px] font-bold mb-6"
-            >
-              Discover and buy chemicals and raw materials all in one place
-            </h1>
-            <p class="text-sm sm:text-base md:text-xl lg:text-2xl">
-              Search, compare, sample, quote and purchase from reliable and
-              trustworthy suppliers
-            </p>
-          </div>
-          <form @submit.prevent="handleSearch" class="max-w-[786px]">
-            <div
-              class="relative flex p-1 w-full bg-white rounded-[5px] items-center mb-[6px] sm:mb-8"
-            >
-              <input
-                required
-                placeholder="Search by product name or supplier"
-                class="px-4 flex-1 h-9 placeholder:text-[rgba(156, 163, 175, 1)] text-xs sm:text-sm outline-none text-[#333]"
-                v-model="search"
-              />
-              <AppButton
-                type="submit"
-                text="Search"
-                btnClass="!px-10 btn-primary hidden sm:flex"
-              />
-            </div>
+    <!-- HQ image layer -->
+    <div
+      class="absolute inset-0 transition-opacity duration-700 bg-center bg-cover"
+      :style="{ backgroundImage: `url('${highQualityImageUrl}')` }"
+      :class="{ 'opacity-100': isLoaded, 'opacity-0': !isLoaded }"
+    ></div>
+
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-[rgba(0,0,0,0.72)]"></div>
+
+    <!-- Content -->
+    <div
+      class="container relative z-10 flex items-center justify-start h-full py-16 text-left text-white"
+    >
+      <div>
+        <div class="max-w-[761px] mb-10">
+          <h1
+            class="text-3xl sm:text-4xl md:text-5xl lg:text-[56px] lg:leading-[67px] font-bold mb-6"
+          >
+            Discover and buy chemicals and raw materials all in one place
+          </h1>
+          <p class="text-sm sm:text-base md:text-xl lg:text-2xl">
+            Search, compare, sample, quote and purchase from reliable and
+            trustworthy suppliers
+          </p>
+        </div>
+        <form @submit.prevent="handleSearch" class="max-w-[786px]">
+          <div
+            class="relative flex p-1 w-full bg-white rounded-[5px] items-center mb-[6px] sm:mb-8"
+          >
+            <input
+              required
+              placeholder="Search by product name or supplier"
+              class="px-4 flex-1 h-9 placeholder:text-[rgba(156, 163, 175, 1)] text-xs sm:text-sm outline-none text-[#333]"
+              v-model="search"
+            />
             <AppButton
               type="submit"
               text="Search"
-              btnClass="!px-4 !py-[10px] btn-primary sm:hidden w-full"
+              btnClass="!px-10 btn-primary hidden sm:flex"
             />
+          </div>
+          <AppButton
+            type="submit"
+            text="Search"
+            btnClass="!px-4 !py-[10px] btn-primary sm:hidden w-full"
+          />
 
-            <div class="hidden sm:flex gap-2 items-center flex-wrap">
-              <span class="whitespace-nowrap text-sm md:text-base"
-                >Frequently searched:
-              </span>
-              <span class="flex gap-2 items-center flex-wrap">
-                <NuxtLink
-                  :to="`/category/market/${i.name}?search_query=${i.name}`"
-                  v-for="i in frequentlySearched"
-                  :key="i.name"
+          <div class="flex-wrap items-center hidden gap-2 sm:flex">
+            <span class="text-sm whitespace-nowrap md:text-base"
+              >Frequently searched:
+            </span>
+            <span class="flex flex-wrap items-center gap-2">
+              <NuxtLink
+                v-for="i in frequentlySearched"
+                :key="i.name"
+                :to="`/category/market/${i.name}?search_query=${i.name}`"
+              >
+                <span
+                  class="text-white border border-white rounded-full text-sm py-[5px] px-[10px]"
+                  >{{ i.name }}</span
                 >
-                  <span
-                    class="text-white border border-white rounded-full text-sm py-[5px] px-[10px]"
-                    >{{ i.name }}</span
-                  >
-                </NuxtLink>
-              </span>
-            </div>
-          </form>
-        </div>
+              </NuxtLink>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-const img = useImage();
-const highQualityImageUrl = img(
-  "https://res.cloudinary.com/arudovwen-me/image/upload/f_webp/c_scale,h_600/xddierf8sf3w2gn1csau.jpg",
-  {
-    sizes: {
-      xl: "100vw",
-      lg: "100vw",
-      md: "100vw",
-      sm: "100vw",
-      xs: "100vw",
-    },
-  }
-);
+import { ref, onMounted } from 'vue'
+import { useHead, useRouter } from '#imports'
+
+const router = useRouter()
+
+// Optimized Cloudinary URL
+const highQualityImageUrl =
+  'https://res.cloudinary.com/arudovwen-me/image/upload/f_auto,q_auto,dpr_auto,c_scale,w_1920,h_600/xddierf8sf3w2gn1csau.jpg'
+
+// Low quality placeholder (small, heavily compressed)
 const lqipSource =
-  "https://res.cloudinary.com/arudovwen-me/image/upload/imageedit_4_4515965894_r27igz.jpg";
-const backgroundImage = ref(lqipSource);
-const isLoaded = ref(false);
+  'https://res.cloudinary.com/arudovwen-me/image/upload/f_auto,q_10,w_20/xddierf8sf3w2gn1csau.jpg'
+
+const isLoaded = ref(false)
+
+useHead({
+  link: [
+    {
+      rel: 'preload',
+      as: 'image',
+      href: highQualityImageUrl
+    }
+  ]
+})
 
 onMounted(() => {
-  const imgLoader = new Image();
-  imgLoader.onload = () => {
-    backgroundImage.value = highQualityImageUrl;
-    isLoaded.value = true;
-  };
-  imgLoader.src = highQualityImageUrl;
-});
+  const img = new Image()
+  img.onload = () => {
+    isLoaded.value = true
+  }
+  img.src = highQualityImageUrl
+})
 
-const router = useRouter();
-const route = useRoute();
-
-const search = ref("");
+const search = ref('')
 const frequentlySearched = [
-  {
-    name: "Ammonia Liquor",
-  },
-  {
-    name: "Hydrogenated Oil",
-  },
-  {
-    name: "Caustic Soda",
-  },
-];
+  { name: 'Ammonia Liquor' },
+  { name: 'Hydrogenated Oil' },
+  { name: 'Caustic Soda' }
+]
 
 function handleSearch() {
-  if (!search) return;
-  router.push(`/category/market/${search.value}?search_query=${search.value}`);
+  if (!search.value) return
+  router.push(`/category/market/${search.value}?search_query=${search.value}`)
 }
 </script>
 
 <style scoped>
-/* Add any custom styling or adjustments here */
+/* Slight blur on LQIP */
+.blur {
+  filter: blur(20px);
+}
+.scale-110 {
+  transform: scale(1.1);
+}
 </style>

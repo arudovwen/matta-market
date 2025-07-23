@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="lg:mb-[30px]">
-      <div class="flex justify-between items-center mb-6">
+      <div class="flex items-center justify-between mb-6">
         <h2
           class="text-xs sm:text-base lg:text-xl font-bold text-[#222] darks:text-white"
         >
@@ -9,7 +9,7 @@
         </h2>
       </div>
 
-      <div v-if="!loading" class="flex gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar overflow-x-auto pb-6">
+      <div v-if="!loading" class="flex pb-6 overflow-x-auto gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar">
         <div
           v-for="slide in productsData.slice(0, 10)"
           :key="slide"
@@ -32,9 +32,9 @@
                 :icon="!slide.liked ? 'ph:heart' : 'ph:heart-fill'"
                 class="text-xs sm:text-sm md:text-base darks:text-white"
             /></span>
-            <img :src="slide.converPhoto" alt="Similar" width="276" height="160" class="w-full  h-full object-cover" fit="cover" loading="lazy" />
+            <img :src="slide.converPhoto" alt="Similar" width="276" height="160" class="object-cover w-full h-full" fit="cover" loading="lazy" />
           </div>
-          <div class="w-full py-3 md:py-5 px-3 xl:px-5">
+          <div class="w-full px-3 py-3 md:py-5 xl:px-5">
             <span
               class="block mb-1 font-medium truncate max-w-max text-[12px] sm:text-sm xl:text-base darks:text-white leading-tight"
               >{{ slide.title }}</span
@@ -44,20 +44,20 @@
               >{{ slide.manufacturer }}</span
             >
 
-            <div class="flex justify-between items-start md:items-center">
+            <div class="flex items-start justify-between md:items-center">
               <span
                 v-if="slide.hidePrice"
                 class="font-semibold text-[12px] sm:text-sm xl:text-base text-[#2176FF] leading-tight"
                 >Request Quote</span
               >
               <span
-                class="text-base flex flex-col md:flex-row gap-x-1 md:items-center"
+                class="flex flex-col text-base md:flex-row gap-x-1 md:items-center"
                 v-else
               >
                 <!-- <span class="text-xs md:text-base text-[#666] darks:text-white/80"
               >From</span
             > -->
-                <span class="gap-x-1 flex items-center">
+                <span class="flex items-center gap-x-1">
                 
                   <span
                     class="font-bold ml-[2px] text-[12px] sm:text-sm xl:text-base text-[#333] darks:text-white leading-tight"
@@ -65,7 +65,7 @@
                   ></span
                 >  <span
                     v-if="slide?.packString?.[0]?.oldPrice"
-                    class="line-through text-gray-400  text-[12px] sm:text-sm xl:text-base leading-tight"
+                    class="line-through text-gray-500  text-[12px] sm:text-sm xl:text-base leading-tight"
                     >{{ currencyFormat(slide?.packString?.[0]?.oldPrice) }}/{{ slide.unit }}</span
                   >
               </span>
@@ -75,7 +75,7 @@
       </div>
       <div
       v-if="loading"
-      class="flex xl:grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar pb-6"
+      class="flex grid-cols-2 pb-6 xl:grid lg:grid-cols-4 xl:grid-cols-5 gap-y-8 gap-x-4 md:gap-x-6 no-scrollbar hover:scrollbar"
     >
       <div v-for="n in 5" :key="n">
         <ProductSkelenton />

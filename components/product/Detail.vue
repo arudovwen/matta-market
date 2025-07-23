@@ -35,7 +35,7 @@
             class="bg-gray-200 animate-pulse w-16 lg:w-[100px] object-cover h-16 lg:h-[100px] rounded-[5px]"
           />
         </div>
-        <div v-if="!isLoading" class="flex-1 relative">
+        <div v-if="!isLoading" class="relative flex-1">
           <img
             :src="imageUrl || productData.featuredPhoto"
             alt="cover"
@@ -51,7 +51,7 @@
               class="text-xs sm:text-sm md:text-base darks:text-white"
           /></span>
         </div>
-        <div v-if="isLoading" class="flex-1 relative">
+        <div v-if="isLoading" class="relative flex-1">
           <div
             class="bg-gray-200 animate-pulse w-full h-[200px] lg:h-[300px] xl:h-[460px] rounded-[10px]"
           />
@@ -74,7 +74,7 @@
           class="flex gap-x-2 items-center mb-[29px]"
         >
           <p class="text-xl lg:text-2xl font-[800]">
-            <span class="font-normal text-base">Starting from</span>
+            <span class="text-base font-normal">Starting from</span>
             {{ currencyFormat(mypackage?.amount || 0) }}
             <span class="text-sm text-[#444] font-normal"
               >/{{ `${mypackage?.unit || ""}` }}</span
@@ -82,7 +82,7 @@
           </p>
           <sub
             v-if="mypackage?.oldPrice > 0"
-            class="text-lg lg:text-xl text-gray-400 line-through"
+            class="text-lg text-gray-500 line-through lg:text-xl"
           >
             {{ currencyFormat(mypackage?.oldPrice || 0) }}
             <span class="">/{{ `${mypackage?.unit || ""}` }}</span>
@@ -110,8 +110,8 @@
         </div>
 
         <div class="mb-[30px]" v-if="!productData.hidePrice">
-          <h2 class="font-medium text-sm mb-2">Choose packaging</h2>
-          <div class="flex gap-4 items-center flex-col lg:flex-row">
+          <h2 class="mb-2 text-sm font-medium">Choose packaging</h2>
+          <div class="flex flex-col items-center gap-4 lg:flex-row">
             <div class="flex-1 w-full">
               <Select
                 v-model="selectedPackage"
@@ -126,10 +126,10 @@
           </div>
         </div>
         <div
-          class="flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4 w-full"
+          class="flex flex-col w-full lg:flex-row gap-y-4 lg:gap-y-0 gap-x-4"
         >
-          <div class="grid gap-y-5 w-full">
-            <div class="flex flex-col md:flex-row gap-3">
+          <div class="grid w-full gap-y-5">
+            <div class="flex flex-col gap-3 md:flex-row">
               <AppButton
                 v-if="
                   !productData.hidePrice &&
@@ -188,7 +188,7 @@
         <p
           class="text-xl lg:text-2xl font-[800] mb-6 bg-gray-200 w-[160px] p-[6px] rounded-full animate-pulse"
         ></p>
-        <p class="text-xs :text-sm mb-6">
+        <p class="mb-6 text-xs :text-sm">
           <span
             class="font-normal bg-gray-200 inline-flex w-[80px] p-[4px] rounded-full animate-pulse"
           ></span
@@ -201,7 +201,7 @@
           class="flex flex-col md:flex-row gap-x-[18px] gap-y-4 lg:gap-y-0 mb-6 justify-start items-center"
         >
           <div
-            class="flex flex-col sm:flex-row gap-y-4 lg:gap-y-0 gap-x-4 items-center"
+            class="flex flex-col items-center sm:flex-row gap-y-4 lg:gap-y-0 gap-x-4"
           >
             <AppButton
               text=""
@@ -247,13 +247,13 @@
   <ModalCenter :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #default>
       <div
-        class="h-full w-full bg-white rounded-lg p-6 lg:p-10"
+        class="w-full h-full p-6 bg-white rounded-lg lg:p-10"
         v-if="requestType !== 'call'"
       >
         <RequestsSample v-if="requestType == 'sample'" />
         <RequestsQuote v-if="requestType == 'quote'" />
       </div>
-      <div v-if="requestType == 'call'" class="rounded-lg bg-white">
+      <div v-if="requestType == 'call'" class="bg-white rounded-lg">
         <CatalogProductRequest
           :productOptions="{
             chemicalName: productData.name,
@@ -281,8 +281,8 @@
     v-if="isRequestAdded"
   >
     <template #default>
-      <div class="bg-white px-6 py-6">
-        <div class="flex justify-between mb-5 items-center">
+      <div class="px-6 py-6 bg-white">
+        <div class="flex items-center justify-between mb-5">
           <div>
             <img src="/images/box.svg" alt="Detail" />
           </div>
@@ -300,7 +300,7 @@
           proceed to send request?
         </p>
 
-        <div class="flex gap-x-4 items-center mt-6">
+        <div class="flex items-center mt-6 gap-x-4">
           <button
             @click="isRequestAdded = false"
             type="button"

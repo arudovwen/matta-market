@@ -1,10 +1,10 @@
 <template>
   <NuxtLoadingIndicator :throttle="0" color="#1570ef" />
   <NuxtLayout v-if="!AppLoading">
-    <NuxtPwaManifest />
+    <!-- <NuxtPwaManifest /> -->
     <NuxtPage />
   </NuxtLayout>
-  <div v-else class="h-screen w-screen flex justify-center items-center">
+  <div v-else class="flex items-center justify-center w-screen h-screen">
     <AppLoaderV2 />
   </div>
 </template>

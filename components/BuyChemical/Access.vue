@@ -16,13 +16,17 @@
             efficient procurement and delivery.
           </p>
           <AppButton
+            @click="
+              navigateTo('https://fluxafrica.co', {
+                external: true,
+              })
+            "
             text="Explore our logistics solutions"
             btnClass="bg-primary-500 text-white  border-primary-500  border !px-[18px] !py-3"
           />
         </div>
       </div>
       <div
-        
         class="w-full bg-cover h-[200px] lg:h-[500px] bg-[url('/images/one.png')] rounded-lg"
       ></div>
     </div>

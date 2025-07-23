@@ -19,7 +19,7 @@
             class="text-xs sm:text-sm md:text-base darks:text-white"
         /></span>
       </div>
-      <div class="py-3 md:py-5 px-3 md:px-5">
+      <div class="px-3 py-3 md:py-5 md:px-5">
         <span
           class="block mb-2 sm:mb-[10px] font-bold truncate max-w-max text-[10px] sm:text-sm md:text-base darks:text-white leading-tight"
           >{{ detail.title }}</span
@@ -29,21 +29,21 @@
           >{{ detail.company }}</span
         >
 
-        <div class="flex justify-between items-start md:items-center">
+        <div class="flex items-start justify-between md:items-center">
           <span
             v-if="detail.type === 'request'"
             class="font-semibold text-[13px] md:text-sm text-[#2176FF] leading-tight"
             >Request Quote</span
           >
           <span
-            class="text-base flex flex-col md:flex-row gap-x-1 md:items-center"
+            class="flex flex-col text-base md:flex-row gap-x-1 md:items-center"
             v-else
           >
             <!-- <span
               class="text-[11px] md:text-xs text-[#666] darks:text-white/80"
               >From</span
             > -->
-            <span class="gap-x-1 flex items-center">
+            <span class="flex items-center gap-x-1">
            
               <span
                 class="font-bold ml-[2px] text-[13px] md:text-base text-[#333] darks:text-white leading-tight"
@@ -52,7 +52,7 @@
             >
             <span
                     v-if="detail?.packString?.[0]?.oldPrice"
-                    class="line-through text-gray-400  text-[12px] sm:text-sm xl:text-base leading-tight"
+                    class="line-through text-gray-500  text-[12px] sm:text-sm xl:text-base leading-tight"
                     >{{ currencyFormat(detail?.packString?.[0]?.oldPrice) }}/{{ detail.unit }}</span
                   >
           </span>
