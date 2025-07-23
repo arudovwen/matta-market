@@ -33,12 +33,18 @@ export default defineNuxtConfig({
     "@zadigetvoltaire/nuxt-gtm",
     // "@nuxtjs/critters",
     // "nuxt-purgecss",
+    "@nuxtjs/robots",
   ],
   gtm: {
     id: "GTM-M7KP6CJG",
     enabled: false,
     debug: false,
   },
+   robots: {
+    UserAgent: '*',
+    Disallow: '',
+    Sitemap: 'https://dev.matta.trade/sitemap.xml'
+  }
   // security: {
   //   hidePoweredBy: false,
   //   headers: {
