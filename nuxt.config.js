@@ -31,8 +31,8 @@ export default defineNuxtConfig({
     // "@vite-pwa/nuxt",
     "@nuxt/test-utils/module",
     "@zadigetvoltaire/nuxt-gtm",
-    '@nuxtjs/critters',
-      'nuxt-purgecss',
+    "@nuxtjs/critters",
+    "nuxt-purgecss",
   ],
   gtm: {
     id: "GTM-M7KP6CJG",
