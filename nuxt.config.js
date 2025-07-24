@@ -12,6 +12,9 @@ export default defineNuxtConfig({
 
   image: {
     inject: true,
+    cloudinary: {
+      baseURL: "https://res.cloudinary.com/arudovwen-me/image/upload/",
+    },
   },
 
   modules: [
@@ -23,7 +26,7 @@ export default defineNuxtConfig({
     "nuxt-vue3-google-signin",
     "nuxt-simple-sitemap",
     "@pinia-plugin-persistedstate/nuxt",
-    // "nuxt-swiper",
+    "nuxt-swiper",
     "@nuxt/image",
     // "nuxt-security",
     "@nuxt/devtools",
@@ -31,20 +34,14 @@ export default defineNuxtConfig({
     // "@vite-pwa/nuxt",
     "@nuxt/test-utils/module",
     "@zadigetvoltaire/nuxt-gtm",
-    // "@nuxtjs/critters",
-    // "nuxt-purgecss",
-    "@nuxtjs/robots",
+    // '@nuxtjs/critters',
+    //   'nuxt-purgecss',
   ],
   gtm: {
     id: "GTM-M7KP6CJG",
-    enabled: false,
+    enabled: true,
     debug: false,
   },
-   robots: {
-    UserAgent: '*',
-    Disallow: '',
-    Sitemap: 'https://dev.matta.trade/sitemap.xml'
-  }
   // security: {
   //   hidePoweredBy: false,
   //   headers: {
@@ -108,6 +105,7 @@ export default defineNuxtConfig({
   },
   css: [
     "vue-toastification/dist/index.css",
+    "vue3-carousel/dist/carousel.css",
     "@programic/vue3-tooltip/dist/index.css",
     "~/assets/css/tailwind.css",
     "~/assets/scss/_button.scss",
