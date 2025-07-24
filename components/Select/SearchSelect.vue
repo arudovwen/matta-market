@@ -4,6 +4,7 @@
     :class="`${error ? 'has-error' : ''}  ${horizontal ? 'flex' : ''}  ${
       validate ? 'is-valid' : ''
     } `"
+    ref="dropdown"
   >
     <label
       v-if="label"
@@ -29,7 +30,7 @@
       </div>
       <div
         v-if="isOpen"
-        class="absolute right-0 origin-top-right rounded bg-white shadow-dropdown z-[999] max-h-[450px] overflow-y-auto w-full py-3 border border-gray-50"
+        class="absolute right-0 origin-top-right rounded bg-white shadow-dropdown z-[999] max-h-[450px] overflow-y-auto w-full border border-gray-50"
       >
         <ul class="grid gap-y-1" v-if="!loading">
           <li
@@ -134,6 +135,10 @@ export default {
   },
   mounted() {
     this.selectedValue = this.modelValue;
+    document.addEventListener("click", this.handleClickOutside);
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.handleClickOutside);
   },
   watch: {
     selectedValue(newValue) {
@@ -148,6 +153,12 @@ export default {
     handleChange(value) {
       this.selectedValue = value;
       this.isOpen = false;
+    },
+    handleClickOutside(event) {
+      if (!this.$refs.dropdown) return;
+      if (!this.$refs.dropdown.contains(event.target)) {
+        this.isOpen = false;
+      }
     },
   },
 };

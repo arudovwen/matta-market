@@ -91,6 +91,7 @@
           :options="addressOptions"
           placeholder=""
           name="street"
+          :loading="addressLoading"
           :reduce="(address) => address.value"
         />
       </FormGroup>
@@ -203,8 +204,12 @@ const states = computed(() => {
   return mystates.value.map((item) => {
     return {
       id: item.code,
-      label: item.name.toLowerCase().includes("abuja") ? "Abuja FCT" : item.name,
-      value: item.name.toLowerCase().includes("abuja") ? "Abuja FCT" : item.name,
+      label: item.name.toLowerCase().includes("abuja")
+        ? "Abuja FCT"
+        : item.name,
+      value: item.name.toLowerCase().includes("abuja")
+        ? "Abuja FCT"
+        : item.name,
     };
   });
 });
@@ -238,19 +243,28 @@ const onSubmit = handleSubmit((values) => {
 });
 
 const addressOptions = ref([]);
+const addressLoading = ref(false);
 watch(street, () => {
   const values = {
     address: street.value,
     state: state.value,
     lga: lga.value,
   };
-  addressSearch(values).then((res) => {
-    if (res.status === 200) {
-      addressOptions.value = res.data.map((i) => ({
-        label: i.label,
-        value: i.label,
-      }));
-    }
-  });
+  addressLoading.value = true;
+  addressSearch(values)
+    .then((res) => {
+      if (res.status === 200) {
+        addressOptions.value = res.data.map((i) => ({
+          label: i.label,
+          value: i.label,
+        }));
+      }
+    })
+    .catch(() => {
+      addressOptions.value = [];
+    })
+    .finally(() => {
+      addressLoading.value = false;
+    });
 });
 </script>
