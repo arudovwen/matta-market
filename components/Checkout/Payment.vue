@@ -128,7 +128,7 @@
     </div>
   </div>
 
-  <!-- <CheckoutCreditPopup
+  <CheckoutCreditPopup
     v-if="isPopOpen"
     @close="isPopOpen = false"
     :open="isPopOpen"
@@ -139,7 +139,7 @@
       balance: authStore.userBalance?.creditDetail?.creditLimit - authStore.userBalance?.creditDetail?.creditUsed,
       amountToPay: cartStore?.cartTotalwithTax
     }"
-  /> -->
+  />
 </template>
 <script setup>
 import { getCreditDetail } from "~/services/creditservice";
@@ -149,7 +149,7 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 
 const activeMethod = inject("activeMethod");
-// const isPopOpen = inject("isPopOpen");
+const isPopOpen = inject("isPopOpen");
 
 const creditDetail = ref(null);
 const details = ref(null);

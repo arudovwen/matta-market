@@ -76,7 +76,7 @@
       v-if="cartStore?.cartTotalAmount < minCartAmount"
       @click="confirmOrder"
       :isLoading="loading || cartStore?.loadingCart"
-      :isDisabled="isPaymentDisabled || insufficient && activeMethod === 'credit'"
+      :isDisabled="isPaymentDisabled || insufficient"
       :text="status"
       loadingText="Processing ..."
       btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4 w-full"
@@ -260,6 +260,6 @@ async function handleOrderRequest() {
 watchEffect(() => {
   insufficient.value =
     cartStore?.cartTotalwithTax >
-    authStore.userBalance?.creditDetail?.availableCredit;
+    authStore.userBalance?.creditDetail?.availableCredit && activeMethod.value === 'credit';
 });
 </script>
