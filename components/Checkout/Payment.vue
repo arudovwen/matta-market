@@ -82,7 +82,7 @@
               />
               <p
                 class="mt-1 text-xs"
-                :class="insufficient ? 'text-red-600' : 'text-[#667085]'"
+                :class="insufficient ? 'text-red-600' : 'text-white/70'"
                 v-if="authStore.userBalance?.creditDetail?.hasCredit"
               >
                 {{ insufficient ? "Insufficient" : "Available" }} credit
