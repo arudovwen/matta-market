@@ -13,3 +13,10 @@ const config = {
 export async function getCurrencyRate(data) {
   return await currencyGet(`${urls.GET_CURRENCY_RATE}/${data}`, config);
 }
+
+export async function getCurrencyRates(data) {
+  return await currencyGet(
+    `${urls.GET_ALL_CURRENCY_RATE}?${new URLSearchParams(data)}`,
+    config
+  );
+}

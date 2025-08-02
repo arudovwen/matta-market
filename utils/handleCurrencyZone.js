@@ -1,9 +1,10 @@
 export function handleCurrencyZone(value, currency) {
-  const usdRate = useCartStore().usdRate;
+  const currentRate = useCurrencyStore().activeCurrency?.rate;
+  // console.log({ currentRate });
 
   if (currency?.toLowerCase() === "ngn") {
     return { value };
   } else {
-    return { value: value / usdRate };
+    return { value: value / currentRate };
   }
 }

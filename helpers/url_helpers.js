@@ -267,7 +267,7 @@ const urls = {
 
   // Currency
   GET_CURRENCY_RATE: "/v1/currencyrate/getrates",
-
+ GET_ALL_CURRENCY_RATE: "v1/currencyrate/get-all",
   GET_SUBAPPS: "admin/v1/subapplication/apps",
 
   SAVE_REQUEST_DRAFT: "v1/financing/save-draft",

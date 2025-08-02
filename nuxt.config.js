@@ -334,6 +334,11 @@ export default defineNuxtConfig({
             },
           }),
         },
+        {
+          src: "https://cdn.jsdelivr.net/npm/@iplookup/geocode/iplookup.min.js",
+          type: "text/javascript",
+          defer: true, // Defer loading until after the HTML is parsed
+        },
       ],
 
       __dangerouslyDisableSanitizersByTagID: {

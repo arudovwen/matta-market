@@ -30,7 +30,7 @@ export const useAuthStore = defineStore(
     );
     const businessId = computed(() => mattaAuth?.value?.businessId);
     const userInfo = computed(() => mattaAuth?.value);
-
+   
     function setLoggedUser(data) {
       loggedUser.value = data;
       mattaAuth.value = data;

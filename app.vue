@@ -69,11 +69,7 @@ amplitude.init('662bcea7400aa949c2cbbd4e0a9fa5c9', {
 import { useMarketStore } from "~/stores/markets";
 import { useApplicationStore } from "~/stores/applications";
 import { getMarkets, getTechLevels } from "~/services/productservices";
-import { getCurrencyRate } from "~/services/currencyservice";
 import { getSubApps, getBusinessType } from "~/services/userservices";
-
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 const { encrypt } = useEncryption();
 const isMattaSignup = getItem("isMattaSignup");
@@ -82,7 +78,8 @@ const cartStore = useCartStore();
 const store = useMarketStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
-const currentCurrency = ref("NGN");
+const currencyStore = useCurrencyStore();
+const currentCurrency = ref(currencyStore.defaultCurrency);
 const route = useRoute();
 const query = reactive({
   PageNumber: 1,
@@ -102,25 +99,7 @@ const getAllApplications = () => {
     }
   });
 };
-const getRate = () => {
-  getCurrencyRate("USD").then((res) => {
-    if (res.status === 200) {
-      cartStore.setUSDRate(res.data.data.rate);
-    }
-  });
-};
-const setCurrency = () => {
-  const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  const NIGERIA_ZONE = "Africa/Lagos";
-  if (zone.toLowerCase() === NIGERIA_ZONE.toLowerCase()) {
-    setItem("currency", "NGN");
-    currentCurrency.value = "NGN";
-  } else {
-    setItem("currency", "USD");
-    currentCurrency.value = "USD";
-  }
-};
 function getAppList() {
   getSubApps().then((res) => {
     if (res.status === 200) {
@@ -161,12 +140,9 @@ function getBusinessUserType() {
     });
 }
 onMounted(() => {
-  AOS.init();
   getAllApplications();
   getAllMarkets();
-  getRate();
   getAppList();
-  setCurrency();
 
   if (authStore.userInfo) {
     getBusinessUserType();
