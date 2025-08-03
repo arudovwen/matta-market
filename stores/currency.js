@@ -44,10 +44,10 @@ export const useCurrencyStore = defineStore("curreny", () => {
 
       // Set default active currency
       setActiveCurrency(
-        tempApiCurrency?.currencyCode || tempCurrency?.currencyCode
+        tempApiCurrency?.currencyCode || tempCurrency?.currencyCode || "NGN"
       );
       defaultCurrency.value =
-        tempApiCurrency?.currencyCode || tempCurrency?.currencyCode;
+        tempApiCurrency?.currencyCode || tempCurrency?.currencyCode || "NGN";
     } catch (error) {
       // Handle the error
       console.error("Error fetching currencies or country info:", error);
