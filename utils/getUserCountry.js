@@ -6,14 +6,14 @@ export async function getUserCountry() {
   const cacheTimestamp = getItem("userCountryTimestamp");
   const cacheExpiration = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
-  if (
-    cachedData &&
-    cacheTimestamp &&
-    Date.now() - cacheTimestamp < cacheExpiration
-  ) {
-    console.log("Returning cached country:", cachedData);
-    return cachedData; // Return cached country data
-  }
+//   if (
+//     cachedData &&
+//     cacheTimestamp &&
+//     Date.now() - cacheTimestamp < cacheExpiration
+//   ) {
+//     console.log("Returning cached country:", cachedData);
+//     return cachedData; // Return cached country data
+//   }
 
   try {
     // Fetch country from the API if no valid cache exists

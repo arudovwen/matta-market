@@ -62,9 +62,10 @@ export const useCurrencyStore = defineStore("curreny", () => {
       const country = currency.countries.find(
         (c) => c?.[type].toLowerCase() === countryName.toLowerCase()
       );
+
       if (country) {
         return {
-          currencyCode: currency.sourceCurrencyCode,
+          currencyCode: currency.destinationCurrencyCode,
           symbol: currency.symbol,
           rate: currency.rate,
         };
