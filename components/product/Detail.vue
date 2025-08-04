@@ -60,6 +60,9 @@
       <div class="lg:w-[550px]" v-if="!isLoading">
         <h1 class="font-bold text-lg sm:text-2xl lg:text-[32px] mb-3 lg:mb-5">
           {{ productData.name }}
+          {{
+            productData.productBrandName && `- ${productData.productBrandName}`
+          }}
         </h1>
         <p class="text-[#444] text-xs lg:text-sm mb-[15px]">
           {{ productData.description }}
