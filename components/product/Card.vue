@@ -32,7 +32,9 @@
       <div class="w-full px-3 py-3 md:py-5 xl:px-5">
         <span
           class="block mb-1 font-medium truncate max-w-[120px] md:max-w-max text-[12px] sm:text-sm xl:text-base darks:text-white leading-tight"
-          >{{ detail.title }}</span
+          >{{ detail.title }}  {{
+            detail.productBrandName && `- ${detail.productBrandName}`
+          }}</span
         >
         <span
           class="block mb-[14px] sm:mb-[25px] text-[10px] sm:text-[12px] xl:text-sm truncate max-w-max text-[#666] darks:text-white/80 leading-tight"
