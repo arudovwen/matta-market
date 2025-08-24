@@ -147,13 +147,7 @@ const packageForms = [
     value: "Others",
   },
 ];
-// {
-//   "orderId": 0,
-//   "brand": "string",
-//   "productId": "string",
-//   "packageName": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-//   "purchasepurchaseAmount": 0
-// }
+
 const packFormSchema = yup.object({
   productName: yup.string().required("Select a package"),
   purchaseAmount: yup.string().required("purchaseAmount is required"),
@@ -171,7 +165,6 @@ const [productName] = defineField("productName");
 const [purchaseAmount] = defineField("purchaseAmount");
 const [brand] = defineField("brand");
 const [packageName] = defineField("packageName");
-const [isAvailable, isAvailableAtt] = defineField("isAvailable");
 
 const onSubmit = handleSubmit(async (values) => {
   try {
@@ -180,7 +173,8 @@ const onSubmit = handleSubmit(async (values) => {
     if (status === 200) {
       getData();
       toast.success("Product updated!");
-      emits("close");
+      // emits("close");
+      navigateTo('/storefront')
     }
   } catch (error) {
     toast.error(error.response.data?.message);
