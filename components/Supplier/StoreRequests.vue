@@ -105,6 +105,9 @@ onMounted(() => {
     count.documents = res.data.documents;
     count.samples = res.data.samples;
   });
+  if (route.query.type) {
+    active.value = route.query.type;
+  }
 });
 function getquotes() {
   quoteLoading.value = true;

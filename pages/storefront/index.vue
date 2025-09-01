@@ -48,8 +48,8 @@ const tabs = [
   },
 ];
 onMounted(() => {
-  if (route.query.page) {
-    active.value = route.query.page;
+  if (route.query.tab) {
+    active.value = route.query.tab;
   }
 });
 provide("active", active);
