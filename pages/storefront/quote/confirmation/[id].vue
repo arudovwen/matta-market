@@ -18,7 +18,7 @@
           <SupplierQuoteConfirmationContent />
         </div>
         <div class="w-[358px]">
-          <SupplierQuoteConfirmationSide />
+          <SupplierQuoteConfirmationSide @close="getData" />
         </div>
       </div>
     </div>
