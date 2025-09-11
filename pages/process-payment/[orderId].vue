@@ -15,7 +15,7 @@
       v-else
       class="bg-white rounded-[10px] py-[30px] px-5 w-full max-w-[400px] shadow"
     >
-      <div class="font-semibold text-2xl text-matta-black pb-6">Order Details</div>
+      <div class="pb-6 text-2xl font-semibold text-matta-black">Order Details</div>
       <div class="flex flex-col gap-y-5">
         <div class="flex justify-between" v-for="item in order?.items">
           <div>
@@ -26,7 +26,7 @@
               Qty: {{ item.quantity }} {{ item.selectedPackage }}
             </p>
           </div>
-          <p class="font-medium text-sm text-matta-black">
+          <p class="text-sm font-medium text-matta-black">
             {{ currencyFormat(item.packagePrice) }}
           </p>
         </div>
@@ -36,35 +36,35 @@
         <div class="flex justify-between">
           <p class="text-sm text-matta-black">Sub-total</p>
 
-          <p class="text-matta-black font-medium text-sm">
+          <p class="text-sm font-medium text-matta-black">
             {{ currencyFormat(order?.cartTotal) }}
           </p>
         </div>
         <div class="flex justify-between" v-if="order.discountValue">
           <p class="text-sm text-matta-black">Discount</p>
 
-          <p class="text-matta-black font-medium text-sm">
+          <p class="text-sm font-medium text-matta-black">
             {{ currencyFormat(order?.discountValue) }}
           </p>
         </div>
         <div class="flex justify-between">
           <p class="text-sm text-matta-black">VAT (7.5%)</p>
 
-          <p class="text-matta-black text-sm font-medium">
+          <p class="text-sm font-medium text-matta-black">
             {{ currencyFormat(order?.cartTotalwithTax - order?.cartTotal) }}
           </p>
         </div>
         <div class="flex justify-between">
           <p class="text-sm text-matta-black">Shipping & Handling</p>
 
-          <p class="text-matta-black font-medium text-sm">{{currencyFormat(order?.shippingTotal)}}</p>
+          <p class="text-sm font-medium text-matta-black">{{currencyFormat(order?.shippingTotal)}}</p>
         </div>
       </div>
       <hr class="my-[20px] border-white/10" />
       <div class="flex justify-between mb-[25px]">
         <p class="text-sm text-matta-black">Total</p>
 
-        <p class="text-matta-black font-bold">
+        <p class="font-bold text-matta-black">
           {{ currencyFormat(order?.cartTotalwithTax) }}
         </p>
       </div>
@@ -92,11 +92,11 @@ const route = useRoute();
 const { orderId } = route.params;
 const loading = ref(false);
 const userInfo = ref(null);
-
+const orderData = ref(null)
 function handlePayment() {
   status.value = "Processing payment...";
   loading.value = true;
-  const data = {
+   orderData.value = {
     email: userInfo?.value?.email,
     name: userInfo?.value.companyName,
     amount: order?.value?.cartTotalwithTax,
@@ -105,11 +105,33 @@ function handlePayment() {
     orderId: orderId,
   };
 
-  payWithMonnify(data, onModalClose, onSuccess);
+  payWithMonnify(orderData, onModalClose, onSuccess);
 }
 function onSuccess(response) {
   if (response.status.toLowerCase() === "success") {
     window.location.href = `/order-success?orderId=${orderId}`;
+  }
+}
+async function onSuccess(response) {
+  if (response.status.toLowerCase() !== "success") return;
+
+  try {
+    const res = await confirmpayment({
+      ...orderData.value,
+      transactionRef: response.transactionReference,
+    });
+
+    if (res.status === 200) {
+      window.location.href = `/order-success?orderId=${orderId}`;
+    }
+  } catch (err) {
+    toast.error(
+      `${
+        err?.response?.data?.Message || err?.response?.data?.message
+      }, Contact us for assistance on your order`
+    );
+    status.value = "Retry order";
+    loading.value = false;
   }
 }
 function onModalClose() {
