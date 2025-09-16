@@ -7,7 +7,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const isLoggedIn = !!mattaAuth.value;
 
   if (!isLoggedIn) {
-    handleRouting({ target: "_self" });
+   handleRouting('login')
     return;
   }
   if (
