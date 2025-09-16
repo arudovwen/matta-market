@@ -5,7 +5,7 @@
     <div class="bg-[#F4F4F4] darks:bg-gray-700 pt-8 sm:pt-[60px]">
       <div class="container hidden mb-6 lg:block sm:mb-10">
         <LandingBoard
-          link="/category/market"
+          link="#"
           url="https://res.cloudinary.com/arudovwen-me/video/upload/q_auto/v1758010465/1440_by_248_yi9tum.mp4"
           type="video"
         />
@@ -15,7 +15,7 @@
         <LandingHot tag="hotdeals" />
         <div class="container mb-6 lg:hidden sm:mb-10">
           <LandingBoard
-            link="/category/market"
+            link="#"
             url="https://res.cloudinary.com/arudovwen-me/video/upload/q_auto/v1758010465/1440_by_248_yi9tum.mp4"
                type="video"
           />
