@@ -5,8 +5,9 @@
     <div class="bg-[#F4F4F4] darks:bg-gray-700 pt-8 sm:pt-[60px]">
       <div class="container hidden mb-6 lg:block sm:mb-10">
         <LandingBoard
-          link="https://matta.trade/product/ASPARTAME/3009649000015519001?categoryId="
-          url="https://res.cloudinary.com/arudovwen-me/image/upload/v1757331185/Signature2-ezgif.com-video-to-gif-converter_1_zlt4lc.gif"
+          link="/category/market"
+          url="https://res.cloudinary.com/arudovwen-me/video/upload/q_auto/v1758010465/1440_by_248_yi9tum.mp4"
+          type="video"
         />
       </div>
       <div class="pb-8 xl:pb-[70px]">
@@ -14,8 +15,9 @@
         <LandingHot tag="hotdeals" />
         <div class="container mb-6 lg:hidden sm:mb-10">
           <LandingBoard
-            link="https://matta.trade/product/ASPARTAME/3009649000015519001?categoryId="
-            url="https://res.cloudinary.com/arudovwen-me/image/upload/v1757331185/Signature2-ezgif.com-video-to-gif-converter_1_zlt4lc.gif"
+            link="/category/market"
+            url="https://res.cloudinary.com/arudovwen-me/video/upload/q_auto/v1758010465/1440_by_248_yi9tum.mp4"
+               type="video"
           />
         </div>
         <!-- <LandingRecommended tag="recommended" /> -->
