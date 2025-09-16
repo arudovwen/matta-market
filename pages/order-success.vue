@@ -36,7 +36,7 @@
           btnClass="bg-[#2176FF] text-white w-full !text-sm !font-normal !py-3"
         />
         <AppButton
-          v-if="!order_type"
+          v-if="!order_type || authStore?.isLoggedIn"
           link="/procurement/my-orders"
           type="button"
           text="Proceed to dashboard"
