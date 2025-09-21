@@ -62,5 +62,5 @@ export async function getBusinessType() {
 }
 
 export async function getSubApps(data) {
-  return await ssoGet(`${urls.GET_SUBAPPS}`, data);
+  return await ssoGet(`${urls.GET_SUBAPPS}?${new URLSearchParams(data)}`, {});
 }

@@ -101,7 +101,7 @@ const getAllApplications = () => {
 };
 
 function getAppList() {
-  getSubApps().then((res) => {
+  getSubApps({isDisabled: false}).then((res) => {
     if (res.status === 200) {
       const appList = res.data.data
         .map((i) => ({
