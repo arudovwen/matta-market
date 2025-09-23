@@ -1,55 +1,55 @@
 <template>
   <div>
     <div class="mb-8">
-      <h3 class="font-medium text-xl text-gray-700 capitalize">
+      <h3 class="text-xl font-medium text-gray-700 capitalize">
         Request for quote
       </h3>
-      <p class="font-normal text-base capitalize">
+      <p class="text-base font-normal capitalize">
         {{ quote.buyerBusinessName }}
       </p>
     </div>
 
     <div class="mb-8">
-      <p class="font-medium text-lg">
+      <p class="text-lg font-medium">
         <span class="text-gray-500">Product name :</span>
         {{ quote.productName }}
       </p>
-      <!-- <p class="font-medium text-base mb-4 flex items-center gap-x-2">
+      <!-- <p class="flex items-center mb-4 text-base font-medium gap-x-2">
         <span class="text-gray-500">Supplier :</span> {{ quote.sellerName }}
       </p> -->
       <div class="grid grid-cols-2">
         <div>
-          <p class="font-nomrmal text-sm text-gray-500">Market</p>
-          <p class="font-medium text-sm">{{ quote.market }}</p>
+          <p class="text-sm text-gray-500 font-nomrmal">Market</p>
+          <p class="text-sm font-medium">{{ quote.market }}</p>
         </div>
         <div>
-          <p class="font-nomrmal text-sm text-gray-500">Application</p>
-          <p class="font-medium text-sm">{{ quote.applications }}</p>
+          <p class="text-sm text-gray-500 font-nomrmal">Application</p>
+          <p class="text-sm font-medium">{{ quote.applications }}</p>
         </div>
       </div>
 
       <hr class="my-4" />
 
       <div class="mb-8">
-        <h4 class="font-medium text-lg mb-4 text-gray-700">
+        <h4 class="mb-4 text-lg font-medium text-gray-700">
           Status of request
         </h4>
         <div class="flex items-start gap-x-3">
           <i
             v-if="quote.status == 0"
-            class="fa fa-clock-o text-lg text-yellow-500 w-5"
+            class="w-5 text-lg text-yellow-500 fa fa-clock-o"
           ></i>
           <i
             v-if="quote.status == 1"
-            class="fa fa-clock-o text-lg text-blue-500 w-5"
+            class="w-5 text-lg text-blue-500 fa fa-clock-o"
           ></i>
           <i
             v-if="quote.status == 2"
-            class="fa fa-clock-o text-lg text-green-500 w-5"
+            class="w-5 text-lg text-green-500 fa fa-clock-o"
           ></i>
 
           <div>
-            <div class="flex text-xl items-center font-medium gap-x-2">
+            <div class="flex items-center text-xl font-medium gap-x-2">
               <p class="">Status</p>
               :
               <span v-if="quote.status == 0" class="text-yellow-500"
@@ -83,10 +83,10 @@
       </div>
       <hr class="my-4" />
       <div class="mb-6">
-        <h4 class="font-medium text-lg mb-4 text-gray-700">Requested terms</h4>
+        <h4 class="mb-4 text-lg font-medium text-gray-700">Requested terms</h4>
         <div class="flex items-start mb-3 gap-x-3">
           <i
-            class="fa fa-hand-o-up text-lg text-gray-500 w-5"
+            class="w-5 text-lg text-gray-500 fa fa-hand-o-up"
             aria-hidden="true"
           ></i>
           <div>
@@ -100,10 +100,10 @@
           </div>
         </div>
         <div class="flex items-start gap-x-3">
-          <i class="fas fa-truck text-lg text-gray-500 w-5"></i>
+          <i class="w-5 text-lg text-gray-500 fas fa-truck"></i>
           <div class="text-base">
-            <p class="text-sm font-medium mb-1">Your pick up</p>
-            <p class="text-sm font-normal flex gap-x-2 items-center">
+            <p class="mb-1 text-sm font-medium">Your pick up</p>
+            <p class="flex items-center text-sm font-normal gap-x-2">
               <span>Address : </span><span>{{ quote.deliverAddress }}</span>
             </p>
           </div>
@@ -112,31 +112,31 @@
 
       <hr class="my-4" />
       <div>
-        <h4 class="text-base font-medium mb-4 text-gray-700">
+        <h4 class="mb-4 text-base font-medium text-gray-700">
           Order preference
         </h4>
-        <div class="flex items-start gap-x-3 mb-3">
-          <i class="fas fa-clipboard-list text-lg text-gray-500 w-5"></i>
+        <div class="flex items-start mb-3 gap-x-3">
+          <i class="w-5 text-lg text-gray-500 fas fa-clipboard-list"></i>
           <div>
-            <p class="text-sm flex font-medium items-center gap-x-2">
-              <span class="text-gray-500 text-lg">Special instruction:</span>
+            <p class="flex items-center text-sm font-medium gap-x-2">
+              <span class="text-lg text-gray-500">Special instruction:</span>
               <span> {{ quote.additionalInformation }}</span>
             </p>
           </div>
         </div>
-        <div class="flex items-start gap-x-3 mb-3">
+        <!-- <div class="flex items-start mb-3 gap-x-3">
           <i
-            class="fa fa-user text-lg text-gray-500 w-5"
+            class="w-5 text-lg text-gray-500 fa fa-user"
             aria-hidden="true"
           ></i>
           <div>
-            <p class="text-sm font-medium mb-2 text-gray-700">Requested by</p>
-            <p class="text-sm mb-1">
+            <p class="mb-2 text-sm font-medium text-gray-700">Requested by</p>
+            <p class="mb-1 text-sm">
               {{ quote.requestedBy }}
             </p>
             <p class="text-sm font-normal">{{ quote.contactPhone }}</p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

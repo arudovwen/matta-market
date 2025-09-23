@@ -52,12 +52,12 @@
             >
               {{ item.product }}
             </td>
-            <td
+            <!-- <td
               :class="item.status == 3 ? 'opacity-25' : ''"
               class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
             >
               {{ item.requestedBy }}
-            </td>
+            </td> -->
             <td
               :class="item.status == 3 ? 'opacity-25' : ''"
               class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
@@ -205,7 +205,7 @@ import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import { buyerquotedetail } from "~/services/quoteservice";
 import debounce from "lodash/debounce";
 
-const theads = ["quote no", "product", "requested by", "created", "status", ""];
+const theads = ["quote no", "product", "created", "status", ""];
 const getquotes = inject("getquotes");
 const quoteLoading = inject("quoteLoading");
 const quotes = inject("quotes");

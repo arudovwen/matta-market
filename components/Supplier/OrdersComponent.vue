@@ -65,11 +65,11 @@
                 >
                   {{ item.orderNumber }}
                 </td>
-                <td
+                <!-- <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
                   {{ item.custormer || "-" }}
-                </td>
+                </td> -->
                 <td
                   class="capitalize text-matta-black text-sm font-normal border-b py-4 px-6 border-[#EAECF0] whitespace-nowrap"
                 >
@@ -261,7 +261,7 @@ function openModal() {
   isOpen.value = !isOpen.value;
 }
 
-const theads = ["order id", "customer name", "updated at", "amount", "status", ""];
+const theads = ["order id",  "updated at", "amount", "status", ""];
 
 function next() {
   queryParams.PageNumber++;
