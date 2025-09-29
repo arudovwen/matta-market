@@ -26,74 +26,72 @@
             leave-to-class="opacity-0"
           >
             <ListboxOptions
-              class="absolute max-h-[700px] mt-[.5rem] right-0 w-[380px] z-[999] py-2 overflow-auto rounded-lg bg-white text-sm shadow-[0px_12px_16px_-4px_rgba(16,24,40,0.08),_0px_4px_6px_-2px_rgba(16,24,40,0.03)] border border-gray-100 outline-0 sm:text-sm"
+              class="absolute max-h-[600px] mt-[.5rem] right-0 w-[380px] z-[999] py-2 overflow-hidden rounded-lg bg-white text-sm shadow-[0px_12px_16px_-4px_rgba(16,24,40,0.08),_0px_4px_6px_-2px_rgba(16,24,40,0.03)] border border-gray-100 outline-0 sm:text-sm"
             >
-              <!-- Loading Spinner -->
-              <div v-if="loading" class="flex items-center justify-center py-4">
-                <div class="loader"></div>
+              <!-- Fixed Content -->
+              <div class="sticky top-0 z-10 px-3 py-1 bg-white">
+                <ListboxOption
+                  as="li"
+                  class="flex justify-start mb-2 border-b border-gray-50"
+                  @click="markAllNotification"
+                >
+                  <button
+                    class="px-1 pt-3 pb-3 text-base font-semibold hover:underline"
+                  >
+                    Notifications
+                  </button>
+                </ListboxOption>
               </div>
 
-              <!-- Notification List -->
-              <ListboxOption
-                as="li"
-                class="flex justify-start mb-2 border-b border-gray-50"
-                v-if="notifications?.length > 0"
-              >
-                <button
-                  class="px-2 pt-3 pb-3 text-base font-semibold hover:underline"
-                  @click="markAllNotification"
-                >
-                  Notifications
-                </button>
-              </ListboxOption>
-              <ListboxOption
-                v-for="notification in notifications"
-                :key="notification?.id"
-                :value="notification?.id"
-                as="li"
-                class="py-2 px-[13px] border-gray-50 border-b"
-                @click="handleMarknotification(notification.id)"
-              >
-                <div class="relative mb-[6px] cursor-pointer select-none">
-                  <div class="flex items-start gap-x-3">
-                    <p
-                      :class="!notification?.isViewed ? 'font-medium' : ''"
-                      class="text-sm text-[#101828] flex-1"
-                      v-if="notification?.message"
-                    >
-                      {{ notification?.message }}
-                    </p>
-                  </div>
-                </div>
-                <div class="flex justify-between mt-2">
-                  <span class="text-[11px]">
-                    {{ moment(notification?.notificationDate).fromNow() }}
-                  </span>
-                  <button
-                    v-if="[3].includes(notification?.notificationType)"
-                    class="block ml-auto text-xs font-medium max-w-max text-primary-500 hover:underline"
-                    type="button"
-                    @click="handleNotifyRouting(notification)"
+              <!-- Scrollable Notification List -->
+              <div class="max-h-[400px] overflow-y-auto">
+                <div v-if="notifications?.length > 0">
+                  <ListboxOption
+                    v-for="notification in notifications"
+                    :key="notification?.id"
+                    :value="notification?.id"
+                    as="li"
+                    class="py-2 px-[13px] border-gray-50 border-b"
+                    @click="handleMarknotification(notification.id)"
                   >
-                    See detail
-                  </button>
+                    <div class="relative mb-[6px] cursor-pointer select-none">
+                      <div class="flex items-start gap-x-3">
+                        <p
+                          :class="!notification?.isViewed ? 'font-medium' : 'text-gray-500'"
+                          class="text-sm text-[#101828] flex-1"
+                          v-if="notification?.message"
+                        >
+                          {{ notification?.message }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                      <span class="text-[11px] text-gray-500">
+                        {{ moment(notification?.notificationDate).fromNow() }}
+                      </span>
+                      <button
+                        v-if="isNotificationWithDetails(notification)"
+                        class="block ml-auto text-xs max-w-max text-primary-500 hover:underline"
+                        type="button"
+                        @click="handleNotifyRouting(notification)"
+                      >
+                        See detail
+                      </button>
+                    </div>
+                  </ListboxOption>
                 </div>
-              </ListboxOption>
-
-              <!-- Mark all as read option -->
-              <ListboxOption
-                as="li"
-                class="flex justify-center"
-                v-if="unreadnotifications?.length > 0"
-              >
-                <button
-                  class="px-2 pt-3 pb-1 text-xs font-medium text-center text-primary-500 hover:underline"
-                  @click="markAllNotification"
-                >
-                  Mark all as read
-                </button>
-              </ListboxOption>
-
+              </div>
+              <div class="sticky bottom-0 z-10 px-3 bg-white">
+                <!-- Mark all as read option -->
+                <ListboxOption as="li" class="flex justify-center">
+                  <button
+                    class="px-2 pt-3 pb-1 text-xs font-medium text-center text-primary-500 hover:underline"
+                    @click="markAllNotification"
+                  >
+                    Mark all as read
+                  </button>
+                </ListboxOption>
+              </div>
               <!-- No notifications message -->
               <div
                 v-if="notifications?.length === 0 && !loading"
@@ -110,12 +108,12 @@
 </template>
 
 <script setup>
-import { ref, computed, provide } from "vue";
+import { ref, computed, inject } from "vue";
 import {
   marknotification,
   markallnotification,
 } from "~/services/notificationservice";
-import { useAuthStore } from "~/stores/auth"; // Assuming you have this
+import { useAuthStore } from "~/stores/auth";
 import {
   Listbox,
   ListboxButton,
@@ -167,25 +165,14 @@ function markAllNotification() {
   });
 }
 
+// Check if the notification has details to view
+function isNotificationWithDetails(notification) {
+  return [3, 4, 5, 6, 7, 8, 9, 10].includes(notification?.notificationType);
+}
+
+// Handle routing to notification details page
+function handleNotifyRouting(notification) {
+  // Implement routing logic here
+  // For example: this.$router.push(`/notifications/${notification.id}`);
+}
 </script>
-
-<style scoped>
-/* Loader styles */
-.loader {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-</style>

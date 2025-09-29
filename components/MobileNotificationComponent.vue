@@ -54,7 +54,7 @@
               {{ moment(notification?.notificationDate).fromNow() }}
             </span>
             <button
-              v-if="[3].includes(notification?.notificationType)"
+              v-if="[3, 4, 5, 6, 7, 8, 9, 10].includes(notification?.notificationType)"
               class="block ml-auto text-xs font-medium max-w-max text-primary-500 hover:underline"
               type="button"
               @click="handleNotifyRouting(notification)"
