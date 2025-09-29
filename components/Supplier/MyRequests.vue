@@ -1,8 +1,13 @@
 <template>
-  <div class="gap-y-2 flex flex-col bg-white rounded-[10px]  border border-[rgb(244,247,254)]">
+  <div
+    class="gap-y-2 flex flex-col bg-white rounded-[10px] border border-[rgb(244,247,254)]"
+  >
     <!-- Top bar   -->
- 
-    <HeaderComponent title="My requests" subtext="List of your requests for samples and documents." />
+
+    <HeaderComponent
+      title="My requests"
+      subtext="List of your requests for samples and documents."
+    />
     <div class="pt-5">
       <AppTab :tabs="tabs" className="px-5" :count="count" />
 
@@ -22,11 +27,11 @@
       <div class="w-[400px] bg-white rounded-lg p-6 lg:p-8 relative">
         <span
           @click="isOpen = false"
-          class="hover:bg-gray-50 rounded-full h-6 w-6 flex items-center justify-center absolute top-4 right-4"
+          class="absolute flex items-center justify-center w-6 h-6 rounded-full hover:bg-gray-50 top-4 right-4"
           ><AppIcon icon="heroicons-solid:x" class="w-4 h-4"
         /></span>
-        <h4 class="text-lg font-medium mb-3">Cancel document request</h4>
-        <p class="text-sm mb-8">
+        <h4 class="mb-3 text-lg font-medium">Cancel document request</h4>
+        <p class="mb-8 text-sm">
           Are your sure you want to cancel #DC455-084 document request?
         </p>
         <div class="flex items-center gap-x-4">
@@ -100,6 +105,9 @@ onMounted(() => {
     count.productRequest = res.data.productRequest;
   });
   getquotes();
+  if (route.query.tab) {
+    active.value = route.query.tab;
+  }
 });
 function getquotes() {
   buyerquotes(quoteParams).then((res) => {

@@ -1,13 +1,5 @@
 <template>
   <div>
-    <!-- <HeaderComponent
-      title="Store Orders"
-      subtext=" List of orders received by your storefront."
-      btnText="Create order"
-      btnIcon="humbleicons:plus"
-      @click="router.push('/markets')"
-    /> -->
-
     <div class="bg-white rounded-lg">
       <div class="items-center justify-between hidden px-5 mb-8 lg:flex">
         <div class="flex gap-x-4">
@@ -231,6 +223,14 @@ function getData() {
         orders.value = res.data.data;
         queryParams.totalCount = res.data.totalCount;
         isLoading.value = false;
+        const prodDataArr = Array.isArray(res?.data?.data) ? res.data.data : [];
+        const prodData = prodDataArr.find(
+          (item) => parseInt(item.id) === parseInt(route.query?.orderId)
+        );
+
+        if (prodData) {
+          openOrder(prodData);
+        }
       }
     })
     .catch((err) => {
@@ -261,7 +261,7 @@ function openModal() {
   isOpen.value = !isOpen.value;
 }
 
-const theads = ["order id",  "updated at", "amount", "status", ""];
+const theads = ["order id", "updated at", "amount", "status", ""];
 
 function next() {
   queryParams.PageNumber++;

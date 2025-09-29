@@ -49,7 +49,7 @@
               </p>
             </div>
           </div>
-          <div class="flex justify-between">
+          <div class="flex justify-between mt-2">
             <span class="text-[11px]">
               {{ moment(notification?.notificationDate).fromNow() }}
             </span>
@@ -57,7 +57,7 @@
               v-if="[3].includes(notification?.notificationType)"
               class="block ml-auto text-xs font-medium max-w-max text-primary-500 hover:underline"
               type="button"
-              @click="handleRouting(notification)"
+              @click="handleNotifyRouting(notification)"
             >
               See detail
             </button>
@@ -130,16 +130,6 @@ function markAllNotification() {
   });
 }
 
-function handleRouting(val) {
-  switch (val.notificationType) {
-    case 3:
-      navigateTo(`/procurement/my-orders?notify=true&orderId=${val.refId}`);
-      break;
-
-    default:
-      break;
-  }
-}
 </script>
 
 <style scoped>

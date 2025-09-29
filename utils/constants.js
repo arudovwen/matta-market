@@ -1515,3 +1515,49 @@ export function handleMessageTitle(
   }
   return creditTitle2;
 }
+
+export function handleNotifyRouting(val) {
+  switch (val.notificationType) {
+    case 3:
+      navigateTo(`/procurement/my-orders?notify=true&orderId=${val.refId}`);
+      break;
+    case 4:
+      navigateTo(
+        `/procurement/my-orders?notify=true&sampleId=${val.refId}&tab=samples`
+      );
+      break;
+    case 5:
+      navigateTo(
+        `/procurement/my-orders?notify=true&documentId=${val.refId}&tab=documents`
+      );
+      break;
+    case 6:
+      navigateTo(
+        `/procurement/my-orders?notify=true&quoteId=${val.refId}&tab=orders`
+      );
+      break;
+    case 7:
+      navigateTo(
+        `/procurement/my-orders?notify=true&productId=${val.refId}&tab=products`
+      );
+      break;
+    case 8:
+      navigateTo(
+        `/storefront?notify=true&orderId=${val.refId}&tab=customer orders`
+      );
+      break;
+    case 9:
+      navigateTo(
+        `/storefront/order/confirmation/${val.refId}?orderNumber==&tab=pending confirmation`
+      );
+      break;
+    case 10:
+      navigateTo(
+        `/storefront/quote/confirmation/${val.refId}&tab=customer requests`
+      );
+      break;
+
+    default:
+      break;
+  }
+}

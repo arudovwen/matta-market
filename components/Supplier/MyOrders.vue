@@ -1,10 +1,12 @@
 <template>
-  <div class="gap-y-2 flex flex-col mb-4 bg-white rounded-[10px] border border-[#F4F7FE]">
+  <div
+    class="gap-y-2 flex flex-col mb-4 bg-white rounded-[10px] border border-[#F4F7FE]"
+  >
     <HeaderComponent title="My  Orders" />
 
-    <div class="p-6 lg:p-8 rounded-lg bg-white">
+    <div class="p-6 bg-white rounded-lg lg:p-8">
       <div v-if="isShowing === 'all'">
-        <div class="hidden lg:flex justify-between items-center mb-8">
+        <div class="items-center justify-between hidden mb-8 lg:flex">
           <div class="flex gap-x-4">
             <div class="relative flex items-center">
               <span class="absolute left-4 pointer-events-none text-[#667085]"
@@ -19,7 +21,7 @@
                 type="search"
               />
             </div>
-            <div class="flex relative items-center">
+            <div class="relative flex items-center">
               <Select
                 v-model="queryParams.OrderItemStatus"
                 :options="options"
@@ -39,12 +41,9 @@
           </div>
         </div>
         <div>
-          <SupplierOrdersSingle
-            v-for="item in orders"
-            :key="item"
-            :order="item"
-            @click="openOrder(item)"
-          />
+          <template v-for="item in orders" :key="item">
+            <SupplierOrdersSingle :order="item" @openDetail="openOrder(item)" />
+          </template>
         </div>
         <div v-if="!isLoading">
           <EmptyData
@@ -59,28 +58,28 @@
         <div
           v-for="(item, idx) in pendingCheckout.items"
           :key="idx"
-          class="p-6 relative rounded-lg bg-white border mb-4"
+          class="relative p-6 mb-4 bg-white border rounded-lg"
         >
           <p class="mb-1 text-[13px] uppercase">
             {{ item.producer }}
           </p>
-          <p class="mb-2 text-lg lg:text-xl font-medium">
+          <p class="mb-2 text-lg font-medium lg:text-xl">
             {{ item.product }}
           </p>
           <!-- <p class="mb-6">
-          <i class="uil uil-store mr-1"></i>
+          <i class="mr-1 uil uil-store"></i>
         </p> -->
 
           <span
-            class="top-3 right-3 absolute cursor-pointer"
+            class="absolute cursor-pointer top-3 right-3"
             @click="removeItem(item.id)"
-            ><i class="uil uil-times text-2xl text-matta-black"></i
+            ><i class="text-2xl uil uil-times text-matta-black"></i
           ></span>
-          <div class="flex flex-col lg:flex-row items-center gap-3 mb-4 w-full">
+          <div class="flex flex-col items-center w-full gap-3 mb-4 lg:flex-row">
             <div
               class="flex items-center bg-[#F1F3F5] rounded-lg relative flex-1 w-full lg:w-auto pr-4"
             >
-              <div class="relative w-full flex justify-between items-center">
+              <div class="relative flex items-center justify-between w-full">
                 <div
                   class="py-4 text-[13px] px-6 bg-transparent capitlize md:uppercase text-matta-black w-full text-left"
                 >
@@ -103,7 +102,7 @@
               </div>
             </div>
             <div
-              class="flex flex-col lg:flex-row gap-3 items-center w-full lg:w-auto"
+              class="flex flex-col items-center w-full gap-3 lg:flex-row lg:w-auto"
             >
               <div
                 class="flex items-center justify-between lg:w-[250px] lg:justify-center gap-x-8 lg:gap-x-16 w-full rounded-lg bg-[#F1F3F5] relative py-4 text-[13px] px-6 uppercase text-matta-black"
@@ -119,11 +118,11 @@
           </div>
         </div>
         <div
-          class="flex justify-end gap-x-10 mb-10 items-center"
+          class="flex items-center justify-end mb-10 gap-x-10"
           v-if="pendingCheckout?.items?.length"
         >
           <div class="text-[#ABABAB] text-sm uppercase">Item total</div>
-          <div class="text-2xl text-right font-medium">
+          <div class="text-2xl font-medium text-right">
             {{ currencyFormat(pendingCheckout.cartTotal) }}
           </div>
         </div>
@@ -141,13 +140,13 @@
         </div>
         <div
           v-if="!pendingCheckout?.items?.length"
-          class="text-center py-20 text-lg"
+          class="py-20 text-lg text-center"
         >
           No pending checkout
         </div>
       </div>
     </div>
-    <div class="text-center p-6 lg:p-8 my-20" v-if="isLoading">
+    <div class="p-6 my-20 text-center lg:p-8" v-if="isLoading">
       <AppLoader />
     </div>
   </div>
@@ -163,11 +162,11 @@
   <SideModal :isOpen="isOpen" @togglePopup="openModal">
     <template #content>
       <div
-        class="h-full w-full bg-white rounded-lg p-6 lg:p-8 overflow-auto max-h-full"
+        class="w-full h-full max-h-full p-6 overflow-auto bg-white rounded-lg lg:p-8"
       >
         <div class="mb-3">
           <p class="text-[13px] text-[#B6B7B9] mb-2">Order ID</p>
-          <h2 class="font-medium text-2xl" v-if="order">
+          <h2 class="text-2xl font-medium" v-if="order">
             #{{ order.orderId }}
           </h2>
         </div>
@@ -180,19 +179,15 @@
 </template>
 
 <script setup>
-import { useRoute } from "vue-router";
-import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import debounce from "lodash/debounce";
 import {
   procurementorders,
   procurementorderdetails,
 } from "~/services/orderservice";
-import moment from "moment";
 import { toast } from "vue3-toastify";
 import { getcart, removecartitem } from "~/services/cartservice";
 
 onMounted(() => {
-
   getData();
   fetchCart();
 });
@@ -259,11 +254,9 @@ function removeItem(id) {
   });
 }
 function getData() {
-
   isLoading.value = true;
   procurementorders(queryParams)
-	.then((res) => {
-	
+    .then((res) => {
       if (res.status) {
         orders.value = res.data.data;
         queryParams.totalCount = res.data.totalCount;
@@ -282,13 +275,13 @@ const order = ref(null);
 const isOpen = ref(false);
 
 function openOrder(val) {
-
+  console.log({val});
+  
   procurementorderdetails(val.orderId)
-	.then((res) => {
-		order.value = { ...val, ...res.data, orderId: val.orderNumber };
-		
-		isOpen.value = true;
-	
+    .then((res) => {
+      order.value = { ...val, ...res.data, orderId: val.orderNumber };
+
+      isOpen.value = true;
     })
     .catch((err) => {
       isLoading.value = false;
@@ -309,7 +302,6 @@ watch(
     queryParams.PageNumber,
     queryParams.OrderItemStatus,
     queryParams.PageSize,
-  
   ],
   () => {
     getData();

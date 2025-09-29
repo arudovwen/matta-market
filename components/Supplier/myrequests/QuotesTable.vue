@@ -168,17 +168,12 @@ import { Menu, MenuButton, MenuItems } from "@headlessui/vue";
 import { sellerquotedetail } from "~/services/quoteservice";
 import debounce from "lodash/debounce";
 
-const theads = ["quote no", "product", "date created", "status", ""];
-
-const quotes = inject("quotes");
-const multi = ref([]);
 defineProps(["title"]);
+const theads = ["quote no", "product", "date created", "status", ""];
+const quotes = inject("quotes");
 const quoteParams = inject("quoteParams");
 const isOpen = ref(false);
-
-function selectall() {
-  multi.value = quotes.value.map((i) => i.id);
-}
+const route = useRoute();
 function openRequest(item) {
   sellerquotedetail(item.id).then((res) => {
     quote.value = { ...res.data.data, quoteId: item.id, id: item.id };
@@ -186,18 +181,6 @@ function openRequest(item) {
   });
 }
 const quote = ref({});
-function next() {
-  quoteParams.PageNumber++;
-}
-function toggleOrder() {
-  quoteParams.SortOrder == "A"
-    ? (quoteParams.SortOrder = "D")
-    : (quoteParams.SortOrder = "A");
-}
-function prev() {
-  if (quoteParams.PageNumber == 1) return;
-  quoteParams.PageNumber--;
-}
 const statusOptions = [
   {
     id: 0,
@@ -215,14 +198,18 @@ watch(
     debounceSearch();
   }
 );
+watch(
+  () => [route.query?.quoteId, quotes.value],
+  ([routeId]) => {
+    const quoteData = quotes.value.find(
+      (item) => parseInt(item.id) === parseInt(routeId)
+    );
+
+    if (quoteData) {
+      openRequest(quoteData);
+    }
+  },
+  { immediate: true }
+);
 provide("quote", quote);
 </script>
-
-<style lang="scss" scoped>
-.bg-img {
-  background-image: url("~/assets/img/bee.svg");
-  background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: bottom;
-}
-</style>

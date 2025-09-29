@@ -3,7 +3,7 @@
     <!-- <div class="h-[100px] w-[100px] bg-gray-50 rounded-[10px] overflow-hidden">
       <img src="/images/2.png" class="w-full h-full" alt="image" />
     </div> -->
-    <div class="flex-1 flex justify-between">
+    <div class="flex justify-between flex-1">
       <div class="w-[236px]">
         <h6 class="text-sm mb-2 text-[#333] font-bold">
           {{ order.product || "-" }}
@@ -28,7 +28,7 @@
       </div>
 
       <div class="w-[130px] text-right">
-        <div class="mb-2 flex justify-end">
+        <div class="flex justify-end mb-2">
           <AppStatusButton
             :status="order?.status"
             stattype="order"
@@ -60,6 +60,17 @@
 </template>
 <script setup>
 import moment from "moment";
-defineProps(["order"]);
+const props = defineProps(["order"]);
 const emits = defineEmits(["onClick"]);
+const route = useRoute();
+
+watch(
+  () => [route.query.orderId, props.order?.orderId],
+  ([routeId, orderId]) => {
+    if (parseInt(routeId) === parseInt(orderId)) {
+      emits("openDetail", props.order);
+    }
+  },
+  { immediate: true }
+);
 </script>

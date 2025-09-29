@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center mb-8 px-5">
+  <div class="flex items-center justify-between px-5 mb-8">
     <div class="flex gap-x-4">
       <div class="relative flex items-center">
         <span class="absolute left-4 pointer-events-none text-[#667085]"
@@ -10,7 +10,7 @@
           @change="getRequestDoc()"
           @keyup="debounceSearch"
           placeholder="Search"
-          class="border border-[#E7E7E7] text-sm  focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
+          class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
           type="search"
         />
       </div>
@@ -79,16 +79,16 @@
             >
               <Menu class="relative" as="div">
                 <MenuButton class="outline-none">
-                   <AppIcon icon="heroicons:ellipsis-vertical-solid" />
+                  <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                 </MenuButton>
                 <MenuItems
                   class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
                 >
                   <div
-                    class="py-2 px-5 hover:bg-gray-50 text-sm whitespace-nowrap cursor-pointer"
+                    class="px-5 py-2 text-sm cursor-pointer hover:bg-gray-50 whitespace-nowrap"
                     @click="openRequest(item)"
                   >
-                    <i class="uil uil-file mr-2"></i> Open Request
+                    <i class="mr-2 uil uil-file"></i> Open Request
                   </div>
                 </MenuItems>
               </Menu>
@@ -118,11 +118,11 @@
   <SideModal :isOpen="isOpen" @togglePopup="isOpen = false" v-if="isOpen">
     <template #content>
       <div
-        class="h-full w-full bg-white rounded-lg p-6 lg:p-8 overflow-auto max-h-full"
+        class="w-full h-full max-h-full p-6 overflow-auto bg-white rounded-lg lg:p-8"
       >
         <div class="mb-3">
           <p class="text-[13px] text-[#B6B7B9] mb-2">Request No</p>
-          <h2 class="font-medium text-2xl">{{ request.requestNumber }}</h2>
+          <h2 class="text-2xl font-medium">{{ request.requestNumber }}</h2>
         </div>
 
         <hr class="my-3 border-gray-200" />
@@ -138,6 +138,7 @@ import moment from "moment";
 import debounce from "lodash/debounce";
 import { getproductrequests } from "~/services/productservices";
 
+const route = useRoute();
 const multi = ref([]);
 const requests = ref([]);
 const isOpen = ref(false);
@@ -173,25 +174,26 @@ function selectall() {
 function getRequestDoc() {
   isLoading.value = true;
   getproductrequests(queryParams).then((res) => {
-    requests.value = res?.data?.data?.data.map(i=>({
+    const dataArr = Array.isArray(res?.data?.data?.data) ? res.data.data.data : [];
+    requests.value = dataArr.map((i) => ({
       ...i,
-      chemicalName: i.products.map(k=> k.chemicalName).join(", ")
+      chemicalName: Array.isArray(i.products) ? i.products.map((k) => k.chemicalName).join(", ") : "",
     }));
-    queryParams.totalCount = res.data.data.totalCount;
+    queryParams.totalCount = res?.data?.data?.totalCount || 0;
+    const prodDataArr = Array.isArray(res?.data?.data) ? res.data.data : [];
+    const prodData = prodDataArr.find(
+      (item) => parseInt(item.id) === parseInt(route.query?.productId)
+    );
+
+    if (prodData) {
+      openRequest(prodData);
+    }
+    isLoading.value = false;
+  }).catch(() => {
+    requests.value = [];
+    queryParams.totalCount = 0;
     isLoading.value = false;
   });
-}
-function next() {
-  queryParams.PageNumber++;
-}
-function toggleOrder() {
-  queryParams.SortOrder == "A"
-    ? (queryParams.SortOrder = "D")
-    : (queryParams.SortOrder = "A");
-}
-function prev() {
-  if (queryParams.PageNumber == 1) return;
-  queryParams.PageNumber--;
 }
 const statusOptions = [
   {
