@@ -347,6 +347,8 @@
     </ModalCenter>
     <ModalAuth goToUrl="/checkout" />
   </section>
+
+  <template v-if="notificationOpen"><MobileNotificationComponent /></template>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -376,7 +378,7 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const store = useMarketStore();
-
+const notificationOpen = inject("notificationOpen");
 const isAuthOpen = ref(false);
 const router = useRouter();
 const { currentRoute } = router;

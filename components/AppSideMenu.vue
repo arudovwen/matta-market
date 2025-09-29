@@ -57,7 +57,9 @@
                   <div class="relative flex-1 px-4 sm:px-6">
                     <!-- Replace with your content -->
                     <div class="absolute inset-0 pt-5">
-                      <div class="flex items-center justify-between px-5 pb-4 mb-3">
+                      <div
+                        class="flex items-center justify-between px-5 pb-4 mb-3"
+                      >
                         <img
                           src="/images/logo.png"
                           width="80"
@@ -65,7 +67,31 @@
                           alt="Matta"
                           class="w-[80px] h-auto"
                         />
-                        <span class="text-sm lg:hidden">
+                        <span class="flex text-sm lg:hidden gap-x-2">
+                          <button
+                            v-if="authStore.isLoggedIn"
+                            type="button"
+                            class="relative flex items-center"
+                            @click="
+                              notificationOpen = true;
+                              open = false;
+                            "
+                          >
+                            <span
+                              class="relative h-8 w-8 rounded-full bg-[#F7F7F7] flex items-center justify-center"
+                            >
+                              <AppIcon
+                                class="text-base md:text-lg text-[#484848]"
+                                icon="uiw:bell"
+                              />
+                              <span
+                                v-if="unreadnotifications > 0"
+                                class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
+                              >
+                                {{ unreadnotifications }}
+                              </span>
+                            </span>
+                          </button>
                           <GoogleTranslateSelect
                             :fetch-browser-language="false"
                             trigger="click"
@@ -191,12 +217,19 @@ const mappedNav = computed(() => {
     ).includes(i.key)
   );
 });
+const notificationOpen = inject("notificationOpen");
 const open = inject("open");
+const notifications = inject("notifications");
 const getUserInitials = computed(() => {
   const firstNameInitial = authStore.userInfo?.firstName.slice(0, 1) || "";
   const lastNameInitial = authStore.userInfo?.lastName.slice(0, 1) || "";
   return `${firstNameInitial}${lastNameInitial}`;
 });
+
+const unreadnotifications = computed(() => {
+  return notifications.value?.filter((n) => !n.isViewed).length || 0;
+});
+
 watch(
   () => route.path,
   () => {
