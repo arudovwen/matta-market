@@ -109,18 +109,14 @@ export async function getSupplierProduct({ productId }) {
   );
 }
 
-export async function getSupplierProducts({
-  Producer = "",
-  PageNumber = 1,
-  PageSize = 10,
-  MarketId = "",
-  Search = "",
-  Status = "",
-  SortOrder = "",
-  MarketApplication = "",
-}) {
+export async function getSupplierProducts(payload) {
   return await marketGet(
-    `${urls.SUPPLIER_GET_PRODUCTS}?Producer=${Producer}&SortOrder=${SortOrder}&MarketId=${MarketId}&PageNumber=${PageNumber}&PageSize=${PageSize}&Search=${Search}&Status=${Status}&MarketApplication=${MarketApplication}`,
+    `${urls.SUPPLIER_GET_PRODUCTS}?${new URLSearchParams(
+      cleanObject({
+        ...payload,
+        withZoho: payload.withZoho !== undefined ? payload.withZoho : true,
+      })
+    )}`,
     config
   );
 }

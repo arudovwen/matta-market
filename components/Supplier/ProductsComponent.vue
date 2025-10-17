@@ -1,6 +1,6 @@
 <template>
   <div class="mb-8 bg-white rounded-[10px] border border-[#F4F7FE]">
-    <div class="gap-y-2 flex flex-col mb-4">
+    <div class="flex flex-col mb-4 gap-y-2">
       <HeaderComponent
         title="Products"
         className="!px-5 !border-none "
@@ -12,12 +12,12 @@
         btnClass="!text-xs md:!text-sm"
       />
 
-      <div class="rounded-lg bg-white">
+      <div class="bg-white rounded-lg">
         <AppTab :tabs="tabs" :count="counts" className="px-5" />
         <div
-          class="justify-between items-center mb-8 w-full hidden lg:flex px-5"
+          class="items-center justify-between hidden w-full px-5 mb-8 lg:flex"
         >
-          <div class="flex gap-x-4 flex-1">
+          <div class="flex flex-1 gap-x-4">
             <div class="relative flex items-center">
               <span class="absolute left-4 pointer-events-none text-[#667085]"
                 ><i class="uil uil-search"></i
@@ -31,7 +31,7 @@
                 type="search"
               />
             </div>
-            <div class="flex relative items-center">
+            <div class="relative flex items-center">
               <FormsSelectComponent
                 @onGetData="onGetMarket"
                 :options="marketOptions"
@@ -41,7 +41,7 @@
                 classStyles="border border-[#D0D5DD] rounded-lg min-w-[180px] py-[10px] px-[14px] focus:outline-none"
               />
             </div>
-            <div class="flex relative items-center">
+            <div class="relative flex items-center">
               <FormsSelectComponent
                 @onGetData="onGetProducer"
                 :options="producerOptions"
@@ -52,7 +52,7 @@
               />
             </div>
           </div>
-          <div class="flex gap-x-3 ml-2">
+          <div class="flex ml-2 gap-x-3">
             <FormsSortFilter>
               <template #content>
                 <button
@@ -90,7 +90,7 @@
                         class="mr-3 h-10 w-10 rounded-full flex items-center justify-center border border-[#E7EBEE]"
                       >
                         <img
-                          class="w-full h-full object-cover rounded-full"
+                          class="object-cover w-full h-full rounded-full"
                           alt="alt"
                           :src="item.logo"
                         />
@@ -133,7 +133,7 @@
                     <Popover class="relative">
                       <Float placement="bottom-end" :offset="4">
                         <PopoverButton class="outline-none">
-                          <i class="uil uil-ellipsis-v text-lg"></i>
+                          <i class="text-lg uil uil-ellipsis-v"></i>
                         </PopoverButton>
                         <PopoverPanel
                           class="bg-white shadow min-w-[150px] rounded-md overflow-hidden pt-4"
@@ -192,24 +192,24 @@
     <IndexModal :isOpen="isOpen" @toggleModal="close">
       <template #content>
         <div
-          class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4 max-w-sm"
+          class="max-w-sm px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4"
           v-if="isOpen"
         >
-          <div class="flex justify-between mb-5 items-center">
-            <h4 class="font-medium text-matta-black text-xl">
+          <div class="flex items-center justify-between mb-5">
+            <h4 class="text-xl font-medium text-matta-black">
               {{ title }}
             </h4>
-            <!-- <i class="uil uil-times cursor-pointer text-lg" @click="close"></i> -->
+            <!-- <i class="text-lg cursor-pointer uil uil-times" @click="close"></i> -->
           </div>
 
-          <p class="text-sm text-matta-black mb-2">
+          <p class="mb-2 text-sm text-matta-black">
             {{ text }}
           </p>
           <input
             class="rounded-lg px-[14px] py-[10px] h-10 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
             v-model="deletetext"
           />
-          <div class="flex justify-end gap-x-2 items-center mt-8">
+          <div class="flex items-center justify-end mt-8 gap-x-2">
             <button
               type="button"
               @click="close"
@@ -289,6 +289,7 @@ const queryParams = reactive({
   pagecount: 0,
   totalCount: 0,
   Status: "published",
+  withZoho: true
 });
 const active = ref("published");
 const isLoading = ref(false);
