@@ -48,8 +48,9 @@
         <span class="hidden text-sm text-white lg:inline">
           <GoogleTranslateSelect
             :fetch-browser-language="false"
+            :languages="availableLanguages"
             trigger="click"
-            @select="handleGoogleTranslateSelect"
+            @select="handleLanguageSelect"
           />
         </span>
       </span>
@@ -58,11 +59,10 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import GoogleTranslateSelect from "@google-translate-select/vue3";
 
 const cartStore = useCartStore();
-const authStore = useAuthStore()
-const handleGoogleTranslateSelect = (language) => {
-  console.log(language);
-};
+const authStore = useAuthStore();
+
+// Use Google Translate composable
+const { availableLanguages, handleLanguageSelect } = useGoogleTranslate();
 </script>

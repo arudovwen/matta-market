@@ -94,7 +94,9 @@
                           </button>
                           <GoogleTranslateSelect
                             :fetch-browser-language="false"
+                            :languages="availableLanguages"
                             trigger="click"
+                            @select="handleLanguageSelect"
                           />
                         </span>
                       </div>
@@ -203,7 +205,6 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
-import GoogleTranslateSelect from "@google-translate-select/vue3";
 
 const storeOpen = ref(false);
 const route = useRoute();
@@ -220,6 +221,10 @@ const mappedNav = computed(() => {
 const notificationOpen = inject("notificationOpen");
 const open = inject("open");
 const notifications = inject("notifications");
+
+// Use Google Translate composable
+const { availableLanguages, handleLanguageSelect } = useGoogleTranslate();
+
 const getUserInitials = computed(() => {
   const firstNameInitial = authStore.userInfo?.firstName.slice(0, 1) || "";
   const lastNameInitial = authStore.userInfo?.lastName.slice(0, 1) || "";

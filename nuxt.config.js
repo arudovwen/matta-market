@@ -107,6 +107,7 @@ export default defineNuxtConfig({
     "vue-toastification/dist/index.css",
     "vue3-carousel/dist/carousel.css",
     "@programic/vue3-tooltip/dist/index.css",
+    "@google-translate-select/theme-chalk/dist/index.css",
     "~/assets/css/tailwind.css",
     "~/assets/scss/_button.scss",
     "~/assets/scss/_form.scss",

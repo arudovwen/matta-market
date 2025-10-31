@@ -30,8 +30,9 @@
               <span class="hidden text-sm lg:inline">
                 <GoogleTranslateSelect
                   :fetch-browser-language="false"
+                  :languages="availableLanguages"
                   trigger="click"
-                  @select="handleGoogleTranslateSelect"
+                  @select="handleLanguageSelect"
                 />
               </span>
 
@@ -355,7 +356,6 @@ import { ref } from "vue";
 import { financeMenu } from "~/utils/data";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { logOut } from "~/services/authservices";
-import GoogleTranslateSelect from "@google-translate-select/vue3";
 
 defineProps({
   showlang: {
@@ -368,9 +368,10 @@ const windowWidth = ref(
     document?.body?.clientWidth ||
     0
 );
-const handleGoogleTranslateSelect = (language) => {
-  // console.log(language);
-};
+
+// Use Google Translate composable
+const { availableLanguages, handleLanguageSelect } = useGoogleTranslate();
+
 const isOpen = ref(false);
 
 const isSigniningOut = ref(false);
