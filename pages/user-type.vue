@@ -123,6 +123,7 @@ const { handleSubmit, defineField, meta, setFieldValue, errors } = useForm({
   validationSchema: schema,
   initialValues: {
     email: authStore.userInfo?.email,
+    country: authStore.userInfo?.country,
     businessUserType: 0,
     appCode: config.public.APP_CODE,
     ssoUserCategory: authStore.userInfo?.userCategory,
