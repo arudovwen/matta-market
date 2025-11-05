@@ -28,12 +28,12 @@
             <span class="flex items-center text-sm gap-x-4 md:hidden">
               <span lass="text-sm"><CurrencyChanger /></span>
               <span class="hidden text-sm lg:inline">
-                <GoogleTranslateSelect
+                <!-- <GoogleTranslateSelect
                   :fetch-browser-language="false"
                   :languages="availableLanguages"
                   trigger="click"
                   @select="handleLanguageSelect"
-                />
+                /> -->
               </span>
 
               <button

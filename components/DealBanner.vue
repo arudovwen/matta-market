@@ -58,11 +58,84 @@
   </div>
 </template>
 <script setup>
+import GoogleTranslateSelect from "@google-translate-select/vue3";
 import { toast } from "vue3-toastify";
+import { getStoreInfo } from "~/services/productservices";
+const router = useRoute();
+const { vendor } = router.params;
+const vendorInfo = ref(null);
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 
 // Use Google Translate composable
 const { availableLanguages, handleLanguageSelect } = useGoogleTranslate();
+
+onMounted(() => {
+  if (!vendor) {
+    console.log("No vendor param, skipping language change");
+    return;
+  }
+
+  console.log("DealBanner mounted, fetching store info for vendor:", vendor);
+
+  getStoreInfo(vendor)
+    .then((res) => {
+      vendorInfo.value = res.data;
+      const lang = res.data?.language || "en";
+      const langCode = lang.split("-")[0]; // Convert en-US to en
+
+      console.log("Store info received, language:", lang, "-> code:", langCode);
+
+      const langData = availableLanguages.find(
+        (l) => l.code === langCode || l.code === lang
+      );
+
+      if (langData) {
+        console.log("Language data found:", langData);
+        
+        // Set Google Translate cookies
+        const googtrans = `/auto/${langData.code}`;
+        document.cookie = `googtrans=${googtrans};path=/`;
+        document.cookie = `googtrans=${googtrans};domain=${location.hostname};path=/`;
+        console.log("Google Translate cookie set:", googtrans);
+
+        // Store in localStorage
+        localStorage.setItem("preferredLanguage", langData.code);
+
+        // Wait for Google Translate to be ready, then trigger translation
+        const waitForGoogleTranslate = setInterval(() => {
+          const selectElement = document.querySelector(".goog-te-combo");
+          
+          if (selectElement) {
+            console.log("Google Translate select element found, triggering translation");
+            selectElement.value = langData.code;
+            
+            // Trigger change event
+            const event = new Event("change", { bubbles: true });
+            selectElement.dispatchEvent(event);
+            
+            console.log("Translation triggered for language:", langData.code);
+            clearInterval(waitForGoogleTranslate);
+          } else {
+            console.log("Waiting for Google Translate to load...");
+          }
+        }, 500);
+
+        // Stop checking after 10 seconds
+        setTimeout(() => {
+          clearInterval(waitForGoogleTranslate);
+          console.log("Stopped waiting for Google Translate");
+        }, 10000);
+
+        // Also call the composable handler
+        handleLanguageSelect(langData);
+      } else {
+        console.warn("No matching language data found for:", langCode);
+      }
+    })
+    .catch((err) => {
+      console.error("Error fetching store info:", err);
+    });
+});
 </script>
