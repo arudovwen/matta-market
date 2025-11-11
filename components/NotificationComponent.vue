@@ -52,9 +52,9 @@
                     :value="notification?.id"
                     as="li"
                     class="py-2 px-[13px] border-gray-50 border-b"
-                    @click="handleMarknotification(notification.id)"
+                
                   >
-                    <div class="relative mb-[6px] cursor-pointer select-none">
+                    <div     @click="handleMarknotification(notification.id)" class="relative mb-[6px] cursor-pointer select-none">
                       <div class="flex items-start gap-x-3">
                         <p
                           :class="!notification?.isViewed ? 'font-medium' : 'text-gray-500'"
@@ -81,7 +81,7 @@
                   </ListboxOption>
                 </div>
               </div>
-              <div class="sticky bottom-0 z-10 px-3 bg-white">
+              <div v-if="notifications?.length > 1"  class="sticky bottom-0 z-10 px-3 bg-white">
                 <!-- Mark all as read option -->
                 <ListboxOption as="li" class="flex justify-center">
                   <button
@@ -167,12 +167,54 @@ function markAllNotification() {
 
 // Check if the notification has details to view
 function isNotificationWithDetails(notification) {
-  return [3, 4, 5, 6, 7, 8, 9, 10].includes(notification?.notificationType);
+  return [4, 5, 6, 7, 8, 9, 10].includes(notification?.notificationType);
 }
 
 // Handle routing to notification details page
 function handleNotifyRouting(notification) {
-  // Implement routing logic here
-  // For example: this.$router.push(`/notifications/${notification.id}`);
+  handleMarknotification(notification.id)
+  switch (notification.notificationType) {
+    case 3:
+      navigateTo(`/procurement/my-orders?notify=true&orderId=${encodeURIComponent(notification.refId)}`);
+      break;
+    case 4:
+      navigateTo(
+        `/procurement/my-orders?notify=true&sampleId=${encodeURIComponent(notification.refId)}&tab=${encodeURIComponent('samples')}`
+      );
+      break;
+    case 5:
+      navigateTo(
+        `/procurement/my-orders?notify=true&documentId=${encodeURIComponent(notification.refId)}&tab=${encodeURIComponent('documents')}`
+      );
+      break;
+    case 6:
+       navigateTo(
+        `/storefront?notify=true&orderId=${encodeURIComponent(notification.refId)}&tab=${encodeURIComponent('customer requests')}`
+      );
+      break;
+    case 7:
+      navigateTo(
+        `/procurement/my-orders?notify=true&productId=${encodeURIComponent(notification.refId)}&tab=${encodeURIComponent('products')}`
+      );
+      break;
+    case 8:
+      navigateTo(
+        `/storefront?notify=true&orderId=${encodeURIComponent(notification.refId)}&tab=${encodeURIComponent('customer orders')}`
+      );
+      break;
+    case 9:
+      navigateTo(
+        `/storefront/order/confirmation/${encodeURIComponent(notification.refId)}?orderNumber=${encodeURIComponent(notification.refId)}&tab=${encodeURIComponent('pending confirmation')}`
+      );
+      break;
+    case 10:
+      navigateTo(
+        `/storefront/quote/confirmation/${encodeURIComponent(notification.refId)}?tab=${encodeURIComponent('customer requests')}`
+      );
+      break;
+
+    default:
+      break;
+  }
 }
 </script>

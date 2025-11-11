@@ -42,7 +42,7 @@
         </div>
         <div>
           <template v-for="item in orders" :key="item">
-            <SupplierOrdersSingle :order="item" @openDetail="openOrder(item)" />
+            <SupplierOrdersSingle :order="item" @onClick="openOrder(item)" />
           </template>
         </div>
         <div v-if="!isLoading">
