@@ -8,46 +8,112 @@ let hasLoggedOut = false; // Track if logout has already been called
 
 // Base URL for API services
 const BASE_URL = "https://dev.gateway.matta.trade";
+const SENSITIVE_FIELDS = [
+  "email",
+  "password",
+  "confirmPassword",
+  "newPassword",
+  "oldPassword",
+];
+
+
+// Encrypt selected fields
+const encryptFields = (payload, encrypt) => {
+  if (!payload || typeof payload !== "object") return payload;
+
+  const data = { ...payload };
+
+  SENSITIVE_FIELDS.forEach((key) => {
+    if (data[key]) {
+      data[key] = encrypt(data[key]);
+    }
+  });
+
+  return data;
+};
+
+// Decrypt selected fields (recursive-safe)
+const decryptFields = (payload, decrypt) => {
+  if (!payload || typeof payload !== "object") return payload;
+
+  const data = Array.isArray(payload) ? [...payload] : { ...payload };
+
+  Object.keys(data).forEach((key) => {
+    if (SENSITIVE_FIELDS.includes(key) && data[key]) {
+      try {
+        data[key] = decrypt(data[key]);
+      } catch {
+        /* ignore if not encrypted */
+      }
+    } else if (typeof data[key] === "object") {
+      data[key] = decryptFields(data[key], decrypt);
+    }
+  });
+
+  return data;
+};
 
 // Create an Axios instance with custom configuration
 const createAxiosInstance = (service) => {
+  const { encrypt, decrypt } = useEncryption();
   const instance = Axios.create({
     baseURL: `${BASE_URL}/${service}/`,
   });
 
   instance.interceptors.request.use((config) => {
     const authStore = useAuthStore();
+
     config.headers.Authorization = authStore?.jwToken
       ? `Bearer ${authStore.jwToken}`
       : config.headers.Authorization || "";
+
     config.headers.Accept = "application/json";
+ 
+    // 🔐 Encrypt sensitive fields (skip FormData)
+    if (config.data && !(config.data instanceof FormData)) {
+      config.data = encryptFields(config.data, encrypt);
+    }
+
     return config;
   });
 
   instance.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      // 🔓 Decrypt sensitive fields in response
+      if (response?.data && typeof response.data === "object") {
+        response.data = decryptFields(response.data, decrypt);
+      }
+      return response;
+    },
     async (error) => {
-      if ([403].includes(error?.response?.status)) {
+      const status = error?.response?.status;
+
+      if (status === 403) {
         try {
+          if (window.location.href.includes("/auth/logout")) {
+            useAuthStore().clearAuth();
+            return Promise.reject(error);
+          }
+
           const newAccessToken = await handleTokenRefresh();
-          error.config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+          error.config.headers.Authorization = `Bearer ${newAccessToken}`;
           return instance.request(error.config);
         } catch (refreshError) {
           handleRefreshError();
           return Promise.reject(refreshError);
         }
       }
-      if ([401].includes(error?.response?.status)) {
+
+      if (status === 401) {
         toast.error(error?.response?.data?.Message || "Unauthorised access!");
-        return Promise.reject(error);
       }
+
       return Promise.reject(error);
     }
   );
 
   return instance;
 };
-
 // Create axios instances for each service
 const axiosApi = createAxiosInstance("matta");
 const axiosSSO = createAxiosInstance("sso");
