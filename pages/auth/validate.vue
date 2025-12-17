@@ -1,8 +1,8 @@
 <template>
-  <div class="flex justify-center items-center p-10 h-screen w-screen">
-    <div class="text-center flex flex-col justify-center items-center gap-y-6">
+  <div class="flex items-center justify-center w-screen h-screen p-10">
+    <div class="flex flex-col items-center justify-center text-center gap-y-6">
       <AppLoaderV2 />
-      <span class="text-sm text-center block">Signing you in</span>
+      <span class="block text-sm text-center">Signing you in</span>
     </div>
   </div>
 </template>
@@ -24,10 +24,11 @@ onMounted(async () => {
   const response = await getTokenInfo(config);
   if (response.status === 200) {
     authStore.setLoggedUser({
-    ...response.data.data,
-    jwToken: decryptedToken,
-    refreshToken: decryptedRefresh,
-  });
+      ...response.data.data,
+      email: decrypt(response.data.data?.email),
+      jwToken: decryptedToken,
+      refreshToken: decryptedRefresh,
+    });
     authStore.setHasPin(response.data.data.hasTransactionPIN);
     localStorage.setItem("fetchCart", true);
     window.location.replace("/");
