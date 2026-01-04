@@ -182,7 +182,7 @@ onMounted(() => {
 
     getBusinessUserType();
   }
-  const cookie = useEncryptedCookie("googtrans");
+  const cookie = useCookie("googtrans");
   if (window?.navigator) {
     cookie.value = languages[navigator.language];
   }
