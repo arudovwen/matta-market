@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white flex-1 rounded-lg">
+  <div class="flex-1 bg-white rounded-lg">
     <form
       @submit.prevent="onSubmit"
       class="h-full max-w-[600px] mx-auto border p-8 rounded-lg border-[#B2DDFF] max-h-[750px] overflow-y-auto"
@@ -8,7 +8,7 @@
         {{ isDetailPage ? "Request a call" : "Request a product" }}
       </h4>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div>
           <Textinput
             placeholder=""
@@ -57,52 +57,51 @@
         </div> -->
 
         <div
-          class="rounded-lg lg:col-span-2 p-4 border border-gray-200 grid gap-y-4"
+          class="grid py-4 border border-gray-200 rounded-lg lg:col-span-2 gap-y-4"
         >
-          <div
-            v-for="(item, idx) in products"
-            :key="idx"
-            class="flex md:flex-row gap-4 items-center"
-          >
-            <div class="flex-1">
-              <Textinput
-                placeholder="Chemical Name"
-                label=""
-                name="chemicalName"
-                v-model="products[idx].chemicalName"
-              />
-            </div>
+          <div v-for="(_, idx) in products" :key="idx" class="flex w-full gap-4 px-4 pb-4 border-b last:border-none last:pb-0">
+            <div
+              class="flex flex-col items-center flex-1 w-full gap-x-4 gap-y-2 md:flex-row"
+            >
+              <div class="w-full">
+                <Textinput
+                  placeholder="Chemical Name"
+                  label=""
+                  name="chemicalName"
+                  v-model="products[idx].chemicalName"
+                />
+              </div>
 
-            <div class="relative z-10">
-              <Textinput
-                placeholder="Quantity"
-                label=""
-                name="quantity"
-                v-model="products[idx].quantity"
-                type="number"
-                :isNumber="true"
-              >
-                <template #suffix>
-                  <span class="request">
-                    <SelectVueSelect
-                      v-model="products[idx].unit"
-                      :options="minimeasurements"
-                      :reduce="(option) => option.value"
-                      placeholder="unit"
-                      classInput="!border-none"
-                      :clearable="false"
-                    />
-                  </span>
-                </template>
-              </Textinput>
+              <div class="relative z-10 w-full">
+                <Textinput
+                  placeholder="Quantity"
+                  label=""
+                  name="quantity"
+                  v-model="products[idx].quantity"
+                  type="number"
+                  :isNumber="true"
+                >
+                  <template #suffix>
+                    <span class="request">
+                      <SelectVueSelect
+                        v-model="products[idx].unit"
+                        :options="minimeasurements"
+                        :reduce="(option) => option.value"
+                        placeholder="unit"
+                        classInput="!border-none"
+                        :clearable="false"
+                      />
+                    </span>
+                  </template>
+                </Textinput>
+              </div>
             </div>
-
             <div class="">
               <button
                 v-if="products.length > 1"
                 @click="removeProduct(idx)"
                 type="button"
-                class="hover:text-red-700 text-xl flex items-center"
+                class="flex items-center text-xl hover:text-red-700"
               >
                 <AppIcon icon="lets-icons:trash-duotone" />
               </button>
@@ -113,11 +112,11 @@
             class="text-danger-500 block placeholder-[#f9bb64] text-sm"
             >{{ errors.products }}</span
           >
-          <div class="">
+          <div class="px-4">
             <button
               @click="addProduct"
               type="button"
-              class="rounded text-primary-500 text-sm"
+              class="text-sm rounded text-primary-500"
             >
               + Add Another Product
             </button>
@@ -176,12 +175,12 @@
         >
           <span>
             <span
-              class="flex gap-x-4 justify-center items-center"
+              class="flex items-center justify-center gap-x-4"
               v-if="isLoading || isUploading"
               ><span> Processing...</span>
               <i
                 v-if="isLoading"
-                class="fa fa-spinner fa-spin text-white"
+                class="text-white fa fa-spinner fa-spin"
                 aria-hidden="true"
               ></i
             ></span>
