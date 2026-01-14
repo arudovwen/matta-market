@@ -18,9 +18,11 @@ export async function ssoConfirmEmail(user, config = {}) {
   return await ssoPost(`${urls.CONFIRM_EMAIL}`,user, config);
 }
 export async function getTokenInfo(config = {}) {
-  return await ssoPost(`${urls.GET_TOKEN_INFORMATION}`, {}, config);
+  const appConfig = useRuntimeConfig()
+  return await ssoPost(`${urls.GET_TOKEN_INFORMATION}/${appConfig.public.APP_CODE}`, {}, config);
 }
 export async function logOut() {
+  
   const authStore = useAuthStore();
   // googleLogout();
   authStore.logOut();

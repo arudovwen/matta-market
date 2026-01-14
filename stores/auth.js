@@ -30,7 +30,7 @@ export const useAuthStore = defineStore(
     );
     const businessId = computed(() => mattaAuth?.value?.businessId);
     const userInfo = computed(() => mattaAuth?.value);
-   
+
     function setLoggedUser(data) {
       loggedUser.value = data;
       mattaAuth.value = data;
@@ -70,9 +70,11 @@ export const useAuthStore = defineStore(
 
     const logOut = async () => {
       try {
+        const appConfig = useRuntimeConfig();
         const response = await logoutUser({
           refreshToken: refreshToken.value,
           token: jwToken.value,
+          appCode: appConfig.public.APP_CODE,
         });
 
         if (response.status === 200) {
