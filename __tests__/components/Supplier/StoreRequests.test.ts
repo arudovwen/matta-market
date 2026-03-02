@@ -16,6 +16,15 @@ import * as procurementService from "~/services/procurementservice";
 import * as reqservices from "~/services/requestservice";
 import StoreRequests from "~/components/Supplier/StoreRequests.vue";
 
+vi.mock("vue-router", async () => {
+  const actual = await vi.importActual("vue-router");
+  return {
+    ...actual,
+    useRoute: () => ({ query: { type: "samples" } }),
+    useRouter: () => ({ push: vi.fn() }),
+  };
+});
+
 const mockRoutePush = vi.fn();
 
 vi.mock("~/services/procurementservice", async (importOriginal) => {
@@ -107,28 +116,33 @@ vi.spyOn(reqservices, "sellerdoc").mockResolvedValue({
     },
   },
 });
-  describe("StoreRequests", () => {
-    it("Renders without error", async () => {
-      const component = render(StoreRequests, {
-        global: {
-          provide: {
-            active: 2,
-            companyInfo: ref({
-              directors: [],
-              approvalStatus: true,
-            }),
-          },
+describe("StoreRequests", () => {
+  it("Renders without error", async () => {
+    const component = render(StoreRequests, {
+      global: {
+        provide: {
+          active: 2,
+          companyInfo: ref({
+            directors: [],
+            approvalStatus: true,
+          }),
         },
-      });
-      expect(screen.getByTestId("spinner")).toBeTruthy();
-			// ;
-      // await waitForElementToBeRemoved(screen.getByTestId("spinner")).then(
-      //   async () => {
-      //     expect(screen.getByText("Joy")).toBeTruthy();
-      //     fireEvent.click(screen.getByTestId("documents")).then(() => {
-      //       ;
-      //     });
-      //   }
-      // );
+        mocks: {
+          $route: {
+            query: {}
+          }
+        }
+      },
     });
+    expect(screen.getByTestId("spinner")).toBeTruthy();
+    // ;
+    // await waitForElementToBeRemoved(screen.getByTestId("spinner")).then(
+    //   async () => {
+    //     expect(screen.getByText("Joy")).toBeTruthy();
+    //     fireEvent.click(screen.getByTestId("documents")).then(() => {
+    //       ;
+    //     });
+    //   }
+    // );
   });
+});

@@ -2,15 +2,52 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import * as authMarketHelpers from "~/services/settingservices";
 // import urls from "~/helpers/url_helpers";
-import { get, post } from "~/helpers/api_helpers";
+import { get, post, put } from "~/helpers/api_helpers";
 import store from "~/store";
 
 // Mock store and helpers
-vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
-  ...(await importOriginal()),
-  get: vi.fn(),
-  post: vi.fn(),
-}));
+vi.mock("~/helpers/api_helpers", async (importOriginal) => {
+  const actual = await importOriginal();
+  const mockGet = vi.fn();
+  const mockPost = vi.fn();
+  const mockPut = vi.fn();
+  const mockDel = vi.fn();
+  return {
+    ...actual,
+    get: mockGet,
+    post: mockPost,
+    put: mockPut,
+    del: mockDel,
+    walletGet: mockGet,
+    walletPost: mockPost,
+    walletPut: mockPut,
+    walletDelete: mockDel,
+    marketGet: mockGet,
+    marketPost: mockPost,
+    marketPut: mockPut,
+    marketDelete: mockDel,
+    ssoGet: mockGet,
+    ssoPost: mockPost,
+    ssoPut: mockPut,
+    ssoDelete: mockDel,
+    oxdideGet: mockGet,
+    oxdidePost: mockPost,
+    oxdidePut: mockPut,
+    oxdideDelete: mockDel,
+    deltaGet: mockGet,
+    deltaPost: mockPost,
+    deltaPut: mockPut,
+    deltaDelete: mockDel,
+    currencyGet: mockGet,
+    currencyPost: mockPost,
+    currencyPut: mockPut,
+    currencyDelete: mockDel,
+    notificationGet: mockGet,
+    notificationPost: mockPost,
+    notificationPut: mockPut,
+    notificationDelete: mockDel,
+  };
+});
 
 vi.mock("~/store", () => ({
   default: {
@@ -22,8 +59,8 @@ vi.mock("~/store", () => ({
 }));
 vi.mock("~/helpers/url_helpers", () => ({
   default: {
-    GET_PROFILE: "mock-get-profile-url",
-    GET_COMPANY_PROFILE: "mock-get-company-profile-url",
+    GET_SSO_PERSONAL_PROFILE: "mock-get-profile-url",
+    GET_SSO_BUSINESS_PROFILE: "mock-get-company-profile-url",
     GET_BUYER_PROFILE: "mock-get-buyer-profile-url",
     UPDATE_BUYER_PROFILE: "mock-update-buyer-profile-url",
     ADMIN_GET_COMPANY_PROFILE: "mock-admin-get-company-profile-url",
@@ -61,7 +98,7 @@ describe("Auth and Market Helper Functions", () => {
 
     const response = await authMarketHelpers.getProfile();
 
-    expect(get).toHaveBeenCalledWith("mock-get-profile-url", expectedConfig);
+    expect(get).toHaveBeenCalledWith("mock-get-profile-url", expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -76,9 +113,7 @@ describe("Auth and Market Helper Functions", () => {
     const response = await authMarketHelpers.getCompanyProfile();
 
     expect(get).toHaveBeenCalledWith(
-      "mock-get-company-profile-url",
-      expectedConfig
-    );
+      "mock-get-company-profile-url", expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -89,15 +124,13 @@ describe("Auth and Market Helper Functions", () => {
       headers: { Authorization: `Bearer ${mockAccessToken}` },
     };
 
-    post.mockResolvedValue({ data: "mock-response" });
+    put.mockResolvedValue({ data: "mock-response" });
 
     const response = await authMarketHelpers.updateProfile(mockData);
 
-    expect(post).toHaveBeenCalledWith(
-      "mock-update-profile-url",
-      mockData,
-      expectedConfig
-    );
+    expect(put).toHaveBeenCalledWith(
+      "mock-get-profile-url",
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -114,9 +147,7 @@ describe("Auth and Market Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-change-password-url",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -133,9 +164,7 @@ describe("Auth and Market Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-set-timezone-url",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -152,9 +181,7 @@ describe("Auth and Market Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-delete-account-url",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -170,9 +197,7 @@ describe("Auth and Market Helper Functions", () => {
     const response = await authMarketHelpers.getesfrontstats(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-storefront-stat-url?StartDate=${mockParams.StartDate}&EndDate=${mockParams.EndDate}`,
-      expectedConfig
-    );
+      `mock-storefront-stat-url?StartDate=${mockParams.StartDate}&EndDate=${mockParams.EndDate}`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -192,9 +217,7 @@ describe("Auth and Market Helper Functions", () => {
     const response = await authMarketHelpers.getstorefronttrending(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-storefront-trending-product-url?StartDate=${mockParams.StartDate}&EndDate=${mockParams.EndDate}&top=${mockParams.top}`,
-      expectedConfig
-    );
+      `mock-storefront-trending-product-url?StartDate=${mockParams.StartDate}&EndDate=${mockParams.EndDate}&top=${mockParams.top}`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 });

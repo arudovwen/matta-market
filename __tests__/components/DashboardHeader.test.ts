@@ -4,10 +4,18 @@ import { it, expect, describe, vi } from "vitest";
 import DashboardHeader from "~/components/DashboardHeader.vue";
 import { createTestingPinia } from "@pinia/testing";
 import * as authServices from "~/services/authservices";
+import { ref } from "vue";
 
 describe("DashboardHeader", () => {
   vi.mock("@/services/notificationservice", () => ({
     getnotification: vi.fn().mockResolvedValue({
+      data: {
+        bannerUrl: "/images/test-banner.png",
+        logo: "/images/test-logo.png",
+        storeName: "Test Store",
+      },
+    }),
+    getnotifications: vi.fn().mockResolvedValue({
       data: {
         bannerUrl: "/images/test-banner.png",
         logo: "/images/test-logo.png",

@@ -397,9 +397,20 @@ const view = ref({
 });
 
 const open = ref(false);
+import { onBeforeUnmount } from 'vue';
+
 onBeforeMount(() => {
-  window?.addEventListener("scroll", handleScroll);
-  window?.addEventListener("resize", getWindowSize);
+  if (typeof window !== "undefined") {
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", getWindowSize);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (typeof window !== "undefined") {
+    window.removeEventListener("scroll", handleScroll);
+    window.removeEventListener("resize", getWindowSize);
+  }
 });
 
 function handleScroll() {

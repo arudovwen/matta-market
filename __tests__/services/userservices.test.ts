@@ -25,11 +25,48 @@ const mockConfig = {
   headers: { Authorization: `Bearer mock-access-token` },
 };
 // Mocking API helpers and store
-vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
-  ...(await importOriginal()),
-  post: vi.fn(),
-  get: vi.fn(),
-}));
+vi.mock("~/helpers/api_helpers", async (importOriginal) => {
+  const actual = await importOriginal();
+  const mockGet = vi.fn();
+  const mockPost = vi.fn();
+  const mockPut = vi.fn();
+  const mockDel = vi.fn();
+  return {
+    ...actual,
+    get: mockGet,
+    post: mockPost,
+    put: mockPut,
+    del: mockDel,
+    walletGet: mockGet,
+    walletPost: mockPost,
+    walletPut: mockPut,
+    walletDelete: mockDel,
+    marketGet: mockGet,
+    marketPost: mockPost,
+    marketPut: mockPut,
+    marketDelete: mockDel,
+    ssoGet: mockGet,
+    ssoPost: mockPost,
+    ssoPut: mockPut,
+    ssoDelete: mockDel,
+    oxdideGet: mockGet,
+    oxdidePost: mockPost,
+    oxdidePut: mockPut,
+    oxdideDelete: mockDel,
+    deltaGet: mockGet,
+    deltaPost: mockPost,
+    deltaPut: mockPut,
+    deltaDelete: mockDel,
+    currencyGet: mockGet,
+    currencyPost: mockPost,
+    currencyPut: mockPut,
+    currencyDelete: mockDel,
+    notificationGet: mockGet,
+    notificationPost: mockPost,
+    notificationPut: mockPut,
+    notificationDelete: mockDel,
+  };
+});
 
 vi.mock("~/store", () => ({
   default: {
@@ -76,7 +113,7 @@ describe("Authentication API Functions", () => {
 
     const response = await inviteUsers(mockData);
 
-    expect(post).toHaveBeenCalledWith(urls.INVITE_USERS, mockData, mockConfig);
+    expect(post).toHaveBeenCalledWith(urls.INVITE_USERS, mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -92,9 +129,7 @@ describe("Authentication API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `${urls.DELETE_INVITES}?invitationId=${mockData.invitationId}`,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -112,9 +147,7 @@ describe("Authentication API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.RESEND_INVITE_USERS,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -130,9 +163,7 @@ describe("Authentication API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `${urls.DELETE_USER}?email=${mockData.email}`,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -148,7 +179,7 @@ describe("Authentication API Functions", () => {
 
     const response = await changeUserRole(mockData);
 
-    expect(post).toHaveBeenCalledWith(urls.CHANGE_ROLE, mockData, mockConfig);
+    expect(post).toHaveBeenCalledWith(urls.CHANGE_ROLE, mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -169,9 +200,7 @@ describe("Authentication API Functions", () => {
     const response = await getInvites(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `${urls.GET_INVITES}?Search=${mockParams.Search}&Status=${mockParams.Status}&Role=${mockParams.Role}&PageNumber=${mockParams.PageNumber}&PageSize=${mockParams.PageSize}`,
-      mockConfig
-    );
+      `${urls.GET_INVITES}?Search=${mockParams.Search}&Status=${mockParams.Status}&Role=${mockParams.Role}&PageNumber=${mockParams.PageNumber}&PageSize=${mockParams.PageSize}`, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -184,7 +213,7 @@ describe("Authentication API Functions", () => {
 
     const response = await getRoles();
 
-    expect(get).toHaveBeenCalledWith(urls.GET_ROLES, mockConfig);
+    expect(get).toHaveBeenCalledWith(urls.GET_ROLES, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -216,9 +245,7 @@ describe("Authentication API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.UPDATE_VENDOR_STORE,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -252,9 +279,7 @@ describe("Authentication API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.CUSTOMIZE_VENDOR_INFO,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 });

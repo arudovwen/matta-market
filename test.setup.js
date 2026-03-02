@@ -25,9 +25,15 @@ config.global.stubs = {
 //   },
 // };
 class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
+  observe() { }
+  unobserve() { }
+  disconnect() { }
 }
 
 global.ResizeObserver = ResizeObserver;
+
+// Block Google Translate from injecting the external API script in tests
+import { vi } from "vitest";
+vi.mock("@google-translate-select/vue3", () => ({
+  default: { template: "<div></div>" }
+}));

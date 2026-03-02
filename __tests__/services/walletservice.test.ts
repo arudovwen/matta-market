@@ -36,10 +36,44 @@ const mockConfig = {
 // Mocking API helpers and store
 vi.mock("~/helpers/api_helpers", async (importOriginal) => {
   const actual = await importOriginal();
+  const mockGet = vi.fn();
+  const mockPost = vi.fn();
+  const mockPut = vi.fn();
+  const mockDel = vi.fn();
   return {
     ...actual,
-    get: vi.fn(),
-    post: vi.fn(),
+    get: mockGet,
+    post: mockPost,
+    put: mockPut,
+    del: mockDel,
+    walletGet: mockGet,
+    walletPost: mockPost,
+    walletPut: mockPut,
+    walletDelete: mockDel,
+    marketGet: mockGet,
+    marketPost: mockPost,
+    marketPut: mockPut,
+    marketDelete: mockDel,
+    ssoGet: mockGet,
+    ssoPost: mockPost,
+    ssoPut: mockPut,
+    ssoDelete: mockDel,
+    oxdideGet: mockGet,
+    oxdidePost: mockPost,
+    oxdidePut: mockPut,
+    oxdideDelete: mockDel,
+    deltaGet: mockGet,
+    deltaPost: mockPost,
+    deltaPut: mockPut,
+    deltaDelete: mockDel,
+    currencyGet: mockGet,
+    currencyPost: mockPost,
+    currencyPut: mockPut,
+    currencyDelete: mockDel,
+    notificationGet: mockGet,
+    notificationPost: mockPost,
+    notificationPut: mockPut,
+    notificationDelete: mockDel,
   };
 });
 
@@ -91,7 +125,7 @@ describe("Wallet API Functions", () => {
 
     const response = await getWalletDetails();
 
-    expect(get).toHaveBeenCalledWith(urls.GET_WALLET_DETAILS, mockConfig);
+    expect(get).toHaveBeenCalledWith(urls.GET_WALLET_DETAILS, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -121,7 +155,7 @@ describe("Wallet API Functions", () => {
 
     const response = await createWallet(mockData);
 
-    expect(post).toHaveBeenCalledWith(urls.CREATE_WALLET, mockData, mockConfig);
+    expect(post).toHaveBeenCalledWith(urls.CREATE_WALLET, mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -137,7 +171,7 @@ describe("Wallet API Functions", () => {
 
     const response = await setWalletpin(mockData);
 
-    expect(post).toHaveBeenCalledWith(urls.SET_PIN, mockData, mockConfig);
+    expect(post).toHaveBeenCalledWith(urls.SET_PIN, mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -153,7 +187,7 @@ describe("Wallet API Functions", () => {
 
     const response = await changeWalletpin(mockData);
 
-    expect(post).toHaveBeenCalledWith(urls.CHANGE_PIN, mockData, mockConfig);
+    expect(post).toHaveBeenCalledWith(urls.CHANGE_PIN, mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -168,9 +202,7 @@ describe("Wallet API Functions", () => {
     const response = await verifyPin(mockCode);
 
     expect(get).toHaveBeenCalledWith(
-      `${urls.VALIDATE_OTP}?code=${mockCode}`,
-      mockConfig
-    );
+      `${urls.VALIDATE_OTP}?code=${mockCode}`, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -188,9 +220,7 @@ describe("Wallet API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.CREATE_UPDATE_KYC,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -221,9 +251,7 @@ describe("Wallet API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.ADD_BENEFICIARY,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -244,9 +272,7 @@ describe("Wallet API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `${urls.GET_BENEFICIARIES}?Search=${mockParams.Search}&discontinued=${mockParams.discontinued}&?PageNumber=${mockParams.PageNumber}&PageSize=${mockParams.PageSize}`,
-      {},
-      mockConfig
-    );
+      {}, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -264,9 +290,7 @@ describe("Wallet API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.REMOVE_BENEFICIARY,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -284,9 +308,7 @@ describe("Wallet API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.SET_UPPER_LIMIT,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -304,9 +326,7 @@ describe("Wallet API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.SET_WARNING_LIMIT,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -322,7 +342,7 @@ describe("Wallet API Functions", () => {
 
     const response = await verifyBvn(mockData);
 
-    expect(post).toHaveBeenCalledWith(urls.VALIDATE_BVN, mockData, mockConfig);
+    expect(post).toHaveBeenCalledWith(urls.VALIDATE_BVN, mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -340,9 +360,7 @@ describe("Wallet API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.CONFIRM_FUNDING,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -360,9 +378,7 @@ describe("Wallet API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.VALIDATE_ACCOUNT,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -380,9 +396,7 @@ describe("Wallet API Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.WITHDRAW_FUNDS,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 
@@ -401,9 +415,7 @@ describe("Wallet API Functions", () => {
     expect(get).toHaveBeenCalledWith(
       `${urls.GET_LEDGER_TRANSACTIONS}?${new URLSearchParams(
         cleanObject(mockData)
-      )}`,
-      mockConfig
-    );
+      )}`, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 });

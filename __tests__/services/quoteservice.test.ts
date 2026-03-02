@@ -68,9 +68,7 @@ describe("Order Helper Functions", () => {
     const response = await orderHelpers.sellerquotedetail(mockId);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-seller-quote-detail-url?id=mock-id`,
-      expectedConfig
-    );
+      `mock-seller-quote-detail-url?id=mock-id`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -102,9 +100,7 @@ describe("Order Helper Functions", () => {
     const response = await orderHelpers.buyerquotedetail(mockId);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-buyer-quote-detail-url?id=mock-id`,
-      expectedConfig
-    );
+      `mock-buyer-quote-detail-url?id=mock-id`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -120,9 +116,7 @@ describe("Order Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-new-quote-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 });

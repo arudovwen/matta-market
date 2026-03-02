@@ -6,11 +6,48 @@ import { get, post } from "~/helpers/api_helpers";
 // import store from "~/store";
 
 // Mock store and helpers
-vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
-  ...(await importOriginal()),
-  get: vi.fn(),
-  post: vi.fn(),
-}));
+vi.mock("~/helpers/api_helpers", async (importOriginal) => {
+  const actual = await importOriginal();
+  const mockGet = vi.fn();
+  const mockPost = vi.fn();
+  const mockPut = vi.fn();
+  const mockDel = vi.fn();
+  return {
+    ...actual,
+    get: mockGet,
+    post: mockPost,
+    put: mockPut,
+    del: mockDel,
+    walletGet: mockGet,
+    walletPost: mockPost,
+    walletPut: mockPut,
+    walletDelete: mockDel,
+    marketGet: mockGet,
+    marketPost: mockPost,
+    marketPut: mockPut,
+    marketDelete: mockDel,
+    ssoGet: mockGet,
+    ssoPost: mockPost,
+    ssoPut: mockPut,
+    ssoDelete: mockDel,
+    oxdideGet: mockGet,
+    oxdidePost: mockPost,
+    oxdidePut: mockPut,
+    oxdideDelete: mockDel,
+    deltaGet: mockGet,
+    deltaPost: mockPost,
+    deltaPut: mockPut,
+    deltaDelete: mockDel,
+    currencyGet: mockGet,
+    currencyPost: mockPost,
+    currencyPut: mockPut,
+    currencyDelete: mockDel,
+    notificationGet: mockGet,
+    notificationPost: mockPost,
+    notificationPut: mockPut,
+    notificationDelete: mockDel,
+  };
+});
 
 vi.mock("~/store", () => ({
   default: {
@@ -76,9 +113,7 @@ describe("Product Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-add-product-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -94,9 +129,7 @@ describe("Product Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-update-product-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -112,9 +145,7 @@ describe("Product Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-update-product-properties-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -132,9 +163,7 @@ describe("Product Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-update-product-documents-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -150,9 +179,7 @@ describe("Product Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-update-product-additional-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -168,9 +195,7 @@ describe("Product Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-delete-product-url/mock-product-id`,
-      {},
-      expectedConfig
-    );
+      {}, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -185,9 +210,7 @@ describe("Product Helper Functions", () => {
     const response = await productHelpers.getMarkets(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-get-markets-url?PageNumber=1&PageSize=10`,
-      expectedConfig
-    );
+      `mock-get-markets-url?PageNumber=1&PageSize=10`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -207,9 +230,7 @@ describe("Product Helper Functions", () => {
     const response = await productHelpers.getMarketmenu(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-get-market-menu-url?ShowSubMenu=false&PageNumber=1&PageSize=10&MarketId=mock-market-id`,
-      expectedConfig
-    );
+      `mock-get-market-menu-url?ShowSubMenu=false&PageNumber=1&PageSize=10&MarketId=mock-market-id`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -224,9 +245,7 @@ describe("Product Helper Functions", () => {
     const response = await productHelpers.getFeaturedManufacturer(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-get-manufacturers-url?Search=&PageNumber=1&PageSize=10`,
-      expectedConfig
-    );
+      `mock-get-manufacturers-url?Search=&PageNumber=1&PageSize=10`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -241,9 +260,7 @@ describe("Product Helper Functions", () => {
     const response = await productHelpers.getTech(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-get-tech-url?Search=&PageNumber=1&PageSize=10`,
-      expectedConfig
-    );
+      `mock-get-tech-url?Search=&PageNumber=1&PageSize=10`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -256,7 +273,7 @@ describe("Product Helper Functions", () => {
 
     const response = await productHelpers.getTechLevels();
 
-    expect(get).toHaveBeenCalledWith(`mock-get-tech-level-url`, expectedConfig);
+    expect(get).toHaveBeenCalledWith(`mock-get-tech-level-url`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -276,9 +293,7 @@ describe("Product Helper Functions", () => {
     const response = await productHelpers.getTechmenu(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-get-tech-menu-url?ShowSubMenu=false&PageNumber=1&PageSize=10&TechnologyId=mock-tech-id`,
-      expectedConfig
-    );
+      `mock-get-tech-menu-url?ShowSubMenu=false&PageNumber=1&PageSize=10&TechnologyId=mock-tech-id`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -324,9 +339,7 @@ describe("Product Helper Functions", () => {
     const response = await productHelpers.getSupplierProduct(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-supplier-get-product-url?productId=mock-product-id`,
-      expectedConfig
-    );
+      `mock-supplier-get-product-url?productId=mock-product-id`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 });

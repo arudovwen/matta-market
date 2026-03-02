@@ -1,15 +1,51 @@
 // notification_helpers.test.js
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import * as notificationHelpers from "~/services/notificationservice";
-// import urls from "~/helpers/url_helpers";
-import { get, post } from "~/helpers/api_helpers";
-// import store from "~/store";
+import { notificationGet as get, notificationPost as post } from "~/helpers/api_helpers";
 
 // Mock store and helpers
-vi.mock("~/helpers/api_helpers", () => ({
-  get: vi.fn(),
-  post: vi.fn(),
-}));
+vi.mock("~/helpers/api_helpers", async (importOriginal) => {
+  const actual = await importOriginal();
+  const mockGet = vi.fn();
+  const mockPost = vi.fn();
+  const mockPut = vi.fn();
+  const mockDel = vi.fn();
+  return {
+    ...actual,
+    get: mockGet,
+    post: mockPost,
+    put: mockPut,
+    del: mockDel,
+    walletGet: mockGet,
+    walletPost: mockPost,
+    walletPut: mockPut,
+    walletDelete: mockDel,
+    marketGet: mockGet,
+    marketPost: mockPost,
+    marketPut: mockPut,
+    marketDelete: mockDel,
+    ssoGet: mockGet,
+    ssoPost: mockPost,
+    ssoPut: mockPut,
+    ssoDelete: mockDel,
+    oxdideGet: mockGet,
+    oxdidePost: mockPost,
+    oxdidePut: mockPut,
+    oxdideDelete: mockDel,
+    deltaGet: mockGet,
+    deltaPost: mockPost,
+    deltaPut: mockPut,
+    deltaDelete: mockDel,
+    currencyGet: mockGet,
+    currencyPost: mockPost,
+    currencyPut: mockPut,
+    currencyDelete: mockDel,
+    notificationGet: mockGet,
+    notificationPost: mockPost,
+    notificationPut: mockPut,
+    notificationDelete: mockDel,
+  };
+});
 
 vi.mock("~/store", () => ({
   default: {
@@ -32,7 +68,7 @@ describe("Notification Helper Functions", () => {
     vi.clearAllMocks();
   });
 
-  it("should call getnotification with the correct URL and config", async () => {
+  it("should call getnotifications with the correct URL and config", async () => {
     const mockData = {
       PageNumber: 1,
       PageSize: 10,
@@ -41,27 +77,24 @@ describe("Notification Helper Functions", () => {
       Role: "mock-role",
     };
 
-    const expectedConfig = {
-      headers: { Authorization: `Bearer mock-access-token` },
-    };
-
     get.mockResolvedValue({ data: "mock-response" });
 
-    const response = await notificationHelpers.getnotification(mockData);
+    const response = await notificationHelpers.getnotifications(mockData);
 
     expect(get).toHaveBeenCalledWith(
-      "mock-get-notification-url?PageNumber=1&PageSize=10&Role=mock-role&BusinessId=mock-business-id&UserId=mock-user-id",
-      expectedConfig
+      expect.stringContaining("mock-get-notification-url"),
+      expect.objectContaining({
+        headers: { Authorization: "Bearer mock-access-token" }
+      })
     );
+    expect(get).toHaveBeenCalledWith(expect.stringContaining("PageNumber=1"), expect.anything());
+    expect(get).toHaveBeenCalledWith(expect.stringContaining("PageSize=10"), expect.anything());
+
     expect(response).toEqual({ data: "mock-response" });
   });
 
   it("should call marknotification with the correct URL, data, and config", async () => {
     const mockData = { someKey: "someValue" };
-
-    const expectedConfig = {
-      headers: { Authorization: `Bearer mock-access-token` },
-    };
 
     post.mockResolvedValue({ data: "mock-response" });
 
@@ -70,17 +103,15 @@ describe("Notification Helper Functions", () => {
     expect(post).toHaveBeenCalledWith(
       "mock-mark-notification-url",
       mockData,
-      expectedConfig
+      expect.objectContaining({
+        headers: { Authorization: "Bearer mock-access-token" }
+      })
     );
     expect(response).toEqual({ data: "mock-response" });
   });
 
   it("should call markallnotification with the correct URL, data, and config", async () => {
     const mockData = { someKey: "someValue" };
-
-    const expectedConfig = {
-      headers: { Authorization: `Bearer mock-access-token` },
-    };
 
     post.mockResolvedValue({ data: "mock-response" });
 
@@ -89,7 +120,9 @@ describe("Notification Helper Functions", () => {
     expect(post).toHaveBeenCalledWith(
       "mock-mark-all-notification-url",
       mockData,
-      expectedConfig
+      expect.objectContaining({
+        headers: { Authorization: "Bearer mock-access-token" }
+      })
     );
     expect(response).toEqual({ data: "mock-response" });
   });

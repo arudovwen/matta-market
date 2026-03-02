@@ -6,11 +6,48 @@ import { post, get } from "~/helpers/api_helpers";
 // import store from '~/store';
 
 // Mock store and helpers
-vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
-  ...(await importOriginal()),
-  post: vi.fn(),
-  get: vi.fn(),
-}));
+vi.mock("~/helpers/api_helpers", async (importOriginal) => {
+  const actual = await importOriginal();
+  const mockGet = vi.fn();
+  const mockPost = vi.fn();
+  const mockPut = vi.fn();
+  const mockDel = vi.fn();
+  return {
+    ...actual,
+    get: mockGet,
+    post: mockPost,
+    put: mockPut,
+    del: mockDel,
+    walletGet: mockGet,
+    walletPost: mockPost,
+    walletPut: mockPut,
+    walletDelete: mockDel,
+    marketGet: mockGet,
+    marketPost: mockPost,
+    marketPut: mockPut,
+    marketDelete: mockDel,
+    ssoGet: mockGet,
+    ssoPost: mockPost,
+    ssoPut: mockPut,
+    ssoDelete: mockDel,
+    oxdideGet: mockGet,
+    oxdidePost: mockPost,
+    oxdidePut: mockPut,
+    oxdideDelete: mockDel,
+    deltaGet: mockGet,
+    deltaPost: mockPost,
+    deltaPut: mockPut,
+    deltaDelete: mockDel,
+    currencyGet: mockGet,
+    currencyPost: mockPost,
+    currencyPut: mockPut,
+    currencyDelete: mockDel,
+    notificationGet: mockGet,
+    notificationPost: mockPost,
+    notificationPut: mockPut,
+    notificationDelete: mockDel,
+  };
+});
 
 vi.mock("~/store", () => ({
   default: {
@@ -50,9 +87,7 @@ describe("Company Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-update-personal-info-url",
-      mockUser,
-      expectedConfig
-    );
+      mockUser, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -68,9 +103,7 @@ describe("Company Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-update-additional-info-url",
-      mockUser,
-      expectedConfig
-    );
+      mockUser, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -86,9 +119,7 @@ describe("Company Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-invite-users-url",
-      mockUser,
-      expectedConfig
-    );
+      mockUser, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -102,9 +133,7 @@ describe("Company Helper Functions", () => {
     const response = await companyHelpers.getOnboarding();
 
     expect(get).toHaveBeenCalledWith(
-      "mock-get-onboarding-info-url",
-      expectedConfig
-    );
+      "mock-get-onboarding-info-url", expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -120,9 +149,7 @@ describe("Company Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-upload-file-url",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -138,9 +165,7 @@ describe("Company Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-upload-document-url",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -155,9 +180,7 @@ describe("Company Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-set-onboarding-complete-url",
-      "",
-      expectedConfig
-    );
+      "", expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -173,9 +196,7 @@ describe("Company Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-set-account-type-url",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 });

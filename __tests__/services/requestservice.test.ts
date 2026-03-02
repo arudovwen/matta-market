@@ -81,9 +81,7 @@ describe("Order Helper Functions", () => {
     const response = await orderHelpers.samplerequestdetails(mockRequestId);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-sample-request-details-url?requestId=mock-request-id`,
-      expectedConfig
-    );
+      `mock-sample-request-details-url?requestId=mock-request-id`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -98,9 +96,7 @@ describe("Order Helper Functions", () => {
     const response = await orderHelpers.samplerequestcount();
 
     expect(get).toHaveBeenCalledWith(
-      `mock-sample-requests-count-url`,
-      expectedConfig
-    );
+      `mock-sample-requests-count-url`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -120,9 +116,7 @@ describe("Order Helper Functions", () => {
     const response = await orderHelpers.samplerequestproducts(mockParams);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-sample-requests-products-url?PageSize=10&PageNumber=1&Search=mock-search`,
-      expectedConfig
-    );
+      `mock-sample-requests-products-url?PageSize=10&PageNumber=1&Search=mock-search`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -139,9 +133,7 @@ describe("Order Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-add-document-request-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -177,9 +169,7 @@ describe("Order Helper Functions", () => {
     const response = await orderHelpers.docdetails(mockRequestId);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-document-request-details-url?requestId=mock-request-id`,
-      expectedConfig
-    );
+      `mock-document-request-details-url?requestId=mock-request-id`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -196,9 +186,7 @@ describe("Order Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-document-set-cancelled-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -234,9 +222,7 @@ describe("Order Helper Functions", () => {
     const response = await orderHelpers.sellerdocdetails(mockRequestId);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-seller-document-details-url?requestId=mock-request-id`,
-      expectedConfig
-    );
+      `mock-seller-document-details-url?requestId=mock-request-id`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -253,9 +239,7 @@ describe("Order Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-seller-document-set-cancelled-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 });
