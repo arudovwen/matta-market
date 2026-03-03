@@ -1,12 +1,21 @@
-import { render, screen, fireEvent } from "@testing-library/vue";
-import { it, expect, describe, vi } from "vitest";
+import { render, screen, fireEvent, cleanup } from "@testing-library/vue";
+import { it, expect, describe, vi, afterEach } from "vitest";
 import { RouterLinkStub } from "@vue/test-utils";
 import AppHeader from "~/components/AppHeader.vue";
 import { createTestingPinia } from "@pinia/testing";
-
+import { ref } from "vue";
 describe("AppHeader", () => {
+  afterEach(() => {
+    cleanup();
+    vi.clearAllTimers();
+  });
   vi.mock("~/services/notificationservice", () => ({
     getnotification: vi.fn().mockResolvedValue({
+      data: {
+        text: "/images/test-banner.png",
+      },
+    }),
+    getnotifications: vi.fn().mockResolvedValue({
       data: {
         text: "/images/test-banner.png",
       },
@@ -35,6 +44,9 @@ describe("AppHeader", () => {
         stubs: {
           RouterLink: RouterLinkStub,
         },
+        provide: {
+          currentCurrency: ref({ code: "NGN", symbol: "₦" }),
+        },
       },
     });
 
@@ -51,7 +63,7 @@ describe("AppHeader", () => {
     await fireEvent.click(screen.getByText("Applications"));
     // await fireEvent.click(screen.getByText("Request a product"));
 
-    component.unmount();
+    // component.unmount();
   });
 
   it("renders without logged in user", async () => {
@@ -59,6 +71,9 @@ describe("AppHeader", () => {
       global: {
         stubs: {
           RouterLink: RouterLinkStub,
+        },
+        provide: {
+          currentCurrency: ref({ code: "NGN", symbol: "₦" }),
         },
       },
     });

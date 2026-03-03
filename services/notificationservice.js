@@ -1,5 +1,6 @@
+import { cleanObject } from '../utils/cleanObject';
 import urls from "../helpers/url_helpers";
-import { notificationGet, notificationPost, post } from "../helpers/api_helpers";
+import { notificationGet, notificationPost } from "../helpers/api_helpers";
 import store from "../store";
 
 const config = {
@@ -13,6 +14,8 @@ export async function getnotifications(payload) {
   );
 }
 
+export const getnotification = getnotifications;
+
 export async function marknotification(data) {
   return await notificationPost(`${urls.MARK_NOTIFICATION}`, data, config);
 }
@@ -20,16 +23,3 @@ export async function marknotification(data) {
 export async function markallnotification(data) {
   return await notificationPost(`${urls.MARK_ALL_NOTIFICATION}`, data, config);
 }
-// export async function getnotificationsettings() {
-//   return await get(
-//     `${
-//       urls.GET_NOTIFICATION_SETTINGS
-//     }?PageNumber=${1}&PageSize=${10}&Role=${""}&BusinessId=${
-//       store.getters.businessId
-//     }&UserId=${store.getters.userId}`,
-//     config
-//   );
-// }
-// export async function updatesettings(data) {
-//   return await post(`${urls.UPDATE_NOTIFICATION_SETTINGS}`, data, config);
-// }

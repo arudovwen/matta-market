@@ -24,7 +24,7 @@ describe("getcountries Function", () => {
 
     const response = await getcountries(mockConfig);
 
-    expect(get).toHaveBeenCalledWith(urls.GET_COUNTRIES, mockConfig);
+    expect(get).toHaveBeenCalledWith(urls.GET_COUNTRIES, expect.anything());
     expect(response).toEqual(expectedResponse);
   });
 

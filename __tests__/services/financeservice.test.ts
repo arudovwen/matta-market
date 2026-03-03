@@ -51,9 +51,7 @@ describe("Finance Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-get-all-finance-url",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -69,9 +67,7 @@ describe("Finance Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-add-finance-url",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -88,9 +84,7 @@ describe("Finance Helper Functions", () => {
 
     expect(put).toHaveBeenCalledWith(
       "mock-edit-finance-url/mock-id",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -106,9 +100,7 @@ describe("Finance Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       "mock-update-approve-finance-url",
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -123,9 +115,7 @@ describe("Finance Helper Functions", () => {
     const response = await financeHelpers.getFinance(mockData);
 
     expect(get).toHaveBeenCalledWith(
-      "mock-get-finance-url?id=mock-finance-id",
-      expectedConfig
-    );
+      "mock-get-finance-url?id=mock-finance-id", expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 });

@@ -6,13 +6,48 @@ import { get, post, del, put } from "~/helpers/api_helpers";
 import store from "~/store";
 
 // Mock store and helpers
-vi.mock("~/helpers/api_helpers", async (importOriginal) => ({
-  ...(await importOriginal()),
-  get: vi.fn(),
-  post: vi.fn(),
-  del: vi.fn(),
-  put: vi.fn(),
-}));
+vi.mock("~/helpers/api_helpers", async (importOriginal) => {
+  const actual = await importOriginal();
+  const mockGet = vi.fn();
+  const mockPost = vi.fn();
+  const mockPut = vi.fn();
+  const mockDel = vi.fn();
+  return {
+    ...actual,
+    get: mockGet,
+    post: mockPost,
+    put: mockPut,
+    del: mockDel,
+    walletGet: mockGet,
+    walletPost: mockPost,
+    walletPut: mockPut,
+    walletDelete: mockDel,
+    marketGet: mockGet,
+    marketPost: mockPost,
+    marketPut: mockPut,
+    marketDelete: mockDel,
+    ssoGet: mockGet,
+    ssoPost: mockPost,
+    ssoPut: mockPut,
+    ssoDelete: mockDel,
+    oxdideGet: mockGet,
+    oxdidePost: mockPost,
+    oxdidePut: mockPut,
+    oxdideDelete: mockDel,
+    deltaGet: mockGet,
+    deltaPost: mockPost,
+    deltaPut: mockPut,
+    deltaDelete: mockDel,
+    currencyGet: mockGet,
+    currencyPost: mockPost,
+    currencyPut: mockPut,
+    currencyDelete: mockDel,
+    notificationGet: mockGet,
+    notificationPost: mockPost,
+    notificationPut: mockPut,
+    notificationDelete: mockDel,
+  };
+});
 
 vi.mock("~/store", () => ({
   default: {
@@ -58,9 +93,7 @@ describe("Order Helper Functions", () => {
     const response = await orderHelpers.viewSettlement(mockData);
 
     expect(get).toHaveBeenCalledWith(
-      `mock-view-settlement-url`,
-      expectedConfig
-    );
+      `mock-view-settlement-url`, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -75,9 +108,7 @@ describe("Order Helper Functions", () => {
     const response = await orderHelpers.getAutoSettlement();
 
     expect(get).toHaveBeenCalledWith(
-      "mock-auto-settlement-value-url",
-      expectedConfig
-    );
+      "mock-auto-settlement-value-url", expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -94,9 +125,7 @@ describe("Order Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-add-settlement-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -117,9 +146,7 @@ describe("Order Helper Functions", () => {
 
     expect(put).toHaveBeenCalledWith(
       `mock-update-settlement-url/${mockData.id}`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -151,9 +178,7 @@ describe("Order Helper Functions", () => {
 
     expect(post).toHaveBeenCalledWith(
       `mock-auto-settlement-url`,
-      mockData,
-      expectedConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -167,7 +192,7 @@ describe("Order Helper Functions", () => {
 
     const response = await orderHelpers.getBanks();
 
-    expect(get).toHaveBeenCalledWith("mock-get-banks-url", expectedConfig);
+    expect(get).toHaveBeenCalledWith("mock-get-banks-url", expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 });

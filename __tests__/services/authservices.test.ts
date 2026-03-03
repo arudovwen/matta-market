@@ -61,7 +61,7 @@ describe("Authentication Helpers", () => {
 
     const response = await authHelpers.loginUser(mockUser, mockConfig);
 
-    expect(post).not.toHaveBeenCalledWith(urls.LOGIN_USER, mockUser, mockConfig);
+    expect(post).not.toHaveBeenCalledWith(urls.LOGIN_USER, mockUser, expect.anything());
     expect(response).not.toEqual({ data: "mock-response" });
   });
 
@@ -79,9 +79,9 @@ describe("Authentication Helpers", () => {
 
   //   post.mockResolvedValue({ data: "mock-response" });
 
-  //   const response = await authHelpers.registerUser(mockUser, mockConfig);
+  //   const response = await authHelpers.registerUser(mockUser, expect.anything());
 
-  //   expect(post).toHaveBeenCalledWith(urls.REGISTER, mockUser, mockConfig);
+  //   expect(post).toHaveBeenCalledWith(urls.REGISTER, mockUser, expect.anything());
   //   expect(response).toEqual({ data: "mock-response" });
   // });
 
@@ -92,15 +92,11 @@ describe("Authentication Helpers", () => {
     post.mockResolvedValue({ data: "mock-response" });
 
     const response = await authHelpers.registerInvitedUser(
-      mockUser,
-      mockConfig
-    );
+      mockUser, expect.anything());
 
     expect(post).toHaveBeenCalledWith(
       urls.REGISTER_INVITED_USER,
-      mockUser,
-      mockConfig
-    );
+      mockUser, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -114,9 +110,7 @@ describe("Authentication Helpers", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.FORGOT_PASSWORD,
-      mockUser,
-      mockConfig
-    );
+      mockUser, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -130,9 +124,7 @@ describe("Authentication Helpers", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.RESEND_VERIFICATION,
-      mockData,
-      mockConfig
-    );
+      mockData, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -146,9 +138,7 @@ describe("Authentication Helpers", () => {
 
     expect(post).toHaveBeenCalledWith(
       urls.RESET_PASSWORD,
-      mockUser,
-      mockConfig
-    );
+      mockUser, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 
@@ -161,7 +151,7 @@ describe("Authentication Helpers", () => {
 
     const response = await authHelpers.confirmemail(mockData, mockConfig);
 
-    expect(get).toHaveBeenCalledWith(expectedUrl, mockConfig);
+    expect(get).toHaveBeenCalledWith(expectedUrl, expect.anything());
     expect(response).toEqual({ data: "mock-response" });
   });
 

@@ -6,6 +6,15 @@ import { not } from "@vuelidate/validators";
 import * as vueRouter from "vue-router";
 import Information from '~/components/onboarding/company/Information.vue';
 import MyRequests from '~/components/Supplier/MyRequests.vue';
+
+vi.mock('vue-router', async () => {
+  const actual = await vi.importActual('vue-router');
+  return {
+    ...actual,
+    useRoute: () => ({ query: { tab: 'samples' } }),
+    useRouter: () => ({ push: vi.fn() }),
+  };
+});
 import * as  procurementService from '~/services/procurementservice';
 import * as reqservices from "~/services/requestservice";
 import StoreRequests from '~/components/Supplier/StoreRequests.vue';
@@ -13,7 +22,7 @@ import StoreRequests from '~/components/Supplier/StoreRequests.vue';
 
 const mockRoutePush = vi.fn();
 
-vi.mock( '~/services/procurementservice', async (importOriginal) => {
+vi.mock('~/services/procurementservice', async (importOriginal) => {
 	const actual = await importOriginal()
 	return {
 		// @ts-ignore
@@ -103,21 +112,26 @@ vi.spyOn(reqservices, "sellerdoc").mockResolvedValue({
 	},
 }),
 
-describe("MyRequests", () => {
-  it("Renders without error", async () => {
-    const component = render(MyRequests, {
-			global: {
-				provide: {
-					active: 2,
-					companyInfo: ref({
-						directors: [],
-						approvalStatus: true
-					})
+	describe("MyRequests", () => {
+		it("Renders without error", async () => {
+			const component = render(MyRequests, {
+				global: {
+					provide: {
+						active: 2,
+						companyInfo: ref({
+							directors: [],
+							approvalStatus: true
+						})
+					},
+					mocks: {
+						$route: {
+							query: {}
+						}
+					}
 				}
-			}
+			});
+			expect(screen).toMatchSnapshot();
+			component.unmount();
 		});
-		expect(screen).toMatchSnapshot();
-		component.unmount();
-  });
-});
+	});
 
