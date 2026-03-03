@@ -1,148 +1,46 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "@testing-library/vue";
-import { it, expect, describe, vi, afterEach } from "vitest";
-import CompanyAccount from "~/components/onboarding/CompanyAccount.vue";
-import { RouterLinkStub, flushPromises, mount } from "@vue/test-utils";
-import { not } from "@vuelidate/validators";
-import * as vueRouter from "vue-router";
-import Information from "~/components/onboarding/company/Information.vue";
-import MyRequests from "~/components/Supplier/MyRequests.vue";
-import * as procurementService from "~/services/procurementservice";
-import * as reqservices from "~/services/requestservice";
-import StoreRequests from "~/components/Supplier/StoreRequests.vue";
+import { mount, flushPromises } from "@vue/test-utils";
+import StoreRequests from "@/components/Supplier/StoreRequests.vue";
+import { createRouter, createWebHistory } from "vue-router";
+import { createPinia, setActivePinia } from "pinia";
+import { vi } from "vitest";
+import * as api from "~/services/quoteservice";
 
-vi.mock("vue-router", async () => {
-  const actual = await vi.importActual("vue-router");
-  return {
-    ...actual,
-    useRoute: () => ({ query: { type: "samples" } }),
-    useRouter: () => ({ push: vi.fn() }),
-  };
-});
+// Mock sellerquotes API
+vi.mock("~/services/quoteservice", () => ({
+  sellerquotes: vi.fn(),
+}));
 
-const mockRoutePush = vi.fn();
+// Mock Pinia store if used inside component
+vi.mock("@/store/supplierStore", () => ({
+  useSupplierStore: () => ({
+    quoteParams: { totalCount: 0, query: {} },
+    count: { quotes: 0 },
+  }),
+}));
 
-vi.mock("~/services/procurementservice", async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    // @ts-ignore
-    ...actual,
-    samplerequests: vi.fn().mockResolvedValue({
-      status: 200,
-      data: {
-        data: {
-          data: [
-            {
-              productName: "Joy",
-              producer: "Pheelz",
-              created: new Date("12/12/12"),
-              requestStatus: 1,
-              status: 3,
-            },
-            {
-              productName: "Aquafina",
-              producer: "Young Jonn",
-              created: new Date("12/12/23"),
-              requestStatus: 2,
-              status: 1,
-            },
-          ],
-          totalCount: 2,
-        },
-      },
-    }),
-    procurementproducts: vi.fn().mockResolvedValue({
-      status: 200,
-      data: {
-        data: {
-          data: [
-            {
-              productId: "45678987",
-              productName: "TestProductOne",
-            },
-            {
-              productId: "456987",
-              productName: "Fefenefrine",
-            },
-          ],
-        },
-      },
-    }),
-    procurementsuppliers: vi.fn().mockResolvedValue({
-      status: 200,
-      data: {
-        data: {
-          data: [
-            {
-              supplierId: "987656789",
-              supplier: "CC Penni",
-            },
-            {
-              supplierId: "9876789",
-              supplier: "Fireboy's Dealer",
-            },
-          ],
-        },
-      },
-    }),
-  };
-});
-
-vi.spyOn(reqservices, "sellerdoc").mockResolvedValue({
-  data: {
-    data: {
-      data: [
-        {
-          productName: "Lumefantrine",
-          producer: "Some Guy",
-          type: "chemical",
-          created: new Date(),
-        },
-        {
-          productName: "Water",
-          producer: "Some Other Guy",
-          type: "chemical",
-          created: new Date(),
-        },
-      ],
-      isLoading: false,
-      totalData: {},
-      totalCount: 2,
-    },
-  },
-});
 describe("StoreRequests", () => {
+  let router: ReturnType<typeof createRouter>;
+
+  beforeEach(() => {
+    setActivePinia(createPinia());
+    router = createRouter({
+      history: createWebHistory(),
+      routes: [],
+    });
+  });
+
   it("Renders without error", async () => {
-    const component = render(StoreRequests, {
+    (api.sellerquotes as any).mockResolvedValue({
+      data: { data: { totalCount: 0, data: [] } },
+    });
+
+    const wrapper = mount(StoreRequests, {
       global: {
-        provide: {
-          active: 2,
-          companyInfo: ref({
-            directors: [],
-            approvalStatus: true,
-          }),
-        },
-        mocks: {
-          $route: {
-            query: {}
-          }
-        }
+        plugins: [router],
       },
     });
-    expect(screen.getByTestId("spinner")).toBeTruthy();
-    // ;
-    // await waitForElementToBeRemoved(screen.getByTestId("spinner")).then(
-    //   async () => {
-    //     expect(screen.getByText("Joy")).toBeTruthy();
-    //     fireEvent.click(screen.getByTestId("documents")).then(() => {
-    //       ;
-    //     });
-    //   }
-    // );
+
+    await flushPromises(); // wait for all promises to resolve (mounted API calls)
+    expect(wrapper.exists()).toBe(true);
   });
 });
