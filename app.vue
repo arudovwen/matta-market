@@ -10,6 +10,14 @@
 </template>
 
 <script setup>
+import { useMarketStore } from "~/stores/markets";
+import { useApplicationStore } from "~/stores/applications";
+import { getMarkets, getTechLevels } from "~/services/productservices";
+import { getSubApps, getBusinessType } from "~/services/userservices";
+import { getnotifications } from "./services/notificationservice";
+
+const NOTIFICATIONS_INTERVAL_MS = 15_000;
+
 useHead(
   {
     script: [
@@ -64,13 +72,8 @@ amplitude.init('662bcea7400aa949c2cbbd4e0a9fa5c9', {
   },
   {
     mode: "client", // Load the script 'strict-dynamically' on client-side only
-  }
+  },
 );
-import { useMarketStore } from "~/stores/markets";
-import { useApplicationStore } from "~/stores/applications";
-import { getMarkets, getTechLevels } from "~/services/productservices";
-import { getSubApps, getBusinessType } from "~/services/userservices";
-import { getnotifications } from "./services/notificationservice";
 
 const { encrypt } = useEncryption();
 const isMattaSignup = getItem("isMattaSignup");
@@ -80,7 +83,7 @@ const store = useMarketStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const notifications = ref([]);
-const notificationOpen = ref(false)
+const notificationOpen = ref(false);
 const notificationsInterval = ref(null);
 const currencyStore = useCurrencyStore();
 const currentCurrency = ref(currencyStore.defaultCurrency);
@@ -105,21 +108,37 @@ const getAllApplications = () => {
 };
 
 function getAppList() {
-  getSubApps({isDisabled: false}).then((res) => {
+  getSubApps({ isDisabled: false }).then((res) => {
     if (res.status === 200) {
-      const appList = res.data.data
-        .map((i) => ({
-          ...i,
-          url: `${i.url}/auth/validate?token=${encodeURIComponent(
-            encrypt(authStore.jwToken)
-          )}&code=${encodeURIComponent(encrypt(authStore.refreshToken))}`,
-        }))
-        .filter((i) => !["matta"].includes(i.name.toLowerCase()));
-      const appInfo = res.data.data.find(
-        (i) => i.name.toLowerCase() === "matta"
-      );
+      const isLoggedIn = authStore.isLoggedIn;
+      let appInfo = null;
+      const appList = [];
+      const loginUrlList = [];
+
+      // Single pass over the data array instead of multiple map/filter/find calls
+      for (const item of res.data.data) {
+        const nameLower = item.name.toLowerCase();
+        if (nameLower === "matta") {
+          appInfo = item;
+          continue;
+        }
+        if (isLoggedIn) {
+          appList.push({
+            ...item,
+            url: `${item.url}/auth/validate?token=${encodeURIComponent(
+              encrypt(authStore.jwToken),
+            )}&code=${encodeURIComponent(encrypt(authStore.refreshToken))}`,
+          });
+        } else {
+          loginUrlList.push({
+            ...item,
+            url: `${validationUrl}/auth/login/${item.code}?continue=${item.url}`,
+          });
+        }
+      }
+
       authStore.setAppInfo(appInfo);
-      authStore.setAppList(appList);
+      authStore.setAppList(isLoggedIn ? appList : loginUrlList);
     }
   });
 }
@@ -162,10 +181,14 @@ const getNotifications = () => {
 
 const handleVisibilityChange = () => {
   if (document.hidden) {
-    clearInterval(notificationsInterval.value); // Stop fetching notifications if tab is not visible
+    clearInterval(notificationsInterval.value); // Pause polling while tab is hidden
   } else {
-    // Restart fetching notifications when tab becomes visible
-    notificationsInterval.value = setInterval(getNotifications, 15000);
+    // Resume: fetch immediately then restart the interval
+    getNotifications();
+    notificationsInterval.value = setInterval(
+      getNotifications,
+      NOTIFICATIONS_INTERVAL_MS,
+    );
   }
 };
 
@@ -173,11 +196,15 @@ onMounted(() => {
   getAllApplications();
   getAllMarkets();
   getAppList();
- if (authStore.isLoggedIn) {
-    // Start the notifications interval only when the tab is visible
-    notificationsInterval.value = setInterval(getNotifications, 15000);
+  if (authStore.isLoggedIn) {
+    // Fetch immediately so notifications are visible right away, then poll
+    getNotifications();
+    notificationsInterval.value = setInterval(
+      getNotifications,
+      NOTIFICATIONS_INTERVAL_MS,
+    );
 
-    // Listen for visibility change events
+    // Pause polling when the tab is hidden, resume when visible
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     getBusinessUserType();
@@ -195,7 +222,6 @@ onUnmounted(() => {
   document.removeEventListener("visibilitychange", handleVisibilityChange);
 });
 
-
 provide("currentCurrency", currentCurrency);
 provide("notifications", notifications);
 provide("getNotifications", getNotifications);
@@ -206,7 +232,7 @@ watch(
     if (isMattaSignup && authStore?.isLoggedIn && !authStore?.userType) {
       navigateTo("/user-type");
     }
-  }
+  },
 );
 </script>
 <style>
