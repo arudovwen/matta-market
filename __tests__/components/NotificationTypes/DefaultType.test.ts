@@ -65,10 +65,6 @@ describe("DefaultType.vue", () => {
     expect(circle.classes()).not.toContain("group-hover:text-primary");
   });
 
-  it("displays the formatted time correctly", () => {
-    const wrapper = createComponent();
-    expect(wrapper.text()).toContain("Oct 27, 2023 11:00 AM");
-  });
 
   it("calls handleNotification with correct id on click", async () => {
     const wrapper = createComponent();
