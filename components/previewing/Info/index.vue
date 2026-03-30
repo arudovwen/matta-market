@@ -20,7 +20,7 @@
       <div v-if="detail?.subSection">
         <div class="" v-for="(n, idx) in detail?.subSection" :key="idx">
           <p class="mb-4 capitalize">{{ n.subSectionName }}</p>
-          <div class="mb-4 description" v-html="n.description"></div>
+          <div class="mb-4 description" v-dompurify-html="n.description"></div>
         </div>
       </div>
     </div>

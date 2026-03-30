@@ -14,14 +14,13 @@
             class="text-xs sm:text-sm md:text-base darks:text-white"
           />
         </span>
-        <NuxtImg
+        <img
           v-if="detail.converPhoto"
           :src="detail.converPhoto"
           alt="Card"
           width="276"
           height="160"
           class="object-cover w-full h-full"
-          fit="cover"
        
         />
         <div

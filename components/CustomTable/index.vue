@@ -66,7 +66,7 @@
                 <span v-if="!column.isHtml">
                   {{ row[column.key] || "" }}
                 </span>
-                <span v-else v-html="row[column.key]"> </span>
+                <span v-else v-dompurify-html="row[column.key]"> </span>
               </slot>
             </td>
           </tr>
