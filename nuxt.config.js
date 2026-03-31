@@ -45,6 +45,10 @@ export default defineNuxtConfig({
   security: {
     hidePoweredBy: false,
     xssValidator: true,
+    ssg: {
+      hashScripts: false,
+      hashStyles: false,
+    },
     headers: {
       crossOriginEmbedderPolicy: "unsafe-none",
       contentSecurityPolicy: {
@@ -63,8 +67,7 @@ export default defineNuxtConfig({
           "'self'",
           "https:",
           "'unsafe-inline'",
-          "'strict-dynamic'",
-          "'nonce-{{nonce}}'",
+          "'unsafe-eval'"
         ],
         "upgrade-insecure-requests": true,
       },
@@ -264,7 +267,7 @@ export default defineNuxtConfig({
         {
           hid: "ld-json-organization",
           type: "application/ld+json",
-          children: JSON.stringify({
+          innerHTML: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "Matta",
@@ -281,7 +284,7 @@ export default defineNuxtConfig({
         {
           hid: "ld-json-about",
           type: "application/ld+json",
-          children: JSON.stringify({
+          innerHTML: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "AboutPage",
             mainEntity: {
@@ -301,7 +304,7 @@ export default defineNuxtConfig({
         {
           hid: "ld-json-contact",
           type: "application/ld+json",
-          children: JSON.stringify({
+          innerHTML: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "ContactPage",
             mainEntity: {
@@ -320,7 +323,7 @@ export default defineNuxtConfig({
         {
           hid: "ld-json-product",
           type: "application/ld+json",
-          children: JSON.stringify({
+          innerHTML: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Product",
             name: "Hot deals",
