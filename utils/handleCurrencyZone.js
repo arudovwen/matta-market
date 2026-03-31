@@ -1,8 +1,7 @@
 export function handleCurrencyZone(value, currency) {
-  const currentRate = useCurrencyStore().activeCurrency?.rate;
-  // console.log({ currentRate });
+  const currentRate = useCurrencyStore().activeCurrency?.rate || 1;
 
-  if (currency?.toLowerCase() === "ngn") {
+  if (currency && currency.toLowerCase() === "ngn") {
     return { value };
   } else {
     return { value: value / currentRate };
