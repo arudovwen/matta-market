@@ -9,7 +9,7 @@
     <AppFooter />
     <a
       data-testid="whatsapp link"
-      href="https://wa.me/+2349169982190"
+      href="https://wa.me/+2348161650047"
       target="_blank"
       class="z-[99999]"
     >
