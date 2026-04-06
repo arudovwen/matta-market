@@ -2,14 +2,14 @@
   <NuxtLink to="/">
     <img
       v-if="!dark"
-      src="/images/logo.png"
+      src="/images/marketplace.png"
       alt="flux"
       :class="className"
 
     />
     <img
       v-else
-      src="/images/logo.png"
+      src="/images/marketplace.png"
       alt="flux"
       :class="className"
     

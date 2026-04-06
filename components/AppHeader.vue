@@ -15,9 +15,9 @@
           <div class="flex items-center logo gap-x-10">
             <NuxtLink to="/">
               <img
-                src="/images/logo.png"
+                src="/images/marketplace.png"
                 alt="Matta"
-                class="w-20 md:w-[120px] h-auto object-contain"
+                class="w-20 md:w-[150px] h-auto object-contain"
             /></NuxtLink>
           </div>
           <div class="max-w-[600px] w-full flex-1 hidden lg:block">
