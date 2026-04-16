@@ -60,7 +60,7 @@ export const useCurrencyStore = defineStore("curreny", () => {
     for (let currency of currencies.value) {
       // Check if this currency applies to the provided country
       const country = currency.countries.find(
-        (c) => c?.[type].toLowerCase() === countryName.toLowerCase()
+        (c) => c?.[type]?.toLowerCase() === countryName?.toLowerCase()
       );
 
       if (country) {

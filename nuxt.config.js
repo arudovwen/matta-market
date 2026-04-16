@@ -52,23 +52,107 @@ export default defineNuxtConfig({
     headers: {
       crossOriginEmbedderPolicy: "unsafe-none",
       contentSecurityPolicy: {
-        "img-src": [
+        // Form submissions
+        "form-action": [
           "'self'",
-          "https:",
-          "data:",
-          "https://gateway.matta.trade",
-          "https://dev.gateway.matta.trade",
-          "https://proxy.matta.trade",
-          "https://staging.gateway.matta.trade",
-          "https://res.cloudinary.com",
-          "https://matta.s3.us-east-1.amazonaws.com",
+          "https://www.facebook.com",
+          "https://www.google.com",
+          "https://*.matta.trade",
         ],
+
+        // Scripts — self, Facebook, and all Google services
         "script-src": [
           "'self'",
-          "https:",
           "'unsafe-inline'",
-          "'unsafe-eval'"
+          "'unsafe-eval'",
+          "https://*.matta.trade",
+          // Google Tag Manager
+          "https://www.googletagmanager.com",
+          // Google Analytics / gtag.js
+          "https://www.google-analytics.com",
+          "https://ssl.google-analytics.com",
+          // Google Ads & Conversion tracking
+          "https://www.googleadservices.com",
+          "https://googleads.g.doubleclick.net",
+          // Google APIs (Maps, etc.)
+          "https://maps.googleapis.com",
+          // Facebook Pixel
+          "https://connect.facebook.net",
+          // IP Geolocation (already in head)
+          "https://cdn.jsdelivr.net",
         ],
+
+        // XHR / fetch / WebSocket connections
+        "connect-src": [
+          "'self'",
+          // Matta APIs
+          "https://*.matta.trade",
+          // Google Analytics & GTM
+          "https://www.google-analytics.com",
+          "https://analytics.google.com",
+          "https://stats.g.doubleclick.net",
+          "https://www.googletagmanager.com",
+          // Google Ads
+          "https://www.googleadservices.com",
+          "https://googleads.g.doubleclick.net",
+          // Facebook
+          "https://www.facebook.com",
+          "https://mpc-prod-25-s6uit34pua-wl.a.run.app", // Facebook/Google event processing
+          "https://demo-1.conversionsapigateway.com", // FB CAPI Gateway
+          // GeoJS IP Lookup
+          "https://get.geojs.io",
+        ],
+
+        // Images (pixel tracking beacons etc.)
+        "img-src": [
+          "'self'",
+          "data:",
+          "https:",
+          // Matta
+          "https://*.matta.trade",
+          "https://res.cloudinary.com",
+          "https://matta.s3.us-east-1.amazonaws.com",
+          // Google tracking pixels
+          "https://www.google-analytics.com",
+          "https://www.googletagmanager.com",
+          "https://www.google.com",
+          "https://googleads.g.doubleclick.net",
+          "https://www.googleadservices.com",
+          // Facebook pixel
+          "https://www.facebook.com",
+          "https://mpc-prod-25-s6uit34pua-wl.a.run.app",
+          "https://demo-1.conversionsapigateway.com",
+        ],
+
+        // iFrames (GTM tag preview, Google Ads conversion, reCAPTCHA)
+        "frame-src": [
+          "'self'",
+          "https://*.matta.trade",
+          "https://www.googletagmanager.com",
+          "https://td.doubleclick.net",
+          "https://www.google.com",
+          "https://www.youtube.com",
+          "https://www.facebook.com",
+          "https://*.facebook.net",
+          "https://*.facebook.com",
+        ],
+
+        // Web fonts
+        "font-src": [
+          "'self'",
+          "data:",
+          "https://fonts.gstatic.com",
+          "https://unicons.iconscout.com",
+        ],
+
+        // Stylesheets
+        "style-src": [
+          "'self'",
+          "'unsafe-inline'",
+          "https://fonts.googleapis.com",
+          "https://unicons.iconscout.com",
+        ],
+
         "upgrade-insecure-requests": true,
       },
       xFrameOptions: "deny",

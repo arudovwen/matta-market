@@ -28,7 +28,7 @@
   </div>
 </template>
 <script setup>
-import { getProducts, getProductsByTag } from "~/services/productservices";
+import { getProducts, getProductsByTag, getStoreInfo } from "~/services/productservices";
 const productStore = useProductStore();
 const route = useRoute();
 const { vendor, id } = route.params;
@@ -107,6 +107,32 @@ function getAllProducts() {
 
 onMounted(() => {
   getAllProducts();
+  getStoreInfo(vendor).then((res) => {
+    vendorInfo.value = res.data;
+    const lang = res.data?.language || "en-US";
+    console.log("language =", lang);
+
+    try {
+      const googtrans = `/auto/${lang}`;
+      // set Google Translate cookie to the vendor language
+      document.cookie = `googtrans=${googtrans};path=/`;
+      document.cookie = `googtrans=${googtrans};domain=${location.hostname};path=/`;
+
+      // if the Google Translate element is already loaded, re-init it with the vendor language
+      if (
+        window.google &&
+        window.google.translate &&
+        window.google.translate.TranslateElement
+      ) {
+        new window.google.translate.TranslateElement(
+          { pageLanguage: lang },
+          "google_translate_element"
+        );
+      }
+    } catch (err) {
+      // silent fail if environment doesn't expose google translate yet
+    }
+  });
 });
 
 watch(

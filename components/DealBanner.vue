@@ -85,8 +85,7 @@ onMounted(() => {
       const lang = res.data?.language || "en";
       const langCode = lang.split("-")[0]; // Convert en-US to en
 
-      console.log("Store info received, language:", lang, "-> code:", langCode);
-
+   
       const langData = availableLanguages.find(
         (l) => l.code === langCode || l.code === lang
       );

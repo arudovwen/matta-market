@@ -87,5 +87,6 @@ const options = [
     value: 1,
   },
 ];
+
 const vendorInfo = inject("vendorInfo");
 </script>
