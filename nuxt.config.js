@@ -101,6 +101,10 @@ export default defineNuxtConfig({
           "https://demo-1.conversionsapigateway.com", // FB CAPI Gateway
           // GeoJS IP Lookup
           "https://get.geojs.io",
+          // Iconify API fallback (icons not found in local @iconify-json bundles)
+          "https://api.iconify.design",
+          "https://api.simplesvg.com",
+          "https://api.unisvg.com",
         ],
 
         // Images (pixel tracking beacons etc.)

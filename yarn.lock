@@ -1216,10 +1216,115 @@
   resolved "https://registry.npmjs.org/@heroicons/vue/-/vue-2.0.18.tgz"
   integrity sha512-BcTC9nq2TkwNSfQuqo96J7ehx4etezypc2YeTq7KsXWxrcrerhkgjLrxGRBnStN0wrXo0Gv4BInybqz5uBG6Cw==
 
+"@iconify-json/akar-icons@^1.2.7":
+  version "1.2.7"
+  resolved "https://registry.npmjs.org/@iconify-json/akar-icons/-/akar-icons-1.2.7.tgz"
+  integrity sha512-cw44dCnZgGhm6Tywxm0WALAnDB9AyGkDk7kiLMo2B/Ayt7duZu/uyrsqb55weWUN8Ge2sQAOl8MRtT6bFcLzPg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/ant-design@^1.2.5":
+  version "1.2.5"
+  resolved "https://registry.npmjs.org/@iconify-json/ant-design/-/ant-design-1.2.5.tgz"
+  integrity sha512-SYxhrx1AFq2MBcXk77AERYz2mPhLQes1F0vtvG64+dJZWyge9studXo7MiR8PPeLjRjZdWRrReRbxiwdRMf70Q==
+  dependencies:
+    "@iconify/types" "*"
+
 "@iconify-json/carbon@^1.1.26":
   version "1.1.27"
   resolved "https://registry.npmjs.org/@iconify-json/carbon/-/carbon-1.1.27.tgz"
   integrity sha512-tJVXv9+D9cjU5HcaY+8J0awv9AL/Mjo9MWR/fxHfHFPP/iokjPBEgq4jOBDGNe8W0k/BTrVI3zpgZjLoi6RNGg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/fa-regular@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/@iconify-json/fa-regular/-/fa-regular-1.2.2.tgz"
+  integrity sha512-OxxofoXzGCJ2lZcQAuNRTySdrc25k/x/wG8+uoVWx/k/xyuJmP2D/Fm2JJt8g2l7iZRmo6axbpUWnhkAeW/YXg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/fa-solid@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/@iconify-json/fa-solid/-/fa-solid-1.2.2.tgz"
+  integrity sha512-V8TDk62dGswAwbWwoSTnaoiTVEfQyjLCq4/TPmI29evFb9GwPyU0OGX4+BdQMGsDDzk8ByR81RjR618FtELSaw==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/fa6-solid@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.npmjs.org/@iconify-json/fa6-solid/-/fa6-solid-1.2.4.tgz"
+  integrity sha512-LmDNNdJVyvF5mPm1yxWvL8KjCc/E8LzoqnF1LNTVpyY2ZJRUlGOWuPIThdbuFBF2IovgttkIyumhyqfmlHdwKg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/fe@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.npmjs.org/@iconify-json/fe/-/fe-1.2.4.tgz"
+  integrity sha512-TBfDSJOUKxd6QO+2WWcOC/trnsovRluk1jx05aGqMyoG+G9pkL661VO0ladWiWp+4ewOHDJ3s47W5bwx3EounQ==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/flat-color-icons@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/@iconify-json/flat-color-icons/-/flat-color-icons-1.2.3.tgz"
+  integrity sha512-KcmJ7CY0TKFv5GuBjiS4/v++jEcNXna1jfY+yq014tnw/MN/jMI2oYpoMHGuIpYtUqDu7eove+WySnOYO8nS3w==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/fluent-mdl2@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/@iconify-json/fluent-mdl2/-/fluent-mdl2-1.2.1.tgz"
+  integrity sha512-zFgd1V9r0a+mqA46Z4mOoSf6PbQbhYnY9Uhtpjl3xvw03doNolh4apMtsZoLlC/Y7wO2uj306MgziaqwWdNMwg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/gravity-ui@^1.2.12":
+  version "1.2.12"
+  resolved "https://registry.npmjs.org/@iconify-json/gravity-ui/-/gravity-ui-1.2.12.tgz"
+  integrity sha512-/66CorNnUoFs66nb8FJ+ZPq6Zog9NwR13ml90qijI0Hj3bVqQIdiWZ9npSyNWRgJe452LFmWZrdWQONYBbJ7XA==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/heroicons-outline@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/@iconify-json/heroicons-outline/-/heroicons-outline-1.2.1.tgz"
+  integrity sha512-QNYV4/KsW8Ww9a3B+hxDntS5BwLLbErKpL1V3MkvB8X+ZVTX5VLxjlj8rAEih+GCDWzaiZJOrdO/pagvsuBkXg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/heroicons-solid@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/@iconify-json/heroicons-solid/-/heroicons-solid-1.2.1.tgz"
+  integrity sha512-sRZ6U1FT1lkxtIuL+iQ9Fpm5IZxvJCDaKdLpP5elgZ6OkQn6j8HVJpxgFIcuJbHC/EeoNp3tHldMEELqN9pZDQ==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/heroicons@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/@iconify-json/heroicons/-/heroicons-1.2.3.tgz"
+  integrity sha512-n+vmCEgTesRsOpp5AB5ILB6srsgsYK+bieoQBNlafvoEhjVXLq8nIGN4B0v/s4DUfa0dOrjwE/cKJgIKdJXOEg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/icon-park-outline@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.npmjs.org/@iconify-json/icon-park-outline/-/icon-park-outline-1.2.4.tgz"
+  integrity sha512-NyZxXe2gD2TbTOyoRRMdtEJhr6i2KQCdDlYYoOn5oZLndQjwpIhw79hzeFhXvP38/o40D3gQ+l+IaSJgbB+0TQ==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/lets-icons@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/@iconify-json/lets-icons/-/lets-icons-1.2.2.tgz"
+  integrity sha512-GBCeFoWNLA5v1ZRIM54cZGpE/lHtFcSJjxXXCi2W5SxkJoPDonNoLGf61/z8eNxiBkegynClvEgCAs0YjLeZkA==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/line-md@^1.2.16":
+  version "1.2.16"
+  resolved "https://registry.npmjs.org/@iconify-json/line-md/-/line-md-1.2.16.tgz"
+  integrity sha512-esHPUQUp30NyqJWa7MNu6ExdG8z/aEFC5r56rVyRGhtJ7acOme6YtYPnDOgVu6p+kk24rM8602xkFuBC6g6x+w==
   dependencies:
     "@iconify/types" "*"
 
@@ -1230,10 +1335,38 @@
   dependencies:
     "@iconify/types" "*"
 
+"@iconify-json/pepicons-pencil@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/@iconify-json/pepicons-pencil/-/pepicons-pencil-1.2.3.tgz"
+  integrity sha512-Lxc9sCCy03AQwxowg8uHmPku9qCecf6fgAMqJGmjbCINYHbrKBgbDDJSTGtxtfqkYSPr4w56DwlHqpBMGahizg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/pepicons-pop@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/@iconify-json/pepicons-pop/-/pepicons-pop-1.2.3.tgz"
+  integrity sha512-keopIpR7DYXpwbSHNF/IPdeyRL5JaPk4ZVMpzZT25XtgK6qPz7ne24W8FA7ZKPYZw4l8wZw3Ho/zi859pN+fxg==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/ph@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/@iconify-json/ph/-/ph-1.2.2.tgz"
+  integrity sha512-PgkEZNtqa8hBGjHXQa4pMwZa93hmfu8FUSjs/nv4oUU6yLsgv+gh9nu28Kqi8Fz9CCVu4hj1MZs9/60J57IzFw==
+  dependencies:
+    "@iconify/types" "*"
+
 "@iconify-json/ri@^1.1.17":
   version "1.1.18"
   resolved "https://registry.npmjs.org/@iconify-json/ri/-/ri-1.1.18.tgz"
   integrity sha512-/gm7OrzhX6iOklhSnhK102unCzA+5wB0OJzXPgvpMr19VOD+dkXzIxEAbGu5lhFCxgn5TJ2jJLc8DtvnZWsyrw==
+  dependencies:
+    "@iconify/types" "*"
+
+"@iconify-json/simple-line-icons@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/@iconify-json/simple-line-icons/-/simple-line-icons-1.2.1.tgz"
+  integrity sha512-MxgGNPpjiruoKqoefyluJtyq3ebwxqIfngJDFx6wIe/YNOIIyT7LTGKS7kh4Az3PDfefh5Z9OkxGTLExx8WfKg==
   dependencies:
     "@iconify/types" "*"
 
