@@ -80,6 +80,8 @@ export default defineNuxtConfig({
           "https://connect.facebook.net",
           // IP Geolocation (already in head)
           "https://cdn.jsdelivr.net",
+          // Monnify SDK
+          "https://sdk.monnify.com",
         ],
 
         // XHR / fetch / WebSocket connections
@@ -105,6 +107,9 @@ export default defineNuxtConfig({
           "https://api.iconify.design",
           "https://api.simplesvg.com",
           "https://api.unisvg.com",
+          // Monnify API
+          "https://*.monnify.com",
+          "https://*.sdk.monnify.com",
         ],
 
         // Images (pixel tracking beacons etc.)
@@ -139,6 +144,9 @@ export default defineNuxtConfig({
           "https://www.facebook.com",
           "https://*.facebook.net",
           "https://*.facebook.com",
+          // Monnify checkout
+          "https://*.monnify.com",
+          "https://*.sdk.monnify.com",
         ],
 
         // Web fonts

@@ -121,7 +121,7 @@ const isOrderRequestDisabled = computed(
     loading.value ||
     !shippingStore?.defaultAddress?.id ||
     cartStore?.loadingCart ||
-    requestLoading.value
+    requestLoading.value,
 );
 
 const isPaymentDisabled = computed(
@@ -134,7 +134,7 @@ const isPaymentDisabled = computed(
     requestLoading.value ||
     (activeMethod.value === "wallet" &&
       authStore.userBalance?.balance?.availableBalance <
-        cartStore?.cartTotalwithTax)
+        cartStore?.cartTotalwithTax),
 );
 
 function onModalClose() {
@@ -193,10 +193,14 @@ async function confirmOrder() {
       }
     }
   } catch (err) {
+    console.log({ err });
+
     toast.error(
       `${
-        err?.response?.data?.Message || err?.response?.data?.message
-      }, Contact us for assistance on your order`
+        err?.response?.data?.Message ||
+        err?.response?.data?.message ||
+        "Payment Failed"
+      }, Contact us for assistance on your order`,
     );
     status.value = "Retry order";
   } finally {
@@ -221,7 +225,7 @@ async function onSuccess(response) {
     toast.error(
       `${
         err?.response?.data?.Message || err?.response?.data?.message
-      }, Contact us for assistance on your order`
+      }, Contact us for assistance on your order`,
     );
     status.value = "Retry order";
     loading.value = false;
@@ -249,7 +253,7 @@ async function handleOrderRequest() {
     toast.error(
       `${
         err?.response?.data?.Message || err?.response?.data?.message
-      }, Contact us for assistance on your order`
+      }, Contact us for assistance on your order`,
     );
   } finally {
     requestLoading.value = false;
@@ -260,6 +264,7 @@ async function handleOrderRequest() {
 watchEffect(() => {
   insufficient.value =
     cartStore?.cartTotalwithTax >
-    authStore.userBalance?.creditDetail?.availableCredit && activeMethod.value === 'credit';
+      authStore.userBalance?.creditDetail?.availableCredit &&
+    activeMethod.value === "credit";
 });
 </script>
