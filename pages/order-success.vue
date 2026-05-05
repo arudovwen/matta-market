@@ -18,25 +18,25 @@
         <span class="font-medium text-[#333]">{{ orderId }} </span>. You will
         receive an email shortly with the invoice for your order.
       </p>
-      <p class="font-medium mb-6 text-sm" v-if="order_type">
+      <!-- <p class="font-medium mb-6 text-sm" v-if="order_type">
         You can also proceed to make payment for your order.
-      </p>
+      </p> -->
       <div class="flex flex-col md:flex-row gap-y-4 md:gap-y-0 md:gap-x-[14px]">
         <AppButton
           link="/category/market/all products"
           text="Continue shopping"
           btnClass="text-[#2176FF] bg-[#1570EF14] w-full !text-sm !font-normal !py-3"
         />
-        <AppButton
+        <!-- <AppButton
           v-if="order_type"
           @click="makePayment"
           :isDisabled="isLoading || loading"
           type="button"
           :text="loading ? 'Processing payment' : 'Make payment'"
           btnClass="bg-[#2176FF] text-white w-full !text-sm !font-normal !py-3"
-        />
+        /> -->
         <AppButton
-          v-if="!order_type"
+       
           link="/procurement/my-orders"
           type="button"
           text="Proceed to dashboard"
