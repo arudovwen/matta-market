@@ -77,6 +77,8 @@ export default defineNuxtConfig({
           // Google APIs (Maps, Translate, etc.)
           "https://maps.googleapis.com",
           "https://translate.google.com",
+          "https://translate.googleapis.com",
+          "https://translate-pa.googleapis.com",
           // Facebook Pixel
           "https://connect.facebook.net",
           // IP Geolocation (already in head)
@@ -90,6 +92,10 @@ export default defineNuxtConfig({
           "https://kit.fontawesome.com",
           // Hotjar
           "https://static.hotjar.com",
+          // Amplitude
+          "https://cdn.amplitude.com",
+          // PostHog
+          "https://us-assets.i.posthog.com",
         ],
 
         // XHR / fetch / WebSocket connections
@@ -123,6 +129,18 @@ export default defineNuxtConfig({
           "https://*.hotjar.com",
           "https://*.hotjar.io",
           "wss://*.hotjar.com",
+          // FontAwesome
+          "https://ka-f.fontawesome.com",
+          // Amplitude
+          "https://cdn.amplitude.com",
+          "https://api2.amplitude.com",
+          // Google Translate
+          "https://translate.googleapis.com",
+          "https://translate-pa.googleapis.com",
+          // PostHog
+          "https://us.i.posthog.com",
+          "https://app.posthog.com",
+          "https://us-assets.i.posthog.com",
         ],
 
         // Images (pixel tracking beacons etc.)
@@ -168,6 +186,7 @@ export default defineNuxtConfig({
           "data:",
           "https://fonts.gstatic.com",
           "https://unicons.iconscout.com",
+          "https://ka-f.fontawesome.com",
         ],
 
         // Stylesheets
@@ -176,6 +195,8 @@ export default defineNuxtConfig({
           "'unsafe-inline'",
           "https://fonts.googleapis.com",
           "https://unicons.iconscout.com",
+          "https://www.gstatic.com",
+          "https://ka-f.fontawesome.com",
         ],
 
         "upgrade-insecure-requests": true,

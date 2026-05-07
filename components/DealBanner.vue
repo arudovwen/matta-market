@@ -47,7 +47,7 @@
         <span lass="text-sm"><CurrencyChanger /></span>
         <span class="hidden text-sm text-white lg:inline">
           <GoogleTranslateSelect
-            :fetch-browser-language="false"
+            :fetch-browser-language="true"
             :languages="availableLanguages"
             trigger="click"
             @select="handleLanguageSelect"

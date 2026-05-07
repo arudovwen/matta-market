@@ -62,7 +62,7 @@ export default  [
   },
   { code: "CG", label: "Congo, Republic of the", phone: "242", phoneLength: 9 },
   { code: "CH", label: "Switzerland", phone: "41", phoneLength: 9 },
-  { code: "CI", label: "Cote d'Ivoire", phone: "225", phoneLength: 8 },
+  { code: "CI", label: "Cote d'Ivoire", phone: "225", phoneLength: 10 },
   { code: "CK", label: "Cook Islands", phone: "682", phoneLength: 5 },
   { code: "CL", label: "Chile", phone: "56", phoneLength: 9 },
   { code: "CM", label: "Cameroon", phone: "237", phoneLength: 9 },
