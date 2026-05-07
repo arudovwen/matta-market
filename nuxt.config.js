@@ -74,14 +74,22 @@ export default defineNuxtConfig({
           // Google Ads & Conversion tracking
           "https://www.googleadservices.com",
           "https://googleads.g.doubleclick.net",
-          // Google APIs (Maps, etc.)
+          // Google APIs (Maps, Translate, etc.)
           "https://maps.googleapis.com",
+          "https://translate.google.com",
           // Facebook Pixel
           "https://connect.facebook.net",
           // IP Geolocation (already in head)
           "https://cdn.jsdelivr.net",
+          // Microsoft Clarity
+          "https://www.clarity.ms",
+          "https://scripts.clarity.ms",
           // Monnify SDK
           "https://sdk.monnify.com",
+          // FontAwesome
+          "https://kit.fontawesome.com",
+          // Hotjar
+          "https://static.hotjar.com",
         ],
 
         // XHR / fetch / WebSocket connections
@@ -94,6 +102,7 @@ export default defineNuxtConfig({
           "https://analytics.google.com",
           "https://stats.g.doubleclick.net",
           "https://www.googletagmanager.com",
+          "https://www.google.com",
           // Google Ads
           "https://www.googleadservices.com",
           "https://googleads.g.doubleclick.net",
@@ -110,6 +119,10 @@ export default defineNuxtConfig({
           // Monnify API
           "https://*.monnify.com",
           "https://*.sdk.monnify.com",
+          // Hotjar
+          "https://*.hotjar.com",
+          "https://*.hotjar.io",
+          "wss://*.hotjar.com",
         ],
 
         // Images (pixel tracking beacons etc.)
