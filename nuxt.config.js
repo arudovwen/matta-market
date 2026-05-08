@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     "nuxt-security",
     "@nuxt/devtools",
     // "nuxt-ssr-cache",
-    // "@vite-pwa/nuxt",
+    "@vite-pwa/nuxt",
     "@nuxt/test-utils/module",
     "@zadigetvoltaire/nuxt-gtm",
     // '@nuxtjs/critters',
@@ -260,13 +260,26 @@ export default defineNuxtConfig({
   devtools: { enabled: process.env.NODE_ENV === "development" },
 
   pwa: {
-    registerType: "autoUpdate",
+    registerType: "prompt",
     manifest: {
       name: "Matta trade",
       short_name: "Matta",
+      description: "Africa's Leading B2B Marketplace for chemicals and materials",
       theme_color: "#1570EF",
+      background_color: "#ffffff",
       display: "standalone",
+      orientation: "portrait",
       icons: [
+        {
+          src: "/icons/android-icon-48x48.png",
+          sizes: "48x48",
+          type: "image/png",
+        },
+        {
+          src: "/icons/android-icon-72x72.png",
+          sizes: "72x72",
+          type: "image/png",
+        },
         {
           src: "/icons/android-icon-96x96.png",
           sizes: "96x96",
@@ -282,6 +295,12 @@ export default defineNuxtConfig({
           sizes: "192x192",
           type: "image/png",
           purpose: "any",
+        },
+        {
+          src: "/icons/android-icon-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+          purpose: "maskable",
         },
       ],
       screenshots: [

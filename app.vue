@@ -1,8 +1,9 @@
 <template>
   <NuxtLoadingIndicator :throttle="0" color="#1570ef" />
   <NuxtLayout v-if="!AppLoading">
-    <!-- <NuxtPwaManifest /> -->
+    <VitePwaManifest />
     <NuxtPage />
+    <ReloadPrompt />
   </NuxtLayout>
   <div v-else class="flex items-center justify-center w-screen h-screen">
     <AppLoaderV2 />
@@ -16,6 +17,7 @@ import { getMarkets, getTechLevels } from "~/services/productservices";
 import { getSubApps, getBusinessType } from "~/services/userservices";
 import { getnotifications } from "./services/notificationservice";
 
+const { $pwa } = useNuxtApp();
 const NOTIFICATIONS_INTERVAL_MS = 15_000;
 
 useHead(
@@ -206,6 +208,11 @@ onMounted(() => {
 
     // Pause polling when the tab is hidden, resume when visible
     document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Check for PWA updates when the user returns to the tab
+    window.addEventListener("focus", () => {
+      if ($pwa) $pwa.updateServiceWorker();
+    });
 
     getBusinessUserType();
   }
