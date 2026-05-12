@@ -145,7 +145,7 @@
       </div>
     </div>
   </footer>
-  <ContactForm />
+  <LazyContactForm />
 </template>
 
 <script setup>

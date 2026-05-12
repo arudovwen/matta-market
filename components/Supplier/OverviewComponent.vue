@@ -192,6 +192,7 @@
 
 <script setup>
 import { useRoute } from "vue-router";
+const apexchart = defineAsyncComponent(() => import("vue3-apexcharts"));
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 

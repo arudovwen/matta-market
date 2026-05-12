@@ -11,12 +11,14 @@
         <span class="" data-testid="promo"
           >Get N50,000 off when you sign up and make your first purchase. &nbsp;
           Use the code
-          <span
-            v-clipboard="'1ST50KOFF'"
-            @click="toast.success('Copied')"
-            class="md:border md:border-white rounded-[4px] md:px-1 md:py-[2px] cursor-pointer font-semibold md:font-bold text-xs"
-            >1ST50KOFF</span
-          >
+          <ClientOnly>
+            <span
+              v-clipboard="'1ST50KOFF'"
+              @click="toast.success('Copied')"
+              class="md:border md:border-white rounded-[4px] md:px-1 md:py-[2px] cursor-pointer font-semibold md:font-bold text-xs"
+              >1ST50KOFF</span
+            >
+          </ClientOnly>
           on checkout</span
         >
       </div>

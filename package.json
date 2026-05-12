@@ -4,7 +4,7 @@
   "type": "module",
   "version": "1.1.0",
   "scripts": {
-    "build": "nuxt build",
+    "build": "node --max-old-space-size=8192 node_modules/nuxt/bin/nuxt.mjs build",
     "dev": "nuxt dev -p 3002",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

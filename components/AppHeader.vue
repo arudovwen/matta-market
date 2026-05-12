@@ -346,10 +346,10 @@
         </div>
       </template>
     </ModalCenter>
-    <ModalAuth goToUrl="/checkout" />
+    <LazyModalAuth goToUrl="/checkout" />
   </section>
 
-  <template v-if="notificationOpen"><MobileNotificationComponent /></template>
+  <template v-if="notificationOpen"><LazyMobileNotificationComponent /></template>
 </template>
 <script setup>
 import { ref } from "vue";

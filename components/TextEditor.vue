@@ -24,8 +24,8 @@
 </template>
 
 <script setup>
-import Editor from "@tinymce/tinymce-vue";
-import { defineProps, defineEmits, ref, watch } from "vue";
+const Editor = defineAsyncComponent(() => import("@tinymce/tinymce-vue"));
+import { defineProps, defineEmits, ref, watch, defineAsyncComponent } from "vue";
 const apikey = process.env.VUE_APP_TINYMCE_KEY;
 const url = process.env.VUE_APP_URL;
 const value = ref("");

@@ -230,11 +230,9 @@ export default defineNuxtConfig({
     },
   },
 
-  ssr: false,
+  ssr: true,
   spaLoadingTemplate: true,
-  routeRules: {
-    "/finance": { redirect: "/" },
-  },
+  routeRules: {},
 
   googleSignIn: {
     clientId:
@@ -505,4 +503,49 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: "2025-02-22",
+  nitro: {
+    baseURL: "/",
+    prerender: {
+      crawlLinks: true,
+      failOnError: false, // Don't crash if one route fails
+    },
+    compressPublicAssets: true,
+    minify: true,
+  },
+
+  experimental: {
+    payloadExtraction: true,
+    inlineSSRStyles: false, // Better to have separate CSS for caching
+    renderJsonPayloads: true,
+  },
+
+  vite: {
+    build: {
+      cssCodeSplit: true,
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              // Group common heavy libraries
+              if (id.includes("apexcharts") || id.includes("vue3-apexcharts")) return "vendor-charts";
+              if (id.includes("tinymce")) return "vendor-editor";
+              if (id.includes("pdf-viewer") || id.includes("vue-pdf") || id.includes("pdfjs")) return "vendor-pdf";
+              if (id.includes("moment")) return "vendor-moment";
+              if (id.includes("iconify") || id.includes("heroicons") || id.includes("fa")) return "vendor-icons";
+              if (id.includes("swiper")) return "vendor-swiper";
+              if (id.includes("headlessui")) return "vendor-headless";
+              if (id.includes("vee-validate") || id.includes("yup") || id.includes("vuelidate")) return "vendor-forms";
+              
+              // Everything else from node_modules goes to vendor
+              return "vendor";
+            }
+          },
+        },
+      },
+    },
+    optimizeDeps: {
+      include: ["vue", "vue-router", "pinia"],
+    },
+  },
 });
