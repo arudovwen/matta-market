@@ -34,4 +34,4 @@ jobs:
     
     - name: Archive production artifacts (Windows)
       run: |
-             Copy-Item -Path C:\matta-frontend-action-runner\_work\Matta-Trade-Frontend-New\Matta-Trade-Frontend-New\.output\public\* -Destination C:\inetpub\wwwroot\Matta.Dev.Frontend\ -recurse -Force
+             Copy-Item -Path C:\matta-frontend-action-runner\_work\Matta-Trade-Frontend-New\Matta-Trade-Frontend-New\.output\* -Destination C:\inetpub\wwwroot\Matta.Dev.Frontend\ -recurse -Force
