@@ -27,7 +27,7 @@
 import { useRoute } from "vue-router";
 import { getCompanyProfile } from "~/services/settingservices";
 
-const mattaAuth = useCookie(AUTH_COOKIE_NAME, defaultOptions);
+const mattaAuth = useEncryptedCookie(AUTH_COOKIE_NAME, defaultOptions);
 const route = useRoute();
 const isOpen = ref(false);
 const detail = ref(null);

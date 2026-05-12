@@ -1,5 +1,5 @@
 import urls from "../helpers/url_helpers";
-import { createApiClient } from "~/helpers/update_api_helpers";
+import { createApiClient } from "~/helpers/api_helpers";
 import store from "../store";
 // import { withRetryHandling } from "../utils/retry-handling";
 

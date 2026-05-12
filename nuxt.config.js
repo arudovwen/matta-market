@@ -230,7 +230,7 @@ export default defineNuxtConfig({
     },
   },
 
-  ssr: true,
+  ssr: false,
   spaLoadingTemplate: true,
   routeRules: {},
 

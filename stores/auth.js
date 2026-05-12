@@ -9,11 +9,65 @@ const UserTypes = {
   0: "buyer",
   1: "supplier",
 };
+const encryptPayload = (data) => {
+  const config = useRuntimeConfig();
+  const secretKey = config?.public?.encryptionKey;
+  if (!secretKey) return JSON.stringify(data);
+
+  const payload = typeof data === "string" ? data : JSON.stringify(data);
+  return CryptoJS.AES.encrypt(payload, secretKey).toString();
+};
+
+const decryptPayload = (value) => {
+  const config = useRuntimeConfig();
+  const secretKey = config?.public?.encryptionKey;
+  if (!secretKey) {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
+  }
+
+  if (!value) return null;
+  try {
+    const bytes = CryptoJS.AES.decrypt(value, secretKey);
+    const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+    try {
+      return JSON.parse(decrypted);
+    } catch {
+      return decrypted;
+    }
+  } catch {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
+  }
+};
+
+const encryptedStorage = {
+  getItem: (key) => {
+    if (typeof window === "undefined") return null;
+    const value = window.localStorage.getItem(key);
+    return value ? decryptPayload(value) : null;
+  },
+  setItem: (key, value) => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(key, encryptPayload(value));
+  },
+  removeItem: (key) => {
+    if (typeof window === "undefined") return;
+    window.localStorage.removeItem(key);
+  },
+};
 
 export const useAuthStore = defineStore(
   "matta_user",
   () => {
-    const mattaAuth = useCookie(AUTH_COOKIE_NAME, defaultOptions);
+    const mattaAuth = useEncryptedCookie(AUTH_COOKIE_NAME, defaultOptions);
+    console.log("mattaAuth", mattaAuth.value);
     const appInfo = ref(null);
     const appList = ref([]);
     const loggedUser = ref("");
@@ -26,7 +80,7 @@ export const useAuthStore = defineStore(
     const roles = computed(() => mattaAuth?.value?.roles);
     const userId = computed(() => mattaAuth?.value?.id);
     const userType = computed(
-      () => UserTypes[mattaAuth?.value?.businessUserType]
+      () => UserTypes[mattaAuth?.value?.businessUserType],
     );
     const businessId = computed(() => mattaAuth?.value?.businessId);
     const userInfo = computed(() => mattaAuth?.value);
@@ -183,7 +237,8 @@ export const useAuthStore = defineStore(
   },
   {
     persist: {
-      storage: persistedState.localStorage,
+      key: "matta_user",
+      storage: encryptedStorage,
     },
-  }
+  },
 );

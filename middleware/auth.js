@@ -1,10 +1,11 @@
 import { handleRouting } from "~/utils/constants";
 
 export default defineNuxtRouteMiddleware(async (to) => {
-  const mattaAuth = useCookie(AUTH_COOKIE_NAME, defaultOptions);
+  const mattaAuth = useEncryptedCookie(AUTH_COOKIE_NAME, defaultOptions);
   const authStore = useAuthStore();
   const allowedCategory = [1, 2];
   const isLoggedIn = !!mattaAuth.value;
+
 
   if (!isLoggedIn) {
    handleRouting('login')

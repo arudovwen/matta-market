@@ -10,27 +10,19 @@
 <script setup>
 import { getTokenInfo } from "~/services/authservices";
 
-const { decrypt } = useEncryption();
-const route = useRoute();
-const { token, code } = route.query;
+const mattaAuth = useEncryptedCookie(AUTH_COOKIE_NAME, defaultOptions);
 const authStore = useAuthStore();
 
 onMounted(async () => {
-  const decryptedRefresh = decrypt(code);
-  const decryptedToken = decrypt(token);
-  const config = {
-    headers: { Authorization: `Bearer ${decryptedToken}` },
-  };
-  const response = await getTokenInfo(config);
+  const response = await getTokenInfo();
   if (response.status === 200) {
     authStore.setLoggedUser({
-    ...response.data.data,
-    jwToken: decryptedToken,
-    refreshToken: decryptedRefresh,
-  });
+      ...response.data.data,
+      ...mattaAuth.value,
+    });
     authStore.setHasPin(response.data.data.hasTransactionPIN);
     localStorage.setItem("fetchCart", true);
-    window.location.replace("/");
+    navigateTo("/");
     return;
   }
 });
