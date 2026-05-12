@@ -46,8 +46,8 @@ export default defineNuxtConfig({
     hidePoweredBy: false,
     xssValidator: true,
     ssg: {
-      hashScripts: true,
-      hashStyles: true,
+      hashScripts: false,
+      hashStyles: false,
     },
     headers: {
       crossOriginEmbedderPolicy: "unsafe-none",
