@@ -46,8 +46,8 @@ export default defineNuxtConfig({
     hidePoweredBy: false,
     xssValidator: true,
     ssg: {
-      hashScripts: false,
-      hashStyles: false,
+      hashScripts: true,
+      hashStyles: true,
     },
     headers: {
       crossOriginEmbedderPolicy: "unsafe-none",
@@ -205,16 +205,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // cache: {
-  //   useHostPrefix: false,
-  //   pages: ["/"],
-  //   store: {
-  //     type: "memory",
-  //     max: 100,
-  //     ttl: 60,
-  //   },
-  // },
-
   runtimeConfig: {
     public: {
       API_BASE_URL: process.env.API_BASE_URL,
@@ -230,7 +220,7 @@ export default defineNuxtConfig({
     },
   },
 
-  ssr: false,
+  ssr: true,
   spaLoadingTemplate: true,
   routeRules: {},
 
