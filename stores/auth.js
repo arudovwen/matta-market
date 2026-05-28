@@ -145,7 +145,12 @@ export const useAuthStore = defineStore(
       mattaAuth.value = null;
       clearCookies().then(() => {
         loggedUser.value = null;
-        window.location.replace("/");
+        const currentPath = window.location.pathname + window.location.search;
+        if (currentPath === '/' || currentPath === '/login' || currentPath === '/register') {
+          window.location.replace("/");
+        } else {
+          window.location.replace(`/?redirectTo=${encodeURIComponent(currentPath)}`);
+        }
       });
     };
     async function getBusinessUserType() {
