@@ -23,6 +23,7 @@
 const isPopOpen = ref(false);
 const authOpen = ref(false);
 const activeMethod = ref("card");
+const selectedShipping = ref("shipping");
 definePageMeta({
   layout: "default",
   middleware: "auth",
@@ -40,4 +41,5 @@ onMounted(()=>{
 provide("isPopOpen", isPopOpen);
 provide("authOpen", authOpen);
 provide("activeMethod", activeMethod);
+provide("selectedShipping", selectedShipping);
 </script>

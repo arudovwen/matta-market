@@ -179,6 +179,7 @@ async function confirmOrder() {
       shippingAddressId: shippingStore?.defaultAddress.id,
       orderRequest: false,
       paymentOption: activeMethod.value === "card" ? 0 : 1,
+      orderPickUp: selectedShipping.value === "pickup"
     });
 
     if (res.status === 200) {

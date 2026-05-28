@@ -273,5 +273,7 @@ const urls = {
   SAVE_REQUEST_DRAFT: "v1/financing/save-draft",
   GET_REQUEST_DRAFT: "v1/financing/retreive-draft",
   DELETE_REQUEST_DRAFT: "v1/financing/delete-draft",
+
+  CLIENT_CLEAR_SHIPPING: "v1/shoppingcart/clear-shipping"
 };
 export default urls;

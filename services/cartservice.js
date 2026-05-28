@@ -122,3 +122,8 @@ export async function placeSuggestion(data) {
     config
   );
 }
+
+
+export async function clearShipping(data){
+  return await marketGet(`${urls.CLIENT_CLEAR_SHIPPING}/${data}`, config);
+}

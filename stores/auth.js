@@ -67,7 +67,6 @@ export const useAuthStore = defineStore(
   "matta_user",
   () => {
     const mattaAuth = useEncryptedCookie(AUTH_COOKIE_NAME, defaultOptions);
-    console.log("mattaAuth", mattaAuth.value);
     const appInfo = ref(null);
     const appList = ref([]);
     const loggedUser = ref("");
