@@ -75,11 +75,11 @@ const { availableLanguages, handleLanguageSelect } = useGoogleTranslate();
 
 onMounted(() => {
   if (!vendor) {
-    console.log("No vendor param, skipping language change");
+
     return;
   }
 
-  console.log("DealBanner mounted, fetching store info for vendor:", vendor);
+
 
   getStoreInfo(vendor)
     .then((res) => {
@@ -93,13 +93,13 @@ onMounted(() => {
       );
 
       if (langData) {
-        console.log("Language data found:", langData);
+
         
         // Set Google Translate cookies
         const googtrans = `/auto/${langData.code}`;
         document.cookie = `googtrans=${googtrans};path=/`;
         document.cookie = `googtrans=${googtrans};domain=${location.hostname};path=/`;
-        console.log("Google Translate cookie set:", googtrans);
+
 
         // Store in localStorage
         localStorage.setItem("preferredLanguage", langData.code);
@@ -109,24 +109,24 @@ onMounted(() => {
           const selectElement = document.querySelector(".goog-te-combo");
           
           if (selectElement) {
-            console.log("Google Translate select element found, triggering translation");
+
             selectElement.value = langData.code;
             
             // Trigger change event
             const event = new Event("change", { bubbles: true });
             selectElement.dispatchEvent(event);
             
-            console.log("Translation triggered for language:", langData.code);
+
             clearInterval(waitForGoogleTranslate);
           } else {
-            console.log("Waiting for Google Translate to load...");
+
           }
         }, 500);
 
         // Stop checking after 10 seconds
         setTimeout(() => {
           clearInterval(waitForGoogleTranslate);
-          console.log("Stopped waiting for Google Translate");
+
         }, 10000);
 
         // Also call the composable handler

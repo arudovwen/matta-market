@@ -38,7 +38,7 @@ vi.mock("vee-validate", () => ({
         try {
           return await fn(values.value);
         } catch (e) {
-          console.log("Form submission error:", e);
+
         }
       },
       defineField: (name: string) => [

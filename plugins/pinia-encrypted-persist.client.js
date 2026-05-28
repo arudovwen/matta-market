@@ -21,7 +21,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     // ---- LOAD ----
     const saved = localStorage.getItem(key);
     if (saved) {
-      console.log("[PINIA-ENCRYPT] Loading encrypted state for:", store.$id);
+
       const data = decrypt(saved);
       if (data) {
         store.$patch(data);
@@ -30,7 +30,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     // ---- SAVE ----
     store.$subscribe((mutation, state) => {
-      console.log("[PINIA-ENCRYPT] Saving encrypted state for:", store.$id);
+
       const encrypted = encrypt(state);
       if (encrypted) {
         localStorage.setItem(key, encrypted);

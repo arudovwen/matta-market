@@ -237,7 +237,7 @@ const product = ref({
 watch(
   () => [route.query],
   () => {
-    console.log(route.query);
+  
     if (route?.query?.stage) {
       active.value = route.query.stage;
     }

@@ -200,7 +200,7 @@
                 }`"
               >
                 <Menu
-                  v-if="!n.url"
+                  v-if="!n.url || n.url === '#'"
                   v-slot="{ open }"
                   as="div"
                   class="relative inline-block text-left"
@@ -379,7 +379,7 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 const appStore = useApplicationStore();
 const store = useMarketStore();
-const notificationOpen = inject("notificationOpen");
+const notificationOpen = inject("notificationOpen", ref(false));
 const isAuthOpen = ref(false);
 const router = useRouter();
 const { currentRoute } = router;

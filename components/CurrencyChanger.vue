@@ -11,7 +11,7 @@
 
 <script setup>
 const currencyStore = useCurrencyStore();
-const currentCurrency = inject("currentCurrency");
+const currentCurrency = inject("currentCurrency", ref(null));
 
 onMounted(() => {
   currencyStore.getCurrencies();

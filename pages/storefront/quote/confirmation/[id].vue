@@ -53,7 +53,7 @@ const crumbsData = ref([
 function getData() {
   buyerquotedetail(id)
     .then((res) => {
-      console.log(res.data);
+
       order.value = { ...res.data.data, quoteId: id, id: id };
       isQuoteLoading.value = false;
     })

@@ -20,11 +20,11 @@ export default defineNuxtPlugin((nuxtApp) => {
             }
           })
         )
-        .catch((error) => {
+        .catch(() => {
           // console.error('Error fetching version.json:', error);
         });
     });
   } catch (error) {
-    console.error('Plugin error:', error);
+   
   }
 });

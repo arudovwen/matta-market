@@ -33,7 +33,7 @@ export const useGoogleTranslate = () => {
         localStorage.setItem("preferredLanguage", language.code);
       }
 
-      console.log("Language changed to:", language.name);
+
     }
   };
 

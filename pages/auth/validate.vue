@@ -8,11 +8,12 @@
 </template>
 
 <script setup>
+import { useRoute } from "vue-router";
 import { getTokenInfo } from "~/services/authservices";
 
 const mattaAuth = useEncryptedCookie(AUTH_COOKIE_NAME, defaultOptions);
 const authStore = useAuthStore();
-
+const route = useRoute();
 onMounted(async () => {
   const response = await getTokenInfo();
   if (response.status === 200) {
@@ -22,7 +23,7 @@ onMounted(async () => {
     });
     authStore.setHasPin(response.data.data.hasTransactionPIN);
     localStorage.setItem("fetchCart", true);
-    navigateTo("/");
+    navigateTo(route.query.redirectUrl ||"/");
     return;
   }
 });

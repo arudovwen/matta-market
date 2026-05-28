@@ -275,7 +275,7 @@ const order = ref(null);
 const isOpen = ref(false);
 
 function openOrder(val) {
-  console.log({val});
+
   
   procurementorderdetails(val.orderId)
     .then((res) => {

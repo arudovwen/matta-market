@@ -186,7 +186,7 @@ watch(
   () => [query.search],
   () => {
     getData();
-    console.log(query.search);
+
   }
 );
 onMounted(() => {

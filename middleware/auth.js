@@ -8,7 +8,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
 
   if (!isLoggedIn) {
-   handleRouting('login')
+   handleRouting('login', `${appUrl}${to.fullPath}`)
     return;
   }
   if (
@@ -20,10 +20,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return;
   }
 
-  if (isLoggedIn) {
-    const businessUserType = mattaAuth.value.businessUserType;
-    if (businessUserType !== 0 && businessUserType !== 1) {
-      return navigateTo("/user-type");
-    }
-  }
+  // if (isLoggedIn) {
+  //   const businessUserType = mattaAuth.value.businessUserType;
+  //   if (businessUserType !== 0 && businessUserType !== 1) {
+  //     // return navigateTo("/user-type");
+  //   }
+  // }
 });

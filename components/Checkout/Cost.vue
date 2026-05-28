@@ -46,7 +46,7 @@ async function getData() {
 
     if (res.status === 200 && res.data?.data) {
       const items = res.data.data.items || [];
-      console.log(res.data.data.totalShippingCost);
+
       
       const totalCost = res.data.data.totalShippingCost || 0;
 

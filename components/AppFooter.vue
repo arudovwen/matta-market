@@ -85,13 +85,20 @@
                 class="text-[14px] font-normal capitlize text-[#EAECF0] mb-2"
               >
                 <NuxtLink
-                  v-if="l.title.toLowerCase() !== 'contact'"
-                  :href="l.url"
+                  v-if="l.title.toLowerCase() !== 'contact' && l.url !== '#'"
+                  :to="l.url"
                   class="hover:underline"
                 >
                   {{ l.title }}
                 </NuxtLink>
-                <span v-else @click="open = true" class="hover:underline">
+                <a
+                  v-else-if="l.title.toLowerCase() !== 'contact'"
+                  href="#"
+                  class="hover:underline"
+                >
+                  {{ l.title }}
+                </a>
+                <span v-else @click="open = true" class="hover:underline cursor-pointer">
                   {{ l.title }}
                 </span>
               </li>

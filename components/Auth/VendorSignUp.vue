@@ -273,7 +273,7 @@ const handleFinalSubmit = (code) => {
         if (!props.main) {
           toast.info("Login successful");
           const userTypeResponse = await authStore.getBusinessUserType();
-          console.log({ userTypeResponse });
+
 
           if (userTypeResponse) {
             emits("close");

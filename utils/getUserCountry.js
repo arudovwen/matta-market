@@ -11,7 +11,7 @@ export async function getUserCountry() {
 //     cacheTimestamp &&
 //     Date.now() - cacheTimestamp < cacheExpiration
 //   ) {
-//     console.log("Returning cached country:", cachedData);
+
 //     return cachedData; // Return cached country data
 //   }
 
@@ -24,7 +24,7 @@ export async function getUserCountry() {
     setItem("userCountry", country);
     setItem("userCountryTimestamp", Date.now().toString());
 
-    console.log("Fetched and cached country:", country);
+
     return country;
   } catch (error) {
     console.error("Error fetching country:", error);

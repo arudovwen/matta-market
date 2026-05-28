@@ -235,7 +235,7 @@ function retrieveDraft() {
         formData.amountRequired = res.data.data.amountRequired;
         formData.tenor = res.data.data.tenor;
         formData.whereDidYouHearAboutUs = res.data.data.whereDidYouHearAboutUs;
-        console.log(res.data.data.supportingDocuments.length);
+
         if (res.data.data.supportingDocuments.length > 0) {
           formData.supportingDocuments = res.data.data.supportingDocuments.map(
             (i) => ({
@@ -270,7 +270,7 @@ function getFinanceData() {
         formData.amountRequired = res.data.data.amountRequired;
         formData.tenor = res.data.data.tenor;
         formData.whereDidYouHearAboutUs = res.data.data.whereDidYouHearAboutUs;
-        console.log(res.data.data.supportingDocuments.length);
+
         if (res.data.data.supportingDocuments.length > 0) {
           formData.supportingDocuments = res.data.data.supportingDocuments.map(
             (i) => ({

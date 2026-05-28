@@ -52,7 +52,7 @@ function handleSubmit() {
         err?.response?.data?.message ||
         err?.response?.data?.Message ||
         "Invalid code";
-      console.log(errorMsg);
+
     })
     .finally(() => {
       loading.value = false;

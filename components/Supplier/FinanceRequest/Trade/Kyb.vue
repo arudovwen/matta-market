@@ -246,7 +246,7 @@ const isSaving = ref(false);
 
 const company = inject("company");
 const formData = inject("formData");
-console.log("🚀 ~ formData:", formData);
+
 const isLoading = ref(false);
 const active = inject("active");
 const authStore = useAuthStore();
@@ -535,7 +535,7 @@ const onSubmit = handleSubmit(async (values) => {
       active.value = 3;
     }
   } catch (err) {
-    console.log("er", err);
+
     toast.error(
       err?.response?.data?.message ||
         err?.response?.data?.Message ||

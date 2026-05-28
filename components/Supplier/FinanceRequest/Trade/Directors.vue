@@ -249,7 +249,7 @@ const onSaveAndContinue = async () => {
   }
 };
 
-onMounted(() => console.log("fd", formData));
+
 
 provide("form", form);
 provide("open", open);

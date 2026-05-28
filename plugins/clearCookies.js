@@ -10,7 +10,7 @@ export default defineNuxtPlugin(() => {
         const cookies = await cookieStore.getAll();
 
         if (cookies.length > 0) {
-          console.log("Deleting cookies:", cookies);
+
 
           // Delete each cookie
           for (const cookie of cookies) {
@@ -20,9 +20,9 @@ export default defineNuxtPlugin(() => {
             });
           }
 
-          console.log("Cookies deleted successfully");
+
         } else {
-          console.log("No cookies found");
+
         }
       }
     }

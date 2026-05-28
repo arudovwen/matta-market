@@ -194,7 +194,6 @@ async function confirmOrder() {
       }
     }
   } catch (err) {
-    console.log({ err });
 
     toast.error(
       `${

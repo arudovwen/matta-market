@@ -342,7 +342,7 @@ const onSaveAndContinue = async () => {
     toast.success("Draft saved successfully");
     router.push("/financing");
   } catch (err) {
-    console.log(err);
+
     toast.error(
       err?.response?.data?.message ||
         err?.response?.data?.Message ||

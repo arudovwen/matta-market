@@ -110,7 +110,7 @@ onMounted(() => {
   getStoreInfo(vendor).then((res) => {
     vendorInfo.value = res.data;
     const lang = res.data?.language || "en-US";
-    console.log("language =", lang);
+
 
     try {
       const googtrans = `/auto/${lang}`;

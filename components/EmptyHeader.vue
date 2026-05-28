@@ -157,7 +157,7 @@ const windowWidth = ref(
     0
 );
 const handleGoogleTranslateSelect = (language) => {
-  console.log(language);
+
 };
 const isOpen = ref(false);
 const authStore = useAuthStore();

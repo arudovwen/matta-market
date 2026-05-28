@@ -52,7 +52,7 @@ const crumbsData = ref([
 function getData() {
   storefrontorderdetails(id)
     .then((res) => {
-      console.log(res.data);
+
       order.value = res.data;
       isOrderLoading.value = false;
     })

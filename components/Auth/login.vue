@@ -162,7 +162,7 @@ const handleFinalSubmit = async (token) => {
         if (!props.main) {
           toast.info("Login successful");
           const userTypeResponse = await authStore.getBusinessUserType();
-          console.log({ userTypeResponse });
+
 
           if (userTypeResponse) {
             navigateTo("/checkout");

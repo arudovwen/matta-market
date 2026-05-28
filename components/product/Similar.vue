@@ -133,7 +133,7 @@ const breakpoints = {
   },
 };
 function scroll() {
-  console.log("scroll");
+
   window.scrollTo({
     top: 0,
     left: 0,
