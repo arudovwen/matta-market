@@ -149,7 +149,7 @@ export const useAuthStore = defineStore(
         if (currentPath === '/' || currentPath === '/login' || currentPath === '/register') {
           window.location.replace("/");
         } else {
-          window.location.replace(`/?redirectTo=${encodeURIComponent(currentPath)}`);
+          window.location.replace(`/?redirectUrl=${encodeURIComponent(currentPath)}`);
         }
       });
     };
