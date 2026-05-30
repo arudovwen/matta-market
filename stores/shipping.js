@@ -38,6 +38,9 @@ export const useShippingStore = defineStore("shipping", () => {
           setAddresses(addresses);
           const tempAddress = sortAddresses(addresses);
           setAddresses(tempAddress);
+        } else {
+          setAddresses([]);
+          defaultAddress.value = null;
         }
 
         loading.value = false;
