@@ -90,7 +90,7 @@ const createAxiosInstance = (service) => {
 
       if (status === 403) {
         try {
-          if (window.location.href.includes("/auth/logout")) {
+          if (typeof window !== "undefined" && window.location.href.includes("/auth/logout")) {
             useAuthStore().clearAuth();
             return Promise.reject(error);
           }
@@ -154,7 +154,7 @@ const handleTokenRefresh = async () => {
 const handleRefreshError = () => {
   const authStore = useAuthStore();
   if (hasLoggedOut) return; // Ensure logout only happens once
-  if (window.location.pathname !== "/checkout") {
+  if (typeof window !== "undefined" && window.location.pathname !== "/checkout") {
     toast.info("Your session has expired");
     hasLoggedOut = true; // Flag logout to prevent multiple logouts
     authStore.logOut(); // Perform the logout only once

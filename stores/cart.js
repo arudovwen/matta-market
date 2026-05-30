@@ -47,7 +47,9 @@ export const useCartStore = defineStore(
       const createRes = await createcart({ items: uniqueCart });
       if (createRes.status === 200) {
         getMyCart();
-        localStorage.removeItem("fetchCart");
+        if (process.client) {
+          localStorage.removeItem("fetchCart");
+        }
       }
     }
 
@@ -57,10 +59,6 @@ export const useCartStore = defineStore(
       loadingCart.value = true;
 
       try {
-        if (!authStore.userType && cartItems.value.length > 0) {
-          navigateTo("/user-type?return_to=/cart");
-          return;
-        }
         const res = await getcart();
         loadingCart.value = false;
 
@@ -73,7 +71,7 @@ export const useCartStore = defineStore(
         const items = cartData?.items || [];
         const uniqueCart = getUniqueItems(items, cartItems.value);
 
-        if (localStorage.getItem("fetchCart") && cartItems.value.length > 0) {
+        if (process.client && localStorage.getItem("fetchCart") && cartItems.value.length > 0) {
           await handleCartCreation(uniqueCart);
         }
 
@@ -91,10 +89,6 @@ export const useCartStore = defineStore(
           loadData();
         }
       } catch (err) {
-        if (!authStore.userType && cartItems.value.length > 0) {
-          navigateTo("/user-type?return_to=/cart");
-          return;
-        }
         if (cartItems.value.length > 0) {
           await handleCartCreation(cartItems.value);
         }
@@ -270,7 +264,20 @@ export const useCartStore = defineStore(
 
   {
     persist: {
-      storage: persistedState.localStorage,
+      storage: {
+        getItem: (key) => {
+          if (typeof window === "undefined") return null;
+          return window.localStorage.getItem(key);
+        },
+        setItem: (key, value) => {
+          if (typeof window === "undefined") return;
+          window.localStorage.setItem(key, value);
+        },
+        removeItem: (key) => {
+          if (typeof window === "undefined") return;
+          window.localStorage.removeItem(key);
+        },
+      },
     },
   }
 );

@@ -95,6 +95,7 @@ import OrderSummaryRow from "./sideRow.vue";
 const isPopOpen = inject("isPopOpen");
 const activeMethod = inject("activeMethod");
 const authOpen = inject("authOpen");
+const selectedShipping = inject("selectedShipping");
 
 const shippingStore = useShippingStore();
 const authStore = useAuthStore();
@@ -119,7 +120,8 @@ const isOrderRequestDisabled = computed(
     !cartStore?.cart ||
     !cartStore?.cartTotalwithTax ||
     loading.value ||
-    !shippingStore?.defaultAddress?.id ||
+    (!shippingStore?.defaultAddress?.id &&
+      selectedShipping.value === "shipping") ||
     cartStore?.loadingCart ||
     requestLoading.value,
 );
@@ -129,7 +131,8 @@ const isPaymentDisabled = computed(
     !cartStore?.cart ||
     !cartStore?.cartTotalAmount ||
     loading.value ||
-    !shippingStore?.defaultAddress?.id ||
+    (!shippingStore?.defaultAddress?.id &&
+      selectedShipping.value === "shipping") ||
     cartStore?.loadingCart ||
     requestLoading.value ||
     (activeMethod.value === "wallet" &&
@@ -179,7 +182,7 @@ async function confirmOrder() {
       shippingAddressId: shippingStore?.defaultAddress.id,
       orderRequest: false,
       paymentOption: activeMethod.value === "card" ? 0 : 1,
-      orderPickUp: selectedShipping.value === "pickup"
+      orderPickUp: selectedShipping.value === "pickup",
     });
 
     if (res.status === 200) {
@@ -194,7 +197,6 @@ async function confirmOrder() {
       }
     }
   } catch (err) {
-
     toast.error(
       `${
         err?.response?.data?.Message ||

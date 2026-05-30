@@ -1,4 +1,4 @@
-import { handleRouting } from "~/utils/constants";
+import { getRoute, appUrl } from "~/utils/constants";
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const mattaAuth = useEncryptedCookie(AUTH_COOKIE_NAME, defaultOptions);
@@ -8,8 +8,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
 
   if (!isLoggedIn) {
-   handleRouting('login', `${appUrl}${to.fullPath}`)
-    return;
+    return navigateTo(getRoute('login', `${appUrl}${to.fullPath}`), { external: true });
   }
   if (
     isLoggedIn &&

@@ -145,11 +145,15 @@ export const useAuthStore = defineStore(
       mattaAuth.value = null;
       clearCookies().then(() => {
         loggedUser.value = null;
-        const currentPath = window.location.pathname + window.location.search;
-        if (currentPath === '/' || currentPath === '/login' || currentPath === '/register') {
-          window.location.replace("/");
+        if (typeof window !== "undefined") {
+          const currentPath = window.location.pathname + window.location.search;
+          if (currentPath === '/' || currentPath === '/login' || currentPath === '/register') {
+            window.location.replace("/");
+          } else {
+            window.location.replace(`/?redirectUrl=${encodeURIComponent(currentPath)}`);
+          }
         } else {
-          window.location.replace(`/?redirectUrl=${encodeURIComponent(currentPath)}`);
+          return navigateTo("/");
         }
       });
     };

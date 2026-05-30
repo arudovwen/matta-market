@@ -52,7 +52,7 @@ export const createApiClient = (baseURL) => {
           return axiosApi.request(error.config);
         } catch (refreshError) {
           const authStore = useAuthStore();
-          if (window.location.pathname !== "/checkout") {
+          if (typeof window !== "undefined" && window.location.pathname !== "/checkout") {
             toast.info("Your session has expired");
             authStore.setLoggedUser(null);
             window.location.href = `/auth/login?info=session_expired&redirected_from=${window.location.href}`;

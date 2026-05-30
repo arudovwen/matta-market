@@ -36,7 +36,9 @@ export const handleRouting = (
 ) => {
   setItem("isMattaSignup", true);
   const config = useRuntimeConfig();
-  window.location.href = `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`;
+  if (typeof window !== "undefined") {
+    window.location.href = `${validationUrl}/auth/${value}/${config.public.APP_CODE}?continue=${url}`;
+  }
 };
 export const getRoute = (value = "login", url = appUrl, target = "_self") => {
   const config = useRuntimeConfig();
@@ -45,7 +47,9 @@ export const getRoute = (value = "login", url = appUrl, target = "_self") => {
 
 export const handleRoute = () => {
   const config = useRuntimeConfig();
-  window.location.href = `${validationUrl}/auth/login/${config.public.APP_CODE}?continue=${appUrl}`;
+  if (typeof window !== "undefined") {
+    window.location.href = `${validationUrl}/auth/login/${config.public.APP_CODE}?continue=${appUrl}`;
+  }
 };
 export const measurements = [
   { value: "g", name: "Gramme", label: "Gramme" },

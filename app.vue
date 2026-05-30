@@ -158,9 +158,9 @@ function getBusinessUserType() {
       }
     })
     .catch(() => {
-      if (isMattaSignup) {
-        navigateTo("/user-type");
-      }
+      // if (isMattaSignup) {
+      //   navigateTo("/user-type");
+      // }
       AppLoading.value = false;
     });
 }
@@ -233,14 +233,14 @@ provide("currentCurrency", currentCurrency);
 provide("notifications", notifications);
 provide("getNotifications", getNotifications);
 provide("notificationOpen", notificationOpen);
-watch(
-  () => route.fullPath,
-  () => {
-    if (isMattaSignup && authStore?.isLoggedIn && !authStore?.userType) {
-      navigateTo("/user-type");
-    }
-  },
-);
+// watch(
+//   () => route.fullPath,
+//   () => {
+//     if (isMattaSignup && authStore?.isLoggedIn && !authStore?.userType) {
+//       navigateTo("/user-type");
+//     }
+//   },
+// );
 </script>
 <style>
 html {
