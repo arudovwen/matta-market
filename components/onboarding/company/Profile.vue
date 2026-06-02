@@ -523,6 +523,7 @@ function crop() {
 
   uploadfile({
     base64: canvas.toDataURL().replace("data:", "").replace(/^.+,/, ""),
+    ext: ".png",
   });
   // .then((res) => {
   //   form.logo = res.data.message;

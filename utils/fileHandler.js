@@ -1,5 +1,6 @@
 export default function fileHandler(e, expertAnswer) {
   const file = e.target.files[0];
+  const ext = file.name.substring(file.name.lastIndexOf(".") + 1);
   // Encode the file using the FileReader API
   const reader = new FileReader();
   reader.readAsDataURL(file);
@@ -9,6 +10,7 @@ export default function fileHandler(e, expertAnswer) {
 
     uploadfile({
       base64: base64String.replace("data:", "").replace(/^.+,/, ""),
+      ext: ext,
     }).then((res) => {
       expertAnswer.photo = res.data.message;
     });
