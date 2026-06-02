@@ -4,7 +4,9 @@
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
       <div class="text-left w-[250px]">
-        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">Product info</h2>
+        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">
+          Product info
+        </h2>
         <p class="text-xs text-[#475467]">Add your product details here.</p>
       </div>
       <div class="max-w-[654px] w-full">
@@ -137,12 +139,7 @@
                                 <span
                                   class="h-11 w-12 rounded-lg bg-white shadow p-4 flex items-center justify-center mr-4 border border-[#E7EBEE]"
                                 >
-                                  <img
-                                    v-if="i.logo"
-                                    :src="i.logo"
-                                    alt="logo"
-                                 
-                                  />
+                                  <img v-if="i.logo" :src="i.logo" alt="logo" />
                                   <p class="text-base uppercase" v-else>
                                     {{ i.title.slice(0, 2) }}
                                   </p>
@@ -305,7 +302,9 @@
       class="flex gap-x-[56px] justify-start flex-col lg:flex-row gap-y-7 lg:gap-y-10"
     >
       <div class="w-[250px]">
-        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">Gallery<RedDot /></h2>
+        <h2 class="text-sm text-[#101828] font-semibold mb-[2px]">
+          Gallery<RedDot />
+        </h2>
         <p class="text-xs text-[#475467]">
           Upload pictures of your products here.
         </p>
@@ -458,7 +457,7 @@
                   >Logo</span
                 >
                 <img
-                  v-else 
+                  v-else
                   alt="prouct"
                   :src="producerForm.logo"
                   class="h-16 w-16 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
@@ -587,7 +586,7 @@ const states = computed(() => {
   if (!producerForm.country) return [];
   return (
     countries.find(
-      (item) => producerForm.country.toLowerCase() == item.name.toLowerCase()
+      (item) => producerForm.country.toLowerCase() == item.name.toLowerCase(),
     ).states || []
   );
 });
@@ -619,7 +618,7 @@ onMounted(() => {
 const isAddingPackage = ref(false);
 const isLoading = ref(false);
 const locations = computed(() =>
-  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
+  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id })),
 );
 const selectedMeasurement = ref(measurements[0]);
 // const newpackage = ref("");
@@ -632,8 +631,8 @@ let filteredProducers = computed(() =>
         i.title
           .toLowerCase()
           .replace(/\s+/g, "")
-          .includes(query.value.toLowerCase().replace(/\s+/g, ""))
-      )
+          .includes(query.value.toLowerCase().replace(/\s+/g, "")),
+      ),
 );
 
 const rules = {
@@ -676,10 +675,10 @@ function create_UUID() {
   var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
     /[xy]/g,
     function (c) {
-      var r = (dt + Math.random() * 16) % 16 | 0;
+      var r = ((dt + Math.random() * 16) % 16) | 0;
       dt = Math.floor(dt / 16);
       return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
-    }
+    },
   );
   return uuid;
 }
@@ -706,7 +705,7 @@ watch(
       i.unit = form.unit;
       return i;
     });
-  }
+  },
 );
 async function handleSubmit() {
   const validity = await v$.value.$validate();
@@ -722,7 +721,7 @@ async function handleSubmit() {
             duration: 4000,
           });
           router.push(
-            `/storefront/products/${route.params.process}?id=${route.query.id}&stage=2`
+            `/storefront/products/${route.params.process}?id=${route.query.id}&stage=2`,
           );
         }
       })
@@ -732,7 +731,7 @@ async function handleSubmit() {
         isLoading.value = false;
 
         toast.error(
-          err?.response?.data?.message || err?.response?.data?.Message
+          err?.response?.data?.message || err?.response?.data?.Message,
         );
       });
   } else {
@@ -744,7 +743,7 @@ async function handleSubmit() {
             duration: 4000,
           });
           router.push(
-            `/storefront/products/${route.params.process}?id=${res.data.data}&stage=2`
+            `/storefront/products/${route.params.process}?id=${res.data.data}&stage=2`,
           );
         }
       })
@@ -754,7 +753,7 @@ async function handleSubmit() {
         isLoading.value = false;
 
         toast.error(
-          err?.response?.data?.message || err?.response?.data?.Message
+          err?.response?.data?.message || err?.response?.data?.Message,
         );
       });
   }
@@ -812,9 +811,11 @@ function handleEvent(e) {
   reader.readAsDataURL(file);
   reader.onloadend = () => {
     const base64String = reader.result;
+    const ext = file.name.substring(file.name.lastIndexOf(".") + 1);
 
     uploadfile({
       base64: base64String.replace(/^data:image\/[a-z]+;base64,/, ""),
+      ext: ext,
     })
       .then((res) => {
         producerForm.logo = res.data.message;

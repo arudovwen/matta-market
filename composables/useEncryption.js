@@ -2,54 +2,66 @@
 import CryptoJS from "crypto-js";
 
 export const useEncryption = () => {
+  const tryParseJson = (value) => {
+    if (typeof value !== "string") return value;
+
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
+  };
+
   const encrypt = (data) => {
     const config = useRuntimeConfig();
     const secretKey = config.public.encryptionKey;
 
-    if (!secretKey) {
-      console.error("Encryption key is missing");
-      return;
-    }
-
     try {
-      // Convert objects or arrays to JSON
       const value =
         typeof data === "object" ? JSON.stringify(data) : String(data);
+
+      if (!secretKey) {
+        return value;
+      }
 
       const encrypted = CryptoJS.AES.encrypt(value, secretKey).toString();
       return encrypted;
     } catch (error) {
-      console.error("Encryption failed:", error);
-      return null;
+      return typeof data === "string" ? data : JSON.stringify(data);
     }
   };
 
   const decrypt = (encryptedData) => {
+    if (encryptedData === null || encryptedData === undefined) {
+      return encryptedData;
+    }
+
+    if (typeof encryptedData !== "string") {
+      return encryptedData;
+    }
+
     try {
       const config = useRuntimeConfig();
       const secretKey = config.public.encryptionKey;
 
+      const rawValue = encryptedData.startsWith("ENC:")
+        ? encryptedData.slice(4)
+        : encryptedData;
+
       if (!secretKey) {
-        console.error("Encryption key is missing");
-        return;
+        return tryParseJson(rawValue);
       }
 
-      const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
+      const bytes = CryptoJS.AES.decrypt(rawValue, secretKey);
       const decrypted = bytes.toString(CryptoJS.enc.Utf8);
 
-      // If it’s not valid UTF-8, return original encrypted value
-      if (!decrypted) return encryptedData;
-
-      // Try converting JSON back to object
-      try {
-        return JSON.parse(decrypted);
-      } catch {
-        // If not JSON, return as plain string
-        return decrypted;
+      if (!decrypted) {
+        return tryParseJson(rawValue);
       }
-    } catch (error) {
-      // Return original encrypted string on failure
-      return encryptedData;
+
+      return tryParseJson(decrypted);
+    } catch {
+      return tryParseJson(encryptedData);
     }
   };
 

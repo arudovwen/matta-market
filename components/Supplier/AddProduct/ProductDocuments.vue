@@ -658,9 +658,11 @@ function handleEvent(e) {
   reader.readAsDataURL(file);
   reader.onloadend = () => {
     const base64String = reader.result;
+    const ext = file.name.substring(file.name.lastIndexOf(".") + 1);
 
     uploadfile({
       base64: base64String.replace(/^data:image\/[a-z]+;base64,/, ""),
+      ext: ext,
     })
       .then((res) => {
         producerForm.logo = res.data.message;

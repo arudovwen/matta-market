@@ -761,6 +761,7 @@ function crop() {
   form.logo = canvas.toDataURL().replace("data:", "").replace(/^.+,/, "");
   uploadfile({
     base64: canvas.toDataURL().replace("data:", "").replace(/^.+,/, ""),
+    ext: ".png",
   }).then((res) => {
     form.logo = res.data.message;
     updateCompanyProfile({ ...form, logo: res.data.message }).then((res) => {

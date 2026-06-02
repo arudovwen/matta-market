@@ -145,6 +145,7 @@ function handleFile(e) {
       if (props.type == "image") {
         uploaddocument({
           base64: base64String.replace("data:", "").replace(/^.+,/, ""),
+          ext: ext,
         }).then((res) => {
           emits("onGetFiles", res.data.data);
           image.value = res.data.data;
@@ -153,7 +154,7 @@ function handleFile(e) {
       } else {
         uploaddocument({
           base64: base64String.replace("data:", "").replace(/^.+,/, ""),
-          ext: `.${ext}`,
+          ext: ext,
         }).then((res) => {
           data.url = res.data.data;
           emits("onGetFiles", data);
