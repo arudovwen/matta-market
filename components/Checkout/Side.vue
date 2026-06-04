@@ -49,6 +49,7 @@
     <hr class="my-[20px] border-white/10" />
 
     <OrderSummaryRow
+      v-if="selectedShipping === 'shipping'"
       label="Estimated Shipping Cost"
       :value="cartStore?.shippingTotal"
       isBold

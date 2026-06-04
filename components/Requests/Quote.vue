@@ -145,7 +145,7 @@
     :open="isSuccessOpen"
     type="approve"
     title="Request has be sent"
-    text="Your request has been sent. You will be contacted by one of our sales reps within the next 24hrs."
+    text="YYour request has been sent. You will be contacted by one of our technical experts shortly."
     btnText="Okay"
     :isCancel="false"
     @actionItem="
