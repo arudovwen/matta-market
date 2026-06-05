@@ -32,6 +32,7 @@ const authstore = useAuthStore();
 const tdata = ref([]);
 const isPageLoading = ref(false);
 const balance = ref(0);
+const config = useRuntimeConfig();
 const queryParams = reactive({
   Status: "",
   Role: "",
@@ -41,6 +42,7 @@ const queryParams = reactive({
   totalCount: 0,
   Search: "",
   Type: "",
+  appCode: config.publis?.APP_CODE
 });
 
 function getLedgersTrans() {
