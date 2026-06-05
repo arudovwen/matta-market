@@ -96,6 +96,7 @@ const isPopOpen = inject("isPopOpen");
 const activeMethod = inject("activeMethod");
 const authOpen = inject("authOpen");
 const selectedShipping = inject("selectedShipping");
+const config = useRuntimeConfig();
 
 const shippingStore = useShippingStore();
 const authStore = useAuthStore();
@@ -157,6 +158,7 @@ function makePayment() {
     phoneNumber: authStore.userInfo?.phoneNumber,
     reference: referenceData.transactionRef,
     orderRequest: false,
+    appCode: config.public?.APP_CODE
   };
   payWithMonnify(data.value, onModalClose, onSuccess);
 }
@@ -183,6 +185,7 @@ async function confirmOrder() {
       orderRequest: false,
       paymentOption: activeMethod.value === "card" ? 0 : 1,
       orderPickUp: selectedShipping.value === "pickup",
+      appCode: config.public?.APP_CODE
     });
 
     if (res.status === 200) {
@@ -219,6 +222,7 @@ async function onSuccess(response) {
     const res = await confirmpayment({
       ...referenceData,
       transactionRef: response.transactionReference,
+      appCode: config.public?.APP_CODE
     });
 
     if (res.status === 200) {

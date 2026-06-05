@@ -3,7 +3,7 @@
     <!-- Top bar   -->
     <div>
       <HeaderComponent
-        :welcome="`Welcome back, ${auth?.userInfo?.firstName}`"
+        :welcome="`Welcome back, ${auth?.userInfo?.firstName ||  ''}`"
         subtext="Your current sales summary and activity."
         className="!px-0 !py-0 pb-6 !border-none mb-[15px]"
       />

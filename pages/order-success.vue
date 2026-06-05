@@ -1,6 +1,9 @@
 <template>
   <div class="items-center flex justify-center p-6">
-    <div class="bg-white rounded-[10px] p-5 md:p-9 text-center max-w-[500px]" v-if="!loading">
+    <div
+      class="bg-white rounded-[10px] p-5 md:p-9 text-center max-w-[500px]"
+      v-if="!loading"
+    >
       <img src="/images/success.png" class="mx-auto mb-[10px]" alt="success" />
       <h1 class="text-2xl mb-[24px] font-bold">
         {{ !order_type ? "Order Successful" : "Order Request Submitted" }}
@@ -36,7 +39,6 @@
           btnClass="bg-[#2176FF] text-white w-full !text-sm !font-normal !py-3"
         /> -->
         <AppButton
-       
           link="/procurement/my-orders"
           type="button"
           text="Proceed to dashboard"
@@ -44,7 +46,10 @@
         />
       </div>
     </div>
-    <div v-else class="bg-white p-6 rounded-lg flex flex-col justify-center items-center gap-y-4">
+    <div
+      v-else
+      class="bg-white p-6 rounded-lg flex flex-col justify-center items-center gap-y-4"
+    >
       <AppLoaderV2 />
       <p class="text-xs font-semibold">Processing payment</p>
     </div>
@@ -83,7 +88,7 @@ onMounted(() => {
     .then((res) => {
       if (res.status == 200) {
         isLoading.value = false;
-      
+
         data.value = {
           email: authStore.userInfo?.email,
           name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
@@ -103,7 +108,6 @@ function makePayment() {
 }
 
 function onSuccess(response) {
- 
   if (response.status.toLowerCase() === "success") {
     confirmpayment({
       ...referenceData,

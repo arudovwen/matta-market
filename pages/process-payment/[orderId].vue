@@ -101,7 +101,7 @@ definePageMeta({
 
 const route = useRoute();
 const { orderId } = route.params;
-
+const config = useRuntimeConfig();
 const order = ref({});
 const userInfo = ref(null);
 const loading = ref(false);
@@ -159,6 +159,8 @@ async function onSuccess(response) {
     const res = await confirmpayment({
       ...orderData.value,
       transactionRef: response.transactionReference,
+    appCode: config.public?.APP_CODE
+
     });
 
     if (res.status === 200) {
