@@ -7,7 +7,7 @@
           @updateShipping="(val) => (selectedShipping = val)"
         />
         <CheckoutCost v-if="selectedShipping === 'shipping'" />
-        <div v-if="cartStore?.cartTotalAmount < minCartAmount">
+        <div v-if="cartStore?.cartTotalAmount">
           <CheckoutPayment />
         </div>
       </div>
