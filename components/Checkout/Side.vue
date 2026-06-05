@@ -150,7 +150,7 @@ function makePayment() {
   loading.value = true;
   status.value = "Processing order...";
   data.value = {
-    shippingAddressId: shippingStore?.defaultAddress.id,
+    shippingAddressId: shippingStore?.defaultAddress?.id,
     email: authStore.userInfo?.email,
     name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
     amount: cartStore?.cartTotalwithTax,
@@ -179,7 +179,7 @@ async function confirmOrder() {
   loading.value = true;
   try {
     const res = await confirmpurchase({
-      shippingAddressId: shippingStore?.defaultAddress.id,
+      shippingAddressId: shippingStore?.defaultAddress?.id,
       orderRequest: false,
       paymentOption: activeMethod.value === "card" ? 0 : 1,
       orderPickUp: selectedShipping.value === "pickup",
@@ -197,6 +197,8 @@ async function confirmOrder() {
       }
     }
   } catch (err) {
+    console.log({err});
+    
     toast.error(
       `${
         err?.response?.data?.Message ||

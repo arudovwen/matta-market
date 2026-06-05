@@ -226,8 +226,8 @@ const notifications = inject("notifications");
 const { availableLanguages, handleLanguageSelect } = useGoogleTranslate();
 
 const getUserInitials = computed(() => {
-  const firstNameInitial = authStore.userInfo?.firstName.slice(0, 1) || "";
-  const lastNameInitial = authStore.userInfo?.lastName.slice(0, 1) || "";
+  const firstNameInitial = authStore.userInfo?.firstName?.slice(0, 1) || "";
+  const lastNameInitial = authStore.userInfo?.lastName?.slice(0, 1) || "";
   return `${firstNameInitial}${lastNameInitial}`;
 });
 
