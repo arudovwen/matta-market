@@ -17,39 +17,29 @@ export const useShippingStore = defineStore("shipping", () => {
   }
 
   const sortAddresses = (addresses) => {
-    return addresses.some((i) => i.isDefault)
-      ? [
-          addresses.find((i) => i.isDefault),
-          ...addresses.filter((i) => !i.isDefault),
-        ]
-      : addresses;
+    return [...addresses].sort((a, b) => Number(b.isDefault) - Number(a.isDefault));
   };
 
-  function getAlladdress() {
+  async function getAlladdress() {
     if (!authStore.isLoggedIn) return;
     loading.value = true;
-    getalladdress()
-      .then(async (res) => {
-        if (res.status === 200) {
-          const addresses = res.data.data;
-          if (addresses.length === 1 && !addresses[0].isDefault) {
-            await setdefaultaddress(addresses[0].id);
-            addresses[0].isDefault = true;
-          }
-
-          setAddresses(addresses);
-          const tempAddress = sortAddresses(addresses);
-          setAddresses(tempAddress);
-        } else {
-          setAddresses([]);
-          defaultAddress.value = null;
+    try {
+      const res = await getalladdress();
+      if (res.status === 200) {
+        const fetchedAddresses = res.data.data || [];
+        if (fetchedAddresses.length > 0 && !fetchedAddresses.some((i) => i.isDefault)) {
+          await setdefaultaddress(fetchedAddresses[0].id);
+          fetchedAddresses[0].isDefault = true;
         }
-
-        loading.value = false;
-      })
-      .catch(() => {
-        loading.value = false;
-      });
+        setAddresses(sortAddresses(fetchedAddresses));
+      } else {
+        setAddresses([]);
+      }
+    } catch (error) {
+      // ignore
+    } finally {
+      loading.value = false;
+    }
   }
   function deleteAddress(id) {
     getalladdress(id).then((res) => {
