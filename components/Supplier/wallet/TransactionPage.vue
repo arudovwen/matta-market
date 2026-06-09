@@ -160,7 +160,7 @@ import { useRoute } from "vue-router";
 import moment from "moment";
 import debounce from "lodash/debounce";
 
-const theads = ["reference", "amount", "date","payment", "type"];
+const theads = ["reference", "amount", "date","payment type", "transaction type"];
 const tdata = inject("tdata");
 const isPageLoading = inject("isPageLoading");
 // eslint-disable-next-line no-unused-vars
