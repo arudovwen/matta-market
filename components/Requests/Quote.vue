@@ -3,7 +3,7 @@
     <form @submit.prevent="onSubmit" class="h-full max-w-[600px] mx-auto">
       <h4 class="text-2xl font-semibold text-left mb-7">Request for quote</h4>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="md:col-span-2" v-if="!authStore.isLoggedIn">
+        <div class="md:col-span-2">
           <Textinput
             placeholder=""
             label="Full name"
@@ -194,13 +194,13 @@ const quoteForm = reactive({
   requestedBy: authStore?.userInfo?.fullName || "",
   sellerName: product.value?.supplier,
   market: "",
-  email: "",
+  email: authStore?.userInfo?.email || "",
   productUse: "",
   expectedVolume: null,
   unit: product.value?.unit,
   deliverAddress: "",
   additionalInformation: "",
-  contactPhone: null,
+  contactPhone: authStore?.userInfo?.phoneNumber || null,
   packageType: product.value?.packagesAvailable?.[0]?.package.id,
   applications: "",
 });

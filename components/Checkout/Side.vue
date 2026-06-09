@@ -63,16 +63,6 @@
         {{ currencyFormat(cartStore?.cartTotalwithTax) }}
       </p>
     </div>
-
-    <AppButton
-      @click="handleOrderRequest"
-      text="Submit Order Request"
-      :isLoading="requestLoading"
-      :isDisabled="isOrderRequestDisabled"
-      loadingText="Processing ..."
-      btnClass="bg-primary-500 w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
-    />
-
     <AppButton
       @click="confirmOrder"
       :isLoading="loading || cartStore?.loadingCart"
@@ -80,6 +70,14 @@
       :text="status"
       loadingText="Processing ..."
       btnClass="!text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm bg-[#FF9900] !normal-case mb-4 w-full"
+    />
+    <AppButton
+      @click="handleOrderRequest"
+      text="Submit Order Request"
+      :isLoading="requestLoading"
+      :isDisabled="isOrderRequestDisabled"
+      loadingText="Processing ..."
+      btnClass="bg-primary-500 w-full text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm mb-4"
     />
 
     <p class="text-xs text-[#E1E1E1]">{{ orderText }}</p>
@@ -158,7 +156,7 @@ function makePayment() {
     phoneNumber: authStore.userInfo?.phoneNumber,
     reference: referenceData.transactionRef,
     orderRequest: false,
-    appCode: config.public?.APP_CODE
+    appCode: config.public?.APP_CODE,
   };
   payWithMonnify(data.value, onModalClose, onSuccess);
 }
@@ -185,7 +183,7 @@ async function confirmOrder() {
       orderRequest: false,
       paymentOption: activeMethod.value === "card" ? 0 : 1,
       orderPickUp: selectedShipping.value === "pickup",
-      appCode: config.public?.APP_CODE
+      appCode: config.public?.APP_CODE,
     });
 
     if (res.status === 200) {
@@ -200,8 +198,8 @@ async function confirmOrder() {
       }
     }
   } catch (err) {
-    console.log({err});
-    
+    console.log({ err });
+
     toast.error(
       `${
         err?.response?.data?.Message ||
@@ -222,7 +220,7 @@ async function onSuccess(response) {
     const res = await confirmpayment({
       ...referenceData,
       transactionRef: response.transactionReference,
-      appCode: config.public?.APP_CODE
+      appCode: config.public?.APP_CODE,
     });
 
     if (res.status === 200) {

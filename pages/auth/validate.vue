@@ -17,10 +17,18 @@ const route = useRoute();
 onMounted(async () => {
   const response = await getTokenInfo();
   if (response.status === 200) {
-    authStore.setLoggedUser({
+    let userData = {
       ...response.data.data,
       ...mattaAuth.value,
-    });
+    };
+
+    if (!userData.firstName && !userData.lastName) {
+      userData.firstName = userData.companyName;
+      userData.lastName = userData.companyName;
+      userData.fullName = userData.companyName;
+    }
+
+    authStore.setLoggedUser(userData);
     authStore.setHasPin(response.data.data.hasTransactionPIN);
     localStorage.setItem("fetchCart", true);
     navigateTo(route.query.redirectUrl ||"/");

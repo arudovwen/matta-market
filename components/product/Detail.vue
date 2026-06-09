@@ -141,16 +141,15 @@
                 @click="handleCart('buy')"
                 text="Send Order Request"
                 icon="pepicons-pop:paper-plane"
-                :isLoading="cartLoading"
-                :isDisabled="cartLoading || requestloading"
+                :isLoading="buyLoading"
+                :isDisabled="buyLoading || addLoading || requestloading"
                 btnClass="border border-primary-500 bg-primary-500  text-white !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full"
               />
               <AppButton
                 @click="handleRequest('call')"
                 text="Request a call"
                 icon="simple-line-icons:call-out"
-                :isLoading="cartLoading"
-                :isDisabled="cartLoading || requestloading"
+                :isDisabled="buyLoading || addLoading || requestloading"
                 btnClass="text-white  !px-[15px] !py-[13px] !normal-case bg-[#f90] border border-[#f90] flex w-full"
               />
             </div>
@@ -162,8 +161,9 @@
               @click="handleCart('add')"
               text="Add to cart"
               icon="bytesize:cart"
-              :isLoading="cartLoading"
-              :isDisabled="cartLoading || requestloading"
+              :isLoading="addLoading"
+              loadingText="Adding to cart..."
+              :isDisabled="buyLoading || addLoading || requestloading"
               btnClass="bg-transparent border border-[#D0D5DD]  text-[#182230] !px-4 !sm:px-6 !py-[13px] text-xs sm:text-sm w-full"
             />
           </div>
@@ -403,7 +403,10 @@ const mypackage = computed(() =>
   selectedPackage.value ? JSON.parse(selectedPackage.value) : null
 );
 const counter = ref(1);
-const cartLoading = ref(false);
+const buyLoading = ref(false);
+const addLoading = ref(false);
+const callLoading = ref(false);
+const requestLoading = ref(false);
 function handleCart(type) {
   if (!selectedPackage.value) {
     toast.info("Please choose a package");
@@ -419,8 +422,15 @@ function handleCart(type) {
     authOpen.value = true;
     return;
   }
-
-  cartLoading.value = true;
+  if (type === "call") {
+    callLoading.value = true;
+  }
+  if (type === "buy") {
+    buyLoading.value = true;
+  }
+  if (type === "add") {
+    addLoading.value = true;
+  }
   let data = {
     id: 0,
     packageId: mypackage?.value.package.id,
@@ -452,7 +462,15 @@ function handleCart(type) {
     if (type === "buy") {
       router.push("/checkout");
     }
-    cartLoading.value = false;
+    if (type === "buy") {
+      buyLoading.value = false;
+    }
+    if (type === "add") {
+      addLoading.value = false;
+    }
+    if (type === "call") {
+      callLoading.value = false;
+    }
   });
 }
 

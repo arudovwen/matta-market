@@ -136,9 +136,9 @@
                         >
                       </div>
                     </div>
-                    <div class="px-[15px] pt-[14px] pb-5 flex-1">
-                      <ul class="grid gap-y-3 text-[#555] darks:text-white/80">
-                        <li v-for="n in filteredMenu" :key="n.name" class="">
+                    <div class="px-2 pt-[14px] pb-5 flex-1">
+                      <ul class="grid gap-y-0.5 text-[#555] darks:text-white/80">
+                        <li v-for="n in ProfileMenu" :key="n.name" class="">
                           <MenuItem v-slot="{ active }">
                             <NuxtLink
                               :to="n.url"
@@ -147,7 +147,7 @@
                               :target="n.external ? '_blank' : '_self'"
                             >
                               <button
-                                class="flex gap-x-3 items-center text-[13px] font-medium text-[#555]"
+                                class="flex w-full px-2 py-1 gap-x-3 items-center rounded text-[13px] font-medium text-[#555] hover:bg-primary-500/10"
                               >
                                 <AppIcon :icon="n.icon" /> {{ n.name }}
                               </button>
@@ -156,7 +156,7 @@
                             <button
                               v-else
                               @click="isSigniningOut = true"
-                              class="flex gap-x-3 items-center text-[13px] font-medium"
+                              class="flex w-full px-2 py-1 gap-x-3 items-center rounded text-[13px] font-medium text-[#555] hover:bg-primary-500/10"
                             >
                               <AppIcon :icon="n.icon" /> {{ n.name }}
                             </button>

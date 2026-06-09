@@ -1,47 +1,76 @@
 <template>
   <div class="flex gap-x-6">
-    <div
-      class="bg-white w-full border border-[#EAECF0] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-3 mb-8"
-    >
-      <div class="px-6 pb-4 border-b border-[#EAECF0]">
-        <div
-          class="lg:w-[311px] h-[180px] bg-[#42307D] bg-no-repeat bg-bottom relative px-5 py-5 rounded-2xl flex flex-col justify-between bg-contain shadow-[0px_6px_2px_#344054]"
-          :style="{ backgroundImage: `url('/lines.png')` }"
-        >
-          <div class="flex flex-col gap-y-4">
-            <div class="flex items-center justify-between text-white">
-              <div>
-                <span class="text-xl font-semibold block">{{
-                  currencyFormat(balance.availableBalance)
-                }}</span>
+    <div class="">
+      <div
+        class="lg:w-[311px] h-[180px] bg-[#42307D] bg-no-repeat bg-bottom relative px-5 py-5 rounded-2xl flex flex-col justify-between bg-contain shadow-[0px_6px_2px_#344054]"
+        :style="{ backgroundImage: `url('/lines.png')` }"
+      >
+        <div class="flex flex-col gap-y-4">
+          <div class="flex items-center justify-between text-white">
+            <div>
+              <span class="text-xl font-semibold block">{{
+                currencyFormat(balance.availableBalance)
+              }}</span>
+              <span
+                class="text-[11px] font-normal flex items-center gap-x-[2px]"
+                >Ledger balance
                 <span
-                  class="text-[11px] font-normal flex items-center gap-x-[2px]"
-                  >Ledger balance
-                  <span
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Ledger balance"
-                    class="cursor-pointer h-3 w-3 flex items-center justify-center"
-                  >
-                    <AppIcon icon="quill:info" /> </span
-                  >: {{ currencyFormat(balance.ledgerBalance) }}</span
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Ledger balance"
+                  class="cursor-pointer h-3 w-3 flex items-center justify-center"
                 >
-              </div>
-              <span class="absolute top-4 right-4">
-                <img src="/images/pass.svg" class="w-4" alt="side"
-              /></span>
+                  <AppIcon icon="quill:info" /> </span
+                >: {{ currencyFormat(balance.ledgerBalance) }}</span
+              >
             </div>
+            <span class="absolute top-4 right-4">
+              <img src="/images/pass.svg" class="w-4" alt="side"
+            /></span>
           </div>
-          <span
-            class="font-normal text-xs text-white capitalize flex justify-between items-center"
-          >
-            <span>{{ details?.accountNumber }}</span>
+        </div>
+        <span
+          class="font-normal text-xs text-white capitalize flex justify-between items-center"
+        >
+          <span>{{ details?.accountNumber }}</span>
 
-            <span class="font-semibold">{{ details.bankName }}</span></span
+          <span class="font-semibold">{{ details.bankName }}</span></span
+        >
+      </div>
+    </div>
+
+    <div class="flex-1">
+      <div
+        v-if="hasWallet"
+        class="border border-[#EAECF0] bg-[#F2F4F7] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-4 pb-4 px-4 min-w-[360px]"
+      >
+        <p class="text-sm text-[#344054] font-semibold mb-2">
+          Bank Transfer Information
+        </p>
+
+        <div class="grid gap-y-0.5">
+          <div
+            class="flex gap-x-2 items-center text-sm"
+            v-for="item in bankData"
+            :key="item.title"
           >
+            <span class="font-normal text-[#667085]">{{ item.title }}: </span>
+            <span class="flex gap-x-4 items-center">
+              <span class="font-medium text-[#101828]">{{
+                details[item.key]
+              }}</span>
+              <button
+                v-if="item.key === 'accountNumber'"
+                v-clipboard="details?.accountNumber"
+                @click="toast.success('Copied')"
+                class="cursor-pointer"
+              >
+                <i class="uil uil-copy text-[#101828]"></i></button
+            ></span>
+          </div>
         </div>
       </div>
-      <div class="px-4 pt-4 flex justify-end gap-x-4" v-if="!isLoading">
+      <div class="pt-4 flex justify-start gap-x-4" v-if="!isLoading">
         <AppButton
           @click="
             () => {
@@ -68,38 +97,6 @@
         />
       </div>
     </div>
- <div class="flex-1">
-  <div
-    v-if="hasWallet"
-    class="border border-[#EAECF0] bg-[#F2F4F7] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-4 px-4 min-w-[360px]"
-  >
-    <p class="text-base text-[#344054] font-semibold mb-3">
-      Bank Transfer Information
-    </p>
-
-    <div class="grid gap-y-1">
-      <div
-        class="flex gap-x-2 items-center text-base"
-        v-for="item in bankData"
-        :key="item.title"
-      >
-        <span class="font-normal text-[#667085]">{{ item.title }}: </span>
-        <span class="flex gap-x-4 items-center">
-          <span class="font-medium text-[#101828]">{{
-            details[item.key]
-          }}</span>
-          <button
-            v-if="item.key === 'accountNumber'"
-            v-clipboard="details?.accountNumber"
-            @click="toast.success('Copied')"
-            class="cursor-pointer"
-          >
-            <i class="uil uil-copy text-[#101828]"></i></button
-        ></span>
-      </div>
-    </div>
-  </div>
- </div>
 
     <!-- <div
       class="bg-white w-full border border-[#EAECF0] rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] pt-5 pb-3 mb-8"

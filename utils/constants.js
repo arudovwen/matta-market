@@ -299,41 +299,57 @@ export const navigation = [
     icon: "lucide:shopping-bag",
     key: "procurement-my-orders",
     external: false,
+    isDisabled: false
   },
   {
     name: "My Requests",
     url: "/procurement/my-requests",
     icon: "ri:hand-coin-line",
     key: "procurement-my-requests",
-    external: false,
+    external: false, isDisabled: false
   },
+  {
+    name: "Storefront",
+    url: "/storefront",
+    icon: "solar:shop-outline",
+    key: "storefront",
+    external: false, isDisabled: false
+  },
+  {
+    name: "Products",
+    url: "/products",
+    icon: "fluent-mdl2:product-variant",
+    key: "products",
+    external: false, isDisabled: false
+  },
+
   {
     name: "Wallet",
     url: "/wallet/home",
     icon: "ion:wallet-outline",
     key: "wallet-home",
-    external: false,
+    external: false, isDisabled: false
   },
   {
     name: "Financing",
     url: "https://dev.oxide.matta.trade/financing",
     icon: "la:hand-holding-usd",
     key: "financing",
-    external: true,
+    external: true, isDisabled: false
   },
   {
     name: "Shipping Addresses",
     url: "/procurement/shipping-addresses",
     icon: "ion:map-outline",
     key: "procurement-shipping-addresses",
-    external: false,
+    external: false, isDisabled: false
   },
   {
     name: "Pickup locations",
     url: "/pickup-locations",
     icon: "lucide:truck",
     key: "pickup-locations",
-    external: false,
+    external: false, isDisabled: false
   },
 
   {
@@ -341,21 +357,7 @@ export const navigation = [
     url: "/account/saved-searches",
     icon: "tdesign:heart",
     key: "account-saved-searches",
-    external: false,
-  },
-  {
-    name: "Storefront",
-    url: "/storefront",
-    icon: "solar:shop-outline",
-    key: "storefront",
-    external: false,
-  },
-  {
-    name: "Products",
-    url: "/products",
-    icon: "fluent-mdl2:product-variant",
-    key: "products",
-    external: false,
+    external: false,   isDisabled: false
   },
 
   {
@@ -363,7 +365,7 @@ export const navigation = [
     url: "/user-management",
     icon: "lucide:users",
     key: "user-management",
-    external: false,
+    external: false, isDisabled: false
   },
 
   // {
@@ -378,16 +380,26 @@ export const navigation = [
     url: "https://dev.profile.matta.trade",
     icon: "heroicons:arrow-top-right-on-square-16-solid",
     key: "settings",
-    external: true,
+    external: true, isDisabled: false
   },
   {
     name: "Sign out",
     key: "sign-out",
     icon: "fa-solid:sign-out-alt",
     url: "#",
+    isDisabled: false
   },
 ];
-
+export const ProfileMenu = navigation.filter((i) =>
+  [
+    "storefront",
+    "products",
+    "procurement-my-orders",
+    "wallet-home",
+    "settings",
+    "sign-out",
+  ].includes(i.key)
+);
 export const businessTypes = [
   {
     sector: "Agriculture",

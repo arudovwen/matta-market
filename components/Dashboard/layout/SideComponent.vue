@@ -6,9 +6,14 @@
       <ul class="grid grid-cols-1 gap-y-1">
         <li v-for="item in mappedNav" :key="item.name">
           <NuxtLink
-            :to="item.url"
-            class="text-sm flex items-center px-5 border-r-[3px] border-transparent font-medium hover:bg-[#2270FA0F] hover:text-primary-500"
-            activeClass="bg-[#2270FA0F] text-primary-500 !border-primary-500"
+            :to="item.isDisabled ? '' : item.url"
+            v-tippy="item.isDisabled ? { content: 'Complete KYC to access page', trigger: 'click' } : false"
+            @click="item.isDisabled ? $event.preventDefault() : null"
+            :class="[
+              'text-sm flex items-center px-5 border-r-[3px] font-medium',
+              item.isDisabled ? 'opacity-60 cursor-not-allowed border-transparent text-gray-400' : 'border-transparent hover:bg-[#2270FA0F] hover:text-primary-500'
+            ]"
+            :activeClass="item.isDisabled ? '' : 'bg-[#2270FA0F] text-primary-500 !border-primary-500'"
             :external="item.external"
             :target="item.external ? '_blank' : '_self'"
           >
@@ -46,24 +51,11 @@ const mappedNav = computed(() => {
         ? vendorRoutes
         : buyerRoutes
       ).includes(i.key)
-    );
+    ).map(j=> ({
+      ...j,
+      // isDisabled: ['products','storefront'].includes(j.key)
+    }));
 });
-const openIndex = ref([
-  "Company",
-  "Procurement",
-  "My Account",
-  "Storefront",
-  "Wallet",
-]);
-// const userType = computed(() => {
-//   return authstore.userType;
-// });
-// function handleIndex(val) {
-//   openIndex.value.push(val);
-// }
-// function dropIndex(val) {
-//   openIndex.value = openIndex.value.filter((i) => i !== val);
-// }
 
 watch(
   () => route.path,
