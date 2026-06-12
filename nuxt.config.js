@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     "@pinia-plugin-persistedstate/nuxt",
     "nuxt-swiper",
     "@nuxt/image",
-    "nuxt-security",
+    // "nuxt-security",
     "@nuxt/devtools",
     // "nuxt-ssr-cache",
     "@vite-pwa/nuxt",
