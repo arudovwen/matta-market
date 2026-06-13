@@ -64,7 +64,8 @@ describe("ProductContent", () => {
         provide: {
           product: {
             hidePrice: false,
-            gallery: [""],
+            gallery: ["/test-img.png"],
+            featuredPhoto: "/test-img.png",
             manufacturer: "Stark Industries",
             id: "678908",
             name: "Mark 47",

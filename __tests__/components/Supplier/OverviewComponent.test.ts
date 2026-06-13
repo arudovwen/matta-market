@@ -5,6 +5,11 @@ import DashboardHeader from "~/components/DashboardHeader.vue";
 import { createTestingPinia } from "@pinia/testing";
 import OverviewComponent from "~/components/Supplier/OverviewComponent.vue";
 
+vi.mock("ofetch", () => ({
+  $fetch: vi.fn(() => Promise.resolve({})),
+  ofetch: vi.fn(() => Promise.resolve({})),
+}));
+
 describe("OverviewComponent", () => {
  
   vi.mock("~/services/settingservices", async () => {

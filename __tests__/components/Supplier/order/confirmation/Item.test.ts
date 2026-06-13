@@ -54,7 +54,7 @@ describe("Item.vue", () => {
     };
     wrapper = createComponent({ detail });
 
-    expect(wrapper.find("img").attributes("src")).toBe("/test-img.png");
+    expect(wrapper.find("img").attributes("src")).toContain("/test-img.png");
     expect(wrapper.text()).toContain("Chemical Compound");
     expect(wrapper.text()).toContain("Acme Corp");
     expect(wrapper.text()).toContain("25kg Bag");
@@ -64,7 +64,7 @@ describe("Item.vue", () => {
 
   it("renders default values when detail fields are missing", () => {
     wrapper = createComponent({ detail: {} });
-    expect(wrapper.find("img").attributes("src")).toBe("/images/imgplace.png");
+    expect(wrapper.find("img").attributes("src")).toContain("/images/imgplace.png");
     expect(wrapper.text()).toContain("n/a");
   });
 

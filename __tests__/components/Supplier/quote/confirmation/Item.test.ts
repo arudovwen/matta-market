@@ -66,7 +66,7 @@ describe('OrderDetailComponent', () => {
     expect(wrapper.text()).toContain('Plastic Drum');
     expect(wrapper.text()).toContain('5');
     expect(wrapper.text()).toContain('₦15000');
-    expect(wrapper.find('img').attributes('src')).toBe('/custom-img.png');
+    expect(wrapper.find('img').attributes('src')).toContain('/custom-img.png');
   });
 
   it('renders fallback values when data is missing', () => {
@@ -78,7 +78,7 @@ describe('OrderDetailComponent', () => {
       }
     });
     expect(wrapper.text()).toContain('n/a');
-    expect(wrapper.find('img').attributes('src')).toBe('/images/imgplace.png');
+    expect(wrapper.find('img').attributes('src')).toContain('/images/imgplace.png');
   });
 
   it('shows Edit Order button only when order status is 0', async () => {

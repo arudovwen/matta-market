@@ -65,7 +65,8 @@ describe("Detail", () => {
               products: {
                 product: {
                   hidePrice: false,
-                  gallery: [""],
+                  gallery: ["/test-image.png"],
+                  featuredPhoto: "/test-image.png",
                   manufacturer: "Stark Industries",
                   id: "678908",
                   name: "Mark 47",
@@ -124,7 +125,8 @@ describe("Detail", () => {
               products: {
                 product: {
                   hidePrice: false,
-                  gallery: [""],
+                  gallery: ["/test-image.png"],
+                  featuredPhoto: "/test-image.png",
                   manufacturer: "Stark Industries",
                   id: "678908",
                   name: "Mark 47",

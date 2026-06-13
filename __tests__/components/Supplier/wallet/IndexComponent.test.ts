@@ -1,9 +1,19 @@
 import { createTestingPinia } from "@pinia/testing";
-import { render, screen, fireEvent } from "@testing-library/vue";
+import { render, screen } from "@testing-library/vue";
 import { it, expect, describe, vi } from "vitest";
-import Vuex, { createStore, mapActions } from "vuex";
-import CompanySettingsCopy from "~/components/Supplier/CompanySettings copy.vue";
+import { flushPromises } from "@vue/test-utils";
+import { createStore } from "vuex";
 import IndexComponnent from "~/components/Supplier/wallet/IndexComponnent.vue";
+
+// Mock wallet services to prevent unresolved async tasks after teardown
+vi.mock("~/services/walletservice", () => ({
+  getLedgerTransactions: vi.fn(() =>
+    Promise.resolve({ status: 200, data: { data: [], totalCount: 0 } })
+  ),
+  getWalletBalance: vi.fn(() =>
+    Promise.resolve({ status: 200, data: { data: 0 } })
+  ),
+}));
 
 const store = createStore({
   state: {
@@ -45,6 +55,7 @@ describe("CompanySettings copy", () => {
       })),
     };
   });
+
   it("renders", async () => {
     const component = render(IndexComponnent, {
       global: {
@@ -62,12 +73,22 @@ describe("CompanySettings copy", () => {
             },
           }),
         ],
-        stubs:{
-          VerificationBox:true
-        }
+        stubs: {
+          VerificationBox: true,
+          SideBox: true,
+          SupplierWalletTransactionPage: true,
+        },
       },
     });
+
+    // Wait for all async operations (service calls) to complete before assertions
+    await flushPromises();
+
     expect(screen.getByText("Wallet")).toBeTruthy();
+
     component.unmount();
+
+    // Allow any remaining microtasks to settle before environment teardown
+    await flushPromises();
   });
 });

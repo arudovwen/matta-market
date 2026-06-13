@@ -27,24 +27,39 @@ vi.mock("vue-router", () => ({
   useRoute: () => mockRoute,
 }));
 
+const mockNavigateTo = vi.fn();
+vi.stubGlobal("navigateTo", mockNavigateTo);
+
+/** Fill all required fields using stable IDs / attributes */
+async function fillForm(wrapper) {
+  await wrapper.find("#firstName").setValue("John");
+  await wrapper.find("#lastName").setValue("Doe");
+  await wrapper.find("#street").setValue("Main Street");
+  await wrapper.find('input[placeholder="Company city"]').setValue("Lagos");
+  const select = wrapper.find(".select-input");
+  if (select.exists()) await select.setValue("Nigeria");
+}
+
 describe("ShippingForm.vue", () => {
   let wrapper;
   const originalLocation = window.location;
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockNavigateTo.mockClear();
     mockRoute.query = {};
-    
-    Object.defineProperty(window, 'location', {
+
+    Object.defineProperty(window, "location", {
       writable: true,
-      value: { href: "" }
+      value: { href: "" },
     });
 
     wrapper = mount(ShippingForm, {
       global: {
         stubs: {
           CountriesSelect: {
-            template: '<select class="select-input" :value="modelValue" @change="$emit(\'update:modelValue\', $event.target.value)"><option value="Nigeria">Nigeria</option></select>',
+            template:
+              '<select class="select-input" :value="modelValue" @change="$emit(\'update:modelValue\', $event.target.value)"><option value="Nigeria">Nigeria</option></select>',
             props: ["modelValue"],
           },
         },
@@ -53,9 +68,9 @@ describe("ShippingForm.vue", () => {
   });
 
   afterAll(() => {
-    Object.defineProperty(window, 'location', {
+    Object.defineProperty(window, "location", {
       writable: true,
-      value: originalLocation
+      value: originalLocation,
     });
   });
 
@@ -79,7 +94,7 @@ describe("ShippingForm.vue", () => {
 
     expect(mockCommit).toHaveBeenCalledWith("setUser", { name: "Test User" });
     expect(toast.info).toHaveBeenCalledWith("Login successful");
-    expect(window.location.href).toBe("/cart");
+    expect(mockNavigateTo).toHaveBeenCalledWith("/cart");
   });
 
   it("handles successful submission with redirect_to", async () => {
@@ -93,7 +108,7 @@ describe("ShippingForm.vue", () => {
     await wrapper.find("form").trigger("submit.prevent");
     await flushPromises();
 
-    expect(window.location.href).toBe("/checkout");
+    expect(mockNavigateTo).toHaveBeenCalledWith("/checkout");
   });
 
   it("handles successful submission with no redirect query", async () => {
@@ -106,7 +121,7 @@ describe("ShippingForm.vue", () => {
     await wrapper.find("form").trigger("submit.prevent");
     await flushPromises();
 
-    expect(window.location.href).toBe("/");
+    expect(mockNavigateTo).toHaveBeenCalledWith("/");
   });
 
   it("handles submission error with lowercase message", async () => {
@@ -136,20 +151,6 @@ describe("ShippingForm.vue", () => {
     expect(toast.error).toHaveBeenCalledWith(errorMsg);
   });
 
-async function fillForm(wrapper) {
-  const inputs = wrapper.findAll("input");
-  await inputs[0].setValue("John");
-  await inputs[1].setValue("Doe");
-  await wrapper.find('input[placeholder="Company city"]').setValue("Lagos");
-  await inputs[3].setValue("Main Street");
-  await inputs[4].setValue("10001");
-  
-  const select = wrapper.find(".select-input");
-  if (select.exists()) {
-    await select.setValue("Nigeria");
-  }
-}
-
   it("triggers validation error for maxLength", async () => {
     await wrapper.find("#firstName").setValue("a".repeat(51));
     await wrapper.find("form").trigger("submit.prevent");
@@ -167,14 +168,3 @@ async function fillForm(wrapper) {
     expect(cancelBtn.exists()).toBe(true);
   });
 });
-
-async function fillForm(wrapper) {
-  await wrapper.find("#firstName").setValue("John");
-  await wrapper.find("#lastName").setValue("Doe");
-  await wrapper.find("#street").setValue("Main Street");
-  await wrapper.find('input[placeholder="Company city"]').setValue("Lagos");
-  const select = wrapper.find(".select-input");
-  if (select.exists()) {
-    await select.setValue("Nigeria");
-  }
-}

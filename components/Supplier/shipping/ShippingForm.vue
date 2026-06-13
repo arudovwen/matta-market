@@ -84,6 +84,7 @@
       <div class="mb-6">
         <label for="street" class="mb-2 font-medium text-sm text-[#344054] block text-left">Street</label>
         <input
+          id="street"
           v-model="v$.street.$model"
           :class="{ 'border-red-500': v$.street.$error }"
           class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
