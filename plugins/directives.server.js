@@ -7,4 +7,5 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   nuxtApp.vueApp.directive("click-outside", ssrDirective);
   nuxtApp.vueApp.directive("clipboard", ssrDirective);
+  nuxtApp.vueApp.directive("tippy", ssrDirective);
 });
