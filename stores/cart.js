@@ -36,20 +36,31 @@ export const useCartStore = defineStore(
       usdRate.value = data;
     }
     function getUniqueItems(items, existingItems) {
-      const mergedItems = [...items, ...existingItems];
-      return mergedItems.filter(
-        (item, index, self) =>
-          self.findIndex((i) => i.productId === item.productId) === index
-      );
+      const result = [...items];
+      existingItems.forEach(localItem => {
+        const existing = result.find(i => i.productId === localItem.productId && i.packageId === localItem.packageId);
+        if (existing) {
+          if (typeof localItem.id === 'string' && localItem.id.startsWith('guest_')) {
+            existing.quantity += localItem.quantity;
+          }
+        } else {
+          result.push(localItem);
+        }
+      });
+      return result;
     }
 
     async function handleCartCreation(uniqueCart) {
-      const createRes = await createcart({ items: uniqueCart });
+      const payload = uniqueCart.map(item => {
+        const { id, ...rest } = item;
+        return typeof id === 'string' && id.startsWith('guest_') ? rest : item;
+      });
+      const createRes = await createcart({ items: payload });
+      if (process.client) {
+        localStorage.removeItem("fetchCart");
+      }
       if (createRes.status === 200) {
         getMyCart();
-        if (process.client) {
-          localStorage.removeItem("fetchCart");
-        }
       }
     }
 
@@ -89,10 +100,10 @@ export const useCartStore = defineStore(
           loadData();
         }
       } catch (err) {
-        if (cartItems.value.length > 0) {
+        if (cartItems.value.length > 0 && process.client && localStorage.getItem("fetchCart")) {
           await handleCartCreation(cartItems.value);
         }
-        resetCartState();
+        loadingCart.value = false;
       }
     }
     function resetCartState() {
@@ -138,14 +149,14 @@ export const useCartStore = defineStore(
 
     async function addToCart(item, type) {
       if (
-        cartItems.value.some((ct) => ct.productId === item.productId) &&
-        cartItems.value.some((ct) => ct.packageId === item.packageId)
+        cartItems.value.some((ct) => ct.productId === item.productId && ct.packageId === item.packageId)
       ) {
         return { status: false, message: "incart" };
       }
 
       if (!authStore.isLoggedIn) {
-        setCart([...cartItems.value, item]);
+        const guestItem = { ...item, id: item.id || ('guest_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)) };
+        setCart([...cartItems.value, guestItem]);
 
         return { status: true, message: type };
       }
@@ -170,7 +181,8 @@ export const useCartStore = defineStore(
     }
 
     function updateCart(item) {
-      if (authStore.isLoggedIn) {
+      const isGuestItem = typeof item.id === 'string' && item.id.startsWith('guest_');
+      if (authStore.isLoggedIn && !isGuestItem) {
         updatecart(item).then((res) => {
           if (res.status === 200) {
             const tempCart = cartItems.value.map((dt) => {
@@ -200,7 +212,8 @@ export const useCartStore = defineStore(
 
     function removeFromCart(id) {
       removeId.value = id;
-      if (authStore.isLoggedIn) {
+      const isGuestItem = typeof id === 'string' && id.startsWith('guest_');
+      if (authStore.isLoggedIn && !isGuestItem) {
         removeLoading.value = true;
         removecartitem(id)
           .then((res) => {

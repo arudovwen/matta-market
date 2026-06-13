@@ -22,12 +22,22 @@ vi.mock("vuex", () => ({
   }),
 }));
 
-let mockRoute = { query: {} };
+const { mockNavigateTo, mockRoute } = vi.hoisted(() => ({
+  mockNavigateTo: vi.fn(),
+  mockRoute: { query: {} }
+}));
+
 vi.mock("vue-router", () => ({
   useRoute: () => mockRoute,
 }));
 
-const mockNavigateTo = vi.fn();
+vi.mock("#app", () => ({
+  navigateTo: mockNavigateTo,
+  useRoute: () => mockRoute,
+}));
+vi.mock("#imports", () => ({
+  navigateTo: mockNavigateTo,
+}));
 vi.stubGlobal("navigateTo", mockNavigateTo);
 
 /** Fill all required fields using stable IDs / attributes */
@@ -35,9 +45,13 @@ async function fillForm(wrapper) {
   await wrapper.find("#firstName").setValue("John");
   await wrapper.find("#lastName").setValue("Doe");
   await wrapper.find("#street").setValue("Main Street");
-  await wrapper.find('input[placeholder="Company city"]').setValue("Lagos");
+  await wrapper.find("#city").setValue("Lagos");
   const select = wrapper.find(".select-input");
   if (select.exists()) await select.setValue("Nigeria");
+  
+  // ensure vue processes these updates
+  await flushPromises();
+  console.log("FORM AFTER FILL:", wrapper.vm.v$.$model);
 }
 
 describe("ShippingForm.vue", () => {

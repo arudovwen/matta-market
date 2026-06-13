@@ -62,6 +62,7 @@
       <div class="mb-6">
         <label for="city" class="mb-2 font-medium text-sm text-[#344054] block text-left">City</label>
         <input
+          id="city"
           v-model="v$.city.$model"
           :class="{ 'border-red-500': v$.city.$error }"
           class="px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] rounded-lg focus:outline-matta-black/20"
@@ -104,6 +105,7 @@
       <div class="mb-6">
         <label for="postalCode" class="mb-2 font-medium text-sm text-[#344054] block text-left">Postal code</label>
         <input
+          id="postalCode"
           v-model="v$.postalCode.$model"
           :class="{ 'border-red-500': v$.postalCode.$error }"
           class="rounded-lg px-[14px] py-[10px] h-11 w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -144,6 +146,7 @@ import useVuelidate from "@vuelidate/core";
 import { required, maxLength } from "@vuelidate/validators";
 import { toast } from 'vue3-toastify';
 import { useRoute } from "vue-router";
+import { navigateTo } from "#app";
 import { loginUser } from "~/services/authservices";
 import CountriesSelect from "~/components/forms/CountriesSelect";
 import { useStore } from "vuex";
@@ -186,7 +189,10 @@ const v$ = useVuelidate(rules, form);
 
 async function handleSubmit() {
   const validity = await v$.value.$validate();
-  if (!validity) return;
+  if (!validity) {
+    console.log("Validation failed:", v$.value.$errors);
+    return;
+  }
   isLoading.value = true;
   loginUser(form)
     .then((res) => {

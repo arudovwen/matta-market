@@ -503,7 +503,7 @@ export default defineNuxtConfig({
       crawlLinks: true,
       failOnError: false, // Don't crash if one route fails
     },
-    compressPublicAssets: true,
+    compressPublicAssets: false,
     minify: true,
   },
 

@@ -23,9 +23,11 @@
         >
       </div>
       <span class="items-center hidden text-sm md:flex gap-x-4">
-        <template v-if="authStore.isLoggedIn">
-          <NotificationComponent
-        /></template>
+        <ClientOnly>
+          <template v-if="authStore.isLoggedIn">
+            <NotificationComponent />
+          </template>
+        </ClientOnly>
         <button
           type="button"
           aria-label="cart"
@@ -50,12 +52,14 @@
         </button>
         <span class="text-sm"><CurrencyChanger /></span>
         <span class="hidden text-sm text-white lg:inline">
-          <GoogleTranslateSelect
-            :fetch-browser-language="true"
-            :languages="availableLanguages"
-            trigger="click"
-            @select="handleLanguageSelect"
-          />
+          <ClientOnly>
+            <GoogleTranslateSelect
+              :fetch-browser-language="true"
+              :languages="availableLanguages"
+              trigger="click"
+              @select="handleLanguageSelect"
+            />
+          </ClientOnly>
         </span>
       </span>
     </div>
