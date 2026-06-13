@@ -156,15 +156,15 @@ async function handleSubmit() {
         store.commit("setUser", res.data.data);
         toast.info("Login successful");
         if (route.query.redirected_from) {
-          window.location.href = route.query.redirected_from;
+          navigateTo(route.query.redirected_from);
           return;
         }
         if (route.query.redirect_to) {
-          window.location.href = route.query.redirect_to;
+          navigateTo(route.query.redirect_to);
           return;
         }
 
-        window.location.href = "/";
+        navigateTo("/");
       }
     })
 

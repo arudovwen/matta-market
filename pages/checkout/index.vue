@@ -10,11 +10,15 @@
     </div>
     <div class="flex gap-x-5 w-full flex-col lg:flex-row gap-y-8 lg:gap-y-0">
       <div class="flex-1 grid gap-y-4">
-        <CartContent />
-        <CheckoutContent />
+        <ClientOnly>
+          <CartContent />
+          <CheckoutContent />
+        </ClientOnly>
       </div>
       <div>
-        <CheckoutSide />
+        <ClientOnly>
+          <CheckoutSide />
+        </ClientOnly>
       </div>
     </div>
   </div>

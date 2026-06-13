@@ -20,7 +20,7 @@
             "
             class="rounded-[10px] py-3 px-[16px] border-2 cursor-pointer"
           >
-            <div @click="handleDefault(n.id)" class="mb-1">
+            <div @click="handleDefault(n.id)" class="mb-1" :title="n?.isDefault ? 'Default' : 'Click to set as default'">
               <CheckoutShippingAddress :detail="n" :active="n?.isDefault" />
             </div>
             <div class="flex gap-x-5 mt-3">

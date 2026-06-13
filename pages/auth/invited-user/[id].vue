@@ -226,7 +226,7 @@ async function handleSubmit() {
       if (res.status === 200) {
         toast.info("Registration successful");
 
-        window.location.href = `/auth/login`;
+        navigateTo(`/auth/login`);
       }
     })
 

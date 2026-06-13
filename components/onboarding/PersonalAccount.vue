@@ -516,7 +516,7 @@ async function handleSubmit() {
           onboardingPageStatus: 1,
         });
 
-        window.location.href = "/onboarding/complete/personal";
+        navigateTo("/onboarding/complete/personal");
       }
     })
 

@@ -54,7 +54,7 @@ function handleOrderRequest() {
       if (res.status === 200) {
         loading.value = false;
         cartStore?.clearCart();
-        window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
+        navigateTo(`/order-success?orderId=${res.data.data}&order_type=requests`);
       }
     })
     .catch((err) => {

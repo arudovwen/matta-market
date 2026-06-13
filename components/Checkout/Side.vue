@@ -189,7 +189,7 @@ async function confirmOrder() {
     if (res.status === 200) {
       if (activeMethod.value === "wallet") {
         cartStore?.clearCart();
-        window.location.href = `/order-success?orderId=${res.data.data}`;
+        navigateTo(`/order-success?orderId=${res.data.data}`);
       } else {
         referenceData.transactionRef = `ORD-${res.data.data}-${nanoid(6)}`;
         referenceData.zohoorderId = `ORD-${res.data.data}`;
@@ -225,7 +225,7 @@ async function onSuccess(response) {
 
     if (res.status === 200) {
       cartStore?.clearCart();
-      window.location.href = `/order-success?orderId=${referenceData.orderId}`;
+      navigateTo(`/order-success?orderId=${referenceData.orderId}`);
     }
   } catch (err) {
     toast.error(
@@ -253,7 +253,7 @@ async function handleOrderRequest() {
 
     if (res.status === 200) {
       cartStore?.clearCart();
-      window.location.href = `/order-success?orderId=${res.data.data}&order_type=requests`;
+      navigateTo(`/order-success?orderId=${res.data.data}&order_type=requests`);
     }
   } catch (err) {
     toast.error(

@@ -210,7 +210,7 @@ async function handleSubmit() {
   inviteUsers(form)
     .then((res) => {
       if (res.status === 200) {
-        window.location.href = "/onboarding/complete/company";
+        navigateTo("/onboarding/complete/company");
       }
     })
     .catch((err) => {

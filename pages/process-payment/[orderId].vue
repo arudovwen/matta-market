@@ -164,7 +164,7 @@ async function onSuccess(response) {
     });
 
     if (res.status === 200) {
-      window.location.href = `/order-success?orderId=${orderId}`;
+      navigateTo(`/order-success?orderId=${orderId}`);
     } else {
       throw new Error('Confirmation failed');
     }

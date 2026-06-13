@@ -401,7 +401,7 @@ function deleteAccount() {
     if (res.status == 200) {
       toast.info("Account deleted successfully");
       store.logOut();
-      window.location.href = "/";
+      navigateTo("/");
     }
   });
 }

@@ -230,7 +230,7 @@ function handlePurchase() {
       .then((res) => {
         if (res.status === 200) {
           cartStore?.clearCart();
-          window.location.href = `/order-success?orderId=${res?.data?.data}`;
+          navigateTo(`/order-success?orderId=${res?.data?.data}`);
           isLoading.value = false;
         }
       })
