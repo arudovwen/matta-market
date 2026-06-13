@@ -12,11 +12,12 @@
           <AppIcon
             :icon="!detail.liked ? 'ph:heart' : 'ph:heart-fill'"
             class="text-xs sm:text-sm md:text-base darks:text-white"
+            :class=" !detail.liked ? 'text-gray-400' : 'text-primary-600'"
           />
         </span>
         <img
-          v-if="detail.converPhoto"
-          :src="detail.converPhoto"
+          v-if="detail.converPhoto || detail?.productImg"
+          :src="detail.converPhoto || detail?.productImg"
           alt="Card"
           width="276"
           height="160"
@@ -31,7 +32,7 @@
       <div class="w-full px-3 py-3 md:py-5 xl:px-5">
         <span
           class="block mb-1 font-medium truncate max-w-[120px] md:max-w-max text-[12px] sm:text-sm xl:text-base darks:text-white leading-tight"
-          >{{ detail.title }}  {{
+          >{{ detail.title || detail?.productName }}  {{
             detail.productBrandName && `- ${detail.productBrandName}`
           }}</span
         >
@@ -82,12 +83,12 @@ const route = useRoute();
 
 // Computed property for product URL
 const productUrl = computed(() => {
-  const productTitle = encodeURIComponent(props.detail.title);
-  const routeTitle = route.params?.title
-    ? `/${encodeURIComponent(route.params.title)}`
+  const productTitle = encodeURIComponent(props.detail.title || props.detail.productName);
+  const routeTitle = route.params?.title || props.detail.categoryName
+    ? `/${encodeURIComponent(route.params.title || props.detail.categoryName)}`
     : "";
-  const productId = props.detail.id;
-  const categoryId = route.params?.id ? route.params.id : "";
+  const productId = props.detail.id ||props.detail.productId;
+  const categoryId = route.params?.id || props.detail.categoryId ? route.params.id : "";
   return `/product/${productTitle}${routeTitle}/${productId}?categoryId=${categoryId}`;
 });
 </script>

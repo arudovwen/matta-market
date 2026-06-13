@@ -187,15 +187,9 @@ export async function likeproduct(data) {
 export async function unlikeproduct(data) {
   return await marketPost(`${urls.UNLIKE_PRODUCT}`, data, config);
 }
-export async function getlikeproducts({
-  PageNumber = 1,
-  PageSize = 10,
-  Search = "",
-  SortOrder,
-  Manufacturer,
-}) {
-  return await get(
-    `${urls.GET_LIKED_PRODUCT}?Search=${Search}&PageNumber=${PageNumber}&SortOrder=${SortOrder}&PageSize=${PageSize}&Manufacturer=${Manufacturer}`,
+export async function getlikeproducts(payload) {
+  return await marketGet(
+    `${urls.GET_LIKED_PRODUCT}?${new URLSearchParams(cleanObject(payload))}`,
     config
   );
 }
@@ -206,14 +200,9 @@ export async function likesupplier(data) {
 export async function unlikesupplier(data) {
   return await post(`${urls.UNLIKE_SUPPLIER}`, data, config);
 }
-export async function getlikedsuppliers({
-  PageNumber = 1,
-  PageSize = 10,
-  Search = "",
-  SortOrder,
-}) {
+export async function getlikedsuppliers(payload) {
   return await get(
-    `${urls.GET_LIKED_SUPPLIERS}?Search=${Search}&PageNumber=${PageNumber}&SortOrder=${SortOrder}&PageSize=${PageSize}`,
+    `${urls.GET_LIKED_SUPPLIERS}?${new URLSearchParams(cleanObject(payload))}`,
     config
   );
 }

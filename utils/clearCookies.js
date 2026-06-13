@@ -10,7 +10,7 @@ export async function clearCookies() {
   
 
     } else {
-
+      console.log('No cookies found');
     }
   }
   

@@ -44,11 +44,15 @@
             class="bg-gray-100 w-full h-[200px] lg:h-[300px] xl:h-[460px] rounded-[5px] object-cover"
           />
           <span
-            class="absolute h-5 sm:h-[30px] w-5 sm:w-[30px] rounded-full right-[10px] top-[10px] bg-white/70 flex items-center justify-center"
+            class="absolute h-5 sm:h-[30px] w-5 sm:w-[30px] rounded-full right-[10px] top-[10px] bg-white/50 backdrop-blur-sm flex items-center justify-center"
             ><AppIcon
               @click="handleLike(productData.liked)"
               :icon="!productData.liked ? 'ph:heart' : 'ph:heart-fill'"
-              class="text-xs sm:text-sm md:text-base darks:text-white"
+              :class="[
+                'text-xs sm:text-sm md:text-base transition-opacity',
+                likeLoading ? 'opacity-50 pointer-events-none cursor-not-allowed' : 'cursor-pointer',
+                !productData.liked ? 'text-gray-400' : 'text-primary-600'
+              ]"
           /></span>
         </div>
         <div v-if="isLoading" class="relative flex-1">
@@ -134,10 +138,7 @@
           <div class="grid w-full gap-y-5">
             <div class="flex flex-col gap-3 md:flex-row">
               <AppButton
-                v-if="
-                  !productData.hidePrice &&
-                  productData?.supplierId !== authStore.businessId
-                "
+                v-if="!productData.hidePrice && productData?.supplierId !== authStore.businessId"
                 @click="handleCart('buy')"
                 text="Send Order Request"
                 icon="pepicons-pop:paper-plane"
@@ -154,10 +155,7 @@
               />
             </div>
             <AppButton
-              v-if="
-                !productData.hidePrice &&
-                productData?.supplierId !== authStore.businessId
-              "
+              v-if="!productData.hidePrice && productData?.supplierId !== authStore.businessId"
               @click="handleCart('add')"
               text="Add to cart"
               icon="bytesize:cart"
@@ -327,10 +325,9 @@
 <script setup>
 import { useProductStore } from "~/stores/products";
 import { toast } from "vue3-toastify";
-import { likeproduct } from "~/services/productservices";
+import { likeproduct, unlikeproduct } from "~/services/productservices";
 import { confirmpurchase, requestACall } from "~/services/cartservice";
-import { Tooltip } from "@programic/vue3-tooltip";
-import "tippy.js/dist/tippy.css";
+
 
 const orderRequestStore = useOrderRequestStore();
 const currentCurrency = inject("currentCurrency");
@@ -407,6 +404,7 @@ const buyLoading = ref(false);
 const addLoading = ref(false);
 const callLoading = ref(false);
 const requestLoading = ref(false);
+const likeLoading = ref(false);
 function handleCart(type) {
   if (!selectedPackage.value) {
     toast.info("Please choose a package");
@@ -533,10 +531,14 @@ function handleOrderRequest(type) {
   });
 }
 
-function handleLike(value) {
+async function handleLike(value) {
   if (!authStore.isLoggedIn) {
     toast.info("Login to continue");
+    return;
   }
+
+  if (likeLoading.value) return;
+  likeLoading.value = true;
 
   let data = {
     businessId: authStore.userId,
@@ -556,18 +558,25 @@ function handleLike(value) {
       : "",
   };
 
-  if (value) {
-    unlikeproduct(data).then((res) => {
+  try {
+    if (value) {
+      const res = await unlikeproduct(data);
       if (res.status === 200) {
-        toast.success("Successfully Unliked");
+        toast.success("Product removed from saved items");
+        store.setProduct({...productData.value, liked: false})
       }
-    });
-  } else {
-    likeproduct(data).then((res) => {
+    } else {
+      const res = await likeproduct(data);
       if (res.status === 200) {
-        toast.success("Successfully liked");
+        toast.success("Product saved successfully");
+        store.setProduct({...productData.value, liked: true})
       }
-    });
+    }
+  } catch (err) {
+    console.log(err)
+    toast.error("Something went wrong, please try again.");
+  } finally {
+    likeLoading.value = false;
   }
 }
 
