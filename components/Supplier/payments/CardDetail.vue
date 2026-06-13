@@ -9,12 +9,12 @@
   >
     <div class="flex items-center gap-x-2">
       <NuxtImg
-        src="~/assets/img/master.svg"
+        src="/assets/img/master.svg"
         alt="alt"
         v-if="index == 1"
         class=""
       />
-      <NuxtImg src="~/assets/img/visa.svg" alt="alt" v-else class="" />
+      <NuxtImg src="/assets/img/visa.svg" alt="alt" v-else class="" />
       <div>
         <div class="flex items-center mb-2 gap-x-2">
           <p

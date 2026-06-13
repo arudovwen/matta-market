@@ -35,24 +35,26 @@
        
         class="hidden lg:grid grid-cols-3 md:grid-cols-4 xl:grid-cols-8 gap-4 md:gap-5 justify-center max-h-[350px] overflow-y-auto no-scrollbar"
       >
-        <NuxtLink
-          v-for="(n, idx) in store?.marketsData"
-          :key="idx"
-          :to="`/category/market/${encodeURIComponent(n.title.toLowerCase())}/${n.id}`"
-        >
-          <span
-            class="mx-auto cursor-pointer px-5 flex flex-col w-[100px] md:w-[140px] h-[100px] md:h-[140px] border-2 border-[#EAEAEA] rounded-full items-center justify-center hover:border-[#777] hover:bg-[rgba(33,118,255,0.04)]"
+        <ClientOnly>
+          <NuxtLink
+            v-for="(n, idx) in store?.marketsData"
+            :key="idx"
+            :to="`/category/market/${encodeURIComponent(n.title.toLowerCase())}/${n.id}`"
           >
-            <AppIcon
-              :icon="`fa6-solid:${n.imagePath}`"
-              class="text-base md:text-[40px] text-[#444444] darks:text-white/80 mb-[6px]"
-            />
             <span
-              class="text-[10px] md:text-xs text-[#333] darks:text-white text-center"
-              >{{ n.title }}</span
+              class="mx-auto cursor-pointer px-5 flex flex-col w-[100px] md:w-[140px] h-[100px] md:h-[140px] border-2 border-[#EAEAEA] rounded-full items-center justify-center hover:border-[#777] hover:bg-[rgba(33,118,255,0.04)]"
             >
-          </span>
-        </NuxtLink>
+              <AppIcon
+                :icon="`fa6-solid:${n.imagePath}`"
+                class="text-base md:text-[40px] text-[#444444] darks:text-white/80 mb-[6px]"
+              />
+              <span
+                class="text-[10px] md:text-xs text-[#333] darks:text-white text-center"
+                >{{ n.title }}</span
+              >
+            </span>
+          </NuxtLink>
+        </ClientOnly>
       </div>
     </div>
   </div>

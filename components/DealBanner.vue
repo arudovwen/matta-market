@@ -39,14 +39,16 @@
               class="text-base md:text-lg text-[#484848]"
               icon="lucide:shopping-cart"
             />
-            <span
-              v-if="cartStore?.cartTotal > 0"
-              class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
-              >{{ cartStore?.cartTotal }}</span
-            >
+            <ClientOnly>
+              <span
+                v-if="cartStore?.cartTotal > 0"
+                class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
+                >{{ cartStore?.cartTotal }}</span
+              >
+            </ClientOnly>
           </span>
         </button>
-        <span lass="text-sm"><CurrencyChanger /></span>
+        <span class="text-sm"><CurrencyChanger /></span>
         <span class="hidden text-sm text-white lg:inline">
           <GoogleTranslateSelect
             :fetch-browser-language="true"
