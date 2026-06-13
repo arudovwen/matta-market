@@ -29,7 +29,7 @@
                   class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                   >Photo</span
                 >
-                 <img
+                <NuxtImg
                   v-else
                   alt="persoanl"
                   :src="image"
@@ -78,7 +78,7 @@
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
                   <input
-                  id="firstName"
+                    id="firstName"
                     v-model="v$.firstName.$model"
                     :class="{ 'border-red-500': v$.firstName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -101,7 +101,7 @@
                     <span class="text-red-500 pl-[.02rem]">*</span></label
                   >
                   <input
-                  id="lastName"
+                    id="lastName"
                     v-model="v$.lastName.$model"
                     :class="{ 'border-red-500': v$.lastName.$error }"
                     class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -166,7 +166,7 @@
                     <PhoneCodes v-model="form.code" />
 
                     <input
-                    id="phone"
+                      id="phone"
                       :class="{ 'border-red-500': v$.phone.$error }"
                       v-model="v$.phone.$model"
                       class="flex-1 rounded-r-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -193,7 +193,7 @@
                   >
                   <div class="flex relative items-center">
                     <input
-                    id="email"
+                      id="email"
                       :class="{ 'border-red-500': v$.email.$error }"
                       :value="form.email"
                       class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] focus:outline-matta-black/20"
@@ -247,7 +247,7 @@
               </div>
             </div>
             <div class="flex justify-center gap-x-4 items-center mt-8">
-            <span></span>
+              <span></span>
               <button
                 :disabled="v$.$silentErrors.length"
                 :class="{
@@ -368,7 +368,7 @@ import {
   maxLength,
   numeric,
 } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 import {
   updatePersonalInfo,
   setOnboardingcomplete,
@@ -394,7 +394,6 @@ const image = ref(null);
 const coordinate = ref(null);
 const cropper = ref(null);
 const zones = moment.tz.names();
-
 
 const form = reactive({
   code: "+234",
@@ -434,7 +433,7 @@ const states = computed(() => {
   if (!form.country) return [];
   return (
     countries.find(
-      (item) => form.country.toLowerCase() === item.name.toLowerCase()
+      (item) => form.country.toLowerCase() === item.name.toLowerCase(),
     ).states || []
   );
 });
@@ -525,7 +524,7 @@ async function handleSubmit() {
       invalidCredentials.value = true;
       isLoading.value = false;
 
-      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 </script>

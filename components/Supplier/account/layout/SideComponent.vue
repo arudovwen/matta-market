@@ -7,7 +7,7 @@
       <div
         class="w-16 md:w-16 h-16 md:h-16 rounded-lg bg-white shadow p-4 flex items-center justify-center border border-[#E7EBEE]"
       >
-         <img v-if="company.logo" class="" :src="company.logo" alt="logo" />
+        <NuxtImg v-if="company.logo" class="" :src="company.logo" alt="logo" />
         <span class="uppercase" v-else>{{
           company.companyName.slice(0, 2)
         }}</span>
@@ -61,11 +61,7 @@
             ></span>
             <hr class="my-2" />
             <ul v-if="openIndex.includes(n.title)">
-              <NuxtLink
-                v-for="item in n.subs"
-                :key="item.name"
-                :to="item.url"
-              >
+              <NuxtLink v-for="item in n.subs" :key="item.name" :to="item.url">
                 <li class="text-sm text-matta-black flex items-center">
                   <span class="flex-1 py-2">
                     <i class="uil uil-corner-down-right mr-2 hidden"></i>
@@ -94,11 +90,11 @@ import { ref, inject, computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
-const authstore = useAuthStore()
+const authstore = useAuthStore();
 const company = inject("company");
 
 const navigation = [
-{
+  {
     title: "My Account",
     role: ["supplier", "buyer"],
     accountType: [0, 1],

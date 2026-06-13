@@ -28,13 +28,13 @@
           >
             <span class="flex gap-x-3 items-center">
               <span>
-                <img
+                <NuxtImg
                   :src="
                     allowedImages.includes(docType(document.url))
                       ? '/images/imgimg.svg'
                       : allowedPdf.includes(docType(document.url))
-                      ? '/images/pdfimg.svg'
-                      : '/images/docimg.svg'
+                        ? '/images/pdfimg.svg'
+                        : '/images/docimg.svg'
                   "
                   class="w-8 h-8"
                   alt="img"
@@ -48,7 +48,7 @@
                   {{
                     `${docName(document.documentType, type).replaceAll(
                       " ",
-                      "_"
+                      "_",
                     )}.${docType(document.url)}`
                   }}</span
                 >
@@ -109,7 +109,7 @@ function openMedia(val) {
 
 const flattenedObjects = computed(() =>
   props.documents.flatMap((item) =>
-    item.urls.map((url) => ({ url: url.url, documentType: item.documentType }))
-  )
+    item.urls.map((url) => ({ url: url.url, documentType: item.documentType })),
+  ),
 );
 </script>

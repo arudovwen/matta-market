@@ -67,8 +67,8 @@
               }"
               class="gap-x-1 items-center"
             >
-               <img
-                src="~/assets/images/nigeria.svg"
+               <NuxtImg
+                src="/assets/images/nigeria.svg"
                 width="20"
                 height="20"
                 alt="Matta"
@@ -297,15 +297,18 @@ const filteredMenu = computed(() =>
       i.key === "settings" ||
       i.key === "procurement-my-orders" ||
       i.key === "sign-out" ||
-      i.key === "wallet-home"
-  )
+      i.key === "wallet-home",
+  ),
 );
 const view = ref({
   atTopOfPage: true,
 });
 const open = ref(false);
-onBeforeMount(() => {
+onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+});
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 // onMounted(() => {
 //   if (authStore.isLoggedIn) {
@@ -365,7 +368,7 @@ provide("isOpen", isSigniningOut);
 <style lang="scss">
 nav {
   .NuxtLink-active.NuxtLink-exact-active {
-    color: #1570EF;
+    color: #1570ef;
   }
 }
 /* Add the transition class for slide-down effect */

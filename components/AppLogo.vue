@@ -1,18 +1,16 @@
 <template>
   <NuxtLink to="/">
-    <img
+    <NuxtImg
       v-if="!dark"
       src="/images/marketplace.png"
       alt="flux"
       :class="className"
-
     />
-    <img
+    <NuxtImg
       v-else
       src="/images/marketplace.png"
       alt="flux"
       :class="className"
-    
     />
   </NuxtLink>
 </template>

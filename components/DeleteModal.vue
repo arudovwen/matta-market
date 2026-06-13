@@ -35,7 +35,7 @@
                 <div class="bg-white px-6 py-6">
                   <div class="flex justify-between mb-5 items-center">
                     <div>
-                      <img alt="delete" src="/images/delete.svg" />
+                      <NuxtImg alt="delete" src="/images/delete.svg" />
                     </div>
                     <span @click="handleclose" class="absolute top-3 right-3">
                       <i

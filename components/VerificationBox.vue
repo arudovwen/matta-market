@@ -55,6 +55,8 @@ function getData() {
     ) {
       isOpen.value = true;
     }
+  }).catch(() => {
+    // silently handle error to prevent unhandled rejection
   });
 }
 watch(route, () => {

@@ -14,7 +14,7 @@
         <div class="flex items-center justify-between">
           <div class="flex items-center logo gap-x-10">
             <NuxtLink to="/">
-              <img
+              <NuxtImg
                 src="/images/marketplace.png"
                 alt="Matta"
                 class="w-20 md:w-[150px] h-auto object-contain"
@@ -26,7 +26,7 @@
 
           <div class="flex items-center text-sm gap-x-4">
             <span class="flex items-center text-sm gap-x-4 md:hidden">
-              <span lass="text-sm"><CurrencyChanger /></span>
+              <span class="text-sm"><CurrencyChanger /></span>
               <span class="hidden text-sm lg:inline">
                 <!-- <GoogleTranslateSelect
                   :fetch-browser-language="false"
@@ -49,11 +49,13 @@
                     class="text-base md:text-lg text-[#484848]"
                     icon="lucide:shopping-cart"
                   />
-                  <span
-                    v-if="cartStore?.cartTotal > 0"
-                    class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
-                    >{{ cartStore?.cartTotal }}</span
-                  >
+                  <ClientOnly>
+                    <span
+                      v-if="cartStore?.cartTotal > 0"
+                      class="w-3 h-3 rounded-full bg-[#16F046] text-[8px] flex items-center justify-center absolute top-[4px] right-[4px]"
+                      >{{ cartStore?.cartTotal }}</span
+                    >
+                  </ClientOnly>
                 </span>
               </button>
             </span>
@@ -117,7 +119,7 @@
                       <span
                         class="h-8 w-8 rounded-full flex items-center justify-center text-white bg-[#f90] font-semibold"
                       >
-                        <img
+                        <NuxtImg
                           v-if="authStore.userInfo?.profilepic"
                           alt="avatar"
                           class="w-8 h-8 rounded-full"
@@ -137,7 +139,9 @@
                       </div>
                     </div>
                     <div class="px-2 pt-[14px] pb-5 flex-1">
-                      <ul class="grid gap-y-0.5 text-[#555] darks:text-white/80">
+                      <ul
+                        class="grid gap-y-0.5 text-[#555] darks:text-white/80"
+                      >
                         <li v-for="n in ProfileMenu" :key="n.name" class="">
                           <MenuItem v-slot="{ active }">
                             <NuxtLink
@@ -349,7 +353,9 @@
     <LazyModalAuth goToUrl="/checkout" />
   </section>
 
-  <template v-if="notificationOpen"><LazyMobileNotificationComponent /></template>
+  <template v-if="notificationOpen"
+    ><LazyMobileNotificationComponent
+  /></template>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -366,7 +372,7 @@ const windowWidth = ref(
   window?.innerWidth ||
     document?.documentElement?.clientWidth ||
     document?.body?.clientWidth ||
-    0
+    0,
 );
 
 // Use Google Translate composable
@@ -389,15 +395,15 @@ const filteredMenu = computed(() =>
       i.key === "settings" ||
       i.key === "procurement-my-orders" ||
       i.key === "sign-out" ||
-      i.key === "wallet-home"
-  )
+      i.key === "wallet-home",
+  ),
 );
 const view = ref({
   atTopOfPage: true,
 });
 
 const open = ref(false);
-import { onBeforeUnmount } from 'vue';
+import { onBeforeUnmount } from "vue";
 
 onBeforeMount(() => {
   if (typeof window !== "undefined") {

@@ -44,7 +44,7 @@
                       class="text-matta-black outline-none h-auto absolute left-4"
                       @click="
                         () => {
-                          open = false
+                          open = false;
                         }
                       "
                     >
@@ -53,15 +53,13 @@
                     </button>
 
                     <span class="font-medium text-base capitalize">
-                    
-                         <img
-                          src="/images/logo.png"
-                          width="100"
-                          height="26"
-                          alt="Matta"
-                          class="w-[100px] h-auto mx-auto"
-                        />
-
+                      <NuxtImg
+                        src="/images/logo.png"
+                        width="100"
+                        height="26"
+                        alt="Matta"
+                        class="w-[100px] h-auto mx-auto"
+                      />
                     </span>
                   </div>
                   <div class="flex-1"></div>

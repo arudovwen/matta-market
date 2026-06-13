@@ -7,7 +7,7 @@
       <span
         class="w-16 md:w-20 h-16 md:h-20 rounded-lg bg-white shadow p-4 flex items-center justify-center"
       >
-         <img
+        <NuxtImg
           class=""
           alt="product"
           width="80"

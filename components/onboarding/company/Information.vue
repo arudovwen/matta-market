@@ -29,7 +29,7 @@
                       class="h-[64px] w-[64px] rounded-full flex items-center text-xs bg-[#F1F3F5] justify-center"
                       ><i class="uil uil-image text-4xl text-gray-400"></i>
                     </span>
-                    <img
+                    <NuxtImg
                       v-else
                       alt="information"
                       :src="image"
@@ -647,7 +647,7 @@ const businessTypesOptions = businessTypes?.map((i) => {
 });
 const sectorOptions = computed(() => {
   const selectedBusinessType = businessTypes?.find(
-    (i) => i.sector === form.companyType
+    (i) => i.sector === form.companyType,
   );
   if (!selectedBusinessType) return []; // Handle case when selected business type is not found
 
@@ -658,7 +658,7 @@ const sectorOptions = computed(() => {
         value: i.subSectorName, // Use subSectorCode as the value
       };
     }) ?? []
-  ); 
+  );
 });
 const form = reactive({
   companyName: "",
@@ -702,7 +702,6 @@ const allcountries = computed(() => {
   });
 });
 
-
 onMounted(() => {
   form.companyName = authStore.userInfo?.companyName;
   form.photo = image.value = companyInfo?.value?.photo;
@@ -739,7 +738,7 @@ function removesocial(i) {
 const states = computed(() => {
   if (!form.country) return [];
   return countries.find(
-    (item) => item.name.toLowerCase() == form.country.toLowerCase()
+    (item) => item.name.toLowerCase() == form.country.toLowerCase(),
   )?.states;
 });
 
@@ -828,8 +827,6 @@ const rules = computed(() => ({
   },
   logo: {},
 }));
-
-
 
 const invalidCredentials = ref(false);
 const v$ = useVuelidate(rules, form);

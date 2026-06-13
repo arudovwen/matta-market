@@ -82,13 +82,16 @@
             @click="sortProduct"
             class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-sm"
           >
-             <img src="~/assets/img/sorting.svg" alt="alt" /></button></template
+            <NuxtImg
+              src="/assets/img/sorting.svg"
+              alt="alt"
+            /></button></template
       ></SortFilter>
       <span class="hidden gap-x-3" @click="sortProduct">
         <span
           class="flex items-center justify-center border border-[#E7EBEE] rounded-full h-11 w-12"
         >
-           <img src="~/assets/img/sorting.svg" alt="alt"
+          <NuxtImg src="/assets/img/sorting.svg" alt="alt"
         /></span>
       </span>
     </div>

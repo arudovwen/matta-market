@@ -26,7 +26,7 @@
                 class="h-16 lg:h-24 w-16 lg:w-24 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                 >Photo</span
               >
-              <img
+              <NuxtImg
                 v-else
                 :src="image"
                 alt="profile"
@@ -232,7 +232,7 @@
                 </label>
                 <div class="relative flex items-center">
                   <input
-                  id="email"
+                    id="email"
                     :class="{ 'border-red-500': v$.email.$error }"
                     :value="form.email"
                     class="rounded-lg px-[14px] py-[10px] h-11 text-sm w-full border border-[#DCDEE6] placeholder:text-[#B6B7B9] text-matta-black/60 focus:outline-matta-black/20"
@@ -511,7 +511,7 @@ function handleEvent(e) {
 const states = computed(() => {
   if (!form.country) return [];
   return countries.find(
-    (item) => item.name.toLowerCase() == form.country.toLowerCase()
+    (item) => item.name.toLowerCase() == form.country.toLowerCase(),
   ).states;
 });
 function crop() {

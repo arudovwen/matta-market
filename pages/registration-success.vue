@@ -1,8 +1,8 @@
 <template>
   <div class="items-center flex justify-center p-6">
     <div class="bg-white rounded-[10px] p-5 md:p-9 text-center max-w-[450px]">
-      <img
-        src="~/assets/images/mail.svg"
+      <NuxtImg
+        src="/assets/images/mail.svg"
         class="mx-auto mb-[10px]"
         alt="success"
       />

@@ -39,7 +39,7 @@
         <div class="">
           <div class="mb-[15px]">
             <NuxtLink to="/">
-              <img
+              <NuxtImg
                 data-testid="logo"
                 src="/logo-matta-white.png"
                 class="w-[132px]"
@@ -60,7 +60,7 @@
               :key="s.title"
               :href="s.link"
             >
-            <span class="sr-only">{{ s.title }}</span>
+              <span class="sr-only">{{ s.title }}</span>
               <span class="">
                 <AppIcon
                   :icon="s.icon"
@@ -98,7 +98,11 @@
                 >
                   {{ l.title }}
                 </a>
-                <span v-else @click="open = true" class="hover:underline cursor-pointer">
+                <span
+                  v-else
+                  @click="open = true"
+                  class="hover:underline cursor-pointer"
+                >
                   {{ l.title }}
                 </span>
               </li>

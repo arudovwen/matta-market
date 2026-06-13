@@ -9,7 +9,7 @@
           <div
             class="w-20 h-20 rounded-xl bg-white flex items-center justify-center"
           >
-             <img :src="supplier.logo" class="rounded-xl" alt="alt" />
+            <NuxtImg :src="supplier.logo" class="rounded-xl" alt="alt" />
           </div>
           <div>
             <p class="font-medium text-base text-matta-black capitalize">
@@ -96,7 +96,6 @@
       </div>
     </div>
   </section>
-
 </template>
 <script setup>
 import DocumentList from "./DocumentList";
@@ -104,9 +103,9 @@ import RequestComplete from "./RequestComplete";
 import { ref, defineEmits, provide, computed, reactive, inject } from "vue";
 import { useStore } from "vuex";
 import { adddocument } from "~/services/requestservice";
-import { toast } from 'vue3-toastify';
+import { toast } from "vue3-toastify";
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 const togglePopup = inject("togglePopup");
 const product = inject("product");
 const supplier = inject("supplier");
@@ -121,7 +120,6 @@ const sampleForm = reactive({
   documentCategories: [],
   description: "",
 });
-
 
 const store = useStore();
 const showAuth = ref(false);
@@ -144,7 +142,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 function toggleAuth() {

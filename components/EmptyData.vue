@@ -9,33 +9,33 @@
         :iconClass="`${classIcon} text-6xl text-[#E8E8E8]`"
         v-if="type == 'shipping'"
       />
-      <img
+      <NuxtImg
         alt="user"
-        src="~/assets/images/emptyuser.png"
+        src="/assets/images/emptyuser.png"
         v-else-if="type == 'user'"
         :class="classIcon"
       />
-      <img
+      <NuxtImg
         alt="campaign"
         src="/images/campaign.png"
         v-else-if="type == 'campaign'"
         :class="classIcon"
       />
-      <img
+      <NuxtImg
         alt="settlements"
         src="/images/settlements.svg"
         v-else-if="type == 'settlements'"
         :class="classIcon"
       />
-      <img
+      <NuxtImg
         alt="transactions"
         src="/images/transaction.svg"
         v-else-if="type == 'transaction'"
         :class="classIcon"
       />
-      <img
+      <NuxtImg
         alt="empty"
-        src="~/assets/images/empty.svg"
+        src="/assets/images/empty.svg"
         v-else
         :class="classIcon"
       />

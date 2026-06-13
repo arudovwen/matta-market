@@ -27,7 +27,7 @@
   <div
     class="container h-[30vh] sm:h-[40vh] md:h-[50vh] lg:h-[80vh] overflow-hidden rounded-lg mb-12"
   >
-    <img alt="deltalog" src="/assets/images/landing-page-image-one.jpeg" class="w-full" />
+    <NuxtImg alt="deltalog" src="/assets/images/landing-page-image-one.jpeg" class="w-full" />
   </div>
   <div
     class="flex flex-col items-center container justify-around sm:py-8 mb-12 bg-[#F9FAFB] h-[230px]"
@@ -37,24 +37,24 @@
     </p>
     <div class="flex flex-row justify-around w-full">
       <div class="flex flex-row justify-between items-center company">
-        <img alt="deltalog" src="/assets/images/Coca-Cola-logo.png" />
+        <NuxtImg alt="deltalog" src="/assets/images/Coca-Cola-logo.png" />
       </div>
       <div class="flex flex-row justify-between items-center company">
-        <img alt="deltalog" src="/assets/images/cormart-logo.png" />
+        <NuxtImg alt="deltalog" src="/assets/images/cormart-logo.png" />
       </div>
       <div class="flex flex-row justify-between items-center company">
-        <img alt="deltalog"
+        <NuxtImg alt="deltalog"
           src="/assets/images/Honeywell-Flour-Mills-Profit-Turns-Red-as-Costs-Eclipse-Revenue.png"
         />
       </div>
       <div class="flex flex-row justify-between items-center company">
-        <img alt="deltalog" src="/assets/images/BASF-Logo.png" />
+        <NuxtImg alt="deltalog" src="/assets/images/BASF-Logo.png" />
       </div>
       <div class="flex flex-row justify-between items-center company">
-        <img alt="deltalog" src="/assets/images/Air-Liquide-logo.png" />
+        <NuxtImg alt="deltalog" src="/assets/images/Air-Liquide-logo.png" />
       </div>
       <div class="flex flex-row justify-between items-center company">
-        <img alt="deltalog" src="/assets/images/cargill-logo-vector.png" />
+        <NuxtImg alt="deltalog" src="/assets/images/cargill-logo-vector.png" />
       </div>
     </div>
   </div>
@@ -208,7 +208,7 @@
       <div class="flex flex-col lg:flex-row flex-wrap justify-between mt-12">
         <div class="w-full lg:w-[45%] flex flex-col items-start justify-around">
           <span class="flex flex-row">
-            <img alt="deltalog" src="/assets/images/Featured icon.svg" class="mr-2" />
+            <NuxtImg alt="deltalog" src="/assets/images/Featured icon.svg" class="mr-2" />
             <div class="flex flex-col justify-between items-start">
               <span class="text[20px] text-[#101828] font-bold"
                 >Instant Quotes</span
@@ -220,7 +220,7 @@
             </div>
           </span>
           <span class="flex flex-row">
-            <img alt="deltalog" src="/assets/images/Featured icon.svg" class="mr-2" />
+            <NuxtImg alt="deltalog" src="/assets/images/Featured icon.svg" class="mr-2" />
             <div class="flex flex-col justify-between items-start">
               <span class="text[20px] text-[#101828] font-bold"
                 >API Integration</span
@@ -232,7 +232,7 @@
             </div>
           </span>
           <span class="flex flex-row">
-            <img alt="deltalog" src="/assets/images/Featured icon.svg" class="mr-2" />
+            <NuxtImg alt="deltalog" src="/assets/images/Featured icon.svg" class="mr-2" />
             <div class="flex flex-col justify-between items-start">
               <span class="text[20px] text-[#101828] font-bold"
                 >Live Tracking</span
@@ -244,7 +244,7 @@
             </div>
           </span>
           <span class="flex flex-row">
-            <img alt="deltalog" src="/assets/images/Featured icon.svg" class="mr-2" />
+            <NuxtImg alt="deltalog" src="/assets/images/Featured icon.svg" class="mr-2" />
             <div class="flex flex-col justify-between items-start">
               <span class="text[20px] text-[#101828] font-bold">Wallet</span>
               <span class="text[20px] text-[#475467]"
@@ -255,7 +255,7 @@
           </span>
         </div>
         <div class="w-full lg:w-[45%] mt-8">
-          <img alt="deltalog"
+          <NuxtImg alt="deltalog"
             class="w-full rounded-xs"
             src="/assets/images/huge-heavy-duty-truck-on-the-empty-road-2023-11-27-05-16-03-utc.jpg"
           />
@@ -282,7 +282,7 @@
         class="bg-[#E50031] h-[48%] py-[12px] px-[18px] text-white rounded-lg flex items-center w-[155px]"
       >
         Get Started
-        <img alt="deltalog" src="/assets/images/Buttons/arrow-narrow-right.svg" class="ml-2" />
+        <NuxtImg alt="deltalog" src="/assets/images/Buttons/arrow-narrow-right.svg" class="ml-2" />
       </button>
     </div>
     <div
@@ -292,8 +292,8 @@
         >© 2024 DeltaLog All Rights Reserved</span
       >
       <div class="flex flex-row w-[70px] justify-between">
-        <img alt="deltalog" src="/assets//images/twitter.svg" class="h-[22px] w-[22px]" />
-        <img alt="deltalog" src="/assets//images/linkedin.svg" class="h-[22px] w-[22px]" />
+        <NuxtImg alt="deltalog" src="/assets//images/twitter.svg" class="h-[22px] w-[22px]" />
+        <NuxtImg alt="deltalog" src="/assets//images/linkedin.svg" class="h-[22px] w-[22px]" />
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@
       class="bg-white rounded-[10px] p-5 md:p-9 text-center max-w-[500px]"
       v-if="!loading"
     >
-      <img src="/images/success.png" class="mx-auto mb-[10px]" alt="success" />
+      <NuxtImg src="/images/success.png" class="mx-auto mb-[10px]" alt="success" />
       <h1 class="text-2xl mb-[24px] font-bold">
         {{ !order_type ? "Order Successful" : "Order Request Submitted" }}
       </h1>

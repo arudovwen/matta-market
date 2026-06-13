@@ -31,7 +31,7 @@
       <p class="text-xs text-[#ABABAB] mb-1" v-if="support">{{ support }}</p>
       <p class="text-xs text-[#ABABAB]" v-if="recommended">{{ recommended }}</p>
     </div>
-    <img
+    <NuxtImg
       alt="upload"
       v-if="!isMultiple && (image || url)"
       :src="image || url"
@@ -55,7 +55,7 @@
       <span
         class="h-16 w-16 rounded-lg bg-white flex items-center justify-center border relative border-[#E7EBEE]"
       >
-        <img :src="n" alt="logo" class="w-full h-full rounded-lg" />
+        <NuxtImg :src="n" alt="logo" class="w-full h-full rounded-lg" />
         <span
           class="bg-white text-matta-black h-5 w-5 flex items-center justify-center absolute -top-1 -right-2"
           @click="removeFile(i)"
@@ -74,7 +74,14 @@
 </template>
 <script setup>
 import { toast } from "vue3-toastify";
-import { ref, onMounted, defineProps, defineEmits, computed } from "vue";
+import {
+  ref,
+  onMounted,
+  onUnmounted,
+  defineProps,
+  defineEmits,
+  computed,
+} from "vue";
 import { uploaddocument } from "~/services/onboardingservices";
 // import axios from "axios";
 const images = ref([]);
@@ -102,6 +109,11 @@ const events = ["dragenter", "dragover", "dragleave", "drop"];
 onMounted(() => {
   events.forEach((eventName) => {
     document.body.addEventListener(eventName, preventDefaults);
+  });
+});
+onUnmounted(() => {
+  events.forEach((eventName) => {
+    document.body.removeEventListener(eventName, preventDefaults);
   });
 });
 function preventDefaults(e) {

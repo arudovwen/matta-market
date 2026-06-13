@@ -6,7 +6,7 @@
       </div>
       <div class="bg-gray-400 rounded-[5px]">
         <div class="h-[160px] md:h-[210px] w-full">
-          <img
+          <NuxtImg
             :src="
               vendorInfo?.bannerUrl
                 ? vendorInfo.bannerUrl
@@ -22,7 +22,7 @@
           <div
             class="absolute w-20 h-20 rounded-[5px] overflow-hidden left-10 bg-white top-0 translate-y-[-60%] flex items-center justify-center border border-[#F5F5F5]"
           >
-            <img
+            <NuxtImg
               :src="
                 vendorInfo?.logo ? vendorInfo?.logo : '/images/matta-icon.png'
               "

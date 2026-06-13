@@ -4,9 +4,9 @@
     class="h-[310px] rounded-lg w-full flex items-center justify-center bg-[#F1F3F5]"
   >
     <div class="text-center max-w-sm mx-auto">
-       <img
-       alt="supplier"
-        src="~/assets/img/nofound.svg"
+      <NuxtImg
+        alt="supplier"
+        src="/assets/img/nofound.svg"
         class="w-[52px] h-auto mx-auto mb-4"
       />
 
@@ -47,7 +47,7 @@
     />
   </div>
   <div class="text-center p-6 lg:p-8 mt-24" v-if="isPageLoading">
-     <AppLoader />
+    <AppLoader />
   </div>
 </template>
 

@@ -170,8 +170,8 @@
             >
               <div class="border rounded-xl p-4 flex flex-1 justify-between">
                 <div class="flex gap-x-3 items-center">
-                  <img
-                    src="~/assets/images/filetype.png"
+                  <NuxtImg
+                    src="/assets/images/filetype.png"
                     alt="prduct"
                     class="w-8 h-auto"
                   />
@@ -377,7 +377,7 @@
                   class="h-16 w-16 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                   >Logo</span
                 >
-                <img
+                <NuxtImg
                   v-else
                   :src="producerForm.logo"
                   class="h-16 w-16 rounded-full flex items-center bg-[#F1F3F5] mr-4 justify-center"
@@ -503,7 +503,7 @@ const states = computed(() => {
   if (!producerForm.country) return [];
   return (
     countries.find(
-      (item) => producerForm.country.toLowerCase() === item.name.toLowerCase()
+      (item) => producerForm.country.toLowerCase() === item.name.toLowerCase(),
     ).states || []
   );
 });
@@ -561,7 +561,7 @@ async function handleSubmit() {
                     });
                     isLoading.value = false;
                     router.push(
-                      `/storefront/products/${route.params.process}?id=${route.query.id}&stage=3`
+                      `/storefront/products/${route.params.process}?id=${route.query.id}&stage=3`,
                     );
                   }
                 })
@@ -618,7 +618,7 @@ function editPackage(val) {
 }
 
 const locations = computed(() =>
-  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id }))
+  pickUpStore.addressesData.map((i) => ({ label: i.address, value: i.id })),
 );
 const producerForm = reactive({
   title: "",

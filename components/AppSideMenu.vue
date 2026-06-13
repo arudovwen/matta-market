@@ -60,7 +60,7 @@
                       <div
                         class="flex items-center justify-between px-5 pb-4 mb-3"
                       >
-                        <img
+                        <NuxtImg
                           src="/images/logo.png"
                           width="80"
                           height="26"
@@ -107,7 +107,7 @@
                         <span
                           class="h-8 w-8 rounded-full flex items-center justify-center text-white bg-[#f90] font-semibold"
                         >
-                          <img
+                          <NuxtImg
                             v-if="authStore.userInfo?.profilepic"
                             alt="avatar"
                             class="w-8 h-8 rounded-full"
@@ -168,7 +168,7 @@
                         >
                           <li
                             v-for="n in mappedNav.filter(
-                              (i) => i.key !== 'sign-out'
+                              (i) => i.key !== 'sign-out',
                             )"
                             :key="n.name"
                           >
@@ -215,7 +215,7 @@ const mappedNav = computed(() => {
     (authStore?.userType?.toLowerCase() === "supplier"
       ? vendorRoutes
       : buyerRoutes
-    ).includes(i.key)
+    ).includes(i.key),
   );
 });
 const notificationOpen = inject("notificationOpen");
@@ -240,7 +240,7 @@ watch(
   () => {
     storeOpen.value = false;
   },
-  { deep: true, immediate: true }
+  { deep: true, immediate: true },
 );
 provide("activeKey", activeKey);
 </script>

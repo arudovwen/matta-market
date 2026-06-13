@@ -24,8 +24,8 @@
             : 'bg-white border border-[rgba(223,223,223,1)] '
         "
       >
-        <img
-          src="~/assets/images/icon/ck-white.svg"
+        <NuxtImg
+          src="/assets/images/icon/ck-white.svg"
           alt="check"
           class="h-[10px] w-[10px] block m-auto"
           v-if="ck"
@@ -102,7 +102,7 @@ export default defineComponent({
       () => [props.checked],
       () => {
         ck.value = props.checked;
-      }
+      },
     );
 
     return { localValue, ck, onChange };

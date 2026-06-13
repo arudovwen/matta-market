@@ -35,12 +35,12 @@
                 <div class="px-6 py-6 bg-white">
                   <div class="flex items-center justify-between mb-5">
                     <div>
-                      <img
+                      <NuxtImg
                         alt="delte"
                         v-if="!insufficient"
                         src="/images/handes.svg"
                       />
-                      <img alt="delte" v-else src="/images/reject.svg" />
+                      <NuxtImg alt="delte" v-else src="/images/reject.svg" />
                     </div>
                     <span
                       v-if="canClose"
@@ -79,10 +79,10 @@
                         <span class="text-[#344054] font-semibold">{{
                           item.key === "dueDate" || item.key === "repaymentDate"
                             ? moment(
-                                handleData(creditDetail)?.[item.key]
+                                handleData(creditDetail)?.[item.key],
                               ).format("ll")
                             : currencyFormat(
-                                handleData(creditDetail)?.[item.key]
+                                handleData(creditDetail)?.[item.key],
                               )
                         }}</span>
                       </div>
@@ -236,7 +236,7 @@ function handlePurchase() {
       })
       .catch((err) => {
         toast.error(
-          err?.response?.data?.message || err?.response?.data?.Message
+          err?.response?.data?.message || err?.response?.data?.Message,
         );
         isLoading.value = false;
       });

@@ -3,7 +3,11 @@
     class="rounded-[20px] bg-white p-6 lg:p-10 shadow text-center w-[350px] max-w-[400px] mt-6"
     v-if="current == 'verified'"
   >
-  <img src="/images/success.png" class="mx-auto mb-[10px]" alt="success" />
+    <NuxtImg
+      src="/images/success.png"
+      class="mx-auto mb-[10px]"
+      alt="success"
+    />
     <h3 class="text-2xl mb-[27px] font-bold">Email verified</h3>
 
     <NuxtLink to="/auth/login">

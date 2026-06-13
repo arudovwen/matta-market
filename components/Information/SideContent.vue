@@ -38,7 +38,7 @@
               <div
                 class="w-28 h-28 rounded-full mx-auto border border-white mb-4 overflow-hidden flex items-center justify-center"
               >
-                 <img
+                 <NuxtImg
                   :src="
                     item.photo
                       ? item.photo
@@ -103,7 +103,7 @@
         <div
           class="w-20 h-20 rounded-xl bg-white flex items-center justify-center"
         >
-           <img
+          <NuxtImg
             v-if="producer.logo"
             :src="producer.logo"
             class="rounded-xl"

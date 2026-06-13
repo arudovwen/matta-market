@@ -23,8 +23,8 @@
             : 'bg-white border border-[rgba(223,223,223,1)] darks:bg-slate-600 darks:border-slate-600'
         "
       >
-        <img
-          src="~/assets/images/icon/ck-white.svg"
+        <NuxtImg
+          src="/assets/images/icon/ck-white.svg"
           alt="check"
           class="h-[10px] w-[10px] block m-auto"
           v-if="localValue.includes(value)"
@@ -95,7 +95,6 @@ export default defineComponent({
       modelValue: newValue,
     }),
   },
-
 });
 </script>
 <style lang=""></style>

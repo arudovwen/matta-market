@@ -8,8 +8,13 @@
     "
   >
     <div class="flex items-center gap-x-2">
-       <img src="~/assets/img/master.svg" alt="alt" v-if="index == 1" class="" />
-       <img src="~/assets/img/visa.svg" alt="alt" v-else class="" />
+      <NuxtImg
+        src="~/assets/img/master.svg"
+        alt="alt"
+        v-if="index == 1"
+        class=""
+      />
+      <NuxtImg src="~/assets/img/visa.svg" alt="alt" v-else class="" />
       <div>
         <div class="flex items-center mb-2 gap-x-2">
           <p
@@ -43,7 +48,7 @@
     </div>
     <Menu class="relative" as="div">
       <MenuButton class="outline-none">
-         <AppIcon icon="heroicons:ellipsis-vertical-solid" />
+        <AppIcon icon="heroicons:ellipsis-vertical-solid" />
       </MenuButton>
       <MenuItems
         class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[140px] rounded-xl overflow-hidden"

@@ -65,7 +65,7 @@
           v-if="url && !multiple && preview"
           class="w-[200px] h-[200px] mx-auto mt-6"
         >
-           <img
+          <NuxtImg
             :src="url"
             class="w-full object-cover h-full block rounded"
             :alt="selectedFile?.name"
@@ -81,7 +81,7 @@
             :key="index"
             class="xl:w-1/5 md:w-1/3 w-1/2 rounded mt-6"
           >
-             <img
+            <NuxtImg
               :src="url"
               class="object-cover w-full h-full rounded"
               :alt="selectedFile?.name"

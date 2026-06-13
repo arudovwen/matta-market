@@ -4,7 +4,7 @@
       <span
         class="mr-3 h-10 w-10 rounded-lg flex items-center justify-center border border-[#E7EBEE] p-2"
       >
-         <!-- <img class="" :src="request?.image" v-if="request?.image" alt="alt" /> -->
+        <!-- <NuxtImg class="" :src="request?.image" v-if="request?.image" alt="alt" /> -->
       </span>
       <span>
         <span class="text-xs font-medium"> {{ request.productName }} </span>
@@ -85,7 +85,9 @@
     </div> -->
     <div class="bg-[#F1F3F5] rounded-lg p-6 text-matta-black">
       <div class="mb-6">
-        <label for="formFile" class="mb-2 text-sm block text-matta-black font-bold"
+        <label
+          for="formFile"
+          class="mb-2 text-sm block text-matta-black font-bold"
           >Upload Request document</label
         >
         <div class="relative flex items-center">
@@ -250,9 +252,7 @@ import { uploaddocument } from "~/services/onboardingservices";
 import { uploaddoc } from "~/services/requestservice";
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
-import { toast } from 'vue3-toastify';
-
-
+import { toast } from "vue3-toastify";
 
 // eslint-disable-next-line no-unused-vars
 const stage = ref(1);
@@ -310,7 +310,7 @@ async function handleSubmit() {
     .catch((err) => {
       isLoading.value = false;
 
-      toast.error((err?.response?.data?.message || err?.response?.data?.Message));
+      toast.error(err?.response?.data?.message || err?.response?.data?.Message);
     });
 }
 </script>

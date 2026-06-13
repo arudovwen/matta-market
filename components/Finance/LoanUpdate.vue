@@ -1,7 +1,7 @@
 <template>
   <div class="grid bg-white rounded-[10px] md:min-w-[320px] w-full">
     <div class="mb-4">
-      <img alt="loan" src="/images/approve.png" />
+      <NuxtImg alt="loan" src="/images/approve.png" />
     </div>
     <div class="mb-4">
       <legend class="text-[#18273AF0] text-lg font-bold mb-1">
@@ -49,7 +49,7 @@
         type="button"
         text=" Accept conditional offer"
         class="appearance-none leading-none px-10 py-4 w-full rounded-lg text-white bg-[#0E9384] hover:opacity-70 mb-4"
-				data-testid="accept"
+        data-testid="accept"
       />
 
       <AppButton
@@ -77,7 +77,7 @@ function handleReject() {
   let data = {
     financeRequestId: props.detail.id,
     approvalStatus: 4,
-    approvedAmount:props.detail.amountApproved,
+    approvedAmount: props.detail.amountApproved,
     tenor: props.detail.tenor,
   };
   updateFinanceStatus(data)
@@ -92,7 +92,7 @@ function handleReject() {
       toast.error(
         err?.response?.data?.message ||
           err?.response?.data?.Message ||
-          "Unable to complete request"
+          "Unable to complete request",
       );
     });
 }
@@ -100,7 +100,7 @@ function handleApprove() {
   let data = {
     financeRequestId: props.detail.id,
     approvalStatus: 3,
-    approvedAmount:props.detail.amountApproved,
+    approvedAmount: props.detail.amountApproved,
     tenor: props.detail.tenor,
   };
   approveloading.value = true;
@@ -116,7 +116,7 @@ function handleApprove() {
       toast.error(
         err?.response?.data?.message ||
           err?.response?.data?.Message ||
-          "Unable to complete request"
+          "Unable to complete request",
       );
     });
 }

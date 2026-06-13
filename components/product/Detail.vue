@@ -14,7 +14,7 @@
           v-if="!isLoading"
           class="lg:w-[100px] flex flex-row lg:flex-col gap-x-3 lg:gap-x-0 lg:gap-y-3"
         >
-          <img
+          <NuxtImg
             :src="n"
             v-for="n in productData.gallery"
             :key="n"
@@ -36,7 +36,7 @@
           />
         </div>
         <div v-if="!isLoading" class="relative flex-1">
-          <img
+          <NuxtImg
             :src="imageUrl || productData.featuredPhoto"
             alt="cover"
             width="400"
@@ -50,8 +50,10 @@
               :icon="!productData.liked ? 'ph:heart' : 'ph:heart-fill'"
               :class="[
                 'text-xs sm:text-sm md:text-base transition-opacity',
-                likeLoading ? 'opacity-50 pointer-events-none cursor-not-allowed' : 'cursor-pointer',
-                !productData.liked ? 'text-gray-400' : 'text-primary-600'
+                likeLoading
+                  ? 'opacity-50 pointer-events-none cursor-not-allowed'
+                  : 'cursor-pointer',
+                !productData.liked ? 'text-gray-400' : 'text-primary-600',
               ]"
           /></span>
         </div>
@@ -138,7 +140,10 @@
           <div class="grid w-full gap-y-5">
             <div class="flex flex-col gap-3 md:flex-row">
               <AppButton
-                v-if="!productData.hidePrice && productData?.supplierId !== authStore.businessId"
+                v-if="
+                  !productData.hidePrice &&
+                  productData?.supplierId !== authStore.businessId
+                "
                 @click="handleCart('buy')"
                 text="Send Order Request"
                 icon="pepicons-pop:paper-plane"
@@ -155,7 +160,10 @@
               />
             </div>
             <AppButton
-              v-if="!productData.hidePrice && productData?.supplierId !== authStore.businessId"
+              v-if="
+                !productData.hidePrice &&
+                productData?.supplierId !== authStore.businessId
+              "
               @click="handleCart('add')"
               text="Add to cart"
               icon="bytesize:cart"
@@ -285,7 +293,7 @@
       <div class="px-6 py-6 bg-white">
         <div class="flex items-center justify-between mb-5">
           <div>
-            <img src="/images/box.svg" alt="Detail" />
+            <NuxtImg src="/images/box.svg" alt="Detail" />
           </div>
           <!-- <span @click="handleclose" class="absolute top-3 right-4">
               <i
@@ -328,7 +336,6 @@ import { toast } from "vue3-toastify";
 import { likeproduct, unlikeproduct } from "~/services/productservices";
 import { confirmpurchase, requestACall } from "~/services/cartservice";
 
-
 const orderRequestStore = useOrderRequestStore();
 const currentCurrency = inject("currentCurrency");
 const isRequestAdded = ref(false);
@@ -351,23 +358,27 @@ const packageOptions = computed(() =>
     return {
       label: `${i.package.title}/${i.size}${i.unit} - ${currencyFormat(
         i.amount * i.size,
-        currentCurrency?.value
+        currentCurrency?.value,
       )}`,
       value: JSON.stringify({ ...i }),
     };
-  })
+  }),
 );
 const links = [
   {
     title: "home",
     url: "/",
   },
-  {
-    title: category,
-    url: `/category/market/${category}/${
-      route.query.categoryId ? route.query.categoryId : ""
-    }`,
-  },
+  ...(category
+    ? [
+        {
+          title: category,
+          url: `/category/market/${category}/${
+            route.query.categoryId ? route.query.categoryId : ""
+          }`,
+        },
+      ]
+    : []),
   {
     title: name,
     url: "#",
@@ -397,7 +408,7 @@ function toggleModal(val) {
   active.value = val;
 }
 const mypackage = computed(() =>
-  selectedPackage.value ? JSON.parse(selectedPackage.value) : null
+  selectedPackage.value ? JSON.parse(selectedPackage.value) : null,
 );
 const counter = ref(1);
 const buyLoading = ref(false);
@@ -563,17 +574,17 @@ async function handleLike(value) {
       const res = await unlikeproduct(data);
       if (res.status === 200) {
         toast.success("Product removed from saved items");
-        store.setProduct({...productData.value, liked: false})
+        store.setProduct({ ...productData.value, liked: false });
       }
     } else {
       const res = await likeproduct(data);
       if (res.status === 200) {
         toast.success("Product saved successfully");
-        store.setProduct({...productData.value, liked: true})
+        store.setProduct({ ...productData.value, liked: true });
       }
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
     toast.error("Something went wrong, please try again.");
   } finally {
     likeLoading.value = false;
@@ -590,7 +601,7 @@ watch(
     if (packageOptions.value?.length) {
       selectedPackage.value = packageOptions.value[0]?.value;
     }
-  }
+  },
 );
 watch(productData, () => {
   supplierStore.fetchSupplier(productData.value.supplierId);

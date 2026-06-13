@@ -21,7 +21,7 @@
                   class="h-24 w-24 rounded-full flex items-center text-sm justify-center bg-[#F1F3F5]"
                   >Photo</span
                 >
-                <img
+                <NuxtImg
                   v-else
                   :src="image"
                   alt="settings"
@@ -496,11 +496,11 @@ const newrules = {
     maxLength: maxLength(16),
     validPassword: helpers.withMessage(
       "Password must include UPPER/lowercase characters and number",
-      validPassword
+      validPassword,
     ),
     specialPassword: helpers.withMessage(
       "Password must contain at least 1 of the special  characters @&!-%#$%",
-      specialPassword
+      specialPassword,
     ),
   },
   newPassword: {
@@ -509,23 +509,23 @@ const newrules = {
     maxLength: maxLength(16),
     validPassword: helpers.withMessage(
       "Password must include UPPER/lowercase characters and number",
-      validPassword
+      validPassword,
     ),
     specialPassword: helpers.withMessage(
       "Password must contain at least 1 of the special  characters @&!-%#$%",
-      specialPassword
+      specialPassword,
     ),
   },
   confirmPassword: {
     required: helpers.withMessage(
       "Confirm Password field cannot be empty",
-      required
+      required,
     ),
     minLength: minLength(8),
     maxLength: maxLength(16),
     validPassword: helpers.withMessage(
       "Confirm Password is invalid",
-      validPassword
+      validPassword,
     ),
     samePassword: helpers.withMessage("Passwords do not match!", samePassword),
   },
@@ -534,7 +534,7 @@ const states = computed(() => {
   if (!form.country) return [];
   return (
     countries.find(
-      (item) => form.country.toLowerCase() === item.name.toLowerCase()
+      (item) => form.country.toLowerCase() === item.name.toLowerCase(),
     ).states || []
   );
 });
@@ -576,7 +576,6 @@ function handleEvent(e) {
   img.value = URL.createObjectURL(files[0]);
   isShowing.value = "crop";
   open.value = true;
- 
 }
 
 // function crop() {

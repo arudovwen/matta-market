@@ -139,7 +139,11 @@
                                 <span
                                   class="h-11 w-12 rounded-lg bg-white shadow p-4 flex items-center justify-center mr-4 border border-[#E7EBEE]"
                                 >
-                                  <img v-if="i.logo" :src="i.logo" alt="logo" />
+                                  <NuxtImg
+                                    v-if="i.logo"
+                                    :src="i.logo"
+                                    alt="logo"
+                                  />
                                   <p class="text-base uppercase" v-else>
                                     {{ i.title.slice(0, 2) }}
                                   </p>
@@ -456,7 +460,7 @@
                   class="h-16 w-16 rounded-full flex items-center text-xs bg-[#F1F3F5] mr-4 justify-center"
                   >Logo</span
                 >
-                <img
+                <NuxtImg
                   v-else
                   alt="prouct"
                   :src="producerForm.logo"

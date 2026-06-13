@@ -1,7 +1,6 @@
 <template>
   <div class="flex justify-between items-center mb-8 px-5">
     <div class="flex gap-x-4">
-     
       <div class="relative flex items-center">
         <span class="absolute left-4 pointer-events-none text-[#667085]"
           ><i class="uil uil-search"></i
@@ -11,7 +10,7 @@
           @change="getRequestDoc()"
           @keyup="debounceSearch"
           placeholder="Search"
-          class="border border-[#E7E7E7] text-sm  focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
+          class="border border-[#E7E7E7] text-sm focus:pr-3 pl-10 rounded-lg w-[280px] focus:outline-none py-[10px] transition ease-in-out duration-300"
           type="search"
         />
       </div>
@@ -25,7 +24,6 @@
         />
       </div>
     </div>
-
   </div>
 
   <div v-if="!isLoading">
@@ -52,7 +50,7 @@
                 <span
                   class="mr-3 h-10 w-10 rounded-lg flex items-center justify-center border border-[#E7EBEE] p-2"
                 >
-                  <img class="" :src="item.image" alt="alt" />
+                  <NuxtImg class="" :src="item.image" alt="alt" />
                 </span>
                 <span :class="item.status == 3 ? 'opacity-25' : ''">
                   <span class="text-sm font-medium">
@@ -112,7 +110,7 @@
             >
               <Menu class="relative" as="div">
                 <MenuButton class="outline-none">
-                   <AppIcon icon="heroicons:ellipsis-vertical-solid" />
+                  <AppIcon icon="heroicons:ellipsis-vertical-solid" />
                 </MenuButton>
                 <MenuItems
                   class="absolute z-[999] bg-white shadow-[5px_12px_35px_rgba(44,44,44,0.12)] py-2 right-0 min-w-[180px] rounded-xl overflow-hidden"
@@ -260,10 +258,10 @@ const debounceSearch = debounce(() => {
 }, 800);
 
 watch(
-  () => [queryParams.Search,  queryParams.PageNumber,  queryParams.RequestStatus],
+  () => [queryParams.Search, queryParams.PageNumber, queryParams.RequestStatus],
   () => {
     debounceSearch();
-  }
+  },
 );
 provide("document", document);
 </script>

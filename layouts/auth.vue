@@ -1,14 +1,17 @@
 <template>
   <div
     class="bg-[#0C111D] grid grid-cols-1 lg:grid-cols-12 h-screen w-screen bg-contain bg-center"
-    :style="{ backgroundImage: `url('https://res.cloudinary.com/arudovwen-me/image/upload/f_auto,q_auto/cuu0iqo5yhh8rzgqev13')` }"
+    :style="{
+      backgroundImage: `url('https://res.cloudinary.com/arudovwen-me/image/upload/f_auto,q_auto/cuu0iqo5yhh8rzgqev13')`,
+    }"
   >
-    <div
-      class="relative hidden lg:flex items-center lg:col-span-7"
-    >
+    <div class="relative hidden lg:flex items-center lg:col-span-7">
       <div class="top-8 left-10 logo absolute z-10">
         <NuxtLink to="/">
-          <img src="/logo-matta-white.png" alt="Matta" class="w-[120px] h-auto"
+          <NuxtImg
+            src="/logo-matta-white.png"
+            alt="Matta"
+            class="w-[120px] h-auto"
         /></NuxtLink>
       </div>
 
@@ -34,7 +37,7 @@
     >
       <div class="pt-6 pb-2 z-10 lg:hidden">
         <NuxtLink to="/">
-          <img
+          <NuxtImg
             src="/images/logo.png"
             width="100"
             height="26"
@@ -51,5 +54,4 @@
 
 <script setup>
 import AuthBg from "~/assets/images/authbg.png";
-
 </script>

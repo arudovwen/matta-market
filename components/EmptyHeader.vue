@@ -176,9 +176,13 @@ const view = ref({
   atTopOfPage: true,
 });
 const open = ref(false);
-onBeforeMount(() => {
+onMounted(() => {
   window?.addEventListener("scroll", handleScroll);
   window?.addEventListener("resize", getWindowSize);
+});
+onUnmounted(() => {
+  window?.removeEventListener("scroll", handleScroll);
+  window?.removeEventListener("resize", getWindowSize);
 });
 
 // onMounted(() => {

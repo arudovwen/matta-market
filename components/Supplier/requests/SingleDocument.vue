@@ -4,7 +4,7 @@
       <span
         class="mr-3 h-10 w-10 rounded-lg flex items-center justify-center border border-[#E7EBEE] p-2"
       >
-         <img class="" :src="document.logo" alt="alt" />
+        <NuxtImg class="" :src="document.logo" alt="alt" />
       </span>
       <span>
         <span class="text-xs font-medium">{{ document.productName }}</span>
@@ -36,7 +36,9 @@
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-2 uppercase">created</p>
-        <span class="text-xs">{{ moment(document.created).format("lll") }}</span>
+        <span class="text-xs">{{
+          moment(document.created).format("lll")
+        }}</span>
       </div>
       <div>
         <p class="text-[12px] text-[#B6B7B9] mb-2 uppercase">document type</p>
@@ -96,10 +98,10 @@
             stage > 2
               ? ''
               : stage == 2
-              ? ' bg-primary-500 text-white'
-              : stage < 2
-              ? 'bg-white text-matta-black'
-              : ''
+                ? ' bg-primary-500 text-white'
+                : stage < 2
+                  ? 'bg-white text-matta-black'
+                  : ''
           "
           class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-xs"
         >
@@ -126,10 +128,10 @@
             stage > 3
               ? ''
               : stage == 3
-              ? ' bg-primary-500 text-white'
-              : stage < 3
-              ? 'bg-white text-matta-black'
-              : ''
+                ? ' bg-primary-500 text-white'
+                : stage < 3
+                  ? 'bg-white text-matta-black'
+                  : ''
           "
           class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-xs"
         >

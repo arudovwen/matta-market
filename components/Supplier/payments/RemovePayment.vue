@@ -5,8 +5,8 @@
     class="group p-4 mb-8 rounded-2xl flex justify-between h-[100px] items-center hover:bg-matta-black hover:text-white border border-[#ddd]"
   >
     <div class="flex items-center gap-x-3">
-       <img src="~/assets/img/master.svg" alt="alt" class="" />
-      <!--  <img src="~/assets/img/visa.svg" v-else class="" /> -->
+      <NuxtImg src="/assets/img/master.svg" alt="alt" class="" />
+      <!--  <NuxtImg src="/assets/img/visa.svg" v-else class="" /> -->
       <div>
         <div class="flex items-center mb-2 gap-x-2">
           <p class="font-medium text-matta-black">Visa **** 4536</p>
@@ -32,4 +32,3 @@
     </button>
   </div>
 </template>
-

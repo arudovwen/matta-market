@@ -35,12 +35,17 @@ export default defineNuxtConfig({
     "@nuxt/test-utils/module",
     "@zadigetvoltaire/nuxt-gtm",
     // '@nuxtjs/critters',
-    //   'nuxt-purgecss',
+    // 'nuxt-purgecss',
+    "nuxt-headlessui",
   ],
+  headlessui: {
+    prefix: 'Headless'
+  },
   gtm: {
     id: "GTM-M7KP6CJG",
     enabled: true,
     debug: false,
+    defer: true,
   },
   security: {
     hidePoweredBy: false,
@@ -229,7 +234,6 @@ export default defineNuxtConfig({
       "56799988480-4d51egljupar9la4djc2tknjodn2vsj5.apps.googleusercontent.com",
   },
   css: [
-    "vue-toastification/dist/index.css",
     "vue3-carousel/dist/carousel.css",
     "@programic/vue3-tooltip/dist/index.css",
     "@google-translate-select/theme-chalk/dist/index.css",

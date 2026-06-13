@@ -1,7 +1,7 @@
 <template>
   <div class="py-[30px] border-b border-[#DFE5EC] flex gap-x-6">
     <!-- <div class="h-[100px] w-[100px] bg-gray-50 rounded-[10px] overflow-hidden">
-      <img src="/images/2.png" class="w-full h-full" alt="image" />
+      <NuxtImg src="/images/2.png" class="w-full h-full" alt="image" />
     </div> -->
     <div class="flex justify-between flex-1">
       <div class="w-[236px]">
@@ -71,6 +71,6 @@ watch(
       emits("openDetail", props.order);
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 </script>

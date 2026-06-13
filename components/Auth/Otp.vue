@@ -5,7 +5,7 @@
       class="min-w-[300px] max-w-[500px] mx-auto px-6 py-6 text-center"
     >
       <div class="mb-8">
-        <img alt="check" src="/images/otp.png" class="block mx-auto" />
+        <NuxtImg alt="check" src="/images/otp.png" class="block mx-auto" />
       </div>
       <h2 class="text-center font-semibold text-[#101828] mb-[6px] text-2xl">
         {{ title }}
@@ -93,7 +93,8 @@ const props = defineProps({
     default: "",
   },
   subtext: {
-    default: "We have sent an OTP to your email address and your registered mobile number",
+    default:
+      "We have sent an OTP to your email address and your registered mobile number",
   },
 });
 const emit = defineEmits(["handleSubmit", "close"]);

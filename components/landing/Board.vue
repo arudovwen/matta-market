@@ -1,5 +1,7 @@
 <template>
-  <div class="rounded-[10px] overflow-hidden relative group aspect-[1440/248] w-full">
+  <div
+    class="rounded-[10px] overflow-hidden relative group aspect-[1440/248] w-full"
+  >
     <!-- Skeleton Loader -->
     <div
       v-if="!isLoaded"
@@ -9,7 +11,7 @@
     <!-- NuxtLink wrapper -->
     <NuxtLink :to="link" class="block h-full w-full relative z-10">
       <!-- Image -->
-      <img
+      <NuxtImg
         v-if="isImage"
         :src="url"
         alt="media"

@@ -1,21 +1,22 @@
 <template>
   <div class="bg-[#F4F4F4] h-screen w-screen flex items-center justify-center">
     <div>
-      <span class="mb-3 block mx-auto" v-if="!route.name.includes('process-payment')">
-       
-          <img
-            src="/logo-matta-black.png"
-            class="w-[110px] mx-auto "
-            alt="Matta"
-            width="132"
-            height="auto"
-          />
-   
+      <span
+        class="mb-3 block mx-auto"
+        v-if="!route.name.includes('process-payment')"
+      >
+        <NuxtImg
+          src="/logo-matta-black.png"
+          class="w-[110px] mx-auto"
+          alt="Matta"
+          width="132"
+          height="auto"
+        />
       </span>
       <slot />
     </div>
   </div>
 </template>
 <script setup>
-const route = useRoute()
+const route = useRoute();
 </script>

@@ -11,8 +11,11 @@
 const view = ref({
   atTopOfPage: true,
 });
-onBeforeMount(() => {
+onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+});
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 function handleScroll() {
   // when the user scrolls, check the pageYOffset

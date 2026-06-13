@@ -3,8 +3,8 @@
     <nav class="flex justify-between gap-x-2 items-center py-5 px-6">
       <div class="flex items-center">
         <NuxtLink to="/">
-           <img
-            src="~/assets/img/logo.svg"
+          <NuxtImg
+            src="/assets/img/logo.svg"
             width="80"
             height="auto"
             alt="Matta"

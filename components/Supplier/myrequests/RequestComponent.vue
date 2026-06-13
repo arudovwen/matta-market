@@ -4,7 +4,7 @@
       <span
         class="mr-3 h-10 w-10 rounded-lg flex items-center justify-center border border-[#E7EBEE] p-2"
       >
-         <!-- <img class="" :src="request?.image" alt="alt" /> -->
+        <!-- <NuxtImg class="" :src="request?.image" alt="alt" /> -->
       </span>
       <span>
         <span class="text-xs font-medium"> {{ request.productName }} </span>
@@ -56,7 +56,7 @@
         </p>
       </div>
     </div>
-    <div class=" border border-[#D0D5DD] rounded-lg px-6 py-5 text-matta-black">
+    <div class="border border-[#D0D5DD] rounded-lg px-6 py-5 text-matta-black">
       <div class="flex justify-between mb-2">
         <h3 class="text-base font-medium">Shipping Address</h3>
         <span><i class="uil uil-minusext-lg"></i></span>
@@ -121,10 +121,10 @@
             stage > 2
               ? ''
               : stage == 2
-              ? ' bg-primary-500 text-white'
-              : stage < 2
-              ? 'bg-white text-matta-black'
-              : ''
+                ? ' bg-primary-500 text-white'
+                : stage < 2
+                  ? 'bg-white text-matta-black'
+                  : ''
           "
           class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-xs"
         >
@@ -151,10 +151,10 @@
             stage > 3
               ? ''
               : stage == 3
-              ? ' bg-primary-500 text-white'
-              : stage < 3
-              ? 'bg-white text-matta-black'
-              : ''
+                ? ' bg-primary-500 text-white'
+                : stage < 3
+                  ? 'bg-white text-matta-black'
+                  : ''
           "
           class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-xs"
         >
@@ -178,10 +178,10 @@
             stage > 4
               ? ''
               : stage == 4
-              ? ' bg-primary-500 text-white'
-              : stage < 4
-              ? 'bg-white text-matta-black'
-              : ''
+                ? ' bg-primary-500 text-white'
+                : stage < 4
+                  ? 'bg-white text-matta-black'
+                  : ''
           "
           class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-xs"
         >

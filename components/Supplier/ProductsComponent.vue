@@ -58,8 +58,8 @@
                 <button
                   class="w-[46px] h-[46px] rounded-full flex items-center justify-center text-matta-black bg-transparent hover:text-white hover:bg-matta-black border border-[#ddd] shadow-sm"
                 >
-                  <img
-                    src="~/assets/img/sorting.svg"
+                  <NuxtImg
+                    src="/assets/img/sorting.svg"
                     alt="alt"
                   /></button></template
             ></FormsSortFilter>
@@ -89,7 +89,7 @@
                         v-if="item.logo"
                         class="mr-3 h-10 w-10 rounded-full flex items-center justify-center border border-[#E7EBEE]"
                       >
-                        <img
+                        <NuxtImg
                           class="object-cover w-full h-full rounded-full"
                           alt="alt"
                           :src="item.logo"
@@ -289,7 +289,7 @@ const queryParams = reactive({
   pagecount: 0,
   totalCount: 0,
   Status: "published",
-  withZoho: true
+  withZoho: true,
 });
 const active = ref("published");
 const isLoading = ref(false);
@@ -403,7 +403,7 @@ function handleDelete() {
     })
     .catch((err) => {
       toast.success(
-        err?.response?.data?.message || err?.response?.data?.Message
+        err?.response?.data?.message || err?.response?.data?.Message,
       );
       isLoading.value = false;
     });
@@ -415,7 +415,7 @@ watch(
   () => [queryParams.PageNumber, queryParams.Status],
   () => {
     getData();
-  }
+  },
 );
 provide("isPageLoading", isPageLoading);
 provide("active", active);

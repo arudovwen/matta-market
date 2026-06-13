@@ -37,7 +37,7 @@
               <div
                 class="flex items-center justify-center mx-auto mb-4 overflow-hidden border border-white rounded-full w-28 h-28"
               >
-                <img
+                <NuxtImg
                   :src="item.photo ? item.photo : defaultImage"
                   class="w-full h-full"
                   alt="default"
@@ -105,7 +105,7 @@
         <div
           class="flex items-center justify-center w-20 h-20 bg-white rounded-xl"
         >
-          <img
+          <NuxtImg
             v-if="producer.logo"
             :src="producer.logo"
             alt="logo"

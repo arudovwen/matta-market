@@ -23,7 +23,7 @@
                 <div
                   class="h-10 text-xl w-10 text-primary-500 rounded-full flex items-center justify-center bg-[#D1E9FF]"
                 >
-                  <img alt="request" :src="n.icon" />
+                  <NuxtImg alt="request" :src="n.icon" />
                 </div>
               </div>
             </div>
@@ -38,7 +38,6 @@
           </div>
         </div>
         <div
-   
           class="w-full h-[200px] lg:h-[500px] bg-cover bg-[url('/images/two.png')] rounded-lg"
         ></div>
       </div>

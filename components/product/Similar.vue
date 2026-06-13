@@ -19,8 +19,8 @@
           @click="
             router.push(
               `/product/${encodeURIComponent(slide.title)}/${encodeURIComponent(
-                'similar'
-              )}/${slide.id}`
+                'similar',
+              )}/${slide.id}`,
             )
           "
           class="w-full cursor-pointer min-w-[140px] sm:min-w-[160px] lg:min-w-[250px] max-w-[250px] bg-white darks:bg-gray-800 rounded-[10px] shadow-[0px_2px_8px_0px_rgba(0,0,0,0.05)] overflow-hidden"
@@ -34,7 +34,7 @@
                 :icon="!slide.liked ? 'ph:heart' : 'ph:heart-fill'"
                 class="text-xs sm:text-sm md:text-base darks:text-white"
             /></span>
-            <img
+            <NuxtImg
               :src="slide.converPhoto"
               alt="Similar"
               width="276"
@@ -133,7 +133,6 @@ const breakpoints = {
   },
 };
 function scroll() {
-
   window.scrollTo({
     top: 0,
     left: 0,
@@ -172,7 +171,7 @@ watch(
   () => [productData.value, route],
   () => {
     getAllProducts();
-  }
+  },
 );
 </script>
 <style>

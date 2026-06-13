@@ -8,7 +8,7 @@
     >
       <div class="flex justify-between">
         <NuxtLink to="/">
-          <img
+          <NuxtImg
             src="/logo-matta-white.png"
             width="100"
             height="26"
@@ -18,15 +18,17 @@
       </div>
       <div class="relative flex-1 flex flex-col justify-center">
         <div class="max-w-[600px] xl:max-w-[800px] w-full">
-          <h1
-            class="text-3xl xl:text-4xl  text-white font-semibold mb-[27px]"
-          >
+          <h1 class="text-3xl xl:text-4xl text-white font-semibold mb-[27px]">
             {{
-              route.path === "/auth/vendor-register" ? vendorHeader : buyerHeader
+              route.path === "/auth/vendor-register"
+                ? vendorHeader
+                : buyerHeader
             }}
           </h1>
-          <p class="text-base xl:text-lg  text-white mb-10">
-            {{ route.path === "/auth/vendor-register" ? vendorText : buyerText }}
+          <p class="text-base xl:text-lg text-white mb-10">
+            {{
+              route.path === "/auth/vendor-register" ? vendorText : buyerText
+            }}
           </p>
           <div class="grid gap-y-2">
             <div
@@ -36,7 +38,9 @@
               :key="n"
               class="flex gap-x-[10px]"
             >
-              <span class="h-[6px] w-[6px] rounded-full bg-white inline mt-[10px]"></span>
+              <span
+                class="h-[6px] w-[6px] rounded-full bg-white inline mt-[10px]"
+              ></span>
 
               <p class="text-base xl:text-lg text-white">
                 {{ n }}
@@ -52,7 +56,7 @@
       <div class="w-full h-full bg-white flex flex-col">
         <div class="z-10 lg:hidden mb-14 max-h-max">
           <NuxtLink to="/">
-            <img
+            <NuxtImg
               src="/images/logo.png"
               width="100"
               height="26"
@@ -82,7 +86,7 @@ const backgroundStyles = computed(() => {
         sm: "100vw",
         xs: "100vw",
       },
-    }
+    },
   );
   return { backgroundImage: `url('${imgUrl}')` };
 });

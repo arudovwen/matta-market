@@ -15,7 +15,11 @@
           v-if="product.gallery"
         >
           <slide v-for="item in product.gallery" :key="item" class="">
-             <img :src="item" class="h-[350px] w-full object-cover" alt="alt" />
+            <NuxtImg
+              :src="item"
+              class="h-[350px] w-full object-cover"
+              alt="alt"
+            />
           </slide>
         </carousel>
       </div>
@@ -246,7 +250,10 @@
             <div v-if="technical.subSection">
               <div class="" v-for="(n, idx) in technical.subSection" :key="idx">
                 <p class="mb-4">{{ n.subSectionName }}</p>
-                <div class="mb-4 description" v-dompurify-html="n.description"></div>
+                <div
+                  class="mb-4 description"
+                  v-dompurify-html="n.description"
+                ></div>
               </div>
             </div>
           </div>
@@ -282,7 +289,10 @@
                 :key="idx"
               >
                 <p class="mb-4">{{ n.subSectionName }}</p>
-                <div class="mb-4 description" v-dompurify-html="n.description"></div>
+                <div
+                  class="mb-4 description"
+                  v-dompurify-html="n.description"
+                ></div>
               </div>
             </div>
           </div>
@@ -314,7 +324,10 @@
             <div v-if="property.subSection">
               <div class="" v-for="(n, idx) in property.subSection" :key="idx">
                 <p class="mb-4">{{ n.subSectionName }}</p>
-                <div class="mb-4 description" v-dompurify-html="n.description"></div>
+                <div
+                  class="mb-4 description"
+                  v-dompurify-html="n.description"
+                ></div>
               </div>
             </div>
           </div>

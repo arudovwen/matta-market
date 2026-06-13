@@ -15,7 +15,7 @@
             :class=" !detail.liked ? 'text-gray-400' : 'text-primary-600'"
           />
         </span>
-        <img
+        <NuxtImg
           v-if="detail.converPhoto || detail?.productImg"
           :src="detail.converPhoto || detail?.productImg"
           alt="Card"

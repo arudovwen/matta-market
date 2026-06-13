@@ -19,7 +19,7 @@
             @rendered="loading = false"
             :page="1"
           />
-          <img
+          <NuxtImg
             alt="media"
             :src="media"
             class="w-full h-full object-contain"

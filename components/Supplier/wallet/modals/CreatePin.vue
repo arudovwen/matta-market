@@ -2,7 +2,7 @@
   <ModalCenterProp :is-modal-open="isCreatePin" @close="emit('close')">
     <div class="min-w-[350px] max-w-[350px] py-6 px-6">
       <div class="mb-2">
-        <img alt="check" src="/images/checkers.svg" />
+        <NuxtImg alt="check" src="/images/checkers.svg" />
       </div>
       <h2 class="block text-lg font-semibold text-[#101828] text-left mb-1">
         Transaction PIN
@@ -109,14 +109,14 @@ const [transactionPIN, transactionPINAtt] = defineField("transactionPIN");
 const [confirmPin, confirmPinAtt] = defineField("confirmPin");
 
 const isLoading = ref(false);
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 const onSubmit = handleSubmit((values) => {
   isLoading.value = true;
 
   setWalletpin(values)
     .then((res) => {
       if (res.status === 200) {
-        authStore.setHasPin(true)
+        authStore.setHasPin(true);
         emit("close");
         isLoading.value = false;
         toast.info("Transaction pin set!");
