@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    preset: "vercel",
     baseURL: "/",
     prerender: {
       crawlLinks: true,
