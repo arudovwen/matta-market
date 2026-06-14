@@ -57,11 +57,43 @@
 
     <hr class="my-[20px] border-white/10" />
 
-    <div class="flex justify-between mb-[25px]">
-      <p class="text-sm text-[#E1E1E1]">Total</p>
-      <p class="font-bold text-white">
-        {{ currencyFormat(cartStore?.cartTotalwithTax) }}
-      </p>
+    <div class="mb-[25px]">
+      <div
+        class="flex justify-between mb-1"
+        v-if="cartStore?.cartData?.walletBalanceApplied"
+      >
+        <p class="text-sm text-[#E1E1E1]">Order Total</p>
+        <p class="font-bold text-white">
+          {{ currencyFormat(cartStore?.cartTotalwithTax) }}
+        </p>
+      </div>
+
+      <OrderSummaryRow
+        v-if="cartStore?.cartData?.walletBalanceApplied"
+        label="Wallet Balance Applied"
+        :value="cartStore?.cartData?.walletBalanceUsed"
+        textColor="text-[#4ADE80]"
+        isNegative
+      />
+
+      <div class="flex justify-between mt-3">
+        <p class="text-sm text-[#E1E1E1]">
+          {{
+            cartStore?.cartData?.walletBalanceApplied
+              ? "Amount to Pay"
+              : "Total"
+          }}
+        </p>
+        <p class="font-bold text-white text-lg">
+          {{
+            currencyFormat(
+              cartStore?.cartData?.walletBalanceApplied
+                ? cartStore?.cartData?.totaltoPayAfterCreditApplied
+                : cartStore?.cartTotalwithTax,
+            )
+          }}
+        </p>
+      </div>
     </div>
     <AppButton
       @click="confirmOrder"
@@ -87,7 +119,7 @@
 <script setup>
 import { toast } from "vue3-toastify";
 import { nanoid } from "nanoid";
-import { confirmpurchase, confirmpayment } from "~/services/cartservice";
+import { confirmpurchase, confirmpayment, clearcart } from "~/services/cartservice";
 import OrderSummaryRow from "./sideRow.vue";
 
 const isPopOpen = inject("isPopOpen");
@@ -162,15 +194,6 @@ function makePayment() {
 }
 
 async function confirmOrder() {
-  if (
-    activeMethod.value === "wallet" &&
-    authStore.userBalance?.balance?.availableBalance <
-      cartStore?.cartTotalwithTax
-  ) {
-    toast.info("Insufficient Wallet balance");
-    return;
-  }
-
   if (activeMethod.value === "credit") {
     isPopOpen.value = true;
     return;
@@ -181,15 +204,23 @@ async function confirmOrder() {
     const res = await confirmpurchase({
       shippingAddressId: shippingStore?.defaultAddress?.id,
       orderRequest: false,
-      paymentOption: activeMethod.value === "card" ? 0 : 1,
+      paymentOption:
+        cartStore?.cartData?.walletBalanceApplied &&
+        cartStore?.cartData?.totaltoPayAfterCreditApplied === 0
+          ? 1
+          : 0,
       orderPickUp: selectedShipping.value === "pickup",
       appCode: config.public?.APP_CODE,
     });
 
     if (res.status === 200) {
-      if (activeMethod.value === "wallet") {
+      if (
+        cartStore?.cartData?.walletBalanceApplied &&
+        cartStore?.cartData?.totaltoPayAfterCreditApplied === 0
+      ) {
+        await clearcart()
         cartStore?.clearCart();
-        navigateTo(`/order-success?orderId=${res.data.data}`);
+        navigateTo(`/order-successful/${res.data.data}`);
       } else {
         referenceData.transactionRef = `ORD-${res.data.data}-${nanoid(6)}`;
         referenceData.zohoorderId = `ORD-${res.data.data}`;
@@ -225,7 +256,7 @@ async function onSuccess(response) {
 
     if (res.status === 200) {
       cartStore?.clearCart();
-      navigateTo(`/order-success?orderId=${referenceData.orderId}`);
+      navigateTo(`/order-successful/${referenceData.orderId}`);
     }
   } catch (err) {
     toast.error(
@@ -253,7 +284,7 @@ async function handleOrderRequest() {
 
     if (res.status === 200) {
       cartStore?.clearCart();
-      navigateTo(`/order-success?orderId=${res.data.data}&order_type=requests`);
+      navigateTo(`/order-successful/${res.data.data}?order_type=requests`);
     }
   } catch (err) {
     toast.error(

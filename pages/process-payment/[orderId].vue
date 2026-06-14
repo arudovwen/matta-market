@@ -164,7 +164,7 @@ async function onSuccess(response) {
     });
 
     if (res.status === 200) {
-      navigateTo(`/order-success?orderId=${orderId}`);
+      navigateTo(`/order-successful/${orderId}`);
     } else {
       throw new Error('Confirmation failed');
     }

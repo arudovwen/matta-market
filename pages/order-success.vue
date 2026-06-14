@@ -116,7 +116,7 @@ function onSuccess(response) {
       .then((res) => {
         if (res.status === 200) {
           cartStore?.clearCart();
-          window.location.replace(`/order-success?orderId=${orderId}`);
+          window.location.replace(`/order-successful/${orderId}`);
           loading.value = false;
         }
       })

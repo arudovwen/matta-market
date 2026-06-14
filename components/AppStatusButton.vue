@@ -79,6 +79,10 @@ const OrderStatusText = {
     text: "Delivered",
     className: StatusClass[1],
   },
+    8: {
+    text: "Order request",
+    className: StatusClass[2],
+  },
 };
 const FinanceStatusText = {
   0: {

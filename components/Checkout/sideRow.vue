@@ -2,7 +2,7 @@
   <div class="flex justify-between">
     <p class="text-sm text-[#E1E1E1]">{{ label }}</p>
     <p
-      :class="['text-xs', isBold ? 'font-medium' : 'font-normal', 'text-white']"
+      :class="['text-xs', isBold ? 'font-medium' : 'font-normal', textColor]"
     >
       {{ isNegative ? "-" : "" }} {{ currencyFormat(value) }}
     </p>
@@ -15,5 +15,6 @@ defineProps({
   value: { type: [Number, String], required: true },
   isNegative: { type: Boolean, default: false },
   isBold: { type: Boolean, default: false },
+  textColor: { type: String, default: "text-white" },
 });
 </script>

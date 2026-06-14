@@ -1,187 +1,192 @@
 <template>
-
   <div v-if="cartStore?.cartTotalwithTax">
     <h2 class="py-5 font-bold text-2xl border-b border-[#f3f3f3]">
       Payment Method
     </h2>
     <div class="grid gap-y-4">
-        <div class="">
-    <div class="grid w-full gap-y-4">
-      <div
-        v-for="n in payData"
-        :key="n.key"
-        class="w-full overflow-hidden border rounded-lg "
-        :class="[
-          useWallet
-            ? 'bg-[#1849A9] border-[#2E90FA] !text-white'
-            : !authStore.userBalance?.balance?.availableBalance
-              ? 'border-[#ECECEC] text-matta-black bg-white'
-              : 'border-[#ECECEC] text-matta-black bg-white',
-          !authStore.userBalance?.balance?.availableBalance
-            ? 'opacity-60 cursor-not-allowed'
-            : '',
-        ]"
-      >
-        <label
-          class="flex items-center justify-between p-4 cursor-pointer"
-          :class="[
-            useWallet ? '!text-white' : 'text-matta-black',
-            n.disabled ? 'opacity-60' : '',
-          ]"
-        >
-          <div class="flex items-center gap-x-3">
-            <span class="flex items-center">
-              <input
-                type="checkbox"
-                class="hidden peer"
-                v-model="useWallet"
-                :disabled="!authStore.userBalance?.balance?.availableBalance"
-              />
-              <span class="hidden peer-checked:inline">
-                <AppIcon
-                  icon="fa6-solid:square-check"
-                  :iconClass="useWallet ? 'text-white' : 'text-[#1570EF]'"
-                />
-              </span>
-              <span class="inline peer-checked:hidden">
-                <AppIcon icon="fa-regular:square" iconClass="text-[#D0D5DD]" />
-              </span>
-            </span>
-           
-            <p class="text-sm font-bold">{{ n.title }}</p>
-          </div>
-
-          <!-- Wallet Balance -->
-          <p class="text-sm font-semibold">
-            {{
-              currencyFormat(authStore.userBalance?.balance?.availableBalance)
-            }}
-          </p>
-        </label>
-      </div>
-    </div>
-  </div>
-   <div class="p-[30px] w-full bg-white rounded-[10px]">
-      <div class="grid w-full gap-y-4">
-        <div
-          v-for="n in data"
-          :key="n.key"
-          class="w-full overflow-hidden border rounded-lg"
-          :class="[
-            activeMethod === 'credit' && n.key === 'credit'
-              ? 'bg-[#1849A9] border-[#2E90FA] !text-white'
-              : 'border-[#ECECEC] text-matta-black',
-            n.disabled ? 'opacity-60 cursor-not-allowed' : '',
-          ]"
-        >
-          <label
-            class="flex items-center justify-between p-4"
+      <div class="">
+        <div class="grid w-full gap-y-4">
+          <div
+            v-for="n in payData"
+            :key="n.key"
+            class="w-full overflow-hidden border rounded-lg"
             :class="[
-              activeMethod === 'credit' && n.key === 'credit'
-                ? '!text-white'
-                : 'text-matta-black',
-              n.disabled ? 'opacity-60' : '',
+              useWallet
+                ? 'bg-[#1849A9] border-[#2E90FA] !text-white'
+                : !authStore.userBalance?.balance?.availableBalance || activeMethod === 'credit'
+                  ? 'border-[#ECECEC] text-matta-black bg-white'
+                  : 'border-[#ECECEC] text-matta-black bg-white',
+              !authStore.userBalance?.balance?.availableBalance || activeMethod === 'credit'
+                ? 'opacity-60 cursor-not-allowed'
+                : '',
             ]"
           >
-            <div class="flex items-center gap-x-3">
-              <span class="flex items-center">
-                <input
-                  type="radio"
-                  class="hidden peer"
-                  :value="n.key"
-                  v-model="activeMethod"
-                  :disabled="n.disabled"
-                />
-                <span class="hidden peer-checked:inline">
-                  <AppIcon
-                    icon="fa6-solid:circle-dot"
-                    :iconClass="
-                      activeMethod === 'credit' && n.key === 'credit'
-                        ? 'text-white'
-                        : 'text-[#1570EF]'
+            <label
+              class="flex items-center justify-between p-4 cursor-pointer"
+              :class="[
+                useWallet ? '!text-white' : 'text-matta-black',
+                n.disabled ? 'opacity-60' : '',
+              ]"
+            >
+              <div class="flex items-center gap-x-3">
+                <span class="flex items-center">
+                  <input
+                    type="checkbox"
+                    class="hidden peer"
+                    v-model="useWallet"
+                    :disabled="
+                      !authStore.userBalance?.balance?.availableBalance || activeMethod === 'credit'
                     "
                   />
+                  <span class="hidden peer-checked:inline">
+                    <AppIcon
+                      icon="fa6-solid:square-check"
+                      :iconClass="useWallet ? 'text-white' : 'text-[#1570EF]'"
+                    />
+                  </span>
+                  <span class="inline peer-checked:hidden">
+                    <AppIcon
+                      icon="fa-regular:square"
+                      iconClass="text-[#D0D5DD]"
+                    />
+                  </span>
                 </span>
-                <span class="inline peer-checked:hidden">
-                  <AppIcon
-                    icon="fa-regular:circle"
-                    iconClass="text-[#D0D5DD]"
-                  />
-                </span>
-              </span>
-              <AppIcon :icon="n.icon" class="ml-1 text-2xl" />
-              <p class="text-sm font-bold">{{ n.title }}</p>
-            </div>
 
-            <!-- Wallet Balance -->
-            <p v-if="n.key === 'wallet'" class="text-sm font-semibold"></p>
+                <p class="text-sm font-bold">{{ n.title }}</p>
+              </div>
 
-            <!-- Credit Option -->
-            <div v-if="n.key === 'credit'" class="text-right">
-              <p
-                v-if="authStore.userBalance?.creditDetail?.hasCredit"
-                class="text-sm font-semibold"
-              >
+              <!-- Wallet Balance -->
+              <p class="text-sm font-semibold">
                 {{
                   currencyFormat(
-                    authStore.userBalance?.creditDetail?.availableCredit,
+                    authStore.userBalance?.balance?.availableBalance,
                   )
                 }}
               </p>
-              <AppButton
-                v-else
-                text="Apply now"
-                @click="openCreditPage"
-                btnClass="bg-white !text-[#1570EF] !text-xs !py-[6px] !px-[10px] font-semibold"
-              />
-              <p
-                class="mt-1 text-xs"
-                :class="insufficient ? 'text-red-600' : 'text-white/70'"
-                v-if="authStore.userBalance?.creditDetail?.hasCredit"
-              >
-                {{ insufficient ? "Insufficient" : "Available" }} credit
-              </p>
-            </div>
-          </label>
-
-          <!-- Additional Credit Info -->
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="p-[30px] w-full bg-white rounded-[10px]">
+        <div class="grid w-full gap-y-4">
           <div
-            v-if="n.key === 'credit' && activeMethod === 'credit'"
-            class="py-4 border-t border-[#FFFFFF24] px-4 text-xs flex justify-between items-end gap-x-16"
-            :class="
+            v-for="n in data"
+            :key="n.key"
+            class="w-full overflow-hidden border rounded-lg"
+            :class="[
               activeMethod === 'credit' && n.key === 'credit'
-                ? '!text-white'
-                : 'text-matta-black'
-            "
+                ? 'bg-[#1849A9] border-[#2E90FA] !text-white'
+                : 'border-[#ECECEC] text-matta-black',
+              n.disabled ? 'opacity-60 cursor-not-allowed' : '',
+            ]"
           >
-            <div class="flex-1">
-              <span class="block mb-1 text-xs font-bold">
-                {{
-                  handleMessageTitle(
-                    cartStore?.cartTotalwithTax >
+            <label
+              class="flex items-center justify-between p-4"
+              :class="[
+                activeMethod === 'credit' && n.key === 'credit'
+                  ? '!text-white'
+                  : 'text-matta-black',
+                n.disabled ? 'opacity-60' : '',
+              ]"
+            >
+              <div class="flex items-center gap-x-3">
+                <span class="flex items-center">
+                  <input
+                    type="radio"
+                    class="hidden peer"
+                    :value="n.key"
+                    v-model="activeMethod"
+                    :disabled="n.disabled"
+                  />
+                  <span class="hidden peer-checked:inline">
+                    <AppIcon
+                      icon="fa6-solid:circle-dot"
+                      :iconClass="
+                        activeMethod === 'credit' && n.key === 'credit'
+                          ? 'text-white'
+                          : 'text-[#1570EF]'
+                      "
+                    />
+                  </span>
+                  <span class="inline peer-checked:hidden">
+                    <AppIcon
+                      icon="fa-regular:circle"
+                      iconClass="text-[#D0D5DD]"
+                    />
+                  </span>
+                </span>
+                <AppIcon :icon="n.icon" class="ml-1 text-2xl" />
+                <p class="text-sm font-bold">{{ n.title }}</p>
+              </div>
+
+              <!-- Wallet Balance -->
+              <p v-if="n.key === 'wallet'" class="text-sm font-semibold"></p>
+
+              <!-- Credit Option -->
+              <div v-if="n.key === 'credit'" class="text-right">
+                <p
+                  v-if="authStore.userBalance?.creditDetail?.hasCredit"
+                  class="text-sm font-semibold"
+                >
+                  {{
+                    currencyFormat(
                       authStore.userBalance?.creditDetail?.availableCredit,
-                    hasCredit,
-                    authStore.userBalance?.creditDetail?.creditWalletStatus,
-                  )
-                }}
-              </span>
-              <span>
-                {{
-                  handleMessage(
-                    cartStore?.cartTotalwithTax >
-                      authStore.userBalance?.creditDetail?.availableCredit,
-                    hasCredit,
-                    authStore.userBalance?.creditDetail?.creditWalletStatus,
-                  )
-                }}
-              </span>
+                    )
+                  }}
+                </p>
+                <AppButton
+                  v-else
+                  text="Apply now"
+                  @click="openCreditPage"
+                  btnClass="bg-white !text-[#1570EF] !text-xs !py-[6px] !px-[10px] font-semibold"
+                />
+                <p
+                  class="mt-1 text-xs"
+                  :class="insufficient ? 'text-red-600' : 'text-white/70'"
+                  v-if="authStore.userBalance?.creditDetail?.hasCredit"
+                >
+                  {{ insufficient ? "Insufficient" : "Available" }} credit
+                </p>
+              </div>
+            </label>
+
+            <!-- Additional Credit Info -->
+            <div
+              v-if="n.key === 'credit' && activeMethod === 'credit'"
+              class="py-4 border-t border-[#FFFFFF24] px-4 text-xs flex justify-between items-end gap-x-16"
+              :class="
+                activeMethod === 'credit' && n.key === 'credit'
+                  ? '!text-white'
+                  : 'text-matta-black'
+              "
+            >
+              <div class="flex-1">
+                <span class="block mb-1 text-xs font-bold">
+                  {{
+                    handleMessageTitle(
+                      cartStore?.cartTotalwithTax >
+                        authStore.userBalance?.creditDetail?.availableCredit,
+                      hasCredit,
+                      authStore.userBalance?.creditDetail?.creditWalletStatus,
+                    )
+                  }}
+                </span>
+                <span>
+                  {{
+                    handleMessage(
+                      cartStore?.cartTotalwithTax >
+                        authStore.userBalance?.creditDetail?.availableCredit,
+                      hasCredit,
+                      authStore.userBalance?.creditDetail?.creditWalletStatus,
+                    )
+                  }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
- 
   </div>
 
   <CheckoutCreditPopup
@@ -211,7 +216,7 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 
 const activeMethod = inject("activeMethod");
-const useWallet = ref(false);
+const useWallet = ref(cartStore?.cartData?.walletBalanceApplied || false);
 const isPopOpen = inject("isPopOpen");
 
 const creditDetail = ref(null);
@@ -311,6 +316,12 @@ watch(useWallet, async (newVal) => {
     await cartStore.getMyCart();
   } catch (error) {
     console.error("Error updating wallet status:", error);
+  }
+});
+
+watch(activeMethod, (newVal) => {
+  if (newVal === "credit" && useWallet.value) {
+    useWallet.value = false;
   }
 });
 </script>

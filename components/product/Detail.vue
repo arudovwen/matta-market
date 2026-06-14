@@ -529,7 +529,7 @@ function handleOrderRequest(type) {
         if (res.status === 200) {
           requestloading.value = false;
           cartStore?.clearCart();
-          navigateTo(`/order-success?orderId=${res.data.data}&order_type=requests`);
+          navigateTo(`/order-successful/${res.data.data}?order_type=requests`);
         }
       })
       .catch((err) => {
