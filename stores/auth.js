@@ -146,12 +146,7 @@ export const useAuthStore = defineStore(
       clearCookies().then(() => {
         loggedUser.value = null;
         if (typeof window !== "undefined") {
-          const currentPath = window.location.pathname + window.location.search;
-          if (currentPath === '/' || currentPath === '/login' || currentPath === '/register') {
-            window.location.replace("/");
-          } else {
-            window.location.replace(`/?redirectUrl=${encodeURIComponent(currentPath)}`);
-          }
+          window.location.reload();
         } else {
           return navigateTo("/");
         }
