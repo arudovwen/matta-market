@@ -1,9 +1,67 @@
 <template>
+
   <div v-if="cartStore?.cartTotalwithTax">
     <h2 class="py-5 font-bold text-2xl border-b border-[#f3f3f3]">
       Payment Method
     </h2>
-    <div class="p-[30px] w-full bg-white rounded-[10px]">
+    <div class="grid gap-y-4">
+        <div class="">
+    <div class="grid w-full gap-y-4">
+      <div
+        v-for="n in payData"
+        :key="n.key"
+        class="w-full overflow-hidden border rounded-lg "
+        :class="[
+          useWallet
+            ? 'bg-[#1849A9] border-[#2E90FA] !text-white'
+            : !authStore.userBalance?.balance?.availableBalance
+              ? 'border-[#ECECEC] text-matta-black bg-white'
+              : 'border-[#ECECEC] text-matta-black bg-white',
+          !authStore.userBalance?.balance?.availableBalance
+            ? 'opacity-60 cursor-not-allowed'
+            : '',
+        ]"
+      >
+        <label
+          class="flex items-center justify-between p-4 cursor-pointer"
+          :class="[
+            useWallet ? '!text-white' : 'text-matta-black',
+            n.disabled ? 'opacity-60' : '',
+          ]"
+        >
+          <div class="flex items-center gap-x-3">
+            <span class="flex items-center">
+              <input
+                type="checkbox"
+                class="hidden peer"
+                v-model="useWallet"
+                :disabled="!authStore.userBalance?.balance?.availableBalance"
+              />
+              <span class="hidden peer-checked:inline">
+                <AppIcon
+                  icon="fa6-solid:square-check"
+                  :iconClass="useWallet ? 'text-white' : 'text-[#1570EF]'"
+                />
+              </span>
+              <span class="inline peer-checked:hidden">
+                <AppIcon icon="fa-regular:square" iconClass="text-[#D0D5DD]" />
+              </span>
+            </span>
+           
+            <p class="text-sm font-bold">{{ n.title }}</p>
+          </div>
+
+          <!-- Wallet Balance -->
+          <p class="text-sm font-semibold">
+            {{
+              currencyFormat(authStore.userBalance?.balance?.availableBalance)
+            }}
+          </p>
+        </label>
+      </div>
+    </div>
+  </div>
+   <div class="p-[30px] w-full bg-white rounded-[10px]">
       <div class="grid w-full gap-y-4">
         <div
           v-for="n in data"
@@ -56,11 +114,7 @@
             </div>
 
             <!-- Wallet Balance -->
-            <p v-if="n.key === 'wallet'" class="text-sm font-semibold">
-              {{
-                currencyFormat(authStore.userBalance?.balance?.availableBalance)
-              }}
-            </p>
+            <p v-if="n.key === 'wallet'" class="text-sm font-semibold"></p>
 
             <!-- Credit Option -->
             <div v-if="n.key === 'credit'" class="text-right">
@@ -70,7 +124,7 @@
               >
                 {{
                   currencyFormat(
-                    authStore.userBalance?.creditDetail?.availableCredit
+                    authStore.userBalance?.creditDetail?.availableCredit,
                   )
                 }}
               </p>
@@ -107,7 +161,7 @@
                     cartStore?.cartTotalwithTax >
                       authStore.userBalance?.creditDetail?.availableCredit,
                     hasCredit,
-                    authStore.userBalance?.creditDetail?.creditWalletStatus
+                    authStore.userBalance?.creditDetail?.creditWalletStatus,
                   )
                 }}
               </span>
@@ -117,7 +171,7 @@
                     cartStore?.cartTotalwithTax >
                       authStore.userBalance?.creditDetail?.availableCredit,
                     hasCredit,
-                    authStore.userBalance?.creditDetail?.creditWalletStatus
+                    authStore.userBalance?.creditDetail?.creditWalletStatus,
                   )
                 }}
               </span>
@@ -126,6 +180,8 @@
         </div>
       </div>
     </div>
+    </div>
+ 
   </div>
 
   <CheckoutCreditPopup
@@ -133,15 +189,21 @@
     @close="isPopOpen = false"
     :open="isPopOpen"
     :available="hasCredit"
-    :insufficient="cartStore?.cartTotalwithTax > authStore.userBalance?.creditDetail?.availableCredit"
+    :insufficient="
+      cartStore?.cartTotalwithTax >
+      authStore.userBalance?.creditDetail?.availableCredit
+    "
     :creditDetail="{
       ...authStore.userBalance?.creditDetail,
-      balance: authStore.userBalance?.creditDetail?.creditLimit - authStore.userBalance?.creditDetail?.creditUsed,
-      amountToPay: cartStore?.cartTotalwithTax
+      balance:
+        authStore.userBalance?.creditDetail?.creditLimit -
+        authStore.userBalance?.creditDetail?.creditUsed,
+      amountToPay: cartStore?.cartTotalwithTax,
     }"
   />
 </template>
 <script setup>
+import { applyWallet, removeWallet } from "~/services/cartservice";
 import { getCreditDetail } from "~/services/creditservice";
 import { getWalletBalance } from "~/services/walletservice";
 
@@ -149,6 +211,7 @@ const cartStore = useCartStore();
 const authStore = useAuthStore();
 
 const activeMethod = inject("activeMethod");
+const useWallet = ref(false);
 const isPopOpen = inject("isPopOpen");
 
 const creditDetail = ref(null);
@@ -159,11 +222,11 @@ const isLoading = ref(false);
 
 const data = [
   {
-    title: "Pay With Wallet Balance",
+    title: "Pay Now",
     icon: "ion:wallet-outline",
-    key: "wallet",
+    key: "card",
     text: "Make payment with funds from your Matta wallet",
-    value: 1,
+    value: 0,
     disabled: false,
   },
   {
@@ -176,12 +239,23 @@ const data = [
       "With our flexible Buy Now Pay Later option, you can complete your procurement instantly and spread your payments over time.",
     disabled: false,
   },
+  // {
+  //   title: "Submit Order Only",
+  //   icon: "famicons:cart-outline",
+  //   key: "card",
+  //   text: "Pay instantly and securely with your credit/debit card",
+  //   value: 0,
+  //   disabled: false,
+  // },
+];
+
+const payData = [
   {
-    title: "Submit Order Only",
-    icon: "famicons:cart-outline",
-    key: "card",
-    text: "Pay instantly and securely with your credit/debit card",
-    value: 0,
+    title: "Apply wallet balance to this order",
+    icon: "ion:wallet-outline",
+    key: "wallet",
+    text: "",
+    value: true,
     disabled: false,
   },
 ];
@@ -226,5 +300,17 @@ watchEffect(() => {
   insufficient.value =
     cartStore?.cartTotalwithTax >
     authStore.userBalance?.creditDetail?.availableCredit;
+});
+watch(useWallet, async (newVal) => {
+  try {
+    if (newVal) {
+      await applyWallet();
+    } else {
+      await removeWallet();
+    }
+    await cartStore.getMyCart();
+  } catch (error) {
+    console.error("Error updating wallet status:", error);
+  }
 });
 </script>

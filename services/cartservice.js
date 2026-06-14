@@ -127,3 +127,10 @@ export async function placeSuggestion(data) {
 export async function clearShipping(data){
   return await marketGet(`${urls.CLIENT_CLEAR_SHIPPING}/${data}`, config);
 }
+
+export async function applyWallet(data) {
+  return await marketPost(`${urls.CLIENT_APPLY_WALLET}`, data, config);
+} 
+export async function removeWallet(data) {
+  return await marketPost(`${urls.CLIENT_REMOVE_WALLET}`, data, config);
+} 

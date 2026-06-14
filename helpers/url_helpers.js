@@ -274,6 +274,8 @@ const urls = {
   GET_REQUEST_DRAFT: "v1/financing/retreive-draft",
   DELETE_REQUEST_DRAFT: "v1/financing/delete-draft",
 
-  CLIENT_CLEAR_SHIPPING: "v1/shoppingcart/clear-shipping"
+  CLIENT_CLEAR_SHIPPING: "v1/shoppingcart/clear-shipping",
+    CLIENT_APPLY_WALLET: "v1/shoppingcart/apply-wallet",
+      CLIENT_REMOVE_WALLET: "v1/shoppingcart/remove-wallet"
 };
 export default urls;

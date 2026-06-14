@@ -4,7 +4,6 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: "vercel",
     baseURL: "/",
     prerender: {
       crawlLinks: true,
@@ -40,7 +39,7 @@ export default defineNuxtConfig({
     "nuxt-headlessui",
   ],
   headlessui: {
-    prefix: 'Headless'
+    prefix: "Headless",
   },
   gtm: {
     id: "GTM-M7KP6CJG",
@@ -257,7 +256,8 @@ export default defineNuxtConfig({
     manifest: {
       name: "Matta trade",
       short_name: "Matta",
-      description: "Africa's Leading B2B Marketplace for chemicals and materials",
+      description:
+        "Africa's Leading B2B Marketplace for chemicals and materials",
       theme_color: "#1570EF",
       background_color: "#ffffff",
       display: "standalone",
@@ -523,15 +523,31 @@ export default defineNuxtConfig({
           manualChunks(id) {
             if (id.includes("node_modules")) {
               // Group common heavy libraries
-              if (id.includes("apexcharts") || id.includes("vue3-apexcharts")) return "vendor-charts";
+              if (id.includes("apexcharts") || id.includes("vue3-apexcharts"))
+                return "vendor-charts";
               if (id.includes("tinymce")) return "vendor-editor";
-              if (id.includes("pdf-viewer") || id.includes("vue-pdf") || id.includes("pdfjs")) return "vendor-pdf";
+              if (
+                id.includes("pdf-viewer") ||
+                id.includes("vue-pdf") ||
+                id.includes("pdfjs")
+              )
+                return "vendor-pdf";
               if (id.includes("moment")) return "vendor-moment";
-              if (id.includes("iconify") || id.includes("heroicons") || id.includes("fa")) return "vendor-icons";
+              if (
+                id.includes("iconify") ||
+                id.includes("heroicons") ||
+                id.includes("fa")
+              )
+                return "vendor-icons";
               if (id.includes("swiper")) return "vendor-swiper";
               if (id.includes("headlessui")) return "vendor-headless";
-              if (id.includes("vee-validate") || id.includes("yup") || id.includes("vuelidate")) return "vendor-forms";
-              
+              if (
+                id.includes("vee-validate") ||
+                id.includes("yup") ||
+                id.includes("vuelidate")
+              )
+                return "vendor-forms";
+
               // Everything else from node_modules goes to vendor
               return "vendor";
             }
