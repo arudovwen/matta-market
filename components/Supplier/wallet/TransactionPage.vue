@@ -1,6 +1,8 @@
 <!-- eslint-disable no-unused-vars -->
 <template>
-  <div class="gap-y-2 flex flex-col w-full bg-white px-6 pt-6 border rounded-lg">
+  <div
+    class="gap-y-2 flex flex-col w-full bg-white px-6 pt-6 border rounded-lg"
+  >
     <div class="mb-4">
       <div class="flex gap-x-4 justify-between">
         <div class="relative flex items-center max-w-[280px]">
@@ -89,12 +91,12 @@
                 >
                   {{ moment(item.transactionDate).format("lll") }}
                 </td>
-                 <td
+                <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
-                  {{ item.legerAction === 1 ? 'Credit' : 'Debit' }}
+                  {{ item.legerAction === 1 ? "Credit" : "Debit" }}
                 </td>
-
+              
                 <td
                   class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
                 >
@@ -102,6 +104,11 @@
                     stattype="wallet"
                     :status="item.transactionType"
                   />
+                </td>
+                  <td
+                  class="capitalize text-matta-black text-sm font-normal py-4 px-6 whitespace-nowrap"
+                >
+                  {{ item.naration }}
                 </td>
               </tr>
             </tbody>
@@ -160,7 +167,14 @@ import { useRoute } from "vue-router";
 import moment from "moment";
 import debounce from "lodash/debounce";
 
-const theads = ["reference", "amount", "date","payment type", "transaction type"];
+const theads = [
+  "reference",
+  "amount",
+  "date",
+  "payment type",
+  "transaction type",
+  "naration",
+];
 const tdata = inject("tdata");
 const isPageLoading = inject("isPageLoading");
 // eslint-disable-next-line no-unused-vars
@@ -177,13 +191,13 @@ watch(
   () => queryParams.Search,
   () => {
     debounceSearch();
-  }
+  },
 );
 watch(
   () => [queryParams.Type, queryParams.PageNumber],
   () => {
     getLedgersTrans();
-  }
+  },
 );
 </script>
 
