@@ -8,6 +8,10 @@ export function payWithMonnify(
 ) {
   const config = useRuntimeConfig();
 
+  // Store the latest callbacks globally to prevent Monnify SDK from caching old closures
+  window._latestMonnifyOnSuccess = onSuccess;
+  window._latestMonnifyOnClose = onModalClose;
+
   window.MonnifySDK.initialize({
     amount: data.amount,
     currency: "NGN",
@@ -23,18 +27,18 @@ export function payWithMonnify(
     paymentMethods: ["CARD", "ACCOUNT_TRANSFER", "USSD", "PHONE_NUMBER"],
     incomeSplitConfig: [],
     onComplete: function (response) {
-      //Implement what happens when transaction is completed.
-      onSuccess(response);
+      // Implement what happens when transaction is completed.
+      if (window._latestMonnifyOnSuccess) {
+        window._latestMonnifyOnSuccess(response);
+      }
     },
     onClose: function (data) {
-      if (data.responseCode === "USER_CANCELLED") {
-        onModalClose();
+      if (data.responseCode === "USER_CANCELLED" || data.status === "FAILED") {
+        if (window._latestMonnifyOnClose) {
+          window._latestMonnifyOnClose();
+        }
       }
-      if (data.status === "FAILED") {
-        onModalClose();
-      }
-
-      //Implement what should happen when the modal is closed here
+      // Implement what should happen when the modal is closed here
     },
   });
 }

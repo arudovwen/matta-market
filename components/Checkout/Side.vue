@@ -119,7 +119,11 @@
 <script setup>
 import { toast } from "vue3-toastify";
 import { nanoid } from "nanoid";
-import { confirmpurchase, confirmpayment, clearcart } from "~/services/cartservice";
+import {
+  confirmpurchase,
+  confirmpayment,
+  clearcart,
+} from "~/services/cartservice";
 import OrderSummaryRow from "./sideRow.vue";
 
 const isPopOpen = inject("isPopOpen");
@@ -142,7 +146,7 @@ const referenceData = reactive({
   transactionRef: null,
   orderId: null,
 });
-
+const orderId = ref(null);
 const data = ref(null);
 
 // Computed to simplify button disabling
@@ -184,7 +188,9 @@ function makePayment() {
     shippingAddressId: shippingStore?.defaultAddress?.id,
     email: authStore.userInfo?.email,
     name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
-    amount:cartStore?.cartData?.walletBalanceApplied?cartStore?.cartData?.totaltoPayAfterCreditApplied: cartStore?.cartTotalwithTax,
+    amount: cartStore?.cartData?.walletBalanceApplied
+      ? cartStore?.cartData?.totaltoPayAfterCreditApplied
+      : cartStore?.cartTotalwithTax,
     phoneNumber: authStore.userInfo?.phoneNumber,
     reference: referenceData.transactionRef,
     orderRequest: false,
@@ -218,13 +224,14 @@ async function confirmOrder() {
         cartStore?.cartData?.walletBalanceApplied &&
         cartStore?.cartData?.totaltoPayAfterCreditApplied === 0
       ) {
-        await clearcart()
+        await clearcart();
         cartStore?.clearCart();
         navigateTo(`/order-successful/${res.data.data}`);
       } else {
         referenceData.transactionRef = `ORD-${res.data.data}-${nanoid(6)}`;
         referenceData.zohoorderId = `ORD-${res.data.data}`;
         referenceData.orderId = res.data.data;
+        orderId.value = res.data.data;
         makePayment();
       }
     }
@@ -248,13 +255,17 @@ async function onSuccess(response) {
   if (response.status.toLowerCase() !== "success") return;
 
   try {
-    const res = await confirmpayment({
-      ...referenceData,
-      transactionRef: response.transactionReference,
+    const payload = {
+      zohoorderId: referenceData.zohoorderId,
+      transactionRef: referenceData.transactionRef,
+      orderId: referenceData.orderId,
       appCode: config.public?.APP_CODE,
-    });
+    };
+
+    const res = await confirmpayment(payload);
 
     if (res.status === 200) {
+      await clearcart();
       cartStore?.clearCart();
       navigateTo(`/order-successful/${referenceData.orderId}`);
     }
