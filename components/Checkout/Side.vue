@@ -119,7 +119,11 @@
 <script setup>
 import { toast } from "vue3-toastify";
 import { nanoid } from "nanoid";
-import { confirmpurchase, confirmpayment, clearcart } from "~/services/cartservice";
+import {
+  confirmpurchase,
+  confirmpayment,
+  clearcart,
+} from "~/services/cartservice";
 import OrderSummaryRow from "./sideRow.vue";
 
 const isPopOpen = inject("isPopOpen");
@@ -184,7 +188,9 @@ function makePayment() {
     shippingAddressId: shippingStore?.defaultAddress?.id,
     email: authStore.userInfo?.email,
     name: `${authStore.userInfo?.firstName} ${authStore.userInfo?.lastName}`,
-    amount: cartStore?.cartTotalwithTax,
+    amount: cartStore?.cartData?.walletBalanceApplied
+      ? cartStore?.cartData?.totaltoPayAfterCreditApplied
+      : cartStore?.cartTotalwithTax,
     phoneNumber: authStore.userInfo?.phoneNumber,
     reference: referenceData.transactionRef,
     orderRequest: false,
@@ -218,7 +224,7 @@ async function confirmOrder() {
         cartStore?.cartData?.walletBalanceApplied &&
         cartStore?.cartData?.totaltoPayAfterCreditApplied === 0
       ) {
-        await clearcart()
+        await clearcart();
         cartStore?.clearCart();
         navigateTo(`/order-successful/${res.data.data}`);
       } else {
