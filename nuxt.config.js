@@ -31,7 +31,6 @@ export default defineNuxtConfig({
     "nuxt-security",
     "@nuxt/devtools",
     // "nuxt-ssr-cache",
-    "@vite-pwa/nuxt",
     "@nuxt/test-utils/module",
     "@zadigetvoltaire/nuxt-gtm",
     // '@nuxtjs/critters',
@@ -250,76 +249,6 @@ export default defineNuxtConfig({
   },
 
   devtools: { enabled: process.env.NODE_ENV === "development" },
-
-  pwa: {
-    registerType: "prompt",
-    manifest: {
-      name: "Matta trade",
-      short_name: "Matta",
-      description:
-        "Africa's Leading B2B Marketplace for chemicals and materials",
-      theme_color: "#1570EF",
-      background_color: "#ffffff",
-      display: "standalone",
-      orientation: "portrait",
-      icons: [
-        {
-          src: "/icons/android-icon-48x48.png",
-          sizes: "48x48",
-          type: "image/png",
-        },
-        {
-          src: "/icons/android-icon-72x72.png",
-          sizes: "72x72",
-          type: "image/png",
-        },
-        {
-          src: "/icons/android-icon-96x96.png",
-          sizes: "96x96",
-          type: "image/png",
-        },
-        {
-          src: "/icons/android-icon-144x144.png",
-          sizes: "144x144",
-          type: "image/png",
-        },
-        {
-          src: "/icons/android-icon-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-          purpose: "any",
-        },
-        {
-          src: "/icons/android-icon-192x192.png",
-          sizes: "192x192",
-          type: "image/png",
-          purpose: "maskable",
-        },
-      ],
-      screenshots: [
-        {
-          src: "/shot2.png",
-          type: "image/png",
-          sizes: "436x720",
-          form_factor: "narrow",
-        },
-        {
-          src: "/shot1.png",
-          type: "image/png",
-          sizes: "1280x686",
-          form_factor: "wide",
-        },
-      ],
-    },
-    workbox: {
-      globPatterns: ["**/*.{js,css,html,png,svg,ico}"],
-      navigateFallback: null,
-    },
-    client: {
-      installPrompt: true,
-      periodicSyncForUpdates: 3600,
-    },
-  },
 
   app: {
     head: {
