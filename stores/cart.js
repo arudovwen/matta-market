@@ -29,7 +29,7 @@ export const useCartStore = defineStore(
     const cartTotalAmount = computed(() =>
       cartItems.value
         .map((item) => item.packagePrice * item.quantity)
-        .reduce((a, b) => Number(a) + Number(b), 0)
+        .reduce((a, b) => Number(a) + Number(b), 0),
     );
 
     function setUSDRate(data) {
@@ -37,10 +37,17 @@ export const useCartStore = defineStore(
     }
     function getUniqueItems(items, existingItems) {
       const result = [...items];
-      existingItems.forEach(localItem => {
-        const existing = result.find(i => i.productId === localItem.productId && i.packageId === localItem.packageId);
+      existingItems.forEach((localItem) => {
+        const existing = result.find(
+          (i) =>
+            i.productId === localItem.productId &&
+            i.packageId === localItem.packageId,
+        );
         if (existing) {
-          if (typeof localItem.id === 'string' && localItem.id.startsWith('guest_')) {
+          if (
+            typeof localItem.id === "string" &&
+            localItem.id.startsWith("guest_")
+          ) {
             existing.quantity += localItem.quantity;
           }
         } else {
@@ -51,9 +58,9 @@ export const useCartStore = defineStore(
     }
 
     async function handleCartCreation(uniqueCart) {
-      const payload = uniqueCart.map(item => {
+      const payload = uniqueCart.map((item) => {
         const { id, ...rest } = item;
-        return typeof id === 'string' && id.startsWith('guest_') ? rest : item;
+        return typeof id === "string" && id.startsWith("guest_") ? rest : item;
       });
       const createRes = await createcart({ items: payload });
       if (process.client) {
@@ -82,7 +89,11 @@ export const useCartStore = defineStore(
         const items = cartData?.items || [];
         const uniqueCart = getUniqueItems(items, cartItems.value);
 
-        if (process.client && localStorage.getItem("fetchCart") && cartItems.value.length > 0) {
+        if (
+          process.client &&
+          localStorage.getItem("fetchCart") &&
+          cartItems.value.length > 0
+        ) {
           await handleCartCreation(uniqueCart);
         }
 
@@ -100,7 +111,11 @@ export const useCartStore = defineStore(
           loadData();
         }
       } catch (err) {
-        if (cartItems.value.length > 0 && process.client && localStorage.getItem("fetchCart")) {
+        if (
+          cartItems.value.length > 0 &&
+          process.client &&
+          localStorage.getItem("fetchCart")
+        ) {
           await handleCartCreation(cartItems.value);
         }
         loadingCart.value = false;
@@ -149,13 +164,24 @@ export const useCartStore = defineStore(
 
     async function addToCart(item, type) {
       if (
-        cartItems.value.some((ct) => ct.productId === item.productId && ct.packageId === item.packageId)
+        cartItems.value.some(
+          (ct) =>
+            ct.productId === item.productId && ct.packageId === item.packageId,
+        )
       ) {
         return { status: false, message: "incart" };
       }
 
       if (!authStore.isLoggedIn) {
-        const guestItem = { ...item, id: item.id || ('guest_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)) };
+        const guestItem = {
+          ...item,
+          id:
+            item.id ||
+            "guest_" +
+              Date.now() +
+              "_" +
+              Math.random().toString(36).substr(2, 9),
+        };
         setCart([...cartItems.value, guestItem]);
 
         return { status: true, message: type };
@@ -181,7 +207,8 @@ export const useCartStore = defineStore(
     }
 
     function updateCart(item) {
-      const isGuestItem = typeof item.id === 'string' && item.id.startsWith('guest_');
+      const isGuestItem =
+        typeof item.id === "string" && item.id.startsWith("guest_");
       if (authStore.isLoggedIn && !isGuestItem) {
         updatecart(item).then((res) => {
           if (res.status === 200) {
@@ -212,7 +239,7 @@ export const useCartStore = defineStore(
 
     function removeFromCart(id) {
       removeId.value = id;
-      const isGuestItem = typeof id === 'string' && id.startsWith('guest_');
+      const isGuestItem = typeof id === "string" && id.startsWith("guest_");
       if (authStore.isLoggedIn && !isGuestItem) {
         removeLoading.value = true;
         removecartitem(id)
@@ -226,10 +253,12 @@ export const useCartStore = defineStore(
           })
           .catch(() => {
             removeLoading.value = false;
+            const tempCart = cartItems.value.filter((item) => item?.id !== id);
+            setCart(tempCart);
             toast.error(
               err?.response?.data?.message ||
                 err?.response?.data?.Message ||
-                "Invalid code"
+                "Invalid code",
             );
           });
       } else {
@@ -292,5 +321,5 @@ export const useCartStore = defineStore(
         },
       },
     },
-  }
+  },
 );
