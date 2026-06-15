@@ -89,9 +89,7 @@
         />
       </FormGroup>
 
-      <div
-        class="grid grid-cols-1 gap-5 mt-8 lg:col-span-2 md:grid-cols-2"
-      >
+      <div class="grid grid-cols-1 gap-5 mt-8 lg:col-span-2 md:grid-cols-2">
         <AppButton
           type="button"
           :isDisabled="isLoading"
@@ -118,10 +116,12 @@ import {
   addPickupLocation,
   editPickupLocation,
   addressSearch,
+  placeSuggestion,
 } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "~/utils/countries.json";
 import Lgas from "~/utils/lgastate.json";
+import { it } from "vitest";
 
 const isOpen = inject("isOpen");
 const detail = inject("detail");
@@ -179,7 +179,7 @@ const allcountries = computed(() => {
 const mystates = computed(() => {
   if (!country.value) return [];
   return countries.find(
-    (item) => item.name.toLowerCase() == country.value.toLowerCase()
+    (item) => item.name.toLowerCase() == country.value.toLowerCase(),
   ).states;
 });
 
@@ -187,14 +187,18 @@ const states = computed(() => {
   return mystates.value.map((item) => {
     return {
       id: item.code,
-      label: item.name.toLowerCase().includes("abuja") ? "Abuja FCT" : item.name,
-      value: item.name.toLowerCase().includes("abuja") ? "Abuja FCT" : item.name,
+      label: item.name.toLowerCase().includes("abuja")
+        ? "Abuja FCT"
+        : item.name,
+      value: item.name.toLowerCase().includes("abuja")
+        ? "Abuja FCT"
+        : item.name,
     };
   });
 });
 const lgasOption = computed(() => {
   return Lgas.find(
-    (i) => i?.state?.toLowerCase() === state?.value?.toLowerCase()
+    (i) => i?.state?.toLowerCase() === state?.value?.toLowerCase(),
   )?.lgas?.map((i) => {
     return { label: i, value: i };
   });
@@ -202,15 +206,16 @@ const lgasOption = computed(() => {
 const addressOptions = ref([]);
 watch(address, () => {
   const values = {
-    address: address.value,
-    state: state.value,
-    lga: lga.value,
+    text: address.value,
+    countryCode: CountryList.find(
+      (i) => i.name.toLowerCase() === country.value?.toLowerCase(),
+    )?.code,
   };
-  addressSearch(values).then((res) => {
+  placeSuggestion(values).then((res) => {
     if (res.status === 200) {
       addressOptions.value = res.data.map((i, index) => ({
-        label: i.label,
-        value: `${i.label}-${index}`,
+        label: i.text,
+        value: i.text,
       }));
     }
   });
@@ -230,7 +235,7 @@ const onSubmit = handleSubmit((values) => {
       isLoading.value = false;
       if (err?.response?.data?.message || err?.response?.data?.Message) {
         toast.error(
-          err?.response?.data?.message || err?.response?.data?.Message
+          err?.response?.data?.message || err?.response?.data?.Message,
         );
       }
     });

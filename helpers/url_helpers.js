@@ -251,7 +251,7 @@ const urls = {
   GET_LEDGER_TRANSACTIONS: "v1/ledger/get-all",
 
   ADDRESS_SEARCH: "Location/address-search",
-  PLACE_SUGGESTION: "Location/place-suggestion",
+  PLACE_SUGGESTION: "v1/Location/place-suggestion",
 
   APPLY_DISCOUNT: "v1/discount/apply-discount",
   GET_DISCOUNT: (code) => `v1/discount/${code}`,

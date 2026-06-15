@@ -128,6 +128,7 @@ import {
   addshipping,
   editshipping,
   addressSearch,
+  placeSuggestion,
 } from "~/services/cartservice";
 import CountryList from "country-list-with-dial-code-and-flag";
 import countries from "~/utils/countries.json";
@@ -196,7 +197,7 @@ const allcountries = computed(() => {
 const mystates = computed(() => {
   if (!country.value) return [];
   return countries.find(
-    (item) => item.name.toLowerCase() == country?.value?.toLowerCase()
+    (item) => item.name.toLowerCase() == country?.value?.toLowerCase(),
   ).states;
 });
 
@@ -215,7 +216,7 @@ const states = computed(() => {
 });
 const lgasOption = computed(() => {
   return Lgas.find(
-    (i) => i?.state?.toLowerCase() === state?.value?.toLowerCase()
+    (i) => i?.state?.toLowerCase() === state?.value?.toLowerCase(),
   )?.lgas?.map((i) => {
     return { label: i, value: i };
   });
@@ -236,7 +237,7 @@ const onSubmit = handleSubmit((values) => {
       isLoading.value = false;
       if (err?.response?.data?.message || err?.response?.data?.Message) {
         toast.error(
-          err?.response?.data?.message || err?.response?.data?.Message
+          err?.response?.data?.message || err?.response?.data?.Message,
         );
       }
     });
@@ -246,17 +247,20 @@ const addressOptions = ref([]);
 const addressLoading = ref(false);
 watch(street, () => {
   const values = {
-    address: street.value,
+    text: street.value,
     state: state.value,
     lga: lga.value,
+    countryCode: CountryList.find(
+      (i) => i.name.toLowerCase() === country.value?.toLowerCase(),
+    )?.code,
   };
   addressLoading.value = true;
-  addressSearch(values)
+  placeSuggestion(values)
     .then((res) => {
       if (res.status === 200) {
         addressOptions.value = res.data.map((i) => ({
-          label: i.label,
-          value: i.label,
+          label: i.text,
+          value: i.text,
         }));
       }
     })

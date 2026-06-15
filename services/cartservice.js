@@ -8,6 +8,7 @@ import {
   marketGet,
   marketPut,
   marketDelete,
+  deltaGet,
 } from "../helpers/api_helpers";
 import store from "../store";
 import { withRetryHandling } from "../utils/retry-handling";
@@ -117,7 +118,7 @@ export async function addressSearch(data) {
   return await post(`${urls.ADDRESS_SEARCH}`, data, config);
 }
 export async function placeSuggestion(data) {
-  return await get(
+  return await deltaGet(
     `${urls.PLACE_SUGGESTION}?${new URLSearchParams(cleanObject(data))}`,
     config
   );
